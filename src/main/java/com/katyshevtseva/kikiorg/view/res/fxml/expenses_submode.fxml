@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import java.net.URL?>
+<VBox xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml"
+      alignment="CENTER">
+
+    <stylesheets>
+        <URL value="@/com/katyshevtseva/kikiorg/view/res/css"/>
+    </stylesheets>
+
+
+    <GridPane alignment="CENTER" hgap="25" vgap="25">
+        <TextField fx:id="itemTextField" minWidth="200" maxWidth="200"
+                   GridPane.columnIndex="0" GridPane.rowIndex="0"/>
+        <Button fx:id="addItemButton" text="Add item" minWidth="200" maxWidth="200"
+                GridPane.columnIndex="1" GridPane.rowIndex="0"/>
+    </GridPane>
+
+    <Pane prefHeight="15"/>
+    <Label text="*****************************************************************"/>
+    <Pane prefHeight="15"/>
+
+    <GridPane alignment="CENTER" hgap="25" vgap="25">
+        <Label text="Account: " GridPane.halignment="RIGHT"
+               GridPane.columnIndex="0" GridPane.rowIndex="0"/>
+
+        <Label text="Item: " GridPane.halignment="RIGHT"
+               GridPane.columnIndex="0" GridPane.rowIndex="1"/>
+
+        <Label text="Amount(₽): " GridPane.halignment="RIGHT"
+               GridPane.columnIndex="0" GridPane.rowIndex="2"/>
+
+        <ComboBox fx:id="accountComboBox" minWidth="200" maxWidth="200"
+                  GridPane.columnIndex="1" GridPane.rowIndex="0"/>
+
+        <ComboBox fx:id="itemComboBox" minWidth="200" maxWidth="200"
+                  GridPane.columnIndex="1" GridPane.rowIndex="1"/>
+
+        <TextField fx:id="amountTextField" minWidth="200" maxWidth="200"
+                   GridPane.columnIndex="1" GridPane.rowIndex="2"/>
+
+        <Button fx:id="doneButton" text="Ok" GridPane.halignment="RIGHT"
+                GridPane.columnIndex="1" GridPane.rowIndex="3"/>
+    </GridPane>
+
+</VBox>
+

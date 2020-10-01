@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import java.net.URL?>
+<GridPane xmlns="http://javafx.com/javafx"
+          xmlns:fx="http://javafx.com/fxml"
+          alignment="CENTER" hgap="10" vgap="10">
+
+    <stylesheets>
+        <URL value="@/com/katyshevtseva/kikiorg/view/res/css/general_style.css"/>
+    </stylesheets>
+
+    <TextField fx:id="accountTitleField" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+    <TextField fx:id="accountDescField" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+    <Button fx:id="addAccountButton" text="Add account" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
+    <TextField fx:id="sourceTitleField" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+    <TextField fx:id="sourceDescField" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+    <Button fx:id="addSourceButton" text="Add source" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+
+
+</GridPane>

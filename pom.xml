@@ -76,6 +76,19 @@
                 <artifactId>spring-boot-maven-plugin</artifactId>
             </plugin>
         </plugins>
+<!--        Если проект собирается с помощью Maven'а, то после сборки-->
+<!--        он запускается из папки target, при этом все остальные-->
+<!--        файлы, в том числе *.fxml, в неё не копируются, для этого-->
+<!--        нужно дополнить pom.xml-->
+        <resources>
+            <resource>
+                <directory>src/main/java</directory>
+                <includes>
+                    <include>**/*.fxml</include>
+                    <include>**/*.css</include>
+                </includes>
+            </resource>
+        </resources>
     </build>
 
 </project>

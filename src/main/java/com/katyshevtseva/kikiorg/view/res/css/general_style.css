@@ -1,0 +1,11 @@
+.mainWindowLeftPanel{
+    -fx-border-color: #000000;
+}
+
+#dateLabel{
+     -fx-font-size: 25;
+}
+
+#eventPane{
+    -fx-background-color: #66CDAA;
+}

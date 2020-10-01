@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import java.net.URL?>
+<HBox xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml">
+
+    <stylesheets>
+        <URL value="@/com/katyshevtseva/kikiorg/view/res/css/general_style.css"/>
+    </stylesheets>
+
+    <VBox maxWidth="300" minWidth="300" styleClass="mainWindowLeftPanel">
+        <GridPane vgap="40" alignment="CENTER">
+            <Button text="Finance" fx:id="financeButton" prefWidth="160"
+                    GridPane.rowIndex="7" GridPane.columnIndex="0"/>
+            <Button text="Today" fx:id="todayButton" prefWidth="160"
+                    GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+            <Button text="Habits" fx:id="habitsButton" prefWidth="160"
+                    GridPane.rowIndex="2" GridPane.columnIndex="0"/>
+            <Button text="Regular Tasks" fx:id="regularTasksButton" prefWidth="160"
+                    GridPane.rowIndex="3" GridPane.columnIndex="0"/>
+            <Button text="Irregular Tasks" fx:id="irregularTasksButton" prefWidth="160"
+                    GridPane.rowIndex="4" GridPane.columnIndex="0"/>
+            <Button text="Events" fx:id="eventsButton" prefWidth="160"
+                    GridPane.rowIndex="5" GridPane.columnIndex="0"/>
+            <Button text="Studies" fx:id="studiesButton" prefWidth="160"
+                    GridPane.rowIndex="6" GridPane.columnIndex="0"/>
+        </GridPane>
+    </VBox>
+
+    <Pane fx:id="mainPane"/>
+
+</HBox>
