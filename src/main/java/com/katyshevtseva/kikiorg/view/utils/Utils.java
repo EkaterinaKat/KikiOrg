@@ -1,8 +1,7 @@
 package com.katyshevtseva.kikiorg.view.utils;
 
 import javafx.scene.Node;
-import javafx.scene.control.Button;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.stage.Stage;
 
 public class Utils {
@@ -23,10 +22,40 @@ public class Utils {
         });
     }
 
-    public static void associateTextFieldAndButton(TextField textField, Button button) {
+    public static void associateButtonWithControls(Button button, Control... controls) {
         button.setDisable(true);
-        textField.textProperty().addListener((observable, oldValue, newValue) ->
-                button.setDisable(textField.getText().trim().equals("")));
+        for (Control control : controls) {
+            if (control instanceof TextField) {
+                TextField textField = (TextField) control;
+                textField.textProperty().addListener(observable -> setButtonAccessibility(button, controls));
+            } else if (control instanceof TextArea) {
+                TextArea textArea = (TextArea) control;
+                textArea.textProperty().addListener(observable -> setButtonAccessibility(button, controls));
+            } else if (control instanceof ComboBox) {
+                ComboBox comboBox = (ComboBox) control;
+                comboBox.valueProperty().addListener((observable -> setButtonAccessibility(button, controls)));
+            } else if (control instanceof DatePicker) {
+                DatePicker datePicker = (DatePicker) control;
+                datePicker.valueProperty().addListener(observable -> setButtonAccessibility(button, controls));
+            }
+            else
+                throw new RuntimeException("Элемент неизвестного типа");
+        }
     }
 
+    private static void setButtonAccessibility(Button button, Control... controls) {
+        boolean disableButton = false;
+        for (Control control : controls) {
+            if (control instanceof TextField && ((TextField) control).getText().trim().equals("")) {
+                disableButton = true;
+            } else if (control instanceof TextArea && ((TextArea) control).getText().trim().equals("")) {
+                disableButton = true;
+            } else if (control instanceof ComboBox && ((ComboBox) control).getValue() == null) {
+                disableButton = true;
+            } else if (control instanceof DatePicker && ((DatePicker)control).getValue() == null){
+                disableButton = true;
+            }
+            button.setDisable(disableButton);
+        }
+    }
 }

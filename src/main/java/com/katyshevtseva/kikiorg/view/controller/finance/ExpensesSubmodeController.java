@@ -26,16 +26,8 @@ class ExpensesSubmodeController implements WindowBuilder.Controller {
         Utils.disableNonNumericChars(amountTextField);
         addItemButton.setOnAction(event -> addItem());
         doneButton.setOnAction(event -> saveExpense());
-        Utils.associateTextFieldAndButton(itemTextField, addItemButton);
-        addItemButton.setDisable(true);
-        amountTextField.textProperty().addListener(observable -> setDoneButtonAccessibility());
-        accountComboBox.valueProperty().addListener(observable -> setDoneButtonAccessibility());
-        itemComboBox.valueProperty().addListener(observable -> setDoneButtonAccessibility());
-    }
-
-    private void setDoneButtonAccessibility() {
-        doneButton.setDisable(amountTextField.getText().trim().equals("") ||
-                accountComboBox.getValue() == null || itemComboBox.getValue() == null);
+        Utils.associateButtonWithControls(addItemButton, itemTextField);
+        Utils.associateButtonWithControls(doneButton, amountTextField, accountComboBox, itemComboBox);
     }
 
     void updateDisplayedData() {

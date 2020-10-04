@@ -24,18 +24,8 @@ class ReplenishmentSubmodeController implements WindowBuilder.Controller {
     private void initialize() {
         Utils.disableNonNumericChars(amountTextField);
         doneButton.setOnAction(event -> saveReplenishment());
-        doneButton.setDisable(true);
-        amountTextField.textProperty().addListener(observable -> setDoneButtonAccessibility());
-        sourceComboBox.valueProperty().addListener((observable -> setDoneButtonAccessibility()));
-        accountComboBox.valueProperty().addListener(observable -> setDoneButtonAccessibility());
-        datePicker.valueProperty().addListener(observable -> setDoneButtonAccessibility());
+        Utils.associateButtonWithControls(doneButton, amountTextField, sourceComboBox, accountComboBox, datePicker);
     }
-
-    private void setDoneButtonAccessibility() {
-        doneButton.setDisable(amountTextField.getText().trim().equals("") || sourceComboBox.getValue() == null
-                || accountComboBox.getValue() == null || datePicker.getValue() == null);
-    }
-
 
     void updateDisplayedData() {
 
