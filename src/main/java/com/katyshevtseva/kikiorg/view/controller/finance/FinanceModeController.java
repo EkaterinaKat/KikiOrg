@@ -1,17 +1,18 @@
 package com.katyshevtseva.kikiorg.view.controller.finance;
 
 import com.katyshevtseva.kikiorg.view.utils.OrganizerWindowCreator;
-import com.katyshevtseva.kikiorg.view.utils.WindowBuilder.Controller;
+import com.katyshevtseva.kikiorg.view.utils.WindowBuilder.FxController;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.layout.Pane;
+import org.springframework.stereotype.Controller;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class FinanceModeController implements Controller {
+public class FinanceModeController implements FxController {
     private List<Button> buttons = new ArrayList<>();
     @FXML
     private Button replenishmentButton;

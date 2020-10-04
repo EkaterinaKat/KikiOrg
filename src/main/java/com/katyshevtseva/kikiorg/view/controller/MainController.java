@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class MainController implements WindowBuilder.Controller {
+public class MainController implements WindowBuilder.FxController {
     private List<Button> buttons = new ArrayList<>();
     @FXML
     private Button todayButton;
@@ -30,7 +30,7 @@ public class MainController implements WindowBuilder.Controller {
     private Button financeButton;
     @FXML
     private Pane mainPane;
-    private FinanceModeController financeModeController = new FinanceModeController();
+    private FinanceModeController financeModeController;
     private Node financeModeNode;
 
     @FXML

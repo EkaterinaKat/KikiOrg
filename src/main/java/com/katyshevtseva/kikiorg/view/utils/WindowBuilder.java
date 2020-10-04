@@ -15,7 +15,7 @@ public class WindowBuilder {
     private String title = "";
     private int width = 500;
     private int height = 500;
-    private Controller controller;
+    private FxController controller;
     private boolean isModal = false;
     private String iconImagePath;
     private boolean stretchable = false;
@@ -39,7 +39,7 @@ public class WindowBuilder {
         return this;
     }
 
-    WindowBuilder setController(Controller controller) {
+    WindowBuilder setController(FxController controller) {
         this.controller = controller;
         return this;
     }
@@ -97,7 +97,7 @@ public class WindowBuilder {
         return parent;
     }
 
-    public interface Controller {
+    public interface FxController {
 
     }
 }

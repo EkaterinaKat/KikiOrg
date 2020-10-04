@@ -1,13 +1,13 @@
 package com.katyshevtseva.kikiorg.view.controller.finance;
 
 import com.katyshevtseva.kikiorg.view.utils.Utils;
-import com.katyshevtseva.kikiorg.view.utils.WindowBuilder.Controller;
+import com.katyshevtseva.kikiorg.view.utils.WindowBuilder.FxController;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 
 
-class AccountsSubmodeController implements Controller {
+class AccountsSubmodeController implements FxController {
     @FXML
     private TextField accountTitleField;
     @FXML
