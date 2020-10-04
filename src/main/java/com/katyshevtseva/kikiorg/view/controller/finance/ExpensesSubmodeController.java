@@ -5,6 +5,7 @@ import com.katyshevtseva.kikiorg.view.utils.WindowBuilder;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
 
 class ExpensesSubmodeController implements WindowBuilder.Controller {
@@ -19,6 +20,8 @@ class ExpensesSubmodeController implements WindowBuilder.Controller {
     @FXML
     private TextField amountTextField;
     @FXML
+    private DatePicker datePicker;
+    @FXML
     private Button doneButton;
 
     @FXML
@@ -27,7 +30,7 @@ class ExpensesSubmodeController implements WindowBuilder.Controller {
         addItemButton.setOnAction(event -> addItem());
         doneButton.setOnAction(event -> saveExpense());
         Utils.associateButtonWithControls(addItemButton, itemTextField);
-        Utils.associateButtonWithControls(doneButton, amountTextField, accountComboBox, itemComboBox);
+        Utils.associateButtonWithControls(doneButton, amountTextField, accountComboBox, itemComboBox, datePicker);
     }
 
     void updateDisplayedData() {

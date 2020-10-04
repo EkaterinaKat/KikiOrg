@@ -24,26 +24,32 @@
     <Pane prefHeight="15"/>
 
     <GridPane alignment="CENTER" hgap="25" vgap="25">
-        <Label text="Account: " GridPane.halignment="RIGHT"
+        <Label text="Amount(₽): " GridPane.halignment="RIGHT"
                GridPane.columnIndex="0" GridPane.rowIndex="0"/>
 
-        <Label text="Item: " GridPane.halignment="RIGHT"
+        <Label text="Date: " GridPane.halignment="RIGHT"
                GridPane.columnIndex="0" GridPane.rowIndex="1"/>
 
-        <Label text="Amount(₽): " GridPane.halignment="RIGHT"
-               GridPane.columnIndex="0" GridPane.rowIndex="2"/>
+        <Label text="Item: " GridPane.halignment="RIGHT"
+               GridPane.columnIndex="2" GridPane.rowIndex="0"/>
 
-        <ComboBox fx:id="accountComboBox" minWidth="200" maxWidth="200"
-                  GridPane.columnIndex="1" GridPane.rowIndex="0"/>
-
-        <ComboBox fx:id="itemComboBox" minWidth="200" maxWidth="200"
-                  GridPane.columnIndex="1" GridPane.rowIndex="1"/>
+        <Label text="Account: " GridPane.halignment="RIGHT"
+               GridPane.columnIndex="2" GridPane.rowIndex="1"/>
 
         <TextField fx:id="amountTextField" minWidth="200" maxWidth="200"
-                   GridPane.columnIndex="1" GridPane.rowIndex="2"/>
+                   GridPane.columnIndex="1" GridPane.rowIndex="1"/>
+
+        <DatePicker fx:id="datePicker" minWidth="200" maxWidth="200"
+                    GridPane.columnIndex="1" GridPane.rowIndex="1"/>
+
+        <ComboBox fx:id="itemComboBox" minWidth="200" maxWidth="200"
+                  GridPane.columnIndex="3" GridPane.rowIndex="2"/>
+
+        <ComboBox fx:id="accountComboBox" minWidth="200" maxWidth="200"
+                  GridPane.columnIndex="3" GridPane.rowIndex="2"/>
 
         <Button fx:id="doneButton" text="Ok" GridPane.halignment="RIGHT"
-                GridPane.columnIndex="1" GridPane.rowIndex="3"/>
+                GridPane.columnIndex="3" GridPane.rowIndex="2"/>
     </GridPane>
 
 </VBox>

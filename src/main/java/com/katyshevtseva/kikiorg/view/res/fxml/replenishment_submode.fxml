@@ -15,20 +15,28 @@
     <GridPane alignment="CENTER" hgap="25" vgap="25">
         <Label text="Amount(₽): " GridPane.halignment="RIGHT"
                GridPane.columnIndex="0" GridPane.rowIndex="0"/>
+
         <Label text="Date: " GridPane.halignment="RIGHT"
                GridPane.columnIndex="0" GridPane.rowIndex="1"/>
+
         <Label text="Source of income: " GridPane.halignment="RIGHT"
                GridPane.columnIndex="2" GridPane.rowIndex="0"/>
+
         <Label text="Account to replenish: " GridPane.halignment="RIGHT"
                GridPane.columnIndex="2" GridPane.rowIndex="1"/>
+
         <TextField fx:id="amountTextField" minWidth="200" maxWidth="200"
                    GridPane.columnIndex="1" GridPane.rowIndex="0"/>
+
         <DatePicker fx:id="datePicker" minWidth="200" maxWidth="200"
                     GridPane.columnIndex="1" GridPane.rowIndex="1"/>
+
         <ComboBox fx:id="sourceComboBox" minWidth="200" maxWidth="200"
                   GridPane.columnIndex="3" GridPane.rowIndex="0"/>
+
         <ComboBox fx:id="accountComboBox" minWidth="200" maxWidth="200"
                   GridPane.columnIndex="3" GridPane.rowIndex="1"/>
+
         <Button fx:id="doneButton" text="Ok"
                 GridPane.halignment="RIGHT" GridPane.columnIndex="3" GridPane.rowIndex="2"/>
     </GridPane>
