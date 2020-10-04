@@ -30,7 +30,7 @@ public class MainController implements WindowBuilder.FxController {
     private Button financeButton;
     @FXML
     private Pane mainPane;
-    private FinanceModeController financeModeController;
+    private FinanceModeController financeModeController = new FinanceModeController();
     private Node financeModeNode;
 
     @FXML
