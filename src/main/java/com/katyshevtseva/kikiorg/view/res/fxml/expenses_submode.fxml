@@ -13,10 +13,12 @@
 
 
     <GridPane alignment="CENTER" hgap="25" vgap="25">
-        <TextField fx:id="itemTextField" minWidth="200" maxWidth="200"
+        <TextField fx:id="itemTitleField" minWidth="200" maxWidth="200"
                    GridPane.columnIndex="0" GridPane.rowIndex="0"/>
+        <TextArea fx:id="itemDescArea" minWidth="200" maxWidth="200"
+                  GridPane.columnIndex="1" GridPane.rowIndex="0"/>
         <Button fx:id="addItemButton" text="Add item" minWidth="200" maxWidth="200"
-                GridPane.columnIndex="1" GridPane.rowIndex="0"/>
+                GridPane.columnIndex="2" GridPane.rowIndex="0"/>
     </GridPane>
 
     <Pane prefHeight="15"/>

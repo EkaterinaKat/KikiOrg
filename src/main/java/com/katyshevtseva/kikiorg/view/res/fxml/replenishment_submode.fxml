@@ -11,6 +11,19 @@
         <URL value="@/com/katyshevtseva/kikiorg/view/res/css/general_style.css"/>
     </stylesheets>
 
+    <GridPane alignment="CENTER" hgap="25" vgap="25">
+        <TextField fx:id="sourceTitleField" minWidth="200" maxWidth="200"
+                   GridPane.columnIndex="0" GridPane.rowIndex="0"/>
+        <TextArea fx:id="sourceDescArea" minWidth="200" maxWidth="200"
+                  GridPane.columnIndex="1" GridPane.rowIndex="0"/>
+        <Button fx:id="addSourceButton" text="Add item" minWidth="200" maxWidth="200"
+                GridPane.columnIndex="2" GridPane.rowIndex="0"/>
+    </GridPane>
+
+
+    <Pane prefHeight="15"/>
+    <Label text="*****************************************************************"/>
+    <Pane prefHeight="15"/>
 
     <GridPane alignment="CENTER" hgap="25" vgap="25">
         <Label text="Amount(₽): " GridPane.halignment="RIGHT"

@@ -14,26 +14,14 @@ class AccountsSubmodeController implements Controller {
     private TextField accountDescField;
     @FXML
     private Button addAccountButton;
-    @FXML
-    private TextField sourceTitleField;
-    @FXML
-    private TextField sourceDescField;
-    @FXML
-    private Button addSourceButton;
 
     @FXML
     private void initialize() {
         addAccountButton.setOnAction(event -> addAccount());
-        addSourceButton.setOnAction(event -> addSource());
         Utils.associateButtonWithControls(addAccountButton, accountTitleField, accountDescField);
-        Utils.associateButtonWithControls(addSourceButton, sourceTitleField, sourceDescField);
     }
 
     private void addAccount() {
-
-    }
-
-    private void addSource() {
 
     }
 
