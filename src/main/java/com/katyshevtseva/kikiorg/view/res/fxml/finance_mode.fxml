@@ -15,16 +15,16 @@
         <VBox>
             <Pane minHeight="10" maxHeight="10"/>
             <HBox>
-                <Button fx:id="replenishmentButton" text="Replenish"/>
+                <Button fx:id="replenishmentButton" text="Replenishment"/>
                 <Button fx:id="expensesButton" text="Expenses"/>
-                <Button fx:id="accountsButton" text="Accounts and Sources"/>
+                <Button fx:id="accountsButton" text="Accounts"/>
             </HBox>
             <Pane minHeight="10" maxHeight="10"/>
         </VBox>
     </top>
 
     <center>
-        <Pane fx:id="mainPane" maxHeight="300" minHeight="300"/>
+        <Pane fx:id="mainPane" maxHeight="400" minHeight="400"/>
     </center>
 
     <left>

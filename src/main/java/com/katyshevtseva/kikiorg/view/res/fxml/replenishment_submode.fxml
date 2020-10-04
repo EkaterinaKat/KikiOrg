@@ -12,12 +12,12 @@
     </stylesheets>
 
     <GridPane alignment="CENTER" hgap="25" vgap="25">
-        <TextField fx:id="sourceTitleField" minWidth="200" maxWidth="200"
+        <TextField fx:id="sourceTitleField" minWidth="250" maxWidth="250"
                    GridPane.columnIndex="0" GridPane.rowIndex="0"/>
-        <TextArea fx:id="sourceDescArea" minWidth="200" maxWidth="200"
-                  GridPane.columnIndex="1" GridPane.rowIndex="0"/>
-        <Button fx:id="addSourceButton" text="Add item" minWidth="200" maxWidth="200"
-                GridPane.columnIndex="2" GridPane.rowIndex="0"/>
+        <TextArea fx:id="sourceDescArea" minWidth="250" maxWidth="250"
+                  GridPane.columnIndex="0" GridPane.rowIndex="1" maxHeight="80"/>
+        <Button fx:id="addSourceButton" text="Add source"
+                GridPane.columnIndex="1" GridPane.rowIndex="1"/>
     </GridPane>
 
 
@@ -26,28 +26,30 @@
     <Pane prefHeight="15"/>
 
     <GridPane alignment="CENTER" hgap="25" vgap="25">
-        <Label text="Amount(₽): " GridPane.halignment="RIGHT"
-               GridPane.columnIndex="0" GridPane.rowIndex="0"/>
+        <Label text="Amount(₽): " GridPane.halignment="LEFT"
+               GridPane.columnIndex="0" GridPane.rowIndex="0"
+               minWidth="150" maxWidth="150"/>
 
-        <Label text="Date: " GridPane.halignment="RIGHT"
+        <Label text="Date: " GridPane.halignment="LEFT"
                GridPane.columnIndex="0" GridPane.rowIndex="1"/>
 
-        <Label text="Source of income: " GridPane.halignment="RIGHT"
-               GridPane.columnIndex="2" GridPane.rowIndex="0"/>
+        <Label text="Source of income: " GridPane.halignment="LEFT"
+               GridPane.columnIndex="2" GridPane.rowIndex="0"
+               minWidth="150" maxWidth="150"/>
 
-        <Label text="Account to replenish: " GridPane.halignment="RIGHT"
+        <Label text="Account to replenish: " GridPane.halignment="LEFT"
                GridPane.columnIndex="2" GridPane.rowIndex="1"/>
 
-        <TextField fx:id="amountTextField" minWidth="200" maxWidth="200"
+        <TextField fx:id="amountTextField" minWidth="250" maxWidth="250"
                    GridPane.columnIndex="1" GridPane.rowIndex="0"/>
 
-        <DatePicker fx:id="datePicker" minWidth="200" maxWidth="200"
+        <DatePicker fx:id="datePicker" minWidth="250" maxWidth="250"
                     GridPane.columnIndex="1" GridPane.rowIndex="1"/>
 
-        <ComboBox fx:id="sourceComboBox" minWidth="200" maxWidth="200"
+        <ComboBox fx:id="sourceComboBox" minWidth="250" maxWidth="250"
                   GridPane.columnIndex="3" GridPane.rowIndex="0"/>
 
-        <ComboBox fx:id="accountComboBox" minWidth="200" maxWidth="200"
+        <ComboBox fx:id="accountComboBox" minWidth="250" maxWidth="250"
                   GridPane.columnIndex="3" GridPane.rowIndex="1"/>
 
         <Button fx:id="doneButton" text="Ok"
