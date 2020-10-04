@@ -1,9 +1,10 @@
 package com.katyshevtseva.kikiorg.view.utils;
 
+import com.katyshevtseva.kikiorg.core.CoreConstants;
 import com.katyshevtseva.kikiorg.view.utils.WindowBuilder.Controller;
 import javafx.scene.Node;
 
-import static com.katyshevtseva.kikiorg.view.utils.Constants.*;
+import static com.katyshevtseva.kikiorg.view.utils.ViewConstants.*;
 
 
 public class OrganizerWindowCreator {
@@ -17,8 +18,8 @@ public class OrganizerWindowCreator {
     }
 
     public void openMainWindow(Controller controller) {
-        new WindowBuilder(FXML_LOCATION + "main.fxml").setController(controller).setHeight(MAIN_WINDOW_HEIGHT).
-                setWidth(MAIN_WINDOW_WIDTH).setTitle(MAIN_WINDOW_TITLE).showWindow();
+        new WindowBuilder(FXML_LOCATION + "main.fxml").setController(controller).setHeight(WINDOW_HEIGHT).
+                setWidth(WINDOW_WIDTH).setTitle(CoreConstants.APP_NAME).showWindow();
     }
 
     /* ----------------------------------  Финансы  ---------------------------------------------- */

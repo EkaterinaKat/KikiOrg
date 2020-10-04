@@ -1,7 +1,7 @@
 package com.katyshevtseva.kikiorg;
 
 
-import com.katyshevtseva.kikiorg.view.MainController;
+import com.katyshevtseva.kikiorg.view.controller.MainController;
 import com.katyshevtseva.kikiorg.view.utils.OrganizerWindowCreator;
 import com.katyshevtseva.kikiorg.view.utils.WindowBuilder;
 import javafx.application.Application;

@@ -1,4 +1,4 @@
-package com.katyshevtseva.kikiorg.view;
+package com.katyshevtseva.kikiorg.view.controller;
 
 import com.katyshevtseva.kikiorg.view.controller.finance.FinanceModeController;
 import com.katyshevtseva.kikiorg.view.utils.OrganizerWindowCreator;
@@ -37,6 +37,8 @@ public class MainController implements WindowBuilder.Controller {
     private void initialize() {
         buttons.addAll(Arrays.asList(todayButton, habitsButton, regularTasksButton, irregularTasksButton,
                 eventsButton, studiesButton, financeButton));
+        financeButton.setOnAction(event -> financeButtonListener());
+        financeButtonListener();
         todayButton.setDisable(true);
         habitsButton.setDisable(true);
         regularTasksButton.setDisable(true);
@@ -44,8 +46,6 @@ public class MainController implements WindowBuilder.Controller {
         eventsButton.setDisable(true);
         studiesButton.setDisable(true);
         financeButton.setDisable(true);
-        financeButton.setOnAction(event -> financeButtonListener());
-        financeButtonListener();
     }
 
     private void financeButtonListener() {
