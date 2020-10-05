@@ -9,6 +9,7 @@ import java.util.Date;
 @Entity
 public class Replenishment {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
     @ManyToOne(fetch = FetchType.EAGER)
