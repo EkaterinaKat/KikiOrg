@@ -36,7 +36,10 @@
     </right>
 
     <bottom>
-        <TextArea editable="false" minWidth="600" maxWidth="600" prefHeight="300"/>
+        <VBox>
+            <TextArea fx:id="reportTextArea" editable="false" minWidth="800" maxWidth="800" prefHeight="400"/>
+            <Button fx:id="updateButton" text="Update displayed data"/>
+        </VBox>
     </bottom>
 
 </BorderPane>

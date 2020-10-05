@@ -52,7 +52,6 @@ public class MainController implements WindowBuilder.FxController {
         activateButton(financeButton);
         if (financeModeNode == null)
             financeModeNode = OrganizerWindowCreator.getInstance().getFinanceModeNode(financeModeController);
-        financeModeController.updateDisplayedData();
         mainPane.getChildren().clear();
         mainPane.getChildren().add(financeModeNode);
     }

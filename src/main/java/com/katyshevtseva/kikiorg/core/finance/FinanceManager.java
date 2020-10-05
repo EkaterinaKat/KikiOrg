@@ -43,7 +43,7 @@ public class FinanceManager implements InitializingBean {
         reportGenerator = new ReportGenerator(INSTANCE);
     }
 
-    String getReport(){
+    public String getReport(){
         return reportGenerator.getReport();
     }
 
