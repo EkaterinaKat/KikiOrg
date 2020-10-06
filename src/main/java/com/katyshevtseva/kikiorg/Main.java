@@ -3,7 +3,6 @@ package com.katyshevtseva.kikiorg;
 
 import com.katyshevtseva.kikiorg.view.controller.MainController;
 import com.katyshevtseva.kikiorg.view.utils.OrganizerWindowCreator;
-import com.katyshevtseva.kikiorg.view.utils.WindowBuilder;
 import com.katyshevtseva.kikiorg.view.utils.WindowBuilder.FxController;
 import javafx.application.Application;
 import javafx.stage.Stage;

@@ -8,7 +8,6 @@ import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.Pane;
-import org.springframework.stereotype.Controller;
 
 import java.util.ArrayList;
 import java.util.Arrays;

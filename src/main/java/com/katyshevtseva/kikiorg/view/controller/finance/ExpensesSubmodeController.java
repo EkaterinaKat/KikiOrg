@@ -10,7 +10,7 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 class ExpensesSubmodeController implements FxController {
     @FXML
@@ -39,16 +39,18 @@ class ExpensesSubmodeController implements FxController {
         Utils.associateButtonWithControls(doneButton, amountTextField, accountComboBox, itemComboBox, datePicker);
         setItemComboBoxItems();
         setAccountComboBoxItems();
+        datePicker.setValue(LocalDate.now());
     }
 
-    private void setItemComboBoxItems(){
+    private void setItemComboBoxItems() {
         ObservableList<Item> items = FXCollections.observableArrayList(FinanceManager.getInstance().getItems());
         itemComboBox.setItems(items);
     }
 
-    void setAccountComboBoxItems(){
+    void setAccountComboBoxItems() {
         ObservableList<Account> accounts = FXCollections.observableArrayList(FinanceManager.getInstance().getAccounts());
         accountComboBox.setItems(accounts);
+        accountComboBox.setValue(accounts.get(0));
     }
 
     private void addItem() {

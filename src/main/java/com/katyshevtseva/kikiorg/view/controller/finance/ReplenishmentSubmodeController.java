@@ -2,7 +2,6 @@ package com.katyshevtseva.kikiorg.view.controller.finance;
 
 import com.katyshevtseva.kikiorg.core.finance.FinanceManager;
 import com.katyshevtseva.kikiorg.core.finance.entity.Account;
-import com.katyshevtseva.kikiorg.core.finance.entity.Item;
 import com.katyshevtseva.kikiorg.core.finance.entity.Source;
 import com.katyshevtseva.kikiorg.view.utils.Utils;
 import com.katyshevtseva.kikiorg.view.utils.WindowBuilder.FxController;
@@ -10,6 +9,8 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+
+import java.time.LocalDate;
 
 class ReplenishmentSubmodeController implements FxController {
     @FXML
@@ -38,16 +39,18 @@ class ReplenishmentSubmodeController implements FxController {
         Utils.associateButtonWithControls(addSourceButton, sourceTitleField, sourceDescArea);
         setSourceComboBoxItems();
         setAccountComboBoxItems();
+        datePicker.setValue(LocalDate.now());
     }
 
-    private void setSourceComboBoxItems(){
+    private void setSourceComboBoxItems() {
         ObservableList<Source> sources = FXCollections.observableArrayList(FinanceManager.getInstance().getSources());
         sourceComboBox.setItems(sources);
     }
 
-    void setAccountComboBoxItems(){
+    void setAccountComboBoxItems() {
         ObservableList<Account> accounts = FXCollections.observableArrayList(FinanceManager.getInstance().getAccounts());
         accountComboBox.setItems(accounts);
+        accountComboBox.setValue(accounts.get(0));
     }
 
     private void addSource() {

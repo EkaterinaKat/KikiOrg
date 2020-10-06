@@ -2,10 +2,8 @@ package com.katyshevtseva.kikiorg.core.finance;
 
 import com.katyshevtseva.kikiorg.core.finance.entity.*;
 import com.katyshevtseva.kikiorg.database.*;
-import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.config.BeanPostProcessor;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
@@ -26,8 +24,8 @@ public class FinanceManager implements InitializingBean {
     @Autowired
     private ReplenishmentRepo replenishmentRepo;
 
-    public static FinanceManager getInstance(){
-        while (INSTANCE==null){
+    public static FinanceManager getInstance() {
+        while (INSTANCE == null) {
             try {
                 Thread.sleep(30);
             } catch (InterruptedException e) {
@@ -43,33 +41,33 @@ public class FinanceManager implements InitializingBean {
         reportGenerator = new ReportGenerator(INSTANCE);
     }
 
-    public String getReport(){
+    public String getReport() {
         return reportGenerator.getReport();
     }
 
-    public void addSourse(String title, String desc){
+    public void addSourse(String title, String desc) {
         Source source = new Source();
         source.setTitle(title);
         source.setDescription(desc);
         sourceRepo.save(source);
     }
 
-    public List<Source> getSources(){
+    public List<Source> getSources() {
         return sourceRepo.findAll();
     }
 
-    public void addItem(String title, String desc){
+    public void addItem(String title, String desc) {
         Item item = new Item();
         item.setTitle(title);
         item.setDescription(desc);
         itemRepo.save(item);
     }
 
-    public List<Item> getItems(){
+    public List<Item> getItems() {
         return itemRepo.findAll();
     }
 
-    public void addAccount(String title, String desc){
+    public void addAccount(String title, String desc) {
         Account account = new Account();
         account.setTitle(title);
         account.setDescription(desc);
@@ -77,33 +75,39 @@ public class FinanceManager implements InitializingBean {
         accountRepo.save(account);
     }
 
-    public List<Account> getAccounts(){
+    public List<Account> getAccounts() {
         return accountRepo.findAll();
     }
 
-    public void addExpence (Account account, long amount, Item item, Date date){
+    public void addExpence(Account account, long amount, Item item, Date date) {
         Expense expense = new Expense();
         expense.setAccount(account);
         expense.setAmount(amount);
         expense.setDateOfExp(date);
         expense.setItem(item);
         expenseRepo.save(expense);
+
+        account.setAmount(account.getAmount() - amount);
+        accountRepo.save(account);
     }
 
-    List<Expense> getExpences(){
+    List<Expense> getExpences() {
         return expenseRepo.findAll();
     }
 
-    public void addReplenishment (Account account, long amount, Source source, Date date){
+    public void addReplenishment(Account account, long amount, Source source, Date date) {
         Replenishment replenishment = new Replenishment();
         replenishment.setAccount(account);
         replenishment.setAmount(amount);
         replenishment.setSource(source);
         replenishment.setDateOfRepl(date);
         replenishmentRepo.save(replenishment);
+
+        account.setAmount(account.getAmount() + amount);
+        accountRepo.save(account);
     }
 
-    List<Replenishment> getReplenishments(){
+    List<Replenishment> getReplenishments() {
         return replenishmentRepo.findAll();
     }
 }
