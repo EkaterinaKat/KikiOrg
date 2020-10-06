@@ -54,7 +54,7 @@ public class FinanceManager implements InitializingBean {
         sourceRepo.save(source);
     }
 
-    List<Source> getSources(){
+    public List<Source> getSources(){
         return sourceRepo.findAll();
     }
 
@@ -65,7 +65,7 @@ public class FinanceManager implements InitializingBean {
         itemRepo.save(item);
     }
 
-    List<Item> getItems(){
+    public List<Item> getItems(){
         return itemRepo.findAll();
     }
 
@@ -77,7 +77,7 @@ public class FinanceManager implements InitializingBean {
         accountRepo.save(account);
     }
 
-    List<Account> getAccounts(){
+    public List<Account> getAccounts(){
         return accountRepo.findAll();
     }
 

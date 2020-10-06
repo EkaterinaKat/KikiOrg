@@ -17,4 +17,9 @@ public class Item {
     private String title;
 
     private String description;
+
+    @Override
+    public String toString() {
+        return title;
+    }
 }
