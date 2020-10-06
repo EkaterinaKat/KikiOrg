@@ -42,13 +42,13 @@ class ExpensesSubmodeController implements FxController {
     }
 
     private void setItemComboBoxItems(){
-//        ObservableList<Item> items = FXCollections.observableArrayList(FinanceManager.getInstance().getItems());
-//        itemComboBox.setItems(items);
+        ObservableList<Item> items = FXCollections.observableArrayList(FinanceManager.getInstance().getItems());
+        itemComboBox.setItems(items);
     }
 
     void setAccountComboBoxItems(){
-//        ObservableList<Account> accounts = FXCollections.observableArrayList(FinanceManager.getInstance().getAccounts());
-//        accountComboBox.setItems(accounts);
+        ObservableList<Account> accounts = FXCollections.observableArrayList(FinanceManager.getInstance().getAccounts());
+        accountComboBox.setItems(accounts);
     }
 
     private void addItem() {

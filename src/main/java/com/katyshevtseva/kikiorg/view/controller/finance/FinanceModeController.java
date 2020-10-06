@@ -40,10 +40,9 @@ public class FinanceModeController implements FxController {
     }
 
     public FinanceModeController() {
-        ReplenishmentSubmodeController replenishmentController = new ReplenishmentSubmodeController();
-        ExpensesSubmodeController expensesController = new ExpensesSubmodeController();
-        AccountsSubmodeController accountsController = new AccountsSubmodeController(replenishmentController,
-                expensesController);
+        replenishmentController = new ReplenishmentSubmodeController();
+        expensesController = new ExpensesSubmodeController();
+        accountsController = new AccountsSubmodeController(replenishmentController, expensesController);
     }
 
     @FXML

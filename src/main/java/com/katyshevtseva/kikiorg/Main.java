@@ -14,6 +14,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class Main extends Application {
 
     public static void main(String[] args) {
+        /* Spring должен запускаться перед Fx */
         SpringApplication.run(Main.class, args);
         launch(args);
     }

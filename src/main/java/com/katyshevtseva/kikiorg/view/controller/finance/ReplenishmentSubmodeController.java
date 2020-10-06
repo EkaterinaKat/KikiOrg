@@ -41,13 +41,13 @@ class ReplenishmentSubmodeController implements FxController {
     }
 
     private void setSourceComboBoxItems(){
-//        ObservableList<Source> sources = FXCollections.observableArrayList(FinanceManager.getInstance().getSources());
-//        sourceComboBox.setItems(sources);
+        ObservableList<Source> sources = FXCollections.observableArrayList(FinanceManager.getInstance().getSources());
+        sourceComboBox.setItems(sources);
     }
 
     void setAccountComboBoxItems(){
-//        ObservableList<Account> accounts = FXCollections.observableArrayList(FinanceManager.getInstance().getAccounts());
-//        accountComboBox.setItems(accounts);
+        ObservableList<Account> accounts = FXCollections.observableArrayList(FinanceManager.getInstance().getAccounts());
+        accountComboBox.setItems(accounts);
     }
 
     private void addSource() {
