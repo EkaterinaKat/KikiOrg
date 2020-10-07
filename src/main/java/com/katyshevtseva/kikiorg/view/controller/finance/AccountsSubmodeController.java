@@ -11,6 +11,7 @@ import javafx.scene.control.TextField;
 class AccountsSubmodeController implements FxController {
     private ReplenishmentSubmodeController replenishmentController;
     private ExpensesSubmodeController expensesController;
+    private CheckSubmodeController checkController;
     @FXML
     private TextField accountTitleField;
     @FXML
@@ -19,9 +20,10 @@ class AccountsSubmodeController implements FxController {
     private Button addAccountButton;
 
     AccountsSubmodeController(ReplenishmentSubmodeController replenishmentController,
-                              ExpensesSubmodeController expensesController) {
+                              ExpensesSubmodeController expensesController, CheckSubmodeController checkController) {
         this.replenishmentController = replenishmentController;
         this.expensesController = expensesController;
+        this.checkController = checkController;
     }
 
     @FXML
@@ -36,5 +38,6 @@ class AccountsSubmodeController implements FxController {
         accountDescField.clear();
         replenishmentController.setAccountComboBoxItems();
         expensesController.setAccountComboBoxItems();
+        checkController.setAccountComboBoxItems();
     }
 }

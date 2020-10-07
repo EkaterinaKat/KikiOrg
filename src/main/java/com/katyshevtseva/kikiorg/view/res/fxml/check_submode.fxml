@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<VBox xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml"
+      alignment="CENTER">
+
+    <ComboBox fx:id="accountComboBox"/>
+    <HBox>
+        <TextField/>
+        <TextField fx:id="textField1"/>
+    </HBox>
+    <HBox>
+        <TextField/>
+        <TextField fx:id="textField2"/>
+    </HBox>
+    <HBox>
+        <TextField/>
+        <TextField fx:id="textField3"/>
+    </HBox>
+    <HBox>
+        <TextField/>
+        <TextField fx:id="textField4"/>
+    </HBox>
+    <HBox>
+        <TextField/>
+        <TextField fx:id="textField5"/>
+    </HBox>
+
+    <Button text="Check" fx:id="checkButton"/>
+
+</VBox>

@@ -39,4 +39,8 @@ public class OrganizerWindowCreator {
     public Node getExpensesSubmodeNode(FxController controller) {
         return new WindowBuilder(FXML_LOCATION + "expenses_submode.fxml").setController(controller).getNode();
     }
+
+    public Node getCheckSubmodeNode(FxController controller) {
+        return new WindowBuilder(FXML_LOCATION + "check_submode.fxml").setController(controller).getNode();
+    }
 }

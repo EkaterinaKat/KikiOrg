@@ -15,6 +15,7 @@ import java.util.List;
 
 public class FinanceModeController implements FxController {
     private List<Button> buttons = new ArrayList<>();
+
     @FXML
     private Button replenishmentButton;
     @FXML
@@ -24,15 +25,21 @@ public class FinanceModeController implements FxController {
     @FXML
     private Button updateButton;
     @FXML
+    private Button checkButton;
+    @FXML
     private TextArea reportTextArea;
     @FXML
     private Pane mainPane;
+
     private ReplenishmentSubmodeController replenishmentController;
     private AccountsSubmodeController accountsController;
     private ExpensesSubmodeController expensesController;
+    private CheckSubmodeController checkSubmodeController;
+
     private Node replenishmentSubmodeNode;
     private Node accountsSubmodeNode;
     private Node expensesSubmodeNode;
+    private Node checkSubmodeNode;
 
     private void updateDisplayedData() {
         reportTextArea.setText(FinanceManager.getInstance().getReport());
@@ -41,16 +48,18 @@ public class FinanceModeController implements FxController {
     public FinanceModeController() {
         replenishmentController = new ReplenishmentSubmodeController();
         expensesController = new ExpensesSubmodeController();
-        accountsController = new AccountsSubmodeController(replenishmentController, expensesController);
+        checkSubmodeController = new CheckSubmodeController();
+        accountsController = new AccountsSubmodeController(replenishmentController, expensesController, checkSubmodeController);
     }
 
     @FXML
     private void initialize() {
-        buttons.addAll(Arrays.asList(replenishmentButton, accountsButton, expensesButton));
+        buttons.addAll(Arrays.asList(replenishmentButton, accountsButton, expensesButton, checkButton));
         replenishmentButtonListener();
         replenishmentButton.setOnAction(event -> replenishmentButtonListener());
         accountsButton.setOnAction(event -> accountsButtonListener());
         expensesButton.setOnAction(event -> expensesButtonListener());
+        checkButton.setOnAction(event -> checkButtonListener());
         updateButton.setOnAction(event -> updateDisplayedData());
     }
 
@@ -76,6 +85,14 @@ public class FinanceModeController implements FxController {
             expensesSubmodeNode = OrganizerWindowCreator.getInstance().getExpensesSubmodeNode(expensesController);
         mainPane.getChildren().clear();
         mainPane.getChildren().add(expensesSubmodeNode);
+    }
+
+    private void checkButtonListener() {
+        activateButton(checkButton);
+        if (checkSubmodeNode == null)
+            checkSubmodeNode = OrganizerWindowCreator.getInstance().getCheckSubmodeNode(checkSubmodeController);
+        mainPane.getChildren().clear();
+        mainPane.getChildren().add(checkSubmodeNode);
     }
 
     private void activateButton(Button buttonToActivate) {
