@@ -87,11 +87,12 @@ public class FinanceManager implements InitializingBean {
         expense.setItem(item);
         expenseRepo.save(expense);
 
-        account.setAmount(account.getAmount() - amount);
-        accountRepo.save(account);
+        Account actualAccount = accountRepo.findById(account.getId()).orElse(null);
+        actualAccount.setAmount(actualAccount.getAmount() - amount);
+        accountRepo.save(actualAccount);
     }
 
-    List<Expense> getExpences() {
+    public List<Expense> getExpences() {
         return expenseRepo.findAll();
     }
 
@@ -103,8 +104,9 @@ public class FinanceManager implements InitializingBean {
         replenishment.setDateOfRepl(date);
         replenishmentRepo.save(replenishment);
 
-        account.setAmount(account.getAmount() + amount);
-        accountRepo.save(account);
+        Account actualAccount = accountRepo.findById(account.getId()).orElse(null);
+        actualAccount.setAmount(actualAccount.getAmount() + amount);
+        accountRepo.save(actualAccount);
     }
 
     List<Replenishment> getReplenishments() {

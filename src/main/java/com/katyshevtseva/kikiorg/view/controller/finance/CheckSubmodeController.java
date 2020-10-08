@@ -45,8 +45,11 @@ class CheckSubmodeController implements FxController {
     }
 
     void setAccountComboBoxItems() {
-        ObservableList<Account> accounts = FXCollections.observableArrayList(FinanceManager.getInstance().getAccounts());
-        accountComboBox.setItems(accounts);
-        accountComboBox.setValue(accounts.get(0));
+        if(accountComboBox != null){
+            ObservableList<Account> accounts = FXCollections.observableArrayList(FinanceManager.getInstance().getAccounts());
+            accountComboBox.setItems(accounts);
+            if (accounts.size() > 0)
+                accountComboBox.setValue(accounts.get(0));
+        }
     }
 }
