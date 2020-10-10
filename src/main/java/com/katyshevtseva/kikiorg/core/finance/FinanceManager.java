@@ -23,6 +23,8 @@ public class FinanceManager implements InitializingBean {
     private ExpenseRepo expenseRepo;
     @Autowired
     private ReplenishmentRepo replenishmentRepo;
+    @Autowired
+    private AccountPartRepo accountPartRepo;
 
     public static FinanceManager getInstance() {
         while (INSTANCE == null) {
@@ -111,5 +113,20 @@ public class FinanceManager implements InitializingBean {
 
     List<Replenishment> getReplenishments() {
         return replenishmentRepo.findAll();
+    }
+
+    public List<AccountPart> getAccountParts() {
+        return accountPartRepo.findAll();
+    }
+
+    public void rewriteAccountParts(List<AccountPart> accountParts) {
+        accountPartRepo.deleteAll();
+        accountPartRepo.saveAll(accountParts);
+    }
+
+    public String check(Account account, int amount) {
+        long accountAmount = accountRepo.findById(account.getId()).get().getAmount();
+        long diff = amount - accountAmount;
+        return String.format("По расчетам: %s. По Факту: %s. Разница: %s.", accountAmount, amount, diff);
     }
 }
