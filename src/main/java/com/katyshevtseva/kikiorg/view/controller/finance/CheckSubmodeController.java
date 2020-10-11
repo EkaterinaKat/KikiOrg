@@ -54,7 +54,7 @@ class CheckSubmodeController implements FxController {
     private ComboBox<Account> accountComboBox;
     @FXML
     private Label resultLabel;
-    private List<Trio> trios = new ArrayList<>();
+    private List<Trio> trios;
 
     @FXML
     private void initialize() {
@@ -68,6 +68,7 @@ class CheckSubmodeController implements FxController {
 
     private void createTrios() {
         List<AccountPart> accountParts = FinanceManager.getInstance().getAccountParts();
+        trios = new ArrayList<>();
         trios.add(new Trio(amountField1, titleField1, accountParts, 0));
         trios.add(new Trio(amountField2, titleField2, accountParts, 1));
         trios.add(new Trio(amountField3, titleField3, accountParts, 2));

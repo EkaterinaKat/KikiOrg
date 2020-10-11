@@ -31,7 +31,7 @@ class ReportGenerator {
 
         // Расходы
         report += "\nРасходы \n";
-        List<Expense> expenses = financeManager.getExpences();
+        List<Expense> expenses = financeManager.getExpenses();
         for (Expense expense : expenses) {
             report += (" * " + expense.getItem() + " " + expense.getDateOfExp() + " " + expense.getAmount() + "\n");
         }

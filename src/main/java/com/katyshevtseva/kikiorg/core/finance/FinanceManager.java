@@ -94,7 +94,7 @@ public class FinanceManager implements InitializingBean {
         accountRepo.save(actualAccount);
     }
 
-    public List<Expense> getExpences() {
+    public List<Expense> getExpenses() {
         return expenseRepo.findAll();
     }
 
