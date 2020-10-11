@@ -22,25 +22,31 @@ public class OrganizerWindowCreator {
                 setWidth(WINDOW_WIDTH).setTitle(CoreConstants.APP_NAME).showWindow();
     }
 
+    /* ----------------------------------  Привычки ---------------------------------------------- */
+
+    public Node getHabitsModeNode(FxController controller) {
+        return new WindowBuilder(HABITS_FXML_LOCATION + "habits_mode.fxml").setController(controller).getNode();
+    }
+
     /* ----------------------------------  Финансы  ---------------------------------------------- */
 
     public Node getFinanceModeNode(FxController controller) {
-        return new WindowBuilder(FXML_LOCATION + "finance_mode.fxml").setController(controller).getNode();
+        return new WindowBuilder(FINANCE_FXML_LOCATION + "finance_mode.fxml").setController(controller).getNode();
     }
 
     public Node getReplenishmentSubmodeNode(FxController controller) {
-        return new WindowBuilder(FXML_LOCATION + "replenishment_submode.fxml").setController(controller).getNode();
+        return new WindowBuilder(FINANCE_FXML_LOCATION + "replenishment_submode.fxml").setController(controller).getNode();
     }
 
     public Node getAccountsSubmodeNode(FxController controller) {
-        return new WindowBuilder(FXML_LOCATION + "accounts_submode.fxml").setController(controller).getNode();
+        return new WindowBuilder(FINANCE_FXML_LOCATION + "accounts_submode.fxml").setController(controller).getNode();
     }
 
     public Node getExpensesSubmodeNode(FxController controller) {
-        return new WindowBuilder(FXML_LOCATION + "expenses_submode.fxml").setController(controller).getNode();
+        return new WindowBuilder(FINANCE_FXML_LOCATION + "expenses_submode.fxml").setController(controller).getNode();
     }
 
     public Node getCheckSubmodeNode(FxController controller) {
-        return new WindowBuilder(FXML_LOCATION + "check_submode.fxml").setController(controller).getNode();
+        return new WindowBuilder(FINANCE_FXML_LOCATION + "check_submode.fxml").setController(controller).getNode();
     }
 }

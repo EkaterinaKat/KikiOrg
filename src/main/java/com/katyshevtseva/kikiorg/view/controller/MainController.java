@@ -1,6 +1,7 @@
 package com.katyshevtseva.kikiorg.view.controller;
 
 import com.katyshevtseva.kikiorg.view.controller.finance.FinanceModeController;
+import com.katyshevtseva.kikiorg.view.controller.habits.HabitsModeController;
 import com.katyshevtseva.kikiorg.view.utils.OrganizerWindowCreator;
 import com.katyshevtseva.kikiorg.view.utils.WindowBuilder;
 import javafx.fxml.FXML;
@@ -8,12 +9,9 @@ import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.layout.Pane;
 
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 
-public class MainController implements WindowBuilder.FxController {
-    private List<Button> buttons = new ArrayList<>();
+public class MainController extends AbstractSwitchController implements WindowBuilder.FxController {
     @FXML
     private Button todayButton;
     @FXML
@@ -31,35 +29,37 @@ public class MainController implements WindowBuilder.FxController {
     @FXML
     private Pane mainPane;
     private FinanceModeController financeModeController = new FinanceModeController();
+    private HabitsModeController habitsModeController = new HabitsModeController();
     private Node financeModeNode;
+    private Node habitsModeNode;
 
     @FXML
     private void initialize() {
+        pane = mainPane;
         buttons.addAll(Arrays.asList(todayButton, habitsButton, regularTasksButton, irregularTasksButton,
                 eventsButton, studiesButton, financeButton));
         financeButton.setOnAction(event -> financeButtonListener());
+        habitsButton.setOnAction(event -> habitsButtonListener());
         financeButtonListener();
+    }
+
+    private void financeButtonListener() {
+        activateMode(financeButton, financeModeNode,
+                OrganizerWindowCreator.getInstance()::getFinanceModeNode, financeModeController);
+        disableEmptyButtons();
+    }
+
+    private void habitsButtonListener() {
+        activateMode(habitsButton, habitsModeNode,
+                OrganizerWindowCreator.getInstance()::getHabitsModeNode, habitsModeController);
+        disableEmptyButtons();
+    }
+
+    private void disableEmptyButtons() {
         todayButton.setDisable(true);
-        habitsButton.setDisable(true);
         regularTasksButton.setDisable(true);
         irregularTasksButton.setDisable(true);
         eventsButton.setDisable(true);
         studiesButton.setDisable(true);
-        financeButton.setDisable(true);
-    }
-
-    private void financeButtonListener() {
-        activateButton(financeButton);
-        if (financeModeNode == null)
-            financeModeNode = OrganizerWindowCreator.getInstance().getFinanceModeNode(financeModeController);
-        mainPane.getChildren().clear();
-        mainPane.getChildren().add(financeModeNode);
-    }
-
-    private void activateButton(Button buttonToActivate) {
-        for (Button button : buttons) {
-            button.setDisable(false);
-        }
-        buttonToActivate.setDisable(true);
     }
 }

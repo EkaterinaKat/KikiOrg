@@ -1,6 +1,7 @@
 package com.katyshevtseva.kikiorg.view.controller.finance;
 
 import com.katyshevtseva.kikiorg.core.finance.FinanceManager;
+import com.katyshevtseva.kikiorg.view.controller.AbstractSwitchController;
 import com.katyshevtseva.kikiorg.view.utils.OrganizerWindowCreator;
 import com.katyshevtseva.kikiorg.view.utils.WindowBuilder.FxController;
 import javafx.fxml.FXML;
@@ -9,13 +10,9 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.Pane;
 
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 
-public class FinanceModeController implements FxController {
-    private List<Button> buttons = new ArrayList<>();
-
+public class FinanceModeController extends AbstractSwitchController implements FxController {
     @FXML
     private Button replenishmentButton;
     @FXML
@@ -54,6 +51,7 @@ public class FinanceModeController implements FxController {
 
     @FXML
     private void initialize() {
+        pane = mainPane;
         buttons.addAll(Arrays.asList(replenishmentButton, accountsButton, expensesButton, checkButton));
         replenishmentButtonListener();
         replenishmentButton.setOnAction(event -> replenishmentButtonListener());
@@ -64,41 +62,22 @@ public class FinanceModeController implements FxController {
     }
 
     private void replenishmentButtonListener() {
-        activateButton(replenishmentButton);
-        if (replenishmentSubmodeNode == null)
-            replenishmentSubmodeNode = OrganizerWindowCreator.getInstance().getReplenishmentSubmodeNode(replenishmentController);
-        mainPane.getChildren().clear();
-        mainPane.getChildren().add(replenishmentSubmodeNode);
+        activateMode(replenishmentButton, replenishmentSubmodeNode,
+                OrganizerWindowCreator.getInstance()::getReplenishmentSubmodeNode, replenishmentController);
     }
 
     private void accountsButtonListener() {
-        activateButton(accountsButton);
-        if (accountsSubmodeNode == null)
-            accountsSubmodeNode = OrganizerWindowCreator.getInstance().getAccountsSubmodeNode(accountsController);
-        mainPane.getChildren().clear();
-        mainPane.getChildren().add(accountsSubmodeNode);
+        activateMode(accountsButton, accountsSubmodeNode,
+                OrganizerWindowCreator.getInstance()::getAccountsSubmodeNode, accountsController);
     }
 
     private void expensesButtonListener() {
-        activateButton(expensesButton);
-        if (expensesSubmodeNode == null)
-            expensesSubmodeNode = OrganizerWindowCreator.getInstance().getExpensesSubmodeNode(expensesController);
-        mainPane.getChildren().clear();
-        mainPane.getChildren().add(expensesSubmodeNode);
+        activateMode(expensesButton, expensesSubmodeNode,
+                OrganizerWindowCreator.getInstance()::getExpensesSubmodeNode, expensesController);
     }
 
     private void checkButtonListener() {
-        activateButton(checkButton);
-        if (checkSubmodeNode == null)
-            checkSubmodeNode = OrganizerWindowCreator.getInstance().getCheckSubmodeNode(checkSubmodeController);
-        mainPane.getChildren().clear();
-        mainPane.getChildren().add(checkSubmodeNode);
-    }
-
-    private void activateButton(Button buttonToActivate) {
-        for (Button button : buttons) {
-            button.setDisable(false);
-        }
-        buttonToActivate.setDisable(true);
+        activateMode(checkButton, checkSubmodeNode,
+                OrganizerWindowCreator.getInstance()::getCheckSubmodeNode, checkSubmodeController);
     }
 }
