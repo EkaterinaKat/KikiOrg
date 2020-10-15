@@ -32,6 +32,10 @@ public class OrganizerWindowCreator {
         return new WindowBuilder(HABITS_FXML_LOCATION + "admin_submode.fxml").setController(controller).getNode();
     }
 
+    public Node getCheckListSubmodeNode(FxController controller) {
+        return new WindowBuilder(HABITS_FXML_LOCATION + "check_list_submode.fxml").setController(controller).getNode();
+    }
+
     /* ----------------------------------  Финансы  ---------------------------------------------- */
 
     public Node getFinanceModeNode(FxController controller) {

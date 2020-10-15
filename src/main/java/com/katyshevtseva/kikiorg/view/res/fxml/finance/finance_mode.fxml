@@ -41,10 +41,16 @@
     </right>
 
     <bottom>
-        <VBox>
-            <TextArea fx:id="reportTextArea" editable="false" minWidth="800" maxWidth="800" prefHeight="400"/>
-            <Button fx:id="updateButton" text="Update displayed data"/>
-        </VBox>
+        <HBox>
+            <Pane minWidth="30" maxWidth="30"/>
+            <VBox>
+                <TextArea fx:id="reportTextArea" editable="false" minWidth="800" maxWidth="800" prefHeight="400"/>
+                <Pane minHeight="30" maxHeight="30"/>
+                <Button fx:id="updateButton" text="Update displayed data"/>
+            </VBox>
+            <Pane minWidth="30" maxWidth="30"/>
+        </HBox>
+
     </bottom>
 
 </BorderPane>

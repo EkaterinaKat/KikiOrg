@@ -36,4 +36,8 @@ public class HabitsManager implements InitializingBean {
     public List<Habit> getAllHabits() {
         return habitsRepo.findAll();
     }
+
+    public List<Habit> getActiveHabits() {
+        return habitsRepo.findByActiveTrue();
+    }
 }

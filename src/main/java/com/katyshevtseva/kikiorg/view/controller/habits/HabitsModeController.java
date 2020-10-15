@@ -18,7 +18,9 @@ public class HabitsModeController extends AbstractSwitchController implements Fx
     @FXML
     private Pane mainPane;
     private Node adminNode;
+    private Node checkListNode;
     private AdminSubmodeController adminController = new AdminSubmodeController();
+    private CheckListSubmodeController checkListController = new CheckListSubmodeController();
 
     @FXML
     private void initialize() {
@@ -30,7 +32,7 @@ public class HabitsModeController extends AbstractSwitchController implements Fx
     }
 
     private void checkListButtonListener() {
-
+        activateMode(checkListButton, checkListNode, OrganizerWindowCreator.getInstance()::getCheckListSubmodeNode, checkListController);
     }
 
     private void adminButtonListener() {

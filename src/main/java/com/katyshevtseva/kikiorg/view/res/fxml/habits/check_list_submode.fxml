@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.VBox?>
+<VBox xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml">
+
+    <DatePicker fx:id="datePicker"/>
+    <GridPane fx:id="habitsTable"/>
+    <Button fx:id="saveButton" text="Save"/>
+    <ScrollPane>
+        <GridPane fx:id="resultsTable"/>
+    </ScrollPane>
+
+</VBox>
