@@ -1,8 +1,11 @@
 package com.katyshevtseva.kikiorg.view.controller.habits;
 
 import com.katyshevtseva.kikiorg.view.controller.AbstractSwitchController;
+import com.katyshevtseva.kikiorg.view.utils.OrganizerWindowCreator;
+import com.katyshevtseva.kikiorg.view.utils.WindowBuilder;
 import com.katyshevtseva.kikiorg.view.utils.WindowBuilder.FxController;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.layout.Pane;
 
@@ -15,6 +18,8 @@ public class HabitsModeController extends AbstractSwitchController implements Fx
     private Button adminButton;
     @FXML
     private Pane mainPane;
+    private Node adminNode;
+    private AdminSubmodeController adminController = new AdminSubmodeController();
 
     @FXML
     private void initialize() {
@@ -26,7 +31,7 @@ public class HabitsModeController extends AbstractSwitchController implements Fx
     }
 
     private void checkListButtonListener() {
-
+        activateMode(adminButton, adminNode, OrganizerWindowCreator.getInstance()::getHabitAdminSubmodeNode, adminController);
     }
 
     private void adminButtonListener() {

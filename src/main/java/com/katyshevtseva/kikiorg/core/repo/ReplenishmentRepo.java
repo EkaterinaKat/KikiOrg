@@ -1,6 +1,6 @@
-package com.katyshevtseva.kikiorg.database;
+package com.katyshevtseva.kikiorg.core.repo;
 
-import com.katyshevtseva.kikiorg.core.finance.entity.Replenishment;
+import com.katyshevtseva.kikiorg.core.modes.finance.entity.Replenishment;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

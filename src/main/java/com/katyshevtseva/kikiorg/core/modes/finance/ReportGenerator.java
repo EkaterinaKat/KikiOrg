@@ -1,8 +1,8 @@
-package com.katyshevtseva.kikiorg.core.finance;
+package com.katyshevtseva.kikiorg.core.modes.finance;
 
-import com.katyshevtseva.kikiorg.core.finance.entity.Account;
-import com.katyshevtseva.kikiorg.core.finance.entity.Expense;
-import com.katyshevtseva.kikiorg.core.finance.entity.Replenishment;
+import com.katyshevtseva.kikiorg.core.modes.finance.entity.Account;
+import com.katyshevtseva.kikiorg.core.modes.finance.entity.Expense;
+import com.katyshevtseva.kikiorg.core.modes.finance.entity.Replenishment;
 
 import java.util.List;
 

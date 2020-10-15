@@ -1,6 +1,6 @@
 package com.katyshevtseva.kikiorg.view.controller.finance;
 
-import com.katyshevtseva.kikiorg.core.finance.FinanceManager;
+import com.katyshevtseva.kikiorg.core.modes.finance.FinanceManager;
 import com.katyshevtseva.kikiorg.view.utils.Utils;
 import com.katyshevtseva.kikiorg.view.utils.WindowBuilder.FxController;
 import javafx.fxml.FXML;

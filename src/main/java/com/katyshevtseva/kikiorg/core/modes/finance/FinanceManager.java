@@ -1,7 +1,7 @@
-package com.katyshevtseva.kikiorg.core.finance;
+package com.katyshevtseva.kikiorg.core.modes.finance;
 
-import com.katyshevtseva.kikiorg.core.finance.entity.*;
-import com.katyshevtseva.kikiorg.database.*;
+import com.katyshevtseva.kikiorg.core.repo.*;
+import com.katyshevtseva.kikiorg.core.modes.finance.entity.*;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

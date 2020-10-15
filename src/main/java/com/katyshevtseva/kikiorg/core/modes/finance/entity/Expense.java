@@ -1,4 +1,4 @@
-package com.katyshevtseva.kikiorg.core.finance.entity;
+package com.katyshevtseva.kikiorg.core.modes.finance.entity;
 
 import lombok.Data;
 
@@ -7,7 +7,7 @@ import java.util.Date;
 
 @Data
 @Entity
-public class Replenishment {
+public class Expense {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
@@ -19,9 +19,9 @@ public class Replenishment {
     private Long amount;
 
     @Temporal(TemporalType.DATE)
-    private Date dateOfRepl;
+    private Date dateOfExp;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "source_id", nullable = false)
-    private Source source;
+    @JoinColumn(name = "item_id", nullable = false)
+    private Item item;
 }

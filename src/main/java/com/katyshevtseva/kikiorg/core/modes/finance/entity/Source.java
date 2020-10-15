@@ -1,4 +1,4 @@
-package com.katyshevtseva.kikiorg.core.finance.entity;
+package com.katyshevtseva.kikiorg.core.modes.finance.entity;
 
 import lombok.Data;
 
@@ -9,12 +9,10 @@ import javax.persistence.Id;
 
 @Data
 @Entity
-public class Account {
+public class Source {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-
-    private long amount;
 
     private String title;
 

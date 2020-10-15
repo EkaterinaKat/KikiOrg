@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<HBox xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml">
+
+    <ScrollPane>
+        <GridPane fx:id="gridPane"/>
+    </ScrollPane>
+
+    <VBox>
+        <Button fx:id="newHabitButton" text="New"/>
+        <Pane fx:id="showPane">
+            <VBox>
+                <Label fx:id="titleLabel"/>
+                <Label fx:id="typeLabel"/>
+                <Label fx:id="descLabel"/>
+                <Button fx:id="editButton" text="Edit"/>
+            </VBox>
+        </Pane>
+        <Pane fx:id="editPane">
+            <VBox>
+                <HBox>
+                    <TextField fx:id="titleTextField"/>
+                    <CheckBox fx:id="activeCheckBox"/>
+                </HBox>
+                <ComboBox fx:id="typeComboBox"/>
+                <TextArea fx:id="descTextArea"/>
+                <Button fx:id="saveButton" text="Save"/>
+            </VBox>
+        </Pane>
+    </VBox>
+
+</HBox>
