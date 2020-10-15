@@ -29,7 +29,11 @@ public class HabitsManager implements InitializingBean {
         INSTANCE = this;
     }
 
-    public List<Habit> getAllHabits(){
+    public void saveHabit(Habit habit) {
+        habitsRepo.save(habit);
+    }
+
+    public List<Habit> getAllHabits() {
         return habitsRepo.findAll();
     }
 }

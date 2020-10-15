@@ -2,7 +2,6 @@ package com.katyshevtseva.kikiorg.view.controller.habits;
 
 import com.katyshevtseva.kikiorg.view.controller.AbstractSwitchController;
 import com.katyshevtseva.kikiorg.view.utils.OrganizerWindowCreator;
-import com.katyshevtseva.kikiorg.view.utils.WindowBuilder;
 import com.katyshevtseva.kikiorg.view.utils.WindowBuilder.FxController;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
@@ -27,15 +26,14 @@ public class HabitsModeController extends AbstractSwitchController implements Fx
         buttons.addAll(Arrays.asList(checkListButton, adminButton));
         checkListButton.setOnAction(event -> checkListButtonListener());
         adminButton.setOnAction(event -> adminButtonListener());
-        checkListButtonListener();
+        adminButtonListener();
     }
 
     private void checkListButtonListener() {
-        activateMode(adminButton, adminNode, OrganizerWindowCreator.getInstance()::getHabitAdminSubmodeNode, adminController);
+
     }
 
     private void adminButtonListener() {
-
+        activateMode(adminButton, adminNode, OrganizerWindowCreator.getInstance()::getHabitAdminSubmodeNode, adminController);
     }
-
 }

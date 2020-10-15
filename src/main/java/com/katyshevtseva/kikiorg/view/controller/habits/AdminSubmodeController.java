@@ -54,6 +54,7 @@ class AdminSubmodeController implements FxController {
         setTypeComboBoxItems();
         newHabitButton.setOnAction(event -> createHabit());
         Utils.associateButtonWithControls(saveButton, titleTextField, typeComboBox, descTextArea);
+        switchMode(Mode.show, null);
     }
 
     private void setTypeComboBoxItems() {
@@ -62,10 +63,11 @@ class AdminSubmodeController implements FxController {
     }
 
     private void fillHabitTable() {
+        gridPane.getChildren().clear();
         List<Habit> habits = HabitsManager.getInstance().getAllHabits();
         listPoints = new ArrayList<>();
         int rowIndex = 0;
-        for(Habit habit: habits){
+        for (Habit habit : habits) {
             Label label = new Label(String.format("%s (active = %s)", habit.getTitle(), habit.isActive()));
             Label point = new Label();
             listPoints.add(point);
@@ -73,11 +75,11 @@ class AdminSubmodeController implements FxController {
                 switchMode(Mode.show, habit);
                 listPoints.forEach(label1 -> label1.setText(""));
                 point.setText("*");
+                editButton.setOnAction(event1 -> switchMode(Mode.edit, habit));
             });
             gridPane.add(point, 0, rowIndex);
             gridPane.add(label, 1, rowIndex);
             rowIndex++;
-            editButton.setOnAction(event -> switchMode(Mode.edit, habit));
         }
     }
 
@@ -86,7 +88,17 @@ class AdminSubmodeController implements FxController {
     }
 
     private void save(Habit habit) {
+        if (habit == null) {
+            habit = new Habit();
+        }
+        habit.setTitle(titleTextField.getText());
+        habit.setDescription(descTextArea.getText());
+        habit.setType(typeComboBox.getValue());
+        habit.setActive(activeCheckBox.isSelected());
+        HabitsManager.getInstance().saveHabit(habit);
 
+        fillHabitTable();
+        switchMode(Mode.show, habit);
     }
 
     private void switchMode(Mode mode, Habit habit) {
@@ -97,20 +109,20 @@ class AdminSubmodeController implements FxController {
 
         if (habit != null && mode == Mode.show) {
             titleLabel.setText(String.format("%s (active = %s)", habit.getTitle(), habit.isActive()));
-            descLabel.setText(habit.getDesc());
+            descLabel.setText(habit.getDescription());
             typeLabel.setText("type: " + habit.getType());
-        } else if(habit != null && mode == Mode.edit) {
+        } else if (habit != null && mode == Mode.edit) {
             titleTextField.setText(habit.getTitle());
-            descTextArea.setText(habit.getDesc());
+            descTextArea.setText(habit.getDescription());
             activeCheckBox.setSelected(habit.isActive());
             typeComboBox.setValue(habit.getType());
             typeComboBox.setDisable(true);
             saveButton.setOnAction(event -> save(habit));
-        } else if(habit == null && mode == Mode.show) {
+        } else if (habit == null && mode == Mode.show) {
             titleLabel.setText("");
             descLabel.setText("");
             typeLabel.setText("");
-        } else if(habit == null && mode == Mode.edit) {
+        } else if (habit == null && mode == Mode.edit) {
             titleTextField.clear();
             descTextArea.clear();
             activeCheckBox.setSelected(true);

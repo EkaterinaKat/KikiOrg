@@ -14,8 +14,11 @@
         <VBox>
             <Pane minHeight="10" maxHeight="10"/>
             <HBox>
+                <Pane minWidth="30" maxWidth="30"/>
                 <Button fx:id="checkListButton" text="Check list"/>
+                <Pane minWidth="30" maxWidth="30"/>
                 <Button fx:id="adminButton" text="Administration"/>
+                <Pane minWidth="30" maxWidth="30"/>
             </HBox>
             <Pane minHeight="10" maxHeight="10"/>
         </VBox>

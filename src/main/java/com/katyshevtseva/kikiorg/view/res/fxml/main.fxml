@@ -10,7 +10,7 @@
         <URL value="@/com/katyshevtseva/kikiorg/view/res/css/general_style.css"/>
     </stylesheets>
 
-    <VBox maxWidth="300" minWidth="300" styleClass="mainWindowLeftPanel">
+    <VBox maxWidth="300" minWidth="300" styleClass="black_border">
         <GridPane vgap="40" alignment="CENTER">
             <Button text="Finance" fx:id="financeButton" prefWidth="160"
                     GridPane.rowIndex="1" GridPane.columnIndex="0"/>

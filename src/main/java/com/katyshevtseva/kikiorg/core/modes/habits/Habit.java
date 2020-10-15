@@ -13,7 +13,7 @@ public class Habit {
 
     private String title;
 
-    private String desc;
+    private String description;
 
     @Enumerated(EnumType.STRING)
     private HabitType type;
