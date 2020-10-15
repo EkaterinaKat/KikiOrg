@@ -22,6 +22,10 @@ public class Utils {
         });
     }
 
+    public static String getBoldTextStyle() {
+        return " font-weight: bold; ";
+    }
+
     public static void associateButtonWithControls(Button button, Control... controls) {
         button.setDisable(true);
         for (Control control : controls) {
