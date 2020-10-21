@@ -1,5 +1,6 @@
 package com.katyshevtseva.kikiorg.view.controller.habits;
 
+import com.katyshevtseva.kikiorg.core.modes.habits.EnumElement;
 import com.katyshevtseva.kikiorg.core.modes.habits.Habit;
 import com.katyshevtseva.kikiorg.core.modes.habits.HabitType;
 import com.katyshevtseva.kikiorg.core.modes.habits.HabitsManager;
@@ -44,6 +45,13 @@ class AdminSubmodeController implements FxController {
     private TextArea descTextArea;
     @FXML
     private Button saveButton;
+    @FXML
+    private TextField enumTextField;
+    @FXML
+    private Button addEnumButton;
+    @FXML
+    private Label enumLabel;
+    List<EnumElement> enumElements = new ArrayList<>();
     private List<Label> listPoints;
 
     enum Mode {show, edit}
@@ -55,6 +63,43 @@ class AdminSubmodeController implements FxController {
         newHabitButton.setOnAction(event -> createHabit());
         Utils.associateButtonWithControls(saveButton, titleTextField, typeComboBox, descTextArea);
         switchMode(Mode.show, null);
+        tuneEnumControls();
+        Utils.associateButtonWithControls(addEnumButton, enumTextField);
+        addEnumButton.setOnAction(event -> addEnumElement());
+    }
+
+    private void tuneEnumControls() {
+        addEnumButton.setDisable(true);
+        enumTextField.setDisable(true);
+        typeComboBox.setOnAction(event -> {
+            boolean isEnum = typeComboBox.getValue() == HabitType.enumeration;
+            addEnumButton.setDisable(!isEnum);
+            enumTextField.setDisable(!isEnum);
+            if (!isEnum) {
+                enumElements = new ArrayList<>();
+                enumLabel.setText("");
+            }
+        });
+    }
+
+    private void addEnumElement() {
+        EnumElement enumElement = new EnumElement();
+        enumElement.setTitle(enumTextField.getText().trim());
+        enumElements.add(enumElement);
+        enumTextField.clear();
+        enumLabel.setText(getEnumString(enumElements));
+    }
+
+    private String getEnumString(List<EnumElement> enumElements) {
+        if (enumElements.size() == 0)
+            return "";
+        String result = "";
+        System.out.println(enumElements);
+        for (int i = 0; i < enumElements.size() - 1; i++) {
+            result += (enumElements.get(i).getTitle() + ", ");
+        }
+        result += enumElements.get(enumElements.size() - 1).getTitle();
+        return result;
     }
 
     private void setTypeComboBoxItems() {
@@ -97,6 +142,13 @@ class AdminSubmodeController implements FxController {
         habit.setActive(activeCheckBox.isSelected());
         HabitsManager.getInstance().saveHabit(habit);
 
+        if (habit.getType() == HabitType.enumeration) {
+            for (EnumElement enumElement : enumElements) {
+                enumElement.setHabit(habit);
+                HabitsManager.getInstance().saveEnumElement(enumElement);
+            }
+        }
+
         fillHabitTable();
         switchMode(Mode.show, habit);
     }
@@ -108,7 +160,8 @@ class AdminSubmodeController implements FxController {
         editPane.setVisible(mode == Mode.edit);
 
         if (habit != null && mode == Mode.show) {
-            titleLabel.setText(String.format("%s (active = %s)", habit.getTitle(), habit.isActive()));
+            titleLabel.setText(String.format("%s [%s] (active = %s)", habit.getTitle(),
+                    getEnumString(HabitsManager.getInstance().getEnumElementsByHabit(habit)), habit.isActive()));
             descLabel.setText(habit.getDescription());
             typeLabel.setText("type: " + habit.getType());
         } else if (habit != null && mode == Mode.edit) {
@@ -117,6 +170,8 @@ class AdminSubmodeController implements FxController {
             activeCheckBox.setSelected(habit.isActive());
             typeComboBox.setValue(habit.getType());
             typeComboBox.setDisable(true);
+            enumTextField.setDisable(true);
+            addEnumButton.setDisable(true);
             saveButton.setOnAction(event -> save(habit));
         } else if (habit == null && mode == Mode.show) {
             titleLabel.setText("");

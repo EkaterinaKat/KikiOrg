@@ -1,5 +1,6 @@
 package com.katyshevtseva.kikiorg.core.modes.habits;
 
+import com.katyshevtseva.kikiorg.core.repo.EnumElementRepo;
 import com.katyshevtseva.kikiorg.core.repo.HabitsRepo;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +13,8 @@ public class HabitsManager implements InitializingBean {
     private static HabitsManager INSTANCE;
     @Autowired
     private HabitsRepo habitsRepo;
+    @Autowired
+    private EnumElementRepo enumElementRepo;
 
     public static HabitsManager getInstance() {
         while (INSTANCE == null) {
@@ -39,5 +42,13 @@ public class HabitsManager implements InitializingBean {
 
     public List<Habit> getActiveHabits() {
         return habitsRepo.findByActiveTrue();
+    }
+
+    public void saveEnumElement(EnumElement enumElement) {
+        enumElementRepo.save(enumElement);
+    }
+
+    public List<EnumElement> getEnumElementsByHabit(Habit habit) {
+        return enumElementRepo.findByHabitId(habit.getId());
     }
 }

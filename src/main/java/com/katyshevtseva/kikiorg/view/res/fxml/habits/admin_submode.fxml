@@ -18,7 +18,7 @@
                 <Pane minWidth="25" maxWidth="25"/>
                 <VBox>
                     <Pane minHeight="25" maxHeight="25"/>
-                    <Label fx:id="titleLabel" styleClass="font_25"/>
+                    <Label fx:id="titleLabel" styleClass="font_25" wrapText="true" minWidth="650" maxWidth="650"/>
                     <Pane minHeight="25" maxHeight="25"/>
                     <Label fx:id="typeLabel"/>
                     <Pane minHeight="25" maxHeight="25"/>
@@ -40,7 +40,15 @@
                         <CheckBox fx:id="activeCheckBox"/>
                     </HBox>
                     <Pane minHeight="25" maxHeight="25"/>
-                    <ComboBox fx:id="typeComboBox"/>
+                    <HBox>
+                        <ComboBox fx:id="typeComboBox"/>
+                        <Pane minWidth="25" maxWidth="25"/>
+                        <TextField fx:id="enumTextField"/>
+                        <Pane minWidth="25" maxWidth="25"/>
+                        <Button fx:id="addEnumButton" text="  +  "/>
+                    </HBox>
+                    <Pane minHeight="25" maxHeight="25"/>
+                    <Label fx:id="enumLabel"/>
                     <Pane minHeight="25" maxHeight="25"/>
                     <TextArea fx:id="descTextArea" wrapText="true" minWidth="650" maxWidth="650"/>
                     <Pane minHeight="25" maxHeight="25"/>
