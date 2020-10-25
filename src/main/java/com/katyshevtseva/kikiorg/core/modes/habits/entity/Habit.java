@@ -1,4 +1,4 @@
-package com.katyshevtseva.kikiorg.core.modes.habits;
+package com.katyshevtseva.kikiorg.core.modes.habits.entity;
 
 import lombok.Data;
 

@@ -1,7 +1,6 @@
 package com.katyshevtseva.kikiorg.core.repo;
 
-import com.katyshevtseva.kikiorg.core.modes.habits.EnumElement;
-import com.katyshevtseva.kikiorg.core.modes.habits.Habit;
+import com.katyshevtseva.kikiorg.core.modes.habits.entity.EnumElement;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

@@ -1,7 +1,7 @@
 package com.katyshevtseva.kikiorg.view.controller.habits;
 
-import com.katyshevtseva.kikiorg.core.modes.habits.EnumElement;
-import com.katyshevtseva.kikiorg.core.modes.habits.Habit;
+import com.katyshevtseva.kikiorg.core.modes.habits.entity.EnumElement;
+import com.katyshevtseva.kikiorg.core.modes.habits.entity.Habit;
 import com.katyshevtseva.kikiorg.core.modes.habits.HabitsManager;
 import com.katyshevtseva.kikiorg.view.utils.Utils;
 import com.katyshevtseva.kikiorg.view.utils.WindowBuilder.FxController;

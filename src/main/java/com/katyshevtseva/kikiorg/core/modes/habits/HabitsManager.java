@@ -1,5 +1,7 @@
 package com.katyshevtseva.kikiorg.core.modes.habits;
 
+import com.katyshevtseva.kikiorg.core.modes.habits.entity.EnumElement;
+import com.katyshevtseva.kikiorg.core.modes.habits.entity.Habit;
 import com.katyshevtseva.kikiorg.core.repo.EnumElementRepo;
 import com.katyshevtseva.kikiorg.core.repo.HabitsRepo;
 import org.springframework.beans.factory.InitializingBean;
