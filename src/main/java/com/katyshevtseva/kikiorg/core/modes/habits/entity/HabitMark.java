@@ -20,5 +20,5 @@ public class HabitMark {
     @JoinColumn(name = "date_entity_id")
     private DateEntity dateEntity;
 
-    private String habitMark;
+    private Long mark;
 }

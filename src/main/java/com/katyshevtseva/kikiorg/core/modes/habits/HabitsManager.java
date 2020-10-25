@@ -1,13 +1,17 @@
 package com.katyshevtseva.kikiorg.core.modes.habits;
 
+import com.katyshevtseva.kikiorg.core.date.DateService;
 import com.katyshevtseva.kikiorg.core.modes.habits.entity.EnumElement;
 import com.katyshevtseva.kikiorg.core.modes.habits.entity.Habit;
+import com.katyshevtseva.kikiorg.core.modes.habits.entity.HabitMark;
 import com.katyshevtseva.kikiorg.core.repo.EnumElementRepo;
+import com.katyshevtseva.kikiorg.core.repo.HabitMarkRepo;
 import com.katyshevtseva.kikiorg.core.repo.HabitsRepo;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -17,6 +21,10 @@ public class HabitsManager implements InitializingBean {
     private HabitsRepo habitsRepo;
     @Autowired
     private EnumElementRepo enumElementRepo;
+    @Autowired
+    private HabitMarkRepo habitMarkRepo;
+    @Autowired
+    private DateService dateService;
 
     public static HabitsManager getInstance() {
         while (INSTANCE == null) {
@@ -52,5 +60,13 @@ public class HabitsManager implements InitializingBean {
 
     public List<EnumElement> getEnumElementsByHabit(Habit habit) {
         return enumElementRepo.findByHabitId(habit.getId());
+    }
+
+    public void makeMark(Habit habit, Date date, Object mark){
+        HabitMark habitMark = new HabitMark();
+        habitMark.setDateEntity(dateService.getDateEntity(date));
+        habitMark.setHabit(habit);
+        habitMark.setMark(HabitMarkConverter.convertToString(habit, mark));
+        habitMarkRepo.save(habitMark);
     }
 }

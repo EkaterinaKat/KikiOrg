@@ -1,8 +1,8 @@
 package com.katyshevtseva.kikiorg.view.controller.habits;
 
+import com.katyshevtseva.kikiorg.core.modes.habits.HabitsManager;
 import com.katyshevtseva.kikiorg.core.modes.habits.entity.EnumElement;
 import com.katyshevtseva.kikiorg.core.modes.habits.entity.Habit;
-import com.katyshevtseva.kikiorg.core.modes.habits.HabitsManager;
 import com.katyshevtseva.kikiorg.view.utils.Utils;
 import com.katyshevtseva.kikiorg.view.utils.WindowBuilder.FxController;
 import javafx.collections.FXCollections;
@@ -53,8 +53,9 @@ class CheckListSubmodeController implements FxController {
             index++;
 
             Pair pair = new Pair(habit);
+            pairs.add(pair);
             habitsTable.add(pair.getLabel(), labelColumn, row);
-            habitsTable.add(pair.getMarkNode(), markNodeColumn, row);
+            habitsTable.add(pair.markNode, markNodeColumn, row);
         }
     }
 
@@ -63,7 +64,9 @@ class CheckListSubmodeController implements FxController {
     }
 
     private void save() {
-
+        for (Pair pair : pairs) {
+            HabitsManager.getInstance().makeMark(pair.habit, java.sql.Date.valueOf(datePicker.getValue()), pair.getMark());
+        }
         updateResultsTable();
     }
 
@@ -100,8 +103,16 @@ class CheckListSubmodeController implements FxController {
             return new Label(habit.getTitle());
         }
 
-        Node getMarkNode() {
-            return markNode;
+        Object getMark() {
+            switch (habit.getType()) {
+                case bollean:
+                    return ((CheckBox) markNode).isSelected();
+                case number:
+                    return Long.parseLong(((TextField) markNode).getText());
+                case enumeration:
+                    return ((ComboBox<EnumElement>) markNode).getValue();
+            }
+            throw new RuntimeException();
         }
     }
 }
