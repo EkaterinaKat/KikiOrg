@@ -28,7 +28,7 @@ public class HabitsModeController extends AbstractSwitchController implements Fx
         buttons.addAll(Arrays.asList(checkListButton, adminButton));
         checkListButton.setOnAction(event -> checkListButtonListener());
         adminButton.setOnAction(event -> adminButtonListener());
-        adminButtonListener();
+        checkListButtonListener();
     }
 
     private void checkListButtonListener() {

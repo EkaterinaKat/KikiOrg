@@ -16,4 +16,9 @@ public class EnumElement {
     @ManyToOne
     @JoinColumn(name = "habit_id")
     private Habit habit;
+
+    @Override
+    public String toString() {
+        return title;
+    }
 }

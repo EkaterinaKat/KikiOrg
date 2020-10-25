@@ -1,15 +1,18 @@
 package com.katyshevtseva.kikiorg.view.controller.habits;
 
+import com.katyshevtseva.kikiorg.core.modes.habits.EnumElement;
 import com.katyshevtseva.kikiorg.core.modes.habits.Habit;
 import com.katyshevtseva.kikiorg.core.modes.habits.HabitsManager;
 import com.katyshevtseva.kikiorg.view.utils.Utils;
 import com.katyshevtseva.kikiorg.view.utils.WindowBuilder.FxController;
+import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.DatePicker;
+import javafx.scene.Node;
+import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 class CheckListSubmodeController implements FxController {
@@ -21,6 +24,7 @@ class CheckListSubmodeController implements FxController {
     private Button saveButton;
     @FXML
     private GridPane resultsTable;
+    private List<Pair> pairs;
 
     @FXML
     private void initialize() {
@@ -33,10 +37,25 @@ class CheckListSubmodeController implements FxController {
 
     private void fillHabitsTable() {
         List<Habit> habits = HabitsManager.getInstance().getActiveHabits();
+        pairs = new ArrayList<>();
         int index = 0;
-        habits.forEach(habit -> {
+        for (Habit habit : habits) {
+            int row = index / 3;
+            int labelColumn = 0;
+            int markNodeColumn = 1;
+            if (index % 3 == 1) {
+                labelColumn = 2;
+                markNodeColumn = 3;
+            } else if (index % 3 == 2) {
+                labelColumn = 4;
+                markNodeColumn = 5;
+            }
+            index++;
 
-        });
+            Pair pair = new Pair(habit);
+            habitsTable.add(pair.getLabel(), labelColumn, row);
+            habitsTable.add(pair.getMarkNode(), markNodeColumn, row);
+        }
     }
 
     private void updateResultsTable() {
@@ -48,4 +67,41 @@ class CheckListSubmodeController implements FxController {
         updateResultsTable();
     }
 
+    private class Pair {
+        final int NODE_WIDTH = 180;
+        Habit habit;
+        Node markNode;
+
+        Pair(Habit habit) {
+            this.habit = habit;
+
+            switch (habit.getType()) {
+                case bollean:
+                    markNode = new CheckBox();
+                    break;
+                case number:
+                    TextField textField = new TextField();
+                    textField.setMaxWidth(NODE_WIDTH);
+                    textField.setMinWidth(NODE_WIDTH);
+                    Utils.disableNonNumericChars(textField);
+                    markNode = textField;
+                    break;
+                case enumeration:
+                    ComboBox<EnumElement> comboBox = new ComboBox<>();
+                    comboBox.setItems(FXCollections.observableArrayList(
+                            HabitsManager.getInstance().getEnumElementsByHabit(habit)));
+                    comboBox.setMaxWidth(NODE_WIDTH);
+                    comboBox.setMinWidth(NODE_WIDTH);
+                    markNode = comboBox;
+            }
+        }
+
+        Label getLabel() {
+            return new Label(habit.getTitle());
+        }
+
+        Node getMarkNode() {
+            return markNode;
+        }
+    }
 }
