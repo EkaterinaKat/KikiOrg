@@ -1,10 +1,12 @@
 package com.katyshevtseva.kikiorg.core.modes.finance;
 
-import com.katyshevtseva.kikiorg.core.repo.*;
+import com.katyshevtseva.kikiorg.core.date.DateService;
 import com.katyshevtseva.kikiorg.core.modes.finance.entity.*;
+import com.katyshevtseva.kikiorg.core.repo.*;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
 import java.util.List;
@@ -25,6 +27,10 @@ public class FinanceManager implements InitializingBean {
     private ReplenishmentRepo replenishmentRepo;
     @Autowired
     private AccountPartRepo accountPartRepo;
+    @Autowired
+    private DateService dateService;
+    @Autowired
+    private TransferRepo transferRepo;
 
     public static FinanceManager getInstance() {
         while (INSTANCE == null) {
@@ -89,9 +95,7 @@ public class FinanceManager implements InitializingBean {
         expense.setItem(item);
         expenseRepo.save(expense);
 
-        Account actualAccount = accountRepo.findById(account.getId()).orElse(null);
-        actualAccount.setAmount(actualAccount.getAmount() - amount);
-        accountRepo.save(actualAccount);
+        changeAccountAmount(account, (-1) * amount);
     }
 
     public List<Expense> getExpenses() {
@@ -106,6 +110,10 @@ public class FinanceManager implements InitializingBean {
         replenishment.setDateOfRepl(date);
         replenishmentRepo.save(replenishment);
 
+        changeAccountAmount(account, amount);
+    }
+
+    private void changeAccountAmount(Account account, long amount) {
         Account actualAccount = accountRepo.findById(account.getId()).orElse(null);
         actualAccount.setAmount(actualAccount.getAmount() + amount);
         accountRepo.save(actualAccount);
@@ -128,5 +136,18 @@ public class FinanceManager implements InitializingBean {
         long accountAmount = accountRepo.findById(account.getId()).get().getAmount();
         long diff = amount - accountAmount;
         return String.format("По расчетам: %s. По Факту: %s. Разница: %s.", accountAmount, amount, diff);
+    }
+
+    @Transactional
+    public void makeTransfer(Account from, Account to, Long amount) {
+        Transfer transfer = new Transfer();
+        transfer.setFrom(from);
+        transfer.setTo(to);
+        transfer.setAmount(amount);
+        transfer.setDateEntity(dateService.getDateEntity(new Date()));
+        transferRepo.save(transfer);
+
+        changeAccountAmount(from, (-1) * amount);
+        changeAccountAmount(to, amount);
     }
 }
