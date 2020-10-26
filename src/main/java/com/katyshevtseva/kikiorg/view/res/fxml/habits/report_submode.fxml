@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.layout.*?>
+<HBox xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml">
+
+    <VBox>
+        <ScrollPane>
+            <GridPane fx:id="habitsTable" minWidth="800" maxWidth="800"/>
+        </ScrollPane>
+        <Pane minHeight="15" maxHeight="15"/>
+        <DatePicker fx:id="startDatePicker"/>
+        <Pane minHeight="15" maxHeight="15"/>
+        <DatePicker fx:id="endDatePicker"/>
+    </VBox>
+
+    <Pane minWidth="25" maxWidth="25"/>
+
+    <ScrollPane maxWidth="250" minWidth="250">
+        <GridPane fx:id="reportTable" alignment="CENTER" maxWidth="240" minWidth="240"/>
+    </ScrollPane>
+</HBox>

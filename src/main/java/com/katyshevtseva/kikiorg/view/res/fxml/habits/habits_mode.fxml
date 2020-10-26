@@ -19,6 +19,7 @@
                 <Pane minWidth="30" maxWidth="30"/>
                 <Button fx:id="adminButton" text="Administration"/>
                 <Pane minWidth="30" maxWidth="30"/>
+                <Button fx:id="reportButton" text="Report"/>
             </HBox>
             <Pane minHeight="10" maxHeight="10"/>
         </VBox>
