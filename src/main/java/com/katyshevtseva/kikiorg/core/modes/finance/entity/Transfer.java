@@ -13,11 +13,11 @@ public class Transfer {
     private long id;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "account_id", nullable = false)
+    @JoinColumn(name = "from_account_id", nullable = false)
     private Account from;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "account_id", nullable = false)
+    @JoinColumn(name = "to_account_id", nullable = false)
     private Account to;
 
     private Long amount;
