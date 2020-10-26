@@ -17,7 +17,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-/* Только первичная настройка выполнена */
 class CheckSubmodeController implements FxController {
     private List<TextField> textFields = new ArrayList<>();
     @FXML

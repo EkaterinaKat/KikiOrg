@@ -22,8 +22,6 @@ class CheckListSubmodeController implements FxController {
     private GridPane habitsTable;
     @FXML
     private Button saveButton;
-    @FXML
-    private GridPane resultsTable;
     private List<Pair> pairs;
 
     @FXML
@@ -32,7 +30,6 @@ class CheckListSubmodeController implements FxController {
         Utils.associateButtonWithControls(saveButton, datePicker);
         datePicker.setValue(LocalDate.now());
         fillHabitsTable();
-        updateResultsTable();
     }
 
     private void fillHabitsTable() {
@@ -59,15 +56,10 @@ class CheckListSubmodeController implements FxController {
         }
     }
 
-    private void updateResultsTable() {
-
-    }
-
     private void save() {
         for (Pair pair : pairs) {
             HabitsManager.getInstance().makeMark(pair.habit, java.sql.Date.valueOf(datePicker.getValue()), pair.getMark());
         }
-        updateResultsTable();
     }
 
     private class Pair {
