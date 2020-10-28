@@ -95,7 +95,7 @@ public class FinanceManager implements InitializingBean {
         expense.setItem(item);
         expenseRepo.save(expense);
 
-        changeAccountAmount(account, (-1) * amount);
+        addToAccountAmount(account, (-1) * amount);
     }
 
     public List<Expense> getExpenses() {
@@ -110,10 +110,10 @@ public class FinanceManager implements InitializingBean {
         replenishment.setDateOfRepl(date);
         replenishmentRepo.save(replenishment);
 
-        changeAccountAmount(account, amount);
+        addToAccountAmount(account, amount);
     }
 
-    private void changeAccountAmount(Account account, long amount) {
+    private void addToAccountAmount(Account account, long amount) {
         Account actualAccount = accountRepo.findById(account.getId()).orElse(null);
         actualAccount.setAmount(actualAccount.getAmount() + amount);
         accountRepo.save(actualAccount);
@@ -147,7 +147,32 @@ public class FinanceManager implements InitializingBean {
         transfer.setDateEntity(dateService.getDateEntity(new Date()));
         transferRepo.save(transfer);
 
-        changeAccountAmount(from, (-1) * amount);
-        changeAccountAmount(to, amount);
+        addToAccountAmount(from, (-1) * amount);
+        addToAccountAmount(to, amount);
+    }
+
+    public void validateAllAccountsAmount(){
+        for(Account account: accountRepo.findAll()){
+            validateAccountAmount(account);
+        }
+    }
+
+    private void validateAccountAmount(Account account){
+        List<Expense> expenses = expenseRepo.findByAccountId(account.getId());
+        List<Replenishment> replenishments = replenishmentRepo.findByAccountId(account.getId());
+        long amount = 0;
+        for (Replenishment replenishment: replenishments){
+            amount+=replenishment.getAmount();
+        }
+        for (Expense expense: expenses){
+            amount-=expense.getAmount();
+        }
+        rewriteAccountAmount(account, amount);
+    }
+
+    private void rewriteAccountAmount(Account account, long amount){
+        Account actualAccount = accountRepo.findById(account.getId()).orElse(null);
+        actualAccount.setAmount(amount);
+        accountRepo.save(actualAccount);
     }
 }

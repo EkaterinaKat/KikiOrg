@@ -30,6 +30,8 @@ class AccountsSubmodeController implements FxController {
     private TextField amountTextField;
     @FXML
     private Button transferButton;
+    @FXML
+    private Button validationButton;
 
     AccountsSubmodeController(ReplenishmentSubmodeController replenishmentController,
                               ExpensesSubmodeController expensesController, CheckSubmodeController checkController) {
@@ -47,6 +49,7 @@ class AccountsSubmodeController implements FxController {
         Utils.disableNonNumericChars(amountTextField);
         Utils.associateButtonWithControls(transferButton, amountTextField, fromComboBox, toComboBox);
         transferButton.setOnAction(event -> transfer());
+        validationButton.setOnAction(event -> FinanceManager.getInstance().validateAllAccountsAmount());
     }
 
     private void transfer() {

@@ -33,4 +33,10 @@
         <Pane minWidth="8" maxWidth="8"/>
         <Button fx:id="transferButton" text="Transfer"/>
     </HBox>
+
+    <Pane maxHeight="25" minHeight="25"/>
+    <Label text="*****************************************************************"/>
+    <Pane maxHeight="25" minHeight="25"/>
+
+    <Button fx:id="validationButton" text="Validate all accounts" prefWidth="220"/>
 </VBox>
