@@ -62,11 +62,16 @@ public class HabitsManager implements InitializingBean {
         return enumElementRepo.findByHabitId(habit.getId());
     }
 
-    public void makeMark(Habit habit, Date date, Object mark){
+    public void makeMark(Habit habit, Date date, Object mark) {
         HabitMark habitMark = new HabitMark();
         habitMark.setDateEntity(dateService.getDateEntity(date));
         habitMark.setHabit(habit);
-        habitMark.setMark(HabitMarkConverter.convertToString(habit, mark));
+        habitMark.setMark(HabitMarkConverter.prepareToPersist(habit, mark));
         habitMarkRepo.save(habitMark);
+    }
+
+    HabitMark getMark(Habit habit, Date date) {
+        return habitMarkRepo.findByHabitIdAndDateEntityId(
+                habit.getId(), dateService.getDateEntity(date).getId()).get();
     }
 }
