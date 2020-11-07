@@ -14,9 +14,8 @@ import java.util.Date;
 import java.util.List;
 
 @Service
-public class FinanceManager implements InitializingBean {
-    private static FinanceManager INSTANCE;
-    private ReportGenerator reportGenerator;
+public class FinanceService implements InitializingBean {
+    private static FinanceService INSTANCE;
     @Getter
     @Setter
     private Owner currentOwner = Owner.K;
@@ -37,7 +36,7 @@ public class FinanceManager implements InitializingBean {
     @Autowired
     private TransferRepo transferRepo;
 
-    public static FinanceManager getInstance() {
+    public static FinanceService getInstance() {
         while (INSTANCE == null) {
             try {
                 Thread.sleep(30);
@@ -51,11 +50,6 @@ public class FinanceManager implements InitializingBean {
     @Override
     public void afterPropertiesSet() throws Exception {
         INSTANCE = this;
-        reportGenerator = new ReportGenerator(INSTANCE);
-    }
-
-    public String getReport() {
-        return reportGenerator.getReport();
     }
 
     public void addSourse(String title, String desc) {

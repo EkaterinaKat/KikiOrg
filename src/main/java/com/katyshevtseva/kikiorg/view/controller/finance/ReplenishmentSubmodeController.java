@@ -1,6 +1,6 @@
 package com.katyshevtseva.kikiorg.view.controller.finance;
 
-import com.katyshevtseva.kikiorg.core.modes.finance.FinanceManager;
+import com.katyshevtseva.kikiorg.core.modes.finance.FinanceService;
 import com.katyshevtseva.kikiorg.core.modes.finance.entity.Account;
 import com.katyshevtseva.kikiorg.core.modes.finance.entity.Source;
 import com.katyshevtseva.kikiorg.view.utils.Utils;
@@ -43,13 +43,13 @@ class ReplenishmentSubmodeController implements FxController {
     }
 
     private void setSourceComboBoxItems() {
-        ObservableList<Source> sources = FXCollections.observableArrayList(FinanceManager.getInstance().getSources());
+        ObservableList<Source> sources = FXCollections.observableArrayList(FinanceService.getInstance().getSources());
         sourceComboBox.setItems(sources);
     }
 
     void setAccountComboBoxItems() {
         if(accountComboBox != null){
-            ObservableList<Account> accounts = FXCollections.observableArrayList(FinanceManager.getInstance().getAccounts());
+            ObservableList<Account> accounts = FXCollections.observableArrayList(FinanceService.getInstance().getAccounts());
             accountComboBox.setItems(accounts);
             if (accounts.size() > 0)
                 accountComboBox.setValue(accounts.get(0));
@@ -57,14 +57,14 @@ class ReplenishmentSubmodeController implements FxController {
     }
 
     private void addSource() {
-        FinanceManager.getInstance().addSourse(sourceTitleField.getText(), sourceDescArea.getText());
+        FinanceService.getInstance().addSourse(sourceTitleField.getText(), sourceDescArea.getText());
         sourceTitleField.clear();
         sourceDescArea.clear();
         setSourceComboBoxItems();
     }
 
     private void saveReplenishment() {
-        FinanceManager.getInstance().addReplenishment(accountComboBox.getValue(), Long.parseLong(amountTextField.getText()),
+        FinanceService.getInstance().addReplenishment(accountComboBox.getValue(), Long.parseLong(amountTextField.getText()),
                 sourceComboBox.getValue(), java.sql.Date.valueOf(datePicker.getValue()));
         amountTextField.clear();
     }

@@ -15,8 +15,8 @@ import java.util.Date;
 import java.util.List;
 
 @Service
-public class HabitsManager implements InitializingBean {
-    private static HabitsManager INSTANCE;
+public class HabitsService implements InitializingBean {
+    private static HabitsService INSTANCE;
     @Autowired
     private HabitsRepo habitsRepo;
     @Autowired
@@ -26,7 +26,7 @@ public class HabitsManager implements InitializingBean {
     @Autowired
     private DateService dateService;
 
-    public static HabitsManager getInstance() {
+    public static HabitsService getInstance() {
         while (INSTANCE == null) {
             try {
                 Thread.sleep(30);

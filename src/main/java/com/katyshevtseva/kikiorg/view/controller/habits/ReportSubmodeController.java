@@ -1,7 +1,7 @@
 package com.katyshevtseva.kikiorg.view.controller.habits;
 
-import com.katyshevtseva.kikiorg.core.modes.habits.HabitsManager;
-import com.katyshevtseva.kikiorg.core.modes.habits.HabitsReportMaker;
+import com.katyshevtseva.kikiorg.core.modes.habits.HabitsService;
+import com.katyshevtseva.kikiorg.core.modes.habits.HabitsReportService;
 import com.katyshevtseva.kikiorg.core.modes.habits.entity.Habit;
 import com.katyshevtseva.kikiorg.core.modes.habits.entity.ReportCell;
 import com.katyshevtseva.kikiorg.view.utils.Utils;
@@ -79,7 +79,7 @@ class ReportSubmodeController implements FxController {
     }
 
     private void fillHabitsTable() {
-        List<Habit> allHabits = HabitsManager.getInstance().getAllHabits();
+        List<Habit> allHabits = HabitsService.getInstance().getAllHabits();
         ObservableList<Habit> observableList = FXCollections.observableArrayList();
         observableList.addAll(allHabits);
         habitsTable.setItems(observableList);
@@ -101,7 +101,7 @@ class ReportSubmodeController implements FxController {
     private void showReport() {
         if (selectedHabits.size() == 0)
             return;
-        List<List<ReportCell>> report = HabitsReportMaker.getInstance().getReport(selectedHabits,
+        List<List<ReportCell>> report = HabitsReportService.getInstance().getReport(selectedHabits,
                 valueOf(startDatePicker.getValue()), valueOf(endDatePicker.getValue()));
 
         for (int i = 0; i < report.size(); i++) {

@@ -1,6 +1,7 @@
 package com.katyshevtseva.kikiorg.view.controller.finance;
 
-import com.katyshevtseva.kikiorg.core.modes.finance.FinanceManager;
+import com.katyshevtseva.kikiorg.core.modes.finance.FinanceService;
+import com.katyshevtseva.kikiorg.core.modes.finance.Owner;
 import com.katyshevtseva.kikiorg.core.modes.finance.entity.Account;
 import com.katyshevtseva.kikiorg.view.utils.Utils;
 import com.katyshevtseva.kikiorg.view.utils.WindowBuilder.FxController;
@@ -50,17 +51,17 @@ class AccountsSubmodeController implements FxController {
         Utils.disableNonNumericChars(amountTextField);
         Utils.associateButtonWithControls(transferButton, amountTextField, fromComboBox, toComboBox);
         transferButton.setOnAction(event -> transfer());
-        validationButton.setOnAction(event -> FinanceManager.getInstance().validateAllAccountsAmount());
+        validationButton.setOnAction(event -> FinanceService.getInstance().validateAllAccountsAmount());
     }
 
     private void transfer() {
-        FinanceManager.getInstance().makeTransfer(fromComboBox.getValue(), toComboBox.getValue(),
+        FinanceService.getInstance().makeTransfer(fromComboBox.getValue(), toComboBox.getValue(),
                 Long.parseLong(amountTextField.getText()));
         amountTextField.clear();
     }
 
     private void addAccount() {
-        FinanceManager.getInstance().addAccount(accountTitleField.getText(), accountDescArea.getText());
+        FinanceService.getInstance().addAccount(accountTitleField.getText(), accountDescArea.getText(), Owner.K);
         accountTitleField.clear();
         accountDescArea.clear();
         replenishmentController.setAccountComboBoxItems();
@@ -72,7 +73,7 @@ class AccountsSubmodeController implements FxController {
 
     private void setAccountComboBoxItems(ComboBox<Account> accountComboBox) {
         if (accountComboBox != null) {
-            ObservableList<Account> accounts = FXCollections.observableArrayList(FinanceManager.getInstance().getAccounts());
+            ObservableList<Account> accounts = FXCollections.observableArrayList(FinanceService.getInstance().getAccounts());
             accountComboBox.setItems(accounts);
             if (accounts.size() > 0)
                 accountComboBox.setValue(accounts.get(0));

@@ -1,6 +1,6 @@
 package com.katyshevtseva.kikiorg.view.controller.habits;
 
-import com.katyshevtseva.kikiorg.core.modes.habits.HabitsManager;
+import com.katyshevtseva.kikiorg.core.modes.habits.HabitsService;
 import com.katyshevtseva.kikiorg.core.modes.habits.entity.EnumElement;
 import com.katyshevtseva.kikiorg.core.modes.habits.entity.Habit;
 import com.katyshevtseva.kikiorg.view.utils.Utils;
@@ -33,7 +33,7 @@ class CheckListSubmodeController implements FxController {
     }
 
     private void fillHabitsTable() {
-        List<Habit> habits = HabitsManager.getInstance().getActiveHabits();
+        List<Habit> habits = HabitsService.getInstance().getActiveHabits();
         pairs = new ArrayList<>();
         int index = 0;
         for (Habit habit : habits) {
@@ -58,7 +58,7 @@ class CheckListSubmodeController implements FxController {
 
     private void save() {
         for (Pair pair : pairs) {
-            HabitsManager.getInstance().makeMark(pair.habit, java.sql.Date.valueOf(datePicker.getValue()), pair.getMark());
+            HabitsService.getInstance().makeMark(pair.habit, java.sql.Date.valueOf(datePicker.getValue()), pair.getMark());
         }
     }
 
@@ -84,7 +84,7 @@ class CheckListSubmodeController implements FxController {
                 case enumeration:
                     ComboBox<EnumElement> comboBox = new ComboBox<>();
                     comboBox.setItems(FXCollections.observableArrayList(
-                            HabitsManager.getInstance().getEnumElementsByHabit(habit)));
+                            HabitsService.getInstance().getEnumElementsByHabit(habit)));
                     comboBox.setMaxWidth(NODE_WIDTH);
                     comboBox.setMinWidth(NODE_WIDTH);
                     markNode = comboBox;

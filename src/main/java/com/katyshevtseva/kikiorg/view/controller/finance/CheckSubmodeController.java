@@ -1,6 +1,6 @@
 package com.katyshevtseva.kikiorg.view.controller.finance;
 
-import com.katyshevtseva.kikiorg.core.modes.finance.FinanceManager;
+import com.katyshevtseva.kikiorg.core.modes.finance.FinanceService;
 import com.katyshevtseva.kikiorg.core.modes.finance.entity.Account;
 import com.katyshevtseva.kikiorg.core.modes.finance.entity.AccountPart;
 import com.katyshevtseva.kikiorg.view.utils.Utils;
@@ -66,7 +66,7 @@ class CheckSubmodeController implements FxController {
     }
 
     private void createTrios() {
-        List<AccountPart> accountParts = FinanceManager.getInstance().getAccountParts();
+        List<AccountPart> accountParts = FinanceService.getInstance().getAccountParts();
         trios = new ArrayList<>();
         trios.add(new Trio(amountField1, titleField1, accountParts, 0));
         trios.add(new Trio(amountField2, titleField2, accountParts, 1));
@@ -88,7 +88,7 @@ class CheckSubmodeController implements FxController {
             for (Trio trio : trios) {
                 amountSum += trio.getAmount();
             }
-            resultLabel.setText(FinanceManager.getInstance().check(accountComboBox.getValue(), amountSum));
+            resultLabel.setText(FinanceService.getInstance().check(accountComboBox.getValue(), amountSum));
         }
     }
 
@@ -100,12 +100,12 @@ class CheckSubmodeController implements FxController {
                 accountPartsToSave.add(accountPart);
             }
         }
-        FinanceManager.getInstance().rewriteAccountParts(accountPartsToSave);
+        FinanceService.getInstance().rewriteAccountParts(accountPartsToSave);
     }
 
     void setAccountComboBoxItems() {
         if (accountComboBox != null) {
-            ObservableList<Account> accounts = FXCollections.observableArrayList(FinanceManager.getInstance().getAccounts());
+            ObservableList<Account> accounts = FXCollections.observableArrayList(FinanceService.getInstance().getAccounts());
             accountComboBox.setItems(accounts);
             if (accounts.size() > 0)
                 accountComboBox.setValue(accounts.get(0));

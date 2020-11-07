@@ -1,6 +1,6 @@
 package com.katyshevtseva.kikiorg.view.controller.finance;
 
-import com.katyshevtseva.kikiorg.core.modes.finance.FinanceManager;
+import com.katyshevtseva.kikiorg.core.modes.finance.FinanceService;
 import com.katyshevtseva.kikiorg.core.modes.finance.entity.Account;
 import com.katyshevtseva.kikiorg.core.modes.finance.entity.Item;
 import com.katyshevtseva.kikiorg.view.utils.Utils;
@@ -43,13 +43,13 @@ class ExpensesSubmodeController implements FxController {
     }
 
     private void setItemComboBoxItems() {
-        ObservableList<Item> items = FXCollections.observableArrayList(FinanceManager.getInstance().getItems());
+        ObservableList<Item> items = FXCollections.observableArrayList(FinanceService.getInstance().getItems());
         itemComboBox.setItems(items);
     }
 
     void setAccountComboBoxItems() {
         if(accountComboBox != null){
-            ObservableList<Account> accounts = FXCollections.observableArrayList(FinanceManager.getInstance().getAccounts());
+            ObservableList<Account> accounts = FXCollections.observableArrayList(FinanceService.getInstance().getAccounts());
             accountComboBox.setItems(accounts);
             if (accounts.size() > 0)
                 accountComboBox.setValue(accounts.get(0));
@@ -57,14 +57,14 @@ class ExpensesSubmodeController implements FxController {
     }
 
     private void addItem() {
-        FinanceManager.getInstance().addItem(itemTitleField.getText(), itemDescArea.getText());
+        FinanceService.getInstance().addItem(itemTitleField.getText(), itemDescArea.getText());
         itemTitleField.clear();
         itemDescArea.clear();
         setItemComboBoxItems();
     }
 
     private void saveExpense() {
-        FinanceManager.getInstance().addExpence(accountComboBox.getValue(), Long.parseLong(amountTextField.getText()),
+        FinanceService.getInstance().addExpence(accountComboBox.getValue(), Long.parseLong(amountTextField.getText()),
                 itemComboBox.getValue(), java.sql.Date.valueOf(datePicker.getValue()));
         amountTextField.clear();
     }

@@ -3,21 +3,39 @@ package com.katyshevtseva.kikiorg.core.modes.finance;
 import com.katyshevtseva.kikiorg.core.modes.finance.entity.Account;
 import com.katyshevtseva.kikiorg.core.modes.finance.entity.Expense;
 import com.katyshevtseva.kikiorg.core.modes.finance.entity.Replenishment;
+import org.springframework.beans.factory.InitializingBean;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-class ReportGenerator {
-    private FinanceManager financeManager;
+@Service
+public class FinanceReportService implements InitializingBean {
+    private static FinanceReportService INSTANCE;
+    @Autowired
+    private FinanceService financeService;
 
-    ReportGenerator(FinanceManager financeManager) {
-        this.financeManager = financeManager;
+    public static FinanceReportService getInstance() {
+        while (INSTANCE == null) {
+            try {
+                Thread.sleep(30);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+        return INSTANCE;
     }
 
-    String getReport() {
+    @Override
+    public void afterPropertiesSet() throws Exception {
+        INSTANCE = this;
+    }
+
+    public String getReport() {
         String report = "";
 
         // Счета
-        List<Account> accounts = financeManager.getAccounts();
+        List<Account> accounts = financeService.getAccounts();
         for (Account account : accounts) {
             report += (" * " + account.getTitle() + ". " +
                     account.getDescription() + ". Amount: " +
@@ -26,7 +44,7 @@ class ReportGenerator {
 
         // Доходы
         report += "\nДоходы \n";
-        List<Replenishment> replenishments = financeManager.getReplenishments();
+        List<Replenishment> replenishments = financeService.getReplenishments();
         for (Replenishment replenishment : replenishments) {
             report += (" * " + replenishment.getSource() + " " +
                     replenishment.getDateOfRepl() +
@@ -36,7 +54,7 @@ class ReportGenerator {
 
         // Расходы
         report += "\nРасходы \n";
-        List<Expense> expenses = financeManager.getExpenses();
+        List<Expense> expenses = financeService.getExpenses();
         for (Expense expense : expenses) {
             report += (" * " + expense.getItem() + " " +
                     expense.getDateOfExp() + " " +

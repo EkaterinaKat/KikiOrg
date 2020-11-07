@@ -12,15 +12,15 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 
 @Service
-public class HabitsReportMaker implements InitializingBean {
-    private static HabitsReportMaker INSTANCE;
+public class HabitsReportService implements InitializingBean {
+    private static HabitsReportService INSTANCE;
     private static SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM");
     @Autowired
-    private HabitsManager habitsManager;
+    private HabitsService habitsService;
     @Autowired
     private HabitMarkConverter habitMarkConverter;
 
-    public static HabitsReportMaker getInstance() {
+    public static HabitsReportService getInstance() {
         while (INSTANCE == null) {
             try {
                 Thread.sleep(30);
@@ -58,7 +58,7 @@ public class HabitsReportMaker implements InitializingBean {
     }
 
     private ReportCell convertToCell(Habit habit, Date date) {
-        HabitMark mark = habitsManager.getMarkOrNull(habit, date);
+        HabitMark mark = habitsService.getMarkOrNull(habit, date);
         if (mark == null)
             return ReportCell.empty();
         return habitMarkConverter.prepareForReport(habit, mark);
