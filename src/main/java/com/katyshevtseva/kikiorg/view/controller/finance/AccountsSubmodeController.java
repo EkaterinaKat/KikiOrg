@@ -9,6 +9,7 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 
 
@@ -19,7 +20,7 @@ class AccountsSubmodeController implements FxController {
     @FXML
     private TextField accountTitleField;
     @FXML
-    private TextField accountDescField;
+    private TextArea accountDescArea;
     @FXML
     private Button addAccountButton;
     @FXML
@@ -43,7 +44,7 @@ class AccountsSubmodeController implements FxController {
     @FXML
     private void initialize() {
         addAccountButton.setOnAction(event -> addAccount());
-        Utils.associateButtonWithControls(addAccountButton, accountTitleField, accountDescField);
+        Utils.associateButtonWithControls(addAccountButton, accountTitleField, accountDescArea);
         setAccountComboBoxItems(fromComboBox);
         setAccountComboBoxItems(toComboBox);
         Utils.disableNonNumericChars(amountTextField);
@@ -59,9 +60,9 @@ class AccountsSubmodeController implements FxController {
     }
 
     private void addAccount() {
-        FinanceManager.getInstance().addAccount(accountTitleField.getText(), accountDescField.getText());
+        FinanceManager.getInstance().addAccount(accountTitleField.getText(), accountDescArea.getText());
         accountTitleField.clear();
-        accountDescField.clear();
+        accountDescArea.clear();
         replenishmentController.setAccountComboBoxItems();
         expensesController.setAccountComboBoxItems();
         checkController.setAccountComboBoxItems();
