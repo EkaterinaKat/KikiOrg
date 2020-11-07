@@ -1,5 +1,6 @@
 package com.katyshevtseva.kikiorg.view.controller.finance;
 
+import com.katyshevtseva.kikiorg.core.Core;
 import com.katyshevtseva.kikiorg.core.modes.finance.FinanceReportService;
 import com.katyshevtseva.kikiorg.core.modes.finance.FinanceService;
 import com.katyshevtseva.kikiorg.view.controller.AbstractSwitchController;
@@ -40,7 +41,7 @@ public class FinanceModeController extends AbstractSwitchController implements F
     private Node checkSubmodeNode;
 
     private void updateDisplayedData() {
-        reportTextArea.setText(FinanceReportService.getInstance().getReport());
+        reportTextArea.setText(Core.getInstance().financeReportService().getReport());
     }
 
     public FinanceModeController() {

@@ -22,7 +22,7 @@
 
     <Pane minWidth="25" maxWidth="25"/>
 
-    <ScrollPane maxWidth="800" minWidth="800" maxHeight="700" minHeight="700">
+    <ScrollPane maxWidth="800" minWidth="800" maxHeight="820" minHeight="820">
         <GridPane fx:id="reportTable" alignment="CENTER" hgap="1" vgap="1" gridLinesVisible="true"/>
     </ScrollPane>
 </HBox>

@@ -1,5 +1,6 @@
 package com.katyshevtseva.kikiorg.view.controller.finance;
 
+import com.katyshevtseva.kikiorg.core.Core;
 import com.katyshevtseva.kikiorg.core.modes.finance.FinanceService;
 import com.katyshevtseva.kikiorg.core.modes.finance.entity.Account;
 import com.katyshevtseva.kikiorg.core.modes.finance.entity.AccountPart;
@@ -66,7 +67,7 @@ class CheckSubmodeController implements FxController {
     }
 
     private void createTrios() {
-        List<AccountPart> accountParts = FinanceService.getInstance().getAccountParts();
+        List<AccountPart> accountParts = Core.getInstance().financeService().getAccountParts();
         trios = new ArrayList<>();
         trios.add(new Trio(amountField1, titleField1, accountParts, 0));
         trios.add(new Trio(amountField2, titleField2, accountParts, 1));
@@ -88,7 +89,7 @@ class CheckSubmodeController implements FxController {
             for (Trio trio : trios) {
                 amountSum += trio.getAmount();
             }
-            resultLabel.setText(FinanceService.getInstance().check(accountComboBox.getValue(), amountSum));
+            resultLabel.setText(Core.getInstance().financeService().check(accountComboBox.getValue(), amountSum));
         }
     }
 
@@ -100,12 +101,12 @@ class CheckSubmodeController implements FxController {
                 accountPartsToSave.add(accountPart);
             }
         }
-        FinanceService.getInstance().rewriteAccountParts(accountPartsToSave);
+        Core.getInstance().financeService().rewriteAccountParts(accountPartsToSave);
     }
 
     void setAccountComboBoxItems() {
         if (accountComboBox != null) {
-            ObservableList<Account> accounts = FXCollections.observableArrayList(FinanceService.getInstance().getAccounts());
+            ObservableList<Account> accounts = FXCollections.observableArrayList(Core.getInstance().financeService().getAccounts());
             accountComboBox.setItems(accounts);
             if (accounts.size() > 0)
                 accountComboBox.setValue(accounts.get(0));

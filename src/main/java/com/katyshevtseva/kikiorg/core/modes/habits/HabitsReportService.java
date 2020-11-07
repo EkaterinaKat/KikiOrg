@@ -12,30 +12,12 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 
 @Service
-public class HabitsReportService implements InitializingBean {
-    private static HabitsReportService INSTANCE;
+public class HabitsReportService {
     private static SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM");
     @Autowired
     private HabitsService habitsService;
     @Autowired
     private HabitMarkConverter habitMarkConverter;
-
-    public static HabitsReportService getInstance() {
-        while (INSTANCE == null) {
-            try {
-                Thread.sleep(30);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        }
-        return INSTANCE;
-    }
-
-    @Override
-    public void afterPropertiesSet() throws Exception {
-        INSTANCE = this;
-    }
-
 
     public List<List<ReportCell>> getReport(List<Habit> habits, Date startDate, Date endDate) {
         List<List<ReportCell>> result = new ArrayList<>();

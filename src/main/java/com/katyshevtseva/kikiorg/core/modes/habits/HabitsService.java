@@ -15,8 +15,7 @@ import java.util.Date;
 import java.util.List;
 
 @Service
-public class HabitsService implements InitializingBean {
-    private static HabitsService INSTANCE;
+public class HabitsService {
     @Autowired
     private HabitsRepo habitsRepo;
     @Autowired
@@ -25,22 +24,6 @@ public class HabitsService implements InitializingBean {
     private HabitMarkRepo habitMarkRepo;
     @Autowired
     private DateService dateService;
-
-    public static HabitsService getInstance() {
-        while (INSTANCE == null) {
-            try {
-                Thread.sleep(30);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        }
-        return INSTANCE;
-    }
-
-    @Override
-    public void afterPropertiesSet() throws Exception {
-        INSTANCE = this;
-    }
 
     public void saveHabit(Habit habit) {
         habitsRepo.save(habit);

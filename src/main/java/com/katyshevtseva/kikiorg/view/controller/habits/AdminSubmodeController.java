@@ -1,5 +1,6 @@
 package com.katyshevtseva.kikiorg.view.controller.habits;
 
+import com.katyshevtseva.kikiorg.core.Core;
 import com.katyshevtseva.kikiorg.core.modes.habits.entity.EnumElement;
 import com.katyshevtseva.kikiorg.core.modes.habits.entity.Habit;
 import com.katyshevtseva.kikiorg.core.modes.habits.entity.HabitType;
@@ -109,7 +110,7 @@ class AdminSubmodeController implements FxController {
 
     private void fillHabitTable() {
         gridPane.getChildren().clear();
-        List<Habit> habits = HabitsService.getInstance().getAllHabits();
+        List<Habit> habits = Core.getInstance().habitsService().getAllHabits();
         listPoints = new ArrayList<>();
         int rowIndex = 0;
         for (Habit habit : habits) {
@@ -140,12 +141,12 @@ class AdminSubmodeController implements FxController {
         habit.setDescription(descTextArea.getText());
         habit.setType(typeComboBox.getValue());
         habit.setActive(activeCheckBox.isSelected());
-        HabitsService.getInstance().saveHabit(habit);
+        Core.getInstance().habitsService().saveHabit(habit);
 
         if (habit.getType() == HabitType.enumeration) {
             for (EnumElement enumElement : enumElements) {
                 enumElement.setHabit(habit);
-                HabitsService.getInstance().saveEnumElement(enumElement);
+                Core.getInstance().habitsService().saveEnumElement(enumElement);
             }
         }
 
@@ -161,7 +162,7 @@ class AdminSubmodeController implements FxController {
 
         if (habit != null && mode == Mode.show) {
             titleLabel.setText(String.format("%s [%s] (active = %s)", habit.getTitle(),
-                    getEnumString(HabitsService.getInstance().getEnumElementsByHabit(habit)), habit.isActive()));
+                    getEnumString(Core.getInstance().habitsService().getEnumElementsByHabit(habit)), habit.isActive()));
             descLabel.setText(habit.getDescription());
             typeLabel.setText("type: " + habit.getType());
         } else if (habit != null && mode == Mode.edit) {

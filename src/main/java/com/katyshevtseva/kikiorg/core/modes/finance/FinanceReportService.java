@@ -10,26 +10,9 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class FinanceReportService implements InitializingBean {
-    private static FinanceReportService INSTANCE;
+public class FinanceReportService {
     @Autowired
     private FinanceService financeService;
-
-    public static FinanceReportService getInstance() {
-        while (INSTANCE == null) {
-            try {
-                Thread.sleep(30);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        }
-        return INSTANCE;
-    }
-
-    @Override
-    public void afterPropertiesSet() throws Exception {
-        INSTANCE = this;
-    }
 
     public String getReport() {
         String report = "";

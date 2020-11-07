@@ -1,5 +1,6 @@
 package com.katyshevtseva.kikiorg.view.controller.finance;
 
+import com.katyshevtseva.kikiorg.core.Core;
 import com.katyshevtseva.kikiorg.core.modes.finance.FinanceService;
 import com.katyshevtseva.kikiorg.core.modes.finance.entity.Account;
 import com.katyshevtseva.kikiorg.core.modes.finance.entity.Source;
@@ -43,13 +44,13 @@ class ReplenishmentSubmodeController implements FxController {
     }
 
     private void setSourceComboBoxItems() {
-        ObservableList<Source> sources = FXCollections.observableArrayList(FinanceService.getInstance().getSources());
+        ObservableList<Source> sources = FXCollections.observableArrayList(Core.getInstance().financeService().getSources());
         sourceComboBox.setItems(sources);
     }
 
     void setAccountComboBoxItems() {
         if(accountComboBox != null){
-            ObservableList<Account> accounts = FXCollections.observableArrayList(FinanceService.getInstance().getAccounts());
+            ObservableList<Account> accounts = FXCollections.observableArrayList(Core.getInstance().financeService().getAccounts());
             accountComboBox.setItems(accounts);
             if (accounts.size() > 0)
                 accountComboBox.setValue(accounts.get(0));
@@ -57,14 +58,14 @@ class ReplenishmentSubmodeController implements FxController {
     }
 
     private void addSource() {
-        FinanceService.getInstance().addSourse(sourceTitleField.getText(), sourceDescArea.getText());
+        Core.getInstance().financeService().addSourse(sourceTitleField.getText(), sourceDescArea.getText());
         sourceTitleField.clear();
         sourceDescArea.clear();
         setSourceComboBoxItems();
     }
 
     private void saveReplenishment() {
-        FinanceService.getInstance().addReplenishment(accountComboBox.getValue(), Long.parseLong(amountTextField.getText()),
+        Core.getInstance().financeService().addReplenishment(accountComboBox.getValue(), Long.parseLong(amountTextField.getText()),
                 sourceComboBox.getValue(), java.sql.Date.valueOf(datePicker.getValue()));
         amountTextField.clear();
     }
