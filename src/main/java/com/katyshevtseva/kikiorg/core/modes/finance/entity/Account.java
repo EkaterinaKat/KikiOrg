@@ -1,11 +1,9 @@
 package com.katyshevtseva.kikiorg.core.modes.finance.entity;
 
+import com.katyshevtseva.kikiorg.core.modes.finance.Owner;
 import lombok.Data;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Data
 @Entity
@@ -19,6 +17,9 @@ public class Account {
     private String title;
 
     private String description;
+
+    @Enumerated(EnumType.STRING)
+    private Owner owner;
 
     @Override
     public String toString() {

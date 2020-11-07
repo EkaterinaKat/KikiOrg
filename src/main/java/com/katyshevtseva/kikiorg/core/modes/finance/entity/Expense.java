@@ -1,5 +1,6 @@
 package com.katyshevtseva.kikiorg.core.modes.finance.entity;
 
+import com.katyshevtseva.kikiorg.core.modes.finance.Owner;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -24,4 +25,7 @@ public class Expense {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "item_id", nullable = false)
     private Item item;
+
+    @Enumerated(EnumType.STRING)
+    private Owner owner;
 }

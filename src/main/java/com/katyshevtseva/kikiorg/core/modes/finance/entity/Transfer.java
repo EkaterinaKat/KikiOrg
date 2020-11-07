@@ -1,6 +1,7 @@
 package com.katyshevtseva.kikiorg.core.modes.finance.entity;
 
 import com.katyshevtseva.kikiorg.core.date.DateEntity;
+import com.katyshevtseva.kikiorg.core.modes.finance.Owner;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -25,4 +26,7 @@ public class Transfer {
     @ManyToOne
     @JoinColumn(name = "date_entity_id")
     private DateEntity dateEntity;
+
+    @Enumerated(EnumType.STRING)
+    private Owner owner;
 }

@@ -3,6 +3,8 @@ package com.katyshevtseva.kikiorg.core.modes.finance;
 import com.katyshevtseva.kikiorg.core.date.DateService;
 import com.katyshevtseva.kikiorg.core.modes.finance.entity.*;
 import com.katyshevtseva.kikiorg.core.repo.*;
+import lombok.Getter;
+import lombok.Setter;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,6 +17,9 @@ import java.util.List;
 public class FinanceManager implements InitializingBean {
     private static FinanceManager INSTANCE;
     private ReportGenerator reportGenerator;
+    @Getter
+    @Setter
+    private Owner currentOwner = Owner.K;
     @Autowired
     private AccountRepo accountRepo;
     @Autowired

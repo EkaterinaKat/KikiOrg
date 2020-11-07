@@ -1,5 +1,6 @@
 package com.katyshevtseva.kikiorg.core.modes.finance.entity;
 
+import com.katyshevtseva.kikiorg.core.modes.finance.Owner;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -24,4 +25,7 @@ public class Replenishment {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "source_id", nullable = false)
     private Source source;
+
+    @Enumerated(EnumType.STRING)
+    private Owner owner;
 }
