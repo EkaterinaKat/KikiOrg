@@ -62,6 +62,7 @@ public class FinanceManager implements InitializingBean {
         Source source = new Source();
         source.setTitle(title);
         source.setDescription(desc);
+        source.setOwner(currentOwner);
         sourceRepo.save(source);
     }
 
@@ -73,6 +74,7 @@ public class FinanceManager implements InitializingBean {
         Item item = new Item();
         item.setTitle(title);
         item.setDescription(desc);
+        item.setOwner(currentOwner);
         itemRepo.save(item);
     }
 
@@ -80,11 +82,12 @@ public class FinanceManager implements InitializingBean {
         return itemRepo.findAll();
     }
 
-    public void addAccount(String title, String desc) {
+    public void addAccount(String title, String desc, Owner owner) {
         Account account = new Account();
         account.setTitle(title);
         account.setDescription(desc);
         account.setAmount(0);
+        account.setOwner(owner);
         accountRepo.save(account);
     }
 
@@ -98,6 +101,7 @@ public class FinanceManager implements InitializingBean {
         expense.setAmount(amount);
         expense.setDateOfExp(date);
         expense.setItem(item);
+        expense.setOwner(currentOwner);
         expenseRepo.save(expense);
 
         addToAccountAmount(account, (-1) * amount);
@@ -113,6 +117,7 @@ public class FinanceManager implements InitializingBean {
         replenishment.setAmount(amount);
         replenishment.setSource(source);
         replenishment.setDateOfRepl(date);
+        replenishment.setOwner(currentOwner);
         replenishmentRepo.save(replenishment);
 
         addToAccountAmount(account, amount);
@@ -150,6 +155,7 @@ public class FinanceManager implements InitializingBean {
         transfer.setTo(to);
         transfer.setAmount(amount);
         transfer.setDateEntity(dateService.createIfNotExistAndGetDateEntity(new Date()));
+        transfer.setOwner(currentOwner);
         transferRepo.save(transfer);
 
         addToAccountAmount(from, (-1) * amount);
