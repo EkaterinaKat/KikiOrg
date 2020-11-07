@@ -13,17 +13,7 @@ import java.util.Arrays;
 
 public class MainController extends AbstractSwitchController implements WindowBuilder.FxController {
     @FXML
-    private Button todayButton;
-    @FXML
     private Button habitsButton;
-    @FXML
-    private Button regularTasksButton;
-    @FXML
-    private Button irregularTasksButton;
-    @FXML
-    private Button eventsButton;
-    @FXML
-    private Button studiesButton;
     @FXML
     private Button financeButton;
     @FXML
@@ -36,8 +26,7 @@ public class MainController extends AbstractSwitchController implements WindowBu
     @FXML
     private void initialize() {
         pane = mainPane;
-        buttons.addAll(Arrays.asList(todayButton, habitsButton, regularTasksButton, irregularTasksButton,
-                eventsButton, studiesButton, financeButton));
+        buttons.addAll(Arrays.asList(habitsButton, financeButton));
         financeButton.setOnAction(event -> financeButtonListener());
         habitsButton.setOnAction(event -> habitsButtonListener());
         financeButtonListener();
@@ -46,20 +35,10 @@ public class MainController extends AbstractSwitchController implements WindowBu
     private void financeButtonListener() {
         activateMode(financeButton, financeModeNode,
                 OrganizerWindowCreator.getInstance()::getFinanceModeNode, financeModeController);
-        disableEmptyButtons();
     }
 
     private void habitsButtonListener() {
         activateMode(habitsButton, habitsModeNode,
                 OrganizerWindowCreator.getInstance()::getHabitsModeNode, habitsModeController);
-        disableEmptyButtons();
-    }
-
-    private void disableEmptyButtons() {
-        todayButton.setDisable(true);
-        regularTasksButton.setDisable(true);
-        irregularTasksButton.setDisable(true);
-        eventsButton.setDisable(true);
-        studiesButton.setDisable(true);
     }
 }
