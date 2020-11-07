@@ -1,24 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.DatePicker?>
-<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <HBox xmlns="http://javafx.com/javafx"
       xmlns:fx="http://javafx.com/fxml">
 
     <VBox>
-        <ScrollPane>
-            <GridPane fx:id="habitsTable" minWidth="800" maxWidth="800"/>
-        </ScrollPane>
+        <TableView maxWidth="250" minWidth="250" fx:id="habitsTable">
+            <columns>
+                <TableColumn prefWidth="50" fx:id="checkBoxColumn"/>
+                <TableColumn prefWidth="200" fx:id="titleColumn"/>
+            </columns>
+        </TableView>
         <Pane minHeight="15" maxHeight="15"/>
         <DatePicker fx:id="startDatePicker"/>
         <Pane minHeight="15" maxHeight="15"/>
         <DatePicker fx:id="endDatePicker"/>
+        <Pane minHeight="15" maxHeight="15"/>
+        <Button fx:id="showButton" text="Show" maxWidth="250" minWidth="250"/>
     </VBox>
 
     <Pane minWidth="25" maxWidth="25"/>
 
-    <ScrollPane maxWidth="250" minWidth="250">
-        <GridPane fx:id="reportTable" alignment="CENTER" maxWidth="240" minWidth="240"/>
+    <ScrollPane maxWidth="800" minWidth="800" maxHeight="700" minHeight="700">
+        <GridPane fx:id="reportTable" alignment="CENTER" hgap="1" vgap="1" gridLinesVisible="true"/>
     </ScrollPane>
 </HBox>

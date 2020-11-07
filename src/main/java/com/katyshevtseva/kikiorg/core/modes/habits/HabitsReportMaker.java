@@ -6,14 +6,15 @@ import com.katyshevtseva.kikiorg.core.modes.habits.entity.HabitMark;
 import com.katyshevtseva.kikiorg.core.modes.habits.entity.ReportCell;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
+@Service
 public class HabitsReportMaker implements InitializingBean {
     private static HabitsReportMaker INSTANCE;
+    private static SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM");
     @Autowired
     private HabitsManager habitsManager;
     @Autowired
@@ -39,7 +40,9 @@ public class HabitsReportMaker implements InitializingBean {
     public List<List<ReportCell>> getReport(List<Habit> habits, Date startDate, Date endDate) {
         List<List<ReportCell>> result = new ArrayList<>();
         result.add(getReportHead(habits));
-        for (Date date : getDateRange(startDate, endDate)) {
+        List<Date> dates = getDateRange(startDate, endDate);
+        Collections.reverse(dates);  // Чтобы последние даты были наверху таблицы
+        for (Date date : dates) {
             result.add(getReportLine(date, habits));
         }
         return result;
@@ -47,7 +50,7 @@ public class HabitsReportMaker implements InitializingBean {
 
     private List<ReportCell> getReportLine(Date date, List<Habit> habits) {
         List<ReportCell> result = new ArrayList<>();
-        result.add(ReportCell.meta(date.toString()));
+        result.add(ReportCell.meta(dateFormat.format(date)));
         for (Habit habit : habits) {
             result.add(convertToCell(habit, date));
         }
@@ -55,7 +58,7 @@ public class HabitsReportMaker implements InitializingBean {
     }
 
     private ReportCell convertToCell(Habit habit, Date date) {
-        HabitMark mark = habitsManager.getMark(habit, date);
+        HabitMark mark = habitsManager.getMarkOrNull(habit, date);
         if (mark == null)
             return ReportCell.empty();
         return habitMarkConverter.prepareForReport(habit, mark);

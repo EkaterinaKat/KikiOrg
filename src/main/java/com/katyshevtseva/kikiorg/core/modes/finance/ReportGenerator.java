@@ -19,21 +19,29 @@ class ReportGenerator {
         // Счета
         List<Account> accounts = financeManager.getAccounts();
         for (Account account : accounts) {
-            report += (" * " + account.getTitle() + ". " + account.getDescription() + ". Amount: " + account.getAmount() + "\n");
+            report += (" * " + account.getTitle() + ". " +
+                    account.getDescription() + ". Amount: " +
+                    account.getAmount() + "\n");
         }
 
         // Доходы
         report += "\nДоходы \n";
         List<Replenishment> replenishments = financeManager.getReplenishments();
         for (Replenishment replenishment : replenishments) {
-            report += (" * " + replenishment.getSource() + " " + replenishment.getDateOfRepl() + " " + replenishment.getAmount() + "\n");
+            report += (" * " + replenishment.getSource() + " " +
+                    replenishment.getDateOfRepl() +
+                    replenishment.getAccount().getTitle() + " " +
+                    replenishment.getAmount() + "\n");
         }
 
         // Расходы
         report += "\nРасходы \n";
         List<Expense> expenses = financeManager.getExpenses();
         for (Expense expense : expenses) {
-            report += (" * " + expense.getItem() + " " + expense.getDateOfExp() + " " + expense.getAmount() + "\n");
+            report += (" * " + expense.getItem() + " " +
+                    expense.getDateOfExp() + " " +
+                    expense.getAccount().getTitle() + " " +
+                    expense.getAmount() + "\n");
         }
 
         return report;

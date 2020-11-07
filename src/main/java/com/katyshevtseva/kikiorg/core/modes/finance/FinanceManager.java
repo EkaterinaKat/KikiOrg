@@ -144,7 +144,7 @@ public class FinanceManager implements InitializingBean {
         transfer.setFrom(from);
         transfer.setTo(to);
         transfer.setAmount(amount);
-        transfer.setDateEntity(dateService.getDateEntity(new Date()));
+        transfer.setDateEntity(dateService.createIfNotExistAndGetDateEntity(new Date()));
         transferRepo.save(transfer);
 
         addToAccountAmount(from, (-1) * amount);

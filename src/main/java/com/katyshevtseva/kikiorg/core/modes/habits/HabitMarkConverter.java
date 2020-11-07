@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 
 /* Если habitType == enum то сохраняется id EnumElement */
+/* Отметка не может быть null */
 @Service
 class HabitMarkConverter {
     private static final String GREEN = "#40FF23";
@@ -35,12 +36,12 @@ class HabitMarkConverter {
         Long markNum = mark.getMark();
         switch (habit.getType()) {
             case bollean:
-                return ReportCell.filled(markNum.toString(), markNum == 1 ? GREEN : WHITE);
+                return ReportCell.filled(markNum.toString(), markNum == 1 ? ReportCell.Color.GREEN : ReportCell.Color.WHITE);
             case number:
-                return ReportCell.filled(markNum.toString(), markNum == 0 ? WHITE : GREEN);
+                return ReportCell.filled(markNum.toString(), markNum == 0 ? ReportCell.Color.WHITE : ReportCell.Color.GREEN);
             case enumeration:
                 EnumElement enumElement = enumElementRepo.findById(markNum).get();
-                return ReportCell.filled(enumElement.getTitle(), GREEN);
+                return ReportCell.filled(enumElement.getTitle(), ReportCell.Color.GREEN);
 
         }
         return null;

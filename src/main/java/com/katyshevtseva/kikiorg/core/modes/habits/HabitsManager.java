@@ -64,14 +64,14 @@ public class HabitsManager implements InitializingBean {
 
     public void makeMark(Habit habit, Date date, Object mark) {
         HabitMark habitMark = new HabitMark();
-        habitMark.setDateEntity(dateService.getDateEntity(date));
+        habitMark.setDateEntity(dateService.createIfNotExistAndGetDateEntity(date));
         habitMark.setHabit(habit);
         habitMark.setMark(HabitMarkConverter.prepareToPersist(habit, mark));
         habitMarkRepo.save(habitMark);
     }
 
-    HabitMark getMark(Habit habit, Date date) {
+    HabitMark getMarkOrNull(Habit habit, Date date) {
         return habitMarkRepo.findByHabitIdAndDateEntityId(
-                habit.getId(), dateService.getDateEntity(date).getId()).get();
+                habit.getId(), dateService.createIfNotExistAndGetDateEntity(date).getId()).orElse(null);
     }
 }

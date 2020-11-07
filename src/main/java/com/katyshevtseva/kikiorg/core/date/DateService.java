@@ -11,7 +11,7 @@ public class DateService {
     @Autowired
     private DateRepo dateRepo;
 
-    public DateEntity getDateEntity(Date date){
+    public DateEntity createIfNotExistAndGetDateEntity(Date date){
         Optional<DateEntity> optionalDateEntity = dateRepo.findByValue(date);
         if (optionalDateEntity.isPresent())
             return optionalDateEntity.get();
