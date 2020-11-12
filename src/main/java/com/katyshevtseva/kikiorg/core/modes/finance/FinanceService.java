@@ -5,11 +5,11 @@ import com.katyshevtseva.kikiorg.core.modes.finance.entity.*;
 import com.katyshevtseva.kikiorg.core.repo.*;
 import lombok.Getter;
 import lombok.Setter;
-import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
@@ -17,7 +17,7 @@ import java.util.List;
 public class FinanceService {
     @Getter
     @Setter
-    private Owner currentOwner = Owner.K;
+    private Owner currentOwner = Owner.M;
     @Autowired
     private AccountRepo accountRepo;
     @Autowired
@@ -139,28 +139,36 @@ public class FinanceService {
         addToAccountAmount(to, amount);
     }
 
-    public void validateAllAccountsAmount(){
-        for(Account account: accountRepo.findAll()){
+    public void validateAllAccountsAmount() {
+        for (Account account : accountRepo.findAll()) {
             validateAccountAmount(account);
         }
     }
 
-    private void validateAccountAmount(Account account){
+    private void validateAccountAmount(Account account) {
         List<Expense> expenses = expenseRepo.findByAccountId(account.getId());
         List<Replenishment> replenishments = replenishmentRepo.findByAccountId(account.getId());
         long amount = 0;
-        for (Replenishment replenishment: replenishments){
-            amount+=replenishment.getAmount();
+        for (Replenishment replenishment : replenishments) {
+            amount += replenishment.getAmount();
         }
-        for (Expense expense: expenses){
-            amount-=expense.getAmount();
+        for (Expense expense : expenses) {
+            amount -= expense.getAmount();
         }
         rewriteAccountAmount(account, amount);
     }
 
-    private void rewriteAccountAmount(Account account, long amount){
+    private void rewriteAccountAmount(Account account, long amount) {
         Account actualAccount = accountRepo.findById(account.getId()).orElse(null);
         actualAccount.setAmount(amount);
         accountRepo.save(actualAccount);
+    }
+
+    public List<Owner> getAvailableOwners() {
+        if (currentOwner == Owner.K)
+            return Arrays.asList(Owner.K, Owner.C);
+        if (currentOwner == Owner.M)
+            return Arrays.asList(Owner.M, Owner.C);
+        throw new RuntimeException();
     }
 }

@@ -1,7 +1,6 @@
 package com.katyshevtseva.kikiorg.view.controller.finance;
 
 import com.katyshevtseva.kikiorg.core.Core;
-import com.katyshevtseva.kikiorg.core.modes.finance.FinanceService;
 import com.katyshevtseva.kikiorg.core.modes.finance.Owner;
 import com.katyshevtseva.kikiorg.core.modes.finance.entity.Account;
 import com.katyshevtseva.kikiorg.view.utils.Utils;
@@ -35,6 +34,8 @@ class AccountsSubmodeController implements FxController {
     private Button transferButton;
     @FXML
     private Button validationButton;
+    @FXML
+    private ComboBox<Owner> ownerComboBox;
 
     AccountsSubmodeController(ReplenishmentSubmodeController replenishmentController,
                               ExpensesSubmodeController expensesController, CheckSubmodeController checkController) {
@@ -46,13 +47,14 @@ class AccountsSubmodeController implements FxController {
     @FXML
     private void initialize() {
         addAccountButton.setOnAction(event -> addAccount());
-        Utils.associateButtonWithControls(addAccountButton, accountTitleField, accountDescArea);
+        Utils.associateButtonWithControls(addAccountButton, accountTitleField, accountDescArea, ownerComboBox);
         setAccountComboBoxItems(fromComboBox);
         setAccountComboBoxItems(toComboBox);
         Utils.disableNonNumericChars(amountTextField);
         Utils.associateButtonWithControls(transferButton, amountTextField, fromComboBox, toComboBox);
         transferButton.setOnAction(event -> transfer());
         validationButton.setOnAction(event -> Core.getInstance().financeService().validateAllAccountsAmount());
+        ownerComboBox.setItems(FXCollections.observableArrayList(Core.getInstance().financeService().getAvailableOwners()));
     }
 
     private void transfer() {
@@ -62,7 +64,10 @@ class AccountsSubmodeController implements FxController {
     }
 
     private void addAccount() {
-        Core.getInstance().financeService().addAccount(accountTitleField.getText(), accountDescArea.getText(), Owner.K);
+        Core.getInstance().financeService().addAccount(
+                accountTitleField.getText(),
+                accountDescArea.getText(),
+                ownerComboBox.getValue());
         accountTitleField.clear();
         accountDescArea.clear();
         replenishmentController.setAccountComboBoxItems();

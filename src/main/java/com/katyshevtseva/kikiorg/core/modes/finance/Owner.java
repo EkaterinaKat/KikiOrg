@@ -1,7 +1,7 @@
 package com.katyshevtseva.kikiorg.core.modes.finance;
 
 public enum Owner {
-    K("Екатерина"), M("Камиль"), COMMON("Общее");
+    K("Екатерина"), M("Камиль"), C("Общий");
 
     private String name;
 
@@ -10,6 +10,11 @@ public enum Owner {
     }
 
     public String getName() {
+        return name;
+    }
+
+    @Override
+    public String toString() {
         return name;
     }
 }
