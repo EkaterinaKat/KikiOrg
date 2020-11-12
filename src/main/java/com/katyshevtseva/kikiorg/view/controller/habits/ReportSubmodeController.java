@@ -46,8 +46,7 @@ class ReportSubmodeController implements FxController {
     private Button showButton;
     private List<Habit> selectedHabits = new ArrayList<>();
     private static final int CELL_PREF_HEIGHT = 30;
-    private static final int CELL_PREF_WIDTH = 80;
-    private static final int CELL_MAX_WIDTH = 100;
+    private static final int CELL_PREF_WIDTH = 110;
 
     @FXML
     private void initialize() {
@@ -120,7 +119,6 @@ class ReportSubmodeController implements FxController {
         StackPane pane = new StackPane();
         pane.setPrefHeight(CELL_PREF_HEIGHT);
         pane.setPrefWidth(CELL_PREF_WIDTH);
-        pane.setMaxWidth(CELL_MAX_WIDTH);
         pane.setStyle(" -fx-background-color: " + reportCell.getColor() + "; ");
         Label label = new Label(reportCell.getText());
         pane.getChildren().add(label);

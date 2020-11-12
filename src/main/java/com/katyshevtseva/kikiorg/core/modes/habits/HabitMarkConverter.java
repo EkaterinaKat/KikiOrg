@@ -36,7 +36,7 @@ class HabitMarkConverter {
         Long markNum = mark.getMark();
         switch (habit.getType()) {
             case bollean:
-                return ReportCell.filled(markNum.toString(), markNum == 1 ? ReportCell.Color.GREEN : ReportCell.Color.WHITE);
+                return ReportCell.filled("", markNum == 1 ? ReportCell.Color.GREEN : ReportCell.Color.WHITE);
             case number:
                 return ReportCell.filled(markNum.toString(), markNum == 0 ? ReportCell.Color.WHITE : ReportCell.Color.GREEN);
             case enumeration:

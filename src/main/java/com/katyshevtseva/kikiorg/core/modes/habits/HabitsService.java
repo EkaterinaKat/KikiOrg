@@ -11,6 +11,7 @@ import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 
@@ -30,7 +31,9 @@ public class HabitsService {
     }
 
     public List<Habit> getAllHabits() {
-        return habitsRepo.findAll();
+        List<Habit> habits = habitsRepo.findAll();
+        habits.sort(Comparator.comparing(Habit::isActive).reversed());
+        return habits;
     }
 
     public List<Habit> getActiveHabits() {
