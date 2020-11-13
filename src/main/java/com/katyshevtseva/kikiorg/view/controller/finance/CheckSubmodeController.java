@@ -1,9 +1,8 @@
 package com.katyshevtseva.kikiorg.view.controller.finance;
 
 import com.katyshevtseva.kikiorg.core.Core;
-import com.katyshevtseva.kikiorg.core.modes.finance.FinanceService;
 import com.katyshevtseva.kikiorg.core.modes.finance.entity.Account;
-import com.katyshevtseva.kikiorg.core.modes.finance.entity.AccountPart;
+import com.katyshevtseva.kikiorg.core.modes.finance.entity.CheckLine;
 import com.katyshevtseva.kikiorg.view.utils.Utils;
 import com.katyshevtseva.kikiorg.view.utils.WindowBuilder.FxController;
 import javafx.collections.FXCollections;
@@ -67,19 +66,19 @@ class CheckSubmodeController implements FxController {
     }
 
     private void createTrios() {
-        List<AccountPart> accountParts = Core.getInstance().financeService().getAccountParts();
+        List<CheckLine> checkLines = Core.getInstance().financeService().getCheckLine();
         trios = new ArrayList<>();
-        trios.add(new Trio(amountField1, titleField1, accountParts, 0));
-        trios.add(new Trio(amountField2, titleField2, accountParts, 1));
-        trios.add(new Trio(amountField3, titleField3, accountParts, 2));
-        trios.add(new Trio(amountField4, titleField4, accountParts, 3));
-        trios.add(new Trio(amountField5, titleField5, accountParts, 4));
-        trios.add(new Trio(amountField6, titleField6, accountParts, 5));
-        trios.add(new Trio(amountField7, titleField7, accountParts, 6));
+        trios.add(new Trio(amountField1, titleField1, checkLines, 0));
+        trios.add(new Trio(amountField2, titleField2, checkLines, 1));
+        trios.add(new Trio(amountField3, titleField3, checkLines, 2));
+        trios.add(new Trio(amountField4, titleField4, checkLines, 3));
+        trios.add(new Trio(amountField5, titleField5, checkLines, 4));
+        trios.add(new Trio(amountField6, titleField6, checkLines, 5));
+        trios.add(new Trio(amountField7, titleField7, checkLines, 6));
     }
 
     private void checkButtonListener() {
-        rewriteAccountParts();
+        rewriteCheckLines();
         showCheckResults();
     }
 
@@ -93,15 +92,15 @@ class CheckSubmodeController implements FxController {
         }
     }
 
-    private void rewriteAccountParts() {
-        List<AccountPart> accountPartsToSave = new ArrayList<>();
+    private void rewriteCheckLines() {
+        List<CheckLine> checkLinesToSave = new ArrayList<>();
         for (Trio trio : trios) {
-            AccountPart accountPart = trio.getChangedAccountPart();
-            if (accountPart != null) {
-                accountPartsToSave.add(accountPart);
+            CheckLine checkLine = trio.getChangedCheckLine();
+            if (checkLine != null) {
+                checkLinesToSave.add(checkLine);
             }
         }
-        Core.getInstance().financeService().rewriteAccountParts(accountPartsToSave);
+        Core.getInstance().financeService().rewriteCheckLine(checkLinesToSave);
     }
 
     void setAccountComboBoxItems() {
@@ -116,24 +115,24 @@ class CheckSubmodeController implements FxController {
     private class Trio {
         TextField amountField;
         TextField titleField;
-        AccountPart accountPart = new AccountPart();
+        CheckLine checkLine = new CheckLine();
 
-        Trio(TextField amountField, TextField titleField, List<AccountPart> accountParts, int index) {
+        Trio(TextField amountField, TextField titleField, List<CheckLine> checkLines, int index) {
             this.amountField = amountField;
             this.titleField = titleField;
 
-            if (accountParts.size() > index) {
-                this.accountPart = accountParts.get(index);
-                titleField.setText(accountPart.getTitle());
-                amountField.setText(accountPart.getAmount().toString());
+            if (checkLines.size() > index) {
+                this.checkLine = checkLines.get(index);
+                titleField.setText(checkLine.getTitle());
+                amountField.setText(checkLine.getAmount().toString());
             }
         }
 
-        AccountPart getChangedAccountPart() {
+        CheckLine getChangedCheckLine() {
             if (!amountField.getText().trim().equals("") && !titleField.getText().trim().equals("")) {
-                accountPart.setAmount(Long.parseLong(amountField.getText().trim()));
-                accountPart.setTitle(titleField.getText().trim());
-                return accountPart;
+                checkLine.setAmount(Long.parseLong(amountField.getText().trim()));
+                checkLine.setTitle(titleField.getText().trim());
+                return checkLine;
             }
             return null;
         }

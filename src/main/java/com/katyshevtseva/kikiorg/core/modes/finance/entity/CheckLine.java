@@ -7,7 +7,7 @@ import javax.persistence.*;
 
 @Data
 @Entity
-public class AccountPart {
+public class CheckLine {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;

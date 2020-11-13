@@ -29,7 +29,7 @@ public class FinanceService {
     @Autowired
     private ReplenishmentRepo replenishmentRepo;
     @Autowired
-    private AccountPartRepo accountPartRepo;
+    private CheckLineRepo checkLineRepo;
     @Autowired
     private DateService dateService;
     @Autowired
@@ -110,13 +110,13 @@ public class FinanceService {
         return replenishmentRepo.findAll();
     }
 
-    public List<AccountPart> getAccountParts() {
-        return accountPartRepo.findAll();
+    public List<CheckLine> getCheckLine() {
+        return checkLineRepo.findAll();
     }
 
-    public void rewriteAccountParts(List<AccountPart> accountParts) {
-        accountPartRepo.deleteAll();
-        accountPartRepo.saveAll(accountParts);
+    public void rewriteCheckLine(List<CheckLine> checkLines) {
+        checkLineRepo.deleteAll();
+        checkLineRepo.saveAll(checkLines);
     }
 
     public String check(Account account, int amount) {
