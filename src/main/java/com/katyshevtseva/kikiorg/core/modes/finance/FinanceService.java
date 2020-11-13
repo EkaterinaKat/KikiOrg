@@ -30,8 +30,6 @@ public class FinanceService {
     @Autowired
     private ReplenishmentRepo replenishmentRepo;
     @Autowired
-    private CheckLineRepo checkLineRepo;
-    @Autowired
     private DateService dateService;
     @Autowired
     private TransferRepo transferRepo;
@@ -114,21 +112,6 @@ public class FinanceService {
 
     List<Replenishment> getReplenishments() {
         return replenishmentRepo.findAllByOwner(currentOwner);
-    }
-
-    public List<CheckLine> getCheckLine() {
-        return checkLineRepo.findAllByOwner(currentOwner);
-    }
-
-    public void rewriteCheckLine(List<CheckLine> checkLines) {
-        checkLineRepo.deleteAll();
-        checkLineRepo.saveAll(checkLines);
-    }
-
-    public String check(Account account, int amount) {
-        long accountAmount = accountRepo.findById(account.getId()).get().getAmount();
-        long diff = amount - accountAmount;
-        return String.format("По расчетам: %s. По Факту: %s. Разница: %s.", accountAmount, amount, diff);
     }
 
     @Transactional

@@ -66,7 +66,7 @@ class CheckSubmodeController implements FxController {
     }
 
     private void createTrios() {
-        List<CheckLine> checkLines = Core.getInstance().financeService().getCheckLine();
+        List<CheckLine> checkLines = Core.getInstance().financeCheckService().getCheckLine();
         trios = new ArrayList<>();
         trios.add(new Trio(amountField1, titleField1, checkLines, 0));
         trios.add(new Trio(amountField2, titleField2, checkLines, 1));
@@ -88,7 +88,7 @@ class CheckSubmodeController implements FxController {
             for (Trio trio : trios) {
                 amountSum += trio.getAmount();
             }
-            resultLabel.setText(Core.getInstance().financeService().check(accountComboBox.getValue(), amountSum));
+            resultLabel.setText(Core.getInstance().financeCheckService().check(accountComboBox.getValue(), amountSum));
         }
     }
 
@@ -100,7 +100,7 @@ class CheckSubmodeController implements FxController {
                 checkLinesToSave.add(checkLine);
             }
         }
-        Core.getInstance().financeService().rewriteCheckLine(checkLinesToSave);
+        Core.getInstance().financeCheckService().rewriteCheckLine(checkLinesToSave);
     }
 
     void setAccountComboBoxItems() {

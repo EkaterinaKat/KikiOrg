@@ -1,5 +1,6 @@
 package com.katyshevtseva.kikiorg.core;
 
+import com.katyshevtseva.kikiorg.core.modes.finance.FinanceCheckService;
 import com.katyshevtseva.kikiorg.core.modes.finance.FinanceReportService;
 import com.katyshevtseva.kikiorg.core.modes.finance.FinanceService;
 import com.katyshevtseva.kikiorg.core.modes.habits.HabitsReportService;
@@ -19,6 +20,8 @@ public class Core implements InitializingBean {
     private HabitsService habitsService;
     @Autowired
     private HabitsReportService habitsReportService;
+    @Autowired
+    private FinanceCheckService financeCheckService;
 
     public static Core getInstance() {
         while (INSTANCE == null) {
@@ -50,5 +53,9 @@ public class Core implements InitializingBean {
 
     public HabitsReportService habitsReportService() {
         return habitsReportService;
+    }
+
+    public FinanceCheckService financeCheckService() {
+        return financeCheckService;
     }
 }
