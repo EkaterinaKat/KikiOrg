@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
@@ -69,7 +70,12 @@ public class FinanceService {
     }
 
     public List<Account> getAccounts() {
-        return accountRepo.findAllByOwner(currentOwner);
+        List<Owner> owners = getAvailableAccountOwners();
+        List<Account> accounts = new ArrayList<>();
+        for (Owner owner : owners) {
+            accounts.addAll(accountRepo.findAllByOwner(owner));
+        }
+        return accounts;
     }
 
     public void addExpense(Account account, long amount, Item item, Date date) {
