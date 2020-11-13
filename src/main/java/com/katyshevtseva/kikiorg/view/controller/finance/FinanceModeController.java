@@ -1,8 +1,6 @@
 package com.katyshevtseva.kikiorg.view.controller.finance;
 
 import com.katyshevtseva.kikiorg.core.Core;
-import com.katyshevtseva.kikiorg.core.modes.finance.FinanceReportService;
-import com.katyshevtseva.kikiorg.core.modes.finance.FinanceService;
 import com.katyshevtseva.kikiorg.view.controller.AbstractSwitchController;
 import com.katyshevtseva.kikiorg.view.utils.OrganizerWindowCreator;
 import com.katyshevtseva.kikiorg.view.utils.WindowBuilder.FxController;
@@ -26,6 +24,8 @@ public class FinanceModeController extends AbstractSwitchController implements F
     @FXML
     private Button checkButton;
     @FXML
+    private Button userButton;
+    @FXML
     private TextArea reportTextArea;
     @FXML
     private Pane mainPane;
@@ -34,11 +34,13 @@ public class FinanceModeController extends AbstractSwitchController implements F
     private AccountsSubmodeController accountsController;
     private ExpensesSubmodeController expensesController;
     private CheckSubmodeController checkSubmodeController;
+    private UserSubmodeController userSubmodeController;
 
     private Node replenishmentSubmodeNode;
     private Node accountsSubmodeNode;
     private Node expensesSubmodeNode;
     private Node checkSubmodeNode;
+    private Node userSubmodeNode;
 
     private void updateDisplayedData() {
         reportTextArea.setText(Core.getInstance().financeReportService().getReport());
@@ -54,12 +56,13 @@ public class FinanceModeController extends AbstractSwitchController implements F
     @FXML
     private void initialize() {
         pane = mainPane;
-        buttons.addAll(Arrays.asList(replenishmentButton, accountsButton, expensesButton, checkButton));
+        buttons.addAll(Arrays.asList(replenishmentButton, accountsButton, expensesButton, checkButton, userButton));
         replenishmentButtonListener();
         replenishmentButton.setOnAction(event -> replenishmentButtonListener());
         accountsButton.setOnAction(event -> accountsButtonListener());
         expensesButton.setOnAction(event -> expensesButtonListener());
         checkButton.setOnAction(event -> checkButtonListener());
+        userButton.setOnAction(event -> userButtonListener());
         updateButton.setOnAction(event -> updateDisplayedData());
     }
 
@@ -81,5 +84,10 @@ public class FinanceModeController extends AbstractSwitchController implements F
     private void checkButtonListener() {
         activateMode(checkButton, checkSubmodeNode,
                 OrganizerWindowCreator.getInstance()::getCheckSubmodeNode, checkSubmodeController);
+    }
+
+    private void userButtonListener() {
+        activateMode(userButton, userSubmodeNode,
+                OrganizerWindowCreator.getInstance()::getUserSubmodeNode, userSubmodeController);
     }
 }
