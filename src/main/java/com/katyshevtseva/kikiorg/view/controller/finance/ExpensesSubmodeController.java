@@ -1,7 +1,6 @@
 package com.katyshevtseva.kikiorg.view.controller.finance;
 
 import com.katyshevtseva.kikiorg.core.Core;
-import com.katyshevtseva.kikiorg.core.modes.finance.FinanceService;
 import com.katyshevtseva.kikiorg.core.modes.finance.entity.Account;
 import com.katyshevtseva.kikiorg.core.modes.finance.entity.Item;
 import com.katyshevtseva.kikiorg.view.utils.Utils;
@@ -65,7 +64,7 @@ class ExpensesSubmodeController implements FxController {
     }
 
     private void saveExpense() {
-        Core.getInstance().financeService().addExpence(accountComboBox.getValue(), Long.parseLong(amountTextField.getText()),
+        Core.getInstance().financeService().addExpense(accountComboBox.getValue(), Long.parseLong(amountTextField.getText()),
                 itemComboBox.getValue(), java.sql.Date.valueOf(datePicker.getValue()));
         amountTextField.clear();
     }

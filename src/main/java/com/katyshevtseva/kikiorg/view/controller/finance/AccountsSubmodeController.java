@@ -54,7 +54,7 @@ class AccountsSubmodeController implements FxController {
         Utils.associateButtonWithControls(transferButton, amountTextField, fromComboBox, toComboBox);
         transferButton.setOnAction(event -> transfer());
         validationButton.setOnAction(event -> Core.getInstance().financeService().validateAllAccountsAmount());
-        ownerComboBox.setItems(FXCollections.observableArrayList(Core.getInstance().financeService().getAvailableOwners()));
+        ownerComboBox.setItems(FXCollections.observableArrayList(Core.getInstance().financeService().getAvailableAccountOwners()));
     }
 
     private void transfer() {

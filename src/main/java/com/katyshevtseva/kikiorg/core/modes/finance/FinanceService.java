@@ -44,7 +44,7 @@ public class FinanceService {
     }
 
     public List<Source> getSources() {
-        return sourceRepo.findAll();
+        return sourceRepo.findAllByOwner(currentOwner);
     }
 
     public void addItem(String title, String desc) {
@@ -56,7 +56,7 @@ public class FinanceService {
     }
 
     public List<Item> getItems() {
-        return itemRepo.findAll();
+        return itemRepo.findAllByOwner(currentOwner);
     }
 
     public void addAccount(String title, String desc, Owner owner) {
@@ -69,10 +69,10 @@ public class FinanceService {
     }
 
     public List<Account> getAccounts() {
-        return accountRepo.findAll();
+        return accountRepo.findAllByOwner(currentOwner);
     }
 
-    public void addExpence(Account account, long amount, Item item, Date date) {
+    public void addExpense(Account account, long amount, Item item, Date date) {
         Expense expense = new Expense();
         expense.setAccount(account);
         expense.setAmount(amount);
@@ -85,7 +85,7 @@ public class FinanceService {
     }
 
     public List<Expense> getExpenses() {
-        return expenseRepo.findAll();
+        return expenseRepo.findAllByOwner(currentOwner);
     }
 
     public void addReplenishment(Account account, long amount, Source source, Date date) {
@@ -107,11 +107,11 @@ public class FinanceService {
     }
 
     List<Replenishment> getReplenishments() {
-        return replenishmentRepo.findAll();
+        return replenishmentRepo.findAllByOwner(currentOwner);
     }
 
     public List<CheckLine> getCheckLine() {
-        return checkLineRepo.findAll();
+        return checkLineRepo.findAllByOwner(currentOwner);
     }
 
     public void rewriteCheckLine(List<CheckLine> checkLines) {
@@ -164,7 +164,7 @@ public class FinanceService {
         accountRepo.save(actualAccount);
     }
 
-    public List<Owner> getAvailableOwners() {
+    public List<Owner> getAvailableAccountOwners() {
         if (currentOwner == Owner.K)
             return Arrays.asList(Owner.K, Owner.C);
         if (currentOwner == Owner.M)
