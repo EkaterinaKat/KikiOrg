@@ -30,9 +30,9 @@ public class FinanceCheckService {
     public String check(Account account, int amount) {
         long accountAmount = accountRepo.findById(account.getId()).get().getAmount();
         long diff = amount - accountAmount;
-        String result = String.format("По расчетам: %s. По Факту: %s. Разница: %s.", accountAmount, amount, diff);
+        String result = String.format("По расчетам: %s. По Факту: %s. ", accountAmount, amount, diff);
         if (diff == 0)
-            result += "Разница: 0 (*°▽°*) ";
+            result += "Разница: 0   (*°▽°*) ";
         if (diff > 0)
             result += String.format("По факту больше чем по расчетам на: %d :О", diff);
         if (diff < 0)

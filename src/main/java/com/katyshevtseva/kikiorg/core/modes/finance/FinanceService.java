@@ -9,10 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 @Service
 public class FinanceService {
@@ -89,7 +86,9 @@ public class FinanceService {
     }
 
     public List<Expense> getExpenses() {
-        return expenseRepo.findAllByOwner(currentOwner);
+        List<Expense> expenses = expenseRepo.findAllByOwner(currentOwner);
+        expenses.sort(Comparator.comparing(Expense::getDateOfExp));
+        return expenses;
     }
 
     public void addReplenishment(Account account, long amount, Source source, Date date) {
@@ -111,7 +110,9 @@ public class FinanceService {
     }
 
     List<Replenishment> getReplenishments() {
-        return replenishmentRepo.findAllByOwner(currentOwner);
+        List<Replenishment> replenishments = replenishmentRepo.findAllByOwner(currentOwner);
+        replenishments.sort(Comparator.comparing(Replenishment::getDateOfRepl));
+        return replenishments;
     }
 
     @Transactional
