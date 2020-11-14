@@ -1,5 +1,6 @@
 package com.katyshevtseva.kikiorg.view.utils;
 
+import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
@@ -7,6 +8,7 @@ import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 
 import java.io.IOException;
 
@@ -19,6 +21,7 @@ public class WindowBuilder {
     private boolean isModal = false;
     private String iconImagePath;
     private boolean stretchable = false;
+    private EventHandler<WindowEvent> eventHandler;
 
     WindowBuilder(String fxmlName) {
         this.fxmlName = fxmlName;
@@ -59,6 +62,11 @@ public class WindowBuilder {
         return this;
     }
 
+    WindowBuilder setOnWindowCloseEventHandler(EventHandler<WindowEvent> eventHandler) {
+        this.eventHandler = eventHandler;
+        return this;
+    }
+
     void showWindow() {
         getStage().show();
     }
@@ -81,6 +89,8 @@ public class WindowBuilder {
             stage.getIcons().add(new Image(iconImagePath));
         if (isModal)
             stage.initModality(Modality.APPLICATION_MODAL);
+        if (eventHandler != null)
+            stage.setOnCloseRequest(eventHandler);
         return stage;
     }
 

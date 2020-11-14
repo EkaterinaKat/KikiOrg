@@ -18,8 +18,10 @@ public class OrganizerWindowCreator {
     }
 
     public void openMainWindow(FxController controller) {
-        new WindowBuilder(FXML_LOCATION + "main.fxml").setController(controller).setHeight(WINDOW_HEIGHT).
-                setWidth(WINDOW_WIDTH).setTitle(CoreConstants.APP_NAME).showWindow();
+        new WindowBuilder(FXML_LOCATION + "main.fxml").
+                setController(controller).setHeight(WINDOW_HEIGHT).
+                setWidth(WINDOW_WIDTH).setTitle(CoreConstants.APP_NAME).
+                setOnWindowCloseEventHandler(event -> System.exit(0)).showWindow();
     }
 
     /* ----------------------------------  Привычки ---------------------------------------------- */
