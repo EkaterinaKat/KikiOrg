@@ -18,7 +18,7 @@ import java.util.List;
 public class FinanceService {
     @Getter
     @Setter
-    private Owner currentOwner = Owner.M;
+    private Owner currentOwner = Owner.K;
     @Autowired
     private AccountRepo accountRepo;
     @Autowired
@@ -121,7 +121,6 @@ public class FinanceService {
         transfer.setTo(to);
         transfer.setAmount(amount);
         transfer.setDateEntity(dateService.createIfNotExistAndGetDateEntity(new Date()));
-        transfer.setOwner(currentOwner);
         transferRepo.save(transfer);
 
         addToAccountAmount(from, (-1) * amount);

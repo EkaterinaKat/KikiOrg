@@ -26,7 +26,4 @@ public class Transfer {
     @ManyToOne
     @JoinColumn(name = "date_entity_id")
     private DateEntity dateEntity;
-
-    @Enumerated(EnumType.STRING)
-    private Owner owner;
 }

@@ -50,6 +50,7 @@ public class FinanceModeController extends AbstractSwitchController implements F
         replenishmentController = new ReplenishmentSubmodeController();
         expensesController = new ExpensesSubmodeController();
         checkSubmodeController = new CheckSubmodeController();
+        userSubmodeController = new UserSubmodeController();
         accountsController = new AccountsSubmodeController(replenishmentController, expensesController, checkSubmodeController);
     }
 
