@@ -3,11 +3,9 @@ package com.katyshevtseva.kikiorg.core.modes.finance;
 import com.katyshevtseva.kikiorg.core.modes.finance.entity.Account;
 import com.katyshevtseva.kikiorg.core.modes.finance.entity.Expense;
 import com.katyshevtseva.kikiorg.core.modes.finance.entity.Replenishment;
-import org.springframework.beans.factory.InitializingBean;
+import com.katyshevtseva.kikiorg.core.modes.finance.entity.Transfer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @Service
 public class FinanceReportService {
@@ -18,17 +16,15 @@ public class FinanceReportService {
         String report = "";
 
         // Счета
-        List<Account> accounts = financeService.getAccounts();
-        for (Account account : accounts) {
-            report += (" * " + account.getTitle() + ". " +
-                    account.getDescription() + ". Amount: " +
-                    account.getAmount() + "\n");
+        for (Account account : financeService.getAccounts()) {
+            report += (" * " + account.getTitle() + ". " + account.getDescription() +
+                    ". Владелец: " + account.getOwner() +
+                    ". Amount: " + account.getAmount() + "\n");
         }
 
         // Доходы
         report += "\nДоходы \n";
-        List<Replenishment> replenishments = financeService.getReplenishments();
-        for (Replenishment replenishment : replenishments) {
+        for (Replenishment replenishment : financeService.getReplenishments()) {
             report += (" * " + replenishment.getSource() + " " +
                     replenishment.getDateOfRepl() +
                     replenishment.getAccount().getTitle() + " " +
@@ -37,14 +33,21 @@ public class FinanceReportService {
 
         // Расходы
         report += "\nРасходы \n";
-        List<Expense> expenses = financeService.getExpenses();
-        for (Expense expense : expenses) {
+        for (Expense expense : financeService.getExpenses()) {
             report += (" * " + expense.getItem() + " " +
                     expense.getDateOfExp() + " " +
                     expense.getAccount().getTitle() + " " +
                     expense.getAmount() + "\n");
         }
 
+        // Переводы
+        report += "\nПереводы \n";
+        for (Transfer transfer : financeService.getTransfers()) {
+            report += (" * Transfer from: " + transfer.getFrom().getTitle() + " to: " +
+                    transfer.getTo().getTitle() + ". " +
+                    transfer.getDateEntity().getValue() + ". Amount: " +
+                    transfer.getAmount() + "\n");
+        }
         return report;
     }
 }

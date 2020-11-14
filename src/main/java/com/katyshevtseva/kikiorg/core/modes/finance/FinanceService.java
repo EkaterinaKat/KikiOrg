@@ -128,6 +128,16 @@ public class FinanceService {
         addToAccountAmount(to, amount);
     }
 
+    public List<Transfer> getTransfers() {
+        List<Transfer> transfers = new ArrayList<>();
+        for (Account account : getAccounts()) {
+            transfers.addAll(transferRepo.findAllByFrom(account));
+            transfers.addAll(transferRepo.findAllByTo(account));
+        }
+        transfers.sort(Comparator.comparing(Transfer::getDateEntity));
+        return transfers;
+    }
+
     public void validateAllAccountsAmount() {
         for (Account account : accountRepo.findAll()) {
             validateAccountAmount(account);
