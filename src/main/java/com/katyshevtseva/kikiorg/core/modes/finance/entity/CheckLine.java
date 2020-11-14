@@ -1,6 +1,5 @@
 package com.katyshevtseva.kikiorg.core.modes.finance.entity;
 
-import com.katyshevtseva.kikiorg.core.modes.finance.Owner;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -16,6 +15,7 @@ public class CheckLine {
 
     private String title;
 
-    @Enumerated(EnumType.STRING)
-    private Owner owner;
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "account_id")
+    private Account account;
 }

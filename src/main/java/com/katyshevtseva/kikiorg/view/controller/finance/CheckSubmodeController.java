@@ -8,17 +8,13 @@ import com.katyshevtseva.kikiorg.view.utils.WindowBuilder.FxController;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 class CheckSubmodeController implements FxController {
-    private List<TextField> textFields = new ArrayList<>();
     @FXML
     private TextField amountField1;
     @FXML
@@ -57,16 +53,23 @@ class CheckSubmodeController implements FxController {
 
     @FXML
     private void initialize() {
-        textFields.addAll(Arrays.asList(amountField1, amountField2, amountField3, amountField4,
-                amountField5, amountField6, amountField7));
-        textFields.forEach(Utils::disableNonNumericChars);
+        Arrays.asList(amountField1, amountField2, amountField3, amountField4,
+                amountField5, amountField6, amountField7).forEach(Utils::disableNonNumericChars);
         checkButton.setOnAction(event -> checkButtonListener());
         setAccountComboBoxItems();
+        accountComboBox.valueProperty().addListener(observable -> prepareSectionForAccountCheck());
+    }
+
+    private void prepareSectionForAccountCheck() {
+        Arrays.asList(amountField1, amountField2, amountField3, amountField4, amountField5, amountField6, amountField7,
+                titleField1, titleField2, titleField3, titleField4, titleField5, titleField6, titleField7).forEach(
+                TextInputControl::clear);
+        resultLabel.setText("");
         createTrios();
     }
 
     private void createTrios() {
-        List<CheckLine> checkLines = Core.getInstance().financeCheckService().getCheckLine();
+        List<CheckLine> checkLines = Core.getInstance().financeCheckService().getCheckLines(accountComboBox.getValue());
         trios = new ArrayList<>();
         trios.add(new Trio(amountField1, titleField1, checkLines, 0));
         trios.add(new Trio(amountField2, titleField2, checkLines, 1));
@@ -100,15 +103,13 @@ class CheckSubmodeController implements FxController {
                 checkLinesToSave.add(checkLine);
             }
         }
-        Core.getInstance().financeCheckService().rewriteCheckLine(checkLinesToSave);
+        Core.getInstance().financeCheckService().rewriteCheckLines(checkLinesToSave, accountComboBox.getValue());
     }
 
     void setAccountComboBoxItems() {
         if (accountComboBox != null) {
             ObservableList<Account> accounts = FXCollections.observableArrayList(Core.getInstance().financeService().getAccounts());
             accountComboBox.setItems(accounts);
-            if (accounts.size() > 0)
-                accountComboBox.setValue(accounts.get(0));
         }
     }
 
@@ -132,6 +133,7 @@ class CheckSubmodeController implements FxController {
             if (!amountField.getText().trim().equals("") && !titleField.getText().trim().equals("")) {
                 checkLine.setAmount(Long.parseLong(amountField.getText().trim()));
                 checkLine.setTitle(titleField.getText().trim());
+                checkLine.setAccount(accountComboBox.getValue());
                 return checkLine;
             }
             return null;

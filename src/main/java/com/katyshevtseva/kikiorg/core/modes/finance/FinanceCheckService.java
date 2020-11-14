@@ -18,12 +18,12 @@ public class FinanceCheckService {
     @Autowired
     private AccountRepo accountRepo;
 
-    public List<CheckLine> getCheckLine() {
-        return checkLineRepo.findAllByOwner(financeService.getCurrentOwner());
+    public List<CheckLine> getCheckLines(Account account) {
+        return checkLineRepo.findAllByAccount(account);
     }
 
-    public void rewriteCheckLine(List<CheckLine> checkLines) {
-        checkLineRepo.deleteAll();
+    public void rewriteCheckLines(List<CheckLine> checkLines, Account account) {
+        checkLineRepo.findAllByAccount(account).forEach(cL -> checkLineRepo.delete(cL));
         checkLineRepo.saveAll(checkLines);
     }
 

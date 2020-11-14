@@ -37,6 +37,6 @@
     </HBox>
 
     <Button text="Check" fx:id="checkButton"/>
-    <Label fx:id="resultLabel"/>
+    <Label fx:id="resultLabel" maxWidth="400" wrapText="true"/>
 
 </VBox>
