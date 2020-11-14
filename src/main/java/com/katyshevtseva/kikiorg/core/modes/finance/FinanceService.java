@@ -109,7 +109,8 @@ public class FinanceService {
         accountRepo.save(actualAccount);
     }
 
-    List<Replenishment> getReplenishments() {
+    // Если нет мд public то FinanceService не может получить доступ к этому методу в собраном в exe приложении
+    public List<Replenishment> getReplenishments() {
         List<Replenishment> replenishments = replenishmentRepo.findAllByOwner(currentOwner);
         replenishments.sort(Comparator.comparing(Replenishment::getDateOfRepl));
         return replenishments;

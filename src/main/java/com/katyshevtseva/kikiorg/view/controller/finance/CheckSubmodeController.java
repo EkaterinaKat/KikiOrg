@@ -58,6 +58,7 @@ class CheckSubmodeController implements FxController {
         checkButton.setOnAction(event -> checkButtonListener());
         setAccountComboBoxItems();
         accountComboBox.valueProperty().addListener(observable -> prepareSectionForAccountCheck());
+        Utils.associateButtonWithControls(checkButton, accountComboBox);
     }
 
     private void prepareSectionForAccountCheck() {
