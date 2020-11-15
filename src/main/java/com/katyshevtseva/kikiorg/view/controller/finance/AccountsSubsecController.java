@@ -66,7 +66,7 @@ class AccountsSubsecController implements FxController {
 
     private void setAccountComboBoxItems(ComboBox<Account> accountComboBox) {
         if (accountComboBox != null) {
-            ObservableList<Account> accounts = FXCollections.observableArrayList(Core.getInstance().financeService().getAccounts());
+            ObservableList<Account> accounts = FXCollections.observableArrayList(Core.getInstance().financeService().getAccountsAvailableForCurrentOwner());
             accountComboBox.setItems(accounts);
             if (accounts.size() > 0)
                 accountComboBox.setValue(accounts.get(0));

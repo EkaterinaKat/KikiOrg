@@ -24,9 +24,6 @@ public class Expense {
     @JoinColumn(name = "item_id", nullable = false)
     private Item item;
 
-    @Enumerated(EnumType.STRING)
-    private Owner owner;
-
     @ManyToOne
     @JoinColumn(name = "date_entity_id")
     private DateEntity dateEntity;

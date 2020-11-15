@@ -16,7 +16,7 @@ public class FinanceReportService {
         String report = "";
 
         // Счета
-        for (Account account : financeService.getAccounts()) {
+        for (Account account : financeService.getAccountsAvailableForCurrentOwner()) {
             report += (" * " + account.getTitle() + ". " + account.getDescription() +
                     ". Владелец: " + account.getOwner() +
                     ". Amount: " + account.getAmount() + "\n");

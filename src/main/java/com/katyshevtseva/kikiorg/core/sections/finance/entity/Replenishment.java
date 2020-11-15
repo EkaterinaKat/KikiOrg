@@ -23,9 +23,6 @@ public class Replenishment {
     @JoinColumn(name = "source_id", nullable = false)
     private Source source;
 
-    @Enumerated(EnumType.STRING)
-    private Owner owner;
-
     @ManyToOne
     @JoinColumn(name = "date_entity_id")
     private DateEntity dateEntity;

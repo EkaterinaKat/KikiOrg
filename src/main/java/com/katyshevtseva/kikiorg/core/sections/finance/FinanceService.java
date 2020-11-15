@@ -64,7 +64,7 @@ public class FinanceService {
         accountRepo.save(account);
     }
 
-    public List<Account> getAccounts() {
+    public List<Account> getAccountsAvailableForCurrentOwner() {
         List<Owner> owners = getAvailableAccountOwners();
         List<Account> accounts = new ArrayList<>();
         for (Owner owner : owners) {
@@ -79,14 +79,15 @@ public class FinanceService {
         expense.setAmount(amount);
         expense.setDateEntity(dateService.createIfNotExistAndGetDateEntity(date));
         expense.setItem(item);
-        expense.setOwner(currentOwner);
         expenseRepo.save(expense);
 
         addToAccountAmount(account, (-1) * amount);
     }
 
     public List<Expense> getExpenses() {
-        List<Expense> expenses = expenseRepo.findAllByOwner(currentOwner);
+        List<Expense> expenses = new ArrayList<>();
+        for (Account account : getAccountsAvailableForCurrentOwner())
+            expenses.addAll(expenseRepo.findByAccount(account));
         expenses.sort(Comparator.comparing(Expense::getDateEntity));
         return expenses;
     }
@@ -97,7 +98,6 @@ public class FinanceService {
         replenishment.setAmount(amount);
         replenishment.setSource(source);
         replenishment.setDateEntity(dateService.createIfNotExistAndGetDateEntity(date));
-        replenishment.setOwner(currentOwner);
         replenishmentRepo.save(replenishment);
 
         addToAccountAmount(account, amount);
@@ -111,7 +111,9 @@ public class FinanceService {
 
     // Если нет мд public то FinanceService не может получить доступ к этому методу в собраном в exe приложении
     public List<Replenishment> getReplenishments() {
-        List<Replenishment> replenishments = replenishmentRepo.findAllByOwner(currentOwner);
+        List<Replenishment> replenishments = new ArrayList<>();
+        for (Account account : getAccountsAvailableForCurrentOwner())
+            replenishments.addAll(replenishmentRepo.findByAccount(account));
         replenishments.sort(Comparator.comparing(Replenishment::getDateEntity));
         return replenishments;
     }
@@ -131,7 +133,7 @@ public class FinanceService {
 
     public List<Transfer> getTransfers() {
         List<Transfer> transfers = new ArrayList<>();
-        for (Account account : getAccounts()) {
+        for (Account account : getAccountsAvailableForCurrentOwner()) {
             transfers.addAll(transferRepo.findAllByFrom(account));
             transfers.addAll(transferRepo.findAllByTo(account));
         }
