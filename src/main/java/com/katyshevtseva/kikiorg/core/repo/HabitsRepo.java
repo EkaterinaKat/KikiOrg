@@ -1,6 +1,6 @@
 package com.katyshevtseva.kikiorg.core.repo;
 
-import com.katyshevtseva.kikiorg.core.modes.habits.entity.Habit;
+import com.katyshevtseva.kikiorg.core.sections.habits.entity.Habit;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;

@@ -1,7 +1,7 @@
 package com.katyshevtseva.kikiorg.view.controller;
 
-import com.katyshevtseva.kikiorg.view.controller.finance.FinanceModeController;
-import com.katyshevtseva.kikiorg.view.controller.habits.HabitsModeController;
+import com.katyshevtseva.kikiorg.view.controller.finance.FinanceSecController;
+import com.katyshevtseva.kikiorg.view.controller.habits.HabitsSecController;
 import com.katyshevtseva.kikiorg.view.utils.OrganizerWindowCreator;
 import com.katyshevtseva.kikiorg.view.utils.WindowBuilder;
 import javafx.fxml.FXML;
@@ -18,8 +18,8 @@ public class MainController extends AbstractSwitchController implements WindowBu
     private Button financeButton;
     @FXML
     private Pane mainPane;
-    private FinanceModeController financeModeController = new FinanceModeController();
-    private HabitsModeController habitsModeController = new HabitsModeController();
+    private FinanceSecController financeSecController = new FinanceSecController();
+    private HabitsSecController habitsSecController = new HabitsSecController();
     private Node financeModeNode;
     private Node habitsModeNode;
 
@@ -34,11 +34,11 @@ public class MainController extends AbstractSwitchController implements WindowBu
 
     private void financeButtonListener() {
         activateMode(financeButton, financeModeNode,
-                OrganizerWindowCreator.getInstance()::getFinanceModeNode, financeModeController);
+                OrganizerWindowCreator.getInstance()::getFinanceSecNode, financeSecController);
     }
 
     private void habitsButtonListener() {
         activateMode(habitsButton, habitsModeNode,
-                OrganizerWindowCreator.getInstance()::getHabitsModeNode, habitsModeController);
+                OrganizerWindowCreator.getInstance()::getHabitsSecNode, habitsSecController);
     }
 }

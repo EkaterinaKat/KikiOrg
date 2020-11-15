@@ -1,10 +1,10 @@
 package com.katyshevtseva.kikiorg.core;
 
-import com.katyshevtseva.kikiorg.core.modes.finance.FinanceCheckService;
-import com.katyshevtseva.kikiorg.core.modes.finance.FinanceReportService;
-import com.katyshevtseva.kikiorg.core.modes.finance.FinanceService;
-import com.katyshevtseva.kikiorg.core.modes.habits.HabitsReportService;
-import com.katyshevtseva.kikiorg.core.modes.habits.HabitsService;
+import com.katyshevtseva.kikiorg.core.sections.finance.FinanceCheckService;
+import com.katyshevtseva.kikiorg.core.sections.finance.FinanceReportService;
+import com.katyshevtseva.kikiorg.core.sections.finance.FinanceService;
+import com.katyshevtseva.kikiorg.core.sections.habits.HabitsReportService;
+import com.katyshevtseva.kikiorg.core.sections.habits.HabitsService;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

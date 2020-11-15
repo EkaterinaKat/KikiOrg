@@ -27,45 +27,45 @@ public class OrganizerWindowCreator {
 
     /* ----------------------------------  Привычки ---------------------------------------------- */
 
-    public Node getHabitsModeNode(FxController controller) {
-        return new WindowBuilder(HABITS_FXML_LOCATION + "habits_mode.fxml").setController(controller).getNode();
+    public Node getHabitsSecNode(FxController controller) {
+        return new WindowBuilder(HABITS_FXML_LOCATION + "habits_sec.fxml").setController(controller).getNode();
     }
 
-    public Node getHabitAdminSubmodeNode(FxController controller) {
-        return new WindowBuilder(HABITS_FXML_LOCATION + "admin_submode.fxml").setController(controller).getNode();
+    public Node getHabitAdminSubsecNode(FxController controller) {
+        return new WindowBuilder(HABITS_FXML_LOCATION + "admin_subsec.fxml").setController(controller).getNode();
     }
 
-    public Node getCheckListSubmodeNode(FxController controller) {
-        return new WindowBuilder(HABITS_FXML_LOCATION + "check_list_submode.fxml").setController(controller).getNode();
+    public Node getCheckListSubsecNode(FxController controller) {
+        return new WindowBuilder(HABITS_FXML_LOCATION + "check_list_subsec.fxml").setController(controller).getNode();
     }
 
-    public Node getHabitsReportSubmodeNode(FxController controller) {
-        return new WindowBuilder(HABITS_FXML_LOCATION + "report_submode.fxml").setController(controller).getNode();
+    public Node getHabitsReportSubsecNode(FxController controller) {
+        return new WindowBuilder(HABITS_FXML_LOCATION + "report_subsec.fxml").setController(controller).getNode();
     }
 
     /* ----------------------------------  Финансы  ---------------------------------------------- */
 
-    public Node getFinanceModeNode(FxController controller) {
-        return new WindowBuilder(FINANCE_FXML_LOCATION + "finance_mode.fxml").setController(controller).getNode();
+    public Node getFinanceSecNode(FxController controller) {
+        return new WindowBuilder(FINANCE_FXML_LOCATION + "finance_sec.fxml").setController(controller).getNode();
     }
 
-    public Node getReplenishmentSubmodeNode(FxController controller) {
-        return new WindowBuilder(FINANCE_FXML_LOCATION + "replenishment_submode.fxml").setController(controller).getNode();
+    public Node getReplenishmentSubsecNode(FxController controller) {
+        return new WindowBuilder(FINANCE_FXML_LOCATION + "replenishment_subsec.fxml").setController(controller).getNode();
     }
 
-    public Node getAccountsSubmodeNode(FxController controller) {
-        return new WindowBuilder(FINANCE_FXML_LOCATION + "accounts_submode.fxml").setController(controller).getNode();
+    public Node getAccountsSubsecNode(FxController controller) {
+        return new WindowBuilder(FINANCE_FXML_LOCATION + "accounts_subsec.fxml").setController(controller).getNode();
     }
 
-    public Node getExpensesSubmodeNode(FxController controller) {
-        return new WindowBuilder(FINANCE_FXML_LOCATION + "expenses_submode.fxml").setController(controller).getNode();
+    public Node getExpensesSubsecNode(FxController controller) {
+        return new WindowBuilder(FINANCE_FXML_LOCATION + "expenses_subsec.fxml").setController(controller).getNode();
     }
 
-    public Node getCheckSubmodeNode(FxController controller) {
-        return new WindowBuilder(FINANCE_FXML_LOCATION + "check_submode.fxml").setController(controller).getNode();
+    public Node getCheckSubsecNode(FxController controller) {
+        return new WindowBuilder(FINANCE_FXML_LOCATION + "check_subsec.fxml").setController(controller).getNode();
     }
 
-    public Node getUserSubmodeNode(FxController controller) {
-        return new WindowBuilder(FINANCE_FXML_LOCATION + "user_submode.fxml").setController(controller).getNode();
+    public Node getUserSubsecNode(FxController controller) {
+        return new WindowBuilder(FINANCE_FXML_LOCATION + "user_subsec.fxml").setController(controller).getNode();
     }
 }
