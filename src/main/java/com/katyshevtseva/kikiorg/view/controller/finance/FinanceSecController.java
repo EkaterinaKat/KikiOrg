@@ -1,13 +1,11 @@
 package com.katyshevtseva.kikiorg.view.controller.finance;
 
-import com.katyshevtseva.kikiorg.core.Core;
 import com.katyshevtseva.kikiorg.view.controller.AbstractSwitchController;
 import com.katyshevtseva.kikiorg.view.utils.OrganizerWindowCreator;
 import com.katyshevtseva.kikiorg.view.utils.WindowBuilder.FxController;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
-import javafx.scene.control.TextArea;
 import javafx.scene.layout.Pane;
 
 import java.util.Arrays;
@@ -20,75 +18,79 @@ public class FinanceSecController extends AbstractSwitchController implements Fx
     @FXML
     private Button accountsButton;
     @FXML
-    private Button updateButton;
-    @FXML
     private Button checkButton;
     @FXML
     private Button userButton;
     @FXML
-    private TextArea reportTextArea;
-    @FXML
     private Pane mainPane;
+    @FXML
+    private Button reportButton;
+    @FXML
+    private Button transferButton;
 
-    private ReplenishmentSubsecController replenishmentController;
-    private AccountsSubsecController accountsController;
-    private ExpensesSubsecController expensesController;
-    private CheckSubsecController checkSubsecController;
-    private UserSubsecController userSubsecController;
+    private ReplenishmentSubsecController replenishmentController = new ReplenishmentSubsecController();
+    private AccountsSubsecController accountsController = new AccountsSubsecController();
+    private ExpensesSubsecController expensesController = new ExpensesSubsecController();
+    private CheckSubsecController checkController = new CheckSubsecController();
+    private UserSubsecController userController = new UserSubsecController();
+    private ReportSubsecController reportController = new ReportSubsecController();
+    private TransferSubsecController transferController = new TransferSubsecController();
 
-    private Node replenishmentSubsecNode;
-    private Node accountsSubsecNode;
-    private Node expensesSubsecNode;
-    private Node checkSubsecNode;
-    private Node userSubsecNode;
-
-    private void updateDisplayedData() {
-        reportTextArea.setText(Core.getInstance().financeReportService().getReport());
-    }
-
-    public FinanceSecController() {
-        replenishmentController = new ReplenishmentSubsecController();
-        expensesController = new ExpensesSubsecController();
-        checkSubsecController = new CheckSubsecController();
-        userSubsecController = new UserSubsecController();
-        accountsController = new AccountsSubsecController();
-    }
+    private Node replenishmentNode;
+    private Node accountsNode;
+    private Node expensesNode;
+    private Node checkNode;
+    private Node userNode;
+    private Node reportNode;
+    private Node transferNode;
 
     @FXML
     private void initialize() {
         pane = mainPane;
-        buttons.addAll(Arrays.asList(replenishmentButton, accountsButton, expensesButton, checkButton, userButton));
+        buttons.addAll(Arrays.asList(replenishmentButton, accountsButton, expensesButton, checkButton, userButton,
+                transferButton, reportButton));
         replenishmentButtonListener();
         replenishmentButton.setOnAction(event -> replenishmentButtonListener());
         accountsButton.setOnAction(event -> accountsButtonListener());
         expensesButton.setOnAction(event -> expensesButtonListener());
         checkButton.setOnAction(event -> checkButtonListener());
         userButton.setOnAction(event -> userButtonListener());
-        updateButton.setOnAction(event -> updateDisplayedData());
+        reportButton.setOnAction(event -> reportButtonListener());
+        transferButton.setOnAction(event -> transferButtonListener());
+    }
+
+    private void reportButtonListener() {
+        activateMode(reportButton, reportNode,
+                OrganizerWindowCreator.getInstance()::getFinanceReportSubsecNode, reportController);
+    }
+
+    private void transferButtonListener() {
+        activateMode(transferButton, transferNode,
+                OrganizerWindowCreator.getInstance()::getTransferSubsecNode, transferController);
     }
 
     private void replenishmentButtonListener() {
-        activateMode(replenishmentButton, replenishmentSubsecNode,
+        activateMode(replenishmentButton, replenishmentNode,
                 OrganizerWindowCreator.getInstance()::getReplenishmentSubsecNode, replenishmentController);
     }
 
     private void accountsButtonListener() {
-        activateMode(accountsButton, accountsSubsecNode,
+        activateMode(accountsButton, accountsNode,
                 OrganizerWindowCreator.getInstance()::getAccountsSubsecNode, accountsController);
     }
 
     private void expensesButtonListener() {
-        activateMode(expensesButton, expensesSubsecNode,
+        activateMode(expensesButton, expensesNode,
                 OrganizerWindowCreator.getInstance()::getExpensesSubsecNode, expensesController);
     }
 
     private void checkButtonListener() {
-        activateMode(checkButton, checkSubsecNode,
-                OrganizerWindowCreator.getInstance()::getCheckSubsecNode, checkSubsecController);
+        activateMode(checkButton, checkNode,
+                OrganizerWindowCreator.getInstance()::getCheckSubsecNode, checkController);
     }
 
     private void userButtonListener() {
-        activateMode(userButton, userSubsecNode,
-                OrganizerWindowCreator.getInstance()::getUserSubsecNode, userSubsecController);
+        activateMode(userButton, userNode,
+                OrganizerWindowCreator.getInstance()::getUserSubsecNode, userController);
     }
 }

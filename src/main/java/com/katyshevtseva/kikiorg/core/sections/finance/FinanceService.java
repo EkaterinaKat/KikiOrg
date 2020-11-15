@@ -132,13 +132,14 @@ public class FinanceService {
     }
 
     public List<Transfer> getTransfers() {
-        List<Transfer> transfers = new ArrayList<>();
+        Set<Transfer> transferSet = new HashSet<>();
         for (Account account : getAccountsAvailableForCurrentOwner()) {
-            transfers.addAll(transferRepo.findAllByFrom(account));
-            transfers.addAll(transferRepo.findAllByTo(account));
+            transferSet.addAll(transferRepo.findAllByFrom(account));
+            transferSet.addAll(transferRepo.findAllByTo(account));
         }
-        transfers.sort(Comparator.comparing(Transfer::getDateEntity));
-        return transfers;
+        List<Transfer> transferList = new ArrayList<>(transferSet);
+        transferList.sort(Comparator.comparing(Transfer::getDateEntity));
+        return transferList;
     }
 
     public void validateAllAccountsAmount() {

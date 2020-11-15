@@ -32,23 +32,5 @@
     <Label text="*****************************************************************"/>
     <Pane maxHeight="25" minHeight="25"/>
 
-    <HBox>
-        <ComboBox fx:id="fromComboBox" minWidth="250" maxWidth="250"/>
-        <Pane minWidth="8" maxWidth="8"/>
-        <Label text="->"/>
-        <Pane minWidth="8" maxWidth="8"/>
-        <TextField fx:id="amountTextField" minWidth="150" maxWidth="150"/>
-        <Pane minWidth="8" maxWidth="8"/>
-        <Label text="->"/>
-        <Pane minWidth="8" maxWidth="8"/>
-        <ComboBox fx:id="toComboBox" minWidth="250" maxWidth="250"/>
-        <Pane minWidth="8" maxWidth="8"/>
-        <Button fx:id="transferButton" text="Transfer"/>
-    </HBox>
-
-    <Pane maxHeight="25" minHeight="25"/>
-    <Label text="*****************************************************************"/>
-    <Pane maxHeight="25" minHeight="25"/>
-
     <Button fx:id="validationButton" text="Validate all accounts" prefWidth="220"/>
 </VBox>

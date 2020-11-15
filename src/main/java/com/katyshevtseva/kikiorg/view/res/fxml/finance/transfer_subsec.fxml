@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<VBox xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml">
+    <Pane minHeight="40" maxHeight="40"/>
+    <HBox>
+        <ComboBox fx:id="fromComboBox" minWidth="250" maxWidth="250"/>
+        <Pane minWidth="8" maxWidth="8"/>
+        <Label text="->"/>
+        <Pane minWidth="8" maxWidth="8"/>
+        <TextField fx:id="amountTextField" minWidth="150" maxWidth="150"/>
+        <Pane minWidth="8" maxWidth="8"/>
+        <Label text="->"/>
+        <Pane minWidth="8" maxWidth="8"/>
+        <ComboBox fx:id="toComboBox" minWidth="250" maxWidth="250"/>
+        <Pane minWidth="8" maxWidth="8"/>
+        <Button fx:id="transferButton" text="Transfer"/>
+    </HBox>
+</VBox>
+
+
+
+

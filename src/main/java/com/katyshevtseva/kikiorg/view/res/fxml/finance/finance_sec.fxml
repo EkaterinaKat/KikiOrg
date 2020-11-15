@@ -25,13 +25,16 @@
                 <Pane minWidth="30" maxWidth="30"/>
                 <Button fx:id="checkButton" text="Check"/>
                 <Pane minWidth="30" maxWidth="30"/>
+                <Button fx:id="reportButton" text="Report"/>
+                <Pane minWidth="30" maxWidth="30"/>
+                <Button fx:id="transferButton" text="Transfer"/>
             </HBox>
             <Pane minHeight="10" maxHeight="10"/>
         </VBox>
     </top>
 
     <center>
-        <Pane fx:id="mainPane" maxHeight="400" minHeight="400"/>
+        <Pane fx:id="mainPane" maxHeight="800" minHeight="800"/>
     </center>
 
     <left>
@@ -42,17 +45,5 @@
         <Pane minWidth="30" maxWidth="30"/>
     </right>
 
-    <bottom>
-        <HBox>
-            <Pane minWidth="30" maxWidth="30"/>
-            <VBox>
-                <TextArea fx:id="reportTextArea" editable="false" minWidth="800" maxWidth="800" prefHeight="400"/>
-                <Pane minHeight="30" maxHeight="30"/>
-                <Button fx:id="updateButton" text="Update displayed data"/>
-            </VBox>
-            <Pane minWidth="30" maxWidth="30"/>
-        </HBox>
-
-    </bottom>
 
 </BorderPane>
