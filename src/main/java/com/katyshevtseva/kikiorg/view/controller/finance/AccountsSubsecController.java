@@ -15,9 +15,6 @@ import javafx.scene.control.TextField;
 
 
 class AccountsSubsecController implements FxController {
-    private ReplenishmentSubsecController replenishmentController;
-    private ExpensesSubsecController expensesController;
-    private CheckSubsecController checkController;
     @FXML
     private TextField accountTitleField;
     @FXML
@@ -36,13 +33,6 @@ class AccountsSubsecController implements FxController {
     private Button validationButton;
     @FXML
     private ComboBox<Owner> ownerComboBox;
-
-    AccountsSubsecController(ReplenishmentSubsecController replenishmentController,
-                             ExpensesSubsecController expensesController, CheckSubsecController checkController) {
-        this.replenishmentController = replenishmentController;
-        this.expensesController = expensesController;
-        this.checkController = checkController;
-    }
 
     @FXML
     private void initialize() {
@@ -70,9 +60,6 @@ class AccountsSubsecController implements FxController {
                 ownerComboBox.getValue());
         accountTitleField.clear();
         accountDescArea.clear();
-        replenishmentController.setAccountComboBoxItems();
-        expensesController.setAccountComboBoxItems();
-        checkController.setAccountComboBoxItems();
         setAccountComboBoxItems(fromComboBox);
         setAccountComboBoxItems(toComboBox);
     }

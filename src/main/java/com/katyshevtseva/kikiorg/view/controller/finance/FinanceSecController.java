@@ -51,7 +51,7 @@ public class FinanceSecController extends AbstractSwitchController implements Fx
         expensesController = new ExpensesSubsecController();
         checkSubsecController = new CheckSubsecController();
         userSubsecController = new UserSubsecController();
-        accountsController = new AccountsSubsecController(replenishmentController, expensesController, checkSubsecController);
+        accountsController = new AccountsSubsecController();
     }
 
     @FXML

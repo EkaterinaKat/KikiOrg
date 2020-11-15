@@ -107,7 +107,7 @@ class CheckSubsecController implements FxController {
         Core.getInstance().financeCheckService().rewriteCheckLines(checkLinesToSave, accountComboBox.getValue());
     }
 
-    void setAccountComboBoxItems() {
+    private void setAccountComboBoxItems() {
         if (accountComboBox != null) {
             ObservableList<Account> accounts = FXCollections.observableArrayList(Core.getInstance().financeService().getAccounts());
             accountComboBox.setItems(accounts);
