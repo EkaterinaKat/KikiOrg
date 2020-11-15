@@ -19,4 +19,9 @@ public class DateEntity implements Comparable<DateEntity> {
     public int compareTo(DateEntity o) {
         return value.compareTo(o.value);
     }
+
+    @Override
+    public String toString() {
+        return value.toString();
+    }
 }

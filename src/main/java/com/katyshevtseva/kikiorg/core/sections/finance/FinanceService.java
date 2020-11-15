@@ -1,8 +1,8 @@
 package com.katyshevtseva.kikiorg.core.sections.finance;
 
 import com.katyshevtseva.kikiorg.core.date.DateService;
-import com.katyshevtseva.kikiorg.core.sections.finance.entity.*;
 import com.katyshevtseva.kikiorg.core.repo.*;
+import com.katyshevtseva.kikiorg.core.sections.finance.entity.*;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -77,7 +77,7 @@ public class FinanceService {
         Expense expense = new Expense();
         expense.setAccount(account);
         expense.setAmount(amount);
-        expense.setDateOfExp(date);
+        expense.setDateEntity(dateService.createIfNotExistAndGetDateEntity(date));
         expense.setItem(item);
         expense.setOwner(currentOwner);
         expenseRepo.save(expense);
@@ -87,7 +87,7 @@ public class FinanceService {
 
     public List<Expense> getExpenses() {
         List<Expense> expenses = expenseRepo.findAllByOwner(currentOwner);
-        expenses.sort(Comparator.comparing(Expense::getDateOfExp));
+        expenses.sort(Comparator.comparing(Expense::getDateEntity));
         return expenses;
     }
 
@@ -96,7 +96,7 @@ public class FinanceService {
         replenishment.setAccount(account);
         replenishment.setAmount(amount);
         replenishment.setSource(source);
-        replenishment.setDateOfRepl(date);
+        replenishment.setDateEntity(dateService.createIfNotExistAndGetDateEntity(date));
         replenishment.setOwner(currentOwner);
         replenishmentRepo.save(replenishment);
 
@@ -112,7 +112,7 @@ public class FinanceService {
     // Если нет мд public то FinanceService не может получить доступ к этому методу в собраном в exe приложении
     public List<Replenishment> getReplenishments() {
         List<Replenishment> replenishments = replenishmentRepo.findAllByOwner(currentOwner);
-        replenishments.sort(Comparator.comparing(Replenishment::getDateOfRepl));
+        replenishments.sort(Comparator.comparing(Replenishment::getDateEntity));
         return replenishments;
     }
 

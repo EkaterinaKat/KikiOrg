@@ -1,5 +1,6 @@
 package com.katyshevtseva.kikiorg.core.sections.finance.entity;
 
+import com.katyshevtseva.kikiorg.core.date.DateEntity;
 import com.katyshevtseva.kikiorg.core.sections.finance.Owner;
 import lombok.Data;
 
@@ -19,13 +20,14 @@ public class Expense {
 
     private Long amount;
 
-    @Temporal(TemporalType.DATE)
-    private Date dateOfExp;
-
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "item_id", nullable = false)
     private Item item;
 
     @Enumerated(EnumType.STRING)
     private Owner owner;
+
+    @ManyToOne
+    @JoinColumn(name = "date_entity_id")
+    private DateEntity dateEntity;
 }

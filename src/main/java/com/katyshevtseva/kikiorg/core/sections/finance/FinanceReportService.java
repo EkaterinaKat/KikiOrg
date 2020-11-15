@@ -26,7 +26,7 @@ public class FinanceReportService {
         report += "\nДоходы \n";
         for (Replenishment replenishment : financeService.getReplenishments()) {
             report += (" * " + replenishment.getSource() + " " +
-                    replenishment.getDateOfRepl() +
+                    replenishment.getDateEntity() +
                     replenishment.getAccount().getTitle() + " " +
                     replenishment.getAmount() + "\n");
         }
@@ -35,7 +35,7 @@ public class FinanceReportService {
         report += "\nРасходы \n";
         for (Expense expense : financeService.getExpenses()) {
             report += (" * " + expense.getItem() + " " +
-                    expense.getDateOfExp() + " " +
+                    expense.getDateEntity() + " " +
                     expense.getAccount().getTitle() + " " +
                     expense.getAmount() + "\n");
         }
