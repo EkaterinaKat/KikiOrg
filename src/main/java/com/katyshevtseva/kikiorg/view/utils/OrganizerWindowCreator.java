@@ -18,7 +18,8 @@ public class OrganizerWindowCreator {
     }
 
     public void openMainWindow(FxController controller) {
-        new WindowBuilder(FXML_LOCATION + "main.fxml").
+        new WindowBuilder(FXML_LOCATION + "main.fxml").setIconImagePath(
+                "file:D:\\Code\\KikiOrg\\src\\main\\java\\com\\katyshevtseva\\kikiorg\\view\\res\\images\\ico.png").
                 setController(controller).setHeight(WINDOW_HEIGHT).
                 setWidth(WINDOW_WIDTH).setTitle(CoreConstants.APP_NAME).
                 setOnWindowCloseEventHandler(event -> System.exit(0)).showWindow();

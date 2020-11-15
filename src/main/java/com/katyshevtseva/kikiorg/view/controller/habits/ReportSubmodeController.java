@@ -1,8 +1,6 @@
 package com.katyshevtseva.kikiorg.view.controller.habits;
 
 import com.katyshevtseva.kikiorg.core.Core;
-import com.katyshevtseva.kikiorg.core.modes.habits.HabitsService;
-import com.katyshevtseva.kikiorg.core.modes.habits.HabitsReportService;
 import com.katyshevtseva.kikiorg.core.modes.habits.entity.Habit;
 import com.katyshevtseva.kikiorg.core.modes.habits.entity.ReportCell;
 import com.katyshevtseva.kikiorg.view.utils.Utils;
@@ -44,12 +42,13 @@ class ReportSubmodeController implements FxController {
     private GridPane reportTable;
     @FXML
     private Button showButton;
-    private List<Habit> selectedHabits = new ArrayList<>();
+    private List<Habit> selectedHabits;
     private static final int CELL_PREF_HEIGHT = 30;
     private static final int CELL_PREF_WIDTH = 110;
 
     @FXML
     private void initialize() {
+        selectedHabits = new ArrayList<>();
         showButton.setOnAction(event -> showReport());
         Utils.associateButtonWithControls(showButton, startDatePicker, endDatePicker);
         setInitialDatesd();

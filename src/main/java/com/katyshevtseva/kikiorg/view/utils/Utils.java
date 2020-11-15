@@ -4,6 +4,9 @@ import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
 
+import java.util.Arrays;
+import java.util.List;
+
 public class Utils {
 
     private Utils() {
@@ -27,6 +30,10 @@ public class Utils {
     }
 
     public static void associateButtonWithControls(Button button, Control... controls) {
+        associateButtonWithControls(button, Arrays.asList(controls));
+    }
+
+    public static void associateButtonWithControls(Button button, List<Control> controls){
         button.setDisable(true);
         for (Control control : controls) {
             if (control instanceof TextField) {
@@ -47,7 +54,7 @@ public class Utils {
         }
     }
 
-    private static void setButtonAccessibility(Button button, Control... controls) {
+    private static void setButtonAccessibility(Button button, List<Control> controls) {
         boolean disableButton = false;
         for (Control control : controls) {
             if (control instanceof TextField && ((TextField) control).getText().trim().equals("")) {

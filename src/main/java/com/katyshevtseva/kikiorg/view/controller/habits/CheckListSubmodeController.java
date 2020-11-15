@@ -1,14 +1,13 @@
 package com.katyshevtseva.kikiorg.view.controller.habits;
 
 import com.katyshevtseva.kikiorg.core.Core;
-import com.katyshevtseva.kikiorg.core.modes.habits.HabitsService;
 import com.katyshevtseva.kikiorg.core.modes.habits.entity.EnumElement;
 import com.katyshevtseva.kikiorg.core.modes.habits.entity.Habit;
+import com.katyshevtseva.kikiorg.core.modes.habits.entity.HabitType;
 import com.katyshevtseva.kikiorg.view.utils.Utils;
 import com.katyshevtseva.kikiorg.view.utils.WindowBuilder.FxController;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
-import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 
@@ -35,6 +34,7 @@ class CheckListSubmodeController implements FxController {
 
     private void fillHabitsTable() {
         List<Habit> habits = Core.getInstance().habitsService().getActiveHabits();
+        List<Control> controlsToAssociateWithSaveButton = new ArrayList<>();
         pairs = new ArrayList<>();
         int index = 0;
         for (Habit habit : habits) {
@@ -53,34 +53,40 @@ class CheckListSubmodeController implements FxController {
             Pair pair = new Pair(habit);
             pairs.add(pair);
             habitsTable.add(pair.getLabel(), labelColumn, row);
-            habitsTable.add(pair.markNode, markNodeColumn, row);
+            habitsTable.add(pair.markControl, markNodeColumn, row);
+
+            if (habit.getType() == HabitType.enumeration || habit.getType() == HabitType.number) {
+                controlsToAssociateWithSaveButton.add(pair.markControl);
+            }
         }
+        Utils.associateButtonWithControls(saveButton, controlsToAssociateWithSaveButton);
     }
 
     private void save() {
         for (Pair pair : pairs) {
-            Core.getInstance().habitsService().makeMark(pair.habit, java.sql.Date.valueOf(datePicker.getValue()), pair.getMark());
+            Core.getInstance().habitsService().saveMarkOrRewriteIfExists(
+                    pair.habit, java.sql.Date.valueOf(datePicker.getValue()), pair.getMark());
         }
     }
 
     private class Pair {
         final int NODE_WIDTH = 180;
         Habit habit;
-        Node markNode;
+        Control markControl;
 
         Pair(Habit habit) {
             this.habit = habit;
 
             switch (habit.getType()) {
                 case bollean:
-                    markNode = new CheckBox();
+                    markControl = new CheckBox();
                     break;
                 case number:
                     TextField textField = new TextField();
                     textField.setMaxWidth(NODE_WIDTH);
                     textField.setMinWidth(NODE_WIDTH);
                     Utils.disableNonNumericChars(textField);
-                    markNode = textField;
+                    markControl = textField;
                     break;
                 case enumeration:
                     ComboBox<EnumElement> comboBox = new ComboBox<>();
@@ -88,7 +94,7 @@ class CheckListSubmodeController implements FxController {
                             Core.getInstance().habitsService().getEnumElementsByHabit(habit)));
                     comboBox.setMaxWidth(NODE_WIDTH);
                     comboBox.setMinWidth(NODE_WIDTH);
-                    markNode = comboBox;
+                    markControl = comboBox;
             }
         }
 
@@ -99,11 +105,11 @@ class CheckListSubmodeController implements FxController {
         Object getMark() {
             switch (habit.getType()) {
                 case bollean:
-                    return ((CheckBox) markNode).isSelected();
+                    return ((CheckBox) markControl).isSelected();
                 case number:
-                    return Long.parseLong(((TextField) markNode).getText());
+                    return Long.parseLong(((TextField) markControl).getText());
                 case enumeration:
-                    return ((ComboBox<EnumElement>) markNode).getValue();
+                    return ((ComboBox<EnumElement>) markControl).getValue();
             }
             throw new RuntimeException();
         }

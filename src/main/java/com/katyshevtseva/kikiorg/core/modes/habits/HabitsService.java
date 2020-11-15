@@ -7,13 +7,13 @@ import com.katyshevtseva.kikiorg.core.modes.habits.entity.HabitMark;
 import com.katyshevtseva.kikiorg.core.repo.EnumElementRepo;
 import com.katyshevtseva.kikiorg.core.repo.HabitMarkRepo;
 import com.katyshevtseva.kikiorg.core.repo.HabitsRepo;
-import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class HabitsService {
@@ -48,7 +48,11 @@ public class HabitsService {
         return enumElementRepo.findByHabitId(habit.getId());
     }
 
-    public void makeMark(Habit habit, Date date, Object mark) {
+    public void saveMarkOrRewriteIfExists(Habit habit, Date date, Object mark) {
+        Optional<HabitMark> optionalHabitMark = habitMarkRepo.findByHabitIdAndDateEntityId(
+                habit.getId(), dateService.createIfNotExistAndGetDateEntity(date).getId());
+        optionalHabitMark.ifPresent(habitMark -> habitMarkRepo.delete(habitMark));
+
         HabitMark habitMark = new HabitMark();
         habitMark.setDateEntity(dateService.createIfNotExistAndGetDateEntity(date));
         habitMark.setHabit(habit);
