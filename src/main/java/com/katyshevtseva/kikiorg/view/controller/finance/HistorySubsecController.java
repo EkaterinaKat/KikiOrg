@@ -10,10 +10,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.TableCell;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.util.Callback;
 
@@ -36,6 +33,7 @@ class HistorySubsecController implements FxController {
     private void initialize() {
         adjustColumns();
         fillTable();
+        setRowsColors();
     }
 
     private void adjustColumns() {
@@ -81,6 +79,30 @@ class HistorySubsecController implements FxController {
                             setGraphic(null);
                         } else {
                             setGraphic(button);
+                        }
+                    }
+                };
+            }
+        });
+    }
+
+    private void setRowsColors() {
+        table.setRowFactory(new Callback<TableView<Operation>, TableRow<Operation>>() {
+            @Override
+            public TableRow<Operation> call(TableView<Operation> tableView) {
+
+                return new TableRow<Operation>() {
+                    @Override
+                    protected void updateItem(Operation operation, boolean empty) {
+                        super.updateItem(operation, empty);
+                        if (operation != null) {
+                            if (operation.getType() == Operation.OperationType.EXPENSE) {
+                                setStyle(Utils.getOrangeBackground());
+                            } else if (operation.getType() == Operation.OperationType.REPLENISHMENT) {
+                                setStyle(Utils.getGreenBackground());
+                            } else if (operation.getType() == Operation.OperationType.TRANSFER) {
+                                setStyle(Utils.getBlueBackground());
+                            }
                         }
                     }
                 };
