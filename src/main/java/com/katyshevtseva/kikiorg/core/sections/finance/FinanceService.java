@@ -84,7 +84,7 @@ public class FinanceService {
         addToAccountAmount(account, (-1) * amount);
     }
 
-    public List<Expense> getExpenses() {
+    public List<Expense> getExpensesAvailableForCurrentUser() {
         List<Expense> expenses = new ArrayList<>();
         for (Account account : getAccountsAvailableForCurrentOwner())
             expenses.addAll(expenseRepo.findByAccount(account));
@@ -110,7 +110,7 @@ public class FinanceService {
     }
 
     // Если нет мд public то FinanceService не может получить доступ к этому методу в собраном в exe приложении
-    public List<Replenishment> getReplenishments() {
+    public List<Replenishment> getReplenishmentsAvailableForCurrentUser() {
         List<Replenishment> replenishments = new ArrayList<>();
         for (Account account : getAccountsAvailableForCurrentOwner())
             replenishments.addAll(replenishmentRepo.findByAccount(account));
@@ -131,7 +131,7 @@ public class FinanceService {
         addToAccountAmount(to, amount);
     }
 
-    public List<Transfer> getTransfers() {
+    public List<Transfer> getTransfersAvailableForCurrentUser() {
         Set<Transfer> transferSet = new HashSet<>();
         for (Account account : getAccountsAvailableForCurrentOwner()) {
             transferSet.addAll(transferRepo.findAllByFrom(account));
@@ -149,7 +149,7 @@ public class FinanceService {
     }
 
     @Transactional
-    private void validateAccountAmount(Account account) {
+    void validateAccountAmount(Account account) {
         List<Expense> expenses = expenseRepo.findByAccount(account);
         List<Replenishment> replenishments = replenishmentRepo.findByAccount(account);
         List<Transfer> transfersToAccount = transferRepo.findAllByTo(account);

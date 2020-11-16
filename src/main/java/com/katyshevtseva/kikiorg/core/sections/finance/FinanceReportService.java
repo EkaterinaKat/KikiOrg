@@ -24,7 +24,7 @@ public class FinanceReportService {
 
         // Доходы
         report += "\nДоходы \n";
-        for (Replenishment replenishment : financeService.getReplenishments()) {
+        for (Replenishment replenishment : financeService.getReplenishmentsAvailableForCurrentUser()) {
             report += (" * " + replenishment.getSource() + " " +
                     replenishment.getDateEntity() +
                     replenishment.getAccount().getTitle() + " " +
@@ -33,7 +33,7 @@ public class FinanceReportService {
 
         // Расходы
         report += "\nРасходы \n";
-        for (Expense expense : financeService.getExpenses()) {
+        for (Expense expense : financeService.getExpensesAvailableForCurrentUser()) {
             report += (" * " + expense.getItem() + " " +
                     expense.getDateEntity() + " " +
                     expense.getAccount().getTitle() + " " +
@@ -42,7 +42,7 @@ public class FinanceReportService {
 
         // Переводы
         report += "\nПереводы \n";
-        for (Transfer transfer : financeService.getTransfers()) {
+        for (Transfer transfer : financeService.getTransfersAvailableForCurrentUser()) {
             report += (" * Transfer from: " + transfer.getFrom().getTitle() + " to: " +
                     transfer.getTo().getTitle() + ". " +
                     transfer.getDateEntity().getValue() + ". Amount: " +
