@@ -1,5 +1,8 @@
 package com.katyshevtseva.kikiorg.core.sections.finance;
 
+import com.katyshevtseva.kikiorg.core.repo.ExpenseRepo;
+import com.katyshevtseva.kikiorg.core.repo.ReplenishmentRepo;
+import com.katyshevtseva.kikiorg.core.repo.TransferRepo;
 import com.katyshevtseva.kikiorg.core.sections.finance.entity.Expense;
 import com.katyshevtseva.kikiorg.core.sections.finance.entity.Replenishment;
 import com.katyshevtseva.kikiorg.core.sections.finance.entity.Transfer;
@@ -14,6 +17,12 @@ import java.util.List;
 public class FinanceOperationService {
     @Autowired
     private FinanceService financeService;
+    @Autowired
+    private ExpenseRepo expenseRepo;
+    @Autowired
+    private ReplenishmentRepo replenishmentRepo;
+    @Autowired
+    private TransferRepo transferRepo;
 
     public List<Operation> getOperationsAvailableForCurrentUser() {
         List<Operation> operations = new ArrayList<>();
@@ -63,6 +72,16 @@ public class FinanceOperationService {
     }
 
     public void deleteOperation(Operation operation) {
-
+        switch (operation.getType()) {
+            case EXPENSE:
+                expenseRepo.deleteById(operation.getId());
+                break;
+            case TRANSFER:
+                transferRepo.deleteById(operation.getId());
+                break;
+            case REPLENISHMENT:
+                replenishmentRepo.deleteById(operation.getId());
+        }
+        financeService.validateAllAccountsAmount();
     }
 }
