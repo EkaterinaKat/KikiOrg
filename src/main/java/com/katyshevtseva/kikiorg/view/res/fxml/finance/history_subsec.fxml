@@ -1,10 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.control.TableColumn?>
-<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.HBox?>
 <HBox xmlns="http://javafx.com/javafx"
       xmlns:fx="http://javafx.com/fxml">
+
+    <TableView fx:id="table" prefWidth="800" prefHeight="800">
+        <columns>
+            <TableColumn prefWidth="200" text="Date" fx:id="dateColumn"/>
+            <TableColumn prefWidth="200" text="From" fx:id="fromColumn"/>
+            <TableColumn prefWidth="200" text="To" fx:id="toColumn"/>
+            <TableColumn prefWidth="100" text="amount" fx:id="amountColumn"/>
+            <TableColumn prefWidth="100" fx:id="deleteColumn"/>
+        </columns>
+    </TableView>
 
 </HBox>
 

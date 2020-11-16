@@ -5,6 +5,7 @@ class ViewConstants {
     }
 
     static final String FXML_LOCATION = "/com/katyshevtseva/kikiorg/view/res/fxml/";
+    static final String IMAGE_LOCATION = "/com/katyshevtseva/kikiorg/view/res/images/";
     static final String FINANCE_FXML_LOCATION = "/com/katyshevtseva/kikiorg/view/res/fxml/finance/";
     static final String HABITS_FXML_LOCATION = "/com/katyshevtseva/kikiorg/view/res/fxml/habits/";
 
