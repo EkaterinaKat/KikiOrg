@@ -25,6 +25,13 @@ public class OrganizerWindowCreator {
                 setOnWindowCloseEventHandler(event -> System.exit(0)).showWindow();
     }
 
+    public void openQuestionDialog(FxController controller) {
+        new WindowBuilder(FXML_LOCATION + "question_dialog.fxml").setIconImagePath(
+                "file:D:\\Code\\KikiOrg\\src\\main\\java\\com\\katyshevtseva\\kikiorg\\view\\res\\images\\ico.png").
+                setController(controller).setHeight(QUESTION_DIALOG_HEIGHT).
+                setWidth(QUESTION_DIALOG_WIDTH).setTitle(CoreConstants.APP_NAME).showWindow();
+    }
+
     /* ----------------------------------  Привычки ---------------------------------------------- */
 
     public Node getHabitsSecNode(FxController controller) {
