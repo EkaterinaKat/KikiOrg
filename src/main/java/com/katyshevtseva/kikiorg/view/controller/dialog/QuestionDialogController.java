@@ -34,7 +34,7 @@ public class QuestionDialogController implements FxController {
     }
 
     @FunctionalInterface
-    interface AnswerHandler {
+    public interface AnswerHandler {
         void handle(boolean b);
     }
 }

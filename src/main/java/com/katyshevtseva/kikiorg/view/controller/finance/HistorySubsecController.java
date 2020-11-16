@@ -2,6 +2,8 @@ package com.katyshevtseva.kikiorg.view.controller.finance;
 
 import com.katyshevtseva.kikiorg.core.Core;
 import com.katyshevtseva.kikiorg.core.sections.finance.Operation;
+import com.katyshevtseva.kikiorg.view.controller.dialog.QuestionDialogController;
+import com.katyshevtseva.kikiorg.view.utils.OrganizerWindowCreator;
 import com.katyshevtseva.kikiorg.view.utils.Utils;
 import com.katyshevtseva.kikiorg.view.utils.WindowBuilder.FxController;
 import javafx.collections.FXCollections;
@@ -46,10 +48,16 @@ class HistorySubsecController implements FxController {
 
             {
                 Utils.setImageOnButton("delete.png", button, 20);
-                button.setOnAction((ActionEvent event) -> {
-                    Core.getInstance().financeOperationService().deleteOperation(getTableView().getItems().get(getIndex()));
-                    fillTable();
-                });
+
+                button.setOnAction((ActionEvent event) ->
+                        OrganizerWindowCreator.getInstance().openQuestionDialog(new QuestionDialogController(
+                                "Delete?",
+                                b -> {
+                                    if (b) {
+                                        Core.getInstance().financeOperationService().deleteOperation(getTableView().getItems().get(getIndex()));
+                                        fillTable();
+                                    }
+                                })));
             }
         });
     }
