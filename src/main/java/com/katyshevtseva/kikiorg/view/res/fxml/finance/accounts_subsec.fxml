@@ -33,4 +33,11 @@
     <Pane maxHeight="25" minHeight="25"/>
 
     <Button fx:id="validationButton" text="Validate all accounts" prefWidth="220"/>
+
+    <Pane maxHeight="25" minHeight="25"/>
+    <Label text="*****************************************************************"/>
+    <Pane maxHeight="25" minHeight="25"/>
+
+    <TextArea fx:id="reportTextArea" editable="false" minWidth="800" maxWidth="800" prefHeight="400"/>
+
 </VBox>

@@ -23,6 +23,8 @@ class AccountsSubsecController implements FxController {
     private Button validationButton;
     @FXML
     private ComboBox<Owner> ownerComboBox;
+    @FXML
+    private TextArea reportTextArea;
 
     @FXML
     private void initialize() {
@@ -39,5 +41,6 @@ class AccountsSubsecController implements FxController {
                 ownerComboBox.getValue());
         accountTitleField.clear();
         accountDescArea.clear();
+        reportTextArea.setText(Core.getInstance().financeReportService().getReport());
     }
 }
