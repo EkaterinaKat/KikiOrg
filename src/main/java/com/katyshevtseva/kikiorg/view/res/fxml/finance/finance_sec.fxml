@@ -25,7 +25,7 @@
                 <Pane minWidth="30" maxWidth="30"/>
                 <Button fx:id="checkButton" text="Check"/>
                 <Pane minWidth="30" maxWidth="30"/>
-                <Button fx:id="reportButton" text="Report"/>
+                <Button fx:id="reportButton" text="History"/>
                 <Pane minWidth="30" maxWidth="30"/>
                 <Button fx:id="transferButton" text="Transfer"/>
             </HBox>

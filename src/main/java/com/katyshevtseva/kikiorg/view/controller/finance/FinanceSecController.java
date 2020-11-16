@@ -33,7 +33,7 @@ public class FinanceSecController extends AbstractSwitchController implements Fx
     private ExpensesSubsecController expensesController = new ExpensesSubsecController();
     private CheckSubsecController checkController = new CheckSubsecController();
     private UserSubsecController userController = new UserSubsecController();
-    private ReportSubsecController reportController = new ReportSubsecController();
+    private HistorySubsecController reportController = new HistorySubsecController();
     private TransferSubsecController transferController = new TransferSubsecController();
 
     private Node replenishmentNode;

@@ -6,7 +6,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 
-class ReportSubsecController implements FxController {
+class HistorySubsecController implements FxController {
     @FXML
     private Button updateButton;
     @FXML

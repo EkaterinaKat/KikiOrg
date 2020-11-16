@@ -70,7 +70,7 @@ public class OrganizerWindowCreator {
     }
 
     public Node getFinanceReportSubsecNode(FxController controller) {
-        return new WindowBuilder(FINANCE_FXML_LOCATION + "report_subsec.fxml").setController(controller).getNode();
+        return new WindowBuilder(FINANCE_FXML_LOCATION + "history_subsec.fxml").setController(controller).getNode();
     }
 
     public Node getTransferSubsecNode(FxController controller) {
