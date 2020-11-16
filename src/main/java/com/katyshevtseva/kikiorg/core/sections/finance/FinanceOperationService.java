@@ -35,7 +35,7 @@ public class FinanceOperationService {
         for (Transfer transfer : financeService.getTransfersAvailableForCurrentUser()) {
             operations.add(convertToOperation(transfer));
         }
-        operations.sort(Comparator.comparing(Operation::getDateForSorting));
+        operations.sort(Comparator.comparing(Operation::getDateForSorting).reversed());
         return operations;
     }
 
