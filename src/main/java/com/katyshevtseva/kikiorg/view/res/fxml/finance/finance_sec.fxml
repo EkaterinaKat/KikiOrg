@@ -28,6 +28,10 @@
                 <Button fx:id="reportButton" text="History"/>
                 <Pane minWidth="30" maxWidth="30"/>
                 <Button fx:id="transferButton" text="Transfer"/>
+                <Pane minWidth="30" maxWidth="30"/>
+                <Button fx:id="itemHierarchyButton" text="Item Hierarchy"/>
+                <Pane minWidth="30" maxWidth="30"/>
+                <Button fx:id="analysisButton" text="Analysis"/>
             </HBox>
             <Pane minHeight="10" maxHeight="10"/>
         </VBox>

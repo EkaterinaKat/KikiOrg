@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.layout.*?>
+<VBox xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml">
+
+    <ScrollPane prefHeight="800" prefWidth="800">
+        <HBox>
+            <Pane maxWidth="20" minWidth="20"/>
+            <VBox>
+                <Pane maxHeight="20" minHeight="20"/>
+                <VBox fx:id="schemaBox"/>
+                <Pane maxHeight="20" minHeight="20"/>
+            </VBox>
+            <Pane maxWidth="20" minWidth="20"/>
+        </HBox>
+    </ScrollPane>
+
+    <Pane maxWidth="20" minWidth="20"/>
+
+    <Button fx:id="saveButton" text="Save"/>
+
+</VBox>
