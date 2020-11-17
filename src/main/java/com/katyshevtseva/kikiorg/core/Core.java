@@ -1,9 +1,6 @@
 package com.katyshevtseva.kikiorg.core;
 
-import com.katyshevtseva.kikiorg.core.sections.finance.FinanceCheckService;
-import com.katyshevtseva.kikiorg.core.sections.finance.FinanceOperationService;
-import com.katyshevtseva.kikiorg.core.sections.finance.FinanceReportService;
-import com.katyshevtseva.kikiorg.core.sections.finance.FinanceService;
+import com.katyshevtseva.kikiorg.core.sections.finance.*;
 import com.katyshevtseva.kikiorg.core.sections.habits.HabitsReportService;
 import com.katyshevtseva.kikiorg.core.sections.habits.HabitsService;
 import org.springframework.beans.factory.InitializingBean;
@@ -25,6 +22,8 @@ public class Core implements InitializingBean {
     private FinanceCheckService financeCheckService;
     @Autowired
     private FinanceOperationService financeOperationService;
+    @Autowired
+    private ItemHierarchyService itemHierarchyService;
 
     public static Core getInstance() {
         while (INSTANCE == null) {
@@ -64,5 +63,9 @@ public class Core implements InitializingBean {
 
     public FinanceOperationService financeOperationService() {
         return financeOperationService;
+    }
+
+    public ItemHierarchyService itemGroupService() {
+        return itemHierarchyService;
     }
 }

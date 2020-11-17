@@ -1,6 +1,7 @@
 package com.katyshevtseva.kikiorg.core.sections.habits;
 
 
+import com.katyshevtseva.kikiorg.core.date.DateService;
 import com.katyshevtseva.kikiorg.core.sections.habits.entity.Habit;
 import com.katyshevtseva.kikiorg.core.sections.habits.entity.HabitMark;
 import com.katyshevtseva.kikiorg.core.sections.habits.entity.ReportCell;
@@ -8,7 +9,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.text.SimpleDateFormat;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Date;
+import java.util.List;
 
 @Service
 public class HabitsReportService {
@@ -17,11 +21,13 @@ public class HabitsReportService {
     private HabitsService habitsService;
     @Autowired
     private HabitMarkConverter habitMarkConverter;
+    @Autowired
+    private DateService dateService;
 
     public List<List<ReportCell>> getReport(List<Habit> habits, Date startDate, Date endDate) {
         List<List<ReportCell>> result = new ArrayList<>();
         result.add(getReportHead(habits));
-        List<Date> dates = getDateRange(startDate, endDate);
+        List<Date> dates = dateService.getDateRange(startDate, endDate);
         Collections.reverse(dates);  // Чтобы последние даты были наверху таблицы
         for (Date date : dates) {
             result.add(getReportLine(date, habits));
@@ -53,24 +59,4 @@ public class HabitsReportService {
         }
         return result;
     }
-
-    private List<Date> getDateRange(Date start, Date end) {
-        Date date = new Date(start.getTime());
-        Date oneDayAfterEnd = addOneDay(end);
-
-        List<Date> result = new ArrayList<>();
-        while (date.before(oneDayAfterEnd)) {
-            result.add(date);
-            date = addOneDay(date);
-        }
-        return result;
-    }
-
-    private Date addOneDay(Date date) {
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTime(date);
-        calendar.add(Calendar.DATE, 1);
-        return calendar.getTime();
-    }
-
 }
