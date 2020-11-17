@@ -32,6 +32,7 @@ class AccountsSubsecController implements FxController {
         Utils.associateButtonWithControls(addAccountButton, accountTitleField, accountDescArea, ownerComboBox);
         validationButton.setOnAction(event -> Core.getInstance().financeService().validateAllAccountsAmount());
         ownerComboBox.setItems(FXCollections.observableArrayList(Core.getInstance().financeService().getAvailableAccountOwners()));
+        reportTextArea.setText(Core.getInstance().financeReportService().getReport());
     }
 
     private void addAccount() {

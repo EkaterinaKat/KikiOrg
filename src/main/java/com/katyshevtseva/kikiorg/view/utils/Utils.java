@@ -33,6 +33,18 @@ public class Utils {
         return " font-weight: bold; ";
     }
 
+    public static String getGreenBackground() {
+        return " -fx-background-color:#4FFF4C ";
+    }
+
+    public static String getOrangeBackground() {
+        return " -fx-background-color:#FFA24C ";
+    }
+
+    public static String getBlueBackground() {
+        return " -fx-background-color:#4C9FFF ";
+    }
+
     public static void associateButtonWithControls(Button button, Control... controls) {
         associateButtonWithControls(button, Arrays.asList(controls));
     }

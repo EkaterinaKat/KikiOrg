@@ -12,7 +12,7 @@ public class QuestionDialogController implements FxController {
     @FXML
     private Button noButton;
     @FXML
-    private Label questionLable;
+    private Label questionLabel;
     private final String question;
     private final AnswerHandler answerHandler;
 
@@ -23,14 +23,14 @@ public class QuestionDialogController implements FxController {
 
     @FXML
     private void initialize() {
-        questionLable.setText(question);
+        questionLabel.setText(question);
         yesButton.setOnAction(event -> handleAnswer(true));
         noButton.setOnAction(event -> handleAnswer(false));
     }
 
     private void handleAnswer(boolean b) {
         answerHandler.handle(b);
-        Utils.closeWindowThatContains(questionLable);
+        Utils.closeWindowThatContains(questionLabel);
     }
 
     @FunctionalInterface

@@ -1,12 +1,12 @@
-.black_border{
+.black_border {
     -fx-border-color: #000000;
 }
 
-.font_25{
+.font_25 {
      -fx-font-size: 25;
 }
 
-.root{
+.root {
     -fx-background-color: #8FE4C6;
 }
 
@@ -14,4 +14,9 @@
     -fx-background-color: #0B8359;
     -fx-text-fill: #FFFFFF;
     -fx-border-color: #000000;
+}
+
+.button:hover {
+    -fx-background-color: #FFFFFF;
+    -fx-text-fill: #0B8359;
 }

@@ -19,7 +19,7 @@ public class Operation {
         this.type = type;
     }
 
-    enum OperationType {
+    public enum OperationType {
         TRANSFER, EXPENSE, REPLENISHMENT
     }
 

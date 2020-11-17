@@ -10,11 +10,9 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.TableCell;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.util.Callback;
 
 
 class HistorySubsecController implements FxController {
@@ -35,6 +33,7 @@ class HistorySubsecController implements FxController {
     private void initialize() {
         adjustColumns();
         fillTable();
+        setRowsColors();
     }
 
     private void adjustColumns() {
@@ -42,29 +41,72 @@ class HistorySubsecController implements FxController {
         fromColumn.setCellValueFactory(new PropertyValueFactory<>("from"));
         toColumn.setCellValueFactory(new PropertyValueFactory<>("to"));
         amountColumn.setCellValueFactory(new PropertyValueFactory<>("amount"));
-
-        deleteColumn.setCellFactory(param -> new TableCell<Operation, Void>() {
-            private final Button button = new Button();
-
-            {
-                Utils.setImageOnButton("delete.png", button, 20);
-
-                button.setOnAction((ActionEvent event) ->
-                        OrganizerWindowCreator.getInstance().openQuestionDialog(new QuestionDialogController(
-                                "Delete?",
-                                b -> {
-                                    if (b) {
-                                        Core.getInstance().financeOperationService().deleteOperation(getTableView().getItems().get(getIndex()));
-                                        fillTable();
-                                    }
-                                })));
-            }
-        });
+        adjustButtonColumn();
     }
 
     private void fillTable() {
         ObservableList<Operation> operations = FXCollections.observableArrayList();
         operations.addAll(Core.getInstance().financeOperationService().getOperationsAvailableForCurrentUser());
         table.setItems(operations);
+    }
+
+    private void adjustButtonColumn() {
+        deleteColumn.setCellFactory(new Callback<TableColumn<Operation, Void>, TableCell<Operation, Void>>() {
+            @Override
+            public TableCell<Operation, Void> call(final TableColumn<Operation, Void> param) {
+                return new TableCell<Operation, Void>() {
+
+                    private final Button button = new Button();
+
+                    {
+                        Utils.setImageOnButton("delete.png", button, 20);
+                        button.setOnAction((ActionEvent event) ->
+                                OrganizerWindowCreator.getInstance().openQuestionDialog(new QuestionDialogController(
+                                        "Delete?",
+                                        b -> {
+                                            if (b) {
+                                                Core.getInstance().financeOperationService().deleteOperation(
+                                                        getTableView().getItems().get(getIndex()));
+                                                fillTable();
+                                            }
+                                        })));
+                    }
+
+                    @Override
+                    public void updateItem(Void item, boolean empty) {
+                        super.updateItem(item, empty);
+                        if (empty) {
+                            setGraphic(null);
+                        } else {
+                            setGraphic(button);
+                        }
+                    }
+                };
+            }
+        });
+    }
+
+    private void setRowsColors() {
+        table.setRowFactory(new Callback<TableView<Operation>, TableRow<Operation>>() {
+            @Override
+            public TableRow<Operation> call(TableView<Operation> tableView) {
+
+                return new TableRow<Operation>() {
+                    @Override
+                    protected void updateItem(Operation operation, boolean empty) {
+                        super.updateItem(operation, empty);
+                        if (operation != null) {
+                            if (operation.getType() == Operation.OperationType.EXPENSE) {
+                                setStyle(Utils.getOrangeBackground());
+                            } else if (operation.getType() == Operation.OperationType.REPLENISHMENT) {
+                                setStyle(Utils.getGreenBackground());
+                            } else if (operation.getType() == Operation.OperationType.TRANSFER) {
+                                setStyle(Utils.getBlueBackground());
+                            }
+                        }
+                    }
+                };
+            }
+        });
     }
 }
