@@ -63,4 +63,36 @@ public class ItemHierarchyService {
         }
         return amount;
     }
+
+    void destroyTreeWithRootNode(ItemHierarchyNode node) {
+        node.setParentGroup(null);
+        saveNode(node);
+
+        if (node.isLeaf())
+            return;
+
+        for (ItemHierarchyNode childNode : getNodesByParent(node))
+            destroyTreeWithRootNode(childNode);
+    }
+
+    void saveNode(ItemHierarchyNode node) {
+        if (node.isLeaf())
+            itemRepo.save((Item) node);
+        else
+            itemGroupRepo.save((ItemGroup) node);
+    }
+
+    boolean treeWithRootContainsNode(ItemHierarchyNode root, ItemHierarchyNode nodeToSearch) {
+        if (root.equals(nodeToSearch))
+            return true;
+
+        if (root.isLeaf())
+            return false;
+
+        for (ItemHierarchyNode childNode : getNodesByParent(root))
+            if (treeWithRootContainsNode(childNode, nodeToSearch))
+                return true;
+
+        return false;
+    }
 }

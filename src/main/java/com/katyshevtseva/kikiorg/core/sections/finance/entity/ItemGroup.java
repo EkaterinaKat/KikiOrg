@@ -4,6 +4,7 @@ import com.katyshevtseva.kikiorg.core.sections.finance.ItemHierarchyNode;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.util.Objects;
 
 @Data
 @Entity
@@ -21,5 +22,18 @@ public class ItemGroup implements ItemHierarchyNode {
     @Override
     public boolean isLeaf() {
         return false;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        ItemGroup itemGroup = (ItemGroup) o;
+        return getId() == itemGroup.getId();
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getId());
     }
 }
