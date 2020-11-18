@@ -27,6 +27,10 @@ public class MainFinanceController extends AbstractSwitchController implements F
     private Button reportButton;
     @FXML
     private Button transferButton;
+    @FXML
+    private Button itemHierarchyButton;
+    @FXML
+    private Button analysisButton;
 
     private final ReplenishmentController replenishmentController = new ReplenishmentController();
     private final AccountsController accountsController = new AccountsController();
@@ -35,6 +39,8 @@ public class MainFinanceController extends AbstractSwitchController implements F
     private final UserController userController = new UserController();
     private final HistoryController reportController = new HistoryController();
     private final TransferController transferController = new TransferController();
+    private final ItemHierarchyController itemHierarchyController = new ItemHierarchyController();
+    private final AnalysisController analysisController = new AnalysisController();
 
     private Node replenishmentNode;
     private Node accountsNode;
@@ -43,12 +49,14 @@ public class MainFinanceController extends AbstractSwitchController implements F
     private Node userNode;
     private Node reportNode;
     private Node transferNode;
+    private Node itemHierarchyNode;
+    private Node analysisNode;
 
     @FXML
     private void initialize() {
         pane = mainPane;
         buttons.addAll(Arrays.asList(replenishmentButton, accountsButton, expensesButton, checkButton, userButton,
-                transferButton, reportButton));
+                transferButton, reportButton, itemHierarchyButton, analysisButton));
         replenishmentButtonListener();
         replenishmentButton.setOnAction(event -> replenishmentButtonListener());
         accountsButton.setOnAction(event -> accountsButtonListener());
@@ -57,6 +65,18 @@ public class MainFinanceController extends AbstractSwitchController implements F
         userButton.setOnAction(event -> userButtonListener());
         reportButton.setOnAction(event -> reportButtonListener());
         transferButton.setOnAction(event -> transferButtonListener());
+        itemHierarchyButton.setOnAction(event -> itemHierarchyButtonListener());
+        analysisButton.setOnAction(event -> analysisButtonListener());
+    }
+
+    private void itemHierarchyButtonListener() {
+        activateMode(itemHierarchyButton, itemHierarchyNode,
+                OrganizerWindowCreator.getInstance()::getItemHierarchyNode, itemHierarchyController);
+    }
+
+    private void analysisButtonListener() {
+        activateMode(analysisButton, analysisNode,
+                OrganizerWindowCreator.getInstance()::getAnalysisNode, analysisController);
     }
 
     private void reportButtonListener() {
