@@ -65,7 +65,7 @@ public class Core implements InitializingBean {
         return financeOperationService;
     }
 
-    public ItemHierarchyService itemGroupService() {
+    public ItemHierarchyService itemHierarchyService() {
         return itemHierarchyService;
     }
 }
