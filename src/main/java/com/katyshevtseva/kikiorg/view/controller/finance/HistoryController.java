@@ -15,7 +15,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.util.Callback;
 
 
-class HistorySubsecController implements FxController {
+class HistoryController implements FxController {
     @FXML
     private TableView<Operation> table;
     @FXML

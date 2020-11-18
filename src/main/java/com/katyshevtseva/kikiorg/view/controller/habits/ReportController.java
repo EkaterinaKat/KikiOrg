@@ -27,7 +27,7 @@ import static java.sql.Date.valueOf;
 import static java.util.Calendar.MONTH;
 import static java.util.Calendar.YEAR;
 
-class ReportSubsecController implements FxController {
+class ReportController implements FxController {
     @FXML
     private TableView<Habit> habitsTable;
     @FXML

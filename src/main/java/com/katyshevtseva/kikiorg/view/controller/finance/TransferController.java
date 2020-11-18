@@ -11,7 +11,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 
-class TransferSubsecController implements FxController {
+class TransferController implements FxController {
     @FXML
     private ComboBox<Account> fromComboBox;
     @FXML

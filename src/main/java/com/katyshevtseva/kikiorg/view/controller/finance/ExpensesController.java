@@ -12,7 +12,7 @@ import javafx.scene.control.*;
 
 import java.time.LocalDate;
 
-class ExpensesSubsecController implements FxController {
+class ExpensesController implements FxController {
     @FXML
     private TextField itemTitleField;
     @FXML

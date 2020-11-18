@@ -9,7 +9,7 @@ import javafx.scene.control.ComboBox;
 
 import java.util.Arrays;
 
-class UserSubsecController implements FxController {
+class UserController implements FxController {
     @FXML
     private ComboBox<Owner> userComboBox;
 

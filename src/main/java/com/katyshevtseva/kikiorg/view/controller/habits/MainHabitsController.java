@@ -10,7 +10,7 @@ import javafx.scene.layout.Pane;
 
 import java.util.Arrays;
 
-public class HabitsSecController extends AbstractSwitchController implements FxController {
+public class MainHabitsController extends AbstractSwitchController implements FxController {
     @FXML
     private Button checkListButton;
     @FXML
@@ -24,9 +24,9 @@ public class HabitsSecController extends AbstractSwitchController implements FxC
     private Node checkListNode;
     private Node reportNode;
 
-    private AdminSubsecController adminController = new AdminSubsecController();
-    private CheckListSubsecController checkListController = new CheckListSubsecController();
-    private ReportSubsecController reportController = new ReportSubsecController();
+    private AdminController adminController = new AdminController();
+    private CheckListController checkListController = new CheckListController();
+    private ReportController reportController = new ReportController();
 
     @FXML
     private void initialize() {
@@ -39,14 +39,14 @@ public class HabitsSecController extends AbstractSwitchController implements FxC
     }
 
     private void checkListButtonListener() {
-        activateMode(checkListButton, checkListNode, OrganizerWindowCreator.getInstance()::getCheckListSubsecNode, checkListController);
+        activateMode(checkListButton, checkListNode, OrganizerWindowCreator.getInstance()::getCheckListNode, checkListController);
     }
 
     private void adminButtonListener() {
-        activateMode(adminButton, adminNode, OrganizerWindowCreator.getInstance()::getHabitAdminSubsecNode, adminController);
+        activateMode(adminButton, adminNode, OrganizerWindowCreator.getInstance()::getHabitAdminNode, adminController);
     }
 
     private void reportButtonListener() {
-        activateMode(reportButton, reportNode, OrganizerWindowCreator.getInstance()::getHabitsReportSubsecNode, reportController);
+        activateMode(reportButton, reportNode, OrganizerWindowCreator.getInstance()::getHabitsReportNode, reportController);
     }
 }

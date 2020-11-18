@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-class CheckSubsecController implements FxController {
+class CheckController implements FxController {
     @FXML
     private TextField amountField1;
     @FXML

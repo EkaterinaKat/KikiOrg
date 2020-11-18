@@ -18,7 +18,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-class AdminSubsecController implements FxController {
+class AdminController implements FxController {
     @FXML
     private GridPane gridPane;
     @FXML

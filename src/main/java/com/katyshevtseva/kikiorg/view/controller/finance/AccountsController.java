@@ -12,7 +12,7 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 
 
-class AccountsSubsecController implements FxController {
+class AccountsController implements FxController {
     @FXML
     private TextField accountTitleField;
     @FXML

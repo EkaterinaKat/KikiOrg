@@ -12,7 +12,7 @@ import javafx.scene.control.*;
 
 import java.time.LocalDate;
 
-class ReplenishmentSubsecController implements FxController {
+class ReplenishmentController implements FxController {
     @FXML
     private TextField sourceTitleField;
     @FXML

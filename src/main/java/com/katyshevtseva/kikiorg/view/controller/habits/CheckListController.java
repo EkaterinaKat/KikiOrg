@@ -15,7 +15,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-class CheckListSubsecController implements FxController {
+class CheckListController implements FxController {
     @FXML
     private DatePicker datePicker;
     @FXML

@@ -10,7 +10,7 @@ import javafx.scene.layout.Pane;
 
 import java.util.Arrays;
 
-public class FinanceSecController extends AbstractSwitchController implements FxController {
+public class MainFinanceController extends AbstractSwitchController implements FxController {
     @FXML
     private Button replenishmentButton;
     @FXML
@@ -28,13 +28,13 @@ public class FinanceSecController extends AbstractSwitchController implements Fx
     @FXML
     private Button transferButton;
 
-    private ReplenishmentSubsecController replenishmentController = new ReplenishmentSubsecController();
-    private AccountsSubsecController accountsController = new AccountsSubsecController();
-    private ExpensesSubsecController expensesController = new ExpensesSubsecController();
-    private CheckSubsecController checkController = new CheckSubsecController();
-    private UserSubsecController userController = new UserSubsecController();
-    private HistorySubsecController reportController = new HistorySubsecController();
-    private TransferSubsecController transferController = new TransferSubsecController();
+    private final ReplenishmentController replenishmentController = new ReplenishmentController();
+    private final AccountsController accountsController = new AccountsController();
+    private final ExpensesController expensesController = new ExpensesController();
+    private final CheckController checkController = new CheckController();
+    private final UserController userController = new UserController();
+    private final HistoryController reportController = new HistoryController();
+    private final TransferController transferController = new TransferController();
 
     private Node replenishmentNode;
     private Node accountsNode;
@@ -61,36 +61,36 @@ public class FinanceSecController extends AbstractSwitchController implements Fx
 
     private void reportButtonListener() {
         activateMode(reportButton, reportNode,
-                OrganizerWindowCreator.getInstance()::getFinanceReportSubsecNode, reportController);
+                OrganizerWindowCreator.getInstance()::getFinanceReportNode, reportController);
     }
 
     private void transferButtonListener() {
         activateMode(transferButton, transferNode,
-                OrganizerWindowCreator.getInstance()::getTransferSubsecNode, transferController);
+                OrganizerWindowCreator.getInstance()::getTransferNode, transferController);
     }
 
     private void replenishmentButtonListener() {
         activateMode(replenishmentButton, replenishmentNode,
-                OrganizerWindowCreator.getInstance()::getReplenishmentSubsecNode, replenishmentController);
+                OrganizerWindowCreator.getInstance()::getReplenishmentNode, replenishmentController);
     }
 
     private void accountsButtonListener() {
         activateMode(accountsButton, accountsNode,
-                OrganizerWindowCreator.getInstance()::getAccountsSubsecNode, accountsController);
+                OrganizerWindowCreator.getInstance()::getAccountsNode, accountsController);
     }
 
     private void expensesButtonListener() {
         activateMode(expensesButton, expensesNode,
-                OrganizerWindowCreator.getInstance()::getExpensesSubsecNode, expensesController);
+                OrganizerWindowCreator.getInstance()::getExpensesNode, expensesController);
     }
 
     private void checkButtonListener() {
         activateMode(checkButton, checkNode,
-                OrganizerWindowCreator.getInstance()::getCheckSubsecNode, checkController);
+                OrganizerWindowCreator.getInstance()::getCheckNode, checkController);
     }
 
     private void userButtonListener() {
         activateMode(userButton, userNode,
-                OrganizerWindowCreator.getInstance()::getUserSubsecNode, userController);
+                OrganizerWindowCreator.getInstance()::getUserNode, userController);
     }
 }
