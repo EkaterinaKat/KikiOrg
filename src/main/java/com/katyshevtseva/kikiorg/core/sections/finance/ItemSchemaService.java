@@ -10,11 +10,11 @@ import java.util.Collections;
 import java.util.List;
 
 @Service
-public class ItemSchemaConstructor {
+public class ItemSchemaService {
     @Autowired
     private ItemHierarchyService service;
 
-    public List<SchemaLine> getShema() {
+    public List<SchemaLine> getSchema() {
         List<SchemaLine> schema = new ArrayList<>();
         for (ItemHierarchyNode topLevelNode : service.getTopLevelNodes()) {
             schema.addAll(getSchemaByRoot(topLevelNode, 0));
@@ -26,22 +26,14 @@ public class ItemSchemaConstructor {
     private List<SchemaLine> getSchemaByRoot(ItemHierarchyNode node, int level) {
         if (node.isLeaf())
             return Collections.singletonList(
-                    new Entry(getIndentByLevel(level) + node.getTitle(), getColorByLevel(level), node));
+                    new Entry(node.getTitle(), level, getColorByLevel(level), node));
 
         List<SchemaLine> schema = new ArrayList<>();
         for (ItemHierarchyNode childNode : service.getNodesByParent(node)) {
             schema.addAll(getSchemaByRoot(childNode, level + 1));
         }
-        schema.add(new AddButton(getIndentByLevel(level), (ItemGroup) node));
+        schema.add(new AddButton(level, (ItemGroup) node));
         return schema;
-    }
-
-    private String getIndentByLevel(int level) {
-        String indent = "";
-        for (int i = 0; i < level; i++) {
-            indent += "   ";
-        }
-        return indent;
     }
 
     private String getColorByLevel(int level) {
@@ -56,11 +48,13 @@ public class ItemSchemaConstructor {
 
     public class Entry implements SchemaLine {
         private final String text;
+        private final int level;
         private final String color;
         private final ItemHierarchyNode node;
 
-        public Entry(String text, String color, ItemHierarchyNode node) {
+        public Entry(String text, int level, String color, ItemHierarchyNode node) {
             this.text = text;
+            this.level = level;
             this.color = color;
             this.node = node;
         }
@@ -76,14 +70,18 @@ public class ItemSchemaConstructor {
         public String getColor() {
             return color;
         }
+
+        public int getLevel() {
+            return level;
+        }
     }
 
     public class AddButton implements SchemaLine {
-        private final String indent;
+        private final int level;
         private final ItemGroup groupToAddTo;
 
-        public AddButton(String indent, ItemGroup groupToAddTo) {
-            this.indent = indent;
+        public AddButton(int level, ItemGroup groupToAddTo) {
+            this.level = level;
             this.groupToAddTo = groupToAddTo;
         }
 
@@ -98,8 +96,8 @@ public class ItemSchemaConstructor {
             service.saveNode(childNodeToAdd);
         }
 
-        public String getIndent() {
-            return indent;
+        public int getLevel() {
+            return level;
         }
     }
 

@@ -24,6 +24,8 @@ public class Core implements InitializingBean {
     private FinanceOperationService financeOperationService;
     @Autowired
     private ItemHierarchyService itemHierarchyService;
+    @Autowired
+    private ItemSchemaService itemSchemaService;
 
     public static Core getInstance() {
         while (INSTANCE == null) {
@@ -65,7 +67,11 @@ public class Core implements InitializingBean {
         return financeOperationService;
     }
 
-    public ItemHierarchyService itemHierarchyService() {
+    public ItemHierarchyService itemHierarchyService() {  //todo оно нужно?
         return itemHierarchyService;
+    }
+
+    public ItemSchemaService itemSchemaService() {
+        return itemSchemaService;
     }
 }
