@@ -26,10 +26,17 @@ public class OrganizerWindowCreator {
     }
 
     public void openQuestionDialog(FxController controller) {
-        new WindowBuilder(FXML_LOCATION + "question_dialog.fxml").setIconImagePath(
+        new WindowBuilder(DIALOG_FXML_LOCATION + "question_dialog.fxml").setIconImagePath(
                 "file:D:\\Code\\KikiOrg\\src\\main\\java\\com\\katyshevtseva\\kikiorg\\view\\res\\images\\ico.png").
-                setController(controller).setHeight(QUESTION_DIALOG_HEIGHT).
-                setWidth(QUESTION_DIALOG_WIDTH).setTitle(CoreConstants.APP_NAME).showWindow();
+                setController(controller).setHeight(DIALOG_HEIGHT).
+                setWidth(DIALOG_WIDTH).setTitle(CoreConstants.APP_NAME).showWindow();
+    }
+
+    public void openInfoDialog(FxController controller) {
+        new WindowBuilder(DIALOG_FXML_LOCATION + "info_dialog.fxml").setIconImagePath(
+                "file:D:\\Code\\KikiOrg\\src\\main\\java\\com\\katyshevtseva\\kikiorg\\view\\res\\images\\ico.png").
+                setController(controller).setHeight(DIALOG_HEIGHT).
+                setWidth(DIALOG_WIDTH).setTitle(CoreConstants.APP_NAME).showWindow();
     }
 
     /* ----------------------------------  Привычки ---------------------------------------------- */
