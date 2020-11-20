@@ -14,5 +14,5 @@ class ViewConstants {
     static final int WINDOW_HEIGHT = 1000;
     static final int WINDOW_WIDTH = 1500;
     static final int DIALOG_HEIGHT = 200;
-    static final int DIALOG_WIDTH = 300;
+    static final int DIALOG_WIDTH = 340;
 }

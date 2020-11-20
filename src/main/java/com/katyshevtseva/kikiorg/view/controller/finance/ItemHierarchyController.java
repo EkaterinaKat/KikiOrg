@@ -38,7 +38,7 @@ class ItemHierarchyController implements FxController {
         fillSchema();
         Utils.associateButtonWithControls(addButton, nameTextField);
         addButton.setOnAction(event -> {
-            hierarchyService.saveGroup(nameTextField.getText().toUpperCase());
+            hierarchyService.saveGroup(nameTextField.getText());
             nameTextField.clear();
             fillSchema();
         });
@@ -65,12 +65,13 @@ class ItemHierarchyController implements FxController {
                     fillSchema();
                 } catch (SchemaException e) {
                     OrganizerWindowCreator.getInstance().openInfoDialog(new InfoDialogController(e.getMessage()));
+                    comboBox.setVisible(false);
                     e.printStackTrace();
                 }
             });
 
             Label label = new Label("<+>");
-            label.setStyle(" -fx-font-weight: bold; ");
+            label.setStyle(" -fx-font-weight: bold; "); //todo
             label.setOnMouseClicked(event -> comboBox.setVisible(true));
 
             HBox hBox = new HBox();
@@ -80,17 +81,20 @@ class ItemHierarchyController implements FxController {
         } else if (line instanceof Entry) {
             Entry entry = (Entry) line;
 
-            Label entryLabel = new Label(entry.getText());
+            Label entryLabel = new Label(entry.isLeaf() ? entry.getText() : entry.getText().toUpperCase());
             entryLabel.setStyle(" -fx-text-fill: " + entry.getColor() + "; ");
 
-            Label deleteLabel = new Label("<->");
-            deleteLabel.setOnMouseClicked(event -> {
-                entry.deleteFromShema();
-                fillSchema();
-            });
-
             schemaBox.add(entryLabel, entry.getLevel(), rowIndex);
-            schemaBox.add(deleteLabel, entry.getLevel() + 1, rowIndex);
+
+            if (!entry.isTopLevel()) {
+                Label deleteLabel = new Label("<->");
+                deleteLabel.setOnMouseClicked(event -> {
+                    entry.deleteFromSchema();
+                    fillSchema();
+                });
+                schemaBox.add(deleteLabel, entry.getLevel() + 1, rowIndex);
+            }
+
         }
     }
 }

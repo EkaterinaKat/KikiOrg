@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 @Service
@@ -24,14 +23,16 @@ public class ItemSchemaService {
     }
 
     private List<SchemaLine> getSchemaByRoot(ItemHierarchyNode node, int level) {
-        if (node.isLeaf())
-            return Collections.singletonList(
-                    new Entry(node.getTitle(), level, getColorByLevel(level), node));
-
         List<SchemaLine> schema = new ArrayList<>();
+        schema.add(new Entry(node.getTitle(), level, getColorByLevel(level), node));
+
+        if (node.isLeaf())
+            return schema;
+
         for (ItemHierarchyNode childNode : service.getNodesByParent(node)) {
             schema.addAll(getSchemaByRoot(childNode, level + 1));
         }
+
         schema.add(new AddButton(level, (ItemGroup) node));
         return schema;
     }
@@ -59,7 +60,7 @@ public class ItemSchemaService {
             this.node = node;
         }
 
-        public void deleteFromShema() {
+        public void deleteFromSchema() {
             service.destroyTreeWithRootNode(node);
         }
 
@@ -73,6 +74,14 @@ public class ItemSchemaService {
 
         public int getLevel() {
             return level;
+        }
+
+        public boolean isLeaf() {
+            return node.isLeaf();
+        }
+
+        public boolean isTopLevel() {
+            return node.getParentGroup() == null;
         }
     }
 
