@@ -41,7 +41,7 @@ class AccountsController implements FxController {
                 accountDescArea.getText(),
                 ownerComboBox.getValue());
         accountTitleField.clear();
-        accountDescArea.clear();
+        accountDescArea.setText("-");
         reportTextArea.setText(Core.getInstance().financeReportService().getReport());
     }
 }

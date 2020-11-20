@@ -59,7 +59,7 @@ class ExpensesController implements FxController {
     private void addItem() {
         Core.getInstance().financeService().addItem(itemTitleField.getText(), itemDescArea.getText());
         itemTitleField.clear();
-        itemDescArea.clear();
+        itemDescArea.setText("-");
         setItemComboBoxItems();
     }
 

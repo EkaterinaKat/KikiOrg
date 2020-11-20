@@ -59,7 +59,7 @@ class ReplenishmentController implements FxController {
     private void addSource() {
         Core.getInstance().financeService().addSourse(sourceTitleField.getText(), sourceDescArea.getText());
         sourceTitleField.clear();
-        sourceDescArea.clear();
+        sourceDescArea.setText("-");
         setSourceComboBoxItems();
     }
 

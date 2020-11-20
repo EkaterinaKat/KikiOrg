@@ -10,25 +10,38 @@ import com.katyshevtseva.kikiorg.core.sections.finance.ItemSchemaService.Entry;
 import com.katyshevtseva.kikiorg.core.sections.finance.ItemSchemaService.SchemaLine;
 import com.katyshevtseva.kikiorg.view.controller.dialog.InfoDialogController;
 import com.katyshevtseva.kikiorg.view.utils.OrganizerWindowCreator;
+import com.katyshevtseva.kikiorg.view.utils.Utils;
 import com.katyshevtseva.kikiorg.view.utils.WindowBuilder.FxController;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 
 import java.util.List;
 
-public class ItemHierarchyController implements FxController {
+class ItemHierarchyController implements FxController {
     private final ItemSchemaService schemaService = Core.getInstance().itemSchemaService();
     private final ItemHierarchyService hierarchyService = Core.getInstance().itemHierarchyService();
     @FXML
     private GridPane schemaBox;
+    @FXML
+    private Button addButton;
+    @FXML
+    private TextField nameTextField;
 
     @FXML
     private void initialize() {
         fillSchema();
+        Utils.associateButtonWithControls(addButton, nameTextField);
+        addButton.setOnAction(event -> {
+            hierarchyService.saveGroup(nameTextField.getText().toUpperCase());
+            nameTextField.clear();
+            fillSchema();
+        });
     }
 
     private void fillSchema() {

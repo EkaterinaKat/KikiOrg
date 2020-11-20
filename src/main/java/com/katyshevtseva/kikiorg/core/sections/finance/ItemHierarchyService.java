@@ -33,7 +33,7 @@ public class ItemHierarchyService {
         return nodes;
     }
 
-    public List<ItemHierarchyNode> getNodesByParent(ItemHierarchyNode parentNode) {
+    List<ItemHierarchyNode> getNodesByParent(ItemHierarchyNode parentNode) {
         List<ItemHierarchyNode> nodes = new ArrayList<>();
         if (parentNode instanceof Item)
             return nodes;
@@ -42,7 +42,7 @@ public class ItemHierarchyService {
         return nodes;
     }
 
-    public long getAmountByNodeAndPeriod(ItemHierarchyNode node, Date startDate, Date endDate) {
+    private long getAmountByNodeAndPeriod(ItemHierarchyNode node, Date startDate, Date endDate) {
         if (node instanceof Item)
             return getAmountByItemAndPeriod((Item) node, startDate, endDate);
 
@@ -94,5 +94,11 @@ public class ItemHierarchyService {
                 return true;
 
         return false;
+    }
+
+    public void saveGroup(String name) {
+        ItemGroup itemGroup = new ItemGroup();
+        itemGroup.setTitle(name);
+        itemGroupRepo.save(itemGroup);
     }
 }
