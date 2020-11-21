@@ -31,7 +31,7 @@ public class FinanceService {
     @Autowired
     private TransferRepo transferRepo;
 
-    public void addSourse(String title, String desc) {
+    public void addSource(String title, String desc) {
         Source source = new Source();
         source.setTitle(title);
         source.setDescription(desc);
@@ -89,6 +89,7 @@ public class FinanceService {
         addToAccountAmount(account, (-1) * amount);
     }
 
+    // Если нет мд public то FinanceService не может получить доступ к этому методу в собраном в exe приложении
     public List<Expense> getExpensesForCurrentUser() {
         List<Expense> expenses = new ArrayList<>();
         for (Account account : getAccountsForCurrentOwner())
@@ -136,6 +137,7 @@ public class FinanceService {
         addToAccountAmount(to, amount);
     }
 
+    // Если нет мд public то FinanceService не может получить доступ к этому методу в собраном в exe приложении
     public List<Transfer> getTransfersForCurrentUser() {
         Set<Transfer> transferSet = new HashSet<>();
         for (Account account : getAccountsForCurrentOwner()) {
