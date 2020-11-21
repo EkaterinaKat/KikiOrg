@@ -26,13 +26,13 @@ public class FinanceOperationService {
 
     public List<Operation> getOperationsAvailableForCurrentUser() {
         List<Operation> operations = new ArrayList<>();
-        for (Replenishment replenishment : financeService.getReplenishmentsAvailableForCurrentUser()) {
+        for (Replenishment replenishment : financeService.getReplenishmentsForCurrentUser()) {
             operations.add(convertToOperation(replenishment));
         }
-        for (Expense expense : financeService.getExpensesAvailableForCurrentUser()) {
+        for (Expense expense : financeService.getExpensesForCurrentUser()) {
             operations.add(convertToOperation(expense));
         }
-        for (Transfer transfer : financeService.getTransfersAvailableForCurrentUser()) {
+        for (Transfer transfer : financeService.getTransfersForCurrentUser()) {
             operations.add(convertToOperation(transfer));
         }
         operations.sort(Comparator.comparing(Operation::getDateForSorting).reversed());

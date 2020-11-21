@@ -16,7 +16,7 @@ public class FinanceReportService {
         String report = "";
 
         // Счета
-        for (Account account : financeService.getAccountsAvailableForCurrentOwner()) {
+        for (Account account : financeService.getAccountsForCurrentOwner()) {
             report += (" * " + account.getTitle() + ". " + account.getDescription() +
                     ". Владелец: " + account.getOwner() +
                     ". Amount: " + account.getAmount() + "\n");
@@ -24,7 +24,7 @@ public class FinanceReportService {
 
         // Доходы
         report += "\nДоходы \n";
-        for (Replenishment replenishment : financeService.getReplenishmentsAvailableForCurrentUser()) {
+        for (Replenishment replenishment : financeService.getReplenishmentsForCurrentUser()) {
             report += (" * " + replenishment.getSource() + " " +
                     replenishment.getDateEntity() +
                     replenishment.getAccount().getTitle() + " " +
@@ -33,7 +33,7 @@ public class FinanceReportService {
 
         // Расходы
         report += "\nРасходы \n";
-        for (Expense expense : financeService.getExpensesAvailableForCurrentUser()) {
+        for (Expense expense : financeService.getExpensesForCurrentUser()) {
             report += (" * " + expense.getItem() + " " +
                     expense.getDateEntity() + " " +
                     expense.getAccount().getTitle() + " " +
@@ -42,7 +42,7 @@ public class FinanceReportService {
 
         // Переводы
         report += "\nПереводы \n";
-        for (Transfer transfer : financeService.getTransfersAvailableForCurrentUser()) {
+        for (Transfer transfer : financeService.getTransfersForCurrentUser()) {
             report += (" * Transfer from: " + transfer.getFrom().getTitle() + " to: " +
                     transfer.getTo().getTitle() + ". " +
                     transfer.getDateEntity().getValue() + ". Amount: " +

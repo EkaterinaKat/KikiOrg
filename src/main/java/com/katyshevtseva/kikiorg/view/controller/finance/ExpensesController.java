@@ -43,13 +43,13 @@ class ExpensesController implements FxController {
     }
 
     private void setItemComboBoxItems() {
-        ObservableList<Item> items = FXCollections.observableArrayList(Core.getInstance().financeService().getItems());
+        ObservableList<Item> items = FXCollections.observableArrayList(Core.getInstance().financeService().getItemsForCurrentOwner());
         itemComboBox.setItems(items);
     }
 
     private void setAccountComboBoxItems() {
         if(accountComboBox != null){
-            ObservableList<Account> accounts = FXCollections.observableArrayList(Core.getInstance().financeService().getAccountsAvailableForCurrentOwner());
+            ObservableList<Account> accounts = FXCollections.observableArrayList(Core.getInstance().financeService().getAccountsForCurrentOwner());
             accountComboBox.setItems(accounts);
             if (accounts.size() > 0)
                 accountComboBox.setValue(accounts.get(0));
