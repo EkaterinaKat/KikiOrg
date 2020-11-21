@@ -33,7 +33,7 @@ public class ItemSchemaService {
             schema.addAll(getSchemaByRoot(childNode, level + 1));
         }
 
-        schema.add(new AddButton(level, (ItemGroup) node));
+        schema.add(new AddButton(level+1, (ItemGroup) node));
         return schema;
     }
 
@@ -41,9 +41,9 @@ public class ItemSchemaService {
         if (level == 0)
             return "#ff0000";
         if (level == 1)
-            return "#00ff00";
-        if (level == 3)
             return "#0000ff";
+        if (level == 2)
+            return "#00ff00";
         return "#000000";
     }
 
@@ -89,7 +89,7 @@ public class ItemSchemaService {
         private final int level;
         private final ItemGroup groupToAddTo;
 
-        public AddButton(int level, ItemGroup groupToAddTo) {
+        AddButton(int level, ItemGroup groupToAddTo) {
             this.level = level;
             this.groupToAddTo = groupToAddTo;
         }
@@ -110,7 +110,7 @@ public class ItemSchemaService {
         }
     }
 
-    public static class EmptyLine implements SchemaLine {
+    private static class EmptyLine implements SchemaLine {
 
     }
 

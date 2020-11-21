@@ -71,7 +71,6 @@ class ItemHierarchyController implements FxController {
             });
 
             Label label = new Label("<+>");
-            label.setStyle(" -fx-font-weight: bold; "); //todo
             label.setOnMouseClicked(event -> comboBox.setVisible(true));
 
             HBox hBox = new HBox();
@@ -84,7 +83,8 @@ class ItemHierarchyController implements FxController {
             Label entryLabel = new Label(entry.isLeaf() ? entry.getText() : entry.getText().toUpperCase());
             entryLabel.setStyle(" -fx-text-fill: " + entry.getColor() + "; ");
 
-            schemaBox.add(entryLabel, entry.getLevel(), rowIndex);
+            HBox hBox = new HBox();
+            hBox.getChildren().add(entryLabel);
 
             if (!entry.isTopLevel()) {
                 Label deleteLabel = new Label("<->");
@@ -92,9 +92,10 @@ class ItemHierarchyController implements FxController {
                     entry.deleteFromSchema();
                     fillSchema();
                 });
-                schemaBox.add(deleteLabel, entry.getLevel() + 1, rowIndex);
+                hBox.getChildren().add(deleteLabel);
             }
 
+            schemaBox.add(hBox, entry.getLevel(), rowIndex);
         }
     }
 }
