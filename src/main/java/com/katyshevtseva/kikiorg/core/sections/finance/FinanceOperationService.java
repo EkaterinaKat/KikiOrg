@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -46,7 +47,7 @@ public class FinanceOperationService {
                 replenishment.getAccount().getTitle(),
                 replenishment.getDateEntity().getValue(),
                 replenishment.getAmount(),
-                Operation.OperationType.REPLENISHMENT);
+                OperationType.REPLENISHMENT);
     }
 
     private Operation convertToOperation(Expense expense) {
@@ -56,7 +57,7 @@ public class FinanceOperationService {
                 expense.getItem().getTitle(),
                 expense.getDateEntity().getValue(),
                 expense.getAmount(),
-                Operation.OperationType.EXPENSE
+                OperationType.EXPENSE
         );
     }
 
@@ -67,7 +68,7 @@ public class FinanceOperationService {
                 transfer.getTo().getTitle(),
                 transfer.getDateEntity().getValue(),
                 transfer.getAmount(),
-                Operation.OperationType.TRANSFER
+                OperationType.TRANSFER
         );
     }
 
@@ -84,4 +85,55 @@ public class FinanceOperationService {
         }
         financeService.validateAllAccountsAmount();
     }
+
+    public enum OperationType {
+        TRANSFER, EXPENSE, REPLENISHMENT
+    }
+
+    public class Operation {
+        private final Long id;
+        private final String from;
+        private final String to;
+        private final Date date;
+        private final Long amount;
+        private final OperationType type;
+
+        Operation(Long id, String from, String to, Date date, Long amount, OperationType type) {
+            this.id = id;
+            this.from = from;
+            this.to = to;
+            this.date = date;
+            this.amount = amount;
+            this.type = type;
+        }
+
+        Date getDateForSorting() {
+            return date;
+        }
+
+        public Long getId() {
+            return id;
+        }
+
+        public String getFrom() {
+            return from;
+        }
+
+        public String getTo() {
+            return to;
+        }
+
+        public String getDate() {
+            return date.toString();
+        }
+
+        public String getAmount() {
+            return "" + amount;
+        }
+
+        public OperationType getType() {
+            return type;
+        }
+    }
+
 }

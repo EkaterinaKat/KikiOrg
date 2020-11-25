@@ -15,7 +15,7 @@ class UserController implements FxController {
 
     @FXML
     private void initialize() {
-        userComboBox.setItems(FXCollections.observableArrayList(Arrays.asList(Owner.K, Owner.M)));
+        userComboBox.setItems(FXCollections.observableArrayList(Arrays.asList(Owner.K, Owner.M, Owner.C)));
         userComboBox.setValue(Core.getInstance().financeService().getCurrentOwner());
         userComboBox.valueProperty().addListener((observable ->
                 Core.getInstance().financeService().setCurrentOwner(userComboBox.getValue())));

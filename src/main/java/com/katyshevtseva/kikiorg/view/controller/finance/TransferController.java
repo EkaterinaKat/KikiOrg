@@ -31,14 +31,14 @@ class TransferController implements FxController {
     }
 
     private void transfer() {
-        Core.getInstance().financeService().makeTransfer(fromComboBox.getValue(), toComboBox.getValue(),
+        Core.getInstance().financeService().addTransfer(fromComboBox.getValue(), toComboBox.getValue(),
                 Long.parseLong(amountTextField.getText()));
         amountTextField.clear();
     }
 
     private void setAccountComboBoxItems(ComboBox<Account> accountComboBox) {
         if (accountComboBox != null) {
-            ObservableList<Account> accounts = FXCollections.observableArrayList(Core.getInstance().financeService().getAccountsForCurrentOwner());
+            ObservableList<Account> accounts = FXCollections.observableArrayList(Core.getInstance().financeService().getAccountsForCurrentUser());
             accountComboBox.setItems(accounts);
         }
     }

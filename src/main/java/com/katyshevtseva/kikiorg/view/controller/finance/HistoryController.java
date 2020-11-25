@@ -1,7 +1,8 @@
 package com.katyshevtseva.kikiorg.view.controller.finance;
 
 import com.katyshevtseva.kikiorg.core.Core;
-import com.katyshevtseva.kikiorg.core.sections.finance.Operation;
+import com.katyshevtseva.kikiorg.core.sections.finance.FinanceOperationService.Operation;
+import com.katyshevtseva.kikiorg.core.sections.finance.FinanceOperationService.OperationType;
 import com.katyshevtseva.kikiorg.view.controller.dialog.QuestionDialogController;
 import com.katyshevtseva.kikiorg.view.utils.OrganizerWindowCreator;
 import com.katyshevtseva.kikiorg.view.utils.Utils;
@@ -96,11 +97,11 @@ class HistoryController implements FxController {
                     protected void updateItem(Operation operation, boolean empty) {
                         super.updateItem(operation, empty);
                         if (operation != null) {
-                            if (operation.getType() == Operation.OperationType.EXPENSE) {
+                            if (operation.getType() == OperationType.EXPENSE) {
                                 setStyle(Utils.getOrangeBackground());
-                            } else if (operation.getType() == Operation.OperationType.REPLENISHMENT) {
+                            } else if (operation.getType() == OperationType.REPLENISHMENT) {
                                 setStyle(Utils.getGreenBackground());
-                            } else if (operation.getType() == Operation.OperationType.TRANSFER) {
+                            } else if (operation.getType() == OperationType.TRANSFER) {
                                 setStyle(Utils.getBlueBackground());
                             }
                         }

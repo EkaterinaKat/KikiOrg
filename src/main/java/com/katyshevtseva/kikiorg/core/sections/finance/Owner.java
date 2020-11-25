@@ -1,7 +1,7 @@
 package com.katyshevtseva.kikiorg.core.sections.finance;
 
 public enum Owner {
-    K("Екатерина"), M("Камиль"), C("Общий");
+    K("Екатерина"), M("Камиль"), C("Семья");
 
     private String name;
 

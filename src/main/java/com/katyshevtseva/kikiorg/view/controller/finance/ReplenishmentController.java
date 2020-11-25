@@ -43,13 +43,13 @@ class ReplenishmentController implements FxController {
     }
 
     private void setSourceComboBoxItems() {
-        ObservableList<Source> sources = FXCollections.observableArrayList(Core.getInstance().financeService().getSources());
+        ObservableList<Source> sources = FXCollections.observableArrayList(Core.getInstance().financeService().getSourcesForCurrentUser());
         sourceComboBox.setItems(sources);
     }
 
     private void setAccountComboBoxItems() {
         if(accountComboBox != null){
-            ObservableList<Account> accounts = FXCollections.observableArrayList(Core.getInstance().financeService().getAccountsForCurrentOwner());
+            ObservableList<Account> accounts = FXCollections.observableArrayList(Core.getInstance().financeService().getAccountsForCurrentUser());
             accountComboBox.setItems(accounts);
             if (accounts.size() > 0)
                 accountComboBox.setValue(accounts.get(0));

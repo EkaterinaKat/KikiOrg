@@ -15,7 +15,7 @@ import java.util.*;
 public class FinanceService {
     @Getter
     @Setter
-    private Owner currentOwner = Owner.K;
+    private Owner currentOwner = Owner.C;
     @Autowired
     private AccountRepo accountRepo;
     @Autowired
@@ -39,7 +39,7 @@ public class FinanceService {
         sourceRepo.save(source);
     }
 
-    public List<Source> getSources() {
+    public List<Source> getSourcesForCurrentUser() {
         return sourceRepo.findAllByOwner(currentOwner);
     }
 
@@ -52,30 +52,20 @@ public class FinanceService {
     }
 
     public List<Item> getItemsForCurrentOwner() {
-        List<Owner> owners = getAvailableAccountOwners();
-        List<Item> items = new ArrayList<>();
-        for (Owner owner : owners) {
-            items.addAll(itemRepo.findAllByOwner(owner));
-        }
-        return items;
+        return itemRepo.findAllByOwner(currentOwner);
     }
 
-    public void addAccount(String title, String desc, Owner owner) {
+    public void addAccount(String title, String desc) {
         Account account = new Account();
         account.setTitle(title);
         account.setDescription(desc);
         account.setAmount(0);
-        account.setOwner(owner);
+        account.setOwner(currentOwner);
         accountRepo.save(account);
     }
 
-    public List<Account> getAccountsForCurrentOwner() {
-        List<Owner> owners = getAvailableAccountOwners();
-        List<Account> accounts = new ArrayList<>();
-        for (Owner owner : owners) {
-            accounts.addAll(accountRepo.findAllByOwner(owner));
-        }
-        return accounts;
+    public List<Account> getAccountsForCurrentUser() {
+        return accountRepo.findAllByOwner(currentOwner);
     }
 
     public void addExpense(Account account, long amount, Item item, Date date) {
@@ -92,7 +82,7 @@ public class FinanceService {
     // Если нет мд public то FinanceService не может получить доступ к этому методу в собраном в exe приложении
     public List<Expense> getExpensesForCurrentUser() {
         List<Expense> expenses = new ArrayList<>();
-        for (Account account : getAccountsForCurrentOwner())
+        for (Account account : getAccountsForCurrentUser())
             expenses.addAll(expenseRepo.findByAccount(account));
         expenses.sort(Comparator.comparing(Expense::getDateEntity));
         return expenses;
@@ -109,23 +99,17 @@ public class FinanceService {
         addToAccountAmount(account, amount);
     }
 
-    private void addToAccountAmount(Account account, long amount) {
-        Account actualAccount = accountRepo.findById(account.getId()).orElse(null);
-        actualAccount.setAmount(actualAccount.getAmount() + amount);
-        accountRepo.save(actualAccount);
-    }
-
     // Если нет мд public то FinanceService не может получить доступ к этому методу в собраном в exe приложении
     public List<Replenishment> getReplenishmentsForCurrentUser() {
         List<Replenishment> replenishments = new ArrayList<>();
-        for (Account account : getAccountsForCurrentOwner())
+        for (Account account : getAccountsForCurrentUser())
             replenishments.addAll(replenishmentRepo.findByAccount(account));
         replenishments.sort(Comparator.comparing(Replenishment::getDateEntity));
         return replenishments;
     }
 
     @Transactional
-    public void makeTransfer(Account from, Account to, Long amount) {
+    public void addTransfer(Account from, Account to, Long amount) {
         Transfer transfer = new Transfer();
         transfer.setFrom(from);
         transfer.setTo(to);
@@ -140,13 +124,19 @@ public class FinanceService {
     // Если нет мд public то FinanceService не может получить доступ к этому методу в собраном в exe приложении
     public List<Transfer> getTransfersForCurrentUser() {
         Set<Transfer> transferSet = new HashSet<>();
-        for (Account account : getAccountsForCurrentOwner()) {
+        for (Account account : getAccountsForCurrentUser()) {
             transferSet.addAll(transferRepo.findAllByFrom(account));
             transferSet.addAll(transferRepo.findAllByTo(account));
         }
         List<Transfer> transferList = new ArrayList<>(transferSet);
         transferList.sort(Comparator.comparing(Transfer::getDateEntity));
         return transferList;
+    }
+
+    private void addToAccountAmount(Account account, long amount) {
+        Account actualAccount = accountRepo.findById(account.getId()).orElse(null);
+        actualAccount.setAmount(actualAccount.getAmount() + amount);
+        accountRepo.save(actualAccount);
     }
 
     public void validateAllAccountsAmount() {
@@ -181,13 +171,5 @@ public class FinanceService {
         Account actualAccount = accountRepo.findById(account.getId()).orElse(null);
         actualAccount.setAmount(amount);
         accountRepo.save(actualAccount);
-    }
-
-    public List<Owner> getAvailableAccountOwners() {
-        if (currentOwner == Owner.K)
-            return Arrays.asList(Owner.K, Owner.C);
-        if (currentOwner == Owner.M)
-            return Arrays.asList(Owner.M, Owner.C);
-        throw new RuntimeException();
     }
 }

@@ -22,24 +22,20 @@ class AccountsController implements FxController {
     @FXML
     private Button validationButton;
     @FXML
-    private ComboBox<Owner> ownerComboBox;
-    @FXML
     private TextArea reportTextArea;
 
     @FXML
     private void initialize() {
         addAccountButton.setOnAction(event -> addAccount());
-        Utils.associateButtonWithControls(addAccountButton, accountTitleField, accountDescArea, ownerComboBox);
+        Utils.associateButtonWithControls(addAccountButton, accountTitleField, accountDescArea);
         validationButton.setOnAction(event -> Core.getInstance().financeService().validateAllAccountsAmount());
-        ownerComboBox.setItems(FXCollections.observableArrayList(Core.getInstance().financeService().getAvailableAccountOwners()));
         reportTextArea.setText(Core.getInstance().financeReportService().getReport());
     }
 
     private void addAccount() {
         Core.getInstance().financeService().addAccount(
                 accountTitleField.getText(),
-                accountDescArea.getText(),
-                ownerComboBox.getValue());
+                accountDescArea.getText());
         accountTitleField.clear();
         accountDescArea.setText("-");
         reportTextArea.setText(Core.getInstance().financeReportService().getReport());
