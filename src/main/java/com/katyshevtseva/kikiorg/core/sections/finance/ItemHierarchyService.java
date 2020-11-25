@@ -1,18 +1,15 @@
 package com.katyshevtseva.kikiorg.core.sections.finance;
 
-import com.katyshevtseva.kikiorg.core.date.DateEntity;
 import com.katyshevtseva.kikiorg.core.date.DateService;
 import com.katyshevtseva.kikiorg.core.repo.ExpenseRepo;
 import com.katyshevtseva.kikiorg.core.repo.ItemGroupRepo;
 import com.katyshevtseva.kikiorg.core.repo.ItemRepo;
-import com.katyshevtseva.kikiorg.core.sections.finance.entity.Expense;
 import com.katyshevtseva.kikiorg.core.sections.finance.entity.Item;
 import com.katyshevtseva.kikiorg.core.sections.finance.entity.ItemGroup;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 @Service
@@ -40,28 +37,6 @@ public class ItemHierarchyService {
         nodes.addAll(itemRepo.findByParentGroup((ItemGroup) parentNode));
         nodes.addAll(itemGroupRepo.findByParentGroup((ItemGroup) parentNode));
         return nodes;
-    }
-
-    private long getAmountByNodeAndPeriod(ItemHierarchyNode node, Date startDate, Date endDate) {
-        if (node instanceof Item)
-            return getAmountByItemAndPeriod((Item) node, startDate, endDate);
-
-        long amount = 0;
-        for (ItemHierarchyNode childNode : getNodesByParent(node))
-            amount += getAmountByNodeAndPeriod(childNode, startDate, endDate);
-        return amount;
-    }
-
-    private long getAmountByItemAndPeriod(Item item, Date startDate, Date endDate) {
-        long amount = 0;
-        List<DateEntity> dateEntities = dateService.getOnlyExistingDateEntitiesByPeriod(startDate, endDate);
-        for (DateEntity dateEntity : dateEntities) {
-            List<Expense> expenses = expenseRepo.findByItemAndDateEntity(item, dateEntity);
-            for (Expense expense : expenses) {
-                amount += expense.getAmount();
-            }
-        }
-        return amount;
     }
 
     void destroyTreeWithRootNode(ItemHierarchyNode node) {
@@ -100,5 +75,17 @@ public class ItemHierarchyService {
         ItemGroup itemGroup = new ItemGroup();
         itemGroup.setTitle(name);
         itemGroupRepo.save(itemGroup);
+    }
+
+    public interface ItemHierarchyNode {
+        long getId();
+
+        boolean isLeaf();
+
+        String getTitle();
+
+        ItemHierarchyNode getParentGroup();
+
+        void setParentGroup(ItemGroup group);
     }
 }

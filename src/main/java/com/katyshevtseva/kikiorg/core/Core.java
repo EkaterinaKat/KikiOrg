@@ -26,6 +26,8 @@ public class Core implements InitializingBean {
     private ItemHierarchyService itemHierarchyService;
     @Autowired
     private ItemSchemaService itemSchemaService;
+    @Autowired
+    private OwnerService ownerService;
 
     public static Core getInstance() {
         while (INSTANCE == null) {
@@ -73,5 +75,9 @@ public class Core implements InitializingBean {
 
     public ItemSchemaService itemSchemaService() {
         return itemSchemaService;
+    }
+
+    public OwnerService ownerService() {
+        return ownerService;
     }
 }

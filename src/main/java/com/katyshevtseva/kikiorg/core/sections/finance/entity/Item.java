@@ -1,7 +1,8 @@
 package com.katyshevtseva.kikiorg.core.sections.finance.entity;
 
-import com.katyshevtseva.kikiorg.core.sections.finance.ItemHierarchyNode;
-import com.katyshevtseva.kikiorg.core.sections.finance.Owner;
+
+import com.katyshevtseva.kikiorg.core.sections.finance.ItemHierarchyService.ItemHierarchyNode;
+import com.katyshevtseva.kikiorg.core.sections.finance.OwnerService.Owner;
 import lombok.Data;
 
 import javax.persistence.*;

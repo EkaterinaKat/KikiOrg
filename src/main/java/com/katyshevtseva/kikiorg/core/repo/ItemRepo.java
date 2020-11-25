@@ -1,6 +1,6 @@
 package com.katyshevtseva.kikiorg.core.repo;
 
-import com.katyshevtseva.kikiorg.core.sections.finance.Owner;
+import com.katyshevtseva.kikiorg.core.sections.finance.OwnerService;
 import com.katyshevtseva.kikiorg.core.sections.finance.entity.Item;
 import com.katyshevtseva.kikiorg.core.sections.finance.entity.ItemGroup;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -10,7 +10,7 @@ import java.util.List;
 
 @Repository
 public interface ItemRepo extends JpaRepository<Item, Long> {
-    List<Item> findAllByOwner(Owner owner);
+    List<Item> findAllByOwner(OwnerService.Owner owner);
 
     List<Item> findByParentGroupIsNull();
 

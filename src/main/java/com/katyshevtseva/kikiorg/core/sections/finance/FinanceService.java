@@ -2,6 +2,7 @@ package com.katyshevtseva.kikiorg.core.sections.finance;
 
 import com.katyshevtseva.kikiorg.core.date.DateService;
 import com.katyshevtseva.kikiorg.core.repo.*;
+import com.katyshevtseva.kikiorg.core.sections.finance.OwnerService.Owner;
 import com.katyshevtseva.kikiorg.core.sections.finance.entity.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -13,9 +14,8 @@ import java.util.*;
 
 @Service
 public class FinanceService {
-    @Getter
-    @Setter
-    private Owner currentOwner = Owner.C;
+    @Autowired
+    private OwnerService ownerService;
     @Autowired
     private AccountRepo accountRepo;
     @Autowired
@@ -35,24 +35,24 @@ public class FinanceService {
         Source source = new Source();
         source.setTitle(title);
         source.setDescription(desc);
-        source.setOwner(currentOwner);
+        source.setOwner(ownerService.getCurrentOwner());
         sourceRepo.save(source);
     }
 
     public List<Source> getSourcesForCurrentUser() {
-        return sourceRepo.findAllByOwner(currentOwner);
+        return sourceRepo.findAllByOwner(ownerService.getCurrentOwner());
     }
 
     public void addItem(String title, String desc) {
         Item item = new Item();
         item.setTitle(title);
         item.setDescription(desc);
-        item.setOwner(currentOwner);
+        item.setOwner(ownerService.getCurrentOwner());
         itemRepo.save(item);
     }
 
     public List<Item> getItemsForCurrentOwner() {
-        return itemRepo.findAllByOwner(currentOwner);
+        return itemRepo.findAllByOwner(ownerService.getCurrentOwner());
     }
 
     public void addAccount(String title, String desc) {
@@ -60,12 +60,12 @@ public class FinanceService {
         account.setTitle(title);
         account.setDescription(desc);
         account.setAmount(0);
-        account.setOwner(currentOwner);
+        account.setOwner(ownerService.getCurrentOwner());
         accountRepo.save(account);
     }
 
     public List<Account> getAccountsForCurrentUser() {
-        return accountRepo.findAllByOwner(currentOwner);
+        return accountRepo.findAllByOwner(ownerService.getCurrentOwner());
     }
 
     public void addExpense(Account account, long amount, Item item, Date date) {
