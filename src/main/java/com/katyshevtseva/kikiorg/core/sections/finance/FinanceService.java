@@ -2,10 +2,7 @@ package com.katyshevtseva.kikiorg.core.sections.finance;
 
 import com.katyshevtseva.kikiorg.core.date.DateService;
 import com.katyshevtseva.kikiorg.core.repo.*;
-import com.katyshevtseva.kikiorg.core.sections.finance.OwnerService.Owner;
 import com.katyshevtseva.kikiorg.core.sections.finance.entity.*;
-import lombok.Getter;
-import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -15,7 +12,7 @@ import java.util.*;
 @Service
 public class FinanceService {
     @Autowired
-    private OwnerService ownerService;
+    private OwnerAdapterService adapter;
     @Autowired
     private AccountRepo accountRepo;
     @Autowired
@@ -35,24 +32,22 @@ public class FinanceService {
         Source source = new Source();
         source.setTitle(title);
         source.setDescription(desc);
-        source.setOwner(ownerService.getCurrentOwner());
-        sourceRepo.save(source);
+        adapter.saveSource(source);
     }
 
     public List<Source> getSourcesForCurrentUser() {
-        return sourceRepo.findAllByOwner(ownerService.getCurrentOwner());
+        return adapter.getSourcesForCurrentUser();
     }
 
     public void addItem(String title, String desc) {
         Item item = new Item();
         item.setTitle(title);
         item.setDescription(desc);
-        item.setOwner(ownerService.getCurrentOwner());
-        itemRepo.save(item);
+        adapter.saveItem(item);
     }
 
     public List<Item> getItemsForCurrentOwner() {
-        return itemRepo.findAllByOwner(ownerService.getCurrentOwner());
+        return adapter.getItemsForCurrentOwner();
     }
 
     public void addAccount(String title, String desc) {
@@ -60,12 +55,11 @@ public class FinanceService {
         account.setTitle(title);
         account.setDescription(desc);
         account.setAmount(0);
-        account.setOwner(ownerService.getCurrentOwner());
-        accountRepo.save(account);
+        adapter.saveAccount(account);
     }
 
     public List<Account> getAccountsForCurrentUser() {
-        return accountRepo.findAllByOwner(ownerService.getCurrentOwner());
+        return adapter.getAccountsForCurrentUser();
     }
 
     public void addExpense(Account account, long amount, Item item, Date date) {

@@ -17,19 +17,18 @@ public class ItemHierarchyService {
     @Autowired
     private ItemGroupRepo itemGroupRepo;
     @Autowired
-    private OwnerService ownerService;
+    private OwnerAdapterService adapter;
 
     public void addGroup(String name) {
         ItemGroup itemGroup = new ItemGroup();
         itemGroup.setTitle(name);
-        itemGroup.setOwner(ownerService.getCurrentOwner());
-        itemGroupRepo.save(itemGroup);
+        adapter.saveItemGroup(itemGroup);
     }
 
     public List<ItemHierarchyNode> getTopLevelNodesForCurrentUser() {
         List<ItemHierarchyNode> nodes = new ArrayList<>();
-        nodes.addAll(itemRepo.findByParentGroupIsNullAndOwner(ownerService.getCurrentOwner()));
-        nodes.addAll(itemGroupRepo.findByParentGroupIsNullAndOwner(ownerService.getCurrentOwner()));
+        nodes.addAll(adapter.getTopLevelItemsForCurrentUser());
+        nodes.addAll(adapter.getTopLevelGroupsForCurrentUser());
         return nodes;
     }
 
@@ -37,8 +36,8 @@ public class ItemHierarchyService {
         List<ItemHierarchyNode> nodes = new ArrayList<>();
         if (parentNode instanceof Item)
             return nodes;
-        nodes.addAll(itemRepo.findByParentGroupAndOwner((ItemGroup) parentNode, ownerService.getCurrentOwner()));
-        nodes.addAll(itemGroupRepo.findByParentGroupAndOwner((ItemGroup) parentNode, ownerService.getCurrentOwner()));
+        nodes.addAll(adapter.getItemsByParentForCurrentUser((ItemGroup) parentNode));
+        nodes.addAll(adapter.getGroupsByParentForCurrentUser((ItemGroup) parentNode));
         return nodes;
     }
 
