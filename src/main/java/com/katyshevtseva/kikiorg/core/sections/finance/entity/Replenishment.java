@@ -1,7 +1,6 @@
 package com.katyshevtseva.kikiorg.core.sections.finance.entity;
 
 import com.katyshevtseva.kikiorg.core.date.DateEntity;
-import com.katyshevtseva.kikiorg.core.sections.finance.Owner;
 import lombok.Data;
 
 import javax.persistence.*;

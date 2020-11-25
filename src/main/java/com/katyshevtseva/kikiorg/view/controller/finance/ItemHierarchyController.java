@@ -10,6 +10,7 @@ import com.katyshevtseva.kikiorg.core.sections.finance.ItemSchemaService.Entry;
 import com.katyshevtseva.kikiorg.core.sections.finance.ItemSchemaService.SchemaLine;
 import com.katyshevtseva.kikiorg.view.controller.dialog.InfoDialogController;
 import com.katyshevtseva.kikiorg.view.utils.OrganizerWindowCreator;
+import com.katyshevtseva.kikiorg.view.utils.Utils;
 import com.katyshevtseva.kikiorg.view.utils.WindowBuilder.FxController;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
@@ -37,7 +38,7 @@ class ItemHierarchyController implements FxController {
 //        fillSchema();
 //        Utils.associateButtonWithControls(addButton, nameTextField);
 //        addButton.setOnAction(event -> {
-//            hierarchyService.saveGroup(nameTextField.getText());
+//            hierarchyService.addGroup(nameTextField.getText());
 //            nameTextField.clear();
 //            fillSchema();
 //        });
