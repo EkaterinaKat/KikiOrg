@@ -16,7 +16,7 @@ public class ItemSchemaService {
 
     public List<SchemaLine> getSchema() {
         List<SchemaLine> schema = new ArrayList<>();
-        for (ItemHierarchyNode topLevelNode : service.getTopLevelNodes()) {
+        for (ItemHierarchyNode topLevelNode : service.getTopLevelNodesForCurrentUser()) {
             schema.addAll(getSchemaByRoot(topLevelNode, 0));
             schema.add(new EmptyLine());
         }
@@ -30,7 +30,7 @@ public class ItemSchemaService {
         if (node.isLeaf())
             return schema;
 
-        for (ItemHierarchyNode childNode : service.getNodesByParent(node)) {
+        for (ItemHierarchyNode childNode : service.getNodesByParentForCurrentUser(node)) {
             schema.addAll(getSchemaByRoot(childNode, level + 1));
         }
 
@@ -103,7 +103,7 @@ public class ItemSchemaService {
                 throw new SchemaException(groupToAddTo.getTitle() + " является подкатегорией категории " + childNodeToAdd.getTitle());
 
             childNodeToAdd.setParentGroup(groupToAddTo);
-            service.saveNode(childNodeToAdd);
+            service.saveModifiedNode(childNodeToAdd);
         }
 
         public int getLevel() {

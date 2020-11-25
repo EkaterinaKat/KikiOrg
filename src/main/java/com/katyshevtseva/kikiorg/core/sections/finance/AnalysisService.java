@@ -25,7 +25,7 @@ public class AnalysisService {
             return getAmountByItemAndPeriod((Item) node, startDate, endDate);
 
         long amount = 0;
-        for (ItemHierarchyService.ItemHierarchyNode childNode : itemHierarchyService.getNodesByParent(node))
+        for (ItemHierarchyService.ItemHierarchyNode childNode : itemHierarchyService.getNodesByParentForCurrentUser(node))
             amount += getAmountByNodeAndPeriod(childNode, startDate, endDate);
         return amount;
     }

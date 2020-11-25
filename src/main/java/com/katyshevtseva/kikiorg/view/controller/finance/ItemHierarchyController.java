@@ -2,15 +2,14 @@ package com.katyshevtseva.kikiorg.view.controller.finance;
 
 import com.katyshevtseva.kikiorg.core.Core;
 import com.katyshevtseva.kikiorg.core.exeption.SchemaException;
-import com.katyshevtseva.kikiorg.core.sections.finance.ItemHierarchyNode;
 import com.katyshevtseva.kikiorg.core.sections.finance.ItemHierarchyService;
+import com.katyshevtseva.kikiorg.core.sections.finance.ItemHierarchyService.ItemHierarchyNode;
 import com.katyshevtseva.kikiorg.core.sections.finance.ItemSchemaService;
 import com.katyshevtseva.kikiorg.core.sections.finance.ItemSchemaService.AddButton;
 import com.katyshevtseva.kikiorg.core.sections.finance.ItemSchemaService.Entry;
 import com.katyshevtseva.kikiorg.core.sections.finance.ItemSchemaService.SchemaLine;
 import com.katyshevtseva.kikiorg.view.controller.dialog.InfoDialogController;
 import com.katyshevtseva.kikiorg.view.utils.OrganizerWindowCreator;
-import com.katyshevtseva.kikiorg.view.utils.Utils;
 import com.katyshevtseva.kikiorg.view.utils.WindowBuilder.FxController;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
@@ -58,7 +57,7 @@ class ItemHierarchyController implements FxController {
 
             ComboBox<ItemHierarchyNode> comboBox = new ComboBox<>();
             comboBox.setVisible(false);
-            comboBox.setItems(FXCollections.observableArrayList(hierarchyService.getTopLevelNodes()));
+            comboBox.setItems(FXCollections.observableArrayList(hierarchyService.getTopLevelNodesForCurrentUser()));
             comboBox.valueProperty().addListener(observable -> {
                 try {
                     addButton.add(comboBox.getValue());

@@ -1,7 +1,5 @@
 package com.katyshevtseva.kikiorg.core.sections.finance;
 
-import com.katyshevtseva.kikiorg.core.date.DateService;
-import com.katyshevtseva.kikiorg.core.repo.ExpenseRepo;
 import com.katyshevtseva.kikiorg.core.repo.ItemGroupRepo;
 import com.katyshevtseva.kikiorg.core.repo.ItemRepo;
 import com.katyshevtseva.kikiorg.core.sections.finance.entity.Item;
@@ -19,38 +17,43 @@ public class ItemHierarchyService {
     @Autowired
     private ItemGroupRepo itemGroupRepo;
     @Autowired
-    private DateService dateService;
-    @Autowired
-    private ExpenseRepo expenseRepo;
+    private OwnerService ownerService;
 
-    public List<ItemHierarchyNode> getTopLevelNodes() {
+    public void addGroup(String name) {
+        ItemGroup itemGroup = new ItemGroup();
+        itemGroup.setTitle(name);
+        itemGroup.setOwner(ownerService.getCurrentOwner());
+        itemGroupRepo.save(itemGroup);
+    }
+
+    public List<ItemHierarchyNode> getTopLevelNodesForCurrentUser() {
         List<ItemHierarchyNode> nodes = new ArrayList<>();
-        nodes.addAll(itemRepo.findByParentGroupIsNull());
-        nodes.addAll(itemGroupRepo.findByParentGroupIsNull());
+        nodes.addAll(itemRepo.findByParentGroupIsNullAndOwner(ownerService.getCurrentOwner()));
+        nodes.addAll(itemGroupRepo.findByParentGroupIsNullAndOwner(ownerService.getCurrentOwner()));
         return nodes;
     }
 
-    List<ItemHierarchyNode> getNodesByParent(ItemHierarchyNode parentNode) {
+    List<ItemHierarchyNode> getNodesByParentForCurrentUser(ItemHierarchyNode parentNode) {
         List<ItemHierarchyNode> nodes = new ArrayList<>();
         if (parentNode instanceof Item)
             return nodes;
-        nodes.addAll(itemRepo.findByParentGroup((ItemGroup) parentNode));
-        nodes.addAll(itemGroupRepo.findByParentGroup((ItemGroup) parentNode));
+        nodes.addAll(itemRepo.findByParentGroupAndOwner((ItemGroup) parentNode, ownerService.getCurrentOwner()));
+        nodes.addAll(itemGroupRepo.findByParentGroupAndOwner((ItemGroup) parentNode, ownerService.getCurrentOwner()));
         return nodes;
     }
 
     void destroyTreeWithRootNode(ItemHierarchyNode node) {
         node.setParentGroup(null);
-        saveNode(node);
+        saveModifiedNode(node);
 
         if (node.isLeaf())
             return;
 
-        for (ItemHierarchyNode childNode : getNodesByParent(node))
+        for (ItemHierarchyNode childNode : getNodesByParentForCurrentUser(node))
             destroyTreeWithRootNode(childNode);
     }
 
-    void saveNode(ItemHierarchyNode node) {
+    void saveModifiedNode(ItemHierarchyNode node) {
         if (node.isLeaf())
             itemRepo.save((Item) node);
         else
@@ -64,17 +67,11 @@ public class ItemHierarchyService {
         if (root.isLeaf())
             return false;
 
-        for (ItemHierarchyNode childNode : getNodesByParent(root))
+        for (ItemHierarchyNode childNode : getNodesByParentForCurrentUser(root))
             if (treeWithRootContainsNode(childNode, nodeToSearch))
                 return true;
 
         return false;
-    }
-
-    public void saveGroup(String name) {
-        ItemGroup itemGroup = new ItemGroup();
-        itemGroup.setTitle(name);
-        itemGroupRepo.save(itemGroup);
     }
 
     public interface ItemHierarchyNode {
