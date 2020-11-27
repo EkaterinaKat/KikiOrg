@@ -4,11 +4,13 @@ import com.katyshevtseva.kikiorg.core.repo.ItemGroupRepo;
 import com.katyshevtseva.kikiorg.core.repo.ItemRepo;
 import com.katyshevtseva.kikiorg.core.sections.finance.entity.Item;
 import com.katyshevtseva.kikiorg.core.sections.finance.entity.ItemGroup;
+import com.katyshevtseva.kikiorg.core.sections.finance.entity.ItemHierarchyLeaf;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ItemHierarchyService {
@@ -27,16 +29,32 @@ public class ItemHierarchyService {
 
     public List<ItemHierarchyNode> getTopLevelNodesForCurrentUser() {
         List<ItemHierarchyNode> nodes = new ArrayList<>();
-        nodes.addAll(adapter.getTopLevelItemsForCurrentUser());
+        nodes.addAll(getTopLevelLeavesForCurrentUser());
         nodes.addAll(adapter.getTopLevelGroupsForCurrentUser());
         return nodes;
+    }
+
+    private List<ItemHierarchyLeaf> getTopLevelLeavesForCurrentUser() {
+        List<Item> items = adapter.getItemsForCurrentOwner();
+        List<ItemHierarchyLeaf> leaves = new ArrayList<>();
+        for (Item item : items) {
+            Optional<ItemHierarchyLeaf> optionalLeaf = adapter.getLeafByItemForCurrentUser(item);
+            if (optionalLeaf.isPresent() && optionalLeaf.get().getParentGroup() == null)
+                leaves.add(optionalLeaf.get());
+            else if (!optionalLeaf.isPresent()) {
+                ItemHierarchyLeaf leaf = new ItemHierarchyLeaf();
+                leaf.setItem(item);
+                leaves.add(leaf);
+            }
+        }
+        return leaves;
     }
 
     List<ItemHierarchyNode> getNodesByParentForCurrentUser(ItemHierarchyNode parentNode) {
         List<ItemHierarchyNode> nodes = new ArrayList<>();
         if (parentNode instanceof Item)
             return nodes;
-        nodes.addAll(adapter.getItemsByParentForCurrentUser((ItemGroup) parentNode));
+        nodes.addAll(adapter.getLeavesByParentForCurrentUser((ItemGroup) parentNode));
         nodes.addAll(adapter.getGroupsByParentForCurrentUser((ItemGroup) parentNode));
         return nodes;
     }
@@ -54,9 +72,9 @@ public class ItemHierarchyService {
 
     void saveModifiedNode(ItemHierarchyNode node) {
         if (node.isLeaf())
-            itemRepo.save((Item) node);
+            adapter.saveItemHierarchyLeaf((ItemHierarchyLeaf) node);
         else
-            itemGroupRepo.save((ItemGroup) node);
+            adapter.saveItemGroup((ItemGroup) node);
     }
 
     boolean treeWithRootContainsNode(ItemHierarchyNode root, ItemHierarchyNode nodeToSearch) {

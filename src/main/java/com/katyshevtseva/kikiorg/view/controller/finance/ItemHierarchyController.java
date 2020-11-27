@@ -35,13 +35,13 @@ class ItemHierarchyController implements FxController {
 
     @FXML
     private void initialize() {
-//        fillSchema();
-//        Utils.associateButtonWithControls(addButton, nameTextField);
-//        addButton.setOnAction(event -> {
-//            hierarchyService.addGroup(nameTextField.getText());
-//            nameTextField.clear();
-//            fillSchema();
-//        });
+        fillSchema();
+        Utils.associateButtonWithControls(addButton, nameTextField);
+        addButton.setOnAction(event -> {
+            hierarchyService.addGroup(nameTextField.getText());
+            nameTextField.clear();
+            fillSchema();
+        });
     }
 
     private void fillSchema() {
