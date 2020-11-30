@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<?import java.net.URL?>
+<BorderPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml">
+
+    <stylesheets>
+        <URL value="@/com/katyshevtseva/kikiorg/view/res/css/general_style.css"/>
+    </stylesheets>
+
+    <center>
+        <VBox alignment="CENTER">
+            <TextField fx:id="textField" prefWidth="270"/>
+            <Pane prefHeight="15"/>
+            <TextArea fx:id="textArea" minWidth="270" maxWidth="270" maxHeight="80"/>
+            <Pane prefHeight="15"/>
+            <Button text="Save" fx:id="saveButton"/>
+        </VBox>
+    </center>
+
+</BorderPane>
