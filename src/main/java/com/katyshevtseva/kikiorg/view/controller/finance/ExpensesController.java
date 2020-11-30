@@ -3,14 +3,18 @@ package com.katyshevtseva.kikiorg.view.controller.finance;
 import com.katyshevtseva.kikiorg.core.Core;
 import com.katyshevtseva.kikiorg.core.sections.finance.entity.Account;
 import com.katyshevtseva.kikiorg.core.sections.finance.entity.Item;
+import com.katyshevtseva.kikiorg.view.controller.dialog.TwoFieldsEditDialogController;
+import com.katyshevtseva.kikiorg.view.utils.OrganizerWindowCreator;
 import com.katyshevtseva.kikiorg.view.utils.Utils;
 import com.katyshevtseva.kikiorg.view.utils.WindowBuilder.FxController;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.text.Text;
+import javafx.util.Callback;
 
 import java.time.LocalDate;
 
@@ -39,6 +43,8 @@ class ExpensesController implements FxController {
     private TableColumn<Item, String> descColumn;
     @FXML
     private TableColumn<Item, String> ownerColumn;
+    @FXML
+    private TableColumn<Item, Void> editColumn;
 
     @FXML
     private void initialize() {
@@ -70,6 +76,7 @@ class ExpensesController implements FxController {
             text.textProperty().bind(cell.itemProperty());
             return cell;
         });
+        adjustButtonColumn();
     }
 
     private void fillTable() {
@@ -103,5 +110,38 @@ class ExpensesController implements FxController {
         Core.getInstance().financeService().addExpense(accountComboBox.getValue(), Long.parseLong(amountTextField.getText()),
                 itemComboBox.getValue(), java.sql.Date.valueOf(datePicker.getValue()));
         amountTextField.clear();
+    }
+
+    private void adjustButtonColumn() {
+        editColumn.setCellFactory(new Callback<TableColumn<Item, Void>, TableCell<Item, Void>>() {
+            @Override
+            public TableCell<Item, Void> call(final TableColumn<Item, Void> param) {
+                return new TableCell<Item, Void>() {
+                    private final Button button = new Button("Edit");
+
+                    {
+                        button.setOnAction((ActionEvent event) -> {
+                            Item item = getTableView().getItems().get(getIndex());
+                            OrganizerWindowCreator.getInstance().openTwoFieldsEditDialog(new TwoFieldsEditDialogController(
+                                    item.getTitle(), item.getDescription(),
+                                    (title, desc) -> {
+                                        Core.getInstance().financeService().alterItem(item, title, desc);
+                                        fillTable();
+                                    }));
+                        });
+                    }
+
+                    @Override
+                    public void updateItem(Void item, boolean empty) {
+                        super.updateItem(item, empty);
+                        if (empty) {
+                            setGraphic(null);
+                        } else {
+                            setGraphic(button);
+                        }
+                    }
+                };
+            }
+        });
     }
 }

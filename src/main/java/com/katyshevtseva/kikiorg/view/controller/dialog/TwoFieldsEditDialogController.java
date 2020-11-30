@@ -37,7 +37,7 @@ public class TwoFieldsEditDialogController implements FxController {
     }
 
     @FunctionalInterface
-    interface EventHandler {
+    public interface EventHandler {
         void execute(String firstText, String secondText);
     }
 }

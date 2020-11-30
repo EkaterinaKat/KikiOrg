@@ -58,11 +58,12 @@
 
     <Pane prefHeight="30"/>
 
-    <TableView fx:id="table" prefWidth="850" prefHeight="400">
+    <TableView fx:id="table" prefWidth="945" prefHeight="400">
         <columns>
             <TableColumn prefWidth="250" text="Title" fx:id="titleColumn"/>
             <TableColumn prefWidth="420" text="Description" fx:id="descColumn"/>
             <TableColumn prefWidth="200" text="Owner" fx:id="ownerColumn"/>
+            <TableColumn prefWidth="75" fx:id="editColumn"/>
         </columns>
     </TableView>
 

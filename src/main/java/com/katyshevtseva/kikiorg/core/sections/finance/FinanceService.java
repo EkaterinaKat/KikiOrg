@@ -106,6 +106,24 @@ public class FinanceService {
         return replenishments;
     }
 
+    public void alterAccount(Account account, String newTitle, String newDesc) {
+        account.setTitle(newTitle);
+        account.setDescription(newDesc);
+        accountRepo.save(account);
+    }
+
+    public void alterItem(Item item, String newTitle, String newDesc) {
+        item.setTitle(newTitle);
+        item.setDescription(newDesc);
+        itemRepo.save(item);
+    }
+
+    public void alterSource(Source source, String newTitle, String newDesc) {
+        source.setTitle(newTitle);
+        source.setDescription(newDesc);
+        sourceRepo.save(source);
+    }
+
     @Transactional
     public void addTransfer(Account from, Account to, Long amount) {
         Transfer transfer = new Transfer();
