@@ -7,9 +7,8 @@ import com.katyshevtseva.kikiorg.view.utils.WindowBuilder.FxController;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
+import javafx.util.Callback;
 
 class TransferController implements FxController {
     @FXML
@@ -23,6 +22,8 @@ class TransferController implements FxController {
 
     @FXML
     private void initialize() {
+        adjustComboBox(fromComboBox);
+        adjustComboBox(toComboBox);
         setAccountComboBoxItems(fromComboBox);
         setAccountComboBoxItems(toComboBox);
         Utils.disableNonNumericChars(amountTextField);
@@ -38,8 +39,43 @@ class TransferController implements FxController {
 
     private void setAccountComboBoxItems(ComboBox<Account> accountComboBox) {
         if (accountComboBox != null) {
-            ObservableList<Account> accounts = FXCollections.observableArrayList(Core.getInstance().financeService().getAccountsForCurrentUser());
+            ObservableList<Account> accounts = FXCollections.observableArrayList(
+                    Core.getInstance().financeService().getAccountsForTransferSection());
             accountComboBox.setItems(accounts);
         }
+    }
+
+    // Этот метод только устанавливает отображение имени счета вместе с информацией о владельце
+    private void adjustComboBox(ComboBox<Account> comboBox) {
+        comboBox.setCellFactory(
+                new Callback<ListView<Account>, ListCell<Account>>() {
+                    @Override
+                    public ListCell<Account> call(ListView<Account> p) {
+                        return new ListCell<Account>() {
+                            @Override
+                            protected void updateItem(Account item, boolean empty) {
+                                super.updateItem(item, empty);
+                                if (empty) {
+                                    setText("");
+                                } else {
+                                    setText(item.getTitleWithOwnerInfo());
+                                }
+                            }
+                        };
+                    }
+                });
+
+        comboBox.setButtonCell(
+                new ListCell<Account>() {
+                    @Override
+                    protected void updateItem(Account t, boolean bln) {
+                        super.updateItem(t, bln);
+                        if (bln) {
+                            setText("");
+                        } else {
+                            setText(t.getTitleWithOwnerInfo());
+                        }
+                    }
+                });
     }
 }

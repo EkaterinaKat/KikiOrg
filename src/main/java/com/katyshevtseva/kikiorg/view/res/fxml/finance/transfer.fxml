@@ -6,7 +6,7 @@
       xmlns:fx="http://javafx.com/fxml">
     <Pane minHeight="40" maxHeight="40"/>
     <HBox>
-        <ComboBox fx:id="fromComboBox" minWidth="250" maxWidth="250"/>
+        <ComboBox fx:id="fromComboBox" minWidth="300" maxWidth="300"/>
         <Pane minWidth="8" maxWidth="8"/>
         <Label text="->"/>
         <Pane minWidth="8" maxWidth="8"/>
@@ -14,7 +14,7 @@
         <Pane minWidth="8" maxWidth="8"/>
         <Label text="->"/>
         <Pane minWidth="8" maxWidth="8"/>
-        <ComboBox fx:id="toComboBox" minWidth="250" maxWidth="250"/>
+        <ComboBox fx:id="toComboBox" minWidth="300" maxWidth="300"/>
         <Pane minWidth="8" maxWidth="8"/>
         <Button fx:id="transferButton" text="Transfer"/>
     </HBox>

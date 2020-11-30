@@ -62,6 +62,10 @@ public class FinanceService {
         return adapter.getAccountsForCurrentUser();
     }
 
+    public List<Account> getAccountsForTransferSection() {
+        return adapter.getAccountsForTransferSection();
+    }
+
     public void addExpense(Account account, long amount, Item item, Date date) {
         Expense expense = new Expense();
         expense.setAccount(account);

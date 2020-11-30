@@ -25,4 +25,8 @@ public class Account {
     public String toString() {
         return title;
     }
+
+    public String getTitleWithOwnerInfo() {
+        return title + " (owner: " + owner + ")";
+    }
 }

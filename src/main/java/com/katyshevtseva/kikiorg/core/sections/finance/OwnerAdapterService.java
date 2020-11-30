@@ -44,20 +44,27 @@ class OwnerAdapterService {
 
     List<Source> getSourcesForCurrentUser() {
         List<Source> sources = new ArrayList<>();
-        for (Owner owner: getScope())
+        for (Owner owner : getScope())
             sources.addAll(sourceRepo.findAllByOwner(owner));
         return sources;
     }
 
     List<Item> getItemsForCurrentOwner() {
         List<Item> items = new ArrayList<>();
-        for (Owner owner: getScope())
+        for (Owner owner : getScope())
             items.addAll(itemRepo.findAllByOwner(owner));
         return items;
     }
 
     List<Account> getAccountsForCurrentUser() {
         return accountRepo.findAllByOwner(ownerService.getCurrentOwner());
+    }
+
+    List<Account> getAccountsForTransferSection() {
+        List<Account> accounts = new ArrayList<>();
+        for (Owner owner : getScope())
+            accounts.addAll(accountRepo.findAllByOwner(owner));
+        return accounts;
     }
 
     void saveItemHierarchyLeaf(ItemHierarchyLeaf leaf) {
