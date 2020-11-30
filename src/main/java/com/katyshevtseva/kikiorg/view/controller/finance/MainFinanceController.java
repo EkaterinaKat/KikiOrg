@@ -57,7 +57,7 @@ public class MainFinanceController extends AbstractSwitchController implements F
         pane = mainPane;
         buttons.addAll(Arrays.asList(replenishmentButton, accountsButton, expensesButton, checkButton, userButton,
                 transferButton, reportButton, itemHierarchyButton, analysisButton));
-        replenishmentButtonListener();
+        userButtonListener();
         replenishmentButton.setOnAction(event -> replenishmentButtonListener());
         accountsButton.setOnAction(event -> accountsButtonListener());
         expensesButton.setOnAction(event -> expensesButtonListener());

@@ -1,10 +1,12 @@
 package com.katyshevtseva.kikiorg.core.sections.finance;
 
 import com.katyshevtseva.kikiorg.core.repo.*;
+import com.katyshevtseva.kikiorg.core.sections.finance.OwnerService.Owner;
 import com.katyshevtseva.kikiorg.core.sections.finance.entity.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -41,11 +43,17 @@ class OwnerAdapterService {
     }
 
     List<Source> getSourcesForCurrentUser() {
-        return sourceRepo.findAllByOwner(ownerService.getCurrentOwner());
+        List<Source> sources = new ArrayList<>();
+        for (Owner owner: getScope())
+            sources.addAll(sourceRepo.findAllByOwner(owner));
+        return sources;
     }
 
     List<Item> getItemsForCurrentOwner() {
-        return itemRepo.findAllByOwner(ownerService.getCurrentOwner());
+        List<Item> items = new ArrayList<>();
+        for (Owner owner: getScope())
+            items.addAll(itemRepo.findAllByOwner(owner));
+        return items;
     }
 
     List<Account> getAccountsForCurrentUser() {
@@ -75,6 +83,20 @@ class OwnerAdapterService {
     void saveAccount(Account account) {
         account.setOwner(ownerService.getCurrentOwner());
         accountRepo.save(account);
+    }
+
+    private List<Owner> getScope() {
+        List<Owner> scope = new ArrayList<>();
+        scope.add(Owner.C);
+
+        switch (ownerService.getCurrentOwner()) {
+            case K:
+                scope.add(Owner.K);
+                break;
+            case M:
+                scope.add(Owner.M);
+        }
+        return scope;
     }
 
 }
