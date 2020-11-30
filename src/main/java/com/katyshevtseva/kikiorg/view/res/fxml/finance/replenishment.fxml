@@ -56,4 +56,14 @@
                 GridPane.halignment="RIGHT" GridPane.columnIndex="3" GridPane.rowIndex="2"/>
     </GridPane>
 
+    <Pane prefHeight="30"/>
+
+    <TableView fx:id="table" prefWidth="850" prefHeight="400">
+        <columns>
+            <TableColumn prefWidth="250" text="Title" fx:id="titleColumn"/>
+            <TableColumn prefWidth="420" text="Description" fx:id="descColumn"/>
+            <TableColumn prefWidth="200" text="Owner" fx:id="ownerColumn"/>
+        </columns>
+    </TableView>
+
 </VBox>

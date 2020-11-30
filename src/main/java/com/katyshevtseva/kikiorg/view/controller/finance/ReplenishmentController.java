@@ -9,6 +9,8 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.text.Text;
 
 import java.time.LocalDate;
 
@@ -29,17 +31,51 @@ class ReplenishmentController implements FxController {
     private DatePicker datePicker;
     @FXML
     private Button doneButton;
+    @FXML
+    private TableView<Source> table;
+    @FXML
+    private TableColumn<Source, String> titleColumn;
+    @FXML
+    private TableColumn<Source, String> descColumn;
+    @FXML
+    private TableColumn<Source, String> ownerColumn;
 
     @FXML
     private void initialize() {
         Utils.disableNonNumericChars(amountTextField);
         doneButton.setOnAction(event -> saveReplenishment());
-        addSourceButton.setOnAction(event -> addSource());
+        addSourceButton.setOnAction(event -> {
+            addSource();
+            fillTable();
+        });
         Utils.associateButtonWithControls(doneButton, amountTextField, sourceComboBox, accountComboBox, datePicker);
         Utils.associateButtonWithControls(addSourceButton, sourceTitleField, sourceDescArea);
         setSourceComboBoxItems();
         setAccountComboBoxItems();
         datePicker.setValue(LocalDate.now());
+        adjustColumns();
+        fillTable();
+    }
+
+    private void adjustColumns() {
+        titleColumn.setCellValueFactory(new PropertyValueFactory<>("title"));
+        descColumn.setCellValueFactory(new PropertyValueFactory<>("description"));
+        ownerColumn.setCellValueFactory(new PropertyValueFactory<>("owner"));
+        descColumn.setCellFactory(tc -> {
+            TableCell<Source, String> cell = new TableCell<>();
+            Text text = new Text();
+            cell.setGraphic(text);
+            cell.setPrefHeight(Control.USE_COMPUTED_SIZE);
+            text.wrappingWidthProperty().bind(descColumn.widthProperty());
+            text.textProperty().bind(cell.itemProperty());
+            return cell;
+        });
+    }
+
+    private void fillTable() {
+        ObservableList<Source> sources = FXCollections.observableArrayList();
+        sources.addAll(Core.getInstance().financeService().getSourcesForCurrentUser());
+        table.setItems(sources);
     }
 
     private void setSourceComboBoxItems() {
@@ -48,7 +84,7 @@ class ReplenishmentController implements FxController {
     }
 
     private void setAccountComboBoxItems() {
-        if(accountComboBox != null){
+        if (accountComboBox != null) {
             ObservableList<Account> accounts = FXCollections.observableArrayList(Core.getInstance().financeService().getAccountsForCurrentUser());
             accountComboBox.setItems(accounts);
             if (accounts.size() > 0)

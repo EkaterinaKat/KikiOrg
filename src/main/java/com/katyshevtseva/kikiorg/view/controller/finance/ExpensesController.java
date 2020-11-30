@@ -9,6 +9,8 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.text.Text;
 
 import java.time.LocalDate;
 
@@ -29,17 +31,51 @@ class ExpensesController implements FxController {
     private DatePicker datePicker;
     @FXML
     private Button doneButton;
+    @FXML
+    private TableView<Item> table;
+    @FXML
+    private TableColumn<Item, String> titleColumn;
+    @FXML
+    private TableColumn<Item, String> descColumn;
+    @FXML
+    private TableColumn<Item, String> ownerColumn;
 
     @FXML
     private void initialize() {
         Utils.disableNonNumericChars(amountTextField);
-        addItemButton.setOnAction(event -> addItem());
+        addItemButton.setOnAction(event -> {
+            addItem();
+            fillTable();
+        });
         doneButton.setOnAction(event -> saveExpense());
         Utils.associateButtonWithControls(addItemButton, itemTitleField, itemDescArea);
         Utils.associateButtonWithControls(doneButton, amountTextField, accountComboBox, itemComboBox, datePicker);
         setItemComboBoxItems();
         setAccountComboBoxItems();
         datePicker.setValue(LocalDate.now());
+        adjustColumns();
+        fillTable();
+    }
+
+    private void adjustColumns() {
+        titleColumn.setCellValueFactory(new PropertyValueFactory<>("title"));
+        descColumn.setCellValueFactory(new PropertyValueFactory<>("description"));
+        ownerColumn.setCellValueFactory(new PropertyValueFactory<>("owner"));
+        descColumn.setCellFactory(tc -> {
+            TableCell<Item, String> cell = new TableCell<>();
+            Text text = new Text();
+            cell.setGraphic(text);
+            cell.setPrefHeight(Control.USE_COMPUTED_SIZE);
+            text.wrappingWidthProperty().bind(descColumn.widthProperty());
+            text.textProperty().bind(cell.itemProperty());
+            return cell;
+        });
+    }
+
+    private void fillTable() {
+        ObservableList<Item> items = FXCollections.observableArrayList();
+        items.addAll(Core.getInstance().financeService().getItemsForCurrentOwner());
+        table.setItems(items);
     }
 
     private void setItemComboBoxItems() {
@@ -48,7 +84,7 @@ class ExpensesController implements FxController {
     }
 
     private void setAccountComboBoxItems() {
-        if(accountComboBox != null){
+        if (accountComboBox != null) {
             ObservableList<Account> accounts = FXCollections.observableArrayList(Core.getInstance().financeService().getAccountsForCurrentUser());
             accountComboBox.setItems(accounts);
             if (accounts.size() > 0)
