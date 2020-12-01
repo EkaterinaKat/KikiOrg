@@ -13,8 +13,6 @@ public class Core implements InitializingBean {
     @Autowired
     private FinanceService financeService;
     @Autowired
-    private FinanceReportService financeReportService;
-    @Autowired
     private HabitsService habitsService;
     @Autowired
     private HabitsReportService habitsReportService;
@@ -47,10 +45,6 @@ public class Core implements InitializingBean {
 
     public FinanceService financeService() {
         return financeService;
-    }
-
-    public FinanceReportService financeReportService() {
-        return financeReportService;
     }
 
     public HabitsService habitsService() {
