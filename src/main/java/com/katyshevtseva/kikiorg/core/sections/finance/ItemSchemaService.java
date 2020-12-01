@@ -2,6 +2,7 @@ package com.katyshevtseva.kikiorg.core.sections.finance;
 
 import com.katyshevtseva.kikiorg.core.exeption.SchemaException;
 import com.katyshevtseva.kikiorg.core.sections.finance.ItemHierarchyService.ItemHierarchyNode;
+import com.katyshevtseva.kikiorg.core.sections.finance.entity.Item;
 import com.katyshevtseva.kikiorg.core.sections.finance.entity.ItemGroup;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -34,7 +35,7 @@ public class ItemSchemaService {
             schema.addAll(getSchemaByRoot(childNode, level + 1));
         }
 
-        schema.add(new AddButton(level+1, (ItemGroup) node));
+        schema.add(new AddButton(level + 1, (ItemGroup) node));
         return schema;
     }
 
@@ -84,6 +85,12 @@ public class ItemSchemaService {
         public boolean isTopLevel() {
             return node.getParentGroup() == null;
         }
+
+        public Item getItem() {
+            if (!node.isLeaf())
+                throw new RuntimeException("Попытка получить Item из узла, который является ItemGroup");
+            return (Item) node;
+        }
     }
 
     public class AddButton implements SchemaLine {
@@ -111,7 +118,7 @@ public class ItemSchemaService {
         }
     }
 
-    private static class EmptyLine implements SchemaLine {
+    public static class EmptyLine implements SchemaLine {
 
     }
 

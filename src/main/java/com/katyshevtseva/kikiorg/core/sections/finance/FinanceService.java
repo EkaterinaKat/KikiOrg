@@ -106,18 +106,21 @@ public class FinanceService {
         return replenishments;
     }
 
+    @Transactional
     public void alterAccount(Account account, String newTitle, String newDesc) {
         account.setTitle(newTitle);
         account.setDescription(newDesc);
         accountRepo.save(account);
     }
 
+    @Transactional
     public void alterItem(Item item, String newTitle, String newDesc) {
         item.setTitle(newTitle);
         item.setDescription(newDesc);
         itemRepo.save(item);
     }
 
+    @Transactional
     public void alterSource(Source source, String newTitle, String newDesc) {
         source.setTitle(newTitle);
         source.setDescription(newDesc);

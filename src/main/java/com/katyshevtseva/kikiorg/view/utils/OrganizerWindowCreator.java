@@ -46,6 +46,12 @@ public class OrganizerWindowCreator {
                 setWidth(DIALOG_WIDTH).setTitle(CoreConstants.APP_NAME).showWindow();
     }
 
+    public void openItemSelectDialog(FxController controller) {
+        new WindowBuilder(DIALOG_FXML_LOCATION + "item_select_dialog.fxml").setIconImagePath(
+                "file:D:\\Code\\KikiOrg\\src\\main\\java\\com\\katyshevtseva\\kikiorg\\view\\res\\images\\ico.png").
+                setController(controller).setHeight(ITEM_SELECT_DIALOG_HEIGHT).
+                setWidth(ITEM_SELECT_DIALOG_WIDTH).setTitle("Select item").showWindow();
+    }
     /* ----------------------------------  Привычки ---------------------------------------------- */
 
     public Node getMainHabitsNode(FxController controller) {

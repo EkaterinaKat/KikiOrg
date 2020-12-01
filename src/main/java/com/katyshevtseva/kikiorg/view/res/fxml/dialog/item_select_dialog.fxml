@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.layout.VBox?>
+<VBox xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml">
+
+    <ScrollPane minWidth="500" maxWidth="500" minHeight="500" maxHeight="500">
+        <VBox fx:id="container">
+
+        </VBox>
+    </ScrollPane>
+
+</VBox>
