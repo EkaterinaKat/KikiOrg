@@ -50,6 +50,19 @@ public class FinanceService {
         return adapter.getItemsForCurrentOwner();
     }
 
+    // Возвращает список из 10 Item которые использовались самыми последними
+    public List<Item> getFewLastItemsForCurrentUser() {
+        List<Expense> expenses = getExpensesForCurrentUser();
+        expenses.sort(Comparator.comparing(Expense::getDateEntity).reversed());
+        Set<Item> items = new HashSet<>();
+        for (Expense expense : expenses) {
+            items.add(expense.getItem());
+            if (items.size() == 15)
+                break;
+        }
+        return new ArrayList<>(items);
+    }
+
     public void addAccount(String title, String desc) {
         Account account = new Account();
         account.setTitle(title);

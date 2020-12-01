@@ -37,7 +37,7 @@ public class ItemSelectDialogController implements FxController {
                 Entry entry = (Entry) line;
                 label.setText(getIndentByLevel(entry.getLevel()) + entry.getText());
                 if (entry.isLeaf()) {
-                    label.setStyle(Utils.getPurpleTextStyle());
+                    label.setStyle(Utils.getPurpleTextStyle() + Utils.getBoldTextStyle());
                     label.setOnMouseClicked(event -> {
                         itemSelectionHandler.execute(entry.getItem());
                         Utils.closeWindowThatContains(container);
@@ -49,9 +49,9 @@ public class ItemSelectDialogController implements FxController {
     }
 
     private String getIndentByLevel(int level) {
-        String indent = "  ";
+        String indent = " ";
         for (int i = 0; i < level; i++) {
-            indent += "  ";
+            indent += "         ";
         }
         return indent;
     }

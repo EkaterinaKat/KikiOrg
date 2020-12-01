@@ -3,6 +3,7 @@ package com.katyshevtseva.kikiorg.view.controller.finance;
 import com.katyshevtseva.kikiorg.core.Core;
 import com.katyshevtseva.kikiorg.core.sections.finance.entity.Account;
 import com.katyshevtseva.kikiorg.core.sections.finance.entity.Item;
+import com.katyshevtseva.kikiorg.view.controller.dialog.ItemSelectDialogController;
 import com.katyshevtseva.kikiorg.view.controller.dialog.TwoFieldsEditDialogController;
 import com.katyshevtseva.kikiorg.view.utils.OrganizerWindowCreator;
 import com.katyshevtseva.kikiorg.view.utils.Utils;
@@ -86,8 +87,19 @@ class ExpensesController implements FxController {
     }
 
     private void setItemComboBoxItems() {
-        ObservableList<Item> items = FXCollections.observableArrayList(Core.getInstance().financeService().getItemsForCurrentOwner());
+        ObservableList<Item> items = FXCollections.observableArrayList(Core.getInstance().financeService().getFewLastItemsForCurrentUser());
+
+        Item more = new Item();
+        more.setTitle("More..");
+        items.add(more);
         itemComboBox.setItems(items);
+
+        itemComboBox.setOnAction(event -> {
+            if (itemComboBox.getValue() == more) {
+                OrganizerWindowCreator.getInstance().openItemSelectDialog(new ItemSelectDialogController(
+                        item -> itemComboBox.setValue(item)));
+            }
+        });
     }
 
     private void setAccountComboBoxItems() {

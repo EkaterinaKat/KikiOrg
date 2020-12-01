@@ -30,7 +30,7 @@ public class Utils {
     }
 
     public static String getBoldTextStyle() {
-        return " font-weight: bold; ";
+        return " -fx-font-weight: bold; ";
     }
 
     public static String getGreenBackground() {

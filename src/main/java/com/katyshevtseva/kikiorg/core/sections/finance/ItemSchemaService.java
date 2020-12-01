@@ -4,6 +4,7 @@ import com.katyshevtseva.kikiorg.core.exeption.SchemaException;
 import com.katyshevtseva.kikiorg.core.sections.finance.ItemHierarchyService.ItemHierarchyNode;
 import com.katyshevtseva.kikiorg.core.sections.finance.entity.Item;
 import com.katyshevtseva.kikiorg.core.sections.finance.entity.ItemGroup;
+import com.katyshevtseva.kikiorg.core.sections.finance.entity.ItemHierarchyLeaf;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -89,7 +90,7 @@ public class ItemSchemaService {
         public Item getItem() {
             if (!node.isLeaf())
                 throw new RuntimeException("Попытка получить Item из узла, который является ItemGroup");
-            return (Item) node;
+            return ((ItemHierarchyLeaf) node).getItem();
         }
     }
 
