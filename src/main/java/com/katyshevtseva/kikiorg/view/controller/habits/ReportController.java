@@ -51,7 +51,7 @@ class ReportController implements FxController {
         selectedHabits = new ArrayList<>();
         showButton.setOnAction(event -> showReport());
         Utils.associateButtonWithControls(showButton, startDatePicker, endDatePicker);
-        setInitialDatesd();
+        setInitialDates();
         adjustTableColumns();
         fillHabitsTable();
         habitsTable.setEditable(true);
@@ -88,7 +88,7 @@ class ReportController implements FxController {
         }
     }
 
-    private void setInitialDatesd() {
+    private void setInitialDates() {
         Calendar calendar = Calendar.getInstance();
         startDatePicker.setValue(LocalDate.of(
                 calendar.get(YEAR),
