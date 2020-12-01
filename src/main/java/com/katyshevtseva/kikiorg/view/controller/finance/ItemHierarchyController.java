@@ -8,18 +8,21 @@ import com.katyshevtseva.kikiorg.core.sections.finance.ItemSchemaService;
 import com.katyshevtseva.kikiorg.core.sections.finance.ItemSchemaService.AddButton;
 import com.katyshevtseva.kikiorg.core.sections.finance.ItemSchemaService.Entry;
 import com.katyshevtseva.kikiorg.core.sections.finance.ItemSchemaService.SchemaLine;
+import com.katyshevtseva.kikiorg.core.sections.finance.entity.ItemGroup;
 import com.katyshevtseva.kikiorg.view.controller.dialog.InfoDialogController;
+import com.katyshevtseva.kikiorg.view.controller.dialog.QuestionDialogController;
 import com.katyshevtseva.kikiorg.view.utils.OrganizerWindowCreator;
 import com.katyshevtseva.kikiorg.view.utils.Utils;
 import com.katyshevtseva.kikiorg.view.utils.WindowBuilder.FxController;
 import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import javafx.util.Callback;
 
 import java.util.List;
 
@@ -32,15 +35,24 @@ class ItemHierarchyController implements FxController {
     private Button addButton;
     @FXML
     private TextField nameTextField;
+    @FXML
+    private TableView<ItemGroup> table;
+    @FXML
+    private TableColumn<ItemGroup, String> titleColumn;
+    @FXML
+    private TableColumn<ItemGroup, Void> deleteColumn;
 
     @FXML
     private void initialize() {
+        adjustColumns();
+        fillTable();
         fillSchema();
         Utils.associateButtonWithControls(addButton, nameTextField);
         addButton.setOnAction(event -> {
             hierarchyService.addGroup(nameTextField.getText());
             nameTextField.clear();
             fillSchema();
+            fillTable();
         });
     }
 
@@ -97,5 +109,53 @@ class ItemHierarchyController implements FxController {
 
             schemaBox.add(hBox, entry.getLevel(), rowIndex);
         }
+    }
+
+    private void adjustColumns() {
+        titleColumn.setCellValueFactory(new PropertyValueFactory<>("title"));
+        adjustButtonColumn();
+    }
+
+    private void fillTable() {
+        ObservableList<ItemGroup> itemGroups = FXCollections.observableArrayList();
+        itemGroups.addAll(Core.getInstance().itemHierarchyService().getItemGroupsForCurrentUser());
+        table.setItems(itemGroups);
+    }
+
+    private void adjustButtonColumn() {
+        deleteColumn.setCellFactory(new Callback<TableColumn<ItemGroup, Void>, TableCell<ItemGroup, Void>>() {
+            @Override
+            public TableCell<ItemGroup, Void> call(final TableColumn<ItemGroup, Void> param) {
+                return new TableCell<ItemGroup, Void>() {
+
+                    private final Button button = new Button("[x]");
+
+                    {
+                        button.setMaxHeight(10);
+                        button.setOnAction((ActionEvent event) ->
+                                OrganizerWindowCreator.getInstance().openQuestionDialog(new QuestionDialogController(
+                                        "Delete?",
+                                        b -> {
+                                            if (b) {
+                                                Core.getInstance().itemHierarchyService().destroyTreeAndDeleteGroup(
+                                                        getTableView().getItems().get(getIndex()));
+                                                fillTable();
+                                                fillSchema();
+                                            }
+                                        })));
+                    }
+
+                    @Override
+                    public void updateItem(Void item, boolean empty) {
+                        super.updateItem(item, empty);
+                        if (empty) {
+                            setGraphic(null);
+                        } else {
+                            setGraphic(button);
+                        }
+                    }
+                };
+            }
+        });
     }
 }
