@@ -1,7 +1,5 @@
 package com.katyshevtseva.kikiorg.core.sections.finance;
 
-import com.katyshevtseva.kikiorg.core.repo.ItemGroupRepo;
-import com.katyshevtseva.kikiorg.core.repo.ItemRepo;
 import com.katyshevtseva.kikiorg.core.sections.finance.entity.Item;
 import com.katyshevtseva.kikiorg.core.sections.finance.entity.ItemGroup;
 import com.katyshevtseva.kikiorg.core.sections.finance.entity.ItemHierarchyLeaf;
@@ -15,16 +13,16 @@ import java.util.Optional;
 @Service
 public class ItemHierarchyService {
     @Autowired
-    private ItemRepo itemRepo;
-    @Autowired
-    private ItemGroupRepo itemGroupRepo;
-    @Autowired
     private OwnerAdapterService adapter;
 
     public void addGroup(String name) {
         ItemGroup itemGroup = new ItemGroup();
         itemGroup.setTitle(name);
         adapter.saveItemGroup(itemGroup);
+    }
+
+    public List<ItemGroup> getItemGroupsForCurrentUser() {
+        return adapter.getItemGroupsForCurrentUser();
     }
 
     public List<ItemHierarchyNode> getTopLevelNodesForCurrentUser() {

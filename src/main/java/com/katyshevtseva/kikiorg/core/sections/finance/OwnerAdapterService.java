@@ -42,6 +42,10 @@ class OwnerAdapterService {
         return itemGroupRepo.findByParentGroupIsNullAndOwner(ownerService.getCurrentOwner());
     }
 
+    List<ItemGroup> getItemGroupsForCurrentUser() {
+        return itemGroupRepo.findByOwner(ownerService.getCurrentOwner());
+    }
+
     List<Source> getSourcesForCurrentUser() {
         List<Source> sources = new ArrayList<>();
         for (Owner owner : getScope())

@@ -11,7 +11,7 @@ import java.util.List;
 public interface ItemGroupRepo extends JpaRepository<ItemGroup, Long> {
     List<ItemGroup> findByParentGroupIsNullAndOwner(Owner owner);
 
-    List<ItemGroup> findByParentGroup(ItemGroup itemGroup);
+    List<ItemGroup> findByOwner(Owner owner);
 
     List<ItemGroup> findByParentGroupAndOwner(ItemGroup itemGroup, Owner owner);
 }
