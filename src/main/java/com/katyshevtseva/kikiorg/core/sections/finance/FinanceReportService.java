@@ -6,6 +6,7 @@ import com.katyshevtseva.kikiorg.core.repo.ExpenseRepo;
 import com.katyshevtseva.kikiorg.core.sections.finance.ItemHierarchyService.ItemHierarchyNode;
 import com.katyshevtseva.kikiorg.core.sections.finance.entity.Expense;
 import com.katyshevtseva.kikiorg.core.sections.finance.entity.Item;
+import com.katyshevtseva.kikiorg.core.sections.finance.entity.ItemHierarchyLeaf;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -35,7 +36,9 @@ public class FinanceReportService {
     private List<ExpensesSegment> getReportByNodes(List<ItemHierarchyNode> nodes, Date startDate, Date endDate) {
         List<ExpensesSegment> segments = new ArrayList<>();
         for (ItemHierarchyNode node : nodes) {
-            segments.add(new ExpensesSegment(node, getAmountByNodeAndPeriod(node, startDate, endDate)));
+            long amount = getAmountByNodeAndPeriod(node, startDate, endDate);
+            if (amount != 0)
+                segments.add(new ExpensesSegment(node, amount));
         }
         setSegmentsPercents(segments);
         return segments;
@@ -46,13 +49,16 @@ public class FinanceReportService {
         for (ExpensesSegment segment : segments)
             total += segment.getAmount();
         for (ExpensesSegment segment : segments) {
-            segment.setPercent((int) ((segment.getAmount() * 100) / total));
+            if (total == 0)
+                segment.setPercent(0);
+            else
+                segment.setPercent((int) ((segment.getAmount() * 100) / total));
         }
     }
 
     private long getAmountByNodeAndPeriod(ItemHierarchyNode node, Date startDate, Date endDate) {
-        if (node instanceof Item)
-            return getAmountByItemAndPeriod((Item) node, startDate, endDate);
+        if (node.isLeaf())
+            return getAmountByItemAndPeriod(((ItemHierarchyLeaf) node).getItem(), startDate, endDate);
 
         long amount = 0;
         for (ItemHierarchyNode childNode : itemHierarchyService.getNodesByParentForCurrentUser(node))
@@ -96,6 +102,10 @@ public class FinanceReportService {
 
         void setPercent(int percent) {
             this.percent = percent;
+        }
+
+        public String getTitle() {
+            return node.getTitle();
         }
     }
 }

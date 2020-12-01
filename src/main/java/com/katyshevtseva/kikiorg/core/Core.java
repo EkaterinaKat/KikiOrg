@@ -26,6 +26,8 @@ public class Core implements InitializingBean {
     private ItemSchemaService itemSchemaService;
     @Autowired
     private OwnerService ownerService;
+    @Autowired
+    private FinanceReportService financeReportService;
 
     public static Core getInstance() {
         while (INSTANCE == null) {
@@ -73,5 +75,9 @@ public class Core implements InitializingBean {
 
     public OwnerService ownerService() {
         return ownerService;
+    }
+
+    public FinanceReportService financeReportService() {
+        return financeReportService;
     }
 }

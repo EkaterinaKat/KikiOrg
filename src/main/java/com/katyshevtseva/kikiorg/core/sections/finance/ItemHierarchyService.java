@@ -58,7 +58,7 @@ public class ItemHierarchyService {
 
     List<ItemHierarchyNode> getNodesByParentForCurrentUser(ItemHierarchyNode parentNode) {
         List<ItemHierarchyNode> nodes = new ArrayList<>();
-        if (parentNode instanceof Item)
+        if (parentNode.isLeaf())
             return nodes;
         nodes.addAll(adapter.getLeavesByParentForCurrentUser((ItemGroup) parentNode));
         nodes.addAll(adapter.getGroupsByParentForCurrentUser((ItemGroup) parentNode));
