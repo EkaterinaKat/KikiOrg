@@ -12,7 +12,7 @@ import java.util.Date;
 import java.util.List;
 
 @Service
-public class AnalysisService {
+public class FinanceReportService {
     @Autowired
     private ItemHierarchyService itemHierarchyService;
     @Autowired

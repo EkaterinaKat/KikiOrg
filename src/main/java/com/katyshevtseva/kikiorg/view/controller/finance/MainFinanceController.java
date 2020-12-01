@@ -24,49 +24,49 @@ public class MainFinanceController extends AbstractSwitchController implements F
     @FXML
     private Pane mainPane;
     @FXML
-    private Button reportButton;
+    private Button historyButton;
     @FXML
     private Button transferButton;
     @FXML
     private Button itemHierarchyButton;
     @FXML
-    private Button analysisButton;
+    private Button reportButton;
 
     private final ReplenishmentController replenishmentController = new ReplenishmentController();
     private final AccountsController accountsController = new AccountsController();
     private final ExpensesController expensesController = new ExpensesController();
     private final CheckController checkController = new CheckController();
     private final UserController userController = new UserController();
-    private final HistoryController reportController = new HistoryController();
+    private final HistoryController historyController = new HistoryController();
     private final TransferController transferController = new TransferController();
     private final ItemHierarchyController itemHierarchyController = new ItemHierarchyController();
-    private final AnalysisController analysisController = new AnalysisController();
+    private final ReportController reportController = new ReportController();
 
     private Node replenishmentNode;
     private Node accountsNode;
     private Node expensesNode;
     private Node checkNode;
     private Node userNode;
-    private Node reportNode;
+    private Node historyNode;
     private Node transferNode;
     private Node itemHierarchyNode;
-    private Node analysisNode;
+    private Node reportNode;
 
     @FXML
     private void initialize() {
         pane = mainPane;
         buttons.addAll(Arrays.asList(replenishmentButton, accountsButton, expensesButton, checkButton, userButton,
-                transferButton, reportButton, itemHierarchyButton, analysisButton));
+                transferButton, historyButton, itemHierarchyButton, reportButton));
         userButtonListener();
         replenishmentButton.setOnAction(event -> replenishmentButtonListener());
         accountsButton.setOnAction(event -> accountsButtonListener());
         expensesButton.setOnAction(event -> expensesButtonListener());
         checkButton.setOnAction(event -> checkButtonListener());
         userButton.setOnAction(event -> userButtonListener());
-        reportButton.setOnAction(event -> reportButtonListener());
+        historyButton.setOnAction(event -> historyButtonListener());
         transferButton.setOnAction(event -> transferButtonListener());
         itemHierarchyButton.setOnAction(event -> itemHierarchyButtonListener());
-        analysisButton.setOnAction(event -> analysisButtonListener());
+        reportButton.setOnAction(event -> reportButtonListener());
     }
 
     private void itemHierarchyButtonListener() {
@@ -74,14 +74,14 @@ public class MainFinanceController extends AbstractSwitchController implements F
                 OrganizerWindowCreator.getInstance()::getItemHierarchyNode, itemHierarchyController);
     }
 
-    private void analysisButtonListener() {
-        activateMode(analysisButton, analysisNode,
-                OrganizerWindowCreator.getInstance()::getAnalysisNode, analysisController);
-    }
-
     private void reportButtonListener() {
         activateMode(reportButton, reportNode,
                 OrganizerWindowCreator.getInstance()::getFinanceReportNode, reportController);
+    }
+
+    private void historyButtonListener() {
+        activateMode(historyButton, historyNode,
+                OrganizerWindowCreator.getInstance()::getHistoryNode, historyController);
     }
 
     private void transferButtonListener() {
