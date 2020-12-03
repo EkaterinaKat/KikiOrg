@@ -14,6 +14,8 @@
         <DatePicker fx:id="endDatePicker"/>
         <Pane minHeight="15" maxHeight="15"/>
         <Button fx:id="showButton" text="Show" maxWidth="250" minWidth="250"/>
+        <Pane minHeight="15" maxHeight="15"/>
+        <GridPane fx:id="table" maxWidth="250" minWidth="250"/>
     </VBox>
 
     <Pane prefWidth="20"/>
