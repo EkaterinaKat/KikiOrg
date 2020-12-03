@@ -23,37 +23,24 @@ public class FinanceReportService {
     @Autowired
     private ExpenseRepo expenseRepo;
 
-    public List<ExpensesSegment> getHeadReport(Date startDate, Date endDate) {
+    public Report getHeadReport(Date startDate, Date endDate) {
         List<ItemHierarchyNode> nodes = itemHierarchyService.getTopLevelNodesForCurrentUser();
-        return getReportByNodes(nodes, startDate, endDate);
+        return getReportByNodes(nodes, startDate, endDate, "All Expenses");
     }
 
-    public List<ExpensesSegment> getReportByRoot(ItemHierarchyNode root, Date startDate, Date endDate) {
+    public Report getReportByRoot(ItemHierarchyNode root, Date startDate, Date endDate) {
         List<ItemHierarchyNode> nodes = itemHierarchyService.getNodesByParentForCurrentUser(root);
-        return getReportByNodes(nodes, startDate, endDate);
+        return getReportByNodes(nodes, startDate, endDate, root.getTitle());
     }
 
-    private List<ExpensesSegment> getReportByNodes(List<ItemHierarchyNode> nodes, Date startDate, Date endDate) {
-        List<ExpensesSegment> segments = new ArrayList<>();
+    private Report getReportByNodes(List<ItemHierarchyNode> nodes, Date startDate, Date endDate, String title) {
+        Report report = new Report(title);
         for (ItemHierarchyNode node : nodes) {
             long amount = getAmountByNodeAndPeriod(node, startDate, endDate);
             if (amount != 0)
-                segments.add(new ExpensesSegment(node, amount));
+                report.addSegment(new ExpensesSegment(node, amount));
         }
-        setSegmentsPercents(segments);
-        return segments;
-    }
-
-    private void setSegmentsPercents(List<ExpensesSegment> segments) {
-        long total = 0;
-        for (ExpensesSegment segment : segments)
-            total += segment.getAmount();
-        for (ExpensesSegment segment : segments) {
-            if (total == 0)
-                segment.setPercent(0);
-            else
-                segment.setPercent((int) ((segment.getAmount() * 100) / total));
-        }
+        return report;
     }
 
     private long getAmountByNodeAndPeriod(ItemHierarchyNode node, Date startDate, Date endDate) {
@@ -76,6 +63,43 @@ public class FinanceReportService {
             }
         }
         return amount;
+    }
+
+    public class Report {
+        private List<ExpensesSegment> segments = new ArrayList<>();
+        private long total = 0;
+        private String title;
+
+        public Report(String title) {
+            this.title = title;
+        }
+
+        void addSegment(ExpensesSegment segment) {
+            segments.add(segment);
+            total += segment.getAmount();
+            recalculatePercents();
+        }
+
+        private void recalculatePercents() {
+            for (ExpensesSegment segment : segments) {
+                if (total == 0)
+                    segment.setPercent(0);
+                else
+                    segment.setPercent((int) ((segment.getAmount() * 100) / total));
+            }
+        }
+
+        public List<ExpensesSegment> getSegments() {
+            return segments;
+        }
+
+        public long getTotal() {
+            return total;
+        }
+
+        public String getTitle() {
+            return title;
+        }
     }
 
     public class ExpensesSegment {
