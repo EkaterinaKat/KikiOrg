@@ -3,7 +3,12 @@ package com.katyshevtseva.kikiorg.core.date;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.Optional;
+
+import static com.katyshevtseva.kikiorg.core.date.DateUtils.getDateRange;
 
 @Service
 public class DateService {
@@ -25,24 +30,5 @@ public class DateService {
         for (Date date : getDateRange(start, end))
             dateRepo.findByValue(date).ifPresent(dateEntities::add);
         return dateEntities;
-    }
-
-    public List<Date> getDateRange(Date start, Date end) {
-        Date date = new Date(start.getTime());
-        Date oneDayAfterEnd = addOneDay(end);
-
-        List<Date> result = new ArrayList<>();
-        while (date.before(oneDayAfterEnd)) {
-            result.add(date);
-            date = addOneDay(date);
-        }
-        return result;
-    }
-
-    private Date addOneDay(Date date) {
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTime(date);
-        calendar.add(Calendar.DATE, 1);
-        return calendar.getTime();
     }
 }

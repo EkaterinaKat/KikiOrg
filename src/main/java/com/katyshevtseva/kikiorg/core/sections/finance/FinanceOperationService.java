@@ -15,6 +15,8 @@ import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 
+import static com.katyshevtseva.kikiorg.core.date.DateUtils.getMonthAgoDate;
+
 @Service
 public class FinanceOperationService {
     @Autowired
@@ -28,13 +30,13 @@ public class FinanceOperationService {
 
     public List<Operation> getOperationsAvailableForCurrentUser() {
         List<Operation> operations = new ArrayList<>();
-        for (Replenishment replenishment : financeService.getReplenishmentsForCurrentUser()) {
+        for (Replenishment replenishment : financeService.getReplenishmentsForCuByPeriod(getMonthAgoDate(), new Date())) {
             operations.add(convertToOperation(replenishment));
         }
-        for (Expense expense : financeService.getExpensesForCurrentUser()) {
+        for (Expense expense : financeService.getExpensesForCuByPeriod(getMonthAgoDate(), new Date())) {
             operations.add(convertToOperation(expense));
         }
-        for (Transfer transfer : financeService.getTransfersForCurrentUser()) {
+        for (Transfer transfer : financeService.getTransfersForCuByPeriod(getMonthAgoDate(), new Date())) {
             operations.add(convertToOperation(transfer));
         }
         operations.sort(Comparator.comparing(Operation::getDateForSorting).reversed());

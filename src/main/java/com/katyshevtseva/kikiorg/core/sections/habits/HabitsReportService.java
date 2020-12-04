@@ -14,6 +14,8 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
+import static com.katyshevtseva.kikiorg.core.date.DateUtils.getDateRange;
+
 @Service
 public class HabitsReportService {
     private static SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM");
@@ -27,7 +29,7 @@ public class HabitsReportService {
     public List<List<ReportCell>> getReport(List<Habit> habits, Date startDate, Date endDate) {
         List<List<ReportCell>> result = new ArrayList<>();
         result.add(getReportHead(habits));
-        List<Date> dates = dateService.getDateRange(startDate, endDate);
+        List<Date> dates = getDateRange(startDate, endDate);
         Collections.reverse(dates);  // Чтобы последние даты были наверху таблицы
         for (Date date : dates) {
             result.add(getReportLine(date, habits));

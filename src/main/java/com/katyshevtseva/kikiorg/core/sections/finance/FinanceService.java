@@ -1,5 +1,6 @@
 package com.katyshevtseva.kikiorg.core.sections.finance;
 
+import com.katyshevtseva.kikiorg.core.date.DateEntity;
 import com.katyshevtseva.kikiorg.core.date.DateService;
 import com.katyshevtseva.kikiorg.core.repo.*;
 import com.katyshevtseva.kikiorg.core.sections.finance.entity.*;
@@ -8,6 +9,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.*;
+
+import static com.katyshevtseva.kikiorg.core.date.DateUtils.getMonthAgoDate;
 
 @Service
 public class FinanceService {
@@ -54,9 +57,9 @@ public class FinanceService {
         return items;
     }
 
-    // Возвращает список из 10 Item которые использовались самыми последними
+    // Возвращает список из 15 (или меньше) Item которые использовались самыми последними
     public List<Item> getFewLastItemsForCurrentUser() {
-        List<Expense> expenses = getExpensesForCurrentUser();
+        List<Expense> expenses = getExpensesForCuByPeriod(getMonthAgoDate(), new Date());
         expenses.sort(Comparator.comparing(Expense::getDateEntity).reversed());
         Set<Item> items = new HashSet<>();
         for (Expense expense : expenses) {
@@ -95,10 +98,13 @@ public class FinanceService {
     }
 
     // Если нет мд public то FinanceService не может получить доступ к этому методу в собраном в exe приложении
-    public List<Expense> getExpensesForCurrentUser() {
+    public List<Expense> getExpensesForCuByPeriod(Date startDate, Date endDate) {
         List<Expense> expenses = new ArrayList<>();
-        for (Account account : getAccountsForCurrentUser())
-            expenses.addAll(expenseRepo.findByAccount(account));
+        List<DateEntity> dateEntities = dateService.getOnlyExistingDateEntitiesByPeriod(startDate, endDate);
+        for (DateEntity dateEntity : dateEntities) {
+            for (Account account : getAccountsForCurrentUser())
+                expenses.addAll(expenseRepo.findByAccountAndDateEntity(account, dateEntity));
+        }
         expenses.sort(Comparator.comparing(Expense::getDateEntity));
         return expenses;
     }
@@ -115,10 +121,13 @@ public class FinanceService {
     }
 
     // Если нет мд public то FinanceService не может получить доступ к этому методу в собраном в exe приложении
-    public List<Replenishment> getReplenishmentsForCurrentUser() {
+    public List<Replenishment> getReplenishmentsForCuByPeriod(Date startDate, Date endDate) {
         List<Replenishment> replenishments = new ArrayList<>();
-        for (Account account : getAccountsForCurrentUser())
-            replenishments.addAll(replenishmentRepo.findByAccount(account));
+        List<DateEntity> dateEntities = dateService.getOnlyExistingDateEntitiesByPeriod(startDate, endDate);
+        for (DateEntity dateEntity : dateEntities) {
+            for (Account account : getAccountsForCurrentUser())
+                replenishments.addAll(replenishmentRepo.findByAccountAndDateEntity(account, dateEntity));
+        }
         replenishments.sort(Comparator.comparing(Replenishment::getDateEntity));
         return replenishments;
     }
@@ -158,11 +167,14 @@ public class FinanceService {
     }
 
     // Если нет мд public то FinanceService не может получить доступ к этому методу в собраном в exe приложении
-    public List<Transfer> getTransfersForCurrentUser() {
+    public List<Transfer> getTransfersForCuByPeriod(Date startDate, Date endDate) {
         Set<Transfer> transferSet = new HashSet<>();
-        for (Account account : getAccountsForCurrentUser()) {
-            transferSet.addAll(transferRepo.findAllByFrom(account));
-            transferSet.addAll(transferRepo.findAllByTo(account));
+        List<DateEntity> dateEntities = dateService.getOnlyExistingDateEntitiesByPeriod(startDate, endDate);
+        for (DateEntity dateEntity : dateEntities) {
+            for (Account account : getAccountsForCurrentUser()) {
+                transferSet.addAll(transferRepo.findAllByFromAndDateEntity(account, dateEntity));
+                transferSet.addAll(transferRepo.findAllByToAndDateEntity(account, dateEntity));
+            }
         }
         List<Transfer> transferList = new ArrayList<>(transferSet);
         transferList.sort(Comparator.comparing(Transfer::getDateEntity));
