@@ -3,6 +3,7 @@ package com.katyshevtseva.kikiorg.core.sections.finance;
 import com.katyshevtseva.kikiorg.core.repo.ExpenseRepo;
 import com.katyshevtseva.kikiorg.core.repo.ReplenishmentRepo;
 import com.katyshevtseva.kikiorg.core.repo.TransferRepo;
+import com.katyshevtseva.kikiorg.core.sections.finance.entity.Account;
 import com.katyshevtseva.kikiorg.core.sections.finance.entity.Expense;
 import com.katyshevtseva.kikiorg.core.sections.finance.entity.Replenishment;
 import com.katyshevtseva.kikiorg.core.sections.finance.entity.Transfer;
@@ -64,12 +65,16 @@ public class FinanceOperationService {
     private Operation convertToOperation(Transfer transfer) {
         return new Operation(
                 transfer.getId(),
-                transfer.getFrom().getTitle(),
-                transfer.getTo().getTitle(),
+                accountToString(transfer.getFrom()),
+                accountToString(transfer.getTo()),
                 transfer.getDateEntity().getValue(),
                 transfer.getAmount(),
                 OperationType.TRANSFER
         );
+    }
+
+    private String accountToString(Account account) {
+        return String.format("%s (owner: %s)", account.getTitle(), account.getOwner());
     }
 
     public void deleteOperation(Operation operation) {

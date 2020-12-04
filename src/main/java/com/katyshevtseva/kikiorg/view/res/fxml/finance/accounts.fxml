@@ -16,7 +16,7 @@
             <TextField fx:id="accountTitleField"/>
             <Pane minHeight="10"/>
             <TextArea fx:id="accountDescArea" minWidth="250" maxWidth="250" text="-"
-                      GridPane.rowIndex="0" GridPane.columnIndex="1" maxHeight="80"/>
+                      GridPane.rowIndex="0" GridPane.columnIndex="1" maxHeight="80" wrapText="true"/>
             <Pane minHeight="10"/>
             <Button fx:id="addAccountButton" text="Add account"/>
         </VBox>

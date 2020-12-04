@@ -16,7 +16,7 @@
         <TextField fx:id="itemTitleField" minWidth="250" maxWidth="250"
                    GridPane.columnIndex="0" GridPane.rowIndex="0"/>
         <TextArea fx:id="itemDescArea" minWidth="250" maxWidth="250" text="-"
-                  GridPane.columnIndex="0" GridPane.rowIndex="1" maxHeight="80"/>
+                  GridPane.columnIndex="0" GridPane.rowIndex="1" maxHeight="80" wrapText="true"/>
         <Button fx:id="addItemButton" text="Add item"
                 GridPane.columnIndex="1" GridPane.rowIndex="1"/>
     </GridPane>

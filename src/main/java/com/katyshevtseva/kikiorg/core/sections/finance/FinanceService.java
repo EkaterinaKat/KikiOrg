@@ -36,7 +36,9 @@ public class FinanceService {
     }
 
     public List<Source> getSourcesForCurrentUser() {
-        return adapter.getSourcesForCurrentUser();
+        List<Source> sources = adapter.getSourcesForCurrentUser();
+        sources.sort(Comparator.comparing(Source::getTitle));
+        return sources;
     }
 
     public void addItem(String title, String desc) {
@@ -47,7 +49,9 @@ public class FinanceService {
     }
 
     public List<Item> getItemsForCurrentOwner() {
-        return adapter.getItemsForCurrentOwner();
+        List<Item> items = adapter.getItemsForCurrentOwner();
+        items.sort(Comparator.comparing(Item::getTitle));
+        return items;
     }
 
     // Возвращает список из 10 Item которые использовались самыми последними
