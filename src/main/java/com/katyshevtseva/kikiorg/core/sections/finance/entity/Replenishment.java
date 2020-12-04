@@ -55,4 +55,9 @@ public class Replenishment implements Operation {
     public FinanceOperationService.OperationType getType() {
         return REPLENISHMENT;
     }
+
+    @Override
+    public String getAmountString() {
+        return "" + amount;
+    }
 }

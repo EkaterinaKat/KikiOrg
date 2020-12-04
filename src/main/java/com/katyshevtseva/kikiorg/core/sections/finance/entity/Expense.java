@@ -55,4 +55,9 @@ public class Expense implements Operation {
     public FinanceOperationService.OperationType getType() {
         return EXPENSE;
     }
+
+    @Override
+    public String getAmountString() {
+        return "" + amount;
+    }
 }

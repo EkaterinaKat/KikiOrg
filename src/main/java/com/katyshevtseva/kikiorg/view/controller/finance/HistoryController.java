@@ -38,10 +38,10 @@ class HistoryController implements FxController {
     }
 
     private void adjustColumns() {
-        dateColumn.setCellValueFactory(new PropertyValueFactory<>("date"));
-        fromColumn.setCellValueFactory(new PropertyValueFactory<>("from"));
-        toColumn.setCellValueFactory(new PropertyValueFactory<>("to"));
-        amountColumn.setCellValueFactory(new PropertyValueFactory<>("amount"));
+        dateColumn.setCellValueFactory(new PropertyValueFactory<>("dateString"));
+        fromColumn.setCellValueFactory(new PropertyValueFactory<>("fromTitle"));
+        toColumn.setCellValueFactory(new PropertyValueFactory<>("toTitle"));
+        amountColumn.setCellValueFactory(new PropertyValueFactory<>("amountString"));
         adjustButtonColumn();
     }
 

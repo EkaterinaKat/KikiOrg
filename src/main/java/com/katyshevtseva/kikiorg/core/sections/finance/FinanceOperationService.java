@@ -3,6 +3,9 @@ package com.katyshevtseva.kikiorg.core.sections.finance;
 import com.katyshevtseva.kikiorg.core.repo.ExpenseRepo;
 import com.katyshevtseva.kikiorg.core.repo.ReplenishmentRepo;
 import com.katyshevtseva.kikiorg.core.repo.TransferRepo;
+import com.katyshevtseva.kikiorg.core.sections.finance.entity.Expense;
+import com.katyshevtseva.kikiorg.core.sections.finance.entity.Replenishment;
+import com.katyshevtseva.kikiorg.core.sections.finance.entity.Transfer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -39,14 +42,17 @@ public class FinanceOperationService {
         switch (operation.getType()) {
             case EXPENSE:
                 expenseRepo.deleteById(operation.getId());
-                break;
-            case TRANSFER:
-                transferRepo.deleteById(operation.getId());
+                validationService.recalculateAndRewriteAccountAmount(((Expense) operation).getAccount());
                 break;
             case REPLENISHMENT:
                 replenishmentRepo.deleteById(operation.getId());
+                validationService.recalculateAndRewriteAccountAmount(((Replenishment) operation).getAccount());
+                break;
+            case TRANSFER:
+                transferRepo.deleteById(operation.getId());
+                validationService.recalculateAndRewriteAccountAmount(((Transfer) operation).getTo());
+                validationService.recalculateAndRewriteAccountAmount(((Transfer) operation).getFrom());
         }
-        validationService.validateAllAccountsAndRewriteAmounts();
     }
 
     public enum OperationType {
@@ -56,7 +62,7 @@ public class FinanceOperationService {
     public interface Operation {
         Date getDate();
 
-        public Long getId();
+        public long getId();
 
         public String getFromTitle();
 
@@ -64,7 +70,7 @@ public class FinanceOperationService {
 
         public String getDateString();
 
-        public String getAmount();
+        public String getAmountString();
 
         public OperationType getType();
     }

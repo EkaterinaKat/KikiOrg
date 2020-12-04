@@ -59,4 +59,9 @@ public class Transfer implements Operation {
     private String accountToString(Account account) {
         return String.format("%s (owner: %s)", account.getTitle(), account.getOwner());
     }
+
+    @Override
+    public String getAmountString() {
+        return "" + amount;
+    }
 }

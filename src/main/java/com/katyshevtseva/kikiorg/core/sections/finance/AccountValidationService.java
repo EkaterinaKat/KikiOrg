@@ -26,10 +26,8 @@ public class AccountValidationService {
     private ReplenishmentRepo replenishmentRepo;
 
     @Transactional
-    void validateAllAccountsAndRewriteAmounts() {
-        for (Account account : accountRepo.findAll()) {
-            rewriteAccountAmount(account, calculateAccountAmountByOperations(account));
-        }
+    void recalculateAndRewriteAccountAmount(Account account) {
+        rewriteAccountAmount(account, calculateAccountAmountByOperations(account));
     }
 
     public String validateAllAccountsAndGetReport() {
