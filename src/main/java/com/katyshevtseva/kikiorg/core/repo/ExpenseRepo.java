@@ -13,5 +13,5 @@ import java.util.List;
 public interface ExpenseRepo extends JpaRepository<Expense, Long> {
     List<Expense> findByAccount(Account account);
 
-    List<Expense> findByItemAndDateEntity(Item item, DateEntity dateEntity);
+    List<Expense> findByItemAndDateEntityAndAccount(Item item, DateEntity dateEntity, Account account);
 }

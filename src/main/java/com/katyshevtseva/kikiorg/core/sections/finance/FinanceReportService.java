@@ -4,6 +4,7 @@ import com.katyshevtseva.kikiorg.core.date.DateEntity;
 import com.katyshevtseva.kikiorg.core.date.DateService;
 import com.katyshevtseva.kikiorg.core.repo.ExpenseRepo;
 import com.katyshevtseva.kikiorg.core.sections.finance.ItemHierarchyService.ItemHierarchyNode;
+import com.katyshevtseva.kikiorg.core.sections.finance.entity.Account;
 import com.katyshevtseva.kikiorg.core.sections.finance.entity.Expense;
 import com.katyshevtseva.kikiorg.core.sections.finance.entity.Item;
 import com.katyshevtseva.kikiorg.core.sections.finance.entity.ItemHierarchyLeaf;
@@ -22,6 +23,8 @@ public class FinanceReportService {
     private DateService dateService;
     @Autowired
     private ExpenseRepo expenseRepo;
+    @Autowired
+    private OwnerAdapterService adapter;
 
     public Report getHeadReport(Date startDate, Date endDate) {
         List<ItemHierarchyNode> nodes = itemHierarchyService.getTopLevelNodesForCurrentUser();
@@ -36,30 +39,32 @@ public class FinanceReportService {
     private Report getReportByNodes(List<ItemHierarchyNode> nodes, Date startDate, Date endDate, String title) {
         Report report = new Report(title);
         for (ItemHierarchyNode node : nodes) {
-            long amount = getAmountByNodeAndPeriod(node, startDate, endDate);
+            long amount = getAmountByNodeAndPeriodForCurrentUser(node, startDate, endDate);
             if (amount != 0)
                 report.addSegment(new ExpensesSegment(node, amount));
         }
         return report;
     }
 
-    private long getAmountByNodeAndPeriod(ItemHierarchyNode node, Date startDate, Date endDate) {
+    private long getAmountByNodeAndPeriodForCurrentUser(ItemHierarchyNode node, Date startDate, Date endDate) {
         if (node.isLeaf())
-            return getAmountByItemAndPeriod(((ItemHierarchyLeaf) node).getItem(), startDate, endDate);
+            return getAmountByItemAndPeriodForCurrentUser(((ItemHierarchyLeaf) node).getItem(), startDate, endDate);
 
         long amount = 0;
         for (ItemHierarchyNode childNode : itemHierarchyService.getNodesByParentForCurrentUser(node))
-            amount += getAmountByNodeAndPeriod(childNode, startDate, endDate);
+            amount += getAmountByNodeAndPeriodForCurrentUser(childNode, startDate, endDate);
         return amount;
     }
 
-    private long getAmountByItemAndPeriod(Item item, Date startDate, Date endDate) {
+    private long getAmountByItemAndPeriodForCurrentUser(Item item, Date startDate, Date endDate) {
         long amount = 0;
         List<DateEntity> dateEntities = dateService.getOnlyExistingDateEntitiesByPeriod(startDate, endDate);
         for (DateEntity dateEntity : dateEntities) {
-            List<Expense> expenses = expenseRepo.findByItemAndDateEntity(item, dateEntity);
-            for (Expense expense : expenses) {
-                amount += expense.getAmount();
+            for (Account account : adapter.getAccountsForCurrentUser()) {
+                List<Expense> expenses = expenseRepo.findByItemAndDateEntityAndAccount(item, dateEntity, account);
+                for (Expense expense : expenses) {
+                    amount += expense.getAmount();
+                }
             }
         }
         return amount;
