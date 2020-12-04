@@ -186,38 +186,4 @@ public class FinanceService {
         actualAccount.setAmount(actualAccount.getAmount() + amount);
         accountRepo.save(actualAccount);
     }
-
-    public void validateAllAccountsAmount() {
-        for (Account account : accountRepo.findAll()) {
-            validateAccountAmount(account);
-        }
-    }
-
-    @Transactional
-    void validateAccountAmount(Account account) {
-        List<Expense> expenses = expenseRepo.findByAccount(account);
-        List<Replenishment> replenishments = replenishmentRepo.findByAccount(account);
-        List<Transfer> transfersToAccount = transferRepo.findAllByTo(account);
-        List<Transfer> transfersFromAccount = transferRepo.findAllByFrom(account);
-        long amount = 0;
-        for (Replenishment replenishment : replenishments) {
-            amount += replenishment.getAmount();
-        }
-        for (Expense expense : expenses) {
-            amount -= expense.getAmount();
-        }
-        for (Transfer transfer : transfersToAccount) {
-            amount += transfer.getAmount();
-        }
-        for (Transfer transfer : transfersFromAccount) {
-            amount -= transfer.getAmount();
-        }
-        rewriteAccountAmount(account, amount);
-    }
-
-    private void rewriteAccountAmount(Account account, long amount) {
-        Account actualAccount = accountRepo.findById(account.getId()).orElse(null);
-        actualAccount.setAmount(amount);
-        accountRepo.save(actualAccount);
-    }
 }

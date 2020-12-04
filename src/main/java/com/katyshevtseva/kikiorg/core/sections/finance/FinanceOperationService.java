@@ -27,6 +27,8 @@ public class FinanceOperationService {
     private ReplenishmentRepo replenishmentRepo;
     @Autowired
     private TransferRepo transferRepo;
+    @Autowired
+    private AccountValidationService validationService;
 
     public List<Operation> getOperationsAvailableForCurrentUser() {
         List<Operation> operations = new ArrayList<>();
@@ -90,7 +92,7 @@ public class FinanceOperationService {
             case REPLENISHMENT:
                 replenishmentRepo.deleteById(operation.getId());
         }
-        financeService.validateAllAccountsAmount();
+        validationService.validateAllAccountsAndRewriteAmounts();
     }
 
     public enum OperationType {

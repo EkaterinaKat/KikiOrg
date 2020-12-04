@@ -39,6 +39,13 @@ public class OrganizerWindowCreator {
                 setWidth(DIALOG_WIDTH).setTitle(CoreConstants.APP_NAME).showWindow();
     }
 
+    public void openBigInfoDialog(FxController controller) {
+        new WindowBuilder(DIALOG_FXML_LOCATION + "info_dialog.fxml").setIconImagePath(
+                "file:D:\\Code\\KikiOrg\\src\\main\\java\\com\\katyshevtseva\\kikiorg\\view\\res\\images\\ico.png").
+                setController(controller).setHeight(BIG_DIALOG_HEIGHT).
+                setWidth(BIG_DIALOG_WIDTH).setTitle(CoreConstants.APP_NAME).showWindow();
+    }
+
     public void openTwoFieldsEditDialog(FxController controller) {
         new WindowBuilder(DIALOG_FXML_LOCATION + "two_fields_edit_dialog.fxml").setIconImagePath(
                 "file:D:\\Code\\KikiOrg\\src\\main\\java\\com\\katyshevtseva\\kikiorg\\view\\res\\images\\ico.png").

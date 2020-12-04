@@ -28,6 +28,8 @@ public class Core implements InitializingBean {
     private OwnerService ownerService;
     @Autowired
     private FinanceReportService financeReportService;
+    @Autowired
+    private AccountValidationService accountValidationService;
 
     public static Core getInstance() {
         while (INSTANCE == null) {
@@ -79,5 +81,9 @@ public class Core implements InitializingBean {
 
     public FinanceReportService financeReportService() {
         return financeReportService;
+    }
+
+    public AccountValidationService accountValidationService() {
+        return accountValidationService;
     }
 }

@@ -2,6 +2,7 @@ package com.katyshevtseva.kikiorg.view.controller.finance;
 
 import com.katyshevtseva.kikiorg.core.Core;
 import com.katyshevtseva.kikiorg.core.sections.finance.entity.Account;
+import com.katyshevtseva.kikiorg.view.controller.dialog.InfoDialogController;
 import com.katyshevtseva.kikiorg.view.controller.dialog.TwoFieldsEditDialogController;
 import com.katyshevtseva.kikiorg.view.utils.OrganizerWindowCreator;
 import com.katyshevtseva.kikiorg.view.utils.Utils;
@@ -40,7 +41,10 @@ class AccountsController implements FxController {
     private void initialize() {
         addAccountButton.setOnAction(event -> addAccount());
         Utils.associateButtonWithControls(addAccountButton, accountTitleField, accountDescArea);
-        validationButton.setOnAction(event -> Core.getInstance().financeService().validateAllAccountsAmount());
+        validationButton.setOnAction(event -> {
+            OrganizerWindowCreator.getInstance().openBigInfoDialog(new InfoDialogController(
+                    Core.getInstance().accountValidationService().validateAllAccountsAndGetReport()));
+        });
         adjustColumns();
         fillTable();
     }
