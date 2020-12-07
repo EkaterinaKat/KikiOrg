@@ -7,9 +7,9 @@ public class TransferSegment implements ReportSegment {
     private String title;
     private int percent;
     private boolean hasChildren;
-    private ExpenseReportService reportService;
+    private ExpensesReportService reportService;
 
-    TransferSegment(long amount, String title, boolean hasChildren, ExpenseReportService reportService) {
+    TransferSegment(long amount, String title, boolean hasChildren, ExpensesReportService reportService) {
         this.amount = amount;
         this.title = title;
         this.hasChildren = hasChildren;

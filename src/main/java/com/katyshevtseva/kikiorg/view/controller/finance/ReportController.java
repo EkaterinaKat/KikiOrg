@@ -1,7 +1,7 @@
 package com.katyshevtseva.kikiorg.view.controller.finance;
 
 import com.katyshevtseva.kikiorg.core.Core;
-import com.katyshevtseva.kikiorg.core.sections.finance.report.ExpenseReportService;
+import com.katyshevtseva.kikiorg.core.sections.finance.report.ExpensesReportService;
 import com.katyshevtseva.kikiorg.core.sections.finance.report.Report;
 import com.katyshevtseva.kikiorg.core.sections.finance.report.ReportSegment;
 import com.katyshevtseva.kikiorg.view.utils.Utils;
@@ -27,7 +27,7 @@ import static java.util.Calendar.MONTH;
 import static java.util.Calendar.YEAR;
 
 class ReportController implements FxController {
-    private ExpenseReportService reportService = Core.getInstance().financeReportService();
+    private ExpensesReportService reportService = Core.getInstance().financeReportService();
     @FXML
     private DatePicker startDatePicker;
     @FXML
