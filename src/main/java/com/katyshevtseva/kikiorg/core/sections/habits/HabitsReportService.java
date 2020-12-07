@@ -2,6 +2,7 @@ package com.katyshevtseva.kikiorg.core.sections.habits;
 
 
 import com.katyshevtseva.kikiorg.core.date.DateService;
+import com.katyshevtseva.kikiorg.core.date.Period;
 import com.katyshevtseva.kikiorg.core.sections.habits.entity.Habit;
 import com.katyshevtseva.kikiorg.core.sections.habits.entity.HabitMark;
 import com.katyshevtseva.kikiorg.core.sections.habits.entity.ReportCell;
@@ -26,10 +27,10 @@ public class HabitsReportService {
     @Autowired
     private DateService dateService;
 
-    public List<List<ReportCell>> getReport(List<Habit> habits, Date startDate, Date endDate) {
+    public List<List<ReportCell>> getReport(List<Habit> habits, Period period) {
         List<List<ReportCell>> result = new ArrayList<>();
         result.add(getReportHead(habits));
-        List<Date> dates = getDateRange(startDate, endDate);
+        List<Date> dates = getDateRange(period);
         Collections.reverse(dates);  // Чтобы последние даты были наверху таблицы
         for (Date date : dates) {
             result.add(getReportLine(date, habits));

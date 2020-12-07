@@ -25,9 +25,9 @@ public class DateService {
         return dateRepo.save(dateEntity);
     }
 
-    public List<DateEntity> getOnlyExistingDateEntitiesByPeriod(Date start, Date end) {
+    public List<DateEntity> getOnlyExistingDateEntitiesByPeriod(Period period) {
         List<DateEntity> dateEntities = new ArrayList<>();
-        for (Date date : getDateRange(start, end))
+        for (Date date : getDateRange(period))
             dateRepo.findByValue(date).ifPresent(dateEntities::add);
         return dateEntities;
     }

@@ -23,7 +23,6 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-import static java.sql.Date.valueOf;
 import static java.util.Calendar.MONTH;
 import static java.util.Calendar.YEAR;
 
@@ -103,7 +102,7 @@ class ReportController implements FxController {
 
         reportTable.getChildren().clear();
         List<List<ReportCell>> report = Core.getInstance().habitsReportService().getReport(selectedHabits,
-                valueOf(startDatePicker.getValue()), valueOf(endDatePicker.getValue()));
+                Utils.getPeriodByDp(startDatePicker, endDatePicker));
 
         for (int i = 0; i < report.size(); i++) {
             List<ReportCell> reportLine = report.get(i);

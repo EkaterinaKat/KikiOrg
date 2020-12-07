@@ -1,8 +1,8 @@
 package com.katyshevtseva.kikiorg.core.sections.finance.report;
 
+import com.katyshevtseva.kikiorg.core.date.Period;
 import com.katyshevtseva.kikiorg.core.sections.finance.ItemHierarchyService.ItemHierarchyNode;
 
-import java.util.Date;
 
 public class ExpensesSegment implements ReportSegment {
     private FinanceReportService reportService;
@@ -26,11 +26,11 @@ public class ExpensesSegment implements ReportSegment {
     }
 
     @Override
-    public Report getChildReport(Date startDate, Date endDate) {
+    public Report getChildReport(Period period) {
         if (!hasChildren())
             throw new RuntimeException("Попытка получить дочерний отчет у листа");
 
-        return reportService.getReportByRoot(node, startDate, endDate);
+        return reportService.getReportByRoot(node, period);
     }
 
     public int getPercent() {

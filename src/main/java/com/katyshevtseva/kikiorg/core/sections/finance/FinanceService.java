@@ -2,6 +2,7 @@ package com.katyshevtseva.kikiorg.core.sections.finance;
 
 import com.katyshevtseva.kikiorg.core.date.DateEntity;
 import com.katyshevtseva.kikiorg.core.date.DateService;
+import com.katyshevtseva.kikiorg.core.date.Period;
 import com.katyshevtseva.kikiorg.core.repo.*;
 import com.katyshevtseva.kikiorg.core.sections.finance.entity.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,8 +10,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.*;
-
-import static com.katyshevtseva.kikiorg.core.date.DateUtils.getMonthAgoDate;
 
 @Service
 public class FinanceService {
@@ -59,7 +58,7 @@ public class FinanceService {
 
     // Возвращает список из 15 (или меньше) Item которые использовались самыми последними
     public List<Item> getFewLastItemsForCurrentUser() {
-        List<Expense> expenses = getExpensesForCuByPeriod(getMonthAgoDate(), new Date());
+        List<Expense> expenses = getExpensesForCuByPeriod(Period.getLastMonth());
         expenses.sort(Comparator.comparing(Expense::getDateEntity).reversed());
         Set<Item> items = new HashSet<>();
         for (Expense expense : expenses) {
@@ -98,9 +97,9 @@ public class FinanceService {
     }
 
     // Если нет мд public то FinanceService не может получить доступ к этому методу в собраном в exe приложении
-    public List<Expense> getExpensesForCuByPeriod(Date startDate, Date endDate) {
+    public List<Expense> getExpensesForCuByPeriod(Period period) {
         List<Expense> expenses = new ArrayList<>();
-        List<DateEntity> dateEntities = dateService.getOnlyExistingDateEntitiesByPeriod(startDate, endDate);
+        List<DateEntity> dateEntities = dateService.getOnlyExistingDateEntitiesByPeriod(period);
         for (DateEntity dateEntity : dateEntities) {
             for (Account account : getAccountsForCurrentUser())
                 expenses.addAll(expenseRepo.findByAccountAndDateEntity(account, dateEntity));
@@ -121,9 +120,9 @@ public class FinanceService {
     }
 
     // Если нет мд public то FinanceService не может получить доступ к этому методу в собраном в exe приложении
-    public List<Replenishment> getReplenishmentsForCuByPeriod(Date startDate, Date endDate) {
+    public List<Replenishment> getReplenishmentsForCuByPeriod(Period period) {
         List<Replenishment> replenishments = new ArrayList<>();
-        List<DateEntity> dateEntities = dateService.getOnlyExistingDateEntitiesByPeriod(startDate, endDate);
+        List<DateEntity> dateEntities = dateService.getOnlyExistingDateEntitiesByPeriod(period);
         for (DateEntity dateEntity : dateEntities) {
             for (Account account : getAccountsForCurrentUser())
                 replenishments.addAll(replenishmentRepo.findByAccountAndDateEntity(account, dateEntity));
@@ -167,9 +166,9 @@ public class FinanceService {
     }
 
     // Если нет мд public то FinanceService не может получить доступ к этому методу в собраном в exe приложении
-    public List<Transfer> getTransfersForCuByPeriod(Date startDate, Date endDate) {
+    public List<Transfer> getTransfersForCuByPeriod(Period period) {
         Set<Transfer> transferSet = new HashSet<>();
-        List<DateEntity> dateEntities = dateService.getOnlyExistingDateEntitiesByPeriod(startDate, endDate);
+        List<DateEntity> dateEntities = dateService.getOnlyExistingDateEntitiesByPeriod(period);
         for (DateEntity dateEntity : dateEntities) {
             for (Account account : getAccountsForCurrentUser()) {
                 transferSet.addAll(transferRepo.findAllByFromAndDateEntity(account, dateEntity));

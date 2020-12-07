@@ -1,6 +1,7 @@
 package com.katyshevtseva.kikiorg.core.sections.finance.report;
 
-import java.util.Date;
+import com.katyshevtseva.kikiorg.core.date.Period;
+
 
 public interface ReportSegment {
     long getAmount();
@@ -13,5 +14,5 @@ public interface ReportSegment {
 
     boolean hasChildren();
 
-    Report getChildReport(Date startDate, Date endDate);
+    Report getChildReport(Period period);
 }

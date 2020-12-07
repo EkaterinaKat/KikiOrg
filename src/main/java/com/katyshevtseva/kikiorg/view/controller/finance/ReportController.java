@@ -17,7 +17,6 @@ import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 
-import java.sql.Date;
 import java.time.LocalDate;
 import java.util.Calendar;
 import java.util.HashMap;
@@ -57,8 +56,7 @@ class ReportController implements FxController {
     }
 
     private void showRootReport() {
-        showReport(reportService.getHeadReport(
-                Date.valueOf(startDatePicker.getValue()), Date.valueOf(endDatePicker.getValue())));
+        showReport(reportService.getHeadReport(Utils.getPeriodByDp(startDatePicker, endDatePicker)));
     }
 
     private void showReport(Report report) {
@@ -83,8 +81,7 @@ class ReportController implements FxController {
                     e -> {
                         ReportSegment segment = chartDataAndNodeMapping.get(data);
                         if (segment.hasChildren()) {
-                            showReport(segment.getChildReport(
-                                    Date.valueOf(startDatePicker.getValue()), Date.valueOf(endDatePicker.getValue())));
+                            showReport(segment.getChildReport(Utils.getPeriodByDp(startDatePicker, endDatePicker)));
                         }
                     });
         }

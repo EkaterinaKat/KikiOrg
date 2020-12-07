@@ -7,16 +7,16 @@ import java.util.List;
 
 public class DateUtils {
 
-    public static Date getMonthAgoDate() {
+    static Date getMonthAgoDate() {
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(new Date());
         calendar.add(Calendar.MONTH, -1);
         return calendar.getTime();
     }
 
-    public static List<Date> getDateRange(Date start, Date end) {
-        Date date = new Date(start.getTime());
-        Date oneDayAfterEnd = addOneDay(end);
+    public static List<Date> getDateRange(Period period) {
+        Date date = new Date(period.start().getTime());
+        Date oneDayAfterEnd = addOneDay(period.end());
 
         List<Date> result = new ArrayList<>();
         while (date.before(oneDayAfterEnd)) {
