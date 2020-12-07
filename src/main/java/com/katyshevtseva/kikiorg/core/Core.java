@@ -1,6 +1,7 @@
 package com.katyshevtseva.kikiorg.core;
 
 import com.katyshevtseva.kikiorg.core.sections.finance.*;
+import com.katyshevtseva.kikiorg.core.sections.finance.report.FinanceReportService;
 import com.katyshevtseva.kikiorg.core.sections.habits.HabitsReportService;
 import com.katyshevtseva.kikiorg.core.sections.habits.HabitsService;
 import org.springframework.beans.factory.InitializingBean;

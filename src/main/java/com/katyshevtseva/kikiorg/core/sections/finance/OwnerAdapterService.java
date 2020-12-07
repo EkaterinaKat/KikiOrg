@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-class OwnerAdapterService {
+public class OwnerAdapterService {
     @Autowired
     private OwnerService ownerService;
     @Autowired
@@ -60,7 +60,7 @@ class OwnerAdapterService {
         return items;
     }
 
-    List<Account> getAccountsForCurrentUser() {
+    public List<Account> getAccountsForCurrentUser() {
         return accountRepo.findAllByOwner(ownerService.getCurrentOwner());
     }
 

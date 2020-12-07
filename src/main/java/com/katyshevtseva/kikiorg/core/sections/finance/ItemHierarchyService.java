@@ -56,7 +56,7 @@ public class ItemHierarchyService {
         return leaves;
     }
 
-    List<ItemHierarchyNode> getNodesByParentForCurrentUser(ItemHierarchyNode parentNode) {
+    public List<ItemHierarchyNode> getNodesByParentForCurrentUser(ItemHierarchyNode parentNode) {
         List<ItemHierarchyNode> nodes = new ArrayList<>();
         if (parentNode.isLeaf())
             return nodes;

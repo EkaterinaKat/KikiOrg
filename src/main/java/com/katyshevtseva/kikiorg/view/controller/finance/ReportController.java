@@ -1,10 +1,10 @@
 package com.katyshevtseva.kikiorg.view.controller.finance;
 
 import com.katyshevtseva.kikiorg.core.Core;
-import com.katyshevtseva.kikiorg.core.sections.finance.FinanceReportService;
-import com.katyshevtseva.kikiorg.core.sections.finance.FinanceReportService.ExpensesSegment;
-import com.katyshevtseva.kikiorg.core.sections.finance.FinanceReportService.Report;
 import com.katyshevtseva.kikiorg.core.sections.finance.ItemHierarchyService.ItemHierarchyNode;
+import com.katyshevtseva.kikiorg.core.sections.finance.report.FinanceReportService;
+import com.katyshevtseva.kikiorg.core.sections.finance.report.Report;
+import com.katyshevtseva.kikiorg.core.sections.finance.report.ReportSegment;
 import com.katyshevtseva.kikiorg.view.utils.Utils;
 import com.katyshevtseva.kikiorg.view.utils.WindowBuilder.FxController;
 import javafx.collections.FXCollections;
@@ -70,7 +70,7 @@ class ReportController implements FxController {
     private void showChart(Report report) {
         ObservableList<Data> chartData = FXCollections.observableArrayList();
         Map<Data, ItemHierarchyNode> chartDataAndNodeMapping = new HashMap<>();
-        for (ExpensesSegment segment : report.getSegments()) {
+        for (ReportSegment segment : report.getSegments()) {
             Data data = new Data(segment.getTitle(), segment.getPercent());
             chartData.add(data);
             chartDataAndNodeMapping.put(data, segment.getNode());
@@ -101,7 +101,7 @@ class ReportController implements FxController {
         table.add(new Label("Total:"), titleColumn, 0);
         table.add(new Label("   " + report.getTotal()), amountColumn, 0);
 
-        List<ExpensesSegment> segments = report.getSegments();
+        List<ReportSegment> segments = report.getSegments();
         for (int i = 0; i < segments.size(); i++) {
             Label titleLabel = new Label(segments.get(i).getTitle());
             titleLabel.setMaxWidth(140);

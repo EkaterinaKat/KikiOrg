@@ -1,9 +1,11 @@
-package com.katyshevtseva.kikiorg.core.sections.finance;
+package com.katyshevtseva.kikiorg.core.sections.finance.report;
 
 import com.katyshevtseva.kikiorg.core.date.DateEntity;
 import com.katyshevtseva.kikiorg.core.date.DateService;
 import com.katyshevtseva.kikiorg.core.repo.ExpenseRepo;
+import com.katyshevtseva.kikiorg.core.sections.finance.ItemHierarchyService;
 import com.katyshevtseva.kikiorg.core.sections.finance.ItemHierarchyService.ItemHierarchyNode;
+import com.katyshevtseva.kikiorg.core.sections.finance.OwnerAdapterService;
 import com.katyshevtseva.kikiorg.core.sections.finance.entity.Account;
 import com.katyshevtseva.kikiorg.core.sections.finance.entity.Expense;
 import com.katyshevtseva.kikiorg.core.sections.finance.entity.Item;
@@ -11,7 +13,6 @@ import com.katyshevtseva.kikiorg.core.sections.finance.entity.ItemHierarchyLeaf;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -68,73 +69,5 @@ public class FinanceReportService {
             }
         }
         return amount;
-    }
-
-    public class Report {
-        private List<ExpensesSegment> segments = new ArrayList<>();
-        private long total = 0;
-        private String title;
-
-        public Report(String title) {
-            this.title = title;
-        }
-
-        void addSegment(ExpensesSegment segment) {
-            segments.add(segment);
-            total += segment.getAmount();
-            recalculatePercents();
-        }
-
-        private void recalculatePercents() {
-            for (ExpensesSegment segment : segments) {
-                if (total == 0)
-                    segment.setPercent(0);
-                else
-                    segment.setPercent((int) ((segment.getAmount() * 100) / total));
-            }
-        }
-
-        public List<ExpensesSegment> getSegments() {
-            return segments;
-        }
-
-        public long getTotal() {
-            return total;
-        }
-
-        public String getTitle() {
-            return title;
-        }
-    }
-
-    public class ExpensesSegment {
-        private ItemHierarchyNode node;
-        private int percent;
-        private long amount;
-
-        ExpensesSegment(ItemHierarchyNode node, long amount) {
-            this.node = node;
-            this.amount = amount;
-        }
-
-        public ItemHierarchyNode getNode() {
-            return node;
-        }
-
-        public int getPercent() {
-            return percent;
-        }
-
-        public long getAmount() {
-            return amount;
-        }
-
-        void setPercent(int percent) {
-            this.percent = percent;
-        }
-
-        public String getTitle() {
-            return node.getTitle();
-        }
     }
 }
