@@ -1,7 +1,6 @@
 package com.katyshevtseva.kikiorg.view.controller.finance;
 
 import com.katyshevtseva.kikiorg.core.Core;
-import com.katyshevtseva.kikiorg.core.sections.finance.ItemHierarchyService.ItemHierarchyNode;
 import com.katyshevtseva.kikiorg.core.sections.finance.report.FinanceReportService;
 import com.katyshevtseva.kikiorg.core.sections.finance.report.Report;
 import com.katyshevtseva.kikiorg.core.sections.finance.report.ReportSegment;
@@ -69,11 +68,11 @@ class ReportController implements FxController {
 
     private void showChart(Report report) {
         ObservableList<Data> chartData = FXCollections.observableArrayList();
-        Map<Data, ItemHierarchyNode> chartDataAndNodeMapping = new HashMap<>();
+        Map<Data, ReportSegment> chartDataAndNodeMapping = new HashMap<>();
         for (ReportSegment segment : report.getSegments()) {
             Data data = new Data(segment.getTitle(), segment.getPercent());
             chartData.add(data);
-            chartDataAndNodeMapping.put(data, segment.getNode());
+            chartDataAndNodeMapping.put(data, segment);
         }
 
         chart.setData(chartData);
@@ -82,11 +81,10 @@ class ReportController implements FxController {
         for (final PieChart.Data data : chart.getData()) {
             data.getNode().addEventHandler(MouseEvent.MOUSE_PRESSED,
                     e -> {
-                        ItemHierarchyNode node = chartDataAndNodeMapping.get(data);
-                        if (!node.isLeaf()) {
-                            Report report1 = reportService.getReportByRoot(node,
-                                    Date.valueOf(startDatePicker.getValue()), Date.valueOf(endDatePicker.getValue()));
-                            showReport(report1);
+                        ReportSegment segment = chartDataAndNodeMapping.get(data);
+                        if (segment.hasChildren()) {
+                            showReport(segment.getChildReport(
+                                    Date.valueOf(startDatePicker.getValue()), Date.valueOf(endDatePicker.getValue())));
                         }
                     });
         }

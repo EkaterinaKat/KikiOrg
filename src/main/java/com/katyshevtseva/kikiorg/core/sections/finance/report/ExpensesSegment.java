@@ -1,19 +1,36 @@
 package com.katyshevtseva.kikiorg.core.sections.finance.report;
 
-import com.katyshevtseva.kikiorg.core.sections.finance.ItemHierarchyService;
+import com.katyshevtseva.kikiorg.core.sections.finance.ItemHierarchyService.ItemHierarchyNode;
+
+import java.util.Date;
 
 public class ExpensesSegment implements ReportSegment {
-    private ItemHierarchyService.ItemHierarchyNode node;
+    private FinanceReportService reportService;
+    private ItemHierarchyNode node;
     private int percent;
     private long amount;
 
-    ExpensesSegment(ItemHierarchyService.ItemHierarchyNode node, long amount) {
+    ExpensesSegment(FinanceReportService reportService, ItemHierarchyNode node, long amount) {
+        this.reportService = reportService;
         this.node = node;
         this.amount = amount;
     }
 
-    public ItemHierarchyService.ItemHierarchyNode getNode() {
+    public ItemHierarchyNode getNode() {
         return node;
+    }
+
+    @Override
+    public boolean hasChildren() {
+        return !node.isLeaf();
+    }
+
+    @Override
+    public Report getChildReport(Date startDate, Date endDate) {
+        if (!hasChildren())
+            throw new RuntimeException("Попытка получить дочерний отчет у листа");
+
+        return reportService.getReportByRoot(node, startDate, endDate);
     }
 
     public int getPercent() {

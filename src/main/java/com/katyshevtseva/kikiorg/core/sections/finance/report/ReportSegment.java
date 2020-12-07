@@ -1,6 +1,6 @@
 package com.katyshevtseva.kikiorg.core.sections.finance.report;
 
-import com.katyshevtseva.kikiorg.core.sections.finance.ItemHierarchyService.ItemHierarchyNode;
+import java.util.Date;
 
 public interface ReportSegment {
     long getAmount();
@@ -11,5 +11,7 @@ public interface ReportSegment {
 
     int getPercent();
 
-    ItemHierarchyNode getNode();
+    boolean hasChildren();
+
+    Report getChildReport(Date startDate, Date endDate);
 }

@@ -42,7 +42,7 @@ public class FinanceReportService {
         for (ItemHierarchyNode node : nodes) {
             long amount = getAmountByNodeAndPeriodForCurrentUser(node, startDate, endDate);
             if (amount != 0)
-                report.addSegment(new ExpensesSegment(node, amount));
+                report.addSegment(new ExpensesSegment(this, node, amount));
         }
         return report;
     }
