@@ -3,12 +3,15 @@
 
 <?import javafx.scene.chart.PieChart?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.layout.*?>
 <HBox xmlns="http://javafx.com/javafx"
       xmlns:fx="http://javafx.com/fxml">
 
     <VBox prefWidth="300">
+        <ComboBox fx:id="modeComboBox"/>
+        <Pane minHeight="15" maxHeight="15"/>
         <DatePicker fx:id="startDatePicker"/>
         <Pane minHeight="15" maxHeight="15"/>
         <DatePicker fx:id="endDatePicker"/>

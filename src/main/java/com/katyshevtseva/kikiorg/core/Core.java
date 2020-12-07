@@ -1,7 +1,7 @@
 package com.katyshevtseva.kikiorg.core;
 
 import com.katyshevtseva.kikiorg.core.sections.finance.*;
-import com.katyshevtseva.kikiorg.core.sections.finance.report.FinanceReportService;
+import com.katyshevtseva.kikiorg.core.sections.finance.report.ExpenseReportService;
 import com.katyshevtseva.kikiorg.core.sections.habits.HabitsReportService;
 import com.katyshevtseva.kikiorg.core.sections.habits.HabitsService;
 import org.springframework.beans.factory.InitializingBean;
@@ -28,7 +28,7 @@ public class Core implements InitializingBean {
     @Autowired
     private OwnerService ownerService;
     @Autowired
-    private FinanceReportService financeReportService;
+    private ExpenseReportService expenseReportService;
     @Autowired
     private AccountValidationService accountValidationService;
 
@@ -80,8 +80,8 @@ public class Core implements InitializingBean {
         return ownerService;
     }
 
-    public FinanceReportService financeReportService() {
-        return financeReportService;
+    public ExpenseReportService financeReportService() {
+        return expenseReportService;
     }
 
     public AccountValidationService accountValidationService() {

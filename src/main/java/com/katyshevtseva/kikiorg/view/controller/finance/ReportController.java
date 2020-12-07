@@ -1,7 +1,7 @@
 package com.katyshevtseva.kikiorg.view.controller.finance;
 
 import com.katyshevtseva.kikiorg.core.Core;
-import com.katyshevtseva.kikiorg.core.sections.finance.report.FinanceReportService;
+import com.katyshevtseva.kikiorg.core.sections.finance.report.ExpenseReportService;
 import com.katyshevtseva.kikiorg.core.sections.finance.report.Report;
 import com.katyshevtseva.kikiorg.core.sections.finance.report.ReportSegment;
 import com.katyshevtseva.kikiorg.view.utils.Utils;
@@ -12,22 +12,22 @@ import javafx.fxml.FXML;
 import javafx.scene.chart.PieChart;
 import javafx.scene.chart.PieChart.Data;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 
 import java.time.LocalDate;
-import java.util.Calendar;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
+import static com.katyshevtseva.kikiorg.view.controller.finance.ReportController.Mode.Expenses;
+import static com.katyshevtseva.kikiorg.view.controller.finance.ReportController.Mode.Income;
 import static java.util.Calendar.MONTH;
 import static java.util.Calendar.YEAR;
 
 class ReportController implements FxController {
-    private FinanceReportService reportService = Core.getInstance().financeReportService();
+    private ExpenseReportService reportService = Core.getInstance().financeReportService();
     @FXML
     private DatePicker startDatePicker;
     @FXML
@@ -38,12 +38,20 @@ class ReportController implements FxController {
     private PieChart chart;
     @FXML
     private GridPane table;
+    @FXML
+    private ComboBox<Mode> modeComboBox;
+
+    enum Mode {
+        Income, Expenses
+    }
 
     @FXML
     private void initialize() {
-        showButton.setOnAction(event -> showRootReport());
+        showButton.setOnAction(event -> showButtonListener());
         Utils.associateButtonWithControls(showButton, startDatePicker, endDatePicker);
         setInitialDates();
+        modeComboBox.setItems(FXCollections.observableArrayList(Arrays.asList(Income, Expenses)));
+        modeComboBox.setValue(Expenses);
     }
 
     private void setInitialDates() {
@@ -55,8 +63,11 @@ class ReportController implements FxController {
         endDatePicker.setValue(LocalDate.now());
     }
 
-    private void showRootReport() {
-        showReport(reportService.getHeadReport(Utils.getPeriodByDp(startDatePicker, endDatePicker)));
+    private void showButtonListener() {
+        if (modeComboBox.getValue() == Expenses)
+            showReport(reportService.getHeadReport(Utils.getPeriodByDp(startDatePicker, endDatePicker)));
+//        if(modeComboBox.getValue()==Income) //todo
+
     }
 
     private void showReport(Report report) {

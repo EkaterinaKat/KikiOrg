@@ -5,12 +5,12 @@ import com.katyshevtseva.kikiorg.core.sections.finance.ItemHierarchyService.Item
 
 
 public class ExpensesSegment implements ReportSegment {
-    private FinanceReportService reportService;
+    private ExpenseReportService reportService;
     private ItemHierarchyNode node;
     private int percent;
     private long amount;
 
-    ExpensesSegment(FinanceReportService reportService, ItemHierarchyNode node, long amount) {
+    ExpensesSegment(ExpenseReportService reportService, ItemHierarchyNode node, long amount) {
         this.reportService = reportService;
         this.node = node;
         this.amount = amount;

@@ -19,7 +19,7 @@ import java.util.Map;
 import static com.katyshevtseva.kikiorg.core.sections.finance.FinanceService.TransferType.FROM_USER_ACCOUNTS;
 
 @Service
-public class FinanceReportService {
+public class ExpenseReportService {
     @Autowired
     private ItemHierarchyService itemHierarchyService;
     @Autowired
