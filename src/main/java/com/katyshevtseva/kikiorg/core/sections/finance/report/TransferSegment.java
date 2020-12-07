@@ -1,19 +1,22 @@
 package com.katyshevtseva.kikiorg.core.sections.finance.report;
 
 import com.katyshevtseva.kikiorg.core.date.Period;
+import com.katyshevtseva.kikiorg.core.sections.finance.FinanceService.TransferType;
 
 public class TransferSegment implements ReportSegment {
     private long amount;
     private String title;
     private int percent;
     private boolean hasChildren;
-    private ExpensesReportService reportService;
+    private TransfersReportService reportService;
+    private TransferType transferType;
 
-    TransferSegment(long amount, String title, boolean hasChildren, ExpensesReportService reportService) {
+    TransferSegment(long amount, String title, boolean hasChildren, TransferType transferType, TransfersReportService reportService) {
         this.amount = amount;
         this.title = title;
         this.hasChildren = hasChildren;
         this.reportService = reportService;
+        this.transferType = transferType;
     }
 
     @Override
@@ -46,6 +49,6 @@ public class TransferSegment implements ReportSegment {
         if (!hasChildren())
             throw new RuntimeException("Попытка получить дочерний отчет у листа");
 
-        return reportService.getTransfersReport(period);
+        return reportService.getTransfersReport(period, transferType);
     }
 }
