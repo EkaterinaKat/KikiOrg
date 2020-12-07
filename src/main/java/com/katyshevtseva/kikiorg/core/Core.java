@@ -2,6 +2,7 @@ package com.katyshevtseva.kikiorg.core;
 
 import com.katyshevtseva.kikiorg.core.sections.finance.*;
 import com.katyshevtseva.kikiorg.core.sections.finance.report.ExpensesReportService;
+import com.katyshevtseva.kikiorg.core.sections.finance.report.IncomeReportService;
 import com.katyshevtseva.kikiorg.core.sections.habits.HabitsReportService;
 import com.katyshevtseva.kikiorg.core.sections.habits.HabitsService;
 import org.springframework.beans.factory.InitializingBean;
@@ -31,6 +32,8 @@ public class Core implements InitializingBean {
     private ExpensesReportService expensesReportService;
     @Autowired
     private AccountValidationService accountValidationService;
+    @Autowired
+    private IncomeReportService incomeReportService;
 
     public static Core getInstance() {
         while (INSTANCE == null) {
@@ -80,8 +83,12 @@ public class Core implements InitializingBean {
         return ownerService;
     }
 
-    public ExpensesReportService financeReportService() {
+    public ExpensesReportService expensesReportService() {
         return expensesReportService;
+    }
+
+    public IncomeReportService incomeReportService() {
+        return incomeReportService;
     }
 
     public AccountValidationService accountValidationService() {

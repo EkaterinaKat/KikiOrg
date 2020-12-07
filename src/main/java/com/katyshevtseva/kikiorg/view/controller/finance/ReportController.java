@@ -2,6 +2,7 @@ package com.katyshevtseva.kikiorg.view.controller.finance;
 
 import com.katyshevtseva.kikiorg.core.Core;
 import com.katyshevtseva.kikiorg.core.sections.finance.report.ExpensesReportService;
+import com.katyshevtseva.kikiorg.core.sections.finance.report.IncomeReportService;
 import com.katyshevtseva.kikiorg.core.sections.finance.report.Report;
 import com.katyshevtseva.kikiorg.core.sections.finance.report.ReportSegment;
 import com.katyshevtseva.kikiorg.view.utils.Utils;
@@ -23,11 +24,13 @@ import java.util.*;
 
 import static com.katyshevtseva.kikiorg.view.controller.finance.ReportController.Mode.Expenses;
 import static com.katyshevtseva.kikiorg.view.controller.finance.ReportController.Mode.Income;
+import static com.katyshevtseva.kikiorg.view.utils.Utils.getPeriodByDp;
 import static java.util.Calendar.MONTH;
 import static java.util.Calendar.YEAR;
 
 class ReportController implements FxController {
-    private ExpensesReportService reportService = Core.getInstance().financeReportService();
+    private ExpensesReportService expensesReportService = Core.getInstance().expensesReportService();
+    private IncomeReportService incomeReportService = Core.getInstance().incomeReportService();
     @FXML
     private DatePicker startDatePicker;
     @FXML
@@ -65,9 +68,9 @@ class ReportController implements FxController {
 
     private void showButtonListener() {
         if (modeComboBox.getValue() == Expenses)
-            showReport(reportService.getHeadReport(Utils.getPeriodByDp(startDatePicker, endDatePicker)));
-//        if(modeComboBox.getValue()==Income) //todo
-
+            showReport(expensesReportService.getHeadReport(getPeriodByDp(startDatePicker, endDatePicker)));
+        if (modeComboBox.getValue() == Income)
+            showReport(incomeReportService.getIncomeReport(getPeriodByDp(startDatePicker, endDatePicker)));
     }
 
     private void showReport(Report report) {
@@ -92,7 +95,7 @@ class ReportController implements FxController {
                     e -> {
                         ReportSegment segment = chartDataAndNodeMapping.get(data);
                         if (segment.hasChildren()) {
-                            showReport(segment.getChildReport(Utils.getPeriodByDp(startDatePicker, endDatePicker)));
+                            showReport(segment.getChildReport(getPeriodByDp(startDatePicker, endDatePicker)));
                         }
                     });
         }

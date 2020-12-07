@@ -10,11 +10,11 @@
       xmlns:fx="http://javafx.com/fxml">
 
     <VBox prefWidth="300">
-        <ComboBox fx:id="modeComboBox"/>
+        <ComboBox fx:id="modeComboBox" maxWidth="250" minWidth="250"/>
         <Pane minHeight="15" maxHeight="15"/>
-        <DatePicker fx:id="startDatePicker"/>
+        <DatePicker fx:id="startDatePicker" maxWidth="250" minWidth="250"/>
         <Pane minHeight="15" maxHeight="15"/>
-        <DatePicker fx:id="endDatePicker"/>
+        <DatePicker fx:id="endDatePicker" maxWidth="250" minWidth="250"/>
         <Pane minHeight="15" maxHeight="15"/>
         <Button fx:id="showButton" text="Show" maxWidth="250" minWidth="250"/>
         <Pane minHeight="15" maxHeight="15"/>
