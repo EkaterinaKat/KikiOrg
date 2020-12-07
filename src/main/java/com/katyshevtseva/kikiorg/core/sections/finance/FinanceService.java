@@ -11,6 +11,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.*;
 
+import static com.katyshevtseva.kikiorg.core.sections.finance.FinanceService.TransferType.*;
+
 @Service
 public class FinanceService {
     @Autowired
@@ -166,18 +168,24 @@ public class FinanceService {
     }
 
     // Если нет мд public то FinanceService не может получить доступ к этому методу в собраном в exe приложении
-    public List<Transfer> getTransfersForCuByPeriod(Period period) {
+    public List<Transfer> getTransfersForCuByPeriod(Period period, TransferType transferType) {
         Set<Transfer> transferSet = new HashSet<>();
         List<DateEntity> dateEntities = dateService.getOnlyExistingDateEntitiesByPeriod(period);
         for (DateEntity dateEntity : dateEntities) {
             for (Account account : getAccountsForCurrentUser()) {
-                transferSet.addAll(transferRepo.findAllByFromAndDateEntity(account, dateEntity));
-                transferSet.addAll(transferRepo.findAllByToAndDateEntity(account, dateEntity));
+                if (transferType == TO_USER_ACCOUNTS || transferType == ALL)
+                    transferSet.addAll(transferRepo.findAllByToAndDateEntity(account, dateEntity));
+                if (transferType == FROM_USER_ACCOUNTS || transferType == ALL)
+                    transferSet.addAll(transferRepo.findAllByFromAndDateEntity(account, dateEntity));
             }
         }
         List<Transfer> transferList = new ArrayList<>(transferSet);
         transferList.sort(Comparator.comparing(Transfer::getDateEntity));
         return transferList;
+    }
+
+    public enum TransferType {
+        TO_USER_ACCOUNTS, FROM_USER_ACCOUNTS, ALL
     }
 
     private void addToAccountAmount(Account account, long amount) {

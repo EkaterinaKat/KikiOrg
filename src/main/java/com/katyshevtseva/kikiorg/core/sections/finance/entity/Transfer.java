@@ -64,4 +64,8 @@ public class Transfer implements Operation {
     public String getAmountString() {
         return "" + amount;
     }
+
+    public boolean isOuter() {
+        return from.getOwner() != to.getOwner();
+    }
 }
