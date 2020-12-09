@@ -15,7 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 @Service
-public class AccountValidationService {
+public class AccountAmountCalculationService {
     @Autowired
     private AccountRepo accountRepo;
     @Autowired
@@ -30,18 +30,7 @@ public class AccountValidationService {
         rewriteAccountAmount(account, calculateAccountAmountByOperations(account));
     }
 
-    public String validateAllAccountsAndGetReport() {
-        String report = "";
-        for (Account account : accountRepo.findAll()) {
-            long calculatedAmount = calculateAccountAmountByOperations(account);
-            report += String.format("%s: %s \n", account.getTitle(),
-                    calculatedAmount == account.getAmount() ? "SUCCESS" : String.format(
-                            "Error: actual amount - %d, calculated amount - %d", account.getAmount(), calculatedAmount));
-        }
-        return report;
-    }
-
-    private long calculateAccountAmountByOperations(Account account) {
+    public long calculateAccountAmountByOperations(Account account) {
         List<Expense> expenses = expenseRepo.findByAccount(account);
         List<Replenishment> replenishments = replenishmentRepo.findByAccount(account);
         List<Transfer> transfersToAccount = transferRepo.findAllByTo(account);

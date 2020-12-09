@@ -31,8 +31,6 @@ public class Core implements InitializingBean {
     @Autowired
     private ExpensesReportService expensesReportService;
     @Autowired
-    private AccountValidationService accountValidationService;
-    @Autowired
     private IncomeReportService incomeReportService;
 
     public static Core getInstance() {
@@ -89,9 +87,5 @@ public class Core implements InitializingBean {
 
     public IncomeReportService incomeReportService() {
         return incomeReportService;
-    }
-
-    public AccountValidationService accountValidationService() {
-        return accountValidationService;
     }
 }

@@ -28,7 +28,7 @@ public class FinanceOperationService {
     @Autowired
     private TransferRepo transferRepo;
     @Autowired
-    private AccountValidationService validationService;
+    private AccountAmountCalculationService calculationService;
 
     public List<Operation> getOperationsAvailableForCurrentUser() {
         List<Operation> operations = new ArrayList<>();
@@ -43,16 +43,16 @@ public class FinanceOperationService {
         switch (operation.getType()) {
             case EXPENSE:
                 expenseRepo.deleteById(operation.getId());
-                validationService.recalculateAndRewriteAccountAmount(((Expense) operation).getAccount());
+                calculationService.recalculateAndRewriteAccountAmount(((Expense) operation).getAccount());
                 break;
             case REPLENISHMENT:
                 replenishmentRepo.deleteById(operation.getId());
-                validationService.recalculateAndRewriteAccountAmount(((Replenishment) operation).getAccount());
+                calculationService.recalculateAndRewriteAccountAmount(((Replenishment) operation).getAccount());
                 break;
             case TRANSFER:
                 transferRepo.deleteById(operation.getId());
-                validationService.recalculateAndRewriteAccountAmount(((Transfer) operation).getTo());
-                validationService.recalculateAndRewriteAccountAmount(((Transfer) operation).getFrom());
+                calculationService.recalculateAndRewriteAccountAmount(((Transfer) operation).getTo());
+                calculationService.recalculateAndRewriteAccountAmount(((Transfer) operation).getFrom());
         }
     }
 
