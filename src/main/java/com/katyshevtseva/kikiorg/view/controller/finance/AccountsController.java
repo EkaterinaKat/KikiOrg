@@ -25,8 +25,6 @@ class AccountsController implements FxController {
     @FXML
     private Button addAccountButton;
     @FXML
-    private Button validationButton;
-    @FXML
     private TableView<Account> table;
     @FXML
     private TableColumn<Account, String> titleColumn;
@@ -41,10 +39,6 @@ class AccountsController implements FxController {
     private void initialize() {
         addAccountButton.setOnAction(event -> addAccount());
         Utils.associateButtonWithControls(addAccountButton, accountTitleField, accountDescArea);
-        validationButton.setOnAction(event -> {
-            OrganizerWindowCreator.getInstance().openBigInfoDialog(new InfoDialogController(
-                    Core.getInstance().accountValidationService().validateAllAccountsAndGetReport()));
-        });
         adjustColumns();
         fillTable();
     }
