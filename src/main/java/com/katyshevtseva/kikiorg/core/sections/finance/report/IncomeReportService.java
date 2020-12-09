@@ -11,10 +11,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import static com.katyshevtseva.kikiorg.core.sections.finance.FinanceService.TransferType.TO_USER_ACCOUNTS;
+
 @Service
 public class IncomeReportService {
     @Autowired
     private FinanceService financeService;
+    @Autowired
+    private TransfersReportService transfersReportService;
 
     public Report getIncomeReport(Period period) {
         Report report = new Report("Income");
@@ -28,6 +32,11 @@ public class IncomeReportService {
         for (Map.Entry<Source, Long> entry : sourceAmountMap.entrySet()) {
             report.addSegment(new IncomeSegment(entry.getKey().getTitle(), entry.getValue()));
         }
+
+        TransferSegment transferSegment = transfersReportService.getRootTransferSegment(period, TO_USER_ACCOUNTS);
+        if (transferSegment.getAmount() > 0)
+            report.addSegment(transferSegment);
+
         return report;
     }
 }

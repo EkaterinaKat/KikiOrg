@@ -3,7 +3,6 @@ package com.katyshevtseva.kikiorg.core.sections.finance.report;
 import com.katyshevtseva.kikiorg.core.date.Period;
 import com.katyshevtseva.kikiorg.core.sections.finance.FinanceService;
 import com.katyshevtseva.kikiorg.core.sections.finance.FinanceService.TransferType;
-import com.katyshevtseva.kikiorg.core.sections.finance.entity.Account;
 import com.katyshevtseva.kikiorg.core.sections.finance.entity.Transfer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -29,18 +28,31 @@ class TransfersReportService {
 
     Report getTransfersReport(Period period, TransferType transferType) {
         List<Transfer> transfers = financeService.getTransfersForCuByPeriod(period, transferType);
-        Map<Account, Long> accountAmountMap = new HashMap<>();
+        Map<String, Long> accountTitleAmountMap = new HashMap<>();
         for (Transfer transfer : transfers) {
             if (transfer.isOuter()) {
-                long initialAmount = accountAmountMap.getOrDefault(transfer.getTo(), 0L);
+                String accountTitle = getAccountTitle(transfer, transferType);
+                long initialAmount = accountTitleAmountMap.getOrDefault(accountTitle, 0L);
                 long increasedAmount = initialAmount + transfer.getAmount();
-                accountAmountMap.put(transfer.getTo(), increasedAmount);
+                accountTitleAmountMap.put(accountTitle, increasedAmount);
             }
         }
         Report report = new Report("Transfers");
-        for (Map.Entry<Account, Long> entry : accountAmountMap.entrySet()) {
-            report.addSegment(new TransferSegment(entry.getValue(), entry.getKey().getTitle(), false, transferType, this));
+        for (Map.Entry<String, Long> entry : accountTitleAmountMap.entrySet()) {
+            report.addSegment(new TransferSegment(
+                    entry.getValue(),
+                    entry.getKey(),
+                    false, transferType,
+                    this));
         }
         return report;
+    }
+
+    /* Если это отчет по переводам СО СЧЕТА тогда нас интересует имя счета, на который был совершен перевод.
+     *  Если это отчет по переводам НА СЧЕТ тогда нас интересует имя счета, с которого был совершен перевод */
+    private String getAccountTitle(Transfer transfer, TransferType transferType) {
+        if (transferType == TransferType.FROM_USER_ACCOUNTS)
+            return transfer.getTo().getTitleWithOwnerInfo();
+        return transfer.getFrom().getTitleWithOwnerInfo();
     }
 }
