@@ -118,4 +118,8 @@ public class OrganizerWindowCreator {
     public Node getFinanceReportNode(FxController controller) {
         return new WindowBuilder(FINANCE_FXML_LOCATION + "report.fxml").setController(controller).getNode();
     }
+
+    public Node getFinanceAnalysisNode(FxController controller) {
+        return new WindowBuilder(FINANCE_FXML_LOCATION + "analysis.fxml").setController(controller).getNode();
+    }
 }
