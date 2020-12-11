@@ -1,6 +1,5 @@
 package com.katyshevtseva.kikiorg.core.sections.finance;
 
-import com.katyshevtseva.kikiorg.core.repo.AccountRepo;
 import com.katyshevtseva.kikiorg.core.repo.ExpenseRepo;
 import com.katyshevtseva.kikiorg.core.repo.ReplenishmentRepo;
 import com.katyshevtseva.kikiorg.core.repo.TransferRepo;
@@ -10,25 +9,17 @@ import com.katyshevtseva.kikiorg.core.sections.finance.entity.Replenishment;
 import com.katyshevtseva.kikiorg.core.sections.finance.entity.Transfer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
 @Service
-public class AccountAmountCalculationService {
-    @Autowired
-    private AccountRepo accountRepo;
+public class CalculationService {
     @Autowired
     private ExpenseRepo expenseRepo;
     @Autowired
     private TransferRepo transferRepo;
     @Autowired
     private ReplenishmentRepo replenishmentRepo;
-
-    @Transactional
-    void recalculateAndRewriteAccountAmount(Account account) {
-        rewriteAccountAmount(account, calculateAccountAmountByOperations(account));
-    }
 
     public long calculateAccountAmountByOperations(Account account) {
         List<Expense> expenses = expenseRepo.findByAccount(account);
@@ -49,11 +40,5 @@ public class AccountAmountCalculationService {
             amount -= transfer.getAmount();
         }
         return amount;
-    }
-
-    private void rewriteAccountAmount(Account account, long amount) {
-        Account actualAccount = accountRepo.findById(account.getId()).orElse(null);
-        actualAccount.setAmount(amount);
-        accountRepo.save(actualAccount);
     }
 }

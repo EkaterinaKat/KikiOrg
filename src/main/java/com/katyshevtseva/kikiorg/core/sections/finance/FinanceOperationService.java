@@ -1,9 +1,11 @@
 package com.katyshevtseva.kikiorg.core.sections.finance;
 
 import com.katyshevtseva.kikiorg.core.date.Period;
+import com.katyshevtseva.kikiorg.core.repo.AccountRepo;
 import com.katyshevtseva.kikiorg.core.repo.ExpenseRepo;
 import com.katyshevtseva.kikiorg.core.repo.ReplenishmentRepo;
 import com.katyshevtseva.kikiorg.core.repo.TransferRepo;
+import com.katyshevtseva.kikiorg.core.sections.finance.entity.Account;
 import com.katyshevtseva.kikiorg.core.sections.finance.entity.Expense;
 import com.katyshevtseva.kikiorg.core.sections.finance.entity.Replenishment;
 import com.katyshevtseva.kikiorg.core.sections.finance.entity.Transfer;
@@ -28,7 +30,9 @@ public class FinanceOperationService {
     @Autowired
     private TransferRepo transferRepo;
     @Autowired
-    private AccountAmountCalculationService calculationService;
+    private CalculationService calculationService;
+    @Autowired
+    private AccountRepo accountRepo;
 
     public List<Operation> getOperationsAvailableForCurrentUser() {
         List<Operation> operations = new ArrayList<>();
@@ -43,17 +47,27 @@ public class FinanceOperationService {
         switch (operation.getType()) {
             case EXPENSE:
                 expenseRepo.deleteById(operation.getId());
-                calculationService.recalculateAndRewriteAccountAmount(((Expense) operation).getAccount());
+                recalculateAndRewriteAccountAmount(((Expense) operation).getAccount());
                 break;
             case REPLENISHMENT:
                 replenishmentRepo.deleteById(operation.getId());
-                calculationService.recalculateAndRewriteAccountAmount(((Replenishment) operation).getAccount());
+                recalculateAndRewriteAccountAmount(((Replenishment) operation).getAccount());
                 break;
             case TRANSFER:
                 transferRepo.deleteById(operation.getId());
-                calculationService.recalculateAndRewriteAccountAmount(((Transfer) operation).getTo());
-                calculationService.recalculateAndRewriteAccountAmount(((Transfer) operation).getFrom());
+                recalculateAndRewriteAccountAmount(((Transfer) operation).getTo());
+                recalculateAndRewriteAccountAmount(((Transfer) operation).getFrom());
         }
+    }
+
+    private void recalculateAndRewriteAccountAmount(Account account) {
+        rewriteAccountAmount(account, calculationService.calculateAccountAmountByOperations(account));
+    }
+
+    private void rewriteAccountAmount(Account account, long amount) {
+        Account actualAccount = accountRepo.findById(account.getId()).orElse(null);
+        actualAccount.setAmount(amount);
+        accountRepo.save(actualAccount);
     }
 
     public enum OperationType {

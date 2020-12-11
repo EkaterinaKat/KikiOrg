@@ -2,7 +2,7 @@ package com.katyshevtseva.kikiorg.core.tests;
 
 import com.katyshevtseva.kikiorg.core.date.DateUtils;
 import com.katyshevtseva.kikiorg.core.repo.AccountRepo;
-import com.katyshevtseva.kikiorg.core.sections.finance.AccountAmountCalculationService;
+import com.katyshevtseva.kikiorg.core.sections.finance.CalculationService;
 import com.katyshevtseva.kikiorg.core.sections.finance.FinanceService;
 import com.katyshevtseva.kikiorg.core.sections.finance.OwnerService;
 import com.katyshevtseva.kikiorg.core.sections.finance.OwnerService.Owner;
@@ -13,14 +13,13 @@ import com.katyshevtseva.kikiorg.core.sections.finance.report.Report;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import javax.annotation.PostConstruct;
 import java.util.Date;
 
 @Component
 public class FinanceTest {
     private boolean success = true;
     @Autowired
-    private AccountAmountCalculationService accountAmountCalculationService;
+    private CalculationService calculationService;
     @Autowired
     private ExpensesReportService expensesReportService;
     @Autowired
@@ -60,7 +59,7 @@ public class FinanceTest {
     private TestResult validateAllAccounts() {
         TestResult testResult = new TestResult();
         for (Account account : accountRepo.findAll()) {
-            long calculatedAmount = accountAmountCalculationService.calculateAccountAmountByOperations(account);
+            long calculatedAmount = calculationService.calculateAccountAmountByOperations(account);
             boolean amountsAreEqual = calculatedAmount == account.getAmount();
             testResult.addLineToReport(String.format("%s: %s", account.getTitle(),
                     (amountsAreEqual ? "Success" : "Error") + String.format(
