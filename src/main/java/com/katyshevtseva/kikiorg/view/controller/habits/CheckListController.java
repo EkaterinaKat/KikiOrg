@@ -29,6 +29,7 @@ class CheckListController implements FxController {
         saveButton.setOnAction(event -> save());
         Utils.associateButtonWithControls(saveButton, datePicker);
         datePicker.setValue(LocalDate.now());
+        datePicker.setOnAction(event -> saveButton.setDisable(false));
         fillHabitsTable();
     }
 
@@ -67,6 +68,7 @@ class CheckListController implements FxController {
             Core.getInstance().habitsService().saveMarkOrRewriteIfExists(
                     pair.habit, java.sql.Date.valueOf(datePicker.getValue()), pair.getMark());
         }
+        saveButton.setDisable(true);
     }
 
     private class Pair {

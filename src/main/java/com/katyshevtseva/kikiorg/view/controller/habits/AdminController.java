@@ -87,19 +87,7 @@ class AdminController implements FxController {
         enumElement.setTitle(enumTextField.getText().trim());
         enumElements.add(enumElement);
         enumTextField.clear();
-        enumLabel.setText(getEnumString(enumElements));
-    }
-
-    private String getEnumString(List<EnumElement> enumElements) {
-        if (enumElements.size() == 0)
-            return "";
-        String result = "";
-        System.out.println(enumElements);
-        for (int i = 0; i < enumElements.size() - 1; i++) {
-            result += (enumElements.get(i).getTitle() + ", ");
-        }
-        result += enumElements.get(enumElements.size() - 1).getTitle();
-        return result;
+        enumLabel.setText(Habit.getEnumString(enumElements));
     }
 
     private void setTypeComboBoxItems() {
@@ -113,7 +101,11 @@ class AdminController implements FxController {
         listPoints = new ArrayList<>();
         int rowIndex = 0;
         for (Habit habit : habits) {
-            Label label = new Label(String.format("%s (active = %s)", habit.getTitle(), habit.isActive()));
+            Label label = new Label(habit.getTitle());
+            if (habit.isActive())
+                label.setStyle(Utils.getGreenTextStyle());
+            else
+                label.setStyle(Utils.getGrayTextStyle());
             Label point = new Label();
             listPoints.add(point);
             label.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
@@ -160,8 +152,7 @@ class AdminController implements FxController {
         editPane.setVisible(mode == Mode.edit);
 
         if (habit != null && mode == Mode.show) {
-            titleLabel.setText(String.format("%s [%s] (active = %s)", habit.getTitle(),
-                    getEnumString(Core.getInstance().habitsService().getEnumElementsByHabit(habit)), habit.isActive()));
+            titleLabel.setText(habit.getExtendedTitle());
             descLabel.setText(habit.getDescription());
             typeLabel.setText("type: " + habit.getType());
         } else if (habit != null && mode == Mode.edit) {

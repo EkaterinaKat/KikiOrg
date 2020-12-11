@@ -55,6 +55,14 @@ public class Utils {
         return " -fx-text-fill: #800080; ";
     }
 
+    public static String getGreenTextStyle() {
+        return " -fx-text-fill: #008000; ";
+    }
+
+    public static String getGrayTextStyle() {
+        return " -fx-text-fill: #808080; ";
+    }
+
     public static void associateButtonWithControls(Button button, Control... controls) {
         associateButtonWithControls(button, Arrays.asList(controls));
     }
