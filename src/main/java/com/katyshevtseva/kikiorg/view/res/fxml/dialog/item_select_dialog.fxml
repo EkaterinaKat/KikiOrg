@@ -5,7 +5,7 @@
 <VBox xmlns="http://javafx.com/javafx"
       xmlns:fx="http://javafx.com/fxml">
 
-    <ScrollPane minWidth="500" maxWidth="500" minHeight="500" maxHeight="500">
+    <ScrollPane minWidth="480" maxWidth="480" minHeight="450" maxHeight="450">
         <VBox fx:id="container">
 
         </VBox>

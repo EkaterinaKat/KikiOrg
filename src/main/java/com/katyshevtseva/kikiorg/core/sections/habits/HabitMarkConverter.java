@@ -1,10 +1,7 @@
 package com.katyshevtseva.kikiorg.core.sections.habits;
 
-import com.katyshevtseva.kikiorg.core.sections.habits.entity.EnumElement;
-import com.katyshevtseva.kikiorg.core.sections.habits.entity.Habit;
-import com.katyshevtseva.kikiorg.core.sections.habits.entity.HabitMark;
-import com.katyshevtseva.kikiorg.core.sections.habits.entity.ReportCell;
 import com.katyshevtseva.kikiorg.core.repo.EnumElementRepo;
+import com.katyshevtseva.kikiorg.core.sections.habits.entity.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,9 +15,14 @@ class HabitMarkConverter {
     @Autowired
     private EnumElementRepo enumElementRepo;
 
-    static Long prepareToPersist(Habit habit, Object mark) {
+    boolean needToPersist(Habit habit, Object mark) {
         if (mark == null)
-            throw new RuntimeException("Mark can not be null");
+            return false;
+        return (habit.getType() != HabitType.number && habit.getType() != HabitType.bollean)
+                || prepareToPersist(habit, mark) != 0;
+    }
+
+    Long prepareToPersist(Habit habit, Object mark) {
         switch (habit.getType()) {
             case enumeration:
                 return ((EnumElement) mark).getId();
@@ -33,16 +35,17 @@ class HabitMarkConverter {
     }
 
     ReportCell prepareForReport(Habit habit, HabitMark mark) {
-        Long markNum = mark.getMark();
+        Long numRepresentation = mark.getNumRepresentation();
         switch (habit.getType()) {
             case bollean:
-                return ReportCell.filled("", markNum == 1 ? ReportCell.Color.GREEN : ReportCell.Color.WHITE);
+                return ReportCell.filled("", numRepresentation == 1 ?
+                        ReportCell.Color.GREEN : ReportCell.Color.WHITE);
             case number:
-                return ReportCell.filled(markNum.toString(), markNum == 0 ? ReportCell.Color.WHITE : ReportCell.Color.GREEN);
+                return ReportCell.filled(numRepresentation.toString(), numRepresentation == 0 ?
+                        ReportCell.Color.WHITE : ReportCell.Color.GREEN);
             case enumeration:
-                EnumElement enumElement = enumElementRepo.findById(markNum).get();
+                EnumElement enumElement = enumElementRepo.findById(numRepresentation).get();
                 return ReportCell.filled(enumElement.getTitle(), ReportCell.Color.GREEN);
-
         }
         return null;
     }

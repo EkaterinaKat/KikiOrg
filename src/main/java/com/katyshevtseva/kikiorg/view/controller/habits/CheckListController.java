@@ -3,7 +3,6 @@ package com.katyshevtseva.kikiorg.view.controller.habits;
 import com.katyshevtseva.kikiorg.core.Core;
 import com.katyshevtseva.kikiorg.core.sections.habits.entity.EnumElement;
 import com.katyshevtseva.kikiorg.core.sections.habits.entity.Habit;
-import com.katyshevtseva.kikiorg.core.sections.habits.entity.HabitType;
 import com.katyshevtseva.kikiorg.view.utils.Utils;
 import com.katyshevtseva.kikiorg.view.utils.WindowBuilder.FxController;
 import javafx.collections.FXCollections;
@@ -35,7 +34,6 @@ class CheckListController implements FxController {
 
     private void fillHabitsTable() {
         List<Habit> habits = Core.getInstance().habitsService().getActiveHabits();
-        List<Control> controlsToAssociateWithSaveButton = new ArrayList<>();
         pairs = new ArrayList<>();
         int index = 0;
         for (Habit habit : habits) {
@@ -55,12 +53,7 @@ class CheckListController implements FxController {
             pairs.add(pair);
             habitsTable.add(pair.getLabel(), labelColumn, row);
             habitsTable.add(pair.markControl, markNodeColumn, row);
-
-            if (habit.getType() == HabitType.enumeration || habit.getType() == HabitType.number) {
-                controlsToAssociateWithSaveButton.add(pair.markControl);
-            }
         }
-        Utils.associateButtonWithControls(saveButton, controlsToAssociateWithSaveButton);
     }
 
     private void save() {
@@ -109,7 +102,10 @@ class CheckListController implements FxController {
                 case bollean:
                     return ((CheckBox) markControl).isSelected();
                 case number:
-                    return Long.parseLong(((TextField) markControl).getText());
+                    String textFieldValue = ((TextField) markControl).getText();
+                    if (textFieldValue == null || textFieldValue.isEmpty())
+                        return 0L;
+                    return Long.parseLong(textFieldValue);
                 case enumeration:
                     return ((ComboBox<EnumElement>) markControl).getValue();
             }

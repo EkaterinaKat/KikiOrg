@@ -20,5 +20,5 @@ public class HabitMark {
     @JoinColumn(name = "date_entity_id")
     private DateEntity dateEntity;
 
-    private Long mark;
+    private Long numRepresentation;
 }
