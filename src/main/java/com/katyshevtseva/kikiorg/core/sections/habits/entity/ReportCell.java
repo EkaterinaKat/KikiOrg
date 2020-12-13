@@ -16,10 +16,6 @@ public class ReportCell {
         Color(String code) {
             this.code = code;
         }
-
-        public String getCode() {
-            return code;
-        }
     }
 
     public static ReportCell empty() {
@@ -30,8 +26,8 @@ public class ReportCell {
         return new ReportCell(text, Color.WHITE.code);
     }
 
-    public static ReportCell filled(String text, Color color) {
-        return new ReportCell(text, color.code);
+    public static ReportCell filled(String text) {
+        return new ReportCell(text, Color.GREEN.code);
     }
 
     public String getText() {

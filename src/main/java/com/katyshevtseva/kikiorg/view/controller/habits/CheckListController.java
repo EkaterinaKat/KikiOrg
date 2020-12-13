@@ -58,8 +58,8 @@ class CheckListController implements FxController {
 
     private void save() {
         for (Pair pair : pairs) {
-            Core.getInstance().habitsService().saveMarkOrRewriteIfExists(
-                    pair.habit, java.sql.Date.valueOf(datePicker.getValue()), pair.getMark());
+            Core.getInstance().habitMarkService().saveMarkOrRewriteIfExists(
+                    pair.habit, java.sql.Date.valueOf(datePicker.getValue()), pair.getMarkControlValue());
         }
         saveButton.setDisable(true);
     }
@@ -97,15 +97,16 @@ class CheckListController implements FxController {
             return new Label(habit.getTitle());
         }
 
-        Object getMark() {
+        // Возвращает Boolean, Integer EnumElement или null
+        Object getMarkControlValue() {
             switch (habit.getType()) {
                 case bollean:
                     return ((CheckBox) markControl).isSelected();
                 case number:
                     String textFieldValue = ((TextField) markControl).getText();
                     if (textFieldValue == null || textFieldValue.isEmpty())
-                        return 0L;
-                    return Long.parseLong(textFieldValue);
+                        return 0;
+                    return Integer.parseInt(textFieldValue);
                 case enumeration:
                     return ((ComboBox<EnumElement>) markControl).getValue();
             }

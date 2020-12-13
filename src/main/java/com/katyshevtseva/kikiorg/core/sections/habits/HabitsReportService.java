@@ -3,8 +3,8 @@ package com.katyshevtseva.kikiorg.core.sections.habits;
 
 import com.katyshevtseva.kikiorg.core.date.DateService;
 import com.katyshevtseva.kikiorg.core.date.Period;
+import com.katyshevtseva.kikiorg.core.sections.habits.HabitMarkService.HabitMark;
 import com.katyshevtseva.kikiorg.core.sections.habits.entity.Habit;
-import com.katyshevtseva.kikiorg.core.sections.habits.entity.HabitMark;
 import com.katyshevtseva.kikiorg.core.sections.habits.entity.ReportCell;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,7 +23,7 @@ public class HabitsReportService {
     @Autowired
     private HabitsService habitsService;
     @Autowired
-    private HabitMarkConverter habitMarkConverter;
+    private HabitMarkService habitMarkService;
     @Autowired
     private DateService dateService;
 
@@ -48,10 +48,10 @@ public class HabitsReportService {
     }
 
     private ReportCell convertToCell(Habit habit, Date date) {
-        HabitMark mark = habitsService.getMarkOrNull(habit, date);
+        HabitMark mark = habitMarkService.getMarkOrNull(habit, date);
         if (mark == null)
             return ReportCell.empty();
-        return habitMarkConverter.prepareForReport(habit, mark);
+        return ReportCell.filled(mark.getTextForReport());
     }
 
     private List<ReportCell> getReportHead(List<Habit> habits) {
