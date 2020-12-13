@@ -1,8 +1,13 @@
 package com.katyshevtseva.kikiorg.view.controller.habits;
 
 import com.katyshevtseva.kikiorg.core.Core;
+import com.katyshevtseva.kikiorg.core.sections.habits.HabitMarkService;
+import com.katyshevtseva.kikiorg.core.sections.habits.HabitMarkService.HabitMark;
+import com.katyshevtseva.kikiorg.core.sections.habits.HabitsService;
 import com.katyshevtseva.kikiorg.core.sections.habits.entity.EnumElement;
+import com.katyshevtseva.kikiorg.core.sections.habits.entity.EnumMark;
 import com.katyshevtseva.kikiorg.core.sections.habits.entity.Habit;
+import com.katyshevtseva.kikiorg.core.sections.habits.entity.NumMark;
 import com.katyshevtseva.kikiorg.view.utils.Utils;
 import com.katyshevtseva.kikiorg.view.utils.WindowBuilder.FxController;
 import javafx.collections.FXCollections;
@@ -15,6 +20,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 class CheckListController implements FxController {
+    private HabitsService habitsService = Core.getInstance().habitsService();
+    private HabitMarkService habitMarkService = Core.getInstance().habitMarkService();
     @FXML
     private DatePicker datePicker;
     @FXML
@@ -33,7 +40,7 @@ class CheckListController implements FxController {
     }
 
     private void fillHabitsTable() {
-        List<Habit> habits = Core.getInstance().habitsService().getActiveHabits();
+        List<Habit> habits = habitsService.getActiveHabits();
         pairs = new ArrayList<>();
         int index = 0;
         for (Habit habit : habits) {
@@ -58,7 +65,7 @@ class CheckListController implements FxController {
 
     private void save() {
         for (Pair pair : pairs) {
-            Core.getInstance().habitMarkService().saveMarkOrRewriteIfExists(
+            habitMarkService.saveMarkOrRewriteIfExists(
                     pair.habit, java.sql.Date.valueOf(datePicker.getValue()), pair.getMarkControlValue());
         }
         saveButton.setDisable(true);
@@ -71,10 +78,14 @@ class CheckListController implements FxController {
 
         Pair(Habit habit) {
             this.habit = habit;
+            HabitMark lastMark = habitMarkService.getLastMarkByHabitWithinLastWeekOrNull(habit);
 
             switch (habit.getType()) {
                 case bollean:
-                    markControl = new CheckBox();
+                    CheckBox checkBox = new CheckBox();
+                    markControl = checkBox;
+                    if (lastMark != null)
+                        checkBox.setSelected(true);
                     break;
                 case number:
                     TextField textField = new TextField();
@@ -82,14 +93,20 @@ class CheckListController implements FxController {
                     textField.setMinWidth(NODE_WIDTH);
                     Utils.disableNonNumericChars(textField);
                     markControl = textField;
+                    if (lastMark != null) {
+                        textField.setText("" + ((NumMark) lastMark).getValue());
+                    }
                     break;
                 case enumeration:
                     ComboBox<EnumElement> comboBox = new ComboBox<>();
                     comboBox.setItems(FXCollections.observableArrayList(
-                            Core.getInstance().habitsService().getEnumElementsByHabit(habit)));
+                            habitsService.getEnumElementsByHabit(habit)));
                     comboBox.setMaxWidth(NODE_WIDTH);
                     comboBox.setMinWidth(NODE_WIDTH);
                     markControl = comboBox;
+                    if (lastMark != null) {
+                        comboBox.setValue(((EnumMark) lastMark).getEnumElement());
+                    }
             }
         }
 

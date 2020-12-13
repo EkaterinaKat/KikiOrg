@@ -25,6 +25,17 @@ public class DateUtils {
         return calendar.getTime();
     }
 
+    private static Date getWeekAgoDate() {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(new Date());
+        calendar.add(Calendar.DATE, -7);
+        return calendar.getTime();
+    }
+
+    public static Period getLastWeekPeriod() {
+        return new Period(getWeekAgoDate(), new Date());
+    }
+
     public static List<Date> getDateRange(Period period) {
         Date date = new Date(period.start().getTime());
         Date oneDayAfterEnd = addOneDay(period.end());

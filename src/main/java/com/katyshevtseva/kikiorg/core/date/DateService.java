@@ -25,6 +25,10 @@ public class DateService {
         return dateRepo.save(dateEntity);
     }
 
+    public DateEntity getDateEntityIfExistsOrNull(Date date) {
+        return dateRepo.findByValue(date).orElse(null);
+    }
+
     public List<DateEntity> getOnlyExistingDateEntitiesByPeriod(Period period) {
         List<DateEntity> dateEntities = new ArrayList<>();
         for (Date date : getDateRange(period))
