@@ -1,9 +1,7 @@
 package com.katyshevtseva.kikiorg.core.sections.habits;
 
 import com.katyshevtseva.kikiorg.core.date.DateService;
-import com.katyshevtseva.kikiorg.core.repo.EnumElementRepo;
-import com.katyshevtseva.kikiorg.core.repo.HabitMarkRepo;
-import com.katyshevtseva.kikiorg.core.repo.HabitsRepo;
+import com.katyshevtseva.kikiorg.core.repo.*;
 import com.katyshevtseva.kikiorg.core.sections.habits.entity.EnumElement;
 import com.katyshevtseva.kikiorg.core.sections.habits.entity.Habit;
 import com.katyshevtseva.kikiorg.core.sections.habits.entity.HabitMark;
@@ -27,6 +25,12 @@ public class HabitsService {
     private DateService dateService;
     @Autowired
     private HabitMarkConverter habitMarkConverter;
+    @Autowired
+    private NumMarkRepo numMarkRepo;
+    @Autowired
+    private EnumMarkRepo enumMarkRepo;
+    @Autowired
+    private BooleanMarkRepo booleanMarkRepo;
 
     public void saveHabit(Habit habit) {
         habitsRepo.save(habit);
