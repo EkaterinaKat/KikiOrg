@@ -41,10 +41,12 @@
                     </HBox>
                     <Pane minHeight="25" maxHeight="25"/>
                     <HBox>
+                        <ComboBox fx:id="groupComboBox"/>
+                        <Pane minWidth="15" maxWidth="15"/>
                         <ComboBox fx:id="typeComboBox"/>
-                        <Pane minWidth="25" maxWidth="25"/>
+                        <Pane minWidth="15" maxWidth="15"/>
                         <TextField fx:id="enumTextField"/>
-                        <Pane minWidth="25" maxWidth="25"/>
+                        <Pane minWidth="15" maxWidth="15"/>
                         <Button fx:id="addEnumButton" text="  +  "/>
                     </HBox>
                     <Pane minHeight="25" maxHeight="25"/>

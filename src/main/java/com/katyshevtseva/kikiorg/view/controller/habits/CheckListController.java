@@ -1,6 +1,7 @@
 package com.katyshevtseva.kikiorg.view.controller.habits;
 
 import com.katyshevtseva.kikiorg.core.Core;
+import com.katyshevtseva.kikiorg.core.sections.habits.HabitGroup;
 import com.katyshevtseva.kikiorg.core.sections.habits.HabitMarkService;
 import com.katyshevtseva.kikiorg.core.sections.habits.HabitMarkService.HabitMark;
 import com.katyshevtseva.kikiorg.core.sections.habits.HabitsService;
@@ -14,6 +15,9 @@ import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -25,10 +29,11 @@ class CheckListController implements FxController {
     @FXML
     private DatePicker datePicker;
     @FXML
-    private GridPane habitsTable;
+    private HBox hPane;
     @FXML
     private Button saveButton;
     private List<Pair> pairs;
+    private List<Habit> habits;
 
     @FXML
     private void initialize() {
@@ -40,27 +45,46 @@ class CheckListController implements FxController {
     }
 
     private void fillHabitsTable() {
-        List<Habit> habits = habitsService.getActiveHabits();
+        habits = habitsService.getActiveHabits();
         pairs = new ArrayList<>();
-        int index = 0;
-        for (Habit habit : habits) {
-            int row = index / 3;
-            int labelColumn = 0;
-            int markNodeColumn = 1;
-            if (index % 3 == 1) {
-                labelColumn = 2;
-                markNodeColumn = 3;
-            } else if (index % 3 == 2) {
-                labelColumn = 4;
-                markNodeColumn = 5;
-            }
-            index++;
 
-            Pair pair = new Pair(habit);
-            pairs.add(pair);
-            habitsTable.add(pair.getLabel(), labelColumn, row);
-            habitsTable.add(pair.markControl, markNodeColumn, row);
+        for (HabitGroup habitGroup : HabitGroup.values()) {
+            List<Habit> groupHabits = selectHabitsByGroup(habitGroup);
+            if (!groupHabits.isEmpty()) {
+                VBox vPane = new VBox();
+                Label groupLabel = new Label(habitGroup.getName().toUpperCase());
+                groupLabel.setStyle(Utils.getBlackTextStyle());
+                vPane.getChildren().add(groupLabel);
+                Pane pane1 = new Pane();
+                pane1.setPrefHeight(15);
+                vPane.getChildren().add(pane1);
+                GridPane gridPane = new GridPane();
+                gridPane.setVgap(15);
+                gridPane.setHgap(15);
+                int rowIndex = 0;
+                for (Habit habit : groupHabits) {
+                    Pair pair = new Pair(habit);
+                    pairs.add(pair);
+                    gridPane.add(pair.getLabel(), 0, rowIndex);
+                    gridPane.add(pair.markControl, 1, rowIndex);
+                    rowIndex++;
+                }
+                vPane.getChildren().add(gridPane);
+                vPane.getChildren().add(new Label(""));
+                hPane.getChildren().add(vPane);
+                Pane pane = new Pane();
+                pane.setPrefWidth(30);
+                hPane.getChildren().add(pane);
+            }
         }
+    }
+
+    private List<Habit> selectHabitsByGroup(HabitGroup habitGroup) {
+        List<Habit> selectedHabits = new ArrayList<>();
+        for (Habit habit : habits)
+            if (habit.getHabitGroup() == habitGroup)
+                selectedHabits.add(habit);
+        return selectedHabits;
     }
 
     private void save() {

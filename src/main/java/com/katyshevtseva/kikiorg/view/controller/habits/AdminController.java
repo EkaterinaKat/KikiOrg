@@ -1,6 +1,7 @@
 package com.katyshevtseva.kikiorg.view.controller.habits;
 
 import com.katyshevtseva.kikiorg.core.Core;
+import com.katyshevtseva.kikiorg.core.sections.habits.HabitGroup;
 import com.katyshevtseva.kikiorg.core.sections.habits.entity.EnumElement;
 import com.katyshevtseva.kikiorg.core.sections.habits.entity.Habit;
 import com.katyshevtseva.kikiorg.core.sections.habits.entity.HabitType;
@@ -51,7 +52,9 @@ class AdminController implements FxController {
     private Button addEnumButton;
     @FXML
     private Label enumLabel;
-    List<EnumElement> enumElements = new ArrayList<>();
+    @FXML
+    private ComboBox<HabitGroup> groupComboBox;
+    private List<EnumElement> enumElements = new ArrayList<>();
     private List<Label> listPoints;
 
     enum Mode {show, edit}
@@ -59,9 +62,9 @@ class AdminController implements FxController {
     @FXML
     private void initialize() {
         fillHabitTable();
-        setTypeComboBoxItems();
+        setComboBoxesItems();
         newHabitButton.setOnAction(event -> createHabit());
-        Utils.associateButtonWithControls(saveButton, titleTextField, typeComboBox, descTextArea);
+        Utils.associateButtonWithControls(saveButton, titleTextField, typeComboBox, descTextArea, groupComboBox);
         switchMode(Mode.show, null);
         tuneEnumControls();
         Utils.associateButtonWithControls(addEnumButton, enumTextField);
@@ -90,9 +93,11 @@ class AdminController implements FxController {
         enumLabel.setText(Habit.getEnumString(enumElements));
     }
 
-    private void setTypeComboBoxItems() {
+    private void setComboBoxesItems() {
         ObservableList<HabitType> items = FXCollections.observableArrayList(Arrays.asList(HabitType.values()));
         typeComboBox.setItems(items);
+        ObservableList<HabitGroup> groups = FXCollections.observableArrayList(Arrays.asList(HabitGroup.values()));
+        groupComboBox.setItems(groups);
     }
 
     private void fillHabitTable() {
@@ -132,6 +137,7 @@ class AdminController implements FxController {
         habit.setDescription(descTextArea.getText());
         habit.setType(typeComboBox.getValue());
         habit.setActive(activeCheckBox.isSelected());
+        habit.setHabitGroup(groupComboBox.getValue());
         Core.getInstance().habitsService().saveHabit(habit);
 
         if (habit.getType() == HabitType.enumeration) {
@@ -163,6 +169,8 @@ class AdminController implements FxController {
             typeComboBox.setDisable(true);
             enumTextField.setDisable(true);
             addEnumButton.setDisable(true);
+            groupComboBox.setValue(habit.getHabitGroup());
+            groupComboBox.setDisable(true);
             saveButton.setOnAction(event -> save(habit));
         } else if (habit == null && mode == Mode.show) {
             titleLabel.setText("");

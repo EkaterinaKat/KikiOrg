@@ -1,5 +1,6 @@
 package com.katyshevtseva.kikiorg.core.sections.habits.entity;
 
+import com.katyshevtseva.kikiorg.core.sections.habits.HabitGroup;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -18,6 +19,9 @@ public class Habit {
 
     @Enumerated(EnumType.STRING)
     private HabitType type;
+
+    @Enumerated(EnumType.STRING)
+    private HabitGroup habitGroup;
 
     private boolean active;
 

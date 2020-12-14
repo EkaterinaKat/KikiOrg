@@ -59,6 +59,10 @@ public class Utils {
         return " -fx-text-fill: #008000; ";
     }
 
+    public static String getBlackTextStyle() {
+        return " -fx-text-fill: #000000; ";
+    }
+
     public static String getGrayTextStyle() {
         return " -fx-text-fill: #808080; ";
     }
