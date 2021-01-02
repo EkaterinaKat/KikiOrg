@@ -12,21 +12,18 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Group;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.CheckBoxTableCell;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
-
-import static java.util.Calendar.MONTH;
-import static java.util.Calendar.YEAR;
 
 class ReportController implements FxController {
     @FXML
@@ -44,8 +41,6 @@ class ReportController implements FxController {
     @FXML
     private Button showButton;
     private List<Habit> selectedHabits;
-    private static final int CELL_PREF_HEIGHT = 30;
-    private static final int CELL_PREF_WIDTH = 110;
 
     @FXML
     private void initialize() {
@@ -112,14 +107,33 @@ class ReportController implements FxController {
     }
 
     private void fillCell(ReportCell reportCell, int row, int column) {
-        StackPane pane = new StackPane();
-        pane.setPrefHeight(CELL_PREF_HEIGHT);
-        pane.setPrefWidth(CELL_PREF_WIDTH);
-        pane.setStyle(" -fx-background-color: " + reportCell.getColor() + "; ");
+        StackPane cell = new StackPane();
+        cell.setStyle(" -fx-background-color: " + reportCell.getColor() + "; ");
         Label label = new Label(reportCell.getText());
-        pane.getChildren().add(label);
+        label.setTooltip(new Tooltip(reportCell.getText()));
+
+
+        if (reportCell.isHabit()) {
+            VBox vBox = new VBox(label);
+            vBox.setRotate(90);
+            vBox.setPadding(new Insets(5, 5, 5, 5));
+            cell.setPrefHeight(170);
+            cell.setPrefWidth(50);
+            cell.getChildren().add(new Group(vBox));
+        } else if (reportCell.isDate()) {
+            cell.setPrefWidth(100);
+            cell.setPrefHeight(30);
+            cell.getChildren().add(label);
+        } else {
+            cell.setPrefHeight(30);
+            cell.setPrefWidth(50);
+            cell.getChildren().add(label);
+        }
+
         HBox.setMargin(label, new Insets(8));
         StackPane.setAlignment(label, Pos.CENTER);
-        reportTable.add(pane, column, row);
+        reportTable.add(cell, column, row);
+
+
     }
 }

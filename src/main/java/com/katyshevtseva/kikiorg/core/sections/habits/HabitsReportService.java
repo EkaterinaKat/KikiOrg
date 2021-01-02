@@ -19,7 +19,7 @@ import static com.katyshevtseva.kikiorg.core.date.DateUtils.getDateRange;
 
 @Service
 public class HabitsReportService {
-    private static SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM");
+    private static SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.YY");
     @Autowired
     private HabitsService habitsService;
     @Autowired
@@ -40,7 +40,7 @@ public class HabitsReportService {
 
     private List<ReportCell> getReportLine(Date date, List<Habit> habits) {
         List<ReportCell> result = new ArrayList<>();
-        result.add(ReportCell.meta(dateFormat.format(date)));
+        result.add(ReportCell.date(dateFormat.format(date)));
         for (Habit habit : habits) {
             result.add(convertToCell(habit, date));
         }
@@ -58,7 +58,7 @@ public class HabitsReportService {
         List<ReportCell> result = new ArrayList<>();
         result.add(ReportCell.empty());
         for (Habit habit : habits) {
-            result.add(ReportCell.meta(habit.getTitle()));
+            result.add(ReportCell.habit(habit.getTitle()));
         }
         return result;
     }
