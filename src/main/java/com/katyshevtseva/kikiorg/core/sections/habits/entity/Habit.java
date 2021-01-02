@@ -28,7 +28,7 @@ public class Habit {
     @OneToMany(mappedBy = "habit", fetch = FetchType.EAGER)
     public List<EnumElement> enumElements;
 
-    public String getExtendedTitle() {
+    public String getTitleWithActiveInfoAndEnumElements() {
         return title + " " + String.format("%s (%s)", type == HabitType.enumeration ? getEnumString(enumElements) : "",
                 active ? "active" : "inactive");
     }

@@ -78,7 +78,8 @@ public class HabitMarkService {
         return null;
     }
 
-    HabitMark getMarkOrNull(Habit habit, Date date) {
+    // Без модификатора public екзешник не работает
+    public HabitMark getMarkOrNull(Habit habit, Date date) {
         DateEntity dateEntity = dateService.getDateEntityIfExistsOrNull(date);
 
         if (dateEntity != null) {

@@ -53,12 +53,6 @@ public class OrganizerWindowCreator {
                 setWidth(DIALOG_WIDTH).setTitle(CoreConstants.APP_NAME).showWindow();
     }
 
-    public void openItemSelectDialog(FxController controller) {
-        new WindowBuilder(DIALOG_FXML_LOCATION + "item_select_dialog.fxml").setIconImagePath(
-                "file:D:\\Code\\KikiOrg\\src\\main\\java\\com\\katyshevtseva\\kikiorg\\view\\res\\images\\ico.png").
-                setController(controller).setHeight(ITEM_SELECT_DIALOG_HEIGHT).
-                setWidth(ITEM_SELECT_DIALOG_WIDTH).setTitle("Select item").showWindow();
-    }
     /* ----------------------------------  Привычки ---------------------------------------------- */
 
     public Node getMainHabitsNode(FxController controller) {
@@ -75,6 +69,13 @@ public class OrganizerWindowCreator {
 
     public Node getHabitsReportNode(FxController controller) {
         return new WindowBuilder(HABITS_FXML_LOCATION + "report.fxml").setController(controller).getNode();
+    }
+
+    public void openHabitEditDialog(FxController controller) {
+        new WindowBuilder(DIALOG_FXML_LOCATION + "habit_edit_dialog.fxml").setIconImagePath(
+                "file:D:\\Code\\KikiOrg\\src\\main\\java\\com\\katyshevtseva\\kikiorg\\view\\res\\images\\ico.png").
+                setController(controller).setHeight(BIG_DIALOG_HEIGHT).
+                setWidth(BIG_DIALOG_WIDTH).setTitle(CoreConstants.APP_NAME).showWindow();
     }
 
     /* ----------------------------------  Финансы  ---------------------------------------------- */
@@ -121,5 +122,12 @@ public class OrganizerWindowCreator {
 
     public Node getFinanceAnalysisNode(FxController controller) {
         return new WindowBuilder(FINANCE_FXML_LOCATION + "analysis.fxml").setController(controller).getNode();
+    }
+
+    public void openItemSelectDialog(FxController controller) {
+        new WindowBuilder(DIALOG_FXML_LOCATION + "item_select_dialog.fxml").setIconImagePath(
+                "file:D:\\Code\\KikiOrg\\src\\main\\java\\com\\katyshevtseva\\kikiorg\\view\\res\\images\\ico.png").
+                setController(controller).setHeight(ITEM_SELECT_DIALOG_HEIGHT).
+                setWidth(ITEM_SELECT_DIALOG_WIDTH).setTitle("Select item").showWindow();
     }
 }

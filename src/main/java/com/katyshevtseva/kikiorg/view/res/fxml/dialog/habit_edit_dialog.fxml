@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import java.net.URL?>
+<HBox xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml">
+
+    <stylesheets>
+        <URL value="@/com/katyshevtseva/kikiorg/view/res/css/general_style.css"/>
+    </stylesheets>
+
+    <Pane minWidth="25" maxWidth="25"/>
+    <VBox>
+        <Pane minHeight="25" maxHeight="25"/>
+        <HBox>
+            <TextField fx:id="titleTextField" styleClass="margin40" maxWidth="400" minWidth="400"/>
+            <Pane minWidth="25" maxWidth="25"/>
+            <CheckBox fx:id="activeCheckBox"/>
+        </HBox>
+        <Pane minHeight="25" maxHeight="25"/>
+        <HBox>
+            <ComboBox fx:id="groupComboBox"/>
+            <Pane minWidth="15" maxWidth="15"/>
+            <ComboBox fx:id="typeComboBox"/>
+        </HBox>
+        <Pane minHeight="25" maxHeight="25"/>
+        <HBox>
+            <TextField fx:id="enumTextField"/>
+            <Pane minWidth="15" maxWidth="15"/>
+            <Button fx:id="addEnumButton" text="  +  "/>
+        </HBox>
+        <Pane minHeight="15" maxHeight="15"/>
+        <Label fx:id="enumLabel"/>
+        <Pane minHeight="15" maxHeight="15"/>
+        <TextArea fx:id="descTextArea" wrapText="true" minWidth="500" maxWidth="500"/>
+        <Pane minHeight="25" maxHeight="25"/>
+        <Button fx:id="saveButton" text="Save"/>
+    </VBox>
+    <Pane minWidth="25" maxWidth="25"/>
+
+</HBox>
