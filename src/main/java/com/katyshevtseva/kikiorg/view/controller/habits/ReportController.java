@@ -1,6 +1,7 @@
 package com.katyshevtseva.kikiorg.view.controller.habits;
 
 import com.katyshevtseva.kikiorg.core.Core;
+import com.katyshevtseva.kikiorg.core.date.DateUtils;
 import com.katyshevtseva.kikiorg.core.sections.habits.entity.Habit;
 import com.katyshevtseva.kikiorg.core.sections.habits.entity.ReportCell;
 import com.katyshevtseva.kikiorg.view.utils.Utils;
@@ -21,6 +22,7 @@ import javafx.scene.layout.StackPane;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import static java.util.Calendar.MONTH;
@@ -88,11 +90,7 @@ class ReportController implements FxController {
     }
 
     private void setInitialDates() {
-        Calendar calendar = Calendar.getInstance();
-        startDatePicker.setValue(LocalDate.of(
-                calendar.get(YEAR),
-                calendar.get(MONTH), // Calendar считает месяцы с 0, а LocalDate с 1, поэтому происходит смещение на 1 месяц
-                calendar.get(Calendar.DATE)));
+        startDatePicker.setValue(new java.sql.Date(DateUtils.getMonthAgoDate().getTime()).toLocalDate());
         endDatePicker.setValue(LocalDate.now());
     }
 

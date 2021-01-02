@@ -18,7 +18,7 @@ public class DateUtils {
         }
     }
 
-    static Date getMonthAgoDate() {
+    public static Date getMonthAgoDate() {
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(new Date());
         calendar.add(Calendar.MONTH, -1);

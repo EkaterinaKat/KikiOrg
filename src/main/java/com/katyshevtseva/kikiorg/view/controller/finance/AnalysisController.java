@@ -1,6 +1,7 @@
 package com.katyshevtseva.kikiorg.view.controller.finance;
 
 import com.katyshevtseva.kikiorg.core.Core;
+import com.katyshevtseva.kikiorg.core.date.DateUtils;
 import com.katyshevtseva.kikiorg.view.utils.Utils;
 import com.katyshevtseva.kikiorg.view.utils.WindowBuilder.FxController;
 import javafx.fxml.FXML;
@@ -42,11 +43,7 @@ class AnalysisController implements FxController {
     }
 
     private void setInitialDates() {
-        Calendar calendar = Calendar.getInstance();
-        startDatePicker.setValue(LocalDate.of(
-                calendar.get(YEAR),
-                calendar.get(MONTH), // Calendar считает месяцы с 0, а LocalDate с 1, поэтому происходит смещение на 1 месяц
-                calendar.get(Calendar.DATE)));
+        startDatePicker.setValue(new java.sql.Date(DateUtils.getMonthAgoDate().getTime()).toLocalDate());
         endDatePicker.setValue(LocalDate.now());
     }
 
