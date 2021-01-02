@@ -114,7 +114,7 @@ public class HabitEditDialogController implements FxController {
             }
         }
 
-        habitSaveHandler.execute(habit);
+        habitSaveHandler.execute(Core.getInstance().habitsService().getHabitById(habit.getId()));
         Utils.closeWindowThatContains(typeComboBox);
     }
 

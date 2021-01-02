@@ -12,8 +12,9 @@ import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 
-import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 class AdminController implements FxController {
     @FXML
@@ -28,7 +29,7 @@ class AdminController implements FxController {
     private Label descLabel;
     @FXML
     private Button editButton;
-    private List<Label> listPoints;
+    private Map<Long, Label> habitIdPointLabelMap;
 
     @FXML
     private void initialize() {
@@ -39,7 +40,7 @@ class AdminController implements FxController {
     private void fillHabitTable() {
         gridPane.getChildren().clear();
         List<Habit> habits = Core.getInstance().habitsService().getAllHabits();
-        listPoints = new ArrayList<>();
+        habitIdPointLabelMap = new HashMap<>();
         int rowIndex = 0;
         for (Habit habit : habits) {
             Label label = new Label(habit.getTitle());
@@ -48,20 +49,24 @@ class AdminController implements FxController {
             else
                 label.setStyle(Utils.getGrayTextStyle());
             Label point = new Label();
-            listPoints.add(point);
+            habitIdPointLabelMap.put(habit.getId(), point);
             label.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
-                habitClickHandler(habit, point);
+                showHabit(habit);
             });
             gridPane.add(point, 0, rowIndex);
             gridPane.add(label, 1, rowIndex);
             rowIndex++;
         }
+        showHabit(habits.get(0));
     }
 
-    private void habitClickHandler(Habit habit, Label point) {
-        showHabit(habit);
-        listPoints.forEach(label1 -> label1.setText(""));
-        point.setText("*");
+    private void showHabit(Habit habit) {
+        titleLabel.setText(habit.getTitleWithActiveInfoAndEnumElements());
+        descLabel.setText(habit.getDescription());
+        typeLabel.setText("type: " + habit.getType() + "; group: " + habit.getHabitGroup() + ".");
+
+        habitIdPointLabelMap.values().forEach(label -> label.setText(""));
+        habitIdPointLabelMap.get(habit.getId()).setText("* ");
         editButton.setOnAction(event1 -> OrganizerWindowCreator.getInstance().openHabitEditDialog(
                 new HabitEditDialogController(habit, savedHabit -> {
                     fillHabitTable();
@@ -75,11 +80,5 @@ class AdminController implements FxController {
                     fillHabitTable();
                     showHabit(savedHabit);
                 }));
-    }
-
-    private void showHabit(Habit habit) {
-        titleLabel.setText(habit.getTitleWithActiveInfoAndEnumElements());
-        descLabel.setText(habit.getDescription());
-        typeLabel.setText("type: " + habit.getType() + "; group: " + habit.getHabitGroup() + ".");
     }
 }

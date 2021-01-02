@@ -38,4 +38,8 @@ public class HabitsService {
     public List<EnumElement> getEnumElementsByHabit(Habit habit) {
         return enumElementRepo.findByHabit(habit);
     }
+
+    public Habit getHabitById(Long id) {
+        return habitsRepo.findById(id).get();
+    }
 }

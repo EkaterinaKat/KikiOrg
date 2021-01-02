@@ -12,8 +12,12 @@
     <Pane maxWidth="20" minWidth="20"/>
 
     <VBox>
-        <Button fx:id="newHabitButton" text="New"/>
-        <Pane maxWidth="700" minWidth="700" maxHeight="700" minHeight="700" styleClass="black_border">
+        <HBox>
+            <Button fx:id="newHabitButton" text="New"/>
+            <Pane minWidth="20" maxWidth="20"/>
+            <Button fx:id="editButton" text="Edit"/>
+        </HBox>
+        <Pane maxWidth="700" minWidth="700" maxHeight="700" minHeight="700">
             <HBox>
                 <Pane minWidth="25" maxWidth="25"/>
                 <VBox>
@@ -23,8 +27,6 @@
                     <Label fx:id="typeLabel"/>
                     <Pane minHeight="25" maxHeight="25"/>
                     <Label fx:id="descLabel" wrapText="true" minWidth="650" maxWidth="650"/>
-                    <Pane minHeight="25" maxHeight="25"/>
-                    <Button fx:id="editButton" text="Edit"/>
                 </VBox>
                 <Pane minWidth="25" maxWidth="25"/>
             </HBox>

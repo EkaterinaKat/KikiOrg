@@ -1,7 +1,7 @@
 package com.katyshevtseva.kikiorg.core.sections.habits;
 
 public enum HabitGroup {
-    O("Организация"), E("Образование"), P("Физическая нагрузка"),
+    O("Организация"), E("Образование"), H("Здоровье"),
     IH("Информационная гигиена");
 
     private String name;
