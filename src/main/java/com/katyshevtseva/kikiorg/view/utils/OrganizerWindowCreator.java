@@ -71,6 +71,10 @@ public class OrganizerWindowCreator {
         return new WindowBuilder(HABITS_FXML_LOCATION + "report.fxml").setController(controller).getNode();
     }
 
+    public Node getHabitsAnalysisNode(FxController controller) {
+        return new WindowBuilder(HABITS_FXML_LOCATION + "analysis.fxml").setController(controller).getNode();
+    }
+
     public void openHabitEditDialog(FxController controller) {
         new WindowBuilder(DIALOG_FXML_LOCATION + "habit_edit_dialog.fxml").setIconImagePath(
                 "file:D:\\Code\\KikiOrg\\src\\main\\java\\com\\katyshevtseva\\kikiorg\\view\\res\\images\\ico.png").

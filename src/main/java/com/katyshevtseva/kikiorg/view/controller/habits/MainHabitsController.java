@@ -18,23 +18,28 @@ public class MainHabitsController extends AbstractSwitchController implements Fx
     @FXML
     private Button reportButton;
     @FXML
+    private Button analysisButton;
+    @FXML
     private Pane mainPane;
 
     private Node adminNode;
     private Node checkListNode;
     private Node reportNode;
+    private Node analysisNode;
 
     private AdminController adminController = new AdminController();
     private CheckListController checkListController = new CheckListController();
     private ReportController reportController = new ReportController();
+    private AnalysisController analysisController = new AnalysisController();
 
     @FXML
     private void initialize() {
         pane = mainPane;
-        buttons.addAll(Arrays.asList(checkListButton, adminButton, reportButton));
+        buttons.addAll(Arrays.asList(checkListButton, adminButton, reportButton, analysisButton));
         checkListButton.setOnAction(event -> checkListButtonListener());
         adminButton.setOnAction(event -> adminButtonListener());
         reportButton.setOnAction(event -> reportButtonListener());
+        analysisButton.setOnAction(event -> analysisButtonListener());
         checkListButtonListener();
     }
 
@@ -48,5 +53,9 @@ public class MainHabitsController extends AbstractSwitchController implements Fx
 
     private void reportButtonListener() {
         activateMode(reportButton, reportNode, OrganizerWindowCreator.getInstance()::getHabitsReportNode, reportController);
+    }
+
+    private void analysisButtonListener() {
+        activateMode(analysisButton, analysisNode, OrganizerWindowCreator.getInstance()::getHabitsAnalysisNode, analysisController);
     }
 }

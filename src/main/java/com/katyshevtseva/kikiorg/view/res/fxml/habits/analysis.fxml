@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.chart.AreaChart?>
+<?import javafx.scene.chart.CategoryAxis?>
+<?import javafx.scene.chart.NumberAxis?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<HBox xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml">
+
+    <VBox>
+        <ComboBox fx:id="habitComboBox" maxWidth="220" minWidth="220"/>
+        <Pane minHeight="15" maxHeight="15"/>
+        <DatePicker fx:id="startDatePicker" maxWidth="220" minWidth="220"/>
+        <Pane minHeight="15" maxHeight="15"/>
+        <DatePicker fx:id="endDatePicker" maxWidth="220" minWidth="220"/>
+        <Pane minHeight="15" maxHeight="15"/>
+        <ComboBox fx:id="graduationComboBox" maxWidth="220" minWidth="220"/>
+        <Pane minHeight="15" maxHeight="15"/>
+        <Button fx:id="showButton" text="Show" maxWidth="220" minWidth="220"/>
+    </VBox>
+
+    <Pane minWidth="25" maxWidth="25"/>
+
+    <VBox>
+        <AreaChart fx:id="chart" prefWidth="800" prefHeight="800">
+            <xAxis>
+                <CategoryAxis side="BOTTOM"/>
+            </xAxis>
+            <yAxis>
+                <NumberAxis side="LEFT"/>
+            </yAxis>
+        </AreaChart>
+        <GridPane fx:id="gridPane"/>
+    </VBox>
+
+</HBox>
