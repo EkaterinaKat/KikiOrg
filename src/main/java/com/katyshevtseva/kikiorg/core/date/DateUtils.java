@@ -1,5 +1,6 @@
 package com.katyshevtseva.kikiorg.core.date;
 
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -9,10 +10,11 @@ import java.util.List;
 
 public class DateUtils {
     private static Date startingPoint;
+    private static DateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy");
 
     static {
         try {
-            startingPoint = new SimpleDateFormat("dd.MM.yyyy").parse("09.09.2020");
+            startingPoint = dateFormat.parse("09.09.2020");
         } catch (ParseException e) {
             e.printStackTrace();
         }
@@ -48,7 +50,7 @@ public class DateUtils {
         return result;
     }
 
-    private static Date addOneDay(Date date) {
+    public static Date addOneDay(Date date) {
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(date);
         calendar.add(Calendar.DATE, 1);
@@ -57,5 +59,9 @@ public class DateUtils {
 
     public static Period getAllTimePeriod() {
         return new Period(startingPoint, new Date());
+    }
+
+    public static String getStringExpression(Period period) {
+        return String.format("%s-%s", dateFormat.format(period.start()), dateFormat.format(period.end()));
     }
 }

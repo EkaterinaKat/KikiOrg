@@ -16,10 +16,10 @@ public class Period {
     }
 
     public Date start() {
-        return startDate;
+        return (Date) startDate.clone();
     }
 
     public Date end() {
-        return endDate;
+        return (Date) endDate.clone();
     }
 }

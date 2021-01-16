@@ -25,4 +25,9 @@ public class BooleanMark implements HabitMark {
     public String getTextForReport() {
         return "";
     }
+
+    @Override
+    public int getNumEquivalent() {
+        return 1;
+    }
 }

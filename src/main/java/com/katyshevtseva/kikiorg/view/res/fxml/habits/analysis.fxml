@@ -23,7 +23,8 @@
     <Pane minWidth="25" maxWidth="25"/>
 
     <VBox>
-        <AreaChart fx:id="chart" prefWidth="800" prefHeight="800">
+        <Label fx:id="topLabel"/>
+        <AreaChart fx:id="chart" prefWidth="800" prefHeight="400">
             <xAxis>
                 <CategoryAxis side="BOTTOM"/>
             </xAxis>

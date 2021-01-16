@@ -29,4 +29,9 @@ public class EnumMark implements HabitMark {
     public String getTextForReport() {
         return enumElement.getTitle();
     }
+
+    @Override
+    public int getNumEquivalent() {
+        return 0;
+    }
 }

@@ -27,4 +27,9 @@ public class NumMark implements HabitMark {
     public String getTextForReport() {
         return "" + value;
     }
+
+    @Override
+    public int getNumEquivalent() {
+        return value;
+    }
 }

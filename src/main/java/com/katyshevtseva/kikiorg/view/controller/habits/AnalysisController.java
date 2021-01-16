@@ -1,6 +1,7 @@
 package com.katyshevtseva.kikiorg.view.controller.habits;
 
 import com.katyshevtseva.kikiorg.core.date.DateUtils;
+import com.katyshevtseva.kikiorg.core.sections.habits.entity.Habit;
 import com.katyshevtseva.kikiorg.view.utils.Utils;
 import com.katyshevtseva.kikiorg.view.utils.WindowBuilder.FxController;
 import javafx.fxml.FXML;
@@ -8,13 +9,14 @@ import javafx.scene.chart.AreaChart;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
+import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
 
 import java.time.LocalDate;
 
 class AnalysisController implements FxController {
     @FXML
-    private ComboBox habitComboBox;
+    private ComboBox<Habit> habitComboBox;
     @FXML
     private DatePicker startDatePicker;
     @FXML
@@ -27,6 +29,8 @@ class AnalysisController implements FxController {
     private AreaChart<String, Long> chart;
     @FXML
     private GridPane gridPane;
+    @FXML
+    private Label topLabel;
 
     @FXML
     private void initialize() {
@@ -41,6 +45,6 @@ class AnalysisController implements FxController {
     }
 
     private void showButtonListener() {
-
+        topLabel.setText("type: " + habitComboBox.getValue().getType());
     }
 }

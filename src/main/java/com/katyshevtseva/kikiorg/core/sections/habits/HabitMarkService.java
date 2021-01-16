@@ -3,6 +3,7 @@ package com.katyshevtseva.kikiorg.core.sections.habits;
 import com.katyshevtseva.kikiorg.core.date.DateEntity;
 import com.katyshevtseva.kikiorg.core.date.DateService;
 import com.katyshevtseva.kikiorg.core.date.DateUtils;
+import com.katyshevtseva.kikiorg.core.date.Period;
 import com.katyshevtseva.kikiorg.core.repo.BooleanMarkRepo;
 import com.katyshevtseva.kikiorg.core.repo.EnumElementRepo;
 import com.katyshevtseva.kikiorg.core.repo.EnumMarkRepo;
@@ -12,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
@@ -95,7 +97,20 @@ public class HabitMarkService {
         return null;
     }
 
+    List<HabitMark> getMarkListByPeriod(Habit habit, Period period) {
+        List<Date> dates = DateUtils.getDateRange(period);
+        List<HabitMark> marks = new ArrayList<>();
+        for (Date date : dates) {
+            HabitMark mark = getMarkOrNull(habit, date);
+            if (mark != null)
+                marks.add(mark);
+        }
+        return marks;
+    }
+
     public interface HabitMark {
         String getTextForReport();
+
+        int getNumEquivalent();
     }
 }
