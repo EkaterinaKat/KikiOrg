@@ -28,6 +28,8 @@
         <HBox>
             <TextField fx:id="enumTextField"/>
             <Pane minWidth="15" maxWidth="15"/>
+            <TextField fx:id="enumElementNumEquivalentTextField" prefWidth="60"/>
+            <Pane minWidth="15" maxWidth="15"/>
             <Button fx:id="addEnumButton" text="  +  "/>
         </HBox>
         <Pane minHeight="15" maxHeight="15"/>

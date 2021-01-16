@@ -38,9 +38,9 @@ public class Habit {
             return "";
         String result = "[";
         for (int i = 0; i < enumElements.size() - 1; i++) {
-            result += (enumElements.get(i).getTitle() + ", ");
+            result += (enumElements.get(i).toString() + ", ");
         }
-        result += enumElements.get(enumElements.size() - 1).getTitle() + "]";
+        result += enumElements.get(enumElements.size() - 1).toString() + "]";
         return result;
     }
 }

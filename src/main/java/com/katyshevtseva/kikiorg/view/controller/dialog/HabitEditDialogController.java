@@ -35,6 +35,8 @@ public class HabitEditDialogController implements FxController {
     private Label enumLabel;
     @FXML
     private ComboBox<HabitGroup> groupComboBox;
+    @FXML
+    private TextField enumElementNumEquivalentTextField;
     private List<EnumElement> enumElements = new ArrayList<>();
     private Habit habit;
     private HabitSaveHandler habitSaveHandler;
@@ -47,7 +49,8 @@ public class HabitEditDialogController implements FxController {
     @FXML
     private void initialize() {
         Utils.associateButtonWithControls(saveButton, titleTextField, typeComboBox, descTextArea, groupComboBox);
-        Utils.associateButtonWithControls(addEnumButton, enumTextField);
+        Utils.associateButtonWithControls(addEnumButton, enumTextField, enumElementNumEquivalentTextField);
+        Utils.disableNonNumericChars(enumElementNumEquivalentTextField);
         addEnumButton.setOnAction(event -> addEnumElement());
         saveButton.setOnAction(event -> save());
         setComboBoxesItems();
@@ -58,13 +61,16 @@ public class HabitEditDialogController implements FxController {
         if (habit == null) {
             addEnumButton.setDisable(true);
             enumTextField.setDisable(true);
+            enumElementNumEquivalentTextField.setDisable(true);
             typeComboBox.setOnAction(event -> {
                 boolean isEnum = typeComboBox.getValue() == HabitType.enumeration;
-                addEnumButton.setDisable(!isEnum);
                 enumTextField.setDisable(!isEnum);
+                enumElementNumEquivalentTextField.setDisable(!isEnum);
                 if (!isEnum) {
                     enumElements = new ArrayList<>();
                     enumLabel.setText("");
+                    enumTextField.clear();
+                    enumElementNumEquivalentTextField.clear();
                 }
             });
         } else {
@@ -77,6 +83,7 @@ public class HabitEditDialogController implements FxController {
             groupComboBox.setDisable(true);
             enumLabel.setText(Habit.getEnumString(habit.enumElements));
             enumTextField.setDisable(habit.getType() != HabitType.enumeration);
+            enumElementNumEquivalentTextField.setDisable(habit.getType() != HabitType.enumeration);
             enumElements.addAll(habit.getEnumElements());
         }
     }
@@ -84,8 +91,10 @@ public class HabitEditDialogController implements FxController {
     private void addEnumElement() {
         EnumElement enumElement = new EnumElement();
         enumElement.setTitle(enumTextField.getText().trim());
+        enumElement.setNumEquivalent(Integer.parseInt(enumElementNumEquivalentTextField.getText()));
         enumElements.add(enumElement);
         enumTextField.clear();
+        enumElementNumEquivalentTextField.clear();
         enumLabel.setText(Habit.getEnumString(enumElements));
     }
 
