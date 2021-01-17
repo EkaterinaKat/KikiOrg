@@ -6,6 +6,7 @@ import com.katyshevtseva.kikiorg.core.sections.finance.report.IncomeReportServic
 import com.katyshevtseva.kikiorg.core.sections.habits.HabitMarkService;
 import com.katyshevtseva.kikiorg.core.sections.habits.HabitsReportService;
 import com.katyshevtseva.kikiorg.core.sections.habits.HabitsService;
+import com.katyshevtseva.kikiorg.core.sections.wardrobe.WardrobeService;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -35,6 +36,8 @@ public class Core implements InitializingBean {
     private IncomeReportService incomeReportService;
     @Autowired
     private HabitMarkService habitMarkService;
+    @Autowired
+    private WardrobeService wardrobeService;
 
     public static Core getInstance() {
         while (INSTANCE == null) {
@@ -94,5 +97,9 @@ public class Core implements InitializingBean {
 
     public HabitMarkService habitMarkService() {
         return habitMarkService;
+    }
+
+    public WardrobeService wardrobeService() {
+        return wardrobeService;
     }
 }
