@@ -1,7 +1,7 @@
 package com.katyshevtseva.kikiorg.core.sections.wardrobe.entity;
 
-import com.katyshevtseva.kikiorg.core.sections.wardrobe.Purpose;
-import com.katyshevtseva.kikiorg.core.sections.wardrobe.Season;
+import com.katyshevtseva.kikiorg.core.sections.wardrobe.enums.Purpose;
+import com.katyshevtseva.kikiorg.core.sections.wardrobe.enums.Season;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -15,11 +15,11 @@ public class Outfit {
     private Long id;
 
     @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(name = "outfits_pieces",
+    @JoinTable(name = "outfits_arrays",
             joinColumns = @JoinColumn(name = "outfit_id"),
-            inverseJoinColumns = @JoinColumn(name = "piece_id")
+            inverseJoinColumns = @JoinColumn(name = "arrays_id")
     )
-    private List<Piece> pieces;
+    private List<PieceArray> arrays;
 
 
     @ElementCollection

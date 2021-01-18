@@ -1,4 +1,4 @@
-package com.katyshevtseva.kikiorg.core.sections.wardrobe;
+package com.katyshevtseva.kikiorg.core.sections.wardrobe.enums;
 
 public enum ClothesType {
 

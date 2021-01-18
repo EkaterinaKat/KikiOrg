@@ -1,8 +1,8 @@
 package com.katyshevtseva.kikiorg.core.sections.wardrobe.entity;
 
-import com.katyshevtseva.kikiorg.core.sections.wardrobe.ClothesType;
-import com.katyshevtseva.kikiorg.core.sections.wardrobe.Purpose;
-import com.katyshevtseva.kikiorg.core.sections.wardrobe.Season;
+import com.katyshevtseva.kikiorg.core.sections.wardrobe.enums.ClothesType;
+import com.katyshevtseva.kikiorg.core.sections.wardrobe.enums.Purpose;
+import com.katyshevtseva.kikiorg.core.sections.wardrobe.enums.Season;
 import lombok.Data;
 
 import javax.persistence.*;
