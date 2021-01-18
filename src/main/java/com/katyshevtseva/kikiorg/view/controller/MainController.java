@@ -2,6 +2,7 @@ package com.katyshevtseva.kikiorg.view.controller;
 
 import com.katyshevtseva.kikiorg.view.controller.finance.MainFinanceController;
 import com.katyshevtseva.kikiorg.view.controller.habits.MainHabitsController;
+import com.katyshevtseva.kikiorg.view.controller.wardrobe.MainWardrobeController;
 import com.katyshevtseva.kikiorg.view.utils.OrganizerWindowCreator;
 import com.katyshevtseva.kikiorg.view.utils.WindowBuilder;
 import javafx.fxml.FXML;
@@ -17,18 +18,23 @@ public class MainController extends AbstractSwitchController implements WindowBu
     @FXML
     private Button financeButton;
     @FXML
+    private Button wardrobeButton;
+    @FXML
     private Pane mainPane;
     private final MainFinanceController mainFinanceController = new MainFinanceController();
     private final MainHabitsController mainHabitsController = new MainHabitsController();
+    private final MainWardrobeController mainWardrobeController = new MainWardrobeController();
     private Node financeModeNode;
     private Node habitsModeNode;
+    private Node wardrobeModeNode;
 
     @FXML
     private void initialize() {
         pane = mainPane;
-        buttons.addAll(Arrays.asList(habitsButton, financeButton));
+        buttons.addAll(Arrays.asList(habitsButton, financeButton, wardrobeButton));
         financeButton.setOnAction(event -> financeButtonListener());
         habitsButton.setOnAction(event -> habitsButtonListener());
+        wardrobeButton.setOnAction(event -> wardrobeButtonListener());
         financeButtonListener();
     }
 
@@ -40,5 +46,10 @@ public class MainController extends AbstractSwitchController implements WindowBu
     private void habitsButtonListener() {
         activateMode(habitsButton, habitsModeNode,
                 OrganizerWindowCreator.getInstance()::getMainHabitsNode, mainHabitsController);
+    }
+
+    private void wardrobeButtonListener() {
+        activateMode(wardrobeButton, wardrobeModeNode,
+                OrganizerWindowCreator.getInstance()::getMainWardrobeNode, mainWardrobeController);
     }
 }

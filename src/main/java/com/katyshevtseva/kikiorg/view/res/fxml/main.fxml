@@ -16,6 +16,8 @@
                     GridPane.rowIndex="1" GridPane.columnIndex="0"/>
             <Button text="Habits" fx:id="habitsButton" prefWidth="160"
                     GridPane.rowIndex="2" GridPane.columnIndex="0"/>
+            <Button text="Wardrobe" fx:id="wardrobeButton" prefWidth="160"
+                    GridPane.rowIndex="3" GridPane.columnIndex="0"/>
         </GridPane>
     </VBox>
 

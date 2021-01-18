@@ -9,6 +9,7 @@ class ViewConstants {
     static final String IMAGE_LOCATION = "";
     static final String FINANCE_FXML_LOCATION = "/com/katyshevtseva/kikiorg/view/res/fxml/finance/";
     static final String HABITS_FXML_LOCATION = "/com/katyshevtseva/kikiorg/view/res/fxml/habits/";
+    static final String WARDROBE_FXML_LOCATION = "/com/katyshevtseva/kikiorg/view/res/fxml/wardrobe/";
     static final String DIALOG_FXML_LOCATION = "/com/katyshevtseva/kikiorg/view/res/fxml/dialog/";
 
     static final int WINDOW_HEIGHT = 1000;

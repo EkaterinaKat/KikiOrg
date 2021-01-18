@@ -53,6 +53,28 @@ public class OrganizerWindowCreator {
                 setWidth(DIALOG_WIDTH).setTitle(CoreConstants.APP_NAME).showWindow();
     }
 
+    /* ---------------------------------- Гардероб ---------------------------------------------- */
+
+    public Node getMainWardrobeNode(FxController controller) {
+        return new WindowBuilder(WARDROBE_FXML_LOCATION + "main_wardrobe.fxml").setController(controller).getNode();
+    }
+
+    public Node getOutfitsNode(FxController controller) {
+        return new WindowBuilder(WARDROBE_FXML_LOCATION + "outfits.fxml").setController(controller).getNode();
+    }
+
+    public Node getAddOutfitNode(FxController controller) {
+        return new WindowBuilder(WARDROBE_FXML_LOCATION + "add_outfit.fxml").setController(controller).getNode();
+    }
+
+    public Node getPiecesNode(FxController controller) {
+        return new WindowBuilder(WARDROBE_FXML_LOCATION + "pieces.fxml").setController(controller).getNode();
+    }
+
+    public Node getAddPieceNode(FxController controller) {
+        return new WindowBuilder(WARDROBE_FXML_LOCATION + "add_piece.fxml").setController(controller).getNode();
+    }
+
     /* ----------------------------------  Привычки ---------------------------------------------- */
 
     public Node getMainHabitsNode(FxController controller) {
