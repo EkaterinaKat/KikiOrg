@@ -17,7 +17,7 @@ public class Piece {
 
     private String description;
 
-    private String image_name;
+    private String imageName;
 
     @Enumerated(EnumType.STRING)
     private ClothesType type;

@@ -1,8 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.*?>
+<HBox xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml">
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml">
+    <ImageView fx:id="imageView" fitWidth="400" fitHeight="400"/>
 
-</AnchorPane>
+    <Pane prefWidth="30"/>
+
+    <VBox>
+        <TextArea fx:id="descTextArea" text="-" prefHeight="100" wrapText="true"/>
+        <Pane prefHeight="20"/>
+        <ComboBox fx:id="clothesTypeComboBox"/>
+        <Pane prefHeight="20"/>
+        <VBox fx:id="seasonsPane"/>
+        <Pane prefHeight="20"/>
+        <VBox fx:id="purposesPane"/>
+        <Pane prefHeight="20"/>
+        <Button text="Save" fx:id="saveButton"/>
+    </VBox>
+
+</HBox>

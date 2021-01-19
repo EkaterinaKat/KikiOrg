@@ -12,4 +12,12 @@ public enum Season {
     public String getTitle() {
         return title;
     }
+
+    public static Season getByTitleOnNull(String title) {
+        for (Season season : Season.values()) {
+            if (season.title.equals(title))
+                return season;
+        }
+        return null;
+    }
 }

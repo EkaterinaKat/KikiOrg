@@ -13,4 +13,12 @@ public enum Purpose {
     public String getTitle() {
         return title;
     }
+
+    public static Purpose getByTitleOnNull(String title) {
+        for (Purpose purpose : Purpose.values()) {
+            if (purpose.title.equals(title))
+                return purpose;
+        }
+        return null;
+    }
 }
