@@ -1,5 +1,6 @@
 package com.katyshevtseva.kikiorg.core.sections.wardrobe.entity;
 
+import com.katyshevtseva.kikiorg.core.sections.wardrobe.HavingImage;
 import com.katyshevtseva.kikiorg.core.sections.wardrobe.enums.ClothesType;
 import com.katyshevtseva.kikiorg.core.sections.wardrobe.enums.Purpose;
 import com.katyshevtseva.kikiorg.core.sections.wardrobe.enums.Season;
@@ -10,7 +11,7 @@ import java.util.List;
 
 @Data
 @Entity
-public class Piece {
+public class Piece implements HavingImage {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

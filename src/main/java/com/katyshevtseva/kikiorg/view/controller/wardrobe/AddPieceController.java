@@ -5,6 +5,7 @@ import com.katyshevtseva.kikiorg.core.sections.wardrobe.entity.Piece;
 import com.katyshevtseva.kikiorg.core.sections.wardrobe.enums.ClothesType;
 import com.katyshevtseva.kikiorg.core.sections.wardrobe.enums.Purpose;
 import com.katyshevtseva.kikiorg.core.sections.wardrobe.enums.Season;
+import com.katyshevtseva.kikiorg.view.utils.OrganizerWindowCreator;
 import com.katyshevtseva.kikiorg.view.utils.Utils;
 import com.katyshevtseva.kikiorg.view.utils.WindowBuilder.FxController;
 import javafx.collections.FXCollections;
@@ -33,6 +34,7 @@ class AddPieceController implements FxController {
     private VBox purposesPane;
     @FXML
     private Button saveButton;
+    private String selectedImageName;
     private List<CheckBox> seasonsCheckBoxes;
     private List<CheckBox> purposesCheckBoxes;
 
@@ -40,13 +42,26 @@ class AddPieceController implements FxController {
     private void initialize() {
         Utils.associateButtonWithControls(saveButton, clothesTypeComboBox, descTextArea);
         saveButton.setOnAction(event -> save());
-        setEmptyImage();
         clothesTypeComboBox.setItems(FXCollections.observableArrayList(ClothesType.values()));
+        adjustCheckBoxPanes();
+        adjustImageAdding();
+    }
+
+    private void adjustImageAdding() {
+        setEmptyImage();
+        imageView.setOnMouseClicked(event -> {
+            OrganizerWindowCreator.getInstance().openImageSelectionDialog(new ImageSelectionDialogController(
+                    ImageService.getFreeImages(Core.getInstance().wardrobeService().getAllPieces()),
+                    havingImage -> {
+                        selectedImageName = havingImage.getImageName();
+                        imageView.setImage(new Image(selectedImageName));
+                    }));
+        });
     }
 
     private void save() {
         Piece piece = new Piece();
-//        piece.setImageName();
+        piece.setImageName(selectedImageName);
         piece.setDescription(descTextArea.getText().trim());
         piece.setType(clothesTypeComboBox.getValue());
         piece.setPurposes(getSelectedPurposes());

@@ -75,6 +75,13 @@ public class OrganizerWindowCreator {
         return new WindowBuilder(WARDROBE_FXML_LOCATION + "add_piece.fxml").setController(controller).getNode();
     }
 
+    public void openImageSelectionDialog(FxController controller) {
+        new WindowBuilder(WARDROBE_FXML_LOCATION + "image_selection_dialog.fxml").setIconImagePath(
+                "file:D:\\Code\\KikiOrg\\src\\main\\java\\com\\katyshevtseva\\kikiorg\\view\\res\\images\\ico.png").
+                setController(controller).setHeight(IMAGE_SELECTION_DIALOG_HEIGHT).
+                setWidth(IMAGE_SELECTION_DIALOG_WIDTH).setTitle(CoreConstants.APP_NAME).showWindow();
+    }
+
     /* ----------------------------------  Привычки ---------------------------------------------- */
 
     public Node getMainHabitsNode(FxController controller) {
