@@ -20,8 +20,6 @@
                 <Button fx:id="piecesButton" text="Pieces"/>
                 <Pane minWidth="30" maxWidth="30"/>
                 <Button fx:id="addOutfitButton" text="Add Outfit"/>
-                <Pane minWidth="30" maxWidth="30"/>
-                <Button fx:id="addPieceButton" text="Add Piece"/>
             </HBox>
             <Pane minHeight="10" maxHeight="10"/>
         </VBox>

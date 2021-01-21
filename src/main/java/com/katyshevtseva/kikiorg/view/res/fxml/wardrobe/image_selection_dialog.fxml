@@ -2,8 +2,13 @@
 
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.layout.*?>
+<?import java.net.URL?>
 <VBox xmlns="http://javafx.com/javafx"
       xmlns:fx="http://javafx.com/fxml">
+
+    <stylesheets>
+        <URL value="@/com/katyshevtseva/kikiorg/view/res/css/general_style.css"/>
+    </stylesheets>
 
     <ScrollPane prefHeight="890">
         <HBox>

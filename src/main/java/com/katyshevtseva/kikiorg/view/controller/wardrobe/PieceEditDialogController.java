@@ -21,7 +21,7 @@ import javafx.scene.layout.VBox;
 import java.util.ArrayList;
 import java.util.List;
 
-class AddPieceController implements FxController {
+class PieceEditDialogController implements FxController {
     @FXML
     private ImageView imageView;
     @FXML
@@ -37,6 +37,13 @@ class AddPieceController implements FxController {
     private String selectedImageName;
     private List<CheckBox> seasonsCheckBoxes;
     private List<CheckBox> purposesCheckBoxes;
+    private Piece piece;
+    private PieceSavingHandler pieceSavingHandler;
+
+    PieceEditDialogController(Piece piece, PieceSavingHandler pieceSavingHandler) {
+        this.piece = piece;
+        this.pieceSavingHandler = pieceSavingHandler;
+    }
 
     @FXML
     private void initialize() {
@@ -45,6 +52,15 @@ class AddPieceController implements FxController {
         clothesTypeComboBox.setItems(FXCollections.observableArrayList(ClothesType.values()));
         adjustCheckBoxPanes();
         adjustImageAdding();
+        setExistingPieceInfo();
+    }
+
+    private void setExistingPieceInfo() {
+        if (piece != null) {
+            imageView.setImage(ImageService.getJavafxImageByHavingImage(piece));
+            descTextArea.setText(piece.getDescription());
+            clothesTypeComboBox.setValue(piece.getType());
+        }
     }
 
     private void adjustImageAdding() {
@@ -60,7 +76,8 @@ class AddPieceController implements FxController {
     }
 
     private void save() {
-        Piece piece = new Piece();
+        if (piece == null)
+            piece = new Piece();
         piece.setImageName(selectedImageName);
         piece.setDescription(descTextArea.getText().trim());
         piece.setType(clothesTypeComboBox.getValue());
@@ -68,11 +85,8 @@ class AddPieceController implements FxController {
         piece.setSeasons(getSelectedSeasons());
         Core.getInstance().wardrobeService().savePiece(piece);
 
-        setEmptyImage();
-        descTextArea.clear();
-        clothesTypeComboBox.setValue(null);
-        saveButton.setDisable(true);
-        adjustCheckBoxPanes();
+        pieceSavingHandler.execute(piece);
+        Utils.closeWindowThatContains(clothesTypeComboBox);
     }
 
     private List<Season> getSelectedSeasons() {
@@ -102,16 +116,24 @@ class AddPieceController implements FxController {
             CheckBox checkBox = new CheckBox(season.getTitle());
             seasonsCheckBoxes.add(checkBox);
             seasonsPane.getChildren().addAll(checkBox, Utils.getPaneWithHeight(10));
+            if (piece != null)
+                checkBox.setSelected(piece.getSeasons().contains(season));
         }
 
         for (Purpose purpose : Purpose.values()) {
             CheckBox checkBox = new CheckBox(purpose.getTitle());
             purposesCheckBoxes.add(checkBox);
             purposesPane.getChildren().addAll(checkBox, Utils.getPaneWithHeight(10));
+            if (piece != null)
+                checkBox.setSelected(piece.getPurposes().contains(purpose));
         }
     }
 
     private void setEmptyImage() {
         imageView.setImage(new Image("piece_creation_plus.png"));
+    }
+
+    interface PieceSavingHandler {
+        void execute(Piece piece);
     }
 }
