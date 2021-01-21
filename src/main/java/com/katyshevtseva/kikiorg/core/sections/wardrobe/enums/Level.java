@@ -1,7 +1,7 @@
 package com.katyshevtseva.kikiorg.core.sections.wardrobe.enums;
 
 public enum Level {
-    T("Верх"), B("Низ"), TB("Верхониз"), H("Головной убор"), S("Обувь");
+    T("Верх"), B("Низ"), TB("Верхониз"), H("Головной убор"), F("Обувь");
 
     private String title;
 

@@ -4,7 +4,6 @@ import com.katyshevtseva.kikiorg.core.sections.wardrobe.HavingImage;
 import com.katyshevtseva.kikiorg.view.utils.Utils;
 import com.katyshevtseva.kikiorg.view.utils.WindowBuilder.FxController;
 import javafx.fxml.FXML;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 
@@ -27,7 +26,7 @@ class ImageSelectionDialogController implements FxController {
     private void initialize() {
         for (int i = 0; i < havingImageList.size(); i++) {
             HavingImage havingImage = havingImageList.get(i);
-            ImageView imageView = new ImageView(new Image(havingImage.getImageName()));
+            ImageView imageView = new ImageView(ImageService.getJavafxImageByHavingImage(havingImage));
             imageView.setFitHeight(IMAGE_SIZE);
             imageView.setFitWidth(IMAGE_SIZE);
             imageView.setOnMouseClicked(event -> {

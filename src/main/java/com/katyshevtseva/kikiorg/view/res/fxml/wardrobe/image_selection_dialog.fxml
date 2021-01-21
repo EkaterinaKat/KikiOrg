@@ -5,7 +5,7 @@
 <VBox xmlns="http://javafx.com/javafx"
       xmlns:fx="http://javafx.com/fxml">
 
-    <ScrollPane>
+    <ScrollPane prefHeight="890">
         <HBox>
             <Pane prefWidth="20"/>
             <VBox>

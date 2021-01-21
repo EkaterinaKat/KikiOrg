@@ -5,6 +5,7 @@ import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
 import java.sql.Date;
@@ -113,5 +114,12 @@ public class Utils {
             }
             button.setDisable(disableButton);
         }
+    }
+
+    public static Pane getPaneWithHeight(int height) {
+        Pane pane = new Pane();
+        pane.setMinHeight(height);
+        pane.setMaxHeight(height);
+        return pane;
     }
 }

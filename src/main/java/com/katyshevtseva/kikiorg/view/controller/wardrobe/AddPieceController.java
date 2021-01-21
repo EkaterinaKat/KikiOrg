@@ -54,7 +54,7 @@ class AddPieceController implements FxController {
                     ImageService.getFreeImages(Core.getInstance().wardrobeService().getAllPieces()),
                     havingImage -> {
                         selectedImageName = havingImage.getImageName();
-                        imageView.setImage(new Image(selectedImageName));
+                        imageView.setImage(ImageService.getJavafxImageByHavingImage(havingImage));
                     }));
         });
     }
@@ -101,13 +101,13 @@ class AddPieceController implements FxController {
         for (Season season : Season.values()) {
             CheckBox checkBox = new CheckBox(season.getTitle());
             seasonsCheckBoxes.add(checkBox);
-            seasonsPane.getChildren().add(checkBox);
+            seasonsPane.getChildren().addAll(checkBox, Utils.getPaneWithHeight(10));
         }
 
         for (Purpose purpose : Purpose.values()) {
             CheckBox checkBox = new CheckBox(purpose.getTitle());
             purposesCheckBoxes.add(checkBox);
-            purposesPane.getChildren().add(checkBox);
+            purposesPane.getChildren().addAll(checkBox, Utils.getPaneWithHeight(10));
         }
     }
 
