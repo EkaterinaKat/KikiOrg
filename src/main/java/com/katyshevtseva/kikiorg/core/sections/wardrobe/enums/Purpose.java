@@ -21,4 +21,9 @@ public enum Purpose {
         }
         return null;
     }
+
+    @Override
+    public String toString() {
+        return title;
+    }
 }

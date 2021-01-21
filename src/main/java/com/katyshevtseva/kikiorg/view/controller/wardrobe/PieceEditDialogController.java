@@ -19,7 +19,9 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 class PieceEditDialogController implements FxController {
     @FXML
@@ -57,9 +59,10 @@ class PieceEditDialogController implements FxController {
 
     private void setExistingPieceInfo() {
         if (piece != null) {
-            imageView.setImage(ImageService.getJavafxImageByHavingImage(piece));
+            imageView.setImage(ImageService.getJavafxImageByImagable(piece));
             descTextArea.setText(piece.getDescription());
             clothesTypeComboBox.setValue(piece.getType());
+            selectedImageName = piece.getImageName();
         }
     }
 
@@ -68,9 +71,9 @@ class PieceEditDialogController implements FxController {
         imageView.setOnMouseClicked(event -> {
             OrganizerWindowCreator.getInstance().openImageSelectionDialog(new ImageSelectionDialogController(
                     ImageService.getFreeImages(Core.getInstance().wardrobeService().getAllPieces()),
-                    havingImage -> {
-                        selectedImageName = havingImage.getImageName();
-                        imageView.setImage(ImageService.getJavafxImageByHavingImage(havingImage));
+                    imagable -> {
+                        selectedImageName = imagable.getImageName();
+                        imageView.setImage(ImageService.getJavafxImageByImagable(imagable));
                     }));
         });
     }
@@ -89,16 +92,16 @@ class PieceEditDialogController implements FxController {
         Utils.closeWindowThatContains(clothesTypeComboBox);
     }
 
-    private List<Season> getSelectedSeasons() {
-        List<Season> selectedSeasons = new ArrayList<>();
+    private Set<Season> getSelectedSeasons() {
+        Set<Season> selectedSeasons = new HashSet<>();
         for (CheckBox checkBox : seasonsCheckBoxes)
             if (checkBox.isSelected())
                 selectedSeasons.add(Season.getByTitleOnNull(checkBox.getText()));
         return selectedSeasons;
     }
 
-    private List<Purpose> getSelectedPurposes() {
-        List<Purpose> selectedPurposes = new ArrayList<>();
+    private Set<Purpose> getSelectedPurposes() {
+        Set<Purpose> selectedPurposes = new HashSet<>();
         for (CheckBox checkBox : purposesCheckBoxes)
             if (checkBox.isSelected())
                 selectedPurposes.add(Purpose.getByTitleOnNull(checkBox.getText()));

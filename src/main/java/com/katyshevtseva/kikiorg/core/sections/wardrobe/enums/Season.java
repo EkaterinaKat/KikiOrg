@@ -20,4 +20,9 @@ public enum Season {
         }
         return null;
     }
+
+    @Override
+    public String toString() {
+        return title;
+    }
 }
