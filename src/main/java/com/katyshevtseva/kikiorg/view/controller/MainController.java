@@ -8,6 +8,8 @@ import com.katyshevtseva.kikiorg.view.utils.WindowBuilder;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 
 import java.util.Arrays;
@@ -21,6 +23,8 @@ public class MainController extends AbstractSwitchController implements WindowBu
     private Button wardrobeButton;
     @FXML
     private Pane mainPane;
+    @FXML
+    private ImageView logoImageView;
     private final MainFinanceController mainFinanceController = new MainFinanceController();
     private final MainHabitsController mainHabitsController = new MainHabitsController();
     private final MainWardrobeController mainWardrobeController = new MainWardrobeController();
@@ -30,6 +34,7 @@ public class MainController extends AbstractSwitchController implements WindowBu
 
     @FXML
     private void initialize() {
+        logoImageView.setImage(new Image("logo.png"));
         pane = mainPane;
         buttons.addAll(Arrays.asList(habitsButton, financeButton, wardrobeButton));
         financeButton.setOnAction(event -> financeButtonListener());

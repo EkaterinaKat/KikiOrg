@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.*?>
 <?import java.net.URL?>
 <HBox xmlns="http://javafx.com/javafx"
@@ -12,12 +13,14 @@
 
     <VBox maxWidth="300" minWidth="300" styleClass="black_border">
         <GridPane vgap="40" alignment="CENTER">
-            <Button text="Finance" fx:id="financeButton" prefWidth="160"
-                    GridPane.rowIndex="1" GridPane.columnIndex="0"/>
-            <Button text="Habits" fx:id="habitsButton" prefWidth="160"
+            <ImageView fx:id="logoImageView" fitHeight="180" fitWidth="180"
+                       GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+            <Button text="Finance" fx:id="financeButton" prefWidth="180"
                     GridPane.rowIndex="2" GridPane.columnIndex="0"/>
-            <Button text="Wardrobe" fx:id="wardrobeButton" prefWidth="160"
+            <Button text="Habits" fx:id="habitsButton" prefWidth="180"
                     GridPane.rowIndex="3" GridPane.columnIndex="0"/>
+            <Button text="Wardrobe" fx:id="wardrobeButton" prefWidth="180"
+                    GridPane.rowIndex="4" GridPane.columnIndex="0"/>
         </GridPane>
     </VBox>
 
