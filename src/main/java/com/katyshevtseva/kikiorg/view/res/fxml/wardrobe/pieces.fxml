@@ -8,7 +8,7 @@
 <HBox xmlns="http://javafx.com/javafx"
       xmlns:fx="http://javafx.com/fxml">
 
-    <ScrollPane prefWidth="600" prefHeight="800">
+    <ScrollPane prefWidth="600" prefHeight="850">
         <GridPane fx:id="gridPane" vgap="10" hgap="10"/>
     </ScrollPane>
     <Pane prefWidth="20"/>

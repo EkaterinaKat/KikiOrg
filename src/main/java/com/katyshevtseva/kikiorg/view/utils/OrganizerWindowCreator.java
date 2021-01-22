@@ -59,10 +59,6 @@ public class OrganizerWindowCreator {
         return new WindowBuilder(WARDROBE_FXML_LOCATION + "outfits.fxml").setController(controller).getNode();
     }
 
-    public Node getAddOutfitNode(FxController controller) {
-        return new WindowBuilder(WARDROBE_FXML_LOCATION + "add_outfit.fxml").setController(controller).getNode();
-    }
-
     public Node getPiecesNode(FxController controller) {
         return new WindowBuilder(WARDROBE_FXML_LOCATION + "pieces.fxml").setController(controller).getNode();
     }
@@ -76,6 +72,11 @@ public class OrganizerWindowCreator {
         new WindowBuilder(WARDROBE_FXML_LOCATION + "image_selection_dialog.fxml").setIconImagePath(ICON_IMAGE_PATH).
                 setController(controller).setHeight(IMAGE_SELECTION_DIALOG_HEIGHT).
                 setWidth(IMAGE_SELECTION_DIALOG_WIDTH).setTitle(CoreConstants.APP_NAME).showWindow();
+    }
+
+    public void openOutfitEditDialog(FxController controller) {
+        new WindowBuilder(WARDROBE_FXML_LOCATION + "outfit_edit_dialog.fxml").setIconImagePath(ICON_IMAGE_PATH).
+                setController(controller).setHeight(800).setWidth(1000).setTitle(CoreConstants.APP_NAME).showWindow();
     }
 
     /* ----------------------------------  Привычки ---------------------------------------------- */
