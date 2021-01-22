@@ -74,8 +74,8 @@ public class OrganizerWindowCreator {
                 setWidth(IMAGE_SELECTION_DIALOG_WIDTH).setTitle(CoreConstants.APP_NAME).showWindow();
     }
 
-    public void openOutfitEditDialog(FxController controller) {
-        new WindowBuilder(WARDROBE_FXML_LOCATION + "outfit_edit_dialog.fxml").setIconImagePath(ICON_IMAGE_PATH).
+    public void openOutfitDialog(FxController controller) {
+        new WindowBuilder(WARDROBE_FXML_LOCATION + "outfit_dialog.fxml").setIconImagePath(ICON_IMAGE_PATH).
                 setController(controller).setHeight(800).setWidth(1000).setTitle(CoreConstants.APP_NAME).showWindow();
     }
 
