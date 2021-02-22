@@ -36,7 +36,16 @@ public class HabitsService {
     }
 
     public List<EnumElement> getEnumElementsByHabit(Habit habit) {
-        return enumElementRepo.findByHabit(habit);
+        List<EnumElement> enumElements = enumElementRepo.findByHabit(habit);
+        enumElements.add(getEmptyEnumElement());
+        return enumElements;
+    }
+
+    private EnumElement getEmptyEnumElement() {
+        EnumElement enumElement = new EnumElement();
+        enumElement.setTitle("-");
+        enumElement.setId(-1L);
+        return enumElement;
     }
 
     public Habit getHabitById(Long id) {

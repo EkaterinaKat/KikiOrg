@@ -33,13 +33,13 @@ public class HabitMarkService {
     @Autowired
     private BooleanMarkRepo booleanMarkRepo;
 
-    public void saveMarkOrRewriteIfExists(Habit habit, Date date, Object mark) {
+    public void saveMarkOrRewriteIfExists(Habit habit, Date date, Object markValue) {
         DateEntity dateEntity = dateService.createIfNotExistAndGetDateEntity(date);
 
         switch (habit.getType()) {
             case number:
                 numMarkRepo.deleteByHabitAndDateEntity(habit, dateEntity);
-                Integer value = (Integer) mark;
+                Integer value = (Integer) markValue;
                 if (value != 0) {
                     NumMark numMark = new NumMark();
                     numMark.setHabit(habit);
@@ -50,7 +50,7 @@ public class HabitMarkService {
                 break;
             case bollean:
                 booleanMarkRepo.deleteByHabitAndDateEntity(habit, dateEntity);
-                if ((Boolean) mark) {
+                if ((Boolean) markValue) {
                     BooleanMark booleanMark = new BooleanMark();
                     booleanMark.setHabit(habit);
                     booleanMark.setDateEntity(dateEntity);
@@ -59,14 +59,18 @@ public class HabitMarkService {
                 break;
             case enumeration:
                 enumMarkRepo.deleteByHabitAndDateEntity(habit, dateEntity);
-                if (mark != null) {
+                if (markValue != null && !isEmptyEnumElement((EnumElement) markValue)) {
                     EnumMark enumMark = new EnumMark();
                     enumMark.setHabit(habit);
                     enumMark.setDateEntity(dateEntity);
-                    enumMark.setEnumElement((EnumElement) mark);
+                    enumMark.setEnumElement((EnumElement) markValue);
                     enumMarkRepo.save(enumMark);
                 }
         }
+    }
+
+    private boolean isEmptyEnumElement(EnumElement enumElement) {
+        return enumElement.getId() == -1L;
     }
 
     public HabitMark getLastMarkByHabitWithinLastWeekOrNull(Habit habit) {
