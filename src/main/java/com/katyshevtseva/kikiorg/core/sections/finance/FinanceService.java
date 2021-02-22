@@ -155,12 +155,12 @@ public class FinanceService {
     }
 
     @Transactional
-    public void addTransfer(Account from, Account to, Long amount) {
+    public void addTransfer(Account from, Account to, Long amount, Date date) {
         Transfer transfer = new Transfer();
         transfer.setFrom(from);
         transfer.setTo(to);
         transfer.setAmount(amount);
-        transfer.setDateEntity(dateService.createIfNotExistAndGetDateEntity(new Date()));
+        transfer.setDateEntity(dateService.createIfNotExistAndGetDateEntity(date));
         transferRepo.save(transfer);
 
         addToAccountAmount(from, (-1) * amount);

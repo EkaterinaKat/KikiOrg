@@ -10,6 +10,8 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.util.Callback;
 
+import java.time.LocalDate;
+
 class TransferController implements FxController {
     @FXML
     private ComboBox<Account> fromComboBox;
@@ -19,6 +21,8 @@ class TransferController implements FxController {
     private TextField amountTextField;
     @FXML
     private Button transferButton;
+    @FXML
+    private DatePicker datePicker;
 
     @FXML
     private void initialize() {
@@ -27,13 +31,14 @@ class TransferController implements FxController {
         setAccountComboBoxItems(fromComboBox);
         setAccountComboBoxItems(toComboBox);
         Utils.disableNonNumericChars(amountTextField);
-        Utils.associateButtonWithControls(transferButton, amountTextField, fromComboBox, toComboBox);
+        Utils.associateButtonWithControls(transferButton, amountTextField, fromComboBox, toComboBox, datePicker);
         transferButton.setOnAction(event -> transfer());
+        datePicker.setValue(LocalDate.now());
     }
 
     private void transfer() {
         Core.getInstance().financeService().addTransfer(fromComboBox.getValue(), toComboBox.getValue(),
-                Long.parseLong(amountTextField.getText()));
+                Long.parseLong(amountTextField.getText()), java.sql.Date.valueOf(datePicker.getValue()));
         amountTextField.clear();
     }
 

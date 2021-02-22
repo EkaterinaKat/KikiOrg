@@ -5,6 +5,8 @@
 <VBox xmlns="http://javafx.com/javafx"
       xmlns:fx="http://javafx.com/fxml">
     <Pane minHeight="40" maxHeight="40"/>
+    <DatePicker fx:id="datePicker" minWidth="250" maxWidth="250"/>
+    <Pane minHeight="40" maxHeight="40"/>
     <HBox>
         <ComboBox fx:id="fromComboBox" minWidth="300" maxWidth="300"/>
         <Pane minWidth="8" maxWidth="8"/>
