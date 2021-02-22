@@ -2,8 +2,13 @@
 
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.layout.VBox?>
+<?import java.net.URL?>
 <VBox xmlns="http://javafx.com/javafx"
       xmlns:fx="http://javafx.com/fxml">
+
+    <stylesheets>
+        <URL value="@/com/katyshevtseva/kikiorg/view/res/css/general_style.css"/>
+    </stylesheets>
 
     <ScrollPane minWidth="480" maxWidth="480" minHeight="450" maxHeight="450">
         <VBox fx:id="container">
