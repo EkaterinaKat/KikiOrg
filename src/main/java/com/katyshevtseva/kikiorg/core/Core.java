@@ -4,6 +4,7 @@ import com.katyshevtseva.kikiorg.core.sections.finance.*;
 import com.katyshevtseva.kikiorg.core.sections.finance.report.ExpensesReportService;
 import com.katyshevtseva.kikiorg.core.sections.finance.report.IncomeReportService;
 import com.katyshevtseva.kikiorg.core.sections.habits.HabitMarkService;
+import com.katyshevtseva.kikiorg.core.sections.habits.HabitUnionService;
 import com.katyshevtseva.kikiorg.core.sections.habits.HabitsReportService;
 import com.katyshevtseva.kikiorg.core.sections.habits.HabitsService;
 import com.katyshevtseva.kikiorg.core.sections.wardrobe.WardrobeService;
@@ -38,6 +39,8 @@ public class Core implements InitializingBean {
     private HabitMarkService habitMarkService;
     @Autowired
     private WardrobeService wardrobeService;
+    @Autowired
+    private HabitUnionService habitUnionService;
 
     public static Core getInstance() {
         while (INSTANCE == null) {
@@ -101,5 +104,9 @@ public class Core implements InitializingBean {
 
     public WardrobeService wardrobeService() {
         return wardrobeService;
+    }
+
+    public HabitUnionService habitUnionService() {
+        return habitUnionService;
     }
 }
