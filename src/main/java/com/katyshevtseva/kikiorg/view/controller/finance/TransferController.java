@@ -45,7 +45,7 @@ class TransferController implements FxController {
     private void setAccountComboBoxItems(ComboBox<Account> accountComboBox) {
         if (accountComboBox != null) {
             ObservableList<Account> accounts = FXCollections.observableArrayList(
-                    Core.getInstance().financeService().getAccountsForTransferSection());
+                    Core.getInstance().financeService().getAllAccounts());
             accountComboBox.setItems(accounts);
         }
     }

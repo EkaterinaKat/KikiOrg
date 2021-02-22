@@ -64,13 +64,6 @@ public class OwnerAdapterService {
         return accountRepo.findAllByOwner(ownerService.getCurrentOwner());
     }
 
-    List<Account> getAccountsForTransferSection() {
-        List<Account> accounts = new ArrayList<>();
-        for (Owner owner : getScope())
-            accounts.addAll(accountRepo.findAllByOwner(owner));
-        return accounts;
-    }
-
     void saveItemHierarchyLeaf(ItemHierarchyLeaf leaf) {
         leaf.setOwner(ownerService.getCurrentOwner());
         itemHierarchyLeafRepo.save(leaf);

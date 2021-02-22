@@ -83,8 +83,8 @@ public class FinanceService {
         return adapter.getAccountsForCurrentUser();
     }
 
-    public List<Account> getAccountsForTransferSection() {
-        return adapter.getAccountsForTransferSection();
+    public List<Account> getAllAccounts() {
+        return accountRepo.findAll();
     }
 
     public void addExpense(Account account, long amount, Item item, Date date) {
