@@ -17,7 +17,7 @@ public class HabitUnionService {
         return habitUnionRepo.findAll();
     }
 
-    public HabitUnion saveHabitUnion(String title, HabitGroup habitGroup) {
+    public HabitUnion createUnion(String title, HabitGroup habitGroup) {
         HabitUnion habitUnion = new HabitUnion();
         habitUnion.setTitle(title);
         habitUnion.setHabitGroup(habitGroup);
@@ -37,5 +37,9 @@ public class HabitUnionService {
 
     public void deleteHabitUnion(HabitUnion habitUnion) {
         habitUnionRepo.delete(habitUnion);
+    }
+
+    public void saveEditedUnion(HabitUnion habitUnion) {
+        habitUnionRepo.save(habitUnion);
     }
 }
