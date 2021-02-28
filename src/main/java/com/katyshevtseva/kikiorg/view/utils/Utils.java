@@ -122,4 +122,8 @@ public class Utils {
         pane.setMaxHeight(height);
         return pane;
     }
+
+    public static String getCssPath() {
+        return "/com/katyshevtseva/kikiorg/view/res/css/general_style.css";
+    }
 }

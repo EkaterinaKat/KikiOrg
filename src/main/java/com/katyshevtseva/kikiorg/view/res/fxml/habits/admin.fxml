@@ -12,21 +12,44 @@
     <Pane maxWidth="20" minWidth="20"/>
 
     <VBox>
+
+        <Pane minHeight="15" maxHeight="15"/>
+
         <HBox>
-            <Button fx:id="newHabitButton" text="New"/>
+            <Button fx:id="newHabitButton" text="New habit"/>
+            <Pane minWidth="20" maxWidth="20"/>
+            <Button fx:id="newUnionButton" text="New union"/>
             <Pane minWidth="20" maxWidth="20"/>
             <Button fx:id="editButton" text="Edit"/>
         </HBox>
-        <Pane maxWidth="700" minWidth="700" maxHeight="700" minHeight="700">
+
+        <Pane minHeight="15" maxHeight="15"/>
+
+        <Pane maxWidth="700" minWidth="700" maxHeight="700" minHeight="700" fx:id="habitPane" managed="false"
+              visible="false">
             <HBox>
                 <Pane minWidth="25" maxWidth="25"/>
                 <VBox>
                     <Pane minHeight="25" maxHeight="25"/>
-                    <Label fx:id="titleLabel" styleClass="font_25" wrapText="true" minWidth="650" maxWidth="650"/>
+                    <Label fx:id="habitTitleLabel" styleClass="font_25" wrapText="true" minWidth="650" maxWidth="650"/>
                     <Pane minHeight="25" maxHeight="25"/>
-                    <Label fx:id="typeLabel"/>
+                    <Label fx:id="habitTypeLabel"/>
                     <Pane minHeight="25" maxHeight="25"/>
-                    <Label fx:id="descLabel" wrapText="true" minWidth="650" maxWidth="650"/>
+                    <Label fx:id="habitDescLabel" wrapText="true" minWidth="650" maxWidth="650"/>
+                </VBox>
+                <Pane minWidth="25" maxWidth="25"/>
+            </HBox>
+        </Pane>
+
+        <Pane maxWidth="700" minWidth="700" maxHeight="700" minHeight="700" fx:id="unionPane" managed="false"
+              visible="false">
+            <HBox>
+                <Pane minWidth="25" maxWidth="25"/>
+                <VBox>
+                    <Pane minHeight="25" maxHeight="25"/>
+                    <Label fx:id="unionTitleLabel" styleClass="font_25" wrapText="true" minWidth="650" maxWidth="650"/>
+                    <Pane minHeight="25" maxHeight="25"/>
+                    <Label fx:id="unionDescLabel" wrapText="true" minWidth="650" maxWidth="650"/>
                 </VBox>
                 <Pane minWidth="25" maxWidth="25"/>
             </HBox>
