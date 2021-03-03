@@ -15,8 +15,6 @@ public class HabitUnion {
 
     private String title;
 
-    private boolean isActive;
-
     @Enumerated(EnumType.STRING)
     private HabitGroup habitGroup;
 

@@ -21,7 +21,6 @@ public class HabitUnionService {
         HabitUnion habitUnion = new HabitUnion();
         habitUnion.setTitle(title);
         habitUnion.setHabitGroup(habitGroup);
-        habitUnion.setActive(true);
         return habitUnionRepo.save(habitUnion);
     }
 
