@@ -121,22 +121,14 @@ class AdminController implements FxController {
                 }));
     }
 
-    private void showUnion(HabitUnion union) {
+    private void showUnion(HabitUnion habitUnion) {
         switchPane(habitPane, unionPane);
 
-        unionTitleLabel.setText(union.getTitle());
-        unionDescLabel.setText("Group: " + union.getHabitGroup());
+        unionTitleLabel.setText(habitUnion.getTitle());
+        unionDescLabel.setText("Group: " + habitUnion.getHabitGroup());
 
         editButton.setOnAction(event -> {
-            new StandardDialogBuilder().setCssPath(Utils.getCssPath()).setTitle("Edit Union").
-                    openTextFieldAndComboBoxDialog(union.getTitle(), Arrays.asList(HabitGroup.values()), union.getHabitGroup(),
-                            (text, habitGroup) -> {
-                                union.setTitle(text);
-                                union.setHabitGroup((HabitGroup) habitGroup);
-                                Core.getInstance().habitUnionService().saveEditedUnion(union);
-                                fillHabitTable();
-                                showUnion(union);
-                            });
+            //todo
         });
     }
 
@@ -144,7 +136,7 @@ class AdminController implements FxController {
         new StandardDialogBuilder().setCssPath(Utils.getCssPath()).setTitle("New Union").
                 openTextFieldAndComboBoxDialog("", Arrays.asList(HabitGroup.values()), HabitGroup.O,
                         (text, habitGroup) -> {
-                            HabitUnion union = Core.getInstance().habitUnionService().createUnion(text, (HabitGroup) habitGroup);
+                            HabitUnion union = Core.getInstance().habitUnionService().saveHabitUnion(text, (HabitGroup) habitGroup);
                             fillHabitTable();
                             showUnion(union);
                         });
