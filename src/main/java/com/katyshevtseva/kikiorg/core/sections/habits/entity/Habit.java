@@ -28,10 +28,6 @@ public class Habit {
     @OneToMany(mappedBy = "habit", fetch = FetchType.EAGER)
     public List<EnumElement> enumElements;
 
-    @ManyToOne
-    @JoinColumn(name = "habit_union_id")
-    private HabitUnion habitUnion;
-
     public String getTitleWithActiveInfoAndEnumElements() {
         return title + " " + String.format("%s (%s)", type == HabitType.enumeration ? getEnumString(enumElements) : "",
                 active ? "active" : "inactive");
