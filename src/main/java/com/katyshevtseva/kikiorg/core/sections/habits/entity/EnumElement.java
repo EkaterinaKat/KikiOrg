@@ -21,8 +21,8 @@ public class EnumElement {
 
     @Override
     public String toString() {
-        if (numEquivalent != null)
-            return String.format("{'%s';%s}", title, "" + numEquivalent);
+//        if (numEquivalent != null)
+//            return String.format("{'%s';%s}", title, "" + numEquivalent);
         return title;
     }
 }
