@@ -12,6 +12,8 @@
         <DatePicker fx:id="endDatePicker" maxWidth="220" minWidth="220"/>
         <Pane minHeight="15" maxHeight="15"/>
         <Button fx:id="showButton" text="Show" maxWidth="220" minWidth="220"/>
+        <Pane minHeight="15" maxHeight="15"/>
+        <Button fx:id="stabilityButton" text="Check Stability" maxWidth="220" minWidth="220"/>
     </VBox>
 
     <Pane minWidth="25" maxWidth="25"/>

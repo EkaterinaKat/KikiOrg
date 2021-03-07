@@ -35,8 +35,12 @@ public class AnalysisService {
             this.daysHabitDone = daysHabitDone;
         }
 
-        public String getSummary() {
+        public String getShortResult() {
             return String.format("%s: %d/%d", habit.getTitle(), daysHabitDone, daysTotal);
+        }
+
+        public String getStabilityInfo() {
+            return "";
         }
     }
 }
