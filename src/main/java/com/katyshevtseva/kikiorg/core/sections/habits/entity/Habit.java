@@ -28,6 +28,9 @@ public class Habit {
     @OneToMany(mappedBy = "habit", fetch = FetchType.EAGER)
     public List<EnumElement> enumElements;
 
+    @OneToOne(mappedBy = "habit")
+    private StabilityCriterion stabilityCriterion;
+
     public String getTitleWithActiveInfoAndEnumElements() {
         return title + " " + String.format("%s (%s)", type == HabitType.enumeration ? getEnumString(enumElements) : "",
                 active ? "active" : "inactive");
