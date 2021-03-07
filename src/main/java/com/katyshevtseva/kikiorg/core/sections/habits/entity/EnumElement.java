@@ -13,16 +13,12 @@ public class EnumElement {
 
     private String title;
 
-    private Integer numEquivalent;
-
     @ManyToOne
     @JoinColumn(name = "habit_id")
     private Habit habit;
 
     @Override
     public String toString() {
-//        if (numEquivalent != null)
-//            return String.format("{'%s';%s}", title, "" + numEquivalent);
         return title;
     }
 }
