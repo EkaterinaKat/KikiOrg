@@ -4,10 +4,12 @@ import com.katyshevtseva.kikiorg.core.date.DateUtils;
 import com.katyshevtseva.kikiorg.core.date.Period;
 import com.katyshevtseva.kikiorg.core.sections.habits.entity.Habit;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.Date;
 import java.util.List;
 
+@Service
 public class AnalysisService {
     @Autowired
     private HabitMarkService markService;
@@ -31,6 +33,10 @@ public class AnalysisService {
             this.habit = habit;
             this.daysTotal = daysTotal;
             this.daysHabitDone = daysHabitDone;
+        }
+
+        public String getSummary() {
+            return String.format("%s: %d/%d", habit.getTitle(), daysHabitDone, daysTotal);
         }
     }
 }
