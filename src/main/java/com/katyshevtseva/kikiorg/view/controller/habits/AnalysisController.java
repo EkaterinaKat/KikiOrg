@@ -2,7 +2,6 @@ package com.katyshevtseva.kikiorg.view.controller.habits;
 
 import com.katyshevtseva.kikiorg.core.Core;
 import com.katyshevtseva.kikiorg.core.date.DateUtils;
-import com.katyshevtseva.kikiorg.core.sections.habits.AnalysisService.AnalysisResult;
 import com.katyshevtseva.kikiorg.core.sections.habits.entity.Habit;
 import com.katyshevtseva.kikiorg.view.utils.Utils;
 import com.katyshevtseva.kikiorg.view.utils.WindowBuilder.FxController;
@@ -20,6 +19,8 @@ import static com.katyshevtseva.date.Utils.TimeUnit.MONTH;
 import static com.katyshevtseva.date.Utils.shiftDate;
 import static com.katyshevtseva.fx.Styler.ThingToColor.TEXT;
 import static com.katyshevtseva.fx.Styler.getColorfullStyle;
+import static com.katyshevtseva.kikiorg.core.sections.habits.StabilityStatus.STABILITY_LOST;
+import static com.katyshevtseva.kikiorg.core.sections.habits.StabilityStatus.STABLE;
 
 class AnalysisController implements FxController {
     @FXML
@@ -63,10 +64,11 @@ class AnalysisController implements FxController {
 
         resultsBox.getChildren().clear();
         for (Habit habit : Core.getInstance().habitsService().getActiveHabits()) {
-            AnalysisResult analysisResult = Core.getInstance().analysisService().stabilityAnalyze(habit);
-            Label label = new Label(analysisResult.getStabilityInfo());
-            if (analysisResult.isStable())
+            Label label = new Label(Core.getInstance().analysisService().analyzeStabilityAndAssignNewStatusIfNeeded(habit));
+            if (habit.getStabilityStatus() == STABLE)
                 label.setStyle(getColorfullStyle(TEXT, "#006400"));
+            if (habit.getStabilityStatus() == STABILITY_LOST)
+                label.setStyle(getColorfullStyle(TEXT, "#800000"));
             resultsBox.getChildren().add(label);
         }
     }

@@ -1,6 +1,7 @@
 package com.katyshevtseva.kikiorg.core.sections.habits.entity;
 
 import com.katyshevtseva.kikiorg.core.sections.habits.HabitGroup;
+import com.katyshevtseva.kikiorg.core.sections.habits.StabilityStatus;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -30,6 +31,10 @@ public class Habit {
 
     @OneToOne(mappedBy = "habit")
     private StabilityCriterion stabilityCriterion;
+
+
+    @Enumerated(EnumType.STRING)
+    private StabilityStatus stabilityStatus;
 
     public String getTitleWithActiveInfoAndEnumElements() {
         return title + " " + String.format("%s (%s)", type == HabitType.enumeration ? getEnumString(enumElements) : "",

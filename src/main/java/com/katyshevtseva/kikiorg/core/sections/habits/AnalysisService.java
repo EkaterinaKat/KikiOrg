@@ -13,6 +13,7 @@ import java.util.List;
 import static com.katyshevtseva.date.Utils.TimeUnit.DAY;
 import static com.katyshevtseva.date.Utils.TimeUnit.MONTH;
 import static com.katyshevtseva.date.Utils.shiftDate;
+import static com.katyshevtseva.kikiorg.core.sections.habits.StabilityStatus.*;
 
 @Service
 public class AnalysisService {
@@ -22,6 +23,8 @@ public class AnalysisService {
     private HabitMarkService markService;
     @Autowired
     private StabilityCriterionService criterionService;
+    @Autowired
+    private HabitsService habitsService;
 
     public String simpleAnalyze(Habit habit, Period period) {
         List<Date> dates = DateUtils.getDateRange(period);
@@ -33,25 +36,37 @@ public class AnalysisService {
         return String.format("%s: %d/%d", habit.getTitle(), daysHabitDone, dates.size());
     }
 
-    public AnalysisResult stabilityAnalyze(Habit habit) {
+    public String analyzeStabilityAndAssignNewStatusIfNeeded(Habit habit) {
         List<Date> dates = DateUtils.getDateRange(new Period(threeMonthAgo, yesterday));
         StabilityCriterion criterion = criterionService.getCriterionByHabitOrNull(habit);
         int daysTotal = dates.size();
         int daysHabitDone = getDaysHabitDone(dates, habit);
 
         if (criterion == null) {
-            String stabilityInfo = String.format("%s: %d/%d. Критерии не заданы", habit.getTitle(), daysHabitDone, daysTotal);
-            return new AnalysisResult(stabilityInfo, false);
+            return String.format("%s: %d/%d. Критерии не заданы", habit.getTitle(), daysHabitDone, daysTotal);
         }
 
         double actualRatio = (daysHabitDone * 1.0) / daysTotal;
         double minimalRatio = (criterion.getDaysHabitDone() * 1.0) / criterion.getDaysTotal();
         boolean isStable = Double.compare(actualRatio, minimalRatio) >= 0;
 
-        String stabilityInfo = String.format("%s. %s. НО: %d/%d=%.3f. МО: %d/%d=%.3f.", habit.getTitle(),
-                isStable ? "Стабильно" : "Не стабильно", daysHabitDone, daysTotal, actualRatio,
+        assignNewStatusIfNeeded(habit, isStable);
+
+        return String.format("%s. %s. НО: %d/%d=%.3f. МО: %d/%d=%.3f.", habit.getTitle(),
+                habit.getStabilityStatus(), daysHabitDone, daysTotal, actualRatio,
                 criterion.getDaysHabitDone(), criterion.getDaysTotal(), minimalRatio);
-        return new AnalysisResult(stabilityInfo, isStable);
+    }
+
+    private void assignNewStatusIfNeeded(Habit habit, boolean isStable) {
+        if (isStable)
+            habit.setStabilityStatus(STABLE);
+        else {
+            if (habit.getStabilityStatus() == null)
+                habit.setStabilityStatus(NOT_STABLE);
+            if (habit.getStabilityStatus() == STABLE)
+                habit.setStabilityStatus(STABILITY_LOST);
+        }
+        habitsService.saveHabit(habit);
     }
 
     private int getDaysHabitDone(List<Date> dates, Habit habit) {
@@ -61,23 +76,5 @@ public class AnalysisService {
                 daysHabitDone++;
         }
         return daysHabitDone;
-    }
-
-    public class AnalysisResult {
-        private String stabilityInfo;
-        private boolean isStable;
-
-        AnalysisResult(String stabilityInfo, boolean isStable) {
-            this.stabilityInfo = stabilityInfo;
-            this.isStable = isStable;
-        }
-
-        public String getStabilityInfo() {
-            return stabilityInfo;
-        }
-
-        public boolean isStable() {
-            return isStable;
-        }
     }
 }
