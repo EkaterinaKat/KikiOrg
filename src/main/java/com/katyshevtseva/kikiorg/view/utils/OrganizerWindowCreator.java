@@ -101,6 +101,10 @@ public class OrganizerWindowCreator {
         return new WindowBuilder(HABITS_FXML_LOCATION + "analysis.fxml").setController(controller).getNode();
     }
 
+    public Node getHabitsCriterionNode(FxController controller) {
+        return new WindowBuilder(HABITS_FXML_LOCATION + "criterion.fxml").setController(controller).getNode();
+    }
+
     public void openHabitEditDialog(FxController controller) {
         new WindowBuilder(DIALOG_FXML_LOCATION + "habit_edit_dialog.fxml").setIconImagePath(ICON_IMAGE_PATH).
                 setController(controller).setHeight(BIG_DIALOG_HEIGHT).

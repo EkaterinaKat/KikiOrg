@@ -11,7 +11,7 @@ public class StabilityCriterionService {
     @Autowired
     private StabilityCriterionRepo stabilityCriterionRepo;
 
-    public void saveOrRevriteCriterion(Habit habit, int daysTotal, int daysHabitDone) {
+    public void saveOrRewriteCriterion(Habit habit, int daysTotal, int daysHabitDone) {
         stabilityCriterionRepo.deleteByHabit(habit);
 
         StabilityCriterion criterion = new StabilityCriterion();

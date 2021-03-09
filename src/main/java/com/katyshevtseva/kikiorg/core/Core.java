@@ -3,10 +3,7 @@ package com.katyshevtseva.kikiorg.core;
 import com.katyshevtseva.kikiorg.core.sections.finance.*;
 import com.katyshevtseva.kikiorg.core.sections.finance.report.ExpensesReportService;
 import com.katyshevtseva.kikiorg.core.sections.finance.report.IncomeReportService;
-import com.katyshevtseva.kikiorg.core.sections.habits.AnalysisService;
-import com.katyshevtseva.kikiorg.core.sections.habits.HabitMarkService;
-import com.katyshevtseva.kikiorg.core.sections.habits.HabitsReportService;
-import com.katyshevtseva.kikiorg.core.sections.habits.HabitsService;
+import com.katyshevtseva.kikiorg.core.sections.habits.*;
 import com.katyshevtseva.kikiorg.core.sections.wardrobe.WardrobeService;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,6 +38,8 @@ public class Core implements InitializingBean {
     private WardrobeService wardrobeService;
     @Autowired
     private AnalysisService analysisService;
+    @Autowired
+    private StabilityCriterionService stabilityCriterionService;
 
     public static Core getInstance() {
         while (INSTANCE == null) {
@@ -108,5 +107,9 @@ public class Core implements InitializingBean {
 
     public AnalysisService analysisService() {
         return analysisService;
+    }
+
+    public StabilityCriterionService stabilityCriterionService() {
+        return stabilityCriterionService;
     }
 }
