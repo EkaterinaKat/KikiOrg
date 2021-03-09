@@ -49,23 +49,21 @@ class AnalysisController implements FxController {
     private void showButtonListener() {
         resultsBox.getChildren().clear();
         for (Habit habit : Core.getInstance().habitsService().getActiveHabits()) {
-            AnalysisResult analysisResult = Core.getInstance().analysisService().analyzeHabit(
+            String analysisResult = Core.getInstance().analysisService().simpleAnalyze(
                     habit, Utils.getPeriodByDp(startDatePicker, endDatePicker));
-            resultsBox.getChildren().add(new Label(analysisResult.getShortResult()));
+            resultsBox.getChildren().add(new Label(analysisResult));
         }
     }
 
     private void stabilityButtonListener() {
         Date yesterday = shiftDate(new Date(), DAY, -1);
         Date threeMonthAgo = shiftDate(yesterday, MONTH, -3);
-
         startDatePicker.setValue(new java.sql.Date(threeMonthAgo.getTime()).toLocalDate());
         endDatePicker.setValue(new java.sql.Date(yesterday.getTime()).toLocalDate());
 
         resultsBox.getChildren().clear();
         for (Habit habit : Core.getInstance().habitsService().getActiveHabits()) {
-            AnalysisResult analysisResult = Core.getInstance().analysisService().analyzeHabit(
-                    habit, Utils.getPeriodByDp(startDatePicker, endDatePicker));
+            AnalysisResult analysisResult = Core.getInstance().analysisService().stabilityAnalyze(habit);
             Label label = new Label(analysisResult.getStabilityInfo());
             if (analysisResult.isStable())
                 label.setStyle(getColorfullStyle(TEXT, "#006400"));
