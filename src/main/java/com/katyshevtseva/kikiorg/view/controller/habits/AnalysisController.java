@@ -18,6 +18,8 @@ import java.util.Date;
 import static com.katyshevtseva.date.Utils.TimeUnit.DAY;
 import static com.katyshevtseva.date.Utils.TimeUnit.MONTH;
 import static com.katyshevtseva.date.Utils.shiftDate;
+import static com.katyshevtseva.fx.Styler.ThingToColor.TEXT;
+import static com.katyshevtseva.fx.Styler.getColorfullStyle;
 
 class AnalysisController implements FxController {
     @FXML
@@ -64,7 +66,10 @@ class AnalysisController implements FxController {
         for (Habit habit : Core.getInstance().habitsService().getActiveHabits()) {
             AnalysisResult analysisResult = Core.getInstance().analysisService().analyzeHabit(
                     habit, Utils.getPeriodByDp(startDatePicker, endDatePicker));
-            resultsBox.getChildren().add(new Label(analysisResult.getStabilityInfo()));
+            Label label = new Label(analysisResult.getStabilityInfo());
+            if (analysisResult.isStable())
+                label.setStyle(getColorfullStyle(TEXT, "#006400"));
+            resultsBox.getChildren().add(label);
         }
     }
 }
