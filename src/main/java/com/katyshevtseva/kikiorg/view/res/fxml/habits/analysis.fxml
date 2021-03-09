@@ -18,8 +18,8 @@
 
     <Pane minWidth="25" maxWidth="25"/>
 
-    <VBox fx:id="resultsBox">
+    <GridPane fx:id="resultsPane" hgap="20" vgap="20" alignment="CENTER">
 
-    </VBox>
+    </GridPane>
 
 </HBox>

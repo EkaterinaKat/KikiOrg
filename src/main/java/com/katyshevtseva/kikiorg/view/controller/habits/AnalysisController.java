@@ -2,6 +2,7 @@ package com.katyshevtseva.kikiorg.view.controller.habits;
 
 import com.katyshevtseva.kikiorg.core.Core;
 import com.katyshevtseva.kikiorg.core.date.DateUtils;
+import com.katyshevtseva.kikiorg.core.sections.habits.AnalysisService.AnalysisResult;
 import com.katyshevtseva.kikiorg.core.sections.habits.entity.Habit;
 import com.katyshevtseva.kikiorg.view.utils.Utils;
 import com.katyshevtseva.kikiorg.view.utils.WindowBuilder.FxController;
@@ -9,7 +10,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.GridPane;
 
 import java.time.LocalDate;
 import java.util.Date;
@@ -30,7 +31,7 @@ class AnalysisController implements FxController {
     @FXML
     private Button showButton;
     @FXML
-    private VBox resultsBox;
+    private GridPane resultsPane;
     @FXML
     private Button stabilityButton;
 
@@ -48,11 +49,13 @@ class AnalysisController implements FxController {
     }
 
     private void showButtonListener() {
-        resultsBox.getChildren().clear();
+        resultsPane.getChildren().clear();
+        int rowIngex = 0;
         for (Habit habit : Core.getInstance().habitsService().getActiveHabits()) {
             String analysisResult = Core.getInstance().analysisService().simpleAnalyze(
                     habit, Utils.getPeriodByDp(startDatePicker, endDatePicker));
-            resultsBox.getChildren().add(new Label(analysisResult));
+            resultsPane.add(new Label(analysisResult), 1, rowIngex);
+            rowIngex++;
         }
     }
 
@@ -62,14 +65,23 @@ class AnalysisController implements FxController {
         startDatePicker.setValue(new java.sql.Date(threeMonthAgo.getTime()).toLocalDate());
         endDatePicker.setValue(new java.sql.Date(yesterday.getTime()).toLocalDate());
 
-        resultsBox.getChildren().clear();
+        resultsPane.getChildren().clear();
+        int rowIndex = 0;
         for (Habit habit : Core.getInstance().habitsService().getActiveHabits()) {
-            Label label = new Label(Core.getInstance().analysisService().analyzeStabilityAndAssignNewStatusIfNeeded(habit));
-            if (habit.getStabilityStatus() == STABLE)
-                label.setStyle(getColorfullStyle(TEXT, "#006400"));
-            if (habit.getStabilityStatus() == STABILITY_LOST)
-                label.setStyle(getColorfullStyle(TEXT, "#800000"));
-            resultsBox.getChildren().add(label);
+            AnalysisResult result = Core.getInstance().analysisService().analyzeStabilityAndAssignNewStatusIfNeeded(habit);
+            resultsPane.add(getColoredLabel(habit, result.getHabitTitle()), 1, rowIndex);
+            resultsPane.add(getColoredLabel(habit, result.getStatus()), 2, rowIndex);
+            resultsPane.add(getColoredLabel(habit, result.getCalculations()), 3, rowIndex);
+            rowIndex++;
         }
+    }
+
+    private Label getColoredLabel(Habit habit, String text) {
+        Label label = new Label(text);
+        if (habit.getStabilityStatus() == STABLE)
+            label.setStyle(getColorfullStyle(TEXT, "#006400"));
+        if (habit.getStabilityStatus() == STABILITY_LOST)
+            label.setStyle(getColorfullStyle(TEXT, "#800000"));
+        return label;
     }
 }

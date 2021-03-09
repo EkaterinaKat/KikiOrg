@@ -36,14 +36,15 @@ public class AnalysisService {
         return String.format("%s: %d/%d", habit.getTitle(), daysHabitDone, dates.size());
     }
 
-    public String analyzeStabilityAndAssignNewStatusIfNeeded(Habit habit) {
+    public AnalysisResult analyzeStabilityAndAssignNewStatusIfNeeded(Habit habit) {
         List<Date> dates = DateUtils.getDateRange(new Period(threeMonthAgo, yesterday));
         StabilityCriterion criterion = criterionService.getCriterionByHabitOrNull(habit);
         int daysTotal = dates.size();
         int daysHabitDone = getDaysHabitDone(dates, habit);
 
         if (criterion == null) {
-            return String.format("%s: %d/%d. Критерии не заданы", habit.getTitle(), daysHabitDone, daysTotal);
+            return new AnalysisResult(habit,
+                    String.format("%d/%d. Критерии не заданы", daysHabitDone, daysTotal));
         }
 
         double actualRatio = (daysHabitDone * 1.0) / daysTotal;
@@ -52,9 +53,8 @@ public class AnalysisService {
 
         assignNewStatusIfNeeded(habit, isStable);
 
-        return String.format("%s. %s. НО: %d/%d=%.3f. МО: %d/%d=%.3f.", habit.getTitle(),
-                habit.getStabilityStatus(), daysHabitDone, daysTotal, actualRatio,
-                criterion.getDaysHabitDone(), criterion.getDaysTotal(), minimalRatio);
+        return new AnalysisResult(habit, String.format("НО: %d/%d=%.3f. МО: %d/%d=%.3f.", daysHabitDone, daysTotal,
+                actualRatio, criterion.getDaysHabitDone(), criterion.getDaysTotal(), minimalRatio));
     }
 
     private void assignNewStatusIfNeeded(Habit habit, boolean isStable) {
@@ -76,5 +76,27 @@ public class AnalysisService {
                 daysHabitDone++;
         }
         return daysHabitDone;
+    }
+
+    public class AnalysisResult {
+        private Habit habit;
+        private String calculations;
+
+        AnalysisResult(Habit habit, String calculations) {
+            this.habit = habit;
+            this.calculations = calculations;
+        }
+
+        public String getHabitTitle() {
+            return habit.getTitle();
+        }
+
+        public String getStatus() {
+            return habit.getStabilityStatus().toString();
+        }
+
+        public String getCalculations() {
+            return calculations;
+        }
     }
 }
