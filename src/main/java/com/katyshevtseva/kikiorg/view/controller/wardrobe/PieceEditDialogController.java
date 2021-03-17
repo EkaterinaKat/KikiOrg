@@ -1,13 +1,14 @@
 package com.katyshevtseva.kikiorg.view.controller.wardrobe;
 
+import com.katyshevtseva.fx.Utils;
+import com.katyshevtseva.fx.WindowBuilder.FxController;
 import com.katyshevtseva.kikiorg.core.Core;
 import com.katyshevtseva.kikiorg.core.sections.wardrobe.entity.Piece;
 import com.katyshevtseva.kikiorg.core.sections.wardrobe.enums.ClothesType;
 import com.katyshevtseva.kikiorg.core.sections.wardrobe.enums.Purpose;
 import com.katyshevtseva.kikiorg.core.sections.wardrobe.enums.Season;
+import com.katyshevtseva.kikiorg.view.utils.OrgUtils;
 import com.katyshevtseva.kikiorg.view.utils.OrganizerWindowCreator;
-import com.katyshevtseva.kikiorg.view.utils.Utils;
-import com.katyshevtseva.kikiorg.view.utils.WindowBuilder.FxController;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -133,7 +134,7 @@ class PieceEditDialogController implements FxController {
     }
 
     private void setEmptyImage() {
-        imageView.setImage(new Image("piece_creation_plus.png"));
+        imageView.setImage(new Image("images/piece_creation_plus.png"));
     }
 
     interface PieceSavingHandler {

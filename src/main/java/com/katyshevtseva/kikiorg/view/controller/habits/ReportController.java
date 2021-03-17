@@ -1,11 +1,12 @@
 package com.katyshevtseva.kikiorg.view.controller.habits;
 
+import com.katyshevtseva.fx.Utils;
+import com.katyshevtseva.fx.WindowBuilder.FxController;
 import com.katyshevtseva.kikiorg.core.Core;
 import com.katyshevtseva.kikiorg.core.date.DateUtils;
 import com.katyshevtseva.kikiorg.core.sections.habits.entity.Habit;
 import com.katyshevtseva.kikiorg.core.sections.habits.entity.ReportCell;
-import com.katyshevtseva.kikiorg.view.utils.Utils;
-import com.katyshevtseva.kikiorg.view.utils.WindowBuilder.FxController;
+import com.katyshevtseva.kikiorg.view.utils.OrgUtils;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -95,7 +96,7 @@ class ReportController implements FxController {
 
         reportTable.getChildren().clear();
         List<List<ReportCell>> report = Core.getInstance().habitsReportService().getReport(selectedHabits,
-                Utils.getPeriodByDp(startDatePicker, endDatePicker));
+                OrgUtils.getPeriodByDp(startDatePicker, endDatePicker));
 
         for (int i = 0; i < report.size(); i++) {
             List<ReportCell> reportLine = report.get(i);

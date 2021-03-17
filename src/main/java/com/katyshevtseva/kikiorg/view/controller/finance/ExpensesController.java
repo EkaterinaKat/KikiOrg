@@ -1,13 +1,12 @@
 package com.katyshevtseva.kikiorg.view.controller.finance;
 
+import com.katyshevtseva.fx.Utils;
+import com.katyshevtseva.fx.WindowBuilder.FxController;
 import com.katyshevtseva.kikiorg.core.Core;
 import com.katyshevtseva.kikiorg.core.sections.finance.entity.Account;
 import com.katyshevtseva.kikiorg.core.sections.finance.entity.Item;
-import com.katyshevtseva.kikiorg.view.controller.dialog.ItemSelectDialogController;
-import com.katyshevtseva.kikiorg.view.controller.dialog.TwoFieldsEditDialogController;
+import com.katyshevtseva.kikiorg.view.utils.OrgUtils;
 import com.katyshevtseva.kikiorg.view.utils.OrganizerWindowCreator;
-import com.katyshevtseva.kikiorg.view.utils.Utils;
-import com.katyshevtseva.kikiorg.view.utils.WindowBuilder.FxController;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -134,12 +133,11 @@ class ExpensesController implements FxController {
                     {
                         button.setOnAction((ActionEvent event) -> {
                             Item item = getTableView().getItems().get(getIndex());
-                            OrganizerWindowCreator.getInstance().openTwoFieldsEditDialog(new TwoFieldsEditDialogController(
-                                    item.getTitle(), item.getDescription(),
+                            OrgUtils.getDialogBuilder().openTextFieldAndTextAreaDialog(item.getTitle(), item.getDescription(),
                                     (title, desc) -> {
                                         Core.getInstance().financeService().alterItem(item, title, desc);
                                         fillTable();
-                                    }));
+                                    });
                         });
                     }
 

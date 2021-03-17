@@ -1,9 +1,10 @@
 package com.katyshevtseva.kikiorg.view.controller.wardrobe;
 
+import com.katyshevtseva.fx.Utils;
+import com.katyshevtseva.fx.WindowBuilder.FxController;
 import com.katyshevtseva.kikiorg.core.CoreUtils;
 import com.katyshevtseva.kikiorg.core.sections.wardrobe.Imagable;
-import com.katyshevtseva.kikiorg.view.utils.Utils;
-import com.katyshevtseva.kikiorg.view.utils.WindowBuilder.FxController;
+import com.katyshevtseva.kikiorg.view.utils.OrgUtils;
 import javafx.fxml.FXML;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;

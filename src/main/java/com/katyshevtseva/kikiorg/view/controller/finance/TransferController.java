@@ -1,9 +1,10 @@
 package com.katyshevtseva.kikiorg.view.controller.finance;
 
+import com.katyshevtseva.fx.Utils;
+import com.katyshevtseva.fx.WindowBuilder.FxController;
 import com.katyshevtseva.kikiorg.core.Core;
 import com.katyshevtseva.kikiorg.core.sections.finance.entity.Account;
-import com.katyshevtseva.kikiorg.view.utils.Utils;
-import com.katyshevtseva.kikiorg.view.utils.WindowBuilder.FxController;
+import com.katyshevtseva.kikiorg.view.utils.OrgUtils;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;

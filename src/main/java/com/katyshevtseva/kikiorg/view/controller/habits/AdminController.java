@@ -1,11 +1,10 @@
 package com.katyshevtseva.kikiorg.view.controller.habits;
 
+import com.katyshevtseva.fx.WindowBuilder.FxController;
 import com.katyshevtseva.kikiorg.core.Core;
 import com.katyshevtseva.kikiorg.core.sections.habits.entity.Habit;
-import com.katyshevtseva.kikiorg.view.controller.dialog.HabitEditDialogController;
+import com.katyshevtseva.kikiorg.view.utils.OrgUtils;
 import com.katyshevtseva.kikiorg.view.utils.OrganizerWindowCreator;
-import com.katyshevtseva.kikiorg.view.utils.Utils;
-import com.katyshevtseva.kikiorg.view.utils.WindowBuilder.FxController;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -45,9 +44,9 @@ class AdminController implements FxController {
         for (Habit habit : habits) {
             Label label = new Label(habit.getTitle());
             if (habit.isActive())
-                label.setStyle(Utils.getGreenTextStyle());
+                label.setStyle(OrgUtils.getGreenTextStyle());
             else
-                label.setStyle(Utils.getGrayTextStyle());
+                label.setStyle(OrgUtils.getGrayTextStyle());
             Label point = new Label();
             habitIdPointLabelMap.put(habit.getId(), point);
             label.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {

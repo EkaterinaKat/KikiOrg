@@ -1,10 +1,10 @@
 package com.katyshevtseva.kikiorg.view.controller;
 
+import com.katyshevtseva.fx.WindowBuilder.FxController;
 import com.katyshevtseva.kikiorg.view.controller.finance.MainFinanceController;
 import com.katyshevtseva.kikiorg.view.controller.habits.MainHabitsController;
 import com.katyshevtseva.kikiorg.view.controller.wardrobe.MainWardrobeController;
 import com.katyshevtseva.kikiorg.view.utils.OrganizerWindowCreator;
-import com.katyshevtseva.kikiorg.view.utils.WindowBuilder;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
@@ -14,7 +14,7 @@ import javafx.scene.layout.Pane;
 
 import java.util.Arrays;
 
-public class MainController extends AbstractSwitchController implements WindowBuilder.FxController {
+public class MainController extends AbstractSwitchController implements FxController {
     @FXML
     private Button habitsButton;
     @FXML
@@ -34,7 +34,7 @@ public class MainController extends AbstractSwitchController implements WindowBu
 
     @FXML
     private void initialize() {
-        logoImageView.setImage(new Image("logo.png"));
+        logoImageView.setImage(new Image("images/logo.png"));
         pane = mainPane;
         buttons.addAll(Arrays.asList(habitsButton, financeButton, wardrobeButton));
         financeButton.setOnAction(event -> financeButtonListener());

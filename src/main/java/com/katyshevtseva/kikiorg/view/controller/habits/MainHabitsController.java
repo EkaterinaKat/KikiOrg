@@ -1,8 +1,8 @@
 package com.katyshevtseva.kikiorg.view.controller.habits;
 
+import com.katyshevtseva.fx.WindowBuilder.FxController;
 import com.katyshevtseva.kikiorg.view.controller.AbstractSwitchController;
 import com.katyshevtseva.kikiorg.view.utils.OrganizerWindowCreator;
-import com.katyshevtseva.kikiorg.view.utils.WindowBuilder.FxController;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.Button;

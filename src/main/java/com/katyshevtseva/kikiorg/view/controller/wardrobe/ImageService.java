@@ -3,7 +3,7 @@ package com.katyshevtseva.kikiorg.view.controller.wardrobe;
 import com.katyshevtseva.fx.dialog.StandardDialogBuilder;
 import com.katyshevtseva.kikiorg.core.sections.wardrobe.Imagable;
 import com.katyshevtseva.kikiorg.core.sections.wardrobe.entity.Piece;
-import com.katyshevtseva.kikiorg.view.utils.Utils;
+import com.katyshevtseva.kikiorg.view.utils.OrgUtils;
 import javafx.scene.image.Image;
 
 import java.io.File;
@@ -38,7 +38,7 @@ class ImageService {
                 e.printStackTrace();
             }
         }
-        new StandardDialogBuilder().setCssPath(Utils.getCssPath()).openInfoDialog("Ошибка!\n Файл с изображением не найден");
+        new StandardDialogBuilder().setCssPath(OrgUtils.getCssPath()).openInfoDialog("Ошибка!\n Файл с изображением не найден");
         throw new RuntimeException();
     }
 

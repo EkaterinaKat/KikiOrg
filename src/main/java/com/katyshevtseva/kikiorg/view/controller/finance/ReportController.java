@@ -1,13 +1,14 @@
 package com.katyshevtseva.kikiorg.view.controller.finance;
 
+import com.katyshevtseva.fx.Utils;
+import com.katyshevtseva.fx.WindowBuilder.FxController;
 import com.katyshevtseva.kikiorg.core.Core;
 import com.katyshevtseva.kikiorg.core.date.DateUtils;
 import com.katyshevtseva.kikiorg.core.sections.finance.report.ExpensesReportService;
 import com.katyshevtseva.kikiorg.core.sections.finance.report.IncomeReportService;
 import com.katyshevtseva.kikiorg.core.sections.finance.report.Report;
 import com.katyshevtseva.kikiorg.core.sections.finance.report.ReportSegment;
-import com.katyshevtseva.kikiorg.view.utils.Utils;
-import com.katyshevtseva.kikiorg.view.utils.WindowBuilder.FxController;
+import com.katyshevtseva.kikiorg.view.utils.OrgUtils;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -21,13 +22,14 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 
 import java.time.LocalDate;
-import java.util.*;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import static com.katyshevtseva.kikiorg.view.controller.finance.ReportController.Mode.Expenses;
 import static com.katyshevtseva.kikiorg.view.controller.finance.ReportController.Mode.Income;
-import static com.katyshevtseva.kikiorg.view.utils.Utils.getPeriodByDp;
-import static java.util.Calendar.MONTH;
-import static java.util.Calendar.YEAR;
+import static com.katyshevtseva.kikiorg.view.utils.OrgUtils.getPeriodByDp;
 
 class ReportController implements FxController {
     private ExpensesReportService expensesReportService = Core.getInstance().expensesReportService();

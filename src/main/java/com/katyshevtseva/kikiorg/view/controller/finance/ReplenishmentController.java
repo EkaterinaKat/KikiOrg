@@ -1,15 +1,13 @@
 package com.katyshevtseva.kikiorg.view.controller.finance;
 
+import com.katyshevtseva.fx.Utils;
+import com.katyshevtseva.fx.WindowBuilder.FxController;
 import com.katyshevtseva.kikiorg.core.Core;
 import com.katyshevtseva.kikiorg.core.sections.finance.entity.Account;
 import com.katyshevtseva.kikiorg.core.sections.finance.entity.Source;
-import com.katyshevtseva.kikiorg.view.controller.dialog.TwoFieldsEditDialogController;
-import com.katyshevtseva.kikiorg.view.utils.OrganizerWindowCreator;
-import com.katyshevtseva.kikiorg.view.utils.Utils;
-import com.katyshevtseva.kikiorg.view.utils.WindowBuilder.FxController;
+import com.katyshevtseva.kikiorg.view.utils.OrgUtils;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -120,14 +118,13 @@ class ReplenishmentController implements FxController {
                     private final Button button = new Button("Edit");
 
                     {
-                        button.setOnAction((ActionEvent event) -> {
+                        button.setOnAction(event -> {
                             Source source = getTableView().getItems().get(getIndex());
-                            OrganizerWindowCreator.getInstance().openTwoFieldsEditDialog(new TwoFieldsEditDialogController(
-                                    source.getTitle(), source.getDescription(),
+                            OrgUtils.getDialogBuilder().openTextFieldAndTextAreaDialog(source.getTitle(), source.getDescription(),
                                     (title, desc) -> {
                                         Core.getInstance().financeService().alterSource(source, title, desc);
                                         fillTable();
-                                    }));
+                                    });
                         });
                     }
 

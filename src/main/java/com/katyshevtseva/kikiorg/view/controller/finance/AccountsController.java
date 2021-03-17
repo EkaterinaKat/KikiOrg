@@ -1,12 +1,10 @@
 package com.katyshevtseva.kikiorg.view.controller.finance;
 
+import com.katyshevtseva.fx.Utils;
+import com.katyshevtseva.fx.WindowBuilder.FxController;
 import com.katyshevtseva.kikiorg.core.Core;
 import com.katyshevtseva.kikiorg.core.sections.finance.entity.Account;
-import com.katyshevtseva.kikiorg.view.controller.dialog.InfoDialogController;
-import com.katyshevtseva.kikiorg.view.controller.dialog.TwoFieldsEditDialogController;
-import com.katyshevtseva.kikiorg.view.utils.OrganizerWindowCreator;
-import com.katyshevtseva.kikiorg.view.utils.Utils;
-import com.katyshevtseva.kikiorg.view.utils.WindowBuilder.FxController;
+import com.katyshevtseva.kikiorg.view.utils.OrgUtils;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -84,12 +82,11 @@ class AccountsController implements FxController {
                     {
                         button.setOnAction((ActionEvent event) -> {
                             Account account = getTableView().getItems().get(getIndex());
-                            OrganizerWindowCreator.getInstance().openTwoFieldsEditDialog(new TwoFieldsEditDialogController(
-                                    account.getTitle(), account.getDescription(),
+                            OrgUtils.getDialogBuilder().openTextFieldAndTextAreaDialog(account.getTitle(), account.getDescription(),
                                     (title, desc) -> {
                                         Core.getInstance().financeService().alterAccount(account, title, desc);
                                         fillTable();
-                                    }));
+                                    });
                         });
                     }
 

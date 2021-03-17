@@ -1,15 +1,16 @@
 package com.katyshevtseva.kikiorg.view.utils;
 
+import com.katyshevtseva.fx.WindowBuilder;
+import com.katyshevtseva.fx.WindowBuilder.FxController;
 import com.katyshevtseva.kikiorg.core.CoreConstants;
-import com.katyshevtseva.kikiorg.view.utils.WindowBuilder.FxController;
 import javafx.scene.Node;
 
+import static com.katyshevtseva.kikiorg.view.utils.OrgUtils.getIcoImagePath;
 import static com.katyshevtseva.kikiorg.view.utils.ViewConstants.*;
 
 
 public class OrganizerWindowCreator {
     private static final OrganizerWindowCreator INSTANCE = new OrganizerWindowCreator();
-    private static final String ICON_IMAGE_PATH = "file:D:\\Code\\KikiOrg\\src\\main\\java\\com\\katyshevtseva\\kikiorg\\view\\res\\images\\ico.png";
 
     private OrganizerWindowCreator() {
     }
@@ -19,34 +20,10 @@ public class OrganizerWindowCreator {
     }
 
     public void openMainWindow(FxController controller) {
-        new WindowBuilder(FXML_LOCATION + "main.fxml").setIconImagePath(ICON_IMAGE_PATH).
+        new WindowBuilder(FXML_LOCATION + "main.fxml").setIconImagePath(getIcoImagePath()).
                 setController(controller).setHeight(WINDOW_HEIGHT).
                 setWidth(WINDOW_WIDTH).setTitle(CoreConstants.APP_NAME).
                 setOnWindowCloseEventHandler(event -> System.exit(0)).showWindow();
-    }
-
-    public void openQuestionDialog(FxController controller) {
-        new WindowBuilder(DIALOG_FXML_LOCATION + "question_dialog.fxml").setIconImagePath(ICON_IMAGE_PATH).
-                setController(controller).setHeight(DIALOG_HEIGHT).
-                setWidth(DIALOG_WIDTH).setTitle(CoreConstants.APP_NAME).showWindow();
-    }
-
-    public void openInfoDialog(FxController controller) {
-        new WindowBuilder(DIALOG_FXML_LOCATION + "info_dialog.fxml").setIconImagePath(ICON_IMAGE_PATH).
-                setController(controller).setHeight(DIALOG_HEIGHT).
-                setWidth(DIALOG_WIDTH).setTitle(CoreConstants.APP_NAME).showWindow();
-    }
-
-    public void openBigInfoDialog(FxController controller) {
-        new WindowBuilder(DIALOG_FXML_LOCATION + "info_dialog.fxml").setIconImagePath(ICON_IMAGE_PATH).
-                setController(controller).setHeight(BIG_DIALOG_HEIGHT).
-                setWidth(BIG_DIALOG_WIDTH).setTitle(CoreConstants.APP_NAME).showWindow();
-    }
-
-    public void openTwoFieldsEditDialog(FxController controller) {
-        new WindowBuilder(DIALOG_FXML_LOCATION + "two_fields_edit_dialog.fxml").setIconImagePath(ICON_IMAGE_PATH).
-                setController(controller).setHeight(DIALOG_HEIGHT).
-                setWidth(DIALOG_WIDTH).setTitle(CoreConstants.APP_NAME).showWindow();
     }
 
     /* ---------------------------------- Гардероб ---------------------------------------------- */
@@ -64,18 +41,18 @@ public class OrganizerWindowCreator {
     }
 
     public void openPieceEditDialog(FxController controller) {
-        new WindowBuilder(WARDROBE_FXML_LOCATION + "piece_edit_dialog.fxml").setIconImagePath(ICON_IMAGE_PATH).
+        new WindowBuilder(WARDROBE_FXML_LOCATION + "piece_edit_dialog.fxml").setIconImagePath(getIcoImagePath()).
                 setController(controller).setHeight(700).setWidth(800).setTitle(CoreConstants.APP_NAME).showWindow();
     }
 
     public void openImageSelectionDialog(FxController controller) {
-        new WindowBuilder(WARDROBE_FXML_LOCATION + "image_selection_dialog.fxml").setIconImagePath(ICON_IMAGE_PATH).
+        new WindowBuilder(WARDROBE_FXML_LOCATION + "image_selection_dialog.fxml").setIconImagePath(getIcoImagePath()).
                 setController(controller).setHeight(IMAGE_SELECTION_DIALOG_HEIGHT).
                 setWidth(IMAGE_SELECTION_DIALOG_WIDTH).setTitle(CoreConstants.APP_NAME).showWindow();
     }
 
     public void openOutfitDialog(FxController controller) {
-        new WindowBuilder(WARDROBE_FXML_LOCATION + "outfit_dialog.fxml").setIconImagePath(ICON_IMAGE_PATH).
+        new WindowBuilder(WARDROBE_FXML_LOCATION + "outfit_dialog.fxml").setIconImagePath(getIcoImagePath()).
                 setController(controller).setHeight(800).setWidth(1000).setTitle(CoreConstants.APP_NAME).showWindow();
     }
 
@@ -106,7 +83,7 @@ public class OrganizerWindowCreator {
     }
 
     public void openHabitEditDialog(FxController controller) {
-        new WindowBuilder(DIALOG_FXML_LOCATION + "habit_edit_dialog.fxml").setIconImagePath(ICON_IMAGE_PATH).
+        new WindowBuilder(HABITS_FXML_LOCATION + "habit_edit_dialog.fxml").setIconImagePath(getIcoImagePath()).
                 setController(controller).setHeight(BIG_DIALOG_HEIGHT).
                 setWidth(BIG_DIALOG_WIDTH).setTitle(CoreConstants.APP_NAME).showWindow();
     }
@@ -158,7 +135,7 @@ public class OrganizerWindowCreator {
     }
 
     public void openItemSelectDialog(FxController controller) {
-        new WindowBuilder(DIALOG_FXML_LOCATION + "item_select_dialog.fxml").setIconImagePath(ICON_IMAGE_PATH).
+        new WindowBuilder(FINANCE_FXML_LOCATION + "item_select_dialog.fxml").setIconImagePath(getIcoImagePath()).
                 setController(controller).setHeight(ITEM_SELECT_DIALOG_HEIGHT).
                 setWidth(ITEM_SELECT_DIALOG_WIDTH).setTitle("Select item").showWindow();
     }

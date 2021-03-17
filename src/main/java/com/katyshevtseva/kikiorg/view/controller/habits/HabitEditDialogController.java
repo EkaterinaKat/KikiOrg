@@ -1,12 +1,13 @@
-package com.katyshevtseva.kikiorg.view.controller.dialog;
+package com.katyshevtseva.kikiorg.view.controller.habits;
 
+import com.katyshevtseva.fx.Utils;
+import com.katyshevtseva.fx.WindowBuilder.FxController;
 import com.katyshevtseva.kikiorg.core.Core;
 import com.katyshevtseva.kikiorg.core.sections.habits.HabitGroup;
 import com.katyshevtseva.kikiorg.core.sections.habits.entity.EnumElement;
 import com.katyshevtseva.kikiorg.core.sections.habits.entity.Habit;
 import com.katyshevtseva.kikiorg.core.sections.habits.entity.HabitType;
-import com.katyshevtseva.kikiorg.view.utils.Utils;
-import com.katyshevtseva.kikiorg.view.utils.WindowBuilder.FxController;
+import com.katyshevtseva.kikiorg.view.utils.OrgUtils;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -16,7 +17,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class HabitEditDialogController implements FxController {
+class HabitEditDialogController implements FxController {
     @FXML
     private TextField titleTextField;
     @FXML

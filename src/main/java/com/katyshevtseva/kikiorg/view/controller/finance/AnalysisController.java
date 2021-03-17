@@ -1,9 +1,10 @@
 package com.katyshevtseva.kikiorg.view.controller.finance;
 
+import com.katyshevtseva.fx.Utils;
+import com.katyshevtseva.fx.WindowBuilder.FxController;
 import com.katyshevtseva.kikiorg.core.Core;
 import com.katyshevtseva.kikiorg.core.date.DateUtils;
-import com.katyshevtseva.kikiorg.view.utils.Utils;
-import com.katyshevtseva.kikiorg.view.utils.WindowBuilder.FxController;
+import com.katyshevtseva.kikiorg.view.utils.OrgUtils;
 import javafx.fxml.FXML;
 import javafx.scene.chart.BarChart;
 import javafx.scene.chart.XYChart;
@@ -13,10 +14,6 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
 
 import java.time.LocalDate;
-import java.util.Calendar;
-
-import static java.util.Calendar.MONTH;
-import static java.util.Calendar.YEAR;
 
 class AnalysisController implements FxController {
     @FXML
@@ -52,9 +49,9 @@ class AnalysisController implements FxController {
         table.getChildren().clear();
 
         long incomeAmount = Core.getInstance().incomeReportService().getIncomeReport(
-                Utils.getPeriodByDp(startDatePicker, endDatePicker)).getTotal();
+                OrgUtils.getPeriodByDp(startDatePicker, endDatePicker)).getTotal();
         long expensesAmount = Core.getInstance().expensesReportService().getHeadReport(
-                Utils.getPeriodByDp(startDatePicker, endDatePicker)).getTotal();
+                OrgUtils.getPeriodByDp(startDatePicker, endDatePicker)).getTotal();
 
         XYChart.Series<String, Long> series1 = new XYChart.Series<>();
         series1.getData().add(new XYChart.Data<String, Long>("", incomeAmount));

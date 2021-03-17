@@ -8,7 +8,7 @@
       alignment="CENTER">
 
     <stylesheets>
-        <URL value="@/com/katyshevtseva/kikiorg/view/res/css/general_style.css"/>
+        <URL value="@/css/general_style.css"/>
     </stylesheets>
 
     <GridPane alignment="CENTER" hgap="25" vgap="25">

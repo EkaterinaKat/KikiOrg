@@ -1,6 +1,6 @@
 package com.katyshevtseva.kikiorg.view.controller;
 
-import com.katyshevtseva.kikiorg.view.utils.WindowBuilder.FxController;
+import com.katyshevtseva.fx.WindowBuilder.FxController;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.layout.Pane;

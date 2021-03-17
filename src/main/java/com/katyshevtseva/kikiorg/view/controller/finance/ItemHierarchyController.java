@@ -1,5 +1,8 @@
 package com.katyshevtseva.kikiorg.view.controller.finance;
 
+import com.katyshevtseva.fx.Utils;
+import com.katyshevtseva.fx.WindowBuilder;
+import com.katyshevtseva.fx.WindowBuilder.FxController;
 import com.katyshevtseva.kikiorg.core.Core;
 import com.katyshevtseva.kikiorg.core.exeption.SchemaException;
 import com.katyshevtseva.kikiorg.core.sections.finance.ItemHierarchyService;
@@ -9,14 +12,9 @@ import com.katyshevtseva.kikiorg.core.sections.finance.ItemSchemaService.AddButt
 import com.katyshevtseva.kikiorg.core.sections.finance.ItemSchemaService.Entry;
 import com.katyshevtseva.kikiorg.core.sections.finance.ItemSchemaService.SchemaLine;
 import com.katyshevtseva.kikiorg.core.sections.finance.entity.ItemGroup;
-import com.katyshevtseva.kikiorg.view.controller.dialog.InfoDialogController;
-import com.katyshevtseva.kikiorg.view.controller.dialog.QuestionDialogController;
-import com.katyshevtseva.kikiorg.view.utils.OrganizerWindowCreator;
-import com.katyshevtseva.kikiorg.view.utils.Utils;
-import com.katyshevtseva.kikiorg.view.utils.WindowBuilder.FxController;
+import com.katyshevtseva.kikiorg.view.utils.OrgUtils;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -76,7 +74,7 @@ class ItemHierarchyController implements FxController {
                     addButton.add(comboBox.getValue());
                     fillSchema();
                 } catch (SchemaException e) {
-                    OrganizerWindowCreator.getInstance().openInfoDialog(new InfoDialogController(e.getMessage()));
+                    OrgUtils.getDialogBuilder().openInfoDialog(e.getMessage());
                     comboBox.setVisible(false);
                     e.printStackTrace();
                 }
@@ -132,17 +130,16 @@ class ItemHierarchyController implements FxController {
 
                     {
                         button.setMaxHeight(10);
-                        button.setOnAction((ActionEvent event) ->
-                                OrganizerWindowCreator.getInstance().openQuestionDialog(new QuestionDialogController(
-                                        "Delete?",
-                                        b -> {
-                                            if (b) {
-                                                Core.getInstance().itemHierarchyService().destroyTreeAndDeleteGroup(
-                                                        getTableView().getItems().get(getIndex()));
-                                                fillTable();
-                                                fillSchema();
-                                            }
-                                        })));
+                        button.setOnAction(event -> {
+                            OrgUtils.getDialogBuilder().openQuestionDialog("Delete?", b -> {
+                                if (b) {
+                                    Core.getInstance().itemHierarchyService().destroyTreeAndDeleteGroup(
+                                            getTableView().getItems().get(getIndex()));
+                                    fillTable();
+                                    fillSchema();
+                                }
+                            });
+                        });
                     }
 
                     @Override

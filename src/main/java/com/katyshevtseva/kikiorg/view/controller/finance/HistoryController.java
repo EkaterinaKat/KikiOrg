@@ -1,15 +1,13 @@
 package com.katyshevtseva.kikiorg.view.controller.finance;
 
+import com.katyshevtseva.fx.Utils;
+import com.katyshevtseva.fx.WindowBuilder.FxController;
 import com.katyshevtseva.kikiorg.core.Core;
 import com.katyshevtseva.kikiorg.core.sections.finance.FinanceOperationService.Operation;
 import com.katyshevtseva.kikiorg.core.sections.finance.FinanceOperationService.OperationType;
-import com.katyshevtseva.kikiorg.view.controller.dialog.QuestionDialogController;
-import com.katyshevtseva.kikiorg.view.utils.OrganizerWindowCreator;
-import com.katyshevtseva.kikiorg.view.utils.Utils;
-import com.katyshevtseva.kikiorg.view.utils.WindowBuilder.FxController;
+import com.katyshevtseva.kikiorg.view.utils.OrgUtils;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -60,17 +58,16 @@ class HistoryController implements FxController {
                     private final Button button = new Button();
 
                     {
-                        Utils.setImageOnButton("delete.png", button, 20);
-                        button.setOnAction((ActionEvent event) ->
-                                OrganizerWindowCreator.getInstance().openQuestionDialog(new QuestionDialogController(
-                                        "Delete?",
-                                        b -> {
-                                            if (b) {
-                                                Core.getInstance().financeOperationService().deleteOperation(
-                                                        getTableView().getItems().get(getIndex()));
-                                                fillTable();
-                                            }
-                                        })));
+                        Utils.setImageOnButton("images/delete.png", button, 20);
+                        button.setOnAction(event -> {
+                            OrgUtils.getDialogBuilder().openQuestionDialog("Delete?", b -> {
+                                if (b) {
+                                    Core.getInstance().financeOperationService().deleteOperation(
+                                            getTableView().getItems().get(getIndex()));
+                                    fillTable();
+                                }
+                            });
+                        });
                     }
 
                     @Override
@@ -98,11 +95,11 @@ class HistoryController implements FxController {
                         super.updateItem(operation, empty);
                         if (operation != null) {
                             if (operation.getType() == OperationType.EXPENSE) {
-                                setStyle(Utils.getOrangeBackground());
+                                setStyle(OrgUtils.getOrangeBackground());
                             } else if (operation.getType() == OperationType.REPLENISHMENT) {
-                                setStyle(Utils.getGreenBackground());
+                                setStyle(OrgUtils.getGreenBackground());
                             } else if (operation.getType() == OperationType.TRANSFER) {
-                                setStyle(Utils.getBlueBackground());
+                                setStyle(OrgUtils.getBlueBackground());
                             }
                         }
                     }
