@@ -1,5 +1,6 @@
 package com.katyshevtseva.kikiorg.view.controller.finance;
 
+import com.katyshevtseva.fx.Styler;
 import com.katyshevtseva.fx.Utils;
 import com.katyshevtseva.fx.WindowBuilder.FxController;
 import com.katyshevtseva.kikiorg.core.Core;
@@ -12,6 +13,10 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.util.Callback;
+
+import static com.katyshevtseva.fx.Styler.StandardColor.*;
+import static com.katyshevtseva.fx.Styler.ThingToColor.BACKGROUND;
+import static com.katyshevtseva.fx.Styler.ThingToColor.TEXT;
 
 
 class HistoryController implements FxController {
@@ -95,11 +100,11 @@ class HistoryController implements FxController {
                         super.updateItem(operation, empty);
                         if (operation != null) {
                             if (operation.getType() == OperationType.EXPENSE) {
-                                setStyle(OrgUtils.getOrangeBackground());
+                                setStyle(Styler.getColorfullStyle(BACKGROUND, ORANGE));
                             } else if (operation.getType() == OperationType.REPLENISHMENT) {
-                                setStyle(OrgUtils.getGreenBackground());
+                                setStyle(Styler.getColorfullStyle(BACKGROUND, SCREAMING_GREEN));
                             } else if (operation.getType() == OperationType.TRANSFER) {
-                                setStyle(OrgUtils.getBlueBackground());
+                                setStyle(Styler.getColorfullStyle(BACKGROUND, BLUE));
                             }
                         }
                     }

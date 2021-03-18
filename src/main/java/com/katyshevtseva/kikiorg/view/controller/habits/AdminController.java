@@ -1,5 +1,6 @@
 package com.katyshevtseva.kikiorg.view.controller.habits;
 
+import com.katyshevtseva.fx.Styler;
 import com.katyshevtseva.fx.WindowBuilder.FxController;
 import com.katyshevtseva.kikiorg.core.Core;
 import com.katyshevtseva.kikiorg.core.sections.habits.entity.Habit;
@@ -14,6 +15,10 @@ import javafx.scene.layout.GridPane;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import static com.katyshevtseva.fx.Styler.StandardColor.GRAY;
+import static com.katyshevtseva.fx.Styler.StandardColor.GREEN;
+import static com.katyshevtseva.fx.Styler.ThingToColor.TEXT;
 
 class AdminController implements FxController {
     @FXML
@@ -44,9 +49,9 @@ class AdminController implements FxController {
         for (Habit habit : habits) {
             Label label = new Label(habit.getTitle());
             if (habit.isActive())
-                label.setStyle(OrgUtils.getGreenTextStyle());
+                label.setStyle(Styler.getColorfullStyle(TEXT, GREEN));
             else
-                label.setStyle(OrgUtils.getGrayTextStyle());
+                label.setStyle(Styler.getColorfullStyle(TEXT, GRAY));
             Label point = new Label();
             habitIdPointLabelMap.put(habit.getId(), point);
             label.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {

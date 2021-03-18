@@ -16,6 +16,10 @@ import javafx.scene.layout.VBox;
 
 import java.util.List;
 
+import static com.katyshevtseva.fx.Styler.StandardColor.GREEN;
+import static com.katyshevtseva.fx.Styler.StandardColor.PURPLE;
+import static com.katyshevtseva.fx.Styler.ThingToColor.TEXT;
+
 public class ItemSelectDialogController implements FxController {
     @FXML
     private VBox container;
@@ -40,7 +44,7 @@ public class ItemSelectDialogController implements FxController {
                 Entry entry = (Entry) line;
                 label.setText(getIndentByLevel(entry.getLevel()) + entry.getText());
                 if (entry.isLeaf()) {
-                    label.setStyle(OrgUtils.getPurpleTextStyle() + Styler.getBoldTextStyle());
+                    label.setStyle(Styler.getColorfullStyle(TEXT, PURPLE) + Styler.getBoldTextStyle());
                     label.setOnMouseClicked(event -> {
                         itemSelectionHandler.execute(entry.getItem());
                         Utils.closeWindowThatContains(container);
