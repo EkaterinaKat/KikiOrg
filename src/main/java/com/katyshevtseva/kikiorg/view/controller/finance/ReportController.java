@@ -8,7 +8,6 @@ import com.katyshevtseva.kikiorg.core.sections.finance.report.ExpensesReportServ
 import com.katyshevtseva.kikiorg.core.sections.finance.report.IncomeReportService;
 import com.katyshevtseva.kikiorg.core.sections.finance.report.Report;
 import com.katyshevtseva.kikiorg.core.sections.finance.report.ReportSegment;
-import com.katyshevtseva.kikiorg.view.utils.OrgUtils;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -27,6 +26,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import static com.katyshevtseva.kikiorg.core.CoreConstants.FINANCIAL_ACCOUNTING_START_DATE;
 import static com.katyshevtseva.kikiorg.view.controller.finance.ReportController.Mode.Expenses;
 import static com.katyshevtseva.kikiorg.view.controller.finance.ReportController.Mode.Income;
 import static com.katyshevtseva.kikiorg.view.utils.OrgUtils.getPeriodByDp;
@@ -46,6 +46,8 @@ class ReportController implements FxController {
     private GridPane table;
     @FXML
     private ComboBox<Mode> modeComboBox;
+    @FXML
+    private Button startDateButton;
 
     enum Mode {
         Income, Expenses
@@ -58,6 +60,8 @@ class ReportController implements FxController {
         setInitialDates();
         modeComboBox.setItems(FXCollections.observableArrayList(Arrays.asList(Income, Expenses)));
         modeComboBox.setValue(Expenses);
+        startDateButton.setOnAction(event ->
+                startDatePicker.setValue(new java.sql.Date(FINANCIAL_ACCOUNTING_START_DATE.getTime()).toLocalDate()));
     }
 
     private void setInitialDates() {

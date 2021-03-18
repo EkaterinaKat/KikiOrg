@@ -10,6 +10,8 @@
       xmlns:fx="http://javafx.com/fxml">
 
     <VBox prefWidth="300">
+        <Button fx:id="startDateButton" text="Set start date" maxWidth="250" minWidth="250"/>
+        <Pane minHeight="15" maxHeight="15"/>
         <ComboBox fx:id="modeComboBox" maxWidth="250" minWidth="250"/>
         <Pane minHeight="15" maxHeight="15"/>
         <DatePicker fx:id="startDatePicker" maxWidth="250" minWidth="250"/>
