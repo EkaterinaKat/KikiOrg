@@ -1,5 +1,6 @@
 package com.katyshevtseva.kikiorg.view.controller.finance;
 
+import com.katyshevtseva.date.DateCorrector;
 import com.katyshevtseva.fx.Utils;
 import com.katyshevtseva.fx.WindowBuilder.FxController;
 import com.katyshevtseva.kikiorg.core.Core;
@@ -66,7 +67,7 @@ class ReportController implements FxController {
 
     private void setInitialDates() {
         startDatePicker.setValue(new java.sql.Date(DateUtils.getMonthAgoDate().getTime()).toLocalDate());
-        endDatePicker.setValue(LocalDate.now());
+        endDatePicker.setValue(new java.sql.Date(DateCorrector.getProperDate().getTime()).toLocalDate());
     }
 
     private void showButtonListener() {

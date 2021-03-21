@@ -1,5 +1,6 @@
 package com.katyshevtseva.kikiorg.view.controller.finance;
 
+import com.katyshevtseva.date.DateCorrector;
 import com.katyshevtseva.fx.Utils;
 import com.katyshevtseva.fx.WindowBuilder.FxController;
 import com.katyshevtseva.kikiorg.core.Core;
@@ -15,8 +16,6 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.text.Text;
 import javafx.util.Callback;
-
-import java.time.LocalDate;
 
 class ExpensesController implements FxController {
     @FXML
@@ -58,7 +57,7 @@ class ExpensesController implements FxController {
         Utils.associateButtonWithControls(doneButton, amountTextField, accountComboBox, itemComboBox, datePicker);
         setItemComboBoxItems();
         setAccountComboBoxItems();
-        datePicker.setValue(LocalDate.now());
+        datePicker.setValue(new java.sql.Date(DateCorrector.getProperDate().getTime()).toLocalDate());
         adjustColumns();
         fillTable();
     }

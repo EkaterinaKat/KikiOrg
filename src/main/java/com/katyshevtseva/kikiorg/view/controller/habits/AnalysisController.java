@@ -1,5 +1,6 @@
 package com.katyshevtseva.kikiorg.view.controller.habits;
 
+import com.katyshevtseva.date.DateCorrector;
 import com.katyshevtseva.fx.Utils;
 import com.katyshevtseva.fx.WindowBuilder.FxController;
 import com.katyshevtseva.kikiorg.core.Core;
@@ -13,7 +14,6 @@ import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
 
-import java.time.LocalDate;
 import java.util.Date;
 
 import static com.katyshevtseva.date.Utils.TimeUnit.DAY;
@@ -46,17 +46,17 @@ class AnalysisController implements FxController {
 
     private void setInitialDates() {
         startDatePicker.setValue(new java.sql.Date(DateUtils.getMonthAgoDate().getTime()).toLocalDate());
-        endDatePicker.setValue(LocalDate.now());
+        endDatePicker.setValue(new java.sql.Date(DateCorrector.getProperDate().getTime()).toLocalDate());
     }
 
     private void showButtonListener() {
         resultsPane.getChildren().clear();
-        int rowIngex = 0;
+        int rowIndex = 0;
         for (Habit habit : Core.getInstance().habitsService().getActiveHabits()) {
             String analysisResult = Core.getInstance().analysisService().simpleAnalyze(
                     habit, OrgUtils.getPeriodByDp(startDatePicker, endDatePicker));
-            resultsPane.add(new Label(analysisResult), 1, rowIngex);
-            rowIngex++;
+            resultsPane.add(new Label(analysisResult), 1, rowIndex);
+            rowIndex++;
         }
     }
 

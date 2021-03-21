@@ -16,7 +16,6 @@ import javafx.util.Callback;
 
 import static com.katyshevtseva.fx.Styler.StandardColor.*;
 import static com.katyshevtseva.fx.Styler.ThingToColor.BACKGROUND;
-import static com.katyshevtseva.fx.Styler.ThingToColor.TEXT;
 
 
 class HistoryController implements FxController {

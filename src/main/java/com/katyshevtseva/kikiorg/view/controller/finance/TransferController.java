@@ -1,17 +1,15 @@
 package com.katyshevtseva.kikiorg.view.controller.finance;
 
+import com.katyshevtseva.date.DateCorrector;
 import com.katyshevtseva.fx.Utils;
 import com.katyshevtseva.fx.WindowBuilder.FxController;
 import com.katyshevtseva.kikiorg.core.Core;
 import com.katyshevtseva.kikiorg.core.sections.finance.entity.Account;
-import com.katyshevtseva.kikiorg.view.utils.OrgUtils;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.util.Callback;
-
-import java.time.LocalDate;
 
 class TransferController implements FxController {
     @FXML
@@ -34,7 +32,7 @@ class TransferController implements FxController {
         Utils.disableNonNumericChars(amountTextField);
         Utils.associateButtonWithControls(transferButton, amountTextField, fromComboBox, toComboBox, datePicker);
         transferButton.setOnAction(event -> transfer());
-        datePicker.setValue(LocalDate.now());
+        datePicker.setValue(new java.sql.Date(DateCorrector.getProperDate().getTime()).toLocalDate());
     }
 
     private void transfer() {
