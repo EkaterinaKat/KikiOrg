@@ -53,8 +53,9 @@ public class AnalysisService {
 
         assignNewStatusIfNeeded(habit, isStable);
 
-        return new AnalysisResult(habit, String.format("НО: %d/%d=%.3f. МО: %d/%d=%.3f.", daysHabitDone, daysTotal,
-                actualRatio, criterion.getDaysHabitDone(), criterion.getDaysTotal(), minimalRatio));
+        return new AnalysisResult(habit, String.format("НО: %d/%d = %.3f.\nМО: %d/%d = %.3f = %d/%d.",
+                daysHabitDone, daysTotal, actualRatio, criterion.getDaysHabitDone(), criterion.getDaysTotal(),
+                minimalRatio, (int) Math.ceil(minimalRatio * daysTotal), daysTotal));
     }
 
     private void assignNewStatusIfNeeded(Habit habit, boolean isStable) {
