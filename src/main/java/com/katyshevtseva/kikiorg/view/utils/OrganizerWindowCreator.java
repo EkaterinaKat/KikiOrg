@@ -26,6 +26,12 @@ public class OrganizerWindowCreator {
                 setOnWindowCloseEventHandler(event -> System.exit(0)).showWindow();
     }
 
+    /* ---------------------------------- Работа ---------------------------------------------- */
+
+    public Node getMainWorkNode(FxController controller) {
+        return new WindowBuilder(WORK_FXML_LOCATION + "main_work.fxml").setController(controller).getNode();
+    }
+
     /* ---------------------------------- Гардероб ---------------------------------------------- */
 
     public Node getMainWardrobeNode(FxController controller) {

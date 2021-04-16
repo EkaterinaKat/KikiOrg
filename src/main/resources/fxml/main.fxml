@@ -21,6 +21,8 @@
                     GridPane.rowIndex="3" GridPane.columnIndex="0"/>
             <Button text="Wardrobe" fx:id="wardrobeButton" prefWidth="180"
                     GridPane.rowIndex="4" GridPane.columnIndex="0"/>
+            <Button text="Work" fx:id="workButton" prefWidth="180"
+                    GridPane.rowIndex="5" GridPane.columnIndex="0"/>
         </GridPane>
     </VBox>
 
