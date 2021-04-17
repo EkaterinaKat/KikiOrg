@@ -1,25 +1,24 @@
 package com.katyshevtseva.kikiorg.core.sections.habits;
 
 
+import com.katyshevtseva.date.Period;
 import com.katyshevtseva.kikiorg.core.date.DateService;
-import com.katyshevtseva.kikiorg.core.date.Period;
+import com.katyshevtseva.kikiorg.core.report.ReportCell;
 import com.katyshevtseva.kikiorg.core.sections.habits.HabitMarkService.HabitMark;
 import com.katyshevtseva.kikiorg.core.sections.habits.entity.Habit;
-import com.katyshevtseva.kikiorg.core.report.ReportCell;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
-import static com.katyshevtseva.kikiorg.core.date.DateUtils.getDateRange;
+import static com.katyshevtseva.date.DateUtils.READABLE_DATE_FORMAT;
+import static com.katyshevtseva.date.DateUtils.getDateRange;
 
 @Service
 public class HabitsReportService {
-    private static SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.YY");
     @Autowired
     private HabitsService habitsService;
     @Autowired
@@ -40,7 +39,7 @@ public class HabitsReportService {
 
     private List<ReportCell> getReportLine(Date date, List<Habit> habits) {
         List<ReportCell> result = new ArrayList<>();
-        result.add(ReportCell.date(dateFormat.format(date)));
+        result.add(ReportCell.date(READABLE_DATE_FORMAT.format(date)));
         for (Habit habit : habits) {
             result.add(convertToCell(habit, date));
         }

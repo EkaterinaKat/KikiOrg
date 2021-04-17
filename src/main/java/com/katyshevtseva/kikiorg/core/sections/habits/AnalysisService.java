@@ -1,7 +1,7 @@
 package com.katyshevtseva.kikiorg.core.sections.habits;
 
-import com.katyshevtseva.kikiorg.core.date.DateUtils;
-import com.katyshevtseva.kikiorg.core.date.Period;
+import com.katyshevtseva.date.Period;
+import com.katyshevtseva.date.DateUtils;
 import com.katyshevtseva.kikiorg.core.sections.habits.entity.Habit;
 import com.katyshevtseva.kikiorg.core.sections.habits.entity.StabilityCriterion;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,9 +10,10 @@ import org.springframework.stereotype.Service;
 import java.util.Date;
 import java.util.List;
 
-import static com.katyshevtseva.date.Utils.TimeUnit.DAY;
-import static com.katyshevtseva.date.Utils.TimeUnit.MONTH;
-import static com.katyshevtseva.date.Utils.shiftDate;
+import static com.katyshevtseva.date.DateUtils.TimeUnit.DAY;
+import static com.katyshevtseva.date.DateUtils.TimeUnit.MONTH;
+import static com.katyshevtseva.date.DateUtils.getDateRange;
+import static com.katyshevtseva.date.DateUtils.shiftDate;
 import static com.katyshevtseva.kikiorg.core.sections.habits.StabilityStatus.*;
 
 @Service
@@ -27,7 +28,7 @@ public class AnalysisService {
     private HabitsService habitsService;
 
     public String simpleAnalyze(Habit habit, Period period) {
-        List<Date> dates = DateUtils.getDateRange(period);
+        List<Date> dates = getDateRange(period);
         int daysHabitDone = 0;
         for (Date date : dates) {
             if (markService.getMarkOrNull(habit, date) != null)
@@ -37,7 +38,7 @@ public class AnalysisService {
     }
 
     public AnalysisResult analyzeStabilityAndAssignNewStatusIfNeeded(Habit habit) {
-        List<Date> dates = DateUtils.getDateRange(new Period(threeMonthAgo, yesterday));
+        List<Date> dates = getDateRange(new Period(threeMonthAgo, yesterday));
         StabilityCriterion criterion = criterionService.getCriterionByHabitOrNull(habit);
         int daysTotal = dates.size();
         int daysHabitDone = getDaysHabitDone(dates, habit);

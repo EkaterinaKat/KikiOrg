@@ -1,10 +1,10 @@
 package com.katyshevtseva.kikiorg.view.controller.finance;
 
 import com.katyshevtseva.date.DateCorrector;
+import com.katyshevtseva.date.DateUtils.TimeUnit;
 import com.katyshevtseva.fx.Utils;
 import com.katyshevtseva.fx.WindowBuilder.FxController;
 import com.katyshevtseva.kikiorg.core.Core;
-import com.katyshevtseva.kikiorg.core.date.DateUtils;
 import com.katyshevtseva.kikiorg.core.sections.finance.report.ExpensesReportService;
 import com.katyshevtseva.kikiorg.core.sections.finance.report.IncomeReportService;
 import com.katyshevtseva.kikiorg.core.sections.finance.report.Report;
@@ -21,11 +21,7 @@ import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 
-import java.time.LocalDate;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import static com.katyshevtseva.kikiorg.core.CoreConstants.FINANCIAL_ACCOUNTING_START_DATE;
 import static com.katyshevtseva.kikiorg.view.controller.finance.ReportController.Mode.Expenses;
@@ -66,7 +62,8 @@ class ReportController implements FxController {
     }
 
     private void setInitialDates() {
-        startDatePicker.setValue(new java.sql.Date(DateUtils.getMonthAgoDate().getTime()).toLocalDate());
+        startDatePicker.setValue(new java.sql.Date(com.katyshevtseva.date.DateUtils.shiftDate(
+                new Date(), TimeUnit.MONTH, -1).getTime()).toLocalDate());
         endDatePicker.setValue(new java.sql.Date(DateCorrector.getProperDate().getTime()).toLocalDate());
     }
 

@@ -1,9 +1,9 @@
 package com.katyshevtseva.kikiorg.core.sections.habits;
 
+import com.katyshevtseva.date.Period;
+import com.katyshevtseva.date.DateUtils;
 import com.katyshevtseva.kikiorg.core.date.DateEntity;
 import com.katyshevtseva.kikiorg.core.date.DateService;
-import com.katyshevtseva.kikiorg.core.date.DateUtils;
-import com.katyshevtseva.kikiorg.core.date.Period;
 import com.katyshevtseva.kikiorg.core.repo.BooleanMarkRepo;
 import com.katyshevtseva.kikiorg.core.repo.EnumElementRepo;
 import com.katyshevtseva.kikiorg.core.repo.EnumMarkRepo;
@@ -17,6 +17,9 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
+
+import static com.katyshevtseva.date.DateUtils.getDateRange;
+import static com.katyshevtseva.date.DateUtils.shiftDate;
 
 
 @Service
@@ -74,7 +77,7 @@ public class HabitMarkService {
     }
 
     public HabitMark getLastMarkByHabitWithinLastWeekOrNull(Habit habit) {
-        List<Date> dates = DateUtils.getDateRange(DateUtils.getLastWeekPeriod());
+        List<Date> dates = getDateRange(new Period(shiftDate(new Date(), DateUtils.TimeUnit.DAY, -7), new Date()));
         dates.sort(Comparator.comparing(Date::getTime).reversed());
         for (Date date : dates) {
             HabitMark habitMark = getMarkOrNull(habit, date);
@@ -102,7 +105,7 @@ public class HabitMarkService {
     }
 
     List<HabitMark> getMarkListByPeriod(Habit habit, Period period) {
-        List<Date> dates = DateUtils.getDateRange(period);
+        List<Date> dates = getDateRange(period);
         List<HabitMark> marks = new ArrayList<>();
         for (Date date : dates) {
             HabitMark mark = getMarkOrNull(habit, date);

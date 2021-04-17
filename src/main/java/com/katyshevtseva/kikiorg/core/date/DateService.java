@@ -1,5 +1,7 @@
 package com.katyshevtseva.kikiorg.core.date;
 
+import com.katyshevtseva.date.Period;
+import com.katyshevtseva.date.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -7,8 +9,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
-
-import static com.katyshevtseva.kikiorg.core.date.DateUtils.getDateRange;
 
 @Service
 public class DateService {
@@ -31,7 +31,7 @@ public class DateService {
 
     public List<DateEntity> getOnlyExistingDateEntitiesByPeriod(Period period) {
         List<DateEntity> dateEntities = new ArrayList<>();
-        for (Date date : getDateRange(period))
+        for (Date date : DateUtils.getDateRange(period))
             dateRepo.findByValue(date).ifPresent(dateEntities::add);
         return dateEntities;
     }

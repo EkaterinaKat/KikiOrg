@@ -1,7 +1,7 @@
 package com.katyshevtseva.kikiorg.view.utils;
 
+import com.katyshevtseva.date.Period;
 import com.katyshevtseva.fx.dialog.StandardDialogBuilder;
-import com.katyshevtseva.kikiorg.core.date.Period;
 import javafx.scene.control.DatePicker;
 
 import java.sql.Date;

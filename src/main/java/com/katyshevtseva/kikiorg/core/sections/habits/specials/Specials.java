@@ -1,7 +1,7 @@
 package com.katyshevtseva.kikiorg.core.sections.habits.specials;
 
-import com.katyshevtseva.kikiorg.core.date.DateUtils;
-import com.katyshevtseva.kikiorg.core.date.Period;
+import com.katyshevtseva.date.Period;
+import com.katyshevtseva.date.DateUtils;
 import com.katyshevtseva.kikiorg.core.repo.EnumElementRepo;
 import com.katyshevtseva.kikiorg.core.repo.HabitsRepo;
 import com.katyshevtseva.kikiorg.core.sections.habits.HabitMarkService;
@@ -16,6 +16,8 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
+import static com.katyshevtseva.date.DateUtils.READABLE_DATE_FORMAT;
+
 @Service
 public class Specials {
     @Autowired
@@ -28,7 +30,6 @@ public class Specials {
     //    @PostConstruct
     public void severalHabitsToOne() {
         System.out.println("start");
-        SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy");
         Habit habit1 = habitsRepo.findById(7L).get();
         Habit habit2 = habitsRepo.findById(8L).get();
         Habit habit3 = habitsRepo.findById(9L).get();
@@ -40,7 +41,7 @@ public class Specials {
         List<Date> dates = null;
         try {
             dates = DateUtils.getDateRange(
-                    new Period(dateFormat.parse("01.03.2020"), dateFormat.parse("03.03.2021")));
+                    new Period(READABLE_DATE_FORMAT.parse("01.03.2020"), READABLE_DATE_FORMAT.parse("03.03.2021")));
         } catch (ParseException e) {
             e.printStackTrace();
         }

@@ -1,8 +1,9 @@
 package com.katyshevtseva.kikiorg.core.sections.finance;
 
+import com.katyshevtseva.date.Period;
+import com.katyshevtseva.date.DateUtils;
 import com.katyshevtseva.kikiorg.core.date.DateEntity;
 import com.katyshevtseva.kikiorg.core.date.DateService;
-import com.katyshevtseva.kikiorg.core.date.Period;
 import com.katyshevtseva.kikiorg.core.repo.*;
 import com.katyshevtseva.kikiorg.core.sections.finance.entity.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.*;
 
+import static com.katyshevtseva.date.DateUtils.getLastMonthPeriod;
 import static com.katyshevtseva.kikiorg.core.sections.finance.FinanceService.TransferType.*;
 
 @Service
@@ -60,7 +62,7 @@ public class FinanceService {
 
     // Возвращает список из 15 (или меньше) Item которые использовались самыми последними
     public List<Item> getFewLastItemsForCurrentUser() {
-        List<Expense> expenses = getExpensesForCuByPeriod(Period.getLastMonth());
+        List<Expense> expenses = getExpensesForCuByPeriod(getLastMonthPeriod());
         expenses.sort(Comparator.comparing(Expense::getDateEntity).reversed());
         Set<Item> items = new HashSet<>();
         for (Expense expense : expenses) {

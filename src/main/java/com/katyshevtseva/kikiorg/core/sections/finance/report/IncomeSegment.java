@@ -1,6 +1,6 @@
 package com.katyshevtseva.kikiorg.core.sections.finance.report;
 
-import com.katyshevtseva.kikiorg.core.date.Period;
+import com.katyshevtseva.date.Period;
 
 public class IncomeSegment implements ReportSegment {
     private long amount;

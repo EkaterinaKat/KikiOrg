@@ -1,10 +1,10 @@
 package com.katyshevtseva.kikiorg.view.controller.habits;
 
 import com.katyshevtseva.date.DateCorrector;
+import com.katyshevtseva.date.DateUtils.TimeUnit;
 import com.katyshevtseva.fx.Utils;
 import com.katyshevtseva.fx.WindowBuilder.FxController;
 import com.katyshevtseva.kikiorg.core.Core;
-import com.katyshevtseva.kikiorg.core.date.DateUtils;
 import com.katyshevtseva.kikiorg.core.sections.habits.AnalysisService.AnalysisResult;
 import com.katyshevtseva.kikiorg.core.sections.habits.entity.Habit;
 import com.katyshevtseva.kikiorg.view.utils.OrgUtils;
@@ -16,9 +16,9 @@ import javafx.scene.layout.GridPane;
 
 import java.util.Date;
 
-import static com.katyshevtseva.date.Utils.TimeUnit.DAY;
-import static com.katyshevtseva.date.Utils.TimeUnit.MONTH;
-import static com.katyshevtseva.date.Utils.shiftDate;
+import static com.katyshevtseva.date.DateUtils.TimeUnit.DAY;
+import static com.katyshevtseva.date.DateUtils.TimeUnit.MONTH;
+import static com.katyshevtseva.date.DateUtils.shiftDate;
 import static com.katyshevtseva.fx.Styler.ThingToColor.TEXT;
 import static com.katyshevtseva.fx.Styler.getColorfullStyle;
 import static com.katyshevtseva.kikiorg.core.sections.habits.StabilityStatus.STABILITY_LOST;
@@ -45,7 +45,7 @@ class AnalysisController implements FxController {
     }
 
     private void setInitialDates() {
-        startDatePicker.setValue(new java.sql.Date(DateUtils.getMonthAgoDate().getTime()).toLocalDate());
+        startDatePicker.setValue(new java.sql.Date(shiftDate(new Date(), TimeUnit.MONTH, -1).getTime()).toLocalDate());
         endDatePicker.setValue(new java.sql.Date(DateCorrector.getProperDate().getTime()).toLocalDate());
     }
 

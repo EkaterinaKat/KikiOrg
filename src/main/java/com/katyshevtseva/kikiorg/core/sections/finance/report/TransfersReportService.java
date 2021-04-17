@@ -1,6 +1,6 @@
 package com.katyshevtseva.kikiorg.core.sections.finance.report;
 
-import com.katyshevtseva.kikiorg.core.date.Period;
+import com.katyshevtseva.date.Period;
 import com.katyshevtseva.kikiorg.core.sections.finance.FinanceService;
 import com.katyshevtseva.kikiorg.core.sections.finance.FinanceService.TransferType;
 import com.katyshevtseva.kikiorg.core.sections.finance.entity.Transfer;

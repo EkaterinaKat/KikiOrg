@@ -1,11 +1,11 @@
 package com.katyshevtseva.kikiorg.view.controller.habits;
 
+import com.katyshevtseva.date.DateUtils.TimeUnit;
 import com.katyshevtseva.fx.Utils;
 import com.katyshevtseva.fx.WindowBuilder.FxController;
 import com.katyshevtseva.kikiorg.core.Core;
-import com.katyshevtseva.kikiorg.core.date.DateUtils;
-import com.katyshevtseva.kikiorg.core.sections.habits.entity.Habit;
 import com.katyshevtseva.kikiorg.core.report.ReportCell;
+import com.katyshevtseva.kikiorg.core.sections.habits.entity.Habit;
 import com.katyshevtseva.kikiorg.view.utils.OrgUtils;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.collections.FXCollections;
@@ -24,7 +24,10 @@ import javafx.scene.layout.VBox;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+
+import static com.katyshevtseva.date.DateUtils.shiftDate;
 
 class ReportController implements FxController {
     @FXML
@@ -86,7 +89,8 @@ class ReportController implements FxController {
     }
 
     private void setInitialDates() {
-        startDatePicker.setValue(new java.sql.Date(DateUtils.getMonthAgoDate().getTime()).toLocalDate());
+        startDatePicker.setValue(new java.sql.Date(shiftDate(
+                new Date(), TimeUnit.MONTH, -1).getTime()).toLocalDate());
         endDatePicker.setValue(LocalDate.now());
     }
 

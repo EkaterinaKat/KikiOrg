@@ -1,6 +1,7 @@
 package com.katyshevtseva.kikiorg.core.tests;
 
-import com.katyshevtseva.kikiorg.core.date.DateUtils;
+import com.katyshevtseva.date.Period;
+import com.katyshevtseva.kikiorg.core.CoreConstants;
 import com.katyshevtseva.kikiorg.core.repo.AccountRepo;
 import com.katyshevtseva.kikiorg.core.sections.finance.CalculationService;
 import com.katyshevtseva.kikiorg.core.sections.finance.FinanceService;
@@ -76,8 +77,10 @@ public class FinanceTest {
         for (Owner owner : Owner.values()) {
             ownerService.setCurrentOwner(owner);
             testResult.addLineToReport("User: " + owner);
-            Report expensesReport = expensesReportService.getHeadReport(DateUtils.getAllTimePeriod());
-            Report incomeReport = incomeReportService.getIncomeReport(DateUtils.getAllTimePeriod());
+            Report expensesReport = expensesReportService.getHeadReport(
+                    new Period(CoreConstants.FINANCIAL_ACCOUNTING_START_DATE, new Date()));
+            Report incomeReport = incomeReportService.getIncomeReport(
+                    new Period(CoreConstants.FINANCIAL_ACCOUNTING_START_DATE, new Date()));
             testResult.addLineToReport(String.format(
                     "Total income: %d. Total expenses: %d.", incomeReport.getTotal(), expensesReport.getTotal()));
             long expectedAmount = incomeReport.getTotal() - expensesReport.getTotal();
