@@ -12,7 +12,7 @@ public class ReportCell {
     }
 
     public enum Color {
-        WHITE("#FFFFFF"), GREEN("#00FF00");
+        WHITE("#FFFFFF"), GREEN("#00FF00"), SLATE_BLUE("#7B68EE");
         private String code;
 
         Color(String code) {
@@ -34,6 +34,10 @@ public class ReportCell {
 
     public static ReportCell filled(String text) {
         return new ReportCell(text, Color.GREEN.code, Type.FILLED);
+    }
+
+    public static ReportCell filled(String text, Color color) {
+        return new ReportCell(text, color.code, Type.FILLED);
     }
 
     public String getText() {

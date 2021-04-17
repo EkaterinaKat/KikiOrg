@@ -6,20 +6,19 @@ import com.katyshevtseva.kikiorg.core.Core;
 import com.katyshevtseva.kikiorg.core.report.ReportCell;
 import com.katyshevtseva.kikiorg.core.sections.habits.entity.Habit;
 import com.katyshevtseva.kikiorg.view.utils.OrgUtils;
+import com.katyshevtseva.kikiorg.view.utils.ReportUtils;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.Group;
-import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.DatePicker;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.scene.control.cell.CheckBoxTableCell;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.StackPane;
-import javafx.scene.layout.VBox;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -98,47 +97,9 @@ class ReportController implements FxController {
         if (selectedHabits.size() == 0)
             return;
 
-        reportTable.getChildren().clear();
         List<List<ReportCell>> report = Core.getInstance().habitsReportService().getReport(selectedHabits,
                 OrgUtils.getPeriodByDp(startDatePicker, endDatePicker));
 
-        for (int i = 0; i < report.size(); i++) {
-            List<ReportCell> reportLine = report.get(i);
-            for (int j = 0; j < reportLine.size(); j++) {
-                ReportCell reportCell = reportLine.get(j);
-                fillCell(reportCell, i, j);
-            }
-        }
-    }
-
-    private void fillCell(ReportCell reportCell, int row, int column) {
-        StackPane cell = new StackPane();
-        cell.setStyle(" -fx-background-color: " + reportCell.getColor() + "; ");
-        Label label = new Label(reportCell.getText());
-        label.setTooltip(new Tooltip(reportCell.getText()));
-
-
-        if (reportCell.isColumnHead()) {
-            VBox vBox = new VBox(label);
-            vBox.setRotate(90);
-            vBox.setPadding(new Insets(5, 5, 5, 5));
-            cell.setPrefHeight(170);
-            cell.setPrefWidth(50);
-            cell.getChildren().add(new Group(vBox));
-        } else if (reportCell.isDate()) {
-            cell.setPrefWidth(100);
-            cell.setPrefHeight(30);
-            cell.getChildren().add(label);
-        } else {
-            cell.setPrefHeight(30);
-            cell.setPrefWidth(50);
-            cell.getChildren().add(label);
-        }
-
-        HBox.setMargin(label, new Insets(8));
-        StackPane.setAlignment(label, Pos.CENTER);
-        reportTable.add(cell, column, row);
-
-
+        ReportUtils.showReport(report, reportTable);
     }
 }

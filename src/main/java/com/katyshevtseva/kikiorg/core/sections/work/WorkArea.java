@@ -9,7 +9,7 @@ public enum WorkArea {
         this.title = name;
     }
 
-    public String getName() {
+    public String getTitle() {
         return title;
     }
 

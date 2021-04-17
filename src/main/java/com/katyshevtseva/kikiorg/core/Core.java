@@ -5,6 +5,7 @@ import com.katyshevtseva.kikiorg.core.sections.finance.report.ExpensesReportServ
 import com.katyshevtseva.kikiorg.core.sections.finance.report.IncomeReportService;
 import com.katyshevtseva.kikiorg.core.sections.habits.*;
 import com.katyshevtseva.kikiorg.core.sections.wardrobe.WardrobeService;
+import com.katyshevtseva.kikiorg.core.sections.work.WorkReportService;
 import com.katyshevtseva.kikiorg.core.sections.work.WorkService;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,6 +44,8 @@ public class Core implements InitializingBean {
     private StabilityCriterionService stabilityCriterionService;
     @Autowired
     private WorkService workService;
+    @Autowired
+    private WorkReportService workReportService;
 
     public static Core getInstance() {
         while (INSTANCE == null) {
@@ -118,5 +121,9 @@ public class Core implements InitializingBean {
 
     public WorkService workService() {
         return workService;
+    }
+
+    public WorkReportService workReportService() {
+        return workReportService;
     }
 }

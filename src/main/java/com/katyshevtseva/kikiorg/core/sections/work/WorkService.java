@@ -22,15 +22,17 @@ public class WorkService {
         if (workLogs.size() > 0)
             workLogRepo.delete(workLogs.get(0));
 
-        WorkLog workLog = new WorkLog();
-        workLog.setDateEntity(dateEntity);
-        workLog.setWorkArea(workArea);
-        workLog.setMinutes(minutes);
+        if (minutes != 0) {
+            WorkLog workLog = new WorkLog();
+            workLog.setDateEntity(dateEntity);
+            workLog.setWorkArea(workArea);
+            workLog.setMinutes(minutes);
 
-        workLogRepo.save(workLog);
+            workLogRepo.save(workLog);
+        }
     }
 
-    public WorkLog getWorkLogOrNull(WorkArea workArea, Date date) {
+    WorkLog getWorkLogOrNull(WorkArea workArea, Date date) {
         DateEntity dateEntity = dateService.createIfNotExistAndGetDateEntity(date);
         List<WorkLog> workLogs = workLogRepo.findByDateEntityAndWorkArea(dateEntity, workArea);
         if (workLogs.size() == 0)
