@@ -5,7 +5,7 @@ import com.katyshevtseva.fx.WindowBuilder.FxController;
 import com.katyshevtseva.kikiorg.core.Core;
 import com.katyshevtseva.kikiorg.core.date.DateUtils;
 import com.katyshevtseva.kikiorg.core.sections.habits.entity.Habit;
-import com.katyshevtseva.kikiorg.core.sections.habits.entity.ReportCell;
+import com.katyshevtseva.kikiorg.core.report.ReportCell;
 import com.katyshevtseva.kikiorg.view.utils.OrgUtils;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.collections.FXCollections;
@@ -114,7 +114,7 @@ class ReportController implements FxController {
         label.setTooltip(new Tooltip(reportCell.getText()));
 
 
-        if (reportCell.isHabit()) {
+        if (reportCell.isColumnHead()) {
             VBox vBox = new VBox(label);
             vBox.setRotate(90);
             vBox.setPadding(new Insets(5, 5, 5, 5));

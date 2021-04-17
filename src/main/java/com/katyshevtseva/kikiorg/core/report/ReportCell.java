@@ -1,4 +1,4 @@
-package com.katyshevtseva.kikiorg.core.sections.habits.entity;
+package com.katyshevtseva.kikiorg.core.report;
 
 public class ReportCell {
     private String text;
@@ -28,8 +28,8 @@ public class ReportCell {
         return new ReportCell(text, Color.WHITE.code, Type.DATE);
     }
 
-    public static ReportCell habit(String text) {
-        return new ReportCell(text, Color.WHITE.code, Type.HABIT);
+    public static ReportCell columnHead(String text) {
+        return new ReportCell(text, Color.WHITE.code, Type.COLUMN_HEAD);
     }
 
     public static ReportCell filled(String text) {
@@ -44,8 +44,8 @@ public class ReportCell {
         return color;
     }
 
-    public boolean isHabit() {
-        return type == Type.HABIT;
+    public boolean isColumnHead() {
+        return type == Type.COLUMN_HEAD;
     }
 
     public boolean isDate() {
@@ -53,6 +53,6 @@ public class ReportCell {
     }
 
     enum Type {
-        DATE, HABIT, EMPTY, FILLED
+        DATE, COLUMN_HEAD, EMPTY, FILLED
     }
 }
