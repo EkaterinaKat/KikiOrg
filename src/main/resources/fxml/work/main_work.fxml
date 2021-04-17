@@ -1,11 +1,45 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<BorderPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml">
 
-<?import javafx.scene.control.Label?>
-<VBox xmlns="http://javafx.com/javafx"
-      xmlns:fx="http://javafx.com/fxml">
 
-    <Label text="work"/>
+    <center>
+        <HBox>
+            <VBox>
+                <DatePicker fx:id="datePicker" maxWidth="250" minWidth="250"/>
+                <Pane minHeight="15" maxHeight="15"/>
+                <ComboBox fx:id="areaComboBox" maxWidth="250" minWidth="250"/>
+                <Pane minHeight="15" maxHeight="15"/>
+                <TextField fx:id="minutesTextField" maxWidth="250" minWidth="250"/>
+                <Pane minHeight="15" maxHeight="15"/>
+                <Button text="Save" fx:id="okButton" maxWidth="250" minWidth="250"/>
+            </VBox>
 
-</VBox>
+            <Pane minWidth="30" maxWidth="30"/>
+
+            <ScrollPane maxWidth="600" minWidth="600" maxHeight="820" minHeight="820">
+                <GridPane fx:id="reportTable" alignment="CENTER" hgap="1" vgap="1" gridLinesVisible="true"/>
+            </ScrollPane>
+        </HBox>
+    </center>
+
+    <top>
+        <Pane minHeight="30" maxHeight="30"/>
+    </top>
+
+    <left>
+        <Pane minWidth="30" maxWidth="30"/>
+    </left>
+
+    <right>
+        <Pane minWidth="30" maxWidth="30"/>
+    </right>
+
+    <bottom>
+        <Pane minHeight="30" maxHeight="30"/>
+    </bottom>
+
+</BorderPane>
