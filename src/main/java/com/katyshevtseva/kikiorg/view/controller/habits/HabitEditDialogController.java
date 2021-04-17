@@ -1,21 +1,18 @@
 package com.katyshevtseva.kikiorg.view.controller.habits;
 
-import com.katyshevtseva.fx.Utils;
 import com.katyshevtseva.fx.WindowBuilder.FxController;
 import com.katyshevtseva.kikiorg.core.Core;
 import com.katyshevtseva.kikiorg.core.sections.habits.HabitGroup;
 import com.katyshevtseva.kikiorg.core.sections.habits.entity.EnumElement;
 import com.katyshevtseva.kikiorg.core.sections.habits.entity.Habit;
 import com.katyshevtseva.kikiorg.core.sections.habits.entity.HabitType;
-import com.katyshevtseva.kikiorg.view.utils.OrgUtils;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
+
+import static com.katyshevtseva.fx.FxUtils.*;
 
 class HabitEditDialogController implements FxController {
     @FXML
@@ -47,11 +44,12 @@ class HabitEditDialogController implements FxController {
 
     @FXML
     private void initialize() {
-        Utils.associateButtonWithControls(saveButton, titleTextField, typeComboBox, descTextArea, groupComboBox);
-        Utils.associateButtonWithControls(addEnumButton, enumTextField);
+        associateButtonWithControls(saveButton, titleTextField, typeComboBox, descTextArea, groupComboBox);
+        associateButtonWithControls(addEnumButton, enumTextField);
         addEnumButton.setOnAction(event -> addEnumElement());
         saveButton.setOnAction(event -> save());
-        setComboBoxesItems();
+        setComboBoxItems(typeComboBox, HabitType.values());
+        setComboBoxItems(groupComboBox, HabitGroup.values());
         tuneControls();
     }
 
@@ -90,13 +88,6 @@ class HabitEditDialogController implements FxController {
         enumLabel.setText(Habit.getEnumString(enumElements));
     }
 
-    private void setComboBoxesItems() {
-        ObservableList<HabitType> items = FXCollections.observableArrayList(Arrays.asList(HabitType.values()));
-        typeComboBox.setItems(items);
-        ObservableList<HabitGroup> groups = FXCollections.observableArrayList(Arrays.asList(HabitGroup.values()));
-        groupComboBox.setItems(groups);
-    }
-
     private void save() {
         if (habit == null) {
             habit = new Habit();
@@ -116,7 +107,7 @@ class HabitEditDialogController implements FxController {
         }
 
         habitSaveHandler.execute(Core.getInstance().habitsService().getHabitById(habit.getId()));
-        Utils.closeWindowThatContains(typeComboBox);
+        closeWindowThatContains(typeComboBox);
     }
 
     @FunctionalInterface

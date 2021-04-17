@@ -1,15 +1,15 @@
 package com.katyshevtseva.kikiorg.view.controller.wardrobe;
 
-import com.katyshevtseva.fx.Utils;
 import com.katyshevtseva.fx.WindowBuilder.FxController;
 import com.katyshevtseva.kikiorg.core.CoreUtils;
 import com.katyshevtseva.kikiorg.core.sections.wardrobe.Imagable;
-import com.katyshevtseva.kikiorg.view.utils.OrgUtils;
 import javafx.fxml.FXML;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 
 import java.util.List;
+
+import static com.katyshevtseva.fx.FxUtils.closeWindowThatContains;
 
 class ImageSelectionDialogController implements FxController {
     private static final int IMAGE_SIZE = 184;
@@ -33,7 +33,7 @@ class ImageSelectionDialogController implements FxController {
             imageView.setFitWidth(IMAGE_SIZE);
             imageView.setOnMouseClicked(event -> {
                 imageClickHandler.execute(imagable);
-                Utils.closeWindowThatContains(gridPane);
+                closeWindowThatContains(gridPane);
             });
             gridPane.add(imageView,
                     CoreUtils.getColumnByIndexAndColumnNum(i, COLUMN_NUM), CoreUtils.getRowByIndexAndColumnNum(i, COLUMN_NUM));

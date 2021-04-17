@@ -1,7 +1,7 @@
 package com.katyshevtseva.kikiorg.view.controller.finance;
 
 import com.katyshevtseva.date.DateCorrector;
-import com.katyshevtseva.fx.Utils;
+import com.katyshevtseva.fx.FxUtils;
 import com.katyshevtseva.fx.WindowBuilder.FxController;
 import com.katyshevtseva.kikiorg.core.Core;
 import com.katyshevtseva.kikiorg.core.sections.finance.entity.Account;
@@ -14,6 +14,8 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.text.Text;
 import javafx.util.Callback;
+
+import static com.katyshevtseva.fx.FxUtils.*;
 
 class ReplenishmentController implements FxController {
     @FXML
@@ -45,16 +47,16 @@ class ReplenishmentController implements FxController {
 
     @FXML
     private void initialize() {
-        Utils.disableNonNumericChars(amountTextField);
+        disableNonNumericChars(amountTextField);
         doneButton.setOnAction(event -> saveReplenishment());
         addSourceButton.setOnAction(event -> {
             addSource();
             fillTable();
         });
-        Utils.associateButtonWithControls(doneButton, amountTextField, sourceComboBox, accountComboBox, datePicker);
-        Utils.associateButtonWithControls(addSourceButton, sourceTitleField, sourceDescArea);
+        associateButtonWithControls(doneButton, amountTextField, sourceComboBox, accountComboBox, datePicker);
+        associateButtonWithControls(addSourceButton, sourceTitleField, sourceDescArea);
         setSourceComboBoxItems();
-        setAccountComboBoxItems();
+        FxUtils.setComboBoxItemsAndSetSelectedFirstItem(accountComboBox, Core.getInstance().financeService().getAccountsForCurrentUser());
         datePicker.setValue(new java.sql.Date(DateCorrector.getProperDate().getTime()).toLocalDate());
         adjustColumns();
         fillTable();
@@ -83,17 +85,7 @@ class ReplenishmentController implements FxController {
     }
 
     private void setSourceComboBoxItems() {
-        ObservableList<Source> sources = FXCollections.observableArrayList(Core.getInstance().financeService().getSourcesForCurrentUser());
-        sourceComboBox.setItems(sources);
-    }
-
-    private void setAccountComboBoxItems() {
-        if (accountComboBox != null) {
-            ObservableList<Account> accounts = FXCollections.observableArrayList(Core.getInstance().financeService().getAccountsForCurrentUser());
-            accountComboBox.setItems(accounts);
-            if (accounts.size() > 0)
-                accountComboBox.setValue(accounts.get(0));
-        }
+        setComboBoxItems(sourceComboBox, Core.getInstance().financeService().getSourcesForCurrentUser());
     }
 
     private void addSource() {

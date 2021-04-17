@@ -1,7 +1,6 @@
 package com.katyshevtseva.kikiorg.view.controller.habits;
 
 import com.katyshevtseva.date.DateUtils.TimeUnit;
-import com.katyshevtseva.fx.Utils;
 import com.katyshevtseva.fx.WindowBuilder.FxController;
 import com.katyshevtseva.kikiorg.core.Core;
 import com.katyshevtseva.kikiorg.core.report.ReportCell;
@@ -28,6 +27,7 @@ import java.util.Date;
 import java.util.List;
 
 import static com.katyshevtseva.date.DateUtils.shiftDate;
+import static com.katyshevtseva.fx.FxUtils.associateButtonWithControls;
 
 class ReportController implements FxController {
     @FXML
@@ -50,7 +50,7 @@ class ReportController implements FxController {
     private void initialize() {
         selectedHabits = new ArrayList<>();
         showButton.setOnAction(event -> showReport());
-        Utils.associateButtonWithControls(showButton, startDatePicker, endDatePicker);
+        associateButtonWithControls(showButton, startDatePicker, endDatePicker);
         setInitialDates();
         adjustTableColumns();
         fillHabitsTable();

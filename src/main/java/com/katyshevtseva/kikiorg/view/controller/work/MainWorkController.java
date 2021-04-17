@@ -1,7 +1,7 @@
 package com.katyshevtseva.kikiorg.view.controller.work;
 
 import com.katyshevtseva.date.DateCorrector;
-import com.katyshevtseva.fx.Utils;
+import com.katyshevtseva.fx.FxUtils;
 import com.katyshevtseva.fx.WindowBuilder.FxController;
 import com.katyshevtseva.kikiorg.core.Core;
 import com.katyshevtseva.kikiorg.core.sections.work.WorkArea;
@@ -15,7 +15,8 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 
 import java.sql.Date;
-import java.util.Arrays;
+
+import static com.katyshevtseva.fx.FxUtils.*;
 
 public class MainWorkController implements FxController {
     @FXML
@@ -31,17 +32,12 @@ public class MainWorkController implements FxController {
 
     @FXML
     private void initialize() {
-        Utils.associateButtonWithControls(okButton, datePicker, areaComboBox, minutesTextField);
-        Utils.disableNonNumericChars(minutesTextField);
+        associateButtonWithControls(okButton, datePicker, areaComboBox, minutesTextField);
+        disableNonNumericChars(minutesTextField);
         okButton.setOnAction(event -> okButtonListener());
         datePicker.setValue(new Date(DateCorrector.getProperDate().getTime()).toLocalDate());
-        setComboBoxItems();
+        setComboBoxItems(areaComboBox, WorkArea.values());
         updateTable();
-    }
-
-    private void setComboBoxItems() {
-        ObservableList<WorkArea> items = FXCollections.observableArrayList(Arrays.asList(WorkArea.values()));
-        areaComboBox.setItems(items);
     }
 
     private void okButtonListener() {

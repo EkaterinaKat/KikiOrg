@@ -1,7 +1,7 @@
 package com.katyshevtseva.kikiorg.view.controller.finance;
 
 import com.katyshevtseva.date.DateCorrector;
-import com.katyshevtseva.fx.Utils;
+import com.katyshevtseva.fx.FxUtils;
 import com.katyshevtseva.fx.WindowBuilder.FxController;
 import com.katyshevtseva.kikiorg.core.Core;
 import com.katyshevtseva.kikiorg.core.sections.finance.entity.Account;
@@ -10,6 +10,9 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.util.Callback;
+
+import static com.katyshevtseva.fx.FxUtils.associateButtonWithControls;
+import static com.katyshevtseva.fx.FxUtils.disableNonNumericChars;
 
 class TransferController implements FxController {
     @FXML
@@ -27,10 +30,10 @@ class TransferController implements FxController {
     private void initialize() {
         adjustComboBox(fromComboBox);
         adjustComboBox(toComboBox);
-        setAccountComboBoxItems(fromComboBox);
-        setAccountComboBoxItems(toComboBox);
-        Utils.disableNonNumericChars(amountTextField);
-        Utils.associateButtonWithControls(transferButton, amountTextField, fromComboBox, toComboBox, datePicker);
+        FxUtils.setComboBoxItems(fromComboBox, Core.getInstance().financeService().getAllAccounts());
+        FxUtils.setComboBoxItems(toComboBox, Core.getInstance().financeService().getAllAccounts());
+        disableNonNumericChars(amountTextField);
+        associateButtonWithControls(transferButton, amountTextField, fromComboBox, toComboBox, datePicker);
         transferButton.setOnAction(event -> transfer());
         datePicker.setValue(new java.sql.Date(DateCorrector.getProperDate().getTime()).toLocalDate());
     }
@@ -39,14 +42,6 @@ class TransferController implements FxController {
         Core.getInstance().financeService().addTransfer(fromComboBox.getValue(), toComboBox.getValue(),
                 Long.parseLong(amountTextField.getText()), java.sql.Date.valueOf(datePicker.getValue()));
         amountTextField.clear();
-    }
-
-    private void setAccountComboBoxItems(ComboBox<Account> accountComboBox) {
-        if (accountComboBox != null) {
-            ObservableList<Account> accounts = FXCollections.observableArrayList(
-                    Core.getInstance().financeService().getAllAccounts());
-            accountComboBox.setItems(accounts);
-        }
     }
 
     // Этот метод только устанавливает отображение имени счета вместе с информацией о владельце

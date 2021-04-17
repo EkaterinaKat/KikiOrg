@@ -1,19 +1,19 @@
 package com.katyshevtseva.kikiorg.view.controller.finance;
 
-import com.katyshevtseva.fx.Utils;
+import com.katyshevtseva.fx.FxUtils;
 import com.katyshevtseva.fx.WindowBuilder.FxController;
 import com.katyshevtseva.kikiorg.core.Core;
 import com.katyshevtseva.kikiorg.core.sections.finance.entity.Account;
 import com.katyshevtseva.kikiorg.core.sections.finance.entity.CheckLine;
-import com.katyshevtseva.kikiorg.view.utils.OrgUtils;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
+import static com.katyshevtseva.fx.FxUtils.associateButtonWithControls;
+import static com.katyshevtseva.fx.FxUtils.setComboBoxItems;
 
 class CheckController implements FxController {
     @FXML
@@ -55,11 +55,11 @@ class CheckController implements FxController {
     @FXML
     private void initialize() {
         Arrays.asList(amountField1, amountField2, amountField3, amountField4,
-                amountField5, amountField6, amountField7).forEach(Utils::disableNonNumericChars);
+                amountField5, amountField6, amountField7).forEach(FxUtils::disableNonNumericChars);
         checkButton.setOnAction(event -> checkButtonListener());
-        setAccountComboBoxItems();
+        setComboBoxItems(accountComboBox, Core.getInstance().financeService().getAccountsForCurrentUser());
         accountComboBox.valueProperty().addListener(observable -> prepareSectionForAccountCheck());
-        Utils.associateButtonWithControls(checkButton, accountComboBox);
+        associateButtonWithControls(checkButton, accountComboBox);
     }
 
     private void prepareSectionForAccountCheck() {
@@ -106,13 +106,6 @@ class CheckController implements FxController {
             }
         }
         Core.getInstance().financeCheckService().rewriteCheckLines(checkLinesToSave, accountComboBox.getValue());
-    }
-
-    private void setAccountComboBoxItems() {
-        if (accountComboBox != null) {
-            ObservableList<Account> accounts = FXCollections.observableArrayList(Core.getInstance().financeService().getAccountsForCurrentUser());
-            accountComboBox.setItems(accounts);
-        }
     }
 
     private class Trio {

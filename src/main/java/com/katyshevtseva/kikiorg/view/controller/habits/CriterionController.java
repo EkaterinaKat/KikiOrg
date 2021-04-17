@@ -1,8 +1,6 @@
 package com.katyshevtseva.kikiorg.view.controller.habits;
 
 import com.katyshevtseva.fx.Styler;
-import com.katyshevtseva.fx.Utils;
-import com.katyshevtseva.fx.WindowBuilder;
 import com.katyshevtseva.fx.WindowBuilder.FxController;
 import com.katyshevtseva.kikiorg.core.Core;
 import com.katyshevtseva.kikiorg.core.sections.habits.entity.Habit;
@@ -16,6 +14,8 @@ import javafx.scene.layout.HBox;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.katyshevtseva.fx.FxUtils.disableNonNumericChars;
 
 class CriterionController implements FxController {
     @FXML
@@ -55,7 +55,7 @@ class CriterionController implements FxController {
     private TextField getTextField(String initText) {
         TextField textField = new TextField();
         textField.setPrefWidth(50);
-        Utils.disableNonNumericChars(textField);
+        disableNonNumericChars(textField);
         textField.setText(initText);
         textField.textProperty().addListener((observable, oldValue, newValue) -> saveButton.setDisable(false));
         return textField;

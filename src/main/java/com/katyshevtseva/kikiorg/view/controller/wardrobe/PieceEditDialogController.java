@@ -1,15 +1,12 @@
 package com.katyshevtseva.kikiorg.view.controller.wardrobe;
 
-import com.katyshevtseva.fx.Utils;
 import com.katyshevtseva.fx.WindowBuilder.FxController;
 import com.katyshevtseva.kikiorg.core.Core;
 import com.katyshevtseva.kikiorg.core.sections.wardrobe.entity.Piece;
 import com.katyshevtseva.kikiorg.core.sections.wardrobe.enums.ClothesType;
 import com.katyshevtseva.kikiorg.core.sections.wardrobe.enums.Purpose;
 import com.katyshevtseva.kikiorg.core.sections.wardrobe.enums.Season;
-import com.katyshevtseva.kikiorg.view.utils.OrgUtils;
 import com.katyshevtseva.kikiorg.view.utils.OrganizerWindowCreator;
-import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
@@ -23,6 +20,8 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+
+import static com.katyshevtseva.fx.FxUtils.*;
 
 class PieceEditDialogController implements FxController {
     @FXML
@@ -50,9 +49,9 @@ class PieceEditDialogController implements FxController {
 
     @FXML
     private void initialize() {
-        Utils.associateButtonWithControls(saveButton, clothesTypeComboBox, descTextArea);
+        associateButtonWithControls(saveButton, clothesTypeComboBox, descTextArea);
         saveButton.setOnAction(event -> save());
-        clothesTypeComboBox.setItems(FXCollections.observableArrayList(ClothesType.values()));
+        setComboBoxItems(clothesTypeComboBox, ClothesType.values());
         adjustCheckBoxPanes();
         adjustImageAdding();
         setExistingPieceInfo();
@@ -90,7 +89,7 @@ class PieceEditDialogController implements FxController {
         Core.getInstance().wardrobeService().savePiece(piece);
 
         pieceSavingHandler.execute(piece);
-        Utils.closeWindowThatContains(clothesTypeComboBox);
+        closeWindowThatContains(clothesTypeComboBox);
     }
 
     private Set<Season> getSelectedSeasons() {
@@ -119,7 +118,7 @@ class PieceEditDialogController implements FxController {
         for (Season season : Season.values()) {
             CheckBox checkBox = new CheckBox(season.getTitle());
             seasonsCheckBoxes.add(checkBox);
-            seasonsPane.getChildren().addAll(checkBox, Utils.getPaneWithHeight(10));
+            seasonsPane.getChildren().addAll(checkBox, getPaneWithHeight(10));
             if (piece != null)
                 checkBox.setSelected(piece.getSeasons().contains(season));
         }
@@ -127,7 +126,7 @@ class PieceEditDialogController implements FxController {
         for (Purpose purpose : Purpose.values()) {
             CheckBox checkBox = new CheckBox(purpose.getTitle());
             purposesCheckBoxes.add(checkBox);
-            purposesPane.getChildren().addAll(checkBox, Utils.getPaneWithHeight(10));
+            purposesPane.getChildren().addAll(checkBox, getPaneWithHeight(10));
             if (piece != null)
                 checkBox.setSelected(piece.getPurposes().contains(purpose));
         }

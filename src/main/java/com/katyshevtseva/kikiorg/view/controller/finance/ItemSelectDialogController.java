@@ -1,22 +1,19 @@
 package com.katyshevtseva.kikiorg.view.controller.finance;
 
 import com.katyshevtseva.fx.Styler;
-import com.katyshevtseva.fx.Utils;
-import com.katyshevtseva.fx.WindowBuilder;
 import com.katyshevtseva.fx.WindowBuilder.FxController;
 import com.katyshevtseva.kikiorg.core.Core;
 import com.katyshevtseva.kikiorg.core.sections.finance.ItemSchemaService.EmptyLine;
 import com.katyshevtseva.kikiorg.core.sections.finance.ItemSchemaService.Entry;
 import com.katyshevtseva.kikiorg.core.sections.finance.ItemSchemaService.SchemaLine;
 import com.katyshevtseva.kikiorg.core.sections.finance.entity.Item;
-import com.katyshevtseva.kikiorg.view.utils.OrgUtils;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 
 import java.util.List;
 
-import static com.katyshevtseva.fx.Styler.StandardColor.GREEN;
+import static com.katyshevtseva.fx.FxUtils.closeWindowThatContains;
 import static com.katyshevtseva.fx.Styler.StandardColor.PURPLE;
 import static com.katyshevtseva.fx.Styler.ThingToColor.TEXT;
 
@@ -47,7 +44,7 @@ public class ItemSelectDialogController implements FxController {
                     label.setStyle(Styler.getColorfullStyle(TEXT, PURPLE) + Styler.getBoldTextStyle());
                     label.setOnMouseClicked(event -> {
                         itemSelectionHandler.execute(entry.getItem());
-                        Utils.closeWindowThatContains(container);
+                        closeWindowThatContains(container);
                     });
                 }
             }

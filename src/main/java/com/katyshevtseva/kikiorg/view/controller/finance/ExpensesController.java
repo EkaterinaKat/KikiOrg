@@ -1,7 +1,6 @@
 package com.katyshevtseva.kikiorg.view.controller.finance;
 
 import com.katyshevtseva.date.DateCorrector;
-import com.katyshevtseva.fx.Utils;
 import com.katyshevtseva.fx.WindowBuilder.FxController;
 import com.katyshevtseva.kikiorg.core.Core;
 import com.katyshevtseva.kikiorg.core.sections.finance.entity.Account;
@@ -16,6 +15,8 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.text.Text;
 import javafx.util.Callback;
+
+import static com.katyshevtseva.fx.FxUtils.*;
 
 class ExpensesController implements FxController {
     @FXML
@@ -47,16 +48,16 @@ class ExpensesController implements FxController {
 
     @FXML
     private void initialize() {
-        Utils.disableNonNumericChars(amountTextField);
+        disableNonNumericChars(amountTextField);
         addItemButton.setOnAction(event -> {
             addItem();
             fillTable();
         });
         doneButton.setOnAction(event -> saveExpense());
-        Utils.associateButtonWithControls(addItemButton, itemTitleField, itemDescArea);
-        Utils.associateButtonWithControls(doneButton, amountTextField, accountComboBox, itemComboBox, datePicker);
+        associateButtonWithControls(addItemButton, itemTitleField, itemDescArea);
+        associateButtonWithControls(doneButton, amountTextField, accountComboBox, itemComboBox, datePicker);
         setItemComboBoxItems();
-        setAccountComboBoxItems();
+        setComboBoxItemsAndSetSelectedFirstItem(accountComboBox, Core.getInstance().financeService().getAccountsForCurrentUser());
         datePicker.setValue(new java.sql.Date(DateCorrector.getProperDate().getTime()).toLocalDate());
         adjustColumns();
         fillTable();
@@ -98,15 +99,6 @@ class ExpensesController implements FxController {
                         item -> itemComboBox.setValue(item)));
             }
         });
-    }
-
-    private void setAccountComboBoxItems() {
-        if (accountComboBox != null) {
-            ObservableList<Account> accounts = FXCollections.observableArrayList(Core.getInstance().financeService().getAccountsForCurrentUser());
-            accountComboBox.setItems(accounts);
-            if (accounts.size() > 0)
-                accountComboBox.setValue(accounts.get(0));
-        }
     }
 
     private void addItem() {

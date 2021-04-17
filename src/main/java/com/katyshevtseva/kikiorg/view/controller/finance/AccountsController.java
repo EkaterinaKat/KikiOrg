@@ -1,6 +1,5 @@
 package com.katyshevtseva.kikiorg.view.controller.finance;
 
-import com.katyshevtseva.fx.Utils;
 import com.katyshevtseva.fx.WindowBuilder.FxController;
 import com.katyshevtseva.kikiorg.core.Core;
 import com.katyshevtseva.kikiorg.core.sections.finance.entity.Account;
@@ -13,6 +12,8 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.text.Text;
 import javafx.util.Callback;
+
+import static com.katyshevtseva.fx.FxUtils.associateButtonWithControls;
 
 
 class AccountsController implements FxController {
@@ -36,7 +37,7 @@ class AccountsController implements FxController {
     @FXML
     private void initialize() {
         addAccountButton.setOnAction(event -> addAccount());
-        Utils.associateButtonWithControls(addAccountButton, accountTitleField, accountDescArea);
+        associateButtonWithControls(addAccountButton, accountTitleField, accountDescArea);
         adjustColumns();
         fillTable();
     }

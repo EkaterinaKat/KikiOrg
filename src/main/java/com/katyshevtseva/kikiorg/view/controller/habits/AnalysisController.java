@@ -2,7 +2,6 @@ package com.katyshevtseva.kikiorg.view.controller.habits;
 
 import com.katyshevtseva.date.DateCorrector;
 import com.katyshevtseva.date.DateUtils.TimeUnit;
-import com.katyshevtseva.fx.Utils;
 import com.katyshevtseva.fx.WindowBuilder.FxController;
 import com.katyshevtseva.kikiorg.core.Core;
 import com.katyshevtseva.kikiorg.core.sections.habits.AnalysisService.AnalysisResult;
@@ -19,6 +18,7 @@ import java.util.Date;
 import static com.katyshevtseva.date.DateUtils.TimeUnit.DAY;
 import static com.katyshevtseva.date.DateUtils.TimeUnit.MONTH;
 import static com.katyshevtseva.date.DateUtils.shiftDate;
+import static com.katyshevtseva.fx.FxUtils.associateButtonWithControls;
 import static com.katyshevtseva.fx.Styler.ThingToColor.TEXT;
 import static com.katyshevtseva.fx.Styler.getColorfullStyle;
 import static com.katyshevtseva.kikiorg.core.sections.habits.StabilityStatus.STABILITY_LOST;
@@ -40,7 +40,7 @@ class AnalysisController implements FxController {
     private void initialize() {
         showButton.setOnAction(event -> showButtonListener());
         stabilityButton.setOnAction(event -> stabilityButtonListener());
-        Utils.associateButtonWithControls(showButton, startDatePicker, endDatePicker);
+        associateButtonWithControls(showButton, startDatePicker, endDatePicker);
         setInitialDates();
     }
 

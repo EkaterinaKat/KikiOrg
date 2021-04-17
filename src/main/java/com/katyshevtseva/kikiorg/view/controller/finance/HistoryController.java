@@ -1,7 +1,6 @@
 package com.katyshevtseva.kikiorg.view.controller.finance;
 
 import com.katyshevtseva.fx.Styler;
-import com.katyshevtseva.fx.Utils;
 import com.katyshevtseva.fx.WindowBuilder.FxController;
 import com.katyshevtseva.kikiorg.core.Core;
 import com.katyshevtseva.kikiorg.core.sections.finance.FinanceOperationService.Operation;
@@ -14,6 +13,7 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.util.Callback;
 
+import static com.katyshevtseva.fx.FxUtils.setImageOnButton;
 import static com.katyshevtseva.fx.Styler.StandardColor.*;
 import static com.katyshevtseva.fx.Styler.ThingToColor.BACKGROUND;
 
@@ -62,7 +62,7 @@ class HistoryController implements FxController {
                     private final Button button = new Button();
 
                     {
-                        Utils.setImageOnButton("images/delete.png", button, 20);
+                        setImageOnButton("images/delete.png", button, 20);
                         button.setOnAction(event -> {
                             OrgUtils.getDialogBuilder().openQuestionDialog("Delete?", b -> {
                                 if (b) {

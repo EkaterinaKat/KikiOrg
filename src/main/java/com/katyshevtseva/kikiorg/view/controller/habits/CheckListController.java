@@ -2,7 +2,6 @@ package com.katyshevtseva.kikiorg.view.controller.habits;
 
 import com.katyshevtseva.date.DateCorrector;
 import com.katyshevtseva.fx.Styler;
-import com.katyshevtseva.fx.Utils;
 import com.katyshevtseva.fx.WindowBuilder.FxController;
 import com.katyshevtseva.kikiorg.core.Core;
 import com.katyshevtseva.kikiorg.core.sections.habits.HabitGroup;
@@ -13,7 +12,6 @@ import com.katyshevtseva.kikiorg.core.sections.habits.entity.EnumElement;
 import com.katyshevtseva.kikiorg.core.sections.habits.entity.EnumMark;
 import com.katyshevtseva.kikiorg.core.sections.habits.entity.Habit;
 import com.katyshevtseva.kikiorg.core.sections.habits.entity.NumMark;
-import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
@@ -24,6 +22,7 @@ import javafx.scene.layout.VBox;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.katyshevtseva.fx.FxUtils.*;
 import static com.katyshevtseva.fx.Styler.StandardColor.BLACK;
 import static com.katyshevtseva.fx.Styler.ThingToColor.TEXT;
 
@@ -42,7 +41,7 @@ class CheckListController implements FxController {
     @FXML
     private void initialize() {
         saveButton.setOnAction(event -> save());
-        Utils.associateButtonWithControls(saveButton, datePicker);
+        associateButtonWithControls(saveButton, datePicker);
         datePicker.setValue(new java.sql.Date(DateCorrector.getProperDate().getTime()).toLocalDate());
         datePicker.setOnAction(event -> saveButton.setDisable(false));
         fillHabitsTable();
@@ -119,7 +118,7 @@ class CheckListController implements FxController {
                     TextField textField = new TextField();
                     textField.setMaxWidth(NODE_WIDTH);
                     textField.setMinWidth(NODE_WIDTH);
-                    Utils.disableNonNumericChars(textField);
+                    disableNonNumericChars(textField);
                     markControl = textField;
                     if (lastMark != null) {
                         textField.setText("" + ((NumMark) lastMark).getValue());
@@ -127,8 +126,7 @@ class CheckListController implements FxController {
                     break;
                 case enumeration:
                     ComboBox<EnumElement> comboBox = new ComboBox<>();
-                    comboBox.setItems(FXCollections.observableArrayList(
-                            habitsService.getEnumElementsByHabit(habit)));
+                    setComboBoxItems(comboBox, habitsService.getEnumElementsByHabit(habit));
                     comboBox.setMaxWidth(NODE_WIDTH);
                     comboBox.setMinWidth(NODE_WIDTH);
                     markControl = comboBox;

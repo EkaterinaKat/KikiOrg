@@ -19,7 +19,7 @@ import javafx.scene.layout.VBox;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.katyshevtseva.fx.Utils.getPaneWithHeight;
+import static com.katyshevtseva.fx.FxUtils.getPaneWithHeight;
 
 class OutfitsController implements FxController {
     private static final int OUTFIT_BLOCK_SIZE = 440;
