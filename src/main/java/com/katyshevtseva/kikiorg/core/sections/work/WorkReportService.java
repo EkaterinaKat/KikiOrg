@@ -36,7 +36,7 @@ public class WorkReportService {
         for (WorkArea workArea : WorkArea.values()) {
             result.add(ReportCell.columnHead(workArea.getTitle()));
         }
-        result.add(ReportCell.columnHead("Total"));
+        result.add(ReportCell.columnHead("Total (h)"));
         return result;
     }
 
@@ -64,8 +64,10 @@ public class WorkReportService {
             if (workLog != null)
                 totalMinutes += workLog.getMinutes();
         }
-        if (totalMinutes > 0)
-            return ReportCell.filled("" + totalMinutes, SLATE_BLUE);
+        if (totalMinutes > 0) {
+            double totalHours = totalMinutes / 60.0;
+            return ReportCell.filled(String.format("%.2f", totalHours), SLATE_BLUE);
+        }
         return ReportCell.empty();
     }
 }

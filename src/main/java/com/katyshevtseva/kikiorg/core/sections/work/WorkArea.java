@@ -1,7 +1,7 @@
 package com.katyshevtseva.kikiorg.core.sections.work;
 
 public enum WorkArea {
-    MATH("Математика"), MP("Мои проекты"), GD("Общее развитие");
+    MATH("Математика"), MP("Мои проекты"), GD("Общее развитие"), ENG("Английский");
 
     private String title;
 
