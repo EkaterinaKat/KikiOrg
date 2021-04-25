@@ -9,13 +9,30 @@
     <center>
         <HBox>
             <VBox>
-                <DatePicker fx:id="datePicker" maxWidth="250" minWidth="250"/>
-                <Pane minHeight="15" maxHeight="15"/>
-                <ComboBox fx:id="areaComboBox" maxWidth="250" minWidth="250"/>
-                <Pane minHeight="15" maxHeight="15"/>
-                <TextField fx:id="minutesTextField" maxWidth="250" minWidth="250"/>
-                <Pane minHeight="15" maxHeight="15"/>
-                <Button text="Save" fx:id="okButton" maxWidth="250" minWidth="250"/>
+                <HBox styleClass="black_border">
+
+                    <Pane minWidth="10" maxWidth="10"/>
+
+                    <VBox>
+                        <Pane minHeight="20" maxHeight="20"/>
+                        <DatePicker fx:id="datePicker" maxWidth="250" minWidth="250"/>
+                        <Pane minHeight="15" maxHeight="15"/>
+                        <ComboBox fx:id="areaComboBox" maxWidth="250" minWidth="250"/>
+                        <Pane minHeight="15" maxHeight="15"/>
+                        <TextField fx:id="minutesTextField" maxWidth="250" minWidth="250"/>
+                        <Pane minHeight="15" maxHeight="15"/>
+                        <HBox>
+                            <Button text="Rewrite" fx:id="rewriteButton" maxWidth="120" minWidth="120"/>
+                            <Pane minWidth="10" maxWidth="10"/>
+                            <Button text="Sum up" fx:id="sumUpButton" maxWidth="120" minWidth="120"/>
+                        </HBox>
+                        <Pane minHeight="20" maxHeight="20"/>
+                    </VBox>
+                    <Pane minWidth="10" maxWidth="10"/>
+                </HBox>
+
+                <Pane minHeight="40" maxHeight="40"/>
+                <fx:include fx:id="autoCount" source="auto_count.fxml"/>
             </VBox>
 
             <Pane minWidth="30" maxWidth="30"/>

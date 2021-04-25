@@ -16,19 +16,36 @@ public class WorkService {
     @Autowired
     private DateService dateService;
 
-    public void saveOrRewriteWorkLog(WorkArea workArea, int minutes, Date date) {
+    public void saveOrSumWithExistingWorkLog(WorkArea workArea, int minutes, Date date) {
+        saveWorkLog(workArea, minutes, date, true);
+    }
+
+    public void saveOrRewriteExistingWorkLog(WorkArea workArea, int minutes, Date date) {
+        saveWorkLog(workArea, minutes, date, false);
+    }
+
+    private void saveWorkLog(WorkArea workArea, int minutes, Date date, boolean sumWithExistingWorkLog) {
+        if (minutes < 0)
+            throw new RuntimeException();
+
         DateEntity dateEntity = dateService.createIfNotExistAndGetDateEntity(date);
         List<WorkLog> workLogs = workLogRepo.findByDateEntityAndWorkArea(dateEntity, workArea);
-        if (workLogs.size() > 0)
-            workLogRepo.delete(workLogs.get(0));
+        WorkLog workLog;
 
-        if (minutes != 0) {
-            WorkLog workLog = new WorkLog();
+        if (workLogs.size() == 0) {
+            workLog = new WorkLog();
             workLog.setDateEntity(dateEntity);
             workLog.setWorkArea(workArea);
             workLog.setMinutes(minutes);
+        } else {
+            workLog = workLogs.get(0);
+            workLog.setMinutes(sumWithExistingWorkLog ? workLog.getMinutes() + minutes : minutes);
+        }
 
+        if (workLog.getMinutes() > 0) {
             workLogRepo.save(workLog);
+        } else {
+            workLogRepo.delete(workLog);
         }
     }
 
