@@ -1,9 +1,9 @@
 package com.katyshevtseva.kikiorg.core.sections.habits.specials;
 
-import com.katyshevtseva.date.Period;
 import com.katyshevtseva.date.DateUtils;
+import com.katyshevtseva.date.Period;
 import com.katyshevtseva.kikiorg.core.repo.EnumElementRepo;
-import com.katyshevtseva.kikiorg.core.repo.HabitsRepo;
+import com.katyshevtseva.kikiorg.core.repo.HabitRepo;
 import com.katyshevtseva.kikiorg.core.sections.habits.HabitMarkService;
 import com.katyshevtseva.kikiorg.core.sections.habits.entity.EnumElement;
 import com.katyshevtseva.kikiorg.core.sections.habits.entity.Habit;
@@ -12,7 +12,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -23,17 +22,17 @@ public class Specials {
     @Autowired
     private HabitMarkService markService;
     @Autowired
-    private HabitsRepo habitsRepo;
+    private HabitRepo habitRepo;
     @Autowired
     private EnumElementRepo enumElementRepo;
 
     //    @PostConstruct
     public void severalHabitsToOne() {
         System.out.println("start");
-        Habit habit1 = habitsRepo.findById(7L).get();
-        Habit habit2 = habitsRepo.findById(8L).get();
-        Habit habit3 = habitsRepo.findById(9L).get();
-        Habit habit20 = habitsRepo.findById(21L).get();
+        Habit habit1 = habitRepo.findById(7L).get();
+        Habit habit2 = habitRepo.findById(8L).get();
+        Habit habit3 = habitRepo.findById(9L).get();
+        Habit habit20 = habitRepo.findById(21L).get();
 
         EnumElement enumElement1 = enumElementRepo.findById(16L).get();
         EnumElement enumElement2 = enumElementRepo.findById(17L).get();

@@ -1,34 +1,39 @@
 package com.katyshevtseva.kikiorg.core.sections.habits;
 
+import com.katyshevtseva.kikiorg.core.date.DateService;
+import com.katyshevtseva.kikiorg.core.repo.DescriptionRepo;
 import com.katyshevtseva.kikiorg.core.repo.EnumElementRepo;
-import com.katyshevtseva.kikiorg.core.repo.HabitsRepo;
+import com.katyshevtseva.kikiorg.core.repo.HabitRepo;
+import com.katyshevtseva.kikiorg.core.sections.habits.entity.Description;
 import com.katyshevtseva.kikiorg.core.sections.habits.entity.EnumElement;
 import com.katyshevtseva.kikiorg.core.sections.habits.entity.Habit;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.Comparator;
+import java.util.Date;
 import java.util.List;
 
+@RequiredArgsConstructor
 @Service
 public class HabitsService {
-    @Autowired
-    private HabitsRepo habitsRepo;
-    @Autowired
-    private EnumElementRepo enumElementRepo;
+    private final HabitRepo habitRepo;
+    private final EnumElementRepo enumElementRepo;
+    private final DescriptionRepo descriptionRepo;
+    private final DateService dateService;
 
     public void saveHabit(Habit habit) {
-        habitsRepo.save(habit);
+        habitRepo.save(habit);
     }
 
     public List<Habit> getAllHabits() {
-        List<Habit> habits = habitsRepo.findAll();
+        List<Habit> habits = habitRepo.findAll();
         habits.sort(Comparator.comparing(Habit::isActive).reversed());
         return habits;
     }
 
     public List<Habit> getActiveHabits() {
-        return habitsRepo.findByActiveTrue();
+        return habitRepo.findByActiveTrue();
     }
 
     public void saveEnumElement(EnumElement enumElement) {
@@ -49,6 +54,30 @@ public class HabitsService {
     }
 
     public Habit getHabitById(Long id) {
-        return habitsRepo.findById(id).get();
+        return habitRepo.findById(id).get();
+    }
+
+    public void newHabitDesc(Habit habit, String newDescText, boolean createNewDesc) { //метод дописан
+        if (habit.getCurrentDescription() != null && !createNewDesc) {
+            Description existingDescription = habit.getCurrentDescription();
+            existingDescription.setText(newDescText);
+            descriptionRepo.save(existingDescription);
+            return;
+        }
+
+        Description newDescription = new Description();
+        newDescription.setBeginningDate(dateService.getDateEntityIfExistsOrNull(new Date()));
+        newDescription.setText(newDescText);
+        newDescription.setHabit(habit);
+        descriptionRepo.save(newDescription);
+
+        if (habit.getCurrentDescription() != null) {
+            Description oldDescription = habit.getCurrentDescription();
+            oldDescription.setEndDate(dateService.getDateEntityIfExistsOrNull(new Date()));
+            descriptionRepo.save(oldDescription);
+        }
+
+        habit.setCurrentDescription(newDescription);
+        habitRepo.save(habit);
     }
 }

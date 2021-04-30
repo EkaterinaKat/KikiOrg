@@ -16,6 +16,7 @@ public class Habit {
 
     private String title;
 
+    @Deprecated
     private String description;
 
     @Enumerated(EnumType.STRING)
@@ -27,11 +28,14 @@ public class Habit {
     private boolean active;
 
     @OneToMany(mappedBy = "habit", fetch = FetchType.EAGER)
-    public List<EnumElement> enumElements;
+    private List<EnumElement> enumElements;
 
     @OneToOne(mappedBy = "habit")
     private StabilityCriterion stabilityCriterion;
 
+    @OneToOne
+    @JoinColumn(name = "current_desc_id")
+    private Description currentDescription;
 
     @Enumerated(EnumType.STRING)
     private StabilityStatus stabilityStatus;
