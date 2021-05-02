@@ -4,7 +4,6 @@ import com.katyshevtseva.fx.Styler;
 import com.katyshevtseva.fx.WindowBuilder.FxController;
 import com.katyshevtseva.kikiorg.core.Core;
 import com.katyshevtseva.kikiorg.core.sections.habits.entity.Habit;
-import com.katyshevtseva.kikiorg.view.utils.OrgUtils;
 import com.katyshevtseva.kikiorg.view.utils.OrganizerWindowCreator;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -61,12 +60,13 @@ class AdminController implements FxController {
             gridPane.add(label, 1, rowIndex);
             rowIndex++;
         }
-        showHabit(habits.get(0));
+        if (habits.size() > 0)
+            showHabit(habits.get(0));
     }
 
     private void showHabit(Habit habit) {
         titleLabel.setText(habit.getTitleWithActiveInfoAndEnumElements());
-        descLabel.setText(habit.getDescription());
+        descLabel.setText(habit.getCurrentDescription() == null ? "описания нет патчимута" : habit.getCurrentDescription().getText());
         typeLabel.setText("type: " + habit.getType() + "; group: " + habit.getHabitGroup() + ".");
 
         habitIdPointLabelMap.values().forEach(label -> label.setText(""));

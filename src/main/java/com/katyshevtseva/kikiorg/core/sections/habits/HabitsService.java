@@ -57,7 +57,7 @@ public class HabitsService {
         return habitRepo.findById(id).get();
     }
 
-    public void newHabitDesc(Habit habit, String newDescText, boolean createNewDesc) { //метод дописан
+    public void newHabitDesc(Habit habit, String newDescText, boolean createNewDesc) {
         if (habit.getCurrentDescription() != null && !createNewDesc) {
             Description existingDescription = habit.getCurrentDescription();
             existingDescription.setText(newDescText);
@@ -66,14 +66,14 @@ public class HabitsService {
         }
 
         Description newDescription = new Description();
-        newDescription.setBeginningDate(dateService.getDateEntityIfExistsOrNull(new Date()));
+        newDescription.setBeginningDate(dateService.createIfNotExistAndGetDateEntity(new Date()));
         newDescription.setText(newDescText);
         newDescription.setHabit(habit);
         descriptionRepo.save(newDescription);
 
         if (habit.getCurrentDescription() != null) {
             Description oldDescription = habit.getCurrentDescription();
-            oldDescription.setEndDate(dateService.getDateEntityIfExistsOrNull(new Date()));
+            oldDescription.setEndDate(dateService.createIfNotExistAndGetDateEntity(new Date()));
             descriptionRepo.save(oldDescription);
         }
 

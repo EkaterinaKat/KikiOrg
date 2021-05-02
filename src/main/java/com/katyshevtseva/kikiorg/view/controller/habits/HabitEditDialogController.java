@@ -6,6 +6,7 @@ import com.katyshevtseva.kikiorg.core.sections.habits.HabitGroup;
 import com.katyshevtseva.kikiorg.core.sections.habits.entity.EnumElement;
 import com.katyshevtseva.kikiorg.core.sections.habits.entity.Habit;
 import com.katyshevtseva.kikiorg.core.sections.habits.entity.HabitType;
+import com.katyshevtseva.kikiorg.view.utils.OrgUtils;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 
@@ -37,7 +38,7 @@ class HabitEditDialogController implements FxController {
     private Habit habit;
     private HabitSaveHandler habitSaveHandler;
 
-    public HabitEditDialogController(Habit habitToEdit, HabitSaveHandler habitSaveHandler) {
+    HabitEditDialogController(Habit habitToEdit, HabitSaveHandler habitSaveHandler) {
         this.habit = habitToEdit;
         this.habitSaveHandler = habitSaveHandler;
     }
@@ -47,10 +48,23 @@ class HabitEditDialogController implements FxController {
         associateButtonWithControls(saveButton, titleTextField, typeComboBox, descTextArea, groupComboBox);
         associateButtonWithControls(addEnumButton, enumTextField);
         addEnumButton.setOnAction(event -> addEnumElement());
-        saveButton.setOnAction(event -> save());
         setComboBoxItems(typeComboBox, HabitType.values());
         setComboBoxItems(groupComboBox, HabitGroup.values());
         tuneControls();
+        saveButton.setOnAction(event -> {
+            if (needToAskAboutDesc())
+                OrgUtils.getDialogBuilder().openQuestionDialog("Create new habit description?", this::saveAndCloseDialog);
+            else
+                saveAndCloseDialog(false);
+        });
+    }
+
+    private boolean needToAskAboutDesc() {
+        boolean itIsHabitCreation = habit == null;
+        if(itIsHabitCreation)
+            return false;
+        boolean descWasEdited = !habit.getCurrentDescription().getText().equals(descTextArea.getText());
+        return descWasEdited;
     }
 
     private void tuneControls() {
@@ -68,13 +82,13 @@ class HabitEditDialogController implements FxController {
             });
         } else {
             titleTextField.setText(habit.getTitle());
-            descTextArea.setText(habit.getDescription());
+            descTextArea.setText(habit.getCurrentDescription() == null ? "описания нет патчимута" : habit.getCurrentDescription().getText());
             activeCheckBox.setSelected(habit.isActive());
             typeComboBox.setValue(habit.getType());
             typeComboBox.setDisable(true);
             groupComboBox.setValue(habit.getHabitGroup());
             groupComboBox.setDisable(true);
-            enumLabel.setText(Habit.getEnumString(habit.enumElements));
+            enumLabel.setText(Habit.getEnumString(habit.getEnumElements()));
             enumTextField.setDisable(habit.getType() != HabitType.enumeration);
             enumElements.addAll(habit.getEnumElements());
         }
@@ -88,16 +102,16 @@ class HabitEditDialogController implements FxController {
         enumLabel.setText(Habit.getEnumString(enumElements));
     }
 
-    private void save() {
+    private void saveAndCloseDialog(boolean createNewDeck) {
         if (habit == null) {
             habit = new Habit();
         }
         habit.setTitle(titleTextField.getText());
-        habit.setDescription(descTextArea.getText());
         habit.setType(typeComboBox.getValue());
         habit.setActive(activeCheckBox.isSelected());
         habit.setHabitGroup(groupComboBox.getValue());
         Core.getInstance().habitsService().saveHabit(habit);
+        Core.getInstance().habitsService().newHabitDesc(habit, descTextArea.getText(), createNewDeck);
 
         if (habit.getType() == HabitType.enumeration) {
             for (EnumElement enumElement : enumElements) {
