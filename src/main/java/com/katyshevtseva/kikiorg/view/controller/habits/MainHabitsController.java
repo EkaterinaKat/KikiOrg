@@ -22,6 +22,8 @@ public class MainHabitsController extends AbstractSwitchController implements Fx
     @FXML
     private Button criterionButton;
     @FXML
+    private Button historyButton;
+    @FXML
     private Pane mainPane;
 
     private Node adminNode;
@@ -29,23 +31,30 @@ public class MainHabitsController extends AbstractSwitchController implements Fx
     private Node reportNode;
     private Node analysisNode;
     private Node criterionNode;
+    private Node historyNode;
 
     private AdminController adminController = new AdminController();
     private CheckListController checkListController = new CheckListController();
     private ReportController reportController = new ReportController();
     private AnalysisController analysisController = new AnalysisController();
     private CriterionController criterionController = new CriterionController();
+    private HistoryController historyController = new HistoryController();
 
     @FXML
     private void initialize() {
         pane = mainPane;
-        buttons.addAll(Arrays.asList(checkListButton, adminButton, reportButton, analysisButton, criterionButton));
+        buttons.addAll(Arrays.asList(checkListButton, adminButton, reportButton, analysisButton, criterionButton, historyButton));
         checkListButton.setOnAction(event -> checkListButtonListener());
         adminButton.setOnAction(event -> adminButtonListener());
         reportButton.setOnAction(event -> reportButtonListener());
         analysisButton.setOnAction(event -> analysisButtonListener());
         criterionButton.setOnAction(event -> criterionButtonListener());
+        historyButton.setOnAction(event -> historyButtonListener());
         checkListButtonListener();
+    }
+
+    private void historyButtonListener() {
+        activateMode(historyButton, historyNode, OrganizerWindowCreator.getInstance()::getHabitsHistoryNode, historyController);
     }
 
     private void checkListButtonListener() {

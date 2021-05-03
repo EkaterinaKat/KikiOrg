@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static com.katyshevtseva.date.DateUtils.shiftDate;
 
@@ -38,6 +39,11 @@ public class HabitsService {
 
     public Habit getHabitById(Long id) {
         return habitRepo.findById(id).get();
+    }
+
+    public List<Description> getAllHabitDescriptions(Habit habit) {
+        return descriptionRepo.findByHabit(habit).stream().sorted(
+                Comparator.comparing(o -> ((Description) o).getBeginningDate().getValue()).reversed()).collect(Collectors.toList());
     }
 
     public void newHabitDesc(Habit habit, String newDescText, boolean createNewDesc) {
