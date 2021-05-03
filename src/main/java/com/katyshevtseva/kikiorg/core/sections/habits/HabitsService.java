@@ -1,5 +1,6 @@
 package com.katyshevtseva.kikiorg.core.sections.habits;
 
+import com.katyshevtseva.date.DateUtils;
 import com.katyshevtseva.kikiorg.core.date.DateService;
 import com.katyshevtseva.kikiorg.core.repo.DescriptionRepo;
 import com.katyshevtseva.kikiorg.core.repo.EnumElementRepo;
@@ -13,6 +14,8 @@ import org.springframework.stereotype.Service;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
+
+import static com.katyshevtseva.date.DateUtils.shiftDate;
 
 @RequiredArgsConstructor
 @Service
@@ -73,7 +76,8 @@ public class HabitsService {
 
         if (habit.getCurrentDescription() != null) {
             Description oldDescription = habit.getCurrentDescription();
-            oldDescription.setEndDate(dateService.createIfNotExistAndGetDateEntity(new Date()));
+            oldDescription.setEndDate(dateService.createIfNotExistAndGetDateEntity(
+                    shiftDate(new Date(), DateUtils.TimeUnit.DAY, -1)));
             descriptionRepo.save(oldDescription);
         }
 

@@ -1,4 +1,4 @@
-package com.katyshevtseva.kikiorg.core.sections.habits.specials;
+package com.katyshevtseva.kikiorg.core.specials;
 
 import com.katyshevtseva.date.DateUtils;
 import com.katyshevtseva.date.Period;
@@ -18,7 +18,7 @@ import java.util.List;
 import static com.katyshevtseva.date.DateUtils.READABLE_DATE_FORMAT;
 
 @Service
-public class Specials {
+public class HabitsTransformer {
     @Autowired
     private HabitMarkService markService;
     @Autowired

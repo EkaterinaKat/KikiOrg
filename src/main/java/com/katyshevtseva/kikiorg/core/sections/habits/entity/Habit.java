@@ -30,9 +30,6 @@ public class Habit {
     @OneToMany(mappedBy = "habit", fetch = FetchType.EAGER)
     private List<EnumElement> enumElements;
 
-    @OneToOne(mappedBy = "habit")
-    private StabilityCriterion stabilityCriterion;
-
     @OneToOne
     @JoinColumn(name = "current_desc_id")
     private Description currentDescription;

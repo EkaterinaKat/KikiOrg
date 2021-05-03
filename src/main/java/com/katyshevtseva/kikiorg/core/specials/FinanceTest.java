@@ -1,4 +1,4 @@
-package com.katyshevtseva.kikiorg.core.tests;
+package com.katyshevtseva.kikiorg.core.specials;
 
 import com.katyshevtseva.date.Period;
 import com.katyshevtseva.kikiorg.core.CoreConstants;
@@ -11,28 +11,25 @@ import com.katyshevtseva.kikiorg.core.sections.finance.entity.Account;
 import com.katyshevtseva.kikiorg.core.sections.finance.report.ExpensesReportService;
 import com.katyshevtseva.kikiorg.core.sections.finance.report.IncomeReportService;
 import com.katyshevtseva.kikiorg.core.sections.finance.report.Report;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import java.util.Date;
 
+import static com.katyshevtseva.kikiorg.core.specials.TestConstants.ERROR_STRING;
+
 @Component
+@RequiredArgsConstructor
 public class FinanceTest {
     private boolean success = true;
-    @Autowired
-    private CalculationService calculationService;
-    @Autowired
-    private ExpensesReportService expensesReportService;
-    @Autowired
-    private IncomeReportService incomeReportService;
-    @Autowired
-    private OwnerService ownerService;
-    @Autowired
-    private FinanceService financeService;
-    @Autowired
-    private AccountRepo accountRepo;
+    private final CalculationService calculationService;
+    private final ExpensesReportService expensesReportService;
+    private final IncomeReportService incomeReportService;
+    private final OwnerService ownerService;
+    private final FinanceService financeService;
+    private final AccountRepo accountRepo;
 
-//    @PostConstruct
+    //    @PostConstruct
     public void test() {
         Date start = new Date();
 
@@ -41,9 +38,7 @@ public class FinanceTest {
         handleTestResult(testReportServices());
 
         if (success)
-            System.out.println("***********************************************\n" +
-                    "                  SUCCESS\n" +
-                    "***********************************************\n");
+            System.out.println(TestConstants.BIG_SUCCESS_BANNER);
         else
             System.out.println("\nTest failed :(");
 
@@ -63,7 +58,7 @@ public class FinanceTest {
             long calculatedAmount = calculationService.calculateAccountAmountByOperations(account);
             boolean amountsAreEqual = calculatedAmount == account.getAmount();
             testResult.addLineToReport(String.format("%s: %s", account.getTitle(),
-                    (amountsAreEqual ? "Success" : "Error") + String.format(
+                    (amountsAreEqual ? "Success" : ERROR_STRING) + String.format(
                             ": actual amount - %d, calculated amount - %d", account.getAmount(), calculatedAmount)));
             if (!amountsAreEqual)
                 testResult.testFailed();
@@ -87,7 +82,7 @@ public class FinanceTest {
             long actualAmount = getTotalAmountForCurrentUser();
             testResult.addLineToReport(String.format(
                     "Expected total amount: %d. Actual total amount: %d.", expectedAmount, actualAmount));
-            testResult.addLineToReport(expectedAmount == actualAmount ? "Success" : "Error");
+            testResult.addLineToReport(expectedAmount == actualAmount ? "Success" : ERROR_STRING);
             testResult.addLineToReport();
         }
         return testResult;
@@ -99,5 +94,30 @@ public class FinanceTest {
             amount += account.getAmount();
         }
         return amount;
+    }
+
+    class TestResult {
+        private String report = "";
+        private boolean success = true;
+
+        void addLineToReport(String s) {
+            report += s + "\n";
+        }
+
+        void addLineToReport() {
+            report += "\n";
+        }
+
+        void testFailed() {
+            success = false;
+        }
+
+        public String getReport() {
+            return report;
+        }
+
+        boolean isSuccess() {
+            return success;
+        }
     }
 }
