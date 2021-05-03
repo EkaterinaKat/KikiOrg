@@ -3,10 +3,8 @@ package com.katyshevtseva.kikiorg.core.sections.habits;
 import com.katyshevtseva.date.DateUtils;
 import com.katyshevtseva.kikiorg.core.date.DateService;
 import com.katyshevtseva.kikiorg.core.repo.DescriptionRepo;
-import com.katyshevtseva.kikiorg.core.repo.EnumElementRepo;
 import com.katyshevtseva.kikiorg.core.repo.HabitRepo;
 import com.katyshevtseva.kikiorg.core.sections.habits.entity.Description;
-import com.katyshevtseva.kikiorg.core.sections.habits.entity.EnumElement;
 import com.katyshevtseva.kikiorg.core.sections.habits.entity.Habit;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -21,7 +19,6 @@ import static com.katyshevtseva.date.DateUtils.shiftDate;
 @Service
 public class HabitsService {
     private final HabitRepo habitRepo;
-    private final EnumElementRepo enumElementRepo;
     private final DescriptionRepo descriptionRepo;
     private final DateService dateService;
 
@@ -37,23 +34,6 @@ public class HabitsService {
 
     public List<Habit> getActiveHabits() {
         return habitRepo.findByActiveTrue();
-    }
-
-    public void saveEnumElement(EnumElement enumElement) {
-        enumElementRepo.save(enumElement);
-    }
-
-    public List<EnumElement> getEnumElementsByHabit(Habit habit) {
-        List<EnumElement> enumElements = enumElementRepo.findByHabit(habit);
-        enumElements.add(getEmptyEnumElement());
-        return enumElements;
-    }
-
-    private EnumElement getEmptyEnumElement() {
-        EnumElement enumElement = new EnumElement();
-        enumElement.setTitle("-");
-        enumElement.setId(-1L);
-        return enumElement;
     }
 
     public Habit getHabitById(Long id) {

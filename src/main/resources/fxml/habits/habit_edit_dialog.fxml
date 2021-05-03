@@ -19,19 +19,8 @@
             <CheckBox fx:id="activeCheckBox"/>
         </HBox>
         <Pane minHeight="25" maxHeight="25"/>
-        <HBox>
-            <ComboBox fx:id="groupComboBox"/>
-            <Pane minWidth="15" maxWidth="15"/>
-            <ComboBox fx:id="typeComboBox"/>
-        </HBox>
+        <ComboBox fx:id="groupComboBox"/>
         <Pane minHeight="25" maxHeight="25"/>
-        <HBox>
-            <TextField fx:id="enumTextField"/>
-            <Pane minWidth="15" maxWidth="15"/>
-            <Button fx:id="addEnumButton" text="  +  "/>
-        </HBox>
-        <Pane minHeight="15" maxHeight="15"/>
-        <Label fx:id="enumLabel"/>
         <Pane minHeight="15" maxHeight="15"/>
         <TextArea fx:id="descTextArea" wrapText="true" minWidth="500" maxWidth="500"/>
         <Pane minHeight="25" maxHeight="25"/>

@@ -6,23 +6,24 @@ import com.katyshevtseva.fx.WindowBuilder.FxController;
 import com.katyshevtseva.kikiorg.core.Core;
 import com.katyshevtseva.kikiorg.core.sections.habits.HabitGroup;
 import com.katyshevtseva.kikiorg.core.sections.habits.HabitMarkService;
-import com.katyshevtseva.kikiorg.core.sections.habits.HabitMarkService.HabitMark;
 import com.katyshevtseva.kikiorg.core.sections.habits.HabitsService;
-import com.katyshevtseva.kikiorg.core.sections.habits.entity.EnumElement;
-import com.katyshevtseva.kikiorg.core.sections.habits.entity.EnumMark;
 import com.katyshevtseva.kikiorg.core.sections.habits.entity.Habit;
-import com.katyshevtseva.kikiorg.core.sections.habits.entity.NumMark;
 import javafx.fxml.FXML;
-import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
+import javafx.scene.control.DatePicker;
+import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
-import static com.katyshevtseva.fx.FxUtils.*;
+import static com.katyshevtseva.fx.FxUtils.associateButtonWithControls;
 import static com.katyshevtseva.fx.Styler.StandardColor.BLACK;
 import static com.katyshevtseva.fx.Styler.ThingToColor.TEXT;
 
@@ -35,8 +36,8 @@ class CheckListController implements FxController {
     private HBox hPane;
     @FXML
     private Button saveButton;
-    private List<Pair> pairs;
     private List<Habit> habits;
+    private Map<Habit, CheckBox> habitCheckBoxMap;
 
     @FXML
     private void initialize() {
@@ -49,7 +50,7 @@ class CheckListController implements FxController {
 
     private void fillHabitsTable() {
         habits = habitsService.getActiveHabits();
-        pairs = new ArrayList<>();
+        habitCheckBoxMap = new HashMap<>();
 
         for (HabitGroup habitGroup : HabitGroup.values()) {
             List<Habit> groupHabits = selectHabitsByGroup(habitGroup);
@@ -66,10 +67,11 @@ class CheckListController implements FxController {
                 gridPane.setHgap(15);
                 int rowIndex = 0;
                 for (Habit habit : groupHabits) {
-                    Pair pair = new Pair(habit);
-                    pairs.add(pair);
-                    gridPane.add(pair.getLabel(), 0, rowIndex);
-                    gridPane.add(pair.markControl, 1, rowIndex);
+                    CheckBox checkBox = new CheckBox();
+                    checkBox.setSelected(true);
+                    habitCheckBoxMap.put(habit, checkBox);
+                    gridPane.add(new Label(habit.getTitle()), 0, rowIndex);
+                    gridPane.add(checkBox, 1, rowIndex);
                     rowIndex++;
                 }
                 vPane.getChildren().add(gridPane);
@@ -91,69 +93,10 @@ class CheckListController implements FxController {
     }
 
     private void save() {
-        for (Pair pair : pairs) {
+        for (Map.Entry<Habit, CheckBox> entry : habitCheckBoxMap.entrySet()) {
             habitMarkService.saveMarkOrRewriteIfExists(
-                    pair.habit, java.sql.Date.valueOf(datePicker.getValue()), pair.getMarkControlValue());
+                    entry.getKey(), java.sql.Date.valueOf(datePicker.getValue()), entry.getValue().isSelected());
         }
         saveButton.setDisable(true);
-    }
-
-    private class Pair {
-        final int NODE_WIDTH = 180;
-        Habit habit;
-        Control markControl;
-
-        Pair(Habit habit) {
-            this.habit = habit;
-            HabitMark lastMark = habitMarkService.getLastMarkByHabitWithinLastWeekOrNull(habit);
-
-            switch (habit.getType()) {
-                case bollean:
-                    CheckBox checkBox = new CheckBox();
-                    markControl = checkBox;
-                    if (lastMark != null)
-                        checkBox.setSelected(true);
-                    break;
-                case number:
-                    TextField textField = new TextField();
-                    textField.setMaxWidth(NODE_WIDTH);
-                    textField.setMinWidth(NODE_WIDTH);
-                    disableNonNumericChars(textField);
-                    markControl = textField;
-                    if (lastMark != null) {
-                        textField.setText("" + ((NumMark) lastMark).getValue());
-                    }
-                    break;
-                case enumeration:
-                    ComboBox<EnumElement> comboBox = new ComboBox<>();
-                    setComboBoxItems(comboBox, habitsService.getEnumElementsByHabit(habit));
-                    comboBox.setMaxWidth(NODE_WIDTH);
-                    comboBox.setMinWidth(NODE_WIDTH);
-                    markControl = comboBox;
-                    if (lastMark != null) {
-                        comboBox.setValue(((EnumMark) lastMark).getEnumElement());
-                    }
-            }
-        }
-
-        Label getLabel() {
-            return new Label(habit.getTitle());
-        }
-
-        // Возвращает Boolean, Integer EnumElement или null
-        Object getMarkControlValue() {
-            switch (habit.getType()) {
-                case bollean:
-                    return ((CheckBox) markControl).isSelected();
-                case number:
-                    String textFieldValue = ((TextField) markControl).getText();
-                    if (textFieldValue == null || textFieldValue.isEmpty())
-                        return 0;
-                    return Integer.parseInt(textFieldValue);
-                case enumeration:
-                    return ((ComboBox<EnumElement>) markControl).getValue();
-            }
-            throw new RuntimeException();
-        }
     }
 }

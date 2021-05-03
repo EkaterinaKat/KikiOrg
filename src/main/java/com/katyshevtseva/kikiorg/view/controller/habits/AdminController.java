@@ -27,7 +27,7 @@ class AdminController implements FxController {
     @FXML
     private Label titleLabel;
     @FXML
-    private Label typeLabel;
+    private Label groupLabel;
     @FXML
     private Label descLabel;
     @FXML
@@ -65,9 +65,9 @@ class AdminController implements FxController {
     }
 
     private void showHabit(Habit habit) {
-        titleLabel.setText(habit.getTitleWithActiveInfoAndEnumElements());
+        titleLabel.setText(habit.getTitleWithActiveInfo());
         descLabel.setText(habit.getCurrentDescription() == null ? "описания нет патчимута" : habit.getCurrentDescription().getText());
-        typeLabel.setText("type: " + habit.getType() + "; group: " + habit.getHabitGroup() + ".");
+        groupLabel.setText("group: " + habit.getHabitGroup() + ".");
 
         habitIdPointLabelMap.values().forEach(label -> label.setText(""));
         habitIdPointLabelMap.get(habit.getId()).setText("* ");

@@ -1,14 +1,13 @@
 package com.katyshevtseva.kikiorg.core.sections.habits.entity;
 
 import com.katyshevtseva.kikiorg.core.date.DateEntity;
-import com.katyshevtseva.kikiorg.core.sections.habits.HabitMarkService.HabitMark;
 import lombok.Data;
 
 import javax.persistence.*;
 
 @Data
 @Entity
-public class NumMark implements HabitMark {
+public class Mark {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
@@ -20,16 +19,4 @@ public class NumMark implements HabitMark {
     @ManyToOne
     @JoinColumn(name = "date_entity_id")
     private DateEntity dateEntity;
-
-    private int value;
-
-    @Override
-    public String getTextForReport() {
-        return "" + value;
-    }
-
-    @Override
-    public int getNumEquivalent() {
-        return value;
-    }
 }
