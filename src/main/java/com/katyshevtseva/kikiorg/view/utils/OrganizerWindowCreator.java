@@ -116,8 +116,12 @@ public class OrganizerWindowCreator {
         return new WindowBuilder(FINANCE_FXML_LOCATION + "expenses.fxml").setController(controller).getNode();
     }
 
+    public Node getScatterCheckNode(FxController controller) {
+        return new WindowBuilder(FINANCE_FXML_LOCATION + "check/scatter_check.fxml").setController(controller).getNode();
+    }
+
     public Node getCheckNode(FxController controller) {
-        return new WindowBuilder(FINANCE_FXML_LOCATION + "check.fxml").setController(controller).getNode();
+        return new WindowBuilder(FINANCE_FXML_LOCATION + "check/check.fxml").setController(controller).getNode();
     }
 
     public Node getUserNode(FxController controller) {

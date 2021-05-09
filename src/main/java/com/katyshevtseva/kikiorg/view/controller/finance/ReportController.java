@@ -56,7 +56,7 @@ class ReportController implements FxController {
         showButton.setOnAction(event -> showButtonListener());
         associateButtonWithControls(showButton, startDatePicker, endDatePicker);
         setInitialDates();
-        FxUtils.setComboBoxItemsAndSetSelectedFirstItem(modeComboBox, Arrays.asList(Expenses, Income));
+        FxUtils.setComboBoxItems(modeComboBox, Arrays.asList(Expenses, Income), Expenses);
         startDateButton.setOnAction(event ->
                 startDatePicker.setValue(new java.sql.Date(FINANCIAL_ACCOUNTING_START_DATE.getTime()).toLocalDate()));
     }
