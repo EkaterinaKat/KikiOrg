@@ -1,10 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
 <VBox xmlns="http://javafx.com/javafx"
       xmlns:fx="http://javafx.com/fxml">
 
+    <Pane maxHeight="40" minHeight="40"/>
+
     <Pane fx:id="scatterPane"/>
 
+    <Pane maxHeight="30" minHeight="30"/>
+
+    <TableView fx:id="table" prefWidth="460" prefHeight="400">
+        <columns>
+            <TableColumn prefWidth="250" text="Title" fx:id="titleColumn"/>
+            <TableColumn prefWidth="150" text="Amount" fx:id="amountColumn"/>
+            <TableColumn prefWidth="50" fx:id="checkBoxColumn"/>
+        </columns>
+    </TableView>
 </VBox>
