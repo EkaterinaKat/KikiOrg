@@ -1,16 +1,16 @@
 package com.katyshevtseva.kikiorg.core.sections.finance;
 
-import com.katyshevtseva.kikiorg.core.sections.finance.entity.Account;
-import com.katyshevtseva.kikiorg.core.sections.finance.entity.CheckLine;
 import com.katyshevtseva.kikiorg.core.repo.AccountRepo;
 import com.katyshevtseva.kikiorg.core.repo.CheckLineRepo;
+import com.katyshevtseva.kikiorg.core.sections.finance.entity.Account;
+import com.katyshevtseva.kikiorg.core.sections.finance.entity.CheckLine;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
-public class FinanceCheckService {
+public class ScuttleCheckService {
     @Autowired
     private CheckLineRepo checkLineRepo;
     @Autowired

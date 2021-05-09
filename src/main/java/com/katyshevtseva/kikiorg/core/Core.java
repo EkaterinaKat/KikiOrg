@@ -7,45 +7,31 @@ import com.katyshevtseva.kikiorg.core.sections.habits.*;
 import com.katyshevtseva.kikiorg.core.sections.wardrobe.WardrobeService;
 import com.katyshevtseva.kikiorg.core.sections.work.WorkReportService;
 import com.katyshevtseva.kikiorg.core.sections.work.WorkService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.InitializingBean;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
+@RequiredArgsConstructor
 public class Core implements InitializingBean {
     private static Core INSTANCE;
-    @Autowired
     private FinanceService financeService;
-    @Autowired
     private HabitsService habitsService;
-    @Autowired
     private HabitsReportService habitsReportService;
-    @Autowired
-    private FinanceCheckService financeCheckService;
-    @Autowired
+    private ScuttleCheckService scuttleCheckService;
     private FinanceOperationService financeOperationService;
-    @Autowired
     private ItemHierarchyService itemHierarchyService;
-    @Autowired
     private ItemSchemaService itemSchemaService;
-    @Autowired
     private OwnerService ownerService;
-    @Autowired
     private ExpensesReportService expensesReportService;
-    @Autowired
     private IncomeReportService incomeReportService;
-    @Autowired
     private HabitMarkService habitMarkService;
-    @Autowired
     private WardrobeService wardrobeService;
-    @Autowired
     private AnalysisService analysisService;
-    @Autowired
     private StabilityCriterionService stabilityCriterionService;
-    @Autowired
     private WorkService workService;
-    @Autowired
     private WorkReportService workReportService;
+    private HuddleCheckService huddleCheckService;
 
     public static Core getInstance() {
         while (INSTANCE == null) {
@@ -75,8 +61,8 @@ public class Core implements InitializingBean {
         return habitsReportService;
     }
 
-    public FinanceCheckService financeCheckService() {
-        return financeCheckService;
+    public ScuttleCheckService financeCheckService() {
+        return scuttleCheckService;
     }
 
     public FinanceOperationService financeOperationService() {
@@ -125,5 +111,9 @@ public class Core implements InitializingBean {
 
     public WorkReportService workReportService() {
         return workReportService;
+    }
+
+    public HuddleCheckService huddleCheckService() {
+        return huddleCheckService;
     }
 }
