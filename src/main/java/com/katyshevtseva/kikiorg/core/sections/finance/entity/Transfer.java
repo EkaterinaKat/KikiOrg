@@ -7,6 +7,7 @@ import lombok.Data;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.Objects;
 
 import static com.katyshevtseva.kikiorg.core.sections.finance.FinanceOperationService.OperationType.TRANSFER;
 
@@ -67,5 +68,18 @@ public class Transfer implements Operation {
 
     public boolean isOuter() {
         return from.getOwner() != to.getOwner();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Transfer transfer = (Transfer) o;
+        return id == transfer.id;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
     }
 }

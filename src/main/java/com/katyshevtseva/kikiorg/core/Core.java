@@ -32,6 +32,7 @@ public class Core implements InitializingBean {
     private final WorkService workService;
     private final WorkReportService workReportService;
     private final HuddleCheckService huddleCheckService;
+    private final FinanceSearchService financeSearchService;
 
     public static Core getInstance() {
         while (INSTANCE == null) {
@@ -115,5 +116,9 @@ public class Core implements InitializingBean {
 
     public HuddleCheckService huddleCheckService() {
         return huddleCheckService;
+    }
+
+    public FinanceSearchService financeSearchService() {
+        return financeSearchService;
     }
 }
