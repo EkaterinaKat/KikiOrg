@@ -71,7 +71,7 @@ class ScatterCheckController implements FxController {
     }
 
     private void createTrios() {
-        List<CheckLine> checkLines = Core.getInstance().financeCheckService().getCheckLines(accountComboBox.getValue());
+        List<CheckLine> checkLines = Core.getInstance().scuttleCheckService().getCheckLines(accountComboBox.getValue());
         trios = new ArrayList<>();
         trios.add(new Trio(amountField1, titleField1, checkLines, 0));
         trios.add(new Trio(amountField2, titleField2, checkLines, 1));
@@ -93,7 +93,7 @@ class ScatterCheckController implements FxController {
             for (Trio trio : trios) {
                 amountSum += trio.getAmount();
             }
-            resultLabel.setText(Core.getInstance().financeCheckService().check(accountComboBox.getValue(), amountSum));
+            resultLabel.setText(Core.getInstance().scuttleCheckService().check(accountComboBox.getValue(), amountSum));
         }
     }
 
@@ -105,7 +105,7 @@ class ScatterCheckController implements FxController {
                 checkLinesToSave.add(checkLine);
             }
         }
-        Core.getInstance().financeCheckService().rewriteCheckLines(checkLinesToSave, accountComboBox.getValue());
+        Core.getInstance().scuttleCheckService().rewriteCheckLines(checkLinesToSave, accountComboBox.getValue());
     }
 
     private class Trio {

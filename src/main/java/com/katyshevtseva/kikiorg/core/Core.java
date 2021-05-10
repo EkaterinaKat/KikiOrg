@@ -15,23 +15,23 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class Core implements InitializingBean {
     private static Core INSTANCE;
-    private FinanceService financeService;
-    private HabitsService habitsService;
-    private HabitsReportService habitsReportService;
-    private ScuttleCheckService scuttleCheckService;
-    private FinanceOperationService financeOperationService;
-    private ItemHierarchyService itemHierarchyService;
-    private ItemSchemaService itemSchemaService;
-    private OwnerService ownerService;
-    private ExpensesReportService expensesReportService;
-    private IncomeReportService incomeReportService;
-    private HabitMarkService habitMarkService;
-    private WardrobeService wardrobeService;
-    private AnalysisService analysisService;
-    private StabilityCriterionService stabilityCriterionService;
-    private WorkService workService;
-    private WorkReportService workReportService;
-    private HuddleCheckService huddleCheckService;
+    private final FinanceService financeService;
+    private final HabitsService habitsService;
+    private final HabitsReportService habitsReportService;
+    private final ScuttleCheckService scuttleCheckService;
+    private final FinanceOperationService financeOperationService;
+    private final ItemHierarchyService itemHierarchyService;
+    private final ItemSchemaService itemSchemaService;
+    private final OwnerService ownerService;
+    private final ExpensesReportService expensesReportService;
+    private final IncomeReportService incomeReportService;
+    private final HabitMarkService habitMarkService;
+    private final WardrobeService wardrobeService;
+    private final AnalysisService analysisService;
+    private final StabilityCriterionService stabilityCriterionService;
+    private final WorkService workService;
+    private final WorkReportService workReportService;
+    private final HuddleCheckService huddleCheckService;
 
     public static Core getInstance() {
         while (INSTANCE == null) {
@@ -61,7 +61,7 @@ public class Core implements InitializingBean {
         return habitsReportService;
     }
 
-    public ScuttleCheckService financeCheckService() {
+    public ScuttleCheckService scuttleCheckService() {
         return scuttleCheckService;
     }
 
