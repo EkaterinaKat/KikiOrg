@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<HBox xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml">
+
+    <Pane maxWidth="20" minWidth="20"/>
+
+    <VBox>
+        <Pane maxHeight="20" minHeight="20"/>
+        <HBox>
+            <ComboBox fx:id="comboBox"/>
+            <Pane maxWidth="10" minWidth="10"/>
+            <Button text="+" fx:id="addButton"/>
+        </HBox>
+        <Pane maxHeight="20" minHeight="20"/>
+        <TextField fx:id="amountTextField"/>
+        <Pane maxHeight="20" minHeight="20"/>
+        <VBox fx:id="accountsPane"/>
+        <Pane maxHeight="20" minHeight="20"/>
+        <Button fx:id="checkButton" text="Check"/>
+        <Label fx:id="resultLabel" maxWidth="400" wrapText="true"/>
+        <Pane maxHeight="20" minHeight="20"/>
+    </VBox>
+
+    <Pane maxWidth="20" minWidth="20"/>
+
+</HBox>

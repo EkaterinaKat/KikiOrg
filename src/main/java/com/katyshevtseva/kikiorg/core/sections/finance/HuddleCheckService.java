@@ -27,6 +27,7 @@ public class HuddleCheckService {
     public String checkAndRewriteHuddleInfo(Huddle huddle, long newAmount, List<Account> accounts) {
         huddle.setAmount(newAmount);
         huddle.setAccounts(accounts);
+        huddleRepo.save(huddle);
 
         long accountsSum = 0;
         for (Account account : accounts) {

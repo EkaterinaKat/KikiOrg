@@ -2,14 +2,18 @@
 
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
-<?import javafx.scene.layout.Pane?>
-<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.*?>
 <VBox xmlns="http://javafx.com/javafx"
       xmlns:fx="http://javafx.com/fxml">
 
     <Pane maxHeight="40" minHeight="40"/>
 
-    <Pane fx:id="scatterPane"/>
+    <HBox>
+        <Pane fx:id="scatterPane" styleClass="black_border"/>
+        <Pane maxWidth="200" minWidth="200"/>
+        <Pane fx:id="huddlePane" styleClass="black_border"/>
+    </HBox>
+
 
     <Pane maxHeight="30" minHeight="30"/>
 

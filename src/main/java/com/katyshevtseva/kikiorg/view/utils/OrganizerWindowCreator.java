@@ -120,6 +120,11 @@ public class OrganizerWindowCreator {
         return new WindowBuilder(FINANCE_FXML_LOCATION + "check/scatter_check.fxml").setController(controller).getNode();
     }
 
+    public Node getHuddleCheckNode(FxController controller) {
+        return new WindowBuilder(FINANCE_FXML_LOCATION + "check/huddle_check.fxml").setController(controller).getNode();
+    }
+
+
     public Node getCheckNode(FxController controller) {
         return new WindowBuilder(FINANCE_FXML_LOCATION + "check/check.fxml").setController(controller).getNode();
     }

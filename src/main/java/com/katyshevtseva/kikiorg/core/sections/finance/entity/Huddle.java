@@ -16,9 +16,14 @@ public class Huddle {
 
     private String title;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "huddle_accounts",
             joinColumns = @JoinColumn(name = "huddle_id"),
             inverseJoinColumns = @JoinColumn(name = "account_id"))
     private List<Account> accounts;
+
+    @Override
+    public String toString() {
+        return title;
+    }
 }

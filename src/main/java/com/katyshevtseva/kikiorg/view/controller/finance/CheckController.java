@@ -23,6 +23,8 @@ class CheckController implements FxController {
     @FXML
     private Pane scatterPane;
     @FXML
+    private Pane huddlePane;
+    @FXML
     private TableView<Account> table;
     @FXML
     private TableColumn<Account, String> titleColumn;
@@ -34,6 +36,7 @@ class CheckController implements FxController {
     @FXML
     private void initialize() {
         scatterPane.getChildren().add(OrganizerWindowCreator.getInstance().getScatterCheckNode(new ScatterCheckController()));
+        huddlePane.getChildren().add(OrganizerWindowCreator.getInstance().getHuddleCheckNode(new HuddleCheckController()));
         adjustTable();
         fillTable();
     }

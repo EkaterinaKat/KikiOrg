@@ -2,41 +2,58 @@
 
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-<VBox xmlns="http://javafx.com/javafx"
+<HBox xmlns="http://javafx.com/javafx"
       xmlns:fx="http://javafx.com/fxml"
       alignment="CENTER">
 
-    <ComboBox fx:id="accountComboBox"/>
-    <HBox>
-        <TextField fx:id="titleField1"/>
-        <TextField fx:id="amountField1"/>
-    </HBox>
-    <HBox>
-        <TextField fx:id="titleField2"/>
-        <TextField fx:id="amountField2"/>
-    </HBox>
-    <HBox>
-        <TextField fx:id="titleField3"/>
-        <TextField fx:id="amountField3"/>
-    </HBox>
-    <HBox>
-        <TextField fx:id="titleField4"/>
-        <TextField fx:id="amountField4"/>
-    </HBox>
-    <HBox>
-        <TextField fx:id="titleField5"/>
-        <TextField fx:id="amountField5"/>
-    </HBox>
-    <HBox>
-        <TextField fx:id="titleField6"/>
-        <TextField fx:id="amountField6"/>
-    </HBox>
-    <HBox>
-        <TextField fx:id="titleField7"/>
-        <TextField fx:id="amountField7"/>
-    </HBox>
+    <Pane maxWidth="20" minWidth="20"/>
 
-    <Button text="Check" fx:id="checkButton"/>
-    <Label fx:id="resultLabel" maxWidth="400" wrapText="true"/>
+    <VBox>
+        <Pane maxHeight="20" minHeight="20"/>
 
-</VBox>
+        <ComboBox fx:id="accountComboBox"/>
+        <Pane maxHeight="20" minHeight="20"/>
+        <HBox>
+            <TextField fx:id="titleField1"/>
+            <TextField fx:id="amountField1"/>
+        </HBox>
+        <Pane maxHeight="10" minHeight="10"/>
+        <HBox>
+            <TextField fx:id="titleField2"/>
+            <TextField fx:id="amountField2"/>
+        </HBox>
+        <Pane maxHeight="10" minHeight="10"/>
+        <HBox>
+            <TextField fx:id="titleField3"/>
+            <TextField fx:id="amountField3"/>
+        </HBox>
+        <Pane maxHeight="10" minHeight="10"/>
+        <HBox>
+            <TextField fx:id="titleField4"/>
+            <TextField fx:id="amountField4"/>
+        </HBox>
+        <Pane maxHeight="10" minHeight="10"/>
+        <HBox>
+            <TextField fx:id="titleField5"/>
+            <TextField fx:id="amountField5"/>
+        </HBox>
+        <Pane maxHeight="10" minHeight="10"/>
+        <HBox>
+            <TextField fx:id="titleField6"/>
+            <TextField fx:id="amountField6"/>
+        </HBox>
+        <Pane maxHeight="10" minHeight="10"/>
+        <HBox>
+            <TextField fx:id="titleField7"/>
+            <TextField fx:id="amountField7"/>
+        </HBox>
+        <Pane maxHeight="20" minHeight="20"/>
+        <Button text="Check" fx:id="checkButton"/>
+        <Label fx:id="resultLabel" maxWidth="400" wrapText="true"/>
+
+        <Pane maxHeight="20" minHeight="20"/>
+    </VBox>
+
+    <Pane maxWidth="20" minWidth="20"/>
+
+</HBox>
