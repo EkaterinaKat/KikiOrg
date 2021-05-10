@@ -6,11 +6,13 @@ import com.katyshevtseva.kikiorg.core.Core;
 import com.katyshevtseva.kikiorg.core.sections.finance.FinanceOperationService.Operation;
 import com.katyshevtseva.kikiorg.core.sections.finance.FinanceOperationService.OperationType;
 import com.katyshevtseva.kikiorg.view.utils.OrgUtils;
+import com.katyshevtseva.kikiorg.view.utils.OrganizerWindowCreator;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.Pane;
 import javafx.util.Callback;
 
 import static com.katyshevtseva.fx.FxUtils.setImageOnButton;
@@ -19,6 +21,8 @@ import static com.katyshevtseva.fx.Styler.ThingToColor.BACKGROUND;
 
 
 class HistoryController implements FxController {
+    @FXML
+    private Pane searchPane;
     @FXML
     private TableView<Operation> table;
     @FXML
@@ -34,6 +38,7 @@ class HistoryController implements FxController {
 
     @FXML
     private void initialize() {
+        searchPane.getChildren().add(OrganizerWindowCreator.getInstance().getSearchNode(new SearchController()));
         adjustColumns();
         fillTable();
         setRowsColors();

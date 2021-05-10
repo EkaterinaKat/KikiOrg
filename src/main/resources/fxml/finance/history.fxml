@@ -1,11 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.*?>
-<?import javafx.scene.layout.HBox?>
-<HBox xmlns="http://javafx.com/javafx"
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<VBox xmlns="http://javafx.com/javafx"
       xmlns:fx="http://javafx.com/fxml">
 
-    <TableView fx:id="table" prefWidth="1000" prefHeight="800">
+    <Pane fx:id="searchPane" prefHeight="170"/>
+
+    <Pane maxHeight="30" minHeight="30"/>
+
+    <TableView fx:id="table" prefWidth="1000" prefHeight="630">
         <columns>
             <TableColumn prefWidth="120" text="Date" fx:id="dateColumn"/>
             <TableColumn prefWidth="340" text="From" fx:id="fromColumn"/>
@@ -15,5 +20,5 @@
         </columns>
     </TableView>
 
-</HBox>
+</VBox>
 

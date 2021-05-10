@@ -104,6 +104,10 @@ public class OrganizerWindowCreator {
         return new WindowBuilder(FINANCE_FXML_LOCATION + "main_finance.fxml").setController(controller).getNode();
     }
 
+    public Node getSearchNode(FxController controller) {
+        return new WindowBuilder(FINANCE_FXML_LOCATION + "search.fxml").setController(controller).getNode();
+    }
+
     public Node getReplenishmentNode(FxController controller) {
         return new WindowBuilder(FINANCE_FXML_LOCATION + "replenishment.fxml").setController(controller).getNode();
     }

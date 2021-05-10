@@ -5,7 +5,6 @@ import com.katyshevtseva.kikiorg.core.repo.ExpenseRepo;
 import com.katyshevtseva.kikiorg.core.repo.ReplenishmentRepo;
 import com.katyshevtseva.kikiorg.core.repo.TransferRepo;
 import com.katyshevtseva.kikiorg.core.sections.finance.FinanceOperationService.Operation;
-import com.katyshevtseva.kikiorg.core.sections.finance.FinanceOperationService.OperationType;
 import com.katyshevtseva.kikiorg.core.sections.finance.entity.Account;
 import com.katyshevtseva.kikiorg.core.sections.finance.entity.Item;
 import com.katyshevtseva.kikiorg.core.sections.finance.entity.Source;
@@ -26,32 +25,32 @@ public class FinanceSearchService {
     public List<Operation> search(SearchRequest request) {
         List<Operation> operations = new ArrayList<>();
 
-        switch (request.getOperationType()) {
-            case EXPENSE:
-                operations.addAll(expenseRepo.search(
-                        request.minAmount,
-                        request.maxAmount,
-                        request.period.start(),
-                        request.period.end(),
-                        request.accounts,
-                        request.items));
-            case REPLENISHMENT:
-            case TRANSFER:
-        }
-
-
         return operations;
     }
 
     @Data
-    public static class SearchRequest {
-        private OperationType operationType;
+    private static class SearchRequest {
+        Period period;
+        int minAmount;
+        int maxAmount;
+    }
 
-        private Period period;
-        private List<Source> sources;
+    @Data
+    public static class ExpenseSearchRequest extends SearchRequest {
         private List<Item> items;
         private List<Account> accounts;
-        private int minAmount;
-        private int maxAmount;
+
+    }
+
+    @Data
+    public static class ReplenishmentSearchRequest extends SearchRequest {
+        private List<Account> from;
+        private List<Account> to;
+    }
+
+    @Data
+    public static class TransferSearchRequest extends SearchRequest {
+        private List<Source> sources;
+        private List<Account> accounts;
     }
 }

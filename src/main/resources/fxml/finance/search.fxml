@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<VBox xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml">
+
+    <Pane minHeight="20" maxHeight="20"/>
+
+    <HBox alignment="BOTTOM_CENTER">
+        <Pane minWidth="20" maxWidth="20"/>
+
+        <VBox>
+            <ComboBox fx:id="typeComboBox"/>
+            <Pane minHeight="10" maxHeight="10"/>
+            <HBox>
+                <TextField fx:id="minTextField" maxWidth="170" minWidth="170"/>
+                <TextField fx:id="maxTextField" maxWidth="170" minWidth="170"/>
+            </HBox>
+            <Pane minHeight="10" maxHeight="10"/>
+            <HBox>
+                <DatePicker fx:id="startDatePicker" maxWidth="170" minWidth="170"/>
+                <DatePicker fx:id="endDatePicker" maxWidth="170" minWidth="170"/>
+            </HBox>
+        </VBox>
+
+        <Pane minWidth="20" maxWidth="20"/>
+
+        <ScrollPane maxWidth="240" minWidth="240" prefHeight="150">
+            <VBox fx:id="fromPane" maxWidth="200" minWidth="200"/>
+        </ScrollPane>
+
+        <Pane minWidth="20" maxWidth="20"/>
+
+        <ScrollPane maxWidth="240" minWidth="240" prefHeight="150">
+            <VBox fx:id="toPane" maxWidth="200" minWidth="200"/>
+        </ScrollPane>
+
+        <Pane minWidth="20" maxWidth="20"/>
+
+        <Button fx:id="searchButton" text="Search"/>
+    </HBox>
+
+    <Pane minHeight="20" maxHeight="20"/>
+
+</VBox>
