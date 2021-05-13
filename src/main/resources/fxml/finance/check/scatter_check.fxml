@@ -9,10 +9,10 @@
     <Pane maxWidth="20" minWidth="20"/>
 
     <VBox>
-        <Pane maxHeight="20" minHeight="20"/>
+        <Pane maxHeight="10" minHeight="10"/>
 
         <ComboBox fx:id="accountComboBox"/>
-        <Pane maxHeight="20" minHeight="20"/>
+        <Pane maxHeight="10" minHeight="10"/>
         <HBox>
             <TextField fx:id="titleField1"/>
             <TextField fx:id="amountField1"/>
@@ -47,8 +47,9 @@
             <TextField fx:id="titleField7"/>
             <TextField fx:id="amountField7"/>
         </HBox>
-        <Pane maxHeight="20" minHeight="20"/>
+        <Pane maxHeight="10" minHeight="10"/>
         <Button text="Check" fx:id="checkButton"/>
+        <Pane maxHeight="10" minHeight="10"/>
         <Label fx:id="resultLabel" maxWidth="400" wrapText="true"/>
 
         <Pane maxHeight="20" minHeight="20"/>

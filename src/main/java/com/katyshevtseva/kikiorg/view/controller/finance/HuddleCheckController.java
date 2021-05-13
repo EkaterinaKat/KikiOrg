@@ -13,6 +13,7 @@ import javafx.scene.layout.VBox;
 import java.util.*;
 import java.util.stream.Collectors;
 
+import static com.katyshevtseva.fx.FxUtils.associateButtonWithControls;
 import static com.katyshevtseva.fx.FxUtils.disableNonNumericChars;
 
 class HuddleCheckController implements FxController {
@@ -35,6 +36,7 @@ class HuddleCheckController implements FxController {
         disableNonNumericChars(amountTextField);
         setComboBoxItems();
         fillGridPane();
+        associateButtonWithControls(checkButton, comboBox);
         addButton.setOnAction(event -> OrgUtils.getDialogBuilder().openTextFieldDialog("", s -> {
             Core.getInstance().huddleCheckService().createHuddle(s);
             emptyAllCheckBoxes();
