@@ -26,15 +26,11 @@
 
         <Pane minWidth="20" maxWidth="20"/>
 
-        <ScrollPane maxWidth="240" minWidth="240" prefHeight="150">
-            <VBox fx:id="fromPane" maxWidth="200" minWidth="200"/>
-        </ScrollPane>
+        <Pane fx:id="fromPane" maxWidth="240" minWidth="240" prefHeight="150"/>
 
         <Pane minWidth="20" maxWidth="20"/>
 
-        <ScrollPane maxWidth="240" minWidth="240" prefHeight="150">
-            <VBox fx:id="toPane" maxWidth="200" minWidth="200"/>
-        </ScrollPane>
+        <Pane fx:id="toPane" maxWidth="240" minWidth="240" prefHeight="150"/>
 
         <Pane minWidth="20" maxWidth="20"/>
 
