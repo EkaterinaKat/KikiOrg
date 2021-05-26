@@ -1,6 +1,7 @@
 package com.katyshevtseva.kikiorg.core.sections.finance.entity;
 
 
+import com.katyshevtseva.kikiorg.core.sections.finance.FinanceSearchService.OperationEnd;
 import com.katyshevtseva.kikiorg.core.sections.finance.OwnerService.Owner;
 import lombok.Data;
 
@@ -9,7 +10,7 @@ import java.util.Objects;
 
 @Data
 @Entity
-public class Item {
+public class Item implements OperationEnd {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;

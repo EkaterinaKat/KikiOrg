@@ -5,9 +5,7 @@ import com.katyshevtseva.kikiorg.core.repo.ExpenseRepo;
 import com.katyshevtseva.kikiorg.core.repo.ReplenishmentRepo;
 import com.katyshevtseva.kikiorg.core.repo.TransferRepo;
 import com.katyshevtseva.kikiorg.core.sections.finance.FinanceOperationService.Operation;
-import com.katyshevtseva.kikiorg.core.sections.finance.entity.Account;
-import com.katyshevtseva.kikiorg.core.sections.finance.entity.Item;
-import com.katyshevtseva.kikiorg.core.sections.finance.entity.Source;
+import com.katyshevtseva.kikiorg.core.sections.finance.FinanceOperationService.OperationType;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -22,37 +20,33 @@ public class FinanceSearchService {
     private final ReplenishmentRepo replenishmentRepo;
     private final TransferRepo transferRepo;
 
-    public List<Operation> search(ExpenseSearchRequest request) {
+    public List<Operation> search(SearchRequest request) {
         List<Operation> operations = new ArrayList<>();
 
+        switch (request.getOperationType()) {
+            case EXPENSE:
+                operations.addAll(expenseRepo.findAll());
+                break;
+            case TRANSFER:
+                operations.addAll(transferRepo.findAll());
+                break;
+            case REPLENISHMENT:
+                operations.addAll(replenishmentRepo.findAll());
+        }
         return operations;
     }
 
     @Data
-    public static class ExpenseSearchRequest {
-        Period period;
-        int minAmount;
-        int maxAmount;
-        private List<Item> items;
-        private List<Account> accounts;
-
+    public static class SearchRequest {
+        private Period period;
+        private int minAmount;
+        private int maxAmount;
+        private OperationType operationType;
+        private List<OperationEnd> from;
+        private List<OperationEnd> to;
     }
 
-    @Data
-    public static class ReplenishmentSearchRequest {
-        Period period;
-        int minAmount;
-        int maxAmount;
-        private List<Account> from;
-        private List<Account> to;
-    }
+    public interface OperationEnd {
 
-    @Data
-    public static class TransferSearchRequest {
-        Period period;
-        int minAmount;
-        int maxAmount;
-        private List<Source> sources;
-        private List<Account> accounts;
     }
 }

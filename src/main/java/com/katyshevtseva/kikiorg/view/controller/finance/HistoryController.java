@@ -15,6 +15,8 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.Pane;
 import javafx.util.Callback;
 
+import java.util.List;
+
 import static com.katyshevtseva.fx.FxUtils.setImageOnButton;
 import static com.katyshevtseva.fx.Styler.StandardColor.*;
 import static com.katyshevtseva.fx.Styler.ThingToColor.BACKGROUND;
@@ -38,9 +40,9 @@ class HistoryController implements FxController {
 
     @FXML
     private void initialize() {
-        searchPane.getChildren().add(OrganizerWindowCreator.getInstance().getSearchNode(new SearchController()));
+        searchPane.getChildren().add(OrganizerWindowCreator.getInstance().getSearchNode(new SearchController(this::setTableContent)));
         adjustColumns();
-        fillTable();
+        setTableInitContent();
         setRowsColors();
     }
 
@@ -52,10 +54,20 @@ class HistoryController implements FxController {
         adjustButtonColumn();
     }
 
-    private void fillTable() {
-        ObservableList<Operation> operations = FXCollections.observableArrayList();
-        operations.addAll(Core.getInstance().financeOperationService().getOperationsAvailableForCurrentUser());
-        table.setItems(operations);
+    private void setTableInitContent() {
+        setTableContent(Core.getInstance().financeOperationService().getOperationsForCurrentUserForLastMonth());
+    }
+
+    private void setTableContent(List<Operation> operations) {
+        table.getItems().clear();
+        ObservableList<Operation> operationObservableList = FXCollections.observableArrayList();
+        operationObservableList.addAll(operations);
+        table.setItems(operationObservableList);
+    }
+
+    @FunctionalInterface
+    interface TableUpdateKnob {
+        void execute(List<Operation> operations);
     }
 
     private void adjustButtonColumn() {
@@ -73,7 +85,7 @@ class HistoryController implements FxController {
                                 if (b) {
                                     Core.getInstance().financeOperationService().deleteOperation(
                                             getTableView().getItems().get(getIndex()));
-                                    fillTable();
+                                    setTableInitContent();
                                 }
                             });
                         });

@@ -1,7 +1,5 @@
 package com.katyshevtseva.kikiorg.core.sections.finance;
 
-import com.katyshevtseva.date.Period;
-import com.katyshevtseva.date.DateUtils;
 import com.katyshevtseva.kikiorg.core.repo.AccountRepo;
 import com.katyshevtseva.kikiorg.core.repo.ExpenseRepo;
 import com.katyshevtseva.kikiorg.core.repo.ReplenishmentRepo;
@@ -36,7 +34,7 @@ public class FinanceOperationService {
     @Autowired
     private AccountRepo accountRepo;
 
-    public List<Operation> getOperationsAvailableForCurrentUser() {
+    public List<Operation> getOperationsForCurrentUserForLastMonth() {
         List<Operation> operations = new ArrayList<>();
         operations.addAll(financeService.getReplenishmentsForCuByPeriod(getLastMonthPeriod()));
         operations.addAll(financeService.getExpensesForCuByPeriod(getLastMonthPeriod()));
@@ -44,8 +42,6 @@ public class FinanceOperationService {
         operations.sort(Comparator.comparing(Operation::getDate).reversed());
         return operations;
     }
-
-
 
     public void deleteOperation(Operation operation) {
         switch (operation.getType()) {
