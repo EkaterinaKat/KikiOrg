@@ -1,6 +1,5 @@
 package com.katyshevtseva.kikiorg.core.sections.finance;
 
-import com.katyshevtseva.date.Period;
 import com.katyshevtseva.kikiorg.core.repo.ExpenseRepo;
 import com.katyshevtseva.kikiorg.core.repo.ReplenishmentRepo;
 import com.katyshevtseva.kikiorg.core.repo.TransferRepo;
@@ -9,7 +8,6 @@ import com.katyshevtseva.kikiorg.core.sections.finance.FinanceOperationService.O
 import com.katyshevtseva.kikiorg.core.sections.finance.entity.Account;
 import com.katyshevtseva.kikiorg.core.sections.finance.entity.Item;
 import com.katyshevtseva.kikiorg.core.sections.finance.entity.Source;
-import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -58,16 +56,6 @@ public class FinanceSearchService {
         }
         System.out.println(operations.size());
         return operations;
-    }
-
-    @Data
-    public static class SearchRequest { //todo логику обработки нулевых запросов поместить сюда
-        private Period period;
-        private long minAmount;
-        private long maxAmount;
-        private OperationType operationType;
-        private List<OperationEnd> from;
-        private List<OperationEnd> to;
     }
 
     public interface OperationEnd {
