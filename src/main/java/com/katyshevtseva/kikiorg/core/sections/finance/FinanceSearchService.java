@@ -22,34 +22,36 @@ public class FinanceSearchService {
     private final ReplenishmentRepo replenishmentRepo;
     private final TransferRepo transferRepo;
 
-    public List<Operation> search(SearchRequest request) {
+    public List<Operation> search(ExpenseSearchRequest request) {
         List<Operation> operations = new ArrayList<>();
 
         return operations;
     }
 
     @Data
-    private static class SearchRequest {
+    public static class ExpenseSearchRequest {
         Period period;
         int minAmount;
         int maxAmount;
-    }
-
-    @Data
-    public static class ExpenseSearchRequest extends SearchRequest {
         private List<Item> items;
         private List<Account> accounts;
 
     }
 
     @Data
-    public static class ReplenishmentSearchRequest extends SearchRequest {
+    public static class ReplenishmentSearchRequest {
+        Period period;
+        int minAmount;
+        int maxAmount;
         private List<Account> from;
         private List<Account> to;
     }
 
     @Data
-    public static class TransferSearchRequest extends SearchRequest {
+    public static class TransferSearchRequest {
+        Period period;
+        int minAmount;
+        int maxAmount;
         private List<Source> sources;
         private List<Account> accounts;
     }
