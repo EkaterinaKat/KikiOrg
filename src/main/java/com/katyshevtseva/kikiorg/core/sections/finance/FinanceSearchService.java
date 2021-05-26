@@ -25,13 +25,25 @@ public class FinanceSearchService {
 
         switch (request.getOperationType()) {
             case EXPENSE:
-                operations.addAll(expenseRepo.search(request.getMinAmount(), request.getMaxAmount()));
+                operations.addAll(expenseRepo.search(
+                        request.getMinAmount(),
+                        request.getMaxAmount(),
+                        request.getPeriod().start(),
+                        request.getPeriod().end()));
                 break;
             case TRANSFER:
-                operations.addAll(transferRepo.search(request.getMinAmount(), request.getMaxAmount()));
+                operations.addAll(transferRepo.search(
+                        request.getMinAmount(),
+                        request.getMaxAmount(),
+                        request.getPeriod().start(),
+                        request.getPeriod().end()));
                 break;
             case REPLENISHMENT:
-                operations.addAll(replenishmentRepo.search(request.getMinAmount(), request.getMaxAmount()));
+                operations.addAll(replenishmentRepo.search(
+                        request.getMinAmount(),
+                        request.getMaxAmount(),
+                        request.getPeriod().start(),
+                        request.getPeriod().end()));
         }
         System.out.println(operations.size());
         return operations;

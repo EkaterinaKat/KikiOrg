@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import java.util.Date;
 import java.util.List;
 
 public interface TransferRepo extends JpaRepository<Transfer, Long> {
@@ -19,8 +20,11 @@ public interface TransferRepo extends JpaRepository<Transfer, Long> {
     List<Transfer> findAllByToAndDateEntity(Account to, DateEntity dateEntity);
 
     @Query("SELECT t FROM Transfer t WHERE " +
-            "t.amount >= :minAmount AND t.amount <= :maxAmount")
+            "t.amount BETWEEN :minAmount AND :maxAmount " +
+            "AND t.dateEntity.value BETWEEN :startDate AND :endDate ")
     List<Transfer> search(
             @Param("minAmount") long minAmount,
-            @Param("maxAmount") long maxAmount);
+            @Param("maxAmount") long maxAmount,
+            @Param("startDate") Date startDate,
+            @Param("endDate") Date endDate);
 }

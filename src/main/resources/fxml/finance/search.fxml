@@ -22,6 +22,8 @@
                 <DatePicker fx:id="startDatePicker" maxWidth="170" minWidth="170"/>
                 <DatePicker fx:id="endDatePicker" maxWidth="170" minWidth="170"/>
             </HBox>
+            <Pane minHeight="10" maxHeight="10"/>
+            <Button fx:id="clearDatesButton" text="Clear dates"/>
         </VBox>
 
         <Pane minWidth="20" maxWidth="20"/>
