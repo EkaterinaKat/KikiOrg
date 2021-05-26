@@ -21,10 +21,14 @@ public interface TransferRepo extends JpaRepository<Transfer, Long> {
 
     @Query("SELECT t FROM Transfer t WHERE " +
             "t.amount BETWEEN :minAmount AND :maxAmount " +
-            "AND t.dateEntity.value BETWEEN :startDate AND :endDate ")
+            "AND t.dateEntity.value BETWEEN :startDate AND :endDate " +
+            "AND t.from IN :from " +
+            "AND t.to IN :to ")
     List<Transfer> search(
             @Param("minAmount") long minAmount,
             @Param("maxAmount") long maxAmount,
             @Param("startDate") Date startDate,
-            @Param("endDate") Date endDate);
+            @Param("endDate") Date endDate,
+            @Param("from") List<Account> from,
+            @Param("to") List<Account> to);
 }

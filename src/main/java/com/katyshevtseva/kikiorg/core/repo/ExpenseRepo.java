@@ -22,23 +22,14 @@ public interface ExpenseRepo extends JpaRepository<Expense, Long> {
 
     @Query("SELECT e FROM Expense e WHERE " +
             "e.amount BETWEEN :minAmount AND :maxAmount " +
-            "AND e.dateEntity.value BETWEEN :startDate AND :endDate ")
+            "AND e.dateEntity.value BETWEEN :startDate AND :endDate " +
+            "AND e.account IN :from " +
+            "AND e.item IN :to ")
     List<Expense> search(
             @Param("minAmount") long minAmount,
             @Param("maxAmount") long maxAmount,
             @Param("startDate") Date startDate,
-            @Param("endDate") Date endDate);
-
-    @Query("SELECT e FROM Expense e WHERE " +
-            "e.amount > :minAmount AND e.amount < :maxAmount " +
-            "AND e.dateEntity.value BETWEEN :startDate AND :endDate " +
-            "AND e.account IN :accounts " +
-            "AND e.item IN :items ")
-    List<Expense> search1(  //todo удалить потом
-                            @Param("minAmount") int minAmount,
-                            @Param("maxAmount") int maxAmount,
-                            @Param("startDate") Date startDate,
-                            @Param("endDate") Date endDate,
-                            @Param("accounts") List<Account> accounts,
-                            @Param("items") List<Item> items);
+            @Param("endDate") Date endDate,
+            @Param("from") List<Account> from,
+            @Param("to") List<Item> to);
 }
