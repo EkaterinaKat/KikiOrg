@@ -7,7 +7,6 @@ import com.katyshevtseva.kikiorg.core.repo.ExpenseRepo;
 import com.katyshevtseva.kikiorg.core.sections.finance.FinanceService;
 import com.katyshevtseva.kikiorg.core.sections.finance.ItemHierarchyService;
 import com.katyshevtseva.kikiorg.core.sections.finance.ItemHierarchyService.ItemHierarchyNode;
-import com.katyshevtseva.kikiorg.core.sections.finance.OwnerAdapterService;
 import com.katyshevtseva.kikiorg.core.sections.finance.entity.Account;
 import com.katyshevtseva.kikiorg.core.sections.finance.entity.Expense;
 import com.katyshevtseva.kikiorg.core.sections.finance.entity.Item;
@@ -28,14 +27,12 @@ public class ExpensesReportService {
     @Autowired
     private ExpenseRepo expenseRepo;
     @Autowired
-    private OwnerAdapterService adapter;
-    @Autowired
     private FinanceService financeService;
     @Autowired
     private TransfersReportService transfersReportService;
 
     public Report getHeadReport(Period period) {
-        Report report = getReportByNodes(itemHierarchyService.getTopLevelNodesForCurrentUser(), period, "All Expenses");
+        Report report = getReportByNodes(itemHierarchyService.getTopLevelNodes(), period, "All Expenses");
         TransferSegment transferSegment = transfersReportService.getRootTransferSegment(period, FROM_USER_ACCOUNTS);
         if (transferSegment.getAmount() > 0)
             report.addSegment(transferSegment);
@@ -43,35 +40,35 @@ public class ExpensesReportService {
     }
 
     Report getReportByRoot(ItemHierarchyNode root, Period period) {
-        List<ItemHierarchyNode> nodes = itemHierarchyService.getNodesByParentForCurrentUser(root);
+        List<ItemHierarchyNode> nodes = itemHierarchyService.getNodesByParent(root);
         return getReportByNodes(nodes, period, root.getTitle());
     }
 
     private Report getReportByNodes(List<ItemHierarchyNode> nodes, Period period, String title) {
         Report report = new Report(title);
         for (ItemHierarchyNode node : nodes) {
-            long amount = getAmountByNodeAndPeriodForCurrentUser(node, period);
+            long amount = getAmountByNodeAndPeriod(node, period);
             if (amount != 0)
                 report.addSegment(new ExpensesSegment(this, node, amount));
         }
         return report;
     }
 
-    private long getAmountByNodeAndPeriodForCurrentUser(ItemHierarchyNode node, Period period) {
+    private long getAmountByNodeAndPeriod(ItemHierarchyNode node, Period period) {
         if (node.isLeaf())
-            return getAmountByItemAndPeriodForCurrentUser(((ItemHierarchyLeaf) node).getItem(), period);
+            return getAmountByItemAndPeriod(((ItemHierarchyLeaf) node).getItem(), period);
 
         long amount = 0;
-        for (ItemHierarchyNode childNode : itemHierarchyService.getNodesByParentForCurrentUser(node))
-            amount += getAmountByNodeAndPeriodForCurrentUser(childNode, period);
+        for (ItemHierarchyNode childNode : itemHierarchyService.getNodesByParent(node))
+            amount += getAmountByNodeAndPeriod(childNode, period);
         return amount;
     }
 
-    private long getAmountByItemAndPeriodForCurrentUser(Item item, Period period) {
+    private long getAmountByItemAndPeriod(Item item, Period period) {
         long amount = 0;
         List<DateEntity> dateEntities = dateService.getOnlyExistingDateEntitiesByPeriod(period);
         for (DateEntity dateEntity : dateEntities) {
-            for (Account account : adapter.getAccountsForCurrentUser()) {
+            for (Account account : financeService.getAllAccounts()) {
                 List<Expense> expenses = expenseRepo.findByItemAndDateEntityAndAccount(item, dateEntity, account);
                 for (Expense expense : expenses) {
                     amount += expense.getAmount();

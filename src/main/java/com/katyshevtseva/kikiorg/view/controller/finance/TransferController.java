@@ -57,7 +57,7 @@ class TransferController implements FxController {
                                 if (empty) {
                                     setText("");
                                 } else {
-                                    setText(item.getTitleWithOwnerInfo());
+                                    setText(item.toString());
                                 }
                             }
                         };
@@ -72,7 +72,7 @@ class TransferController implements FxController {
                         if (bln) {
                             setText("");
                         } else {
-                            setText(t.getTitleWithOwnerInfo());
+                            setText(t.toString());
                         }
                     }
                 });

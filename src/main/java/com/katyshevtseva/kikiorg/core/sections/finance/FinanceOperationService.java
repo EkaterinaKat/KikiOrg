@@ -34,10 +34,10 @@ public class FinanceOperationService {
     @Autowired
     private AccountRepo accountRepo;
 
-    public List<Operation> getOperationsForCurrentUserForLastMonth() {
+    public List<Operation> getOperationsForLastMonth() {
         List<Operation> operations = new ArrayList<>();
-        operations.addAll(financeService.getReplenishmentsForCuByPeriod(getLastMonthPeriod()));
-        operations.addAll(financeService.getExpensesForCuByPeriod(getLastMonthPeriod()));
+        operations.addAll(financeService.getReplenishmentsByPeriod(getLastMonthPeriod()));
+        operations.addAll(financeService.getExpensesByPeriod(getLastMonthPeriod()));
         operations.addAll(financeService.getTransfersForCuByPeriod(getLastMonthPeriod(), ALL));
         operations.sort(Comparator.comparing(Operation::getDate).reversed());
         return operations;

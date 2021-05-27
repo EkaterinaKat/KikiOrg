@@ -22,7 +22,7 @@ public class IncomeReportService {
 
     public Report getIncomeReport(Period period) {
         Report report = new Report("Income");
-        List<Replenishment> replenishments = financeService.getReplenishmentsForCuByPeriod(period);
+        List<Replenishment> replenishments = financeService.getReplenishmentsByPeriod(period);
         Map<Source, Long> sourceAmountMap = new HashMap<>();
         for (Replenishment replenishment : replenishments) {
             long initialAmount = sourceAmountMap.getOrDefault(replenishment.getSource(), 0L);

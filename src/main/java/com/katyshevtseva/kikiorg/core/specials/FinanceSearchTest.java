@@ -23,7 +23,7 @@ public class FinanceSearchTest {
     private final FinanceSearchService searchService;
     private final FinanceService financeService;
 
-    @PostConstruct
+//    @PostConstruct
     private void test() {
         System.out.println(searchService.search(getRequest1()).size() + " - " + testRepo.count1(getIds(getSomeAccounts())));
         System.out.println(searchService.search(getRequest2()).size() + " - " + testRepo.count2(getIds(getSomeAccounts())));

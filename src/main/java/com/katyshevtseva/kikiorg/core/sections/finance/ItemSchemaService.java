@@ -18,7 +18,7 @@ public class ItemSchemaService {
 
     public List<SchemaLine> getSchema() {
         List<SchemaLine> schema = new ArrayList<>();
-        for (ItemHierarchyNode topLevelNode : service.getTopLevelNodesForCurrentUser()) {
+        for (ItemHierarchyNode topLevelNode : service.getTopLevelNodes()) {
             schema.addAll(getSchemaByRoot(topLevelNode, 0));
             schema.add(new EmptyLine());
         }
@@ -32,7 +32,7 @@ public class ItemSchemaService {
         if (node.isLeaf())
             return schema;
 
-        for (ItemHierarchyNode childNode : service.getNodesByParentForCurrentUser(node)) {
+        for (ItemHierarchyNode childNode : service.getNodesByParent(node)) {
             schema.addAll(getSchemaByRoot(childNode, level + 1));
         }
 

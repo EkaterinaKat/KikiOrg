@@ -55,7 +55,7 @@ class CheckController implements FxController {
 
     private void fillTable() {
         List<Account> accounts = Core.getInstance().financeService().getAllAccounts().stream()
-                .sorted(Comparator.comparing(Account::getOwner)).collect(Collectors.toList());
+                .sorted(Comparator.comparing(Account::getTitle)).collect(Collectors.toList());
         ObservableList<Account> observableList = FXCollections.observableArrayList();
         observableList.addAll(accounts);
         table.setItems(observableList);

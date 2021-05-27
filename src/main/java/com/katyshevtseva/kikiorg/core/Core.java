@@ -22,7 +22,6 @@ public class Core implements InitializingBean {
     private final FinanceOperationService financeOperationService;
     private final ItemHierarchyService itemHierarchyService;
     private final ItemSchemaService itemSchemaService;
-    private final OwnerService ownerService;
     private final ExpensesReportService expensesReportService;
     private final IncomeReportService incomeReportService;
     private final HabitMarkService habitMarkService;
@@ -76,10 +75,6 @@ public class Core implements InitializingBean {
 
     public ItemSchemaService itemSchemaService() {
         return itemSchemaService;
-    }
-
-    public OwnerService ownerService() {
-        return ownerService;
     }
 
     public ExpensesReportService expensesReportService() {

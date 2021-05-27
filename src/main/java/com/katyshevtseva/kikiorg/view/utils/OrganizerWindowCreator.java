@@ -133,10 +133,6 @@ public class OrganizerWindowCreator {
         return new WindowBuilder(FINANCE_FXML_LOCATION + "check/check.fxml").setController(controller).getNode();
     }
 
-    public Node getUserNode(FxController controller) {
-        return new WindowBuilder(FINANCE_FXML_LOCATION + "user.fxml").setController(controller).getNode();
-    }
-
     public Node getHistoryNode(FxController controller) {
         return new WindowBuilder(FINANCE_FXML_LOCATION + "history.fxml").setController(controller).getNode();
     }

@@ -2,10 +2,12 @@ package com.katyshevtseva.kikiorg.core.sections.finance.entity;
 
 
 import com.katyshevtseva.kikiorg.core.sections.finance.FinanceSearchService.OperationEnd;
-import com.katyshevtseva.kikiorg.core.sections.finance.OwnerService.Owner;
 import lombok.Data;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import java.util.Objects;
 
 @Data
@@ -23,9 +25,6 @@ public class Item implements OperationEnd {
     public String toString() {
         return title;
     }
-
-    @Enumerated(EnumType.STRING)
-    private Owner owner;
 
     @Override
     public boolean equals(Object o) {

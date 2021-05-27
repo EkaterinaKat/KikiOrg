@@ -20,8 +20,6 @@ public class MainFinanceController extends AbstractSwitchController implements F
     @FXML
     private Button checkButton;
     @FXML
-    private Button userButton;
-    @FXML
     private Pane mainPane;
     @FXML
     private Button historyButton;
@@ -38,7 +36,6 @@ public class MainFinanceController extends AbstractSwitchController implements F
     private final AccountsController accountsController = new AccountsController();
     private final ExpensesController expensesController = new ExpensesController();
     private final CheckController checkController = new CheckController();
-    private final UserController userController = new UserController();
     private final HistoryController historyController = new HistoryController();
     private final TransferController transferController = new TransferController();
     private final ItemHierarchyController itemHierarchyController = new ItemHierarchyController();
@@ -49,7 +46,6 @@ public class MainFinanceController extends AbstractSwitchController implements F
     private Node accountsNode;
     private Node expensesNode;
     private Node checkNode;
-    private Node userNode;
     private Node historyNode;
     private Node transferNode;
     private Node itemHierarchyNode;
@@ -59,14 +55,13 @@ public class MainFinanceController extends AbstractSwitchController implements F
     @FXML
     private void initialize() {
         pane = mainPane;
-        buttons.addAll(Arrays.asList(replenishmentButton, accountsButton, expensesButton, checkButton, userButton,
+        buttons.addAll(Arrays.asList(replenishmentButton, accountsButton, expensesButton, checkButton,
                 transferButton, historyButton, itemHierarchyButton, reportButton, analysisButton));
-        userButtonListener();
+        replenishmentButtonListener();
         replenishmentButton.setOnAction(event -> replenishmentButtonListener());
         accountsButton.setOnAction(event -> accountsButtonListener());
         expensesButton.setOnAction(event -> expensesButtonListener());
         checkButton.setOnAction(event -> checkButtonListener());
-        userButton.setOnAction(event -> userButtonListener());
         historyButton.setOnAction(event -> historyButtonListener());
         transferButton.setOnAction(event -> transferButtonListener());
         itemHierarchyButton.setOnAction(event -> itemHierarchyButtonListener());
@@ -117,10 +112,5 @@ public class MainFinanceController extends AbstractSwitchController implements F
     private void checkButtonListener() {
         activateMode(checkButton, checkNode,
                 OrganizerWindowCreator.getInstance()::getCheckNode, checkController);
-    }
-
-    private void userButtonListener() {
-        activateMode(userButton, userNode,
-                OrganizerWindowCreator.getInstance()::getUserNode, userController);
     }
 }

@@ -42,8 +42,6 @@ class ExpensesController implements FxController {
     @FXML
     private TableColumn<Item, String> descColumn;
     @FXML
-    private TableColumn<Item, String> ownerColumn;
-    @FXML
     private TableColumn<Item, Void> editColumn;
 
     @FXML
@@ -57,7 +55,7 @@ class ExpensesController implements FxController {
         associateButtonWithControls(addItemButton, itemTitleField, itemDescArea);
         associateButtonWithControls(doneButton, amountTextField, accountComboBox, itemComboBox, datePicker);
         setItemComboBoxItems();
-        setComboBoxItemsAndSetSelectedFirstItem(accountComboBox, Core.getInstance().financeService().getAccountsForCurrentUser());
+        setComboBoxItemsAndSetSelectedFirstItem(accountComboBox, Core.getInstance().financeService().getAllAccounts());
         datePicker.setValue(new java.sql.Date(DateCorrector.getProperDate().getTime()).toLocalDate());
         adjustColumns();
         fillTable();
@@ -66,7 +64,6 @@ class ExpensesController implements FxController {
     private void adjustColumns() {
         titleColumn.setCellValueFactory(new PropertyValueFactory<>("title"));
         descColumn.setCellValueFactory(new PropertyValueFactory<>("description"));
-        ownerColumn.setCellValueFactory(new PropertyValueFactory<>("owner"));
         descColumn.setCellFactory(tc -> {
             TableCell<Item, String> cell = new TableCell<>();
             Text text = new Text();
@@ -81,12 +78,12 @@ class ExpensesController implements FxController {
 
     private void fillTable() {
         ObservableList<Item> items = FXCollections.observableArrayList();
-        items.addAll(Core.getInstance().financeService().getItemsForCurrentOwner());
+        items.addAll(Core.getInstance().financeService().getAllItems());
         table.setItems(items);
     }
 
     private void setItemComboBoxItems() {
-        ObservableList<Item> items = FXCollections.observableArrayList(Core.getInstance().financeService().getFewLastItemsForCurrentUser());
+        ObservableList<Item> items = FXCollections.observableArrayList(Core.getInstance().financeService().getFewLastItems());
 
         Item more = new Item();
         more.setTitle("More..");

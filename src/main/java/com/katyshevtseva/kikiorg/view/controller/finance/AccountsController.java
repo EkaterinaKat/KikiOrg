@@ -69,7 +69,7 @@ class AccountsController implements FxController {
 
     private void fillTable() {
         ObservableList<Account> accounts = FXCollections.observableArrayList();
-        accounts.addAll(Core.getInstance().financeService().getAccountsForCurrentUser());
+        accounts.addAll(Core.getInstance().financeService().getAllAccounts());
         table.setItems(accounts);
     }
 

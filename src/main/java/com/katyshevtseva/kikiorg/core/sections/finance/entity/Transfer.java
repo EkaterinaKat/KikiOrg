@@ -39,12 +39,12 @@ public class Transfer implements Operation {
 
     @Override
     public String getFromTitle() {
-        return accountToString(from);
+        return from.toString();
     }
 
     @Override
     public String getToTitle() {
-        return accountToString(to);
+        return to.toString();
     }
 
     @Override
@@ -57,17 +57,13 @@ public class Transfer implements Operation {
         return TRANSFER;
     }
 
-    private String accountToString(Account account) {
-        return String.format("%s (owner: %s)", account.getTitle(), account.getOwner());
-    }
-
     @Override
     public String getAmountString() {
         return "" + amount;
     }
 
     public boolean isOuter() {
-        return from.getOwner() != to.getOwner();
+        return false;
     }
 
     @Override

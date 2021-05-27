@@ -52,7 +52,7 @@ class TransfersReportService {
      *  Если это отчет по переводам НА СЧЕТ тогда нас интересует имя счета, с которого был совершен перевод */
     private String getAccountTitle(Transfer transfer, TransferType transferType) {
         if (transferType == TransferType.FROM_USER_ACCOUNTS)
-            return transfer.getTo().getTitleWithOwnerInfo();
-        return transfer.getFrom().getTitleWithOwnerInfo();
+            return transfer.getTo().toString();
+        return transfer.getFrom().toString();
     }
 }

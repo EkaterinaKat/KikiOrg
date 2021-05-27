@@ -5,8 +5,6 @@ import com.katyshevtseva.kikiorg.core.CoreConstants;
 import com.katyshevtseva.kikiorg.core.repo.AccountRepo;
 import com.katyshevtseva.kikiorg.core.sections.finance.CalculationService;
 import com.katyshevtseva.kikiorg.core.sections.finance.FinanceService;
-import com.katyshevtseva.kikiorg.core.sections.finance.OwnerService;
-import com.katyshevtseva.kikiorg.core.sections.finance.OwnerService.Owner;
 import com.katyshevtseva.kikiorg.core.sections.finance.entity.Account;
 import com.katyshevtseva.kikiorg.core.sections.finance.report.ExpensesReportService;
 import com.katyshevtseva.kikiorg.core.sections.finance.report.IncomeReportService;
@@ -25,7 +23,6 @@ public class FinanceTest {
     private final CalculationService calculationService;
     private final ExpensesReportService expensesReportService;
     private final IncomeReportService incomeReportService;
-    private final OwnerService ownerService;
     private final FinanceService financeService;
     private final AccountRepo accountRepo;
 
@@ -69,28 +66,26 @@ public class FinanceTest {
     private TestResult testReportServices() {
         TestResult testResult = new TestResult();
         testResult.addLineToReport("Testing report services");
-        for (Owner owner : Owner.values()) {
-            ownerService.setCurrentOwner(owner);
-            testResult.addLineToReport("User: " + owner);
-            Report expensesReport = expensesReportService.getHeadReport(
-                    new Period(CoreConstants.FINANCIAL_ACCOUNTING_START_DATE, new Date()));
-            Report incomeReport = incomeReportService.getIncomeReport(
-                    new Period(CoreConstants.FINANCIAL_ACCOUNTING_START_DATE, new Date()));
-            testResult.addLineToReport(String.format(
-                    "Total income: %d. Total expenses: %d.", incomeReport.getTotal(), expensesReport.getTotal()));
-            long expectedAmount = incomeReport.getTotal() - expensesReport.getTotal();
-            long actualAmount = getTotalAmountForCurrentUser();
-            testResult.addLineToReport(String.format(
-                    "Expected total amount: %d. Actual total amount: %d.", expectedAmount, actualAmount));
-            testResult.addLineToReport(expectedAmount == actualAmount ? "Success" : ERROR_STRING);
-            testResult.addLineToReport();
-        }
+
+        Report expensesReport = expensesReportService.getHeadReport(
+                new Period(CoreConstants.FINANCIAL_ACCOUNTING_START_DATE, new Date()));
+        Report incomeReport = incomeReportService.getIncomeReport(
+                new Period(CoreConstants.FINANCIAL_ACCOUNTING_START_DATE, new Date()));
+        testResult.addLineToReport(String.format(
+                "Total income: %d. Total expenses: %d.", incomeReport.getTotal(), expensesReport.getTotal()));
+        long expectedAmount = incomeReport.getTotal() - expensesReport.getTotal();
+        long actualAmount = getTotalAmount();
+        testResult.addLineToReport(String.format(
+                "Expected total amount: %d. Actual total amount: %d.", expectedAmount, actualAmount));
+        testResult.addLineToReport(expectedAmount == actualAmount ? "Success" : ERROR_STRING);
+        testResult.addLineToReport();
+
         return testResult;
     }
 
-    private long getTotalAmountForCurrentUser() {
+    private long getTotalAmount() {
         long amount = 0;
-        for (Account account : financeService.getAccountsForCurrentUser()) {
+        for (Account account : financeService.getAllAccounts()) {
             amount += account.getAmount();
         }
         return amount;

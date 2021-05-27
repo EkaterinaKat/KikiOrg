@@ -1,7 +1,6 @@
 package com.katyshevtseva.kikiorg.core.sections.finance.entity;
 
 import com.katyshevtseva.kikiorg.core.sections.finance.ItemHierarchyService.ItemHierarchyNode;
-import com.katyshevtseva.kikiorg.core.sections.finance.OwnerService;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -20,9 +19,6 @@ public class ItemHierarchyLeaf implements ItemHierarchyNode {
     @ManyToOne
     @JoinColumn(name = "parent_group_id")
     private ItemGroup parentGroup;
-
-    @Enumerated(EnumType.STRING)
-    private OwnerService.Owner owner;
 
     @Override
     public boolean isLeaf() {

@@ -10,14 +10,13 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 import static com.katyshevtseva.date.DateUtils.getLastMonthPeriod;
 import static com.katyshevtseva.kikiorg.core.sections.finance.FinanceService.TransferType.*;
 
 @Service
 public class FinanceService {
-    @Autowired
-    private OwnerAdapterService adapter;
     @Autowired
     private AccountRepo accountRepo;
     @Autowired
@@ -37,31 +36,19 @@ public class FinanceService {
         Source source = new Source();
         source.setTitle(title);
         source.setDescription(desc);
-        adapter.saveSource(source);
-    }
-
-    public List<Source> getSourcesForCurrentUser() {
-        List<Source> sources = adapter.getSourcesForCurrentUser();
-        sources.sort(Comparator.comparing(Source::getTitle));
-        return sources;
+        sourceRepo.save(source);
     }
 
     public void addItem(String title, String desc) {
         Item item = new Item();
         item.setTitle(title);
         item.setDescription(desc);
-        adapter.saveItem(item);
-    }
-
-    public List<Item> getItemsForCurrentOwner() {
-        List<Item> items = adapter.getItemsForCurrentOwner();
-        items.sort(Comparator.comparing(Item::getTitle));
-        return items;
+        itemRepo.save(item);
     }
 
     // Возвращает список из 15 (или меньше) Item которые использовались самыми последними
-    public List<Item> getFewLastItemsForCurrentUser() {
-        List<Expense> expenses = getExpensesForCuByPeriod(getLastMonthPeriod());
+    public List<Item> getFewLastItems() {
+        List<Expense> expenses = getExpensesByPeriod(getLastMonthPeriod());
         expenses.sort(Comparator.comparing(Expense::getDateEntity).reversed());
         Set<Item> items = new HashSet<>();
         for (Expense expense : expenses) {
@@ -77,11 +64,7 @@ public class FinanceService {
         account.setTitle(title);
         account.setDescription(desc);
         account.setAmount(0);
-        adapter.saveAccount(account);
-    }
-
-    public List<Account> getAccountsForCurrentUser() {
-        return adapter.getAccountsForCurrentUser();
+        accountRepo.save(account);
     }
 
     public List<Account> getAllAccounts() {
@@ -93,7 +76,7 @@ public class FinanceService {
     }
 
     public List<Item> getAllItems() {
-        return itemRepo.findAll();
+        return itemRepo.findAll().stream().sorted(Comparator.comparing(Item::getTitle)).collect(Collectors.toList());
     }
 
     public void addExpense(Account account, long amount, Item item, Date date) {
@@ -108,11 +91,11 @@ public class FinanceService {
     }
 
     // Если нет мд public то FinanceService не может получить доступ к этому методу в собраном в exe приложении
-    public List<Expense> getExpensesForCuByPeriod(Period period) {
+    public List<Expense> getExpensesByPeriod(Period period) {
         List<Expense> expenses = new ArrayList<>();
         List<DateEntity> dateEntities = dateService.getOnlyExistingDateEntitiesByPeriod(period);
         for (DateEntity dateEntity : dateEntities) {
-            for (Account account : getAccountsForCurrentUser())
+            for (Account account : getAllAccounts())
                 expenses.addAll(expenseRepo.findByAccountAndDateEntity(account, dateEntity));
         }
         expenses.sort(Comparator.comparing(Expense::getDateEntity));
@@ -131,11 +114,11 @@ public class FinanceService {
     }
 
     // Если нет мд public то FinanceService не может получить доступ к этому методу в собраном в exe приложении
-    public List<Replenishment> getReplenishmentsForCuByPeriod(Period period) {
+    public List<Replenishment> getReplenishmentsByPeriod(Period period) {
         List<Replenishment> replenishments = new ArrayList<>();
         List<DateEntity> dateEntities = dateService.getOnlyExistingDateEntitiesByPeriod(period);
         for (DateEntity dateEntity : dateEntities) {
-            for (Account account : getAccountsForCurrentUser())
+            for (Account account : getAllAccounts())
                 replenishments.addAll(replenishmentRepo.findByAccountAndDateEntity(account, dateEntity));
         }
         replenishments.sort(Comparator.comparing(Replenishment::getDateEntity));
@@ -181,7 +164,7 @@ public class FinanceService {
         Set<Transfer> transferSet = new HashSet<>();
         List<DateEntity> dateEntities = dateService.getOnlyExistingDateEntitiesByPeriod(period);
         for (DateEntity dateEntity : dateEntities) {
-            for (Account account : getAccountsForCurrentUser()) {
+            for (Account account : getAllAccounts()) {
                 if (transferType == TO_USER_ACCOUNTS || transferType == ALL)
                     transferSet.addAll(transferRepo.findAllByToAndDateEntity(account, dateEntity));
                 if (transferType == FROM_USER_ACCOUNTS || transferType == ALL)

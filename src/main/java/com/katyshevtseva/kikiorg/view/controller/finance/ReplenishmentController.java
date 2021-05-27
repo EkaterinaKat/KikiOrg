@@ -41,8 +41,6 @@ class ReplenishmentController implements FxController {
     @FXML
     private TableColumn<Source, String> descColumn;
     @FXML
-    private TableColumn<Source, String> ownerColumn;
-    @FXML
     private TableColumn<Source, Void> editColumn;
 
     @FXML
@@ -56,7 +54,7 @@ class ReplenishmentController implements FxController {
         associateButtonWithControls(doneButton, amountTextField, sourceComboBox, accountComboBox, datePicker);
         associateButtonWithControls(addSourceButton, sourceTitleField, sourceDescArea);
         setSourceComboBoxItems();
-        FxUtils.setComboBoxItemsAndSetSelectedFirstItem(accountComboBox, Core.getInstance().financeService().getAccountsForCurrentUser());
+        FxUtils.setComboBoxItemsAndSetSelectedFirstItem(accountComboBox, Core.getInstance().financeService().getAllAccounts());
         datePicker.setValue(new java.sql.Date(DateCorrector.getProperDate().getTime()).toLocalDate());
         adjustColumns();
         fillTable();
@@ -65,7 +63,6 @@ class ReplenishmentController implements FxController {
     private void adjustColumns() {
         titleColumn.setCellValueFactory(new PropertyValueFactory<>("title"));
         descColumn.setCellValueFactory(new PropertyValueFactory<>("description"));
-        ownerColumn.setCellValueFactory(new PropertyValueFactory<>("owner"));
         descColumn.setCellFactory(tc -> {
             TableCell<Source, String> cell = new TableCell<>();
             Text text = new Text();
@@ -80,12 +77,12 @@ class ReplenishmentController implements FxController {
 
     private void fillTable() {
         ObservableList<Source> sources = FXCollections.observableArrayList();
-        sources.addAll(Core.getInstance().financeService().getSourcesForCurrentUser());
+        sources.addAll(Core.getInstance().financeService().getAllSources());
         table.setItems(sources);
     }
 
     private void setSourceComboBoxItems() {
-        setComboBoxItems(sourceComboBox, Core.getInstance().financeService().getSourcesForCurrentUser());
+        setComboBoxItems(sourceComboBox, Core.getInstance().financeService().getAllSources());
     }
 
     private void addSource() {

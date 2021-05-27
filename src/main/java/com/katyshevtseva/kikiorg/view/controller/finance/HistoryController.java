@@ -55,7 +55,7 @@ class HistoryController implements FxController {
     }
 
     private void setTableInitContent() {
-        setTableContent(Core.getInstance().financeOperationService().getOperationsForCurrentUserForLastMonth());
+        setTableContent(Core.getInstance().financeOperationService().getOperationsForLastMonth());
     }
 
     private void setTableContent(List<Operation> operations) {

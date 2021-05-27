@@ -65,7 +65,7 @@ public class FinanceSearchService {
         List<OperationEnd> operationEndList = new ArrayList<>();
         switch (operationType) {
             case REPLENISHMENT:
-                operationEndList.addAll(financeService.getSourcesForCurrentUser());
+                operationEndList.addAll(financeService.getAllSources());
                 break;
             case EXPENSE:
             case TRANSFER:
@@ -78,7 +78,7 @@ public class FinanceSearchService {
         List<OperationEnd> operationEndList = new ArrayList<>();
         switch (operationType) {
             case EXPENSE:
-                operationEndList.addAll(financeService.getItemsForCurrentOwner());
+                operationEndList.addAll(financeService.getAllItems());
                 break;
             case REPLENISHMENT:
             case TRANSFER:

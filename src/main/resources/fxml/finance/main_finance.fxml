@@ -15,8 +15,6 @@
             <Pane minHeight="10" maxHeight="10"/>
             <HBox>
                 <Pane minWidth="30" maxWidth="30"/>
-                <Button fx:id="userButton" text="User"/>
-                <Pane minWidth="30" maxWidth="30"/>
                 <Button fx:id="replenishmentButton" text="Replenishment"/>
                 <Pane minWidth="30" maxWidth="30"/>
                 <Button fx:id="expensesButton" text="Expenses"/>

@@ -55,9 +55,9 @@ class HuddleCheckController implements FxController {
     private void fillGridPane() {
         accountCheckBoxMap = new HashMap<>();
         List<Account> accounts = Core.getInstance().financeService().getAllAccounts()
-                .stream().sorted(Comparator.comparing(Account::getOwner)).collect(Collectors.toList());
+                .stream().sorted(Comparator.comparing(Account::getTitle)).collect(Collectors.toList());
         for (Account account : accounts) {
-            CheckBox checkBox = new CheckBox(account.getTitleWithOwnerInfo());
+            CheckBox checkBox = new CheckBox(account.toString());
             accountCheckBoxMap.put(account, checkBox);
             accountsPane.getChildren().addAll(checkBox, FxUtils.getPaneWithHeight(10));
         }

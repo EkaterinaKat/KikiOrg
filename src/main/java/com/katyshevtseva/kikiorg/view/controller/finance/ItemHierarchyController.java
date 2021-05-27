@@ -69,7 +69,7 @@ class ItemHierarchyController implements FxController {
 
             ComboBox<ItemHierarchyNode> comboBox = new ComboBox<>();
             comboBox.setVisible(false);
-            setComboBoxItems(comboBox, hierarchyService.getTopLevelNodesForCurrentUser());
+            setComboBoxItems(comboBox, hierarchyService.getTopLevelNodes());
             comboBox.valueProperty().addListener(observable -> {
                 try {
                     addButton.add(comboBox.getValue());
@@ -117,7 +117,7 @@ class ItemHierarchyController implements FxController {
 
     private void fillTable() {
         ObservableList<ItemGroup> itemGroups = FXCollections.observableArrayList();
-        itemGroups.addAll(Core.getInstance().itemHierarchyService().getItemGroupsForCurrentUser());
+        itemGroups.addAll(Core.getInstance().itemHierarchyService().getAllItemGroups());
         table.setItems(itemGroups);
     }
 
