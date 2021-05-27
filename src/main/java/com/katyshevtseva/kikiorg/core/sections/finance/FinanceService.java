@@ -1,7 +1,6 @@
 package com.katyshevtseva.kikiorg.core.sections.finance;
 
 import com.katyshevtseva.date.Period;
-import com.katyshevtseva.date.DateUtils;
 import com.katyshevtseva.kikiorg.core.date.DateEntity;
 import com.katyshevtseva.kikiorg.core.date.DateService;
 import com.katyshevtseva.kikiorg.core.repo.*;
@@ -87,6 +86,14 @@ public class FinanceService {
 
     public List<Account> getAllAccounts() {
         return accountRepo.findAll();
+    }
+
+    public List<Source> getAllSources() {
+        return sourceRepo.findAll();
+    }
+
+    public List<Item> getAllItems() {
+        return itemRepo.findAll();
     }
 
     public void addExpense(Account account, long amount, Item item, Date date) {
