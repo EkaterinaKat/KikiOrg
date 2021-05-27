@@ -70,7 +70,8 @@ class SearchController implements FxController {
         request.setOperationType(typeComboBox.getValue());
         request.setMinAmount(minTextField.getText());
         request.setMaxAmount(maxTextField.getText());
-        request.setPeriod(startDatePicker.getValue(), endDatePicker.getValue());
+        request.setStart(startDatePicker.getValue());
+        request.setEnd(endDatePicker.getValue());
         request.setFrom(fromController.getSelectedItems(), fromController.getAllItems());
         request.setTo(toController.getSelectedItems(), toController.getAllItems());
         tableUpdateKnob.execute(searchService.search(request));

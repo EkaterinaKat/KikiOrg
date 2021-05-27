@@ -1,12 +1,12 @@
 package com.katyshevtseva.kikiorg.core.sections.finance;
 
 import com.katyshevtseva.date.DateUtils;
-import com.katyshevtseva.date.Period;
 import com.katyshevtseva.kikiorg.core.sections.finance.FinanceOperationService.OperationType;
 import com.katyshevtseva.kikiorg.core.sections.finance.FinanceSearchService.OperationEnd;
 import lombok.Getter;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -16,26 +16,32 @@ import static com.katyshevtseva.kikiorg.core.CoreConstants.FINANCIAL_ACCOUNTING_
 
 @Getter
 public class SearchRequest {
-    private Period period;
-    private long minAmount;
-    private long maxAmount;
+    private Date start = FINANCIAL_ACCOUNTING_START_DATE;
+    private Date end = DateUtils.shiftDate(new Date(), DAY, 1);
+    private long minAmount = 0;
+    private long maxAmount = Long.MAX_VALUE;
     private OperationType operationType;
-    private List<OperationEnd> from;
-    private List<OperationEnd> to;
+    private List<OperationEnd> from = new ArrayList<>();
+    private List<OperationEnd> to = new ArrayList<>();
 
-    public void setPeriod(LocalDate start, LocalDate end) {
-        this.period = new Period(
-                start != null ? java.sql.Date.valueOf(start) : FINANCIAL_ACCOUNTING_START_DATE,
-                end != null ? java.sql.Date.valueOf(end) : DateUtils.shiftDate(new Date(), DAY, 1)
-        );
+    public void setStart(LocalDate start) {
+        if (start != null)
+            this.start = java.sql.Date.valueOf(start);
+    }
+
+    public void setEnd(LocalDate end) {
+        if (end != null)
+            this.end = java.sql.Date.valueOf(end);
     }
 
     public void setMinAmount(String minAmountString) {
-        this.minAmount = isEmpty(minAmountString) ? 0 : Long.parseLong(minAmountString);
+        if (!isEmpty(minAmountString))
+            minAmount = Long.parseLong(minAmountString);
     }
 
     public void setMaxAmount(String maxAmountString) {
-        this.maxAmount = isEmpty(maxAmountString) ? Long.MAX_VALUE : Long.parseLong(maxAmountString);
+        if (!isEmpty(maxAmountString))
+            maxAmount = Long.parseLong(maxAmountString);
     }
 
     public void setOperationType(OperationType operationType) {

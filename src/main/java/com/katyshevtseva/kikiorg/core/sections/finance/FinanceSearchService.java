@@ -31,8 +31,8 @@ public class FinanceSearchService {
                 operations.addAll(expenseRepo.search(
                         request.getMinAmount(),
                         request.getMaxAmount(),
-                        request.getPeriod().start(),
-                        request.getPeriod().end(),
+                        request.getStart(),
+                        request.getEnd(),
                         request.getFrom().stream().map(operationEnd -> (Account) operationEnd).collect(Collectors.toList()),
                         request.getTo().stream().map(operationEnd -> (Item) operationEnd).collect(Collectors.toList())));
                 break;
@@ -40,8 +40,8 @@ public class FinanceSearchService {
                 operations.addAll(transferRepo.search(
                         request.getMinAmount(),
                         request.getMaxAmount(),
-                        request.getPeriod().start(),
-                        request.getPeriod().end(),
+                        request.getStart(),
+                        request.getEnd(),
                         request.getFrom().stream().map(operationEnd -> (Account) operationEnd).collect(Collectors.toList()),
                         request.getTo().stream().map(operationEnd -> (Account) operationEnd).collect(Collectors.toList())));
                 break;
@@ -49,17 +49,16 @@ public class FinanceSearchService {
                 operations.addAll(replenishmentRepo.search(
                         request.getMinAmount(),
                         request.getMaxAmount(),
-                        request.getPeriod().start(),
-                        request.getPeriod().end(),
+                        request.getStart(),
+                        request.getEnd(),
                         request.getFrom().stream().map(operationEnd -> (Source) operationEnd).collect(Collectors.toList()),
                         request.getTo().stream().map(operationEnd -> (Account) operationEnd).collect(Collectors.toList())));
         }
-        System.out.println(operations.size());
         return operations;
     }
 
     public interface OperationEnd {
-
+        long getId();
     }
 
     public List<OperationEnd> getFrom(OperationType operationType) {
