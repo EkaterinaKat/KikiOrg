@@ -12,6 +12,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -54,7 +55,7 @@ public class FinanceSearchService {
                         request.getFrom().stream().map(operationEnd -> (Source) operationEnd).collect(Collectors.toList()),
                         request.getTo().stream().map(operationEnd -> (Account) operationEnd).collect(Collectors.toList())));
         }
-        return operations;
+        return operations.stream().sorted(Comparator.comparing(Operation::getDate).reversed()).collect(Collectors.toList());
     }
 
     public interface OperationEnd {
