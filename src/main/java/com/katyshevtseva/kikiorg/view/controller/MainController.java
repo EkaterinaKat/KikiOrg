@@ -3,6 +3,7 @@ package com.katyshevtseva.kikiorg.view.controller;
 import com.katyshevtseva.fx.WindowBuilder.FxController;
 import com.katyshevtseva.kikiorg.view.controller.finance.MainFinanceController;
 import com.katyshevtseva.kikiorg.view.controller.habits.MainHabitsController;
+import com.katyshevtseva.kikiorg.view.controller.tracker.MainTrackerController;
 import com.katyshevtseva.kikiorg.view.controller.wardrobe.MainWardrobeController;
 import com.katyshevtseva.kikiorg.view.controller.work.MainWorkController;
 import com.katyshevtseva.kikiorg.view.utils.OrganizerWindowCreator;
@@ -28,25 +29,35 @@ public class MainController extends AbstractSwitchController implements FxContro
     private ImageView logoImageView;
     @FXML
     private Button workButton;
+    @FXML
+    private Button trackerButton;
     private final MainFinanceController mainFinanceController = new MainFinanceController();
     private final MainHabitsController mainHabitsController = new MainHabitsController();
     private final MainWardrobeController mainWardrobeController = new MainWardrobeController();
     private final MainWorkController mainWorkController = new MainWorkController();
+    private final MainTrackerController mainTrackerController = new MainTrackerController();
     private Node financeModeNode;
     private Node habitsModeNode;
     private Node wardrobeModeNode;
     private Node workModeNode;
+    private Node trackerModeNode;
 
     @FXML
     private void initialize() {
         logoImageView.setImage(new Image("images/logo.png"));
         pane = mainPane;
-        buttons.addAll(Arrays.asList(habitsButton, financeButton, wardrobeButton, workButton));
+        buttons.addAll(Arrays.asList(habitsButton, financeButton, wardrobeButton, workButton, trackerButton));
         financeButton.setOnAction(event -> financeButtonListener());
         habitsButton.setOnAction(event -> habitsButtonListener());
         wardrobeButton.setOnAction(event -> wardrobeButtonListener());
         workButton.setOnAction(event -> workButtonListener());
+        trackerButton.setOnAction(event -> trackerButtonListener());
         financeButtonListener();
+    }
+
+    private void trackerButtonListener() {
+        activateMode(trackerButton, trackerModeNode,
+                OrganizerWindowCreator.getInstance()::getMainTrackerNode, mainTrackerController);
     }
 
     private void workButtonListener() {

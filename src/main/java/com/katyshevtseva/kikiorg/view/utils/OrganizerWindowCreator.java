@@ -32,6 +32,20 @@ public class OrganizerWindowCreator {
         return new WindowBuilder(WORK_FXML_LOCATION + "main_work.fxml").setController(controller).getNode();
     }
 
+    /* ---------------------------------- Трекер ---------------------------------------------- */
+
+    public Node getMainTrackerNode(FxController controller) {
+        return new WindowBuilder(TRACKER_FXML_LOCATION + "main_tracker.fxml").setController(controller).getNode();
+    }
+
+    public Node getBoardNode(FxController controller) {
+        return new WindowBuilder(TRACKER_FXML_LOCATION + "board.fxml").setController(controller).getNode();
+    }
+
+    public Node getProjectsNode(FxController controller) {
+        return new WindowBuilder(TRACKER_FXML_LOCATION + "projects.fxml").setController(controller).getNode();
+    }
+
     /* ---------------------------------- Гардероб ---------------------------------------------- */
 
     public Node getMainWardrobeNode(FxController controller) {
