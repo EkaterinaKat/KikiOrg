@@ -1,5 +1,6 @@
 package com.katyshevtseva.kikiorg.view.controller.finance;
 
+import com.katyshevtseva.fx.FxUtils;
 import com.katyshevtseva.fx.WindowBuilder.FxController;
 import com.katyshevtseva.kikiorg.core.Core;
 import com.katyshevtseva.kikiorg.core.exeption.SchemaException;
@@ -112,48 +113,21 @@ class ItemHierarchyController implements FxController {
 
     private void adjustColumns() {
         titleColumn.setCellValueFactory(new PropertyValueFactory<>("title"));
-        adjustButtonColumn();
+        FxUtils.adjustButtonColumn(deleteColumn, "[x]",
+                itemGroup ->
+                        OrgUtils.getDialogBuilder().openQuestionDialog("Delete?", b -> {
+                            if (b) {
+                                Core.getInstance().itemHierarchyService().destroyTreeAndDeleteGroup(itemGroup);
+                                fillTable();
+                                fillSchema();
+                            }
+                        }),
+                button ->  button.setMaxHeight(10));
     }
 
     private void fillTable() {
         ObservableList<ItemGroup> itemGroups = FXCollections.observableArrayList();
         itemGroups.addAll(Core.getInstance().itemHierarchyService().getAllItemGroups());
         table.setItems(itemGroups);
-    }
-
-    private void adjustButtonColumn() {
-        deleteColumn.setCellFactory(new Callback<TableColumn<ItemGroup, Void>, TableCell<ItemGroup, Void>>() {
-            @Override
-            public TableCell<ItemGroup, Void> call(final TableColumn<ItemGroup, Void> param) {
-                return new TableCell<ItemGroup, Void>() {
-
-                    private final Button button = new Button("[x]");
-
-                    {
-                        button.setMaxHeight(10);
-                        button.setOnAction(event -> {
-                            OrgUtils.getDialogBuilder().openQuestionDialog("Delete?", b -> {
-                                if (b) {
-                                    Core.getInstance().itemHierarchyService().destroyTreeAndDeleteGroup(
-                                            getTableView().getItems().get(getIndex()));
-                                    fillTable();
-                                    fillSchema();
-                                }
-                            });
-                        });
-                    }
-
-                    @Override
-                    public void updateItem(Void item, boolean empty) {
-                        super.updateItem(item, empty);
-                        if (empty) {
-                            setGraphic(null);
-                        } else {
-                            setGraphic(button);
-                        }
-                    }
-                };
-            }
-        });
     }
 }

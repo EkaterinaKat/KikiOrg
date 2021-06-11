@@ -13,7 +13,6 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.text.Text;
-import javafx.util.Callback;
 
 import static com.katyshevtseva.fx.FxUtils.*;
 
@@ -72,7 +71,13 @@ class ReplenishmentController implements FxController {
             text.textProperty().bind(cell.itemProperty());
             return cell;
         });
-        adjustButtonColumn();
+        FxUtils.adjustButtonColumn(editColumn, "Edit",
+                source ->
+                        OrgUtils.getDialogBuilder().openTextFieldAndTextAreaDialog(source.getTitle(), source.getDescription(),
+                                (title, desc) -> {
+                                    Core.getInstance().financeService().alterSource(source, title, desc);
+                                    fillTable();
+                                }));
     }
 
     private void fillTable() {
@@ -96,37 +101,5 @@ class ReplenishmentController implements FxController {
         Core.getInstance().financeService().addReplenishment(accountComboBox.getValue(), Long.parseLong(amountTextField.getText()),
                 sourceComboBox.getValue(), java.sql.Date.valueOf(datePicker.getValue()));
         amountTextField.clear();
-    }
-
-    private void adjustButtonColumn() {
-        editColumn.setCellFactory(new Callback<TableColumn<Source, Void>, TableCell<Source, Void>>() {
-            @Override
-            public TableCell<Source, Void> call(final TableColumn<Source, Void> param) {
-                return new TableCell<Source, Void>() {
-                    private final Button button = new Button("Edit");
-
-                    {
-                        button.setOnAction(event -> {
-                            Source source = getTableView().getItems().get(getIndex());
-                            OrgUtils.getDialogBuilder().openTextFieldAndTextAreaDialog(source.getTitle(), source.getDescription(),
-                                    (title, desc) -> {
-                                        Core.getInstance().financeService().alterSource(source, title, desc);
-                                        fillTable();
-                                    });
-                        });
-                    }
-
-                    @Override
-                    public void updateItem(Void item, boolean empty) {
-                        super.updateItem(item, empty);
-                        if (empty) {
-                            setGraphic(null);
-                        } else {
-                            setGraphic(button);
-                        }
-                    }
-                };
-            }
-        });
     }
 }

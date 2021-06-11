@@ -1,6 +1,7 @@
 package com.katyshevtseva.kikiorg.view.controller.finance;
 
 import com.katyshevtseva.date.DateCorrector;
+import com.katyshevtseva.fx.FxUtils;
 import com.katyshevtseva.fx.WindowBuilder.FxController;
 import com.katyshevtseva.kikiorg.core.Core;
 import com.katyshevtseva.kikiorg.core.sections.finance.entity.Account;
@@ -9,12 +10,10 @@ import com.katyshevtseva.kikiorg.view.utils.OrgUtils;
 import com.katyshevtseva.kikiorg.view.utils.OrganizerWindowCreator;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.text.Text;
-import javafx.util.Callback;
 
 import static com.katyshevtseva.fx.FxUtils.*;
 
@@ -73,7 +72,12 @@ class ExpensesController implements FxController {
             text.textProperty().bind(cell.itemProperty());
             return cell;
         });
-        adjustButtonColumn();
+        FxUtils.adjustButtonColumn(editColumn, "Edit",
+                item -> OrgUtils.getDialogBuilder().openTextFieldAndTextAreaDialog(item.getTitle(), item.getDescription(),
+                        (title, desc) -> {
+                            Core.getInstance().financeService().alterItem(item, title, desc);
+                            fillTable();
+                        }));
     }
 
     private void fillTable() {
@@ -109,37 +113,5 @@ class ExpensesController implements FxController {
         Core.getInstance().financeService().addExpense(accountComboBox.getValue(), Long.parseLong(amountTextField.getText()),
                 itemComboBox.getValue(), java.sql.Date.valueOf(datePicker.getValue()));
         amountTextField.clear();
-    }
-
-    private void adjustButtonColumn() { //todo из библиотеки используй и во всех других местах тоже
-        editColumn.setCellFactory(new Callback<TableColumn<Item, Void>, TableCell<Item, Void>>() {
-            @Override
-            public TableCell<Item, Void> call(final TableColumn<Item, Void> param) {
-                return new TableCell<Item, Void>() {
-                    private final Button button = new Button("Edit");
-
-                    {
-                        button.setOnAction((ActionEvent event) -> {
-                            Item item = getTableView().getItems().get(getIndex());
-                            OrgUtils.getDialogBuilder().openTextFieldAndTextAreaDialog(item.getTitle(), item.getDescription(),
-                                    (title, desc) -> {
-                                        Core.getInstance().financeService().alterItem(item, title, desc);
-                                        fillTable();
-                                    });
-                        });
-                    }
-
-                    @Override
-                    public void updateItem(Void item, boolean empty) {
-                        super.updateItem(item, empty);
-                        if (empty) {
-                            setGraphic(null);
-                        } else {
-                            setGraphic(button);
-                        }
-                    }
-                };
-            }
-        });
     }
 }

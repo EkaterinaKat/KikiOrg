@@ -1,5 +1,6 @@
 package com.katyshevtseva.kikiorg.view.controller.finance;
 
+import com.katyshevtseva.fx.FxUtils;
 import com.katyshevtseva.fx.WindowBuilder.FxController;
 import com.katyshevtseva.kikiorg.core.Core;
 import com.katyshevtseva.kikiorg.core.sections.finance.entity.Account;
@@ -64,44 +65,18 @@ class AccountsController implements FxController {
             text.textProperty().bind(cell.itemProperty());
             return cell;
         });
-        adjustButtonColumn();
+        FxUtils.adjustButtonColumn(editColumn, "Edit",
+                account ->
+                        OrgUtils.getDialogBuilder().openTextFieldAndTextAreaDialog(account.getTitle(), account.getDescription(),
+                                (title, desc) -> {
+                                    Core.getInstance().financeService().alterAccount(account, title, desc);
+                                    fillTable();
+                                }));
     }
 
     private void fillTable() {
         ObservableList<Account> accounts = FXCollections.observableArrayList();
         accounts.addAll(Core.getInstance().financeService().getAllAccounts());
         table.setItems(accounts);
-    }
-
-    private void adjustButtonColumn() {
-        editColumn.setCellFactory(new Callback<TableColumn<Account, Void>, TableCell<Account, Void>>() {
-            @Override
-            public TableCell<Account, Void> call(final TableColumn<Account, Void> param) {
-                return new TableCell<Account, Void>() {
-                    private final Button button = new Button("Edit");
-
-                    {
-                        button.setOnAction((ActionEvent event) -> {
-                            Account account = getTableView().getItems().get(getIndex());
-                            OrgUtils.getDialogBuilder().openTextFieldAndTextAreaDialog(account.getTitle(), account.getDescription(),
-                                    (title, desc) -> {
-                                        Core.getInstance().financeService().alterAccount(account, title, desc);
-                                        fillTable();
-                                    });
-                        });
-                    }
-
-                    @Override
-                    public void updateItem(Void item, boolean empty) {
-                        super.updateItem(item, empty);
-                        if (empty) {
-                            setGraphic(null);
-                        } else {
-                            setGraphic(button);
-                        }
-                    }
-                };
-            }
-        });
     }
 }
