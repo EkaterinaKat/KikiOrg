@@ -111,7 +111,7 @@ class ExpensesController implements FxController {
         amountTextField.clear();
     }
 
-    private void adjustButtonColumn() {
+    private void adjustButtonColumn() { //todo из библиотеки используй и во всех других местах тоже
         editColumn.setCellFactory(new Callback<TableColumn<Item, Void>, TableCell<Item, Void>>() {
             @Override
             public TableCell<Item, Void> call(final TableColumn<Item, Void> param) {

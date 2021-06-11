@@ -69,7 +69,7 @@ public class MainWorkController implements FxController {
         ReportUtils.showReport(report, reportTable);
     }
 
-    interface Knob {
+    interface Knob { //todo найти другие подобные штуки и перенести в библитеку
         void execute();
     }
 }

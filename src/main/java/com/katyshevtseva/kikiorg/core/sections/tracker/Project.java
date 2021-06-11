@@ -2,10 +2,7 @@ package com.katyshevtseva.kikiorg.core.sections.tracker;
 
 import lombok.Data;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Data
 @Entity
@@ -19,4 +16,8 @@ public class Project {
     private String description;
 
     private String code;
+
+    @ManyToOne
+    @JoinColumn(name = "color_entity_id")
+    private ColorEntity color;
 }

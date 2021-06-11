@@ -1,6 +1,7 @@
 package com.katyshevtseva.kikiorg.core.sections.tracker;
 
 import com.katyshevtseva.kikiorg.core.date.DateService;
+import com.katyshevtseva.kikiorg.core.repo.ColorRepo;
 import com.katyshevtseva.kikiorg.core.repo.ProjectRepo;
 import com.katyshevtseva.kikiorg.core.repo.TaskRepo;
 import lombok.RequiredArgsConstructor;
@@ -17,8 +18,10 @@ public class TrackerService {
     private final ProjectRepo projectRepo;
     private final TaskRepo taskRepo;
     private final DateService dateService;
+    private final ColorRepo colorRepo;
 
     public Project saveProject(Project project) {
+        colorRepo.save(project.getColor()); //todo исправить потом этот костыль
         return projectRepo.save(project);
     }
 

@@ -4,7 +4,10 @@ import com.katyshevtseva.date.Period;
 import com.katyshevtseva.fx.DesignInfo;
 import com.katyshevtseva.fx.component.ComponentBuilder;
 import com.katyshevtseva.fx.dialog.StandardDialogBuilder;
+import com.katyshevtseva.kikiorg.core.sections.tracker.ColorEntity;
+import javafx.scene.control.ColorPicker;
 import javafx.scene.control.DatePicker;
+import javafx.scene.paint.Color;
 
 import java.sql.Date;
 
@@ -31,6 +34,11 @@ public class OrgUtils {
 
     public static ComponentBuilder getComponentBuilder() {
         return new ComponentBuilder().setDesignInfo(getDesignInfo());
+    }
+
+    public static ColorEntity getColor(ColorPicker colorPicker) {
+        Color color = colorPicker.getValue();
+        return new ColorEntity(color.getRed(), color.getGreen(), color.getBlue());
     }
 
     private static DesignInfo getDesignInfo() {

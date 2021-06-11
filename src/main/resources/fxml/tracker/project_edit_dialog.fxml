@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import java.net.URL?>
+<HBox xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml">
+
+    <stylesheets>
+        <URL value="@/css/general_style.css"/>
+    </stylesheets>
+
+    <Pane minWidth="25" maxWidth="25"/>
+
+    <VBox>
+        <Pane minHeight="25" maxHeight="25"/>
+        <TextField fx:id="titleTextField" styleClass="margin40" maxWidth="400" minWidth="400"/>
+        <Pane minHeight="10" maxHeight="10"/>
+        <TextField fx:id="codeTextField" styleClass="margin40" maxWidth="400" minWidth="400"/>
+        <Pane minHeight="10" maxHeight="10"/>
+        <ColorPicker fx:id="colorPicker"/>
+        <Pane minHeight="10" maxHeight="10"/>
+        <TextArea fx:id="descTextArea" wrapText="true" maxWidth="400" minWidth="400" minHeight="220" maxHeight="220"/>
+        <Pane minHeight="10" maxHeight="10"/>
+        <Button fx:id="saveButton" text="Save"/>
+    </VBox>
+
+    <Pane minWidth="25" maxWidth="25"/>
+
+</HBox>
+
+
