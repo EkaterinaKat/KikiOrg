@@ -47,7 +47,7 @@ class ProjectDialogController implements FxController {
             project.setTitle(titleTextField.getText());
             project.setCode(codeTextField.getText());
             project.setDescription(descTextArea.getText());
-            project.setColor(OrgUtils.getColor(colorPicker));
+            project.setColor(OrgUtils.getColorEntity(colorPicker.getValue()));
             Core.getInstance().trackerService().saveProject(project);
 
             tableUpdateKnob.execute();

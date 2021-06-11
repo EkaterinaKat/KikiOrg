@@ -5,7 +5,6 @@ import com.katyshevtseva.fx.DesignInfo;
 import com.katyshevtseva.fx.component.ComponentBuilder;
 import com.katyshevtseva.fx.dialog.StandardDialogBuilder;
 import com.katyshevtseva.kikiorg.core.sections.tracker.ColorEntity;
-import javafx.scene.control.ColorPicker;
 import javafx.scene.control.DatePicker;
 import javafx.scene.paint.Color;
 
@@ -36,9 +35,12 @@ public class OrgUtils {
         return new ComponentBuilder().setDesignInfo(getDesignInfo());
     }
 
-    public static ColorEntity getColor(ColorPicker colorPicker) {
-        Color color = colorPicker.getValue();
+    public static ColorEntity getColorEntity(Color color) {
         return new ColorEntity(color.getRed(), color.getGreen(), color.getBlue());
+    }
+
+    public static String getColorString(ColorEntity color) {
+        return " rgb(" + color.getRed() * 100 + "%, " + color.getGreen() * 100 + "%, " + color.getBlue() * 100 + "%) ";
     }
 
     private static DesignInfo getDesignInfo() {

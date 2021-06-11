@@ -1,9 +1,12 @@
 package com.katyshevtseva.kikiorg.view.controller.tracker;
 
 import com.katyshevtseva.fx.FxUtils;
+import com.katyshevtseva.fx.Styler;
 import com.katyshevtseva.fx.WindowBuilder.FxController;
 import com.katyshevtseva.kikiorg.core.Core;
+import com.katyshevtseva.kikiorg.core.sections.tracker.ColorEntity;
 import com.katyshevtseva.kikiorg.core.sections.tracker.Project;
+import com.katyshevtseva.kikiorg.view.utils.OrgUtils;
 import com.katyshevtseva.kikiorg.view.utils.OrganizerWindowCreator;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -11,6 +14,11 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.text.Text;
+import javafx.util.Callback;
+
+import static com.katyshevtseva.fx.Styler.StandardColor.BLACK;
+import static com.katyshevtseva.fx.Styler.ThingToColor.BACKGROUND;
+import static com.katyshevtseva.fx.Styler.ThingToColor.TABLE_TEXT;
 
 class ProjectsController implements FxController {
     @FXML
@@ -29,6 +37,7 @@ class ProjectsController implements FxController {
     @FXML
     private void initialize() {
         adjustColumns();
+        setRowsColors();
         fillTable();
         addProjectButton.setOnAction(event ->
                 OrganizerWindowCreator.getInstance().openProjectEditDialog(new ProjectDialogController(this::fillTable, null)));
@@ -55,5 +64,25 @@ class ProjectsController implements FxController {
         });
         FxUtils.adjustButtonColumn(editColumn, "Edit", (project) ->
                 OrganizerWindowCreator.getInstance().openProjectEditDialog(new ProjectDialogController(this::fillTable, project)));
+    }
+
+    private void setRowsColors() {
+        table.setRowFactory(new Callback<TableView<Project>, TableRow<Project>>() {
+            @Override
+            public TableRow<Project> call(TableView<Project> tableView) {
+
+                return new TableRow<Project>() {
+                    @Override
+                    protected void updateItem(Project project, boolean empty) {
+                        super.updateItem(project, empty);
+                        if (project != null) {
+                            ColorEntity color = project.getColor();
+                            setStyle(Styler.getColorfullStyle(BACKGROUND, OrgUtils.getColorString(color))
+                                    + Styler.getColorfullStyle(TABLE_TEXT, BLACK));
+                        }
+                    }
+                };
+            }
+        });
     }
 }
