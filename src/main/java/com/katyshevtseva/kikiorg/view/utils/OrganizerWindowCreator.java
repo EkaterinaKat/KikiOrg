@@ -56,6 +56,10 @@ public class OrganizerWindowCreator {
                 setController(controller).setHeight(500).setWidth(480).setTitle(CoreConstants.APP_NAME).showWindow();
     }
 
+    public Node getTaskPaneNode(FxController controller) {
+        return new WindowBuilder(TRACKER_FXML_LOCATION + "task_pane.fxml").setController(controller).getNode();
+    }
+
     /* ---------------------------------- Гардероб ---------------------------------------------- */
 
     public Node getMainWardrobeNode(FxController controller) {
