@@ -29,7 +29,7 @@ class BoardController implements FxController {
         FxUtils.setComboBoxItems(taskTypeComboBox, TaskType.values(), TaskType.CURRENT);
         updateBoard();
         addTaskButton.setOnAction(event ->
-                OrganizerWindowCreator.getInstance().openTaskDialog(new TaskDialogController(this::updateBoard)));
+                OrganizerWindowCreator.getInstance().openTaskDialog(new TaskDialogController(null, this::updateBoard)));
         taskTypeComboBox.setOnAction(event -> updateBoard());
     }
 
@@ -45,7 +45,7 @@ class BoardController implements FxController {
         }
         for (Task task : tasks) {
             taskPane.getChildren().add(FxUtils.getPaneWithHeight(20));
-            taskPane.getChildren().add(OrganizerWindowCreator.getInstance().getTaskPaneNode(new TaskPaneController(task)));
+            taskPane.getChildren().add(OrganizerWindowCreator.getInstance().getTaskPaneNode(new TaskPaneController(task, this::updateBoard)));
         }
         taskPane.getChildren().add(FxUtils.getPaneWithHeight(20));
     }

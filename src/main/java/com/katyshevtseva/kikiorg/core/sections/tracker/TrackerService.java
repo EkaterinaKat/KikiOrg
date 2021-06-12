@@ -24,11 +24,11 @@ public class TrackerService {
         projectRepo.save(project);
     }
 
-    public Task saveTask(Task task) {
-        return taskRepo.save(task);
+    public void saveEditedTask(Task task) {
+        taskRepo.save(task);
     }
 
-    public Task createTask(String title, String description, Project project) {
+    public void createTask(String title, String description, Project project) {
         Task task = new Task();
         task.setTitle(title);
         task.setDescription(description);
@@ -36,7 +36,7 @@ public class TrackerService {
         task.setNumber(getProjectNextNumber(project));
         task.setCreationDate(dateService.createIfNotExistAndGetDateEntity(new Date()));
         task.setTaskStatus(TaskStatus.TODO);
-        return saveTask(task);
+        saveEditedTask(task);
     }
 
     public List<Project> getAllProjects() {
@@ -51,6 +51,24 @@ public class TrackerService {
         List<Task> tasks = taskRepo.findAllByTaskStatus(TaskStatus.REJECTED);
         tasks.addAll(taskRepo.findAllByTaskStatus(TaskStatus.DONE));
         return tasks;
+    }
+
+    public void completeTask(Task task) {
+        task.setCompletionDate(dateService.createIfNotExistAndGetDateEntity(new Date()));
+        task.setTaskStatus(TaskStatus.DONE);
+        taskRepo.save(task);
+    }
+
+    public void rejectTask(Task task) {
+        task.setCompletionDate(dateService.createIfNotExistAndGetDateEntity(new Date()));
+        task.setTaskStatus(TaskStatus.REJECTED);
+        taskRepo.save(task);
+    }
+
+    public void returnTaskToWork(Task task) {
+        task.setCompletionDate(null);
+        task.setTaskStatus(TaskStatus.TODO);
+        taskRepo.save(task);
     }
 
     private int getProjectNextNumber(Project project) {

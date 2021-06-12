@@ -1,8 +1,11 @@
 package com.katyshevtseva.kikiorg.view.controller.tracker;
 
 import com.katyshevtseva.fx.WindowBuilder.FxController;
+import com.katyshevtseva.general.NoArgsKnob;
+import com.katyshevtseva.kikiorg.core.Core;
 import com.katyshevtseva.kikiorg.core.sections.tracker.Task;
 import com.katyshevtseva.kikiorg.core.sections.tracker.TaskStatus;
+import com.katyshevtseva.kikiorg.view.utils.OrganizerWindowCreator;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -18,6 +21,7 @@ import static com.katyshevtseva.kikiorg.view.utils.OrgUtils.getColorString;
 
 class TaskPaneController implements FxController {
     private Task task;
+    private NoArgsKnob boardUpdateKnob;
     @FXML
     private HBox root;
     @FXML
@@ -29,8 +33,9 @@ class TaskPaneController implements FxController {
     @FXML
     private HBox buttonsPane;
 
-    TaskPaneController(Task task) {
+    TaskPaneController(Task task, NoArgsKnob boardUpdateKnob) {
         this.task = task;
+        this.boardUpdateKnob = boardUpdateKnob;
     }
 
     @FXML
@@ -43,28 +48,61 @@ class TaskPaneController implements FxController {
         if (task.getTaskStatus() == TaskStatus.TODO) {
             descLabel.setText(task.getDescription() + "\n\nCreation date: " + READABLE_DATE_FORMAT.format(task.getCreationDate().getValue()));
             buttonsPane.getChildren().addAll(
-                    new Button("Edit"),
+                    getEditButton(),
                     getPaneWithWidth(25),
-                    new Button("Reject"),
+                    getRejectButton(),
                     getPaneWithWidth(25),
-                    new Button("Done"));
+                    getDoneButton());
         }
         if (task.getTaskStatus() == TaskStatus.DONE) {
             imageView.setImage(new Image("images/green_tick.png"));
             descLabel.setText(task.getDescription() + "\n\nCreation date: " + READABLE_DATE_FORMAT.format(task.getCreationDate().getValue())
-                    + "\nCompletion date: " + READABLE_DATE_FORMAT.format(task.getCompletionDate()));
+                    + "\nCompletion date: " + READABLE_DATE_FORMAT.format(task.getCompletionDate().getValue()));
             buttonsPane.getChildren().addAll(
-                    new Button("Edit"),
+                    getEditButton(),
                     getPaneWithWidth(25),
-                    new Button("Return to work"));
+                    getReturnToWorkButton());
         }
         if (task.getTaskStatus() == TaskStatus.REJECTED) {
             imageView.setImage(new Image("images/gray_cross.png"));
             descLabel.setText(task.getDescription() + "\n\nCreation date: " + READABLE_DATE_FORMAT.format(task.getCreationDate().getValue()));
             buttonsPane.getChildren().addAll(
-                    new Button("Edit"),
+                    getEditButton(),
                     getPaneWithWidth(25),
-                    new Button("Return to work"));
+                    getReturnToWorkButton());
         }
+    }
+
+    private Button getEditButton() {
+        Button button = new Button("Edit");
+        button.setOnAction(event -> OrganizerWindowCreator.getInstance().openTaskDialog(new TaskDialogController(task, boardUpdateKnob)));
+        return button;
+    }
+
+    private Button getReturnToWorkButton() {
+        Button returnToWorkButton = new Button("Return to work");
+        returnToWorkButton.setOnAction(event -> {
+            Core.getInstance().trackerService().returnTaskToWork(task);
+            boardUpdateKnob.execute();
+        });
+        return returnToWorkButton;
+    }
+
+    private Button getDoneButton() {
+        Button doneButton = new Button("Done");
+        doneButton.setOnAction(event -> {
+            Core.getInstance().trackerService().completeTask(task);
+            boardUpdateKnob.execute();
+        });
+        return doneButton;
+    }
+
+    private Button getRejectButton() {
+        Button rejectButton = new Button("Reject");
+        rejectButton.setOnAction(event -> {
+            Core.getInstance().trackerService().rejectTask(task);
+            boardUpdateKnob.execute();
+        });
+        return rejectButton;
     }
 }

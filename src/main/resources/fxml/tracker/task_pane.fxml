@@ -13,7 +13,7 @@
     <VBox>
         <Pane minHeight="25" maxHeight="25"/>
         <HBox>
-            <ImageView fx:id="imageView" fitHeight="30" fitWidth="30"/>
+            <ImageView fx:id="imageView" fitHeight="60" fitWidth="60"/>
             <Pane minWidth="25" maxWidth="25"/>
             <Label fx:id="titleLabel" styleClass="font_25"/>
         </HBox>
