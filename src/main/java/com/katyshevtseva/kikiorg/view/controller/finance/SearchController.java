@@ -5,18 +5,21 @@ import com.katyshevtseva.fx.Size;
 import com.katyshevtseva.fx.WindowBuilder.FxController;
 import com.katyshevtseva.fx.component.ComponentBuilder.Component;
 import com.katyshevtseva.fx.component.MultipleChoiceController;
+import com.katyshevtseva.general.OneArgKnob;
 import com.katyshevtseva.kikiorg.core.Core;
+import com.katyshevtseva.kikiorg.core.sections.finance.FinanceOperationService.Operation;
 import com.katyshevtseva.kikiorg.core.sections.finance.FinanceOperationService.OperationType;
 import com.katyshevtseva.kikiorg.core.sections.finance.FinanceSearchService;
 import com.katyshevtseva.kikiorg.core.sections.finance.FinanceSearchService.OperationEnd;
 import com.katyshevtseva.kikiorg.core.sections.finance.SearchRequest;
-import com.katyshevtseva.kikiorg.view.controller.finance.HistoryController.TableUpdateKnob;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.Pane;
+
+import java.util.List;
 
 import static com.katyshevtseva.fx.FxUtils.associateButtonWithControls;
 import static com.katyshevtseva.fx.FxUtils.setComboBoxItems;
@@ -25,7 +28,7 @@ import static com.katyshevtseva.kikiorg.view.utils.OrgUtils.getComponentBuilder;
 class SearchController implements FxController {
     private final Size fromAndToComponentSize = new Size(150, 240);
     private final FinanceSearchService searchService = Core.getInstance().financeSearchService();
-    private TableUpdateKnob tableUpdateKnob;
+    private OneArgKnob<List<Operation>> tableUpdateKnob;
     private MultipleChoiceController<OperationEnd> fromController;
     private MultipleChoiceController<OperationEnd> toController;
     @FXML
@@ -47,7 +50,7 @@ class SearchController implements FxController {
     @FXML
     private Button clearDatesButton;
 
-    SearchController(TableUpdateKnob tableUpdateKnob) {
+    SearchController(OneArgKnob<List<Operation>> tableUpdateKnob) {
         this.tableUpdateKnob = tableUpdateKnob;
     }
 

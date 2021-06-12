@@ -2,6 +2,7 @@ package com.katyshevtseva.kikiorg.view.controller.finance;
 
 import com.katyshevtseva.fx.Styler;
 import com.katyshevtseva.fx.WindowBuilder.FxController;
+import com.katyshevtseva.general.OneArgKnob;
 import com.katyshevtseva.kikiorg.core.Core;
 import com.katyshevtseva.kikiorg.core.sections.finance.ItemSchemaService.EmptyLine;
 import com.katyshevtseva.kikiorg.core.sections.finance.ItemSchemaService.Entry;
@@ -17,12 +18,12 @@ import static com.katyshevtseva.fx.FxUtils.closeWindowThatContains;
 import static com.katyshevtseva.fx.Styler.StandardColor.PURPLE;
 import static com.katyshevtseva.fx.Styler.ThingToColor.TEXT;
 
-public class ItemSelectDialogController implements FxController {
+class ItemSelectDialogController implements FxController {
     @FXML
     private VBox container;
-    private ItemSelectionHandler itemSelectionHandler;
+    private OneArgKnob<Item> itemSelectionHandler;
 
-    public ItemSelectDialogController(ItemSelectionHandler itemSelectionHandler) {
+    ItemSelectDialogController(OneArgKnob<Item> itemSelectionHandler) {
         this.itemSelectionHandler = itemSelectionHandler;
     }
 
@@ -58,10 +59,5 @@ public class ItemSelectDialogController implements FxController {
             indent += "         ";
         }
         return indent;
-    }
-
-    @FunctionalInterface
-    public interface ItemSelectionHandler {
-        void execute(Item selectedItem);
     }
 }

@@ -1,6 +1,7 @@
 package com.katyshevtseva.kikiorg.view.controller.wardrobe;
 
 import com.katyshevtseva.fx.WindowBuilder.FxController;
+import com.katyshevtseva.general.OneArgKnob;
 import com.katyshevtseva.kikiorg.core.CoreUtils;
 import com.katyshevtseva.kikiorg.core.sections.wardrobe.Imagable;
 import javafx.fxml.FXML;
@@ -17,9 +18,9 @@ class ImageSelectionDialogController implements FxController {
     @FXML
     private GridPane gridPane;
     private List<Imagable> imagableList;
-    private ImageClickHandler imageClickHandler;
+    private OneArgKnob<Imagable> imageClickHandler;
 
-    ImageSelectionDialogController(List<Imagable> imagableList, ImageClickHandler imageClickHandler) {
+    ImageSelectionDialogController(List<Imagable> imagableList, OneArgKnob<Imagable> imageClickHandler) {
         this.imagableList = imagableList;
         this.imageClickHandler = imageClickHandler;
     }
@@ -38,10 +39,5 @@ class ImageSelectionDialogController implements FxController {
             gridPane.add(imageView,
                     CoreUtils.getColumnByIndexAndColumnNum(i, COLUMN_NUM), CoreUtils.getRowByIndexAndColumnNum(i, COLUMN_NUM));
         }
-    }
-
-    @FunctionalInterface
-    interface ImageClickHandler {
-        void execute(Imagable imagable);
     }
 }

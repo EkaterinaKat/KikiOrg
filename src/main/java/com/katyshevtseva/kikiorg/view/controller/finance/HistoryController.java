@@ -76,11 +76,6 @@ class HistoryController implements FxController {
         table.setItems(operationObservableList);
     }
 
-    @FunctionalInterface
-    interface TableUpdateKnob {
-        void execute(List<Operation> operations);
-    }
-
     private void setRowsColors() {
         table.setRowFactory(new Callback<TableView<Operation>, TableRow<Operation>>() {
             @Override

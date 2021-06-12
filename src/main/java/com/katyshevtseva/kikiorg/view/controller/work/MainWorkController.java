@@ -68,8 +68,4 @@ public class MainWorkController implements FxController {
         List<List<ReportCell>> report = Core.getInstance().workReportService().getReport(DateUtils.getLastMonthPeriod());
         ReportUtils.showReport(report, reportTable);
     }
-
-    interface Knob { //todo найти другие подобные штуки и перенести в библитеку
-        void execute();
-    }
 }

@@ -1,6 +1,7 @@
 package com.katyshevtseva.kikiorg.view.controller.habits;
 
 import com.katyshevtseva.fx.WindowBuilder.FxController;
+import com.katyshevtseva.general.OneArgKnob;
 import com.katyshevtseva.kikiorg.core.Core;
 import com.katyshevtseva.kikiorg.core.sections.habits.HabitGroup;
 import com.katyshevtseva.kikiorg.core.sections.habits.entity.Habit;
@@ -22,9 +23,9 @@ class HabitEditDialogController implements FxController {
     @FXML
     private ComboBox<HabitGroup> groupComboBox;
     private Habit habit;
-    private HabitSaveHandler habitSaveHandler;
+    private OneArgKnob<Habit> habitSaveHandler;
 
-    HabitEditDialogController(Habit habitToEdit, HabitSaveHandler habitSaveHandler) {
+    HabitEditDialogController(Habit habitToEdit, OneArgKnob<Habit> habitSaveHandler) {
         this.habit = habitToEdit;
         this.habitSaveHandler = habitSaveHandler;
     }
@@ -72,10 +73,5 @@ class HabitEditDialogController implements FxController {
 
         habitSaveHandler.execute(Core.getInstance().habitsService().getHabitById(habit.getId()));
         closeWindowThatContains(saveButton);
-    }
-
-    @FunctionalInterface
-    public interface HabitSaveHandler {
-        void execute(Habit savedHabit);
     }
 }

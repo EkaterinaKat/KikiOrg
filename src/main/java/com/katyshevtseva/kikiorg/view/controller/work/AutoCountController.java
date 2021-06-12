@@ -1,8 +1,8 @@
 package com.katyshevtseva.kikiorg.view.controller.work;
 
+import com.katyshevtseva.general.NoArgsKnob;
 import com.katyshevtseva.kikiorg.core.Core;
 import com.katyshevtseva.kikiorg.core.sections.work.WorkArea;
-import com.katyshevtseva.kikiorg.view.controller.work.MainWorkController.Knob;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
@@ -19,7 +19,7 @@ public class AutoCountController {
     private AutoCountStage autoCountStage = AutoCountStage.NOT_STARTED;
     private Date startDate;
     private Date finishDate;
-    private Knob tableUpdateKnob;
+    private NoArgsKnob tableUpdateKnob;
     private int finalMinutesNum = 0;
     @FXML
     private Label dateLabel;
@@ -45,7 +45,7 @@ public class AutoCountController {
         NOT_STARTED, STARTED, MINUTES_SUBTRACTION, FINISHED
     }
 
-    void setTableUpdateKnob(Knob knob) {
+    void setTableUpdateKnob(NoArgsKnob knob) {
         this.tableUpdateKnob = knob;
     }
 
