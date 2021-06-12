@@ -20,4 +20,9 @@ public class Project {
     @ManyToOne
     @JoinColumn(name = "color_entity_id")
     private ColorEntity color;
+
+    @Override
+    public String toString() {
+        return title;
+    }
 }

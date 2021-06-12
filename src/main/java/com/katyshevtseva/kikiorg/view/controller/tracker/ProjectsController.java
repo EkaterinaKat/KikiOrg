@@ -40,7 +40,7 @@ class ProjectsController implements FxController {
         setRowsColors();
         fillTable();
         addProjectButton.setOnAction(event ->
-                OrganizerWindowCreator.getInstance().openProjectEditDialog(new ProjectDialogController(this::fillTable, null)));
+                OrganizerWindowCreator.getInstance().openProjectDialog(new ProjectDialogController(this::fillTable, null)));
     }
 
     private void fillTable() {
@@ -63,7 +63,7 @@ class ProjectsController implements FxController {
             return cell;
         });
         FxUtils.adjustButtonColumn(editColumn, "Edit", (project) ->
-                OrganizerWindowCreator.getInstance().openProjectEditDialog(new ProjectDialogController(this::fillTable, project)));
+                OrganizerWindowCreator.getInstance().openProjectDialog(new ProjectDialogController(this::fillTable, project)));
     }
 
     private void setRowsColors() {

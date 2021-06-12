@@ -46,8 +46,13 @@ public class OrganizerWindowCreator {
         return new WindowBuilder(TRACKER_FXML_LOCATION + "projects.fxml").setController(controller).getNode();
     }
 
-    public void openProjectEditDialog(FxController controller) {
-        new WindowBuilder(TRACKER_FXML_LOCATION + "project_edit_dialog.fxml").setIconImagePath(getIcoImagePath()).
+    public void openProjectDialog(FxController controller) {
+        new WindowBuilder(TRACKER_FXML_LOCATION + "project_dialog.fxml").setIconImagePath(getIcoImagePath()).
+                setController(controller).setHeight(500).setWidth(480).setTitle(CoreConstants.APP_NAME).showWindow();
+    }
+
+    public void openTaskDialog(FxController controller) {
+        new WindowBuilder(TRACKER_FXML_LOCATION + "task_dialog.fxml").setIconImagePath(getIcoImagePath()).
                 setController(controller).setHeight(500).setWidth(480).setTitle(CoreConstants.APP_NAME).showWindow();
     }
 
