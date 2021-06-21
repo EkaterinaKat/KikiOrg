@@ -6,9 +6,11 @@ import com.katyshevtseva.kikiorg.core.repo.TaskRepo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 
 @Service
@@ -44,7 +46,8 @@ public class TrackerService {
     }
 
     public List<Task> getTodoTasks() {
-        return taskRepo.findAllByTaskStatus(TaskStatus.TODO);
+        return taskRepo.findAllByTaskStatus(TaskStatus.TODO).stream()
+                .sorted(Comparator.comparing(Task::getProject).thenComparing(Task::getNumber)).collect(Collectors.toList());
     }
 
     public List<Task> getAllDoneAndRejectedTasks() {

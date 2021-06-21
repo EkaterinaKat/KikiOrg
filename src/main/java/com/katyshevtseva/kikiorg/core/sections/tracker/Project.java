@@ -6,7 +6,7 @@ import javax.persistence.*;
 
 @Data
 @Entity
-public class Project {
+public class Project implements Comparable<Project>{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
@@ -24,5 +24,10 @@ public class Project {
     @Override
     public String toString() {
         return title;
+    }
+
+    @Override
+    public int compareTo(Project other) {
+        return this.title.compareTo(other.getTitle());
     }
 }
