@@ -8,6 +8,7 @@ import com.katyshevtseva.kikiorg.view.utils.OrganizerWindowCreator;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 
 import java.util.List;
@@ -19,6 +20,8 @@ class BoardController implements FxController {
     private VBox taskPane;
     @FXML
     private ComboBox<TaskType> taskTypeComboBox;
+    @FXML
+    private Label statisticsLabel;
 
     private enum TaskType {
         CURRENT, ARCHIVE
@@ -34,6 +37,7 @@ class BoardController implements FxController {
     }
 
     private void updateBoard() {
+        updateStatistics();
         taskPane.getChildren().clear();
         List<Task> tasks = null;
         switch (taskTypeComboBox.getValue()) {
@@ -48,5 +52,9 @@ class BoardController implements FxController {
             taskPane.getChildren().add(OrganizerWindowCreator.getInstance().getTaskPaneNode(new TaskPaneController(task, this::updateBoard)));
         }
         taskPane.getChildren().add(FxUtils.getPaneWithHeight(20));
+    }
+
+    private void updateStatistics() {
+        statisticsLabel.setText(Core.getInstance().trackerService().getStatistics());
     }
 }

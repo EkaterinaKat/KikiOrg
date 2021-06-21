@@ -74,6 +74,13 @@ public class TrackerService {
         taskRepo.save(task);
     }
 
+    public String getStatistics() {
+        return String.format("To Do: %d. Done: %d. Rejected: %d.",
+                taskRepo.countByTaskStatus(TaskStatus.TODO),
+                taskRepo.countByTaskStatus(TaskStatus.DONE),
+                taskRepo.countByTaskStatus(TaskStatus.REJECTED));
+    }
+
     private int getProjectNextNumber(Project project) {
         Optional<Task> optionalTask = taskRepo.findFirstByProjectOrderByNumberDesc(project);
         return optionalTask.map(task -> task.getNumber() + 1).orElse(1);
