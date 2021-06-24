@@ -58,10 +58,6 @@ public class FinanceSearchService {
         return operations.stream().sorted(Comparator.comparing(Operation::getDate).reversed()).collect(Collectors.toList());
     }
 
-    public interface OperationEnd {
-        long getId();
-    }
-
     public List<OperationEnd> getFrom(OperationType operationType) {
         List<OperationEnd> operationEndList = new ArrayList<>();
         switch (operationType) {

@@ -16,8 +16,6 @@ public class MainFinanceController extends AbstractSwitchController implements F
     @FXML
     private Button expensesButton;
     @FXML
-    private Button accountsButton;
-    @FXML
     private Button checkButton;
     @FXML
     private Pane mainPane;
@@ -30,47 +28,44 @@ public class MainFinanceController extends AbstractSwitchController implements F
     @FXML
     private Button reportButton;
     @FXML
-    private Button analysisButton;
+    private Button adminButton;
     @FXML
     private Button ledgerButton;
 
     private final ReplenishmentController replenishmentController = new ReplenishmentController();
-    private final AccountsController accountsController = new AccountsController();
     private final ExpensesController expensesController = new ExpensesController();
     private final CheckController checkController = new CheckController();
     private final HistoryController historyController = new HistoryController();
     private final TransferController transferController = new TransferController();
     private final ItemHierarchyController itemHierarchyController = new ItemHierarchyController();
     private final ReportController reportController = new ReportController();
-    private final AnalysisController analysisController = new AnalysisController();
+    private final AdminController adminController = new AdminController();
     private final LedgerController ledgerController = new LedgerController();
 
     private Node replenishmentNode;
-    private Node accountsNode;
     private Node expensesNode;
     private Node checkNode;
     private Node historyNode;
     private Node transferNode;
     private Node itemHierarchyNode;
     private Node reportNode;
-    private Node analysisNode;
+    private Node adminNode;
     private Node ledgerNode;
 
     @FXML
     private void initialize() {
         pane = mainPane;
-        buttons.addAll(Arrays.asList(replenishmentButton, accountsButton, expensesButton, checkButton,
-                transferButton, historyButton, itemHierarchyButton, reportButton, analysisButton));
+        buttons.addAll(Arrays.asList(replenishmentButton, expensesButton, checkButton, ledgerButton,
+                transferButton, historyButton, itemHierarchyButton, reportButton, adminButton));
         ledgerButtonListener();
         replenishmentButton.setOnAction(event -> replenishmentButtonListener());
-        accountsButton.setOnAction(event -> accountsButtonListener());
         expensesButton.setOnAction(event -> expensesButtonListener());
         checkButton.setOnAction(event -> checkButtonListener());
         historyButton.setOnAction(event -> historyButtonListener());
         transferButton.setOnAction(event -> transferButtonListener());
         itemHierarchyButton.setOnAction(event -> itemHierarchyButtonListener());
         reportButton.setOnAction(event -> reportButtonListener());
-        analysisButton.setOnAction(event -> analysisButtonListener());
+        adminButton.setOnAction(event -> adminButtonListener());
         ledgerButton.setOnAction(event -> ledgerButtonListener());
     }
 
@@ -79,9 +74,9 @@ public class MainFinanceController extends AbstractSwitchController implements F
                 OrganizerWindowCreator.getInstance()::getLedgerNode, ledgerController);
     }
 
-    private void analysisButtonListener() {
-        activateMode(analysisButton, analysisNode,
-                OrganizerWindowCreator.getInstance()::getFinanceAnalysisNode, analysisController);
+    private void adminButtonListener() {
+        activateMode(adminButton, adminNode,
+                OrganizerWindowCreator.getInstance()::getFinanceAdminNode, adminController);
     }
 
     private void itemHierarchyButtonListener() {
@@ -107,11 +102,6 @@ public class MainFinanceController extends AbstractSwitchController implements F
     private void replenishmentButtonListener() {
         activateMode(replenishmentButton, replenishmentNode,
                 OrganizerWindowCreator.getInstance()::getReplenishmentNode, replenishmentController);
-    }
-
-    private void accountsButtonListener() {
-        activateMode(accountsButton, accountsNode,
-                OrganizerWindowCreator.getInstance()::getAccountsNode, accountsController);
     }
 
     private void expensesButtonListener() {

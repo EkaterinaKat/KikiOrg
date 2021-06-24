@@ -2,7 +2,6 @@ package com.katyshevtseva.kikiorg.core.sections.finance;
 
 import com.katyshevtseva.date.DateUtils;
 import com.katyshevtseva.kikiorg.core.sections.finance.FinanceOperationService.OperationType;
-import com.katyshevtseva.kikiorg.core.sections.finance.FinanceSearchService.OperationEnd;
 import lombok.Getter;
 
 import java.time.LocalDate;

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<VBox xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml">
+
+    <Pane prefHeight="20"/>
+
+    <HBox>
+        <VBox prefWidth="150">
+            <ComboBox fx:id="typeComboBox" prefWidth="150"/>
+            <Pane minHeight="15" maxHeight="15"/>
+            <Button text="New" fx:id="newButton" prefWidth="150"/>
+        </VBox>
+
+        <Pane prefWidth="20"/>
+
+        <TableView fx:id="table" prefWidth="800" prefHeight="800">
+            <columns>
+                <TableColumn prefWidth="250" text="Title" fx:id="titleColumn"/>
+                <TableColumn prefWidth="420" text="Description" fx:id="descColumn"/>
+                <TableColumn prefWidth="75" fx:id="editColumn"/>
+            </columns>
+        </TableView>
+    </HBox>
+
+
+</VBox>

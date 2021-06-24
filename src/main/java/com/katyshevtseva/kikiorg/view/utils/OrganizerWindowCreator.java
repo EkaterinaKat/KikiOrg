@@ -140,10 +140,6 @@ public class OrganizerWindowCreator {
         return new WindowBuilder(FINANCE_FXML_LOCATION + "replenishment.fxml").setController(controller).getNode();
     }
 
-    public Node getAccountsNode(FxController controller) {
-        return new WindowBuilder(FINANCE_FXML_LOCATION + "accounts.fxml").setController(controller).getNode();
-    }
-
     public Node getExpensesNode(FxController controller) {
         return new WindowBuilder(FINANCE_FXML_LOCATION + "expenses.fxml").setController(controller).getNode();
     }
@@ -177,8 +173,8 @@ public class OrganizerWindowCreator {
         return new WindowBuilder(FINANCE_FXML_LOCATION + "report.fxml").setController(controller).getNode();
     }
 
-    public Node getFinanceAnalysisNode(FxController controller) {
-        return new WindowBuilder(FINANCE_FXML_LOCATION + "analysis.fxml").setController(controller).getNode();
+    public Node getFinanceAdminNode(FxController controller) {
+        return new WindowBuilder(FINANCE_FXML_LOCATION + "admin.fxml").setController(controller).getNode();
     }
 
     public Node getLedgerNode(FxController controller) {

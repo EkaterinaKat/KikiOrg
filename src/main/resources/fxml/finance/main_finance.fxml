@@ -21,8 +21,6 @@
                 <Pane minWidth="30" maxWidth="30"/>
                 <Button fx:id="expensesButton" text="Expenses"/>
                 <Pane minWidth="30" maxWidth="30"/>
-                <Button fx:id="accountsButton" text="Accounts"/>
-                <Pane minWidth="30" maxWidth="30"/>
                 <Button fx:id="checkButton" text="Check"/>
                 <Pane minWidth="30" maxWidth="30"/>
                 <Button fx:id="historyButton" text="History"/>
@@ -33,7 +31,7 @@
                 <Pane minWidth="30" maxWidth="30"/>
                 <Button fx:id="reportButton" text="Report"/>
                 <Pane minWidth="30" maxWidth="30"/>
-                <Button fx:id="analysisButton" text="Analysis"/>
+                <Button fx:id="adminButton" text="Admin"/>
             </HBox>
             <Pane minHeight="10" maxHeight="10"/>
         </VBox>

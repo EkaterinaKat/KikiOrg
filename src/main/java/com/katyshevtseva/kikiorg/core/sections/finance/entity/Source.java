@@ -1,6 +1,6 @@
 package com.katyshevtseva.kikiorg.core.sections.finance.entity;
 
-import com.katyshevtseva.kikiorg.core.sections.finance.FinanceSearchService.OperationEnd;
+import com.katyshevtseva.kikiorg.core.sections.finance.OperationEnd;
 import lombok.Data;
 
 import javax.persistence.Entity;
@@ -22,5 +22,10 @@ public class Source implements OperationEnd {
     @Override
     public String toString() {
         return title;
+    }
+
+    @Override
+    public OperationEndType getType() {
+        return OperationEndType.SOURCE;
     }
 }

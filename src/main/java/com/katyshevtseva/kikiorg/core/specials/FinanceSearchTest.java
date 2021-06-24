@@ -2,13 +2,12 @@ package com.katyshevtseva.kikiorg.core.specials;
 
 import com.katyshevtseva.kikiorg.core.repo.TestRepo;
 import com.katyshevtseva.kikiorg.core.sections.finance.FinanceSearchService;
-import com.katyshevtseva.kikiorg.core.sections.finance.FinanceSearchService.OperationEnd;
 import com.katyshevtseva.kikiorg.core.sections.finance.FinanceService;
+import com.katyshevtseva.kikiorg.core.sections.finance.OperationEnd;
 import com.katyshevtseva.kikiorg.core.sections.finance.SearchRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import javax.annotation.PostConstruct;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;

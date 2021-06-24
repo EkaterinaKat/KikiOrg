@@ -1,29 +1,22 @@
 package com.katyshevtseva.kikiorg.view.controller.finance;
 
 import com.katyshevtseva.date.DateCorrector;
-import com.katyshevtseva.fx.FxUtils;
 import com.katyshevtseva.fx.WindowBuilder.FxController;
 import com.katyshevtseva.kikiorg.core.Core;
 import com.katyshevtseva.kikiorg.core.sections.finance.entity.Account;
 import com.katyshevtseva.kikiorg.core.sections.finance.entity.Item;
-import com.katyshevtseva.kikiorg.view.utils.OrgUtils;
 import com.katyshevtseva.kikiorg.view.utils.OrganizerWindowCreator;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.scene.control.*;
-import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.text.Text;
+import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.DatePicker;
+import javafx.scene.control.TextField;
 
 import static com.katyshevtseva.fx.FxUtils.*;
 
 class ExpensesController implements FxController {
-    @FXML
-    private TextField itemTitleField;
-    @FXML
-    private TextArea itemDescArea;
-    @FXML
-    private Button addItemButton;
     @FXML
     private ComboBox<Account> accountComboBox;
     @FXML
@@ -34,56 +27,15 @@ class ExpensesController implements FxController {
     private DatePicker datePicker;
     @FXML
     private Button doneButton;
-    @FXML
-    private TableView<Item> table;
-    @FXML
-    private TableColumn<Item, String> titleColumn;
-    @FXML
-    private TableColumn<Item, String> descColumn;
-    @FXML
-    private TableColumn<Item, Void> editColumn;
 
     @FXML
     private void initialize() {
         disableNonNumericChars(amountTextField);
-        addItemButton.setOnAction(event -> {
-            addItem();
-            fillTable();
-        });
         doneButton.setOnAction(event -> saveExpense());
-        associateButtonWithControls(addItemButton, itemTitleField, itemDescArea);
         associateButtonWithControls(doneButton, amountTextField, accountComboBox, itemComboBox, datePicker);
         setItemComboBoxItems();
         setComboBoxItemsAndSetSelectedFirstItem(accountComboBox, Core.getInstance().financeService().getAllAccounts());
         datePicker.setValue(new java.sql.Date(DateCorrector.getProperDate().getTime()).toLocalDate());
-        adjustColumns();
-        fillTable();
-    }
-
-    private void adjustColumns() {
-        titleColumn.setCellValueFactory(new PropertyValueFactory<>("title"));
-        descColumn.setCellValueFactory(new PropertyValueFactory<>("description"));
-        descColumn.setCellFactory(tc -> {
-            TableCell<Item, String> cell = new TableCell<>();
-            Text text = new Text();
-            cell.setGraphic(text);
-            cell.setPrefHeight(Control.USE_COMPUTED_SIZE);
-            text.wrappingWidthProperty().bind(descColumn.widthProperty());
-            text.textProperty().bind(cell.itemProperty());
-            return cell;
-        });
-        FxUtils.adjustButtonColumn(editColumn, "Edit",
-                item -> OrgUtils.getDialogBuilder().openTextFieldAndTextAreaDialog(item.getTitle(), item.getDescription(),
-                        (title, desc) -> {
-                            Core.getInstance().financeService().alterItem(item, title, desc);
-                            fillTable();
-                        }));
-    }
-
-    private void fillTable() {
-        ObservableList<Item> items = FXCollections.observableArrayList();
-        items.addAll(Core.getInstance().financeService().getAllItems());
-        table.setItems(items);
     }
 
     private void setItemComboBoxItems() {
@@ -100,13 +52,6 @@ class ExpensesController implements FxController {
                         item -> itemComboBox.setValue(item)));
             }
         });
-    }
-
-    private void addItem() {
-        Core.getInstance().financeService().addItem(itemTitleField.getText(), itemDescArea.getText());
-        itemTitleField.clear();
-        itemDescArea.setText("-");
-        setItemComboBoxItems();
     }
 
     private void saveExpense() {

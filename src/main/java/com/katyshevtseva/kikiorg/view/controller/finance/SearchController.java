@@ -10,7 +10,7 @@ import com.katyshevtseva.kikiorg.core.Core;
 import com.katyshevtseva.kikiorg.core.sections.finance.FinanceOperationService.Operation;
 import com.katyshevtseva.kikiorg.core.sections.finance.FinanceOperationService.OperationType;
 import com.katyshevtseva.kikiorg.core.sections.finance.FinanceSearchService;
-import com.katyshevtseva.kikiorg.core.sections.finance.FinanceSearchService.OperationEnd;
+import com.katyshevtseva.kikiorg.core.sections.finance.OperationEnd;
 import com.katyshevtseva.kikiorg.core.sections.finance.SearchRequest;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;

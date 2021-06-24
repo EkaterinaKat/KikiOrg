@@ -6,17 +6,6 @@
       xmlns:fx="http://javafx.com/fxml"
       alignment="CENTER">
 
-    <GridPane alignment="CENTER" hgap="25" vgap="25">
-        <TextField fx:id="itemTitleField" minWidth="250" maxWidth="250"
-                   GridPane.columnIndex="0" GridPane.rowIndex="0"/>
-        <TextArea fx:id="itemDescArea" minWidth="250" maxWidth="250" text="-"
-                  GridPane.columnIndex="0" GridPane.rowIndex="1" maxHeight="80" wrapText="true"/>
-        <Button fx:id="addItemButton" text="Add item"
-                GridPane.columnIndex="1" GridPane.rowIndex="1"/>
-    </GridPane>
-
-    <Pane prefHeight="15"/>
-    <Label text="*****************************************************************"/>
     <Pane prefHeight="15"/>
 
     <GridPane alignment="CENTER" hgap="25" vgap="25">
@@ -49,16 +38,6 @@
         <Button fx:id="doneButton" text="Ok" GridPane.halignment="RIGHT"
                 GridPane.columnIndex="3" GridPane.rowIndex="2"/>
     </GridPane>
-
-    <Pane prefHeight="30"/>
-
-    <TableView fx:id="table" prefWidth="945" prefHeight="400">
-        <columns>
-            <TableColumn prefWidth="250" text="Title" fx:id="titleColumn"/>
-            <TableColumn prefWidth="420" text="Description" fx:id="descColumn"/>
-            <TableColumn prefWidth="75" fx:id="editColumn"/>
-        </columns>
-    </TableView>
 
 </VBox>
 

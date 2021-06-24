@@ -36,14 +36,14 @@ public class FinanceService {
         Source source = new Source();
         source.setTitle(title);
         source.setDescription(desc);
-        sourceRepo.save(source);
+        sourceRepo.saveAndFlush(source);
     }
 
     public void addItem(String title, String desc) {
         Item item = new Item();
         item.setTitle(title);
         item.setDescription(desc);
-        itemRepo.save(item);
+        itemRepo.saveAndFlush(item);
     }
 
     // Возвращает список из 15 (или меньше) Item которые использовались самыми последними
@@ -64,7 +64,7 @@ public class FinanceService {
         account.setTitle(title);
         account.setDescription(desc);
         account.setAmount(0);
-        accountRepo.save(account);
+        accountRepo.saveAndFlush(account);
     }
 
     public List<Account> getAllAccounts() {
@@ -85,7 +85,7 @@ public class FinanceService {
         expense.setAmount(amount);
         expense.setDateEntity(dateService.createIfNotExistAndGetDateEntity(date));
         expense.setItem(item);
-        expenseRepo.save(expense);
+        expenseRepo.saveAndFlush(expense);
 
         addToAccountAmount(account, (-1) * amount);
     }
@@ -108,7 +108,7 @@ public class FinanceService {
         replenishment.setAmount(amount);
         replenishment.setSource(source);
         replenishment.setDateEntity(dateService.createIfNotExistAndGetDateEntity(date));
-        replenishmentRepo.save(replenishment);
+        replenishmentRepo.saveAndFlush(replenishment);
 
         addToAccountAmount(account, amount);
     }
@@ -129,21 +129,21 @@ public class FinanceService {
     public void alterAccount(Account account, String newTitle, String newDesc) {
         account.setTitle(newTitle);
         account.setDescription(newDesc);
-        accountRepo.save(account);
+        accountRepo.saveAndFlush(account);
     }
 
     @Transactional
     public void alterItem(Item item, String newTitle, String newDesc) {
         item.setTitle(newTitle);
         item.setDescription(newDesc);
-        itemRepo.save(item);
+        itemRepo.saveAndFlush(item);
     }
 
     @Transactional
     public void alterSource(Source source, String newTitle, String newDesc) {
         source.setTitle(newTitle);
         source.setDescription(newDesc);
-        sourceRepo.save(source);
+        sourceRepo.saveAndFlush(source);
     }
 
     @Transactional
@@ -153,7 +153,7 @@ public class FinanceService {
         transfer.setTo(to);
         transfer.setAmount(amount);
         transfer.setDateEntity(dateService.createIfNotExistAndGetDateEntity(date));
-        transferRepo.save(transfer);
+        transferRepo.saveAndFlush(transfer);
 
         addToAccountAmount(from, (-1) * amount);
         addToAccountAmount(to, amount);
@@ -183,6 +183,6 @@ public class FinanceService {
     private void addToAccountAmount(Account account, long amount) {
         Account actualAccount = accountRepo.findById(account.getId()).orElse(null);
         actualAccount.setAmount(actualAccount.getAmount() + amount);
-        accountRepo.save(actualAccount);
+        accountRepo.saveAndFlush(actualAccount);
     }
 }

@@ -1,7 +1,7 @@
 package com.katyshevtseva.kikiorg.core.sections.finance.entity;
 
 
-import com.katyshevtseva.kikiorg.core.sections.finance.FinanceSearchService.OperationEnd;
+import com.katyshevtseva.kikiorg.core.sections.finance.OperationEnd;
 import lombok.Data;
 
 import javax.persistence.Entity;
@@ -37,5 +37,10 @@ public class Item implements OperationEnd {
     @Override
     public int hashCode() {
         return Objects.hash(getId());
+    }
+
+    @Override
+    public OperationEndType getType() {
+        return OperationEndType.ITEM;
     }
 }
