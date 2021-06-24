@@ -181,6 +181,10 @@ public class OrganizerWindowCreator {
         return new WindowBuilder(FINANCE_FXML_LOCATION + "analysis.fxml").setController(controller).getNode();
     }
 
+    public Node getLedgerNode(FxController controller) {
+        return new WindowBuilder(FINANCE_FXML_LOCATION + "ledger.fxml").setController(controller).getNode();
+    }
+
     public void openItemSelectDialog(FxController controller) {
         new WindowBuilder(FINANCE_FXML_LOCATION + "item_select_dialog.fxml").setIconImagePath(getIcoImagePath()).
                 setController(controller).setHeight(ITEM_SELECT_DIALOG_HEIGHT).

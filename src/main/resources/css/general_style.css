@@ -10,6 +10,10 @@
     -fx-background-color: #fff1ad;
 }
 
+.scroll-pane{
+    -fx-background: #fff1ad;
+}
+
 .button {
     -fx-background-color: #8B4513;
     -fx-text-fill: #FFFFFF;

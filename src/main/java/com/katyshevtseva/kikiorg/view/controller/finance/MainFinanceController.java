@@ -31,6 +31,8 @@ public class MainFinanceController extends AbstractSwitchController implements F
     private Button reportButton;
     @FXML
     private Button analysisButton;
+    @FXML
+    private Button ledgerButton;
 
     private final ReplenishmentController replenishmentController = new ReplenishmentController();
     private final AccountsController accountsController = new AccountsController();
@@ -41,6 +43,7 @@ public class MainFinanceController extends AbstractSwitchController implements F
     private final ItemHierarchyController itemHierarchyController = new ItemHierarchyController();
     private final ReportController reportController = new ReportController();
     private final AnalysisController analysisController = new AnalysisController();
+    private final LedgerController ledgerController = new LedgerController();
 
     private Node replenishmentNode;
     private Node accountsNode;
@@ -51,13 +54,14 @@ public class MainFinanceController extends AbstractSwitchController implements F
     private Node itemHierarchyNode;
     private Node reportNode;
     private Node analysisNode;
+    private Node ledgerNode;
 
     @FXML
     private void initialize() {
         pane = mainPane;
         buttons.addAll(Arrays.asList(replenishmentButton, accountsButton, expensesButton, checkButton,
                 transferButton, historyButton, itemHierarchyButton, reportButton, analysisButton));
-        replenishmentButtonListener();
+        ledgerButtonListener();
         replenishmentButton.setOnAction(event -> replenishmentButtonListener());
         accountsButton.setOnAction(event -> accountsButtonListener());
         expensesButton.setOnAction(event -> expensesButtonListener());
@@ -67,6 +71,12 @@ public class MainFinanceController extends AbstractSwitchController implements F
         itemHierarchyButton.setOnAction(event -> itemHierarchyButtonListener());
         reportButton.setOnAction(event -> reportButtonListener());
         analysisButton.setOnAction(event -> analysisButtonListener());
+        ledgerButton.setOnAction(event -> ledgerButtonListener());
+    }
+
+    private void ledgerButtonListener() {
+        activateMode(ledgerButton, ledgerNode,
+                OrganizerWindowCreator.getInstance()::getLedgerNode, ledgerController);
     }
 
     private void analysisButtonListener() {
