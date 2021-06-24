@@ -3,10 +3,9 @@ package com.katyshevtseva.kikiorg.view.controller.finance;
 import com.katyshevtseva.date.DateCorrector;
 import com.katyshevtseva.fx.FxUtils;
 import com.katyshevtseva.fx.WindowBuilder.FxController;
+import com.katyshevtseva.general.NoArgsKnob;
 import com.katyshevtseva.kikiorg.core.Core;
 import com.katyshevtseva.kikiorg.core.sections.finance.entity.Account;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.util.Callback;
@@ -15,6 +14,7 @@ import static com.katyshevtseva.fx.FxUtils.associateButtonWithControls;
 import static com.katyshevtseva.fx.FxUtils.disableNonNumericChars;
 
 class TransferController implements FxController {
+    private NoArgsKnob operationListener;
     @FXML
     private ComboBox<Account> fromComboBox;
     @FXML
@@ -25,6 +25,10 @@ class TransferController implements FxController {
     private Button transferButton;
     @FXML
     private DatePicker datePicker;
+
+    TransferController(NoArgsKnob operationListener) {
+        this.operationListener = operationListener;
+    }
 
     @FXML
     private void initialize() {
@@ -42,6 +46,7 @@ class TransferController implements FxController {
         Core.getInstance().financeService().addTransfer(fromComboBox.getValue(), toComboBox.getValue(),
                 Long.parseLong(amountTextField.getText()), java.sql.Date.valueOf(datePicker.getValue()));
         amountTextField.clear();
+        operationListener.execute();
     }
 
     // Этот метод только устанавливает отображение имени счета вместе с информацией о владельце

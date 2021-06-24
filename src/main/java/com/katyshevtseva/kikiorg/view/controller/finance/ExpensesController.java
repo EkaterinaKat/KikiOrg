@@ -2,6 +2,7 @@ package com.katyshevtseva.kikiorg.view.controller.finance;
 
 import com.katyshevtseva.date.DateCorrector;
 import com.katyshevtseva.fx.WindowBuilder.FxController;
+import com.katyshevtseva.general.NoArgsKnob;
 import com.katyshevtseva.kikiorg.core.Core;
 import com.katyshevtseva.kikiorg.core.sections.finance.entity.Account;
 import com.katyshevtseva.kikiorg.core.sections.finance.entity.Item;
@@ -17,6 +18,7 @@ import javafx.scene.control.TextField;
 import static com.katyshevtseva.fx.FxUtils.*;
 
 class ExpensesController implements FxController {
+    private NoArgsKnob operationListener;
     @FXML
     private ComboBox<Account> accountComboBox;
     @FXML
@@ -27,6 +29,10 @@ class ExpensesController implements FxController {
     private DatePicker datePicker;
     @FXML
     private Button doneButton;
+
+    ExpensesController(NoArgsKnob operationListener) {
+        this.operationListener = operationListener;
+    }
 
     @FXML
     private void initialize() {
@@ -58,5 +64,6 @@ class ExpensesController implements FxController {
         Core.getInstance().financeService().addExpense(accountComboBox.getValue(), Long.parseLong(amountTextField.getText()),
                 itemComboBox.getValue(), java.sql.Date.valueOf(datePicker.getValue()));
         amountTextField.clear();
+        operationListener.execute();
     }
 }

@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.TableColumn?>
-<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <VBox xmlns="http://javafx.com/javafx"
       xmlns:fx="http://javafx.com/fxml">
@@ -26,4 +25,7 @@
             <TableColumn prefWidth="50" fx:id="checkBoxColumn"/>
         </columns>
     </TableView>
+    <Pane maxHeight="15" minHeight="15"/>
+    <Button text="Update" fx:id="updateButton"/>
+
 </VBox>

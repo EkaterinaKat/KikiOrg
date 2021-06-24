@@ -9,6 +9,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
+import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.CheckBoxTableCell;
@@ -32,13 +33,16 @@ class CheckController implements FxController {
     private TableColumn<Account, Long> amountColumn;
     @FXML
     private TableColumn<Account, Boolean> checkBoxColumn;
+    @FXML
+    private Button updateButton;
 
     @FXML
     private void initialize() {
         scatterPane.getChildren().add(OrganizerWindowCreator.getInstance().getScatterCheckNode(new ScatterCheckController()));
         huddlePane.getChildren().add(OrganizerWindowCreator.getInstance().getHuddleCheckNode(new HuddleCheckController()));
+        updateButton.setOnAction(event -> updateTable());
         adjustTable();
-        fillTable();
+        updateTable();
     }
 
     private void adjustTable() {
@@ -53,7 +57,7 @@ class CheckController implements FxController {
         });
     }
 
-    private void fillTable() {
+    void updateTable() {
         List<Account> accounts = Core.getInstance().financeService().getAllAccounts().stream()
                 .sorted(Comparator.comparing(Account::getTitle)).collect(Collectors.toList());
         ObservableList<Account> observableList = FXCollections.observableArrayList();

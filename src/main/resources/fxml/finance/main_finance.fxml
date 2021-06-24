@@ -2,13 +2,8 @@
 
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-<?import java.net.URL?>
 <BorderPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml">
-
-    <stylesheets>
-        <URL value="@/css/general_style.css"/>
-    </stylesheets>
 
     <top>
         <VBox>
@@ -17,15 +12,7 @@
                 <Pane minWidth="30" maxWidth="30"/>
                 <Button fx:id="ledgerButton" text="Ledger"/>
                 <Pane minWidth="30" maxWidth="30"/>
-                <Button fx:id="replenishmentButton" text="Replenishment"/>
-                <Pane minWidth="30" maxWidth="30"/>
-                <Button fx:id="expensesButton" text="Expenses"/>
-                <Pane minWidth="30" maxWidth="30"/>
-                <Button fx:id="checkButton" text="Check"/>
-                <Pane minWidth="30" maxWidth="30"/>
                 <Button fx:id="historyButton" text="History"/>
-                <Pane minWidth="30" maxWidth="30"/>
-                <Button fx:id="transferButton" text="Transfer"/>
                 <Pane minWidth="30" maxWidth="30"/>
                 <Button fx:id="itemHierarchyButton" text="Item Hierarchy"/>
                 <Pane minWidth="30" maxWidth="30"/>

@@ -9,7 +9,7 @@
     <Pane maxWidth="20" minWidth="20"/>
 
     <VBox>
-        <Pane maxHeight="10" minHeight="10"/>
+        <Pane maxHeight="20" minHeight="20"/>
 
         <ComboBox fx:id="accountComboBox"/>
         <Pane maxHeight="10" minHeight="10"/>

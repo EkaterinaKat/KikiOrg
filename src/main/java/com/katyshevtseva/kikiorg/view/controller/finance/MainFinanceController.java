@@ -12,17 +12,9 @@ import java.util.Arrays;
 
 public class MainFinanceController extends AbstractSwitchController implements FxController {
     @FXML
-    private Button replenishmentButton;
-    @FXML
-    private Button expensesButton;
-    @FXML
-    private Button checkButton;
-    @FXML
     private Pane mainPane;
     @FXML
     private Button historyButton;
-    @FXML
-    private Button transferButton;
     @FXML
     private Button itemHierarchyButton;
     @FXML
@@ -32,21 +24,13 @@ public class MainFinanceController extends AbstractSwitchController implements F
     @FXML
     private Button ledgerButton;
 
-    private final ReplenishmentController replenishmentController = new ReplenishmentController();
-    private final ExpensesController expensesController = new ExpensesController();
-    private final CheckController checkController = new CheckController();
     private final HistoryController historyController = new HistoryController();
-    private final TransferController transferController = new TransferController();
     private final ItemHierarchyController itemHierarchyController = new ItemHierarchyController();
     private final ReportController reportController = new ReportController();
     private final AdminController adminController = new AdminController();
     private final LedgerController ledgerController = new LedgerController();
 
-    private Node replenishmentNode;
-    private Node expensesNode;
-    private Node checkNode;
     private Node historyNode;
-    private Node transferNode;
     private Node itemHierarchyNode;
     private Node reportNode;
     private Node adminNode;
@@ -55,14 +39,9 @@ public class MainFinanceController extends AbstractSwitchController implements F
     @FXML
     private void initialize() {
         pane = mainPane;
-        buttons.addAll(Arrays.asList(replenishmentButton, expensesButton, checkButton, ledgerButton,
-                transferButton, historyButton, itemHierarchyButton, reportButton, adminButton));
+        buttons.addAll(Arrays.asList(ledgerButton, historyButton, itemHierarchyButton, reportButton, adminButton));
         ledgerButtonListener();
-        replenishmentButton.setOnAction(event -> replenishmentButtonListener());
-        expensesButton.setOnAction(event -> expensesButtonListener());
-        checkButton.setOnAction(event -> checkButtonListener());
         historyButton.setOnAction(event -> historyButtonListener());
-        transferButton.setOnAction(event -> transferButtonListener());
         itemHierarchyButton.setOnAction(event -> itemHierarchyButtonListener());
         reportButton.setOnAction(event -> reportButtonListener());
         adminButton.setOnAction(event -> adminButtonListener());
@@ -92,25 +71,5 @@ public class MainFinanceController extends AbstractSwitchController implements F
     private void historyButtonListener() {
         activateMode(historyButton, historyNode,
                 OrganizerWindowCreator.getInstance()::getHistoryNode, historyController);
-    }
-
-    private void transferButtonListener() {
-        activateMode(transferButton, transferNode,
-                OrganizerWindowCreator.getInstance()::getTransferNode, transferController);
-    }
-
-    private void replenishmentButtonListener() {
-        activateMode(replenishmentButton, replenishmentNode,
-                OrganizerWindowCreator.getInstance()::getReplenishmentNode, replenishmentController);
-    }
-
-    private void expensesButtonListener() {
-        activateMode(expensesButton, expensesNode,
-                OrganizerWindowCreator.getInstance()::getExpensesNode, expensesController);
-    }
-
-    private void checkButtonListener() {
-        activateMode(checkButton, checkNode,
-                OrganizerWindowCreator.getInstance()::getCheckNode, checkController);
     }
 }

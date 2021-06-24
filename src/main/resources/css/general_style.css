@@ -27,3 +27,17 @@
 .label {
     -fx-font-weight: bold;
 }
+
+.increment-button, .decrement-button {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+}
+
+.scroll-bar .track-background {
+    -fx-background-color: #8B4513;
+    -fx-background-radius: 2em;
+}
+
+.scroll-bar .thumb {
+ -fx-background-color: #fff1ad;
+}
