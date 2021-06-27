@@ -55,15 +55,15 @@ public class HabitsService {
         }
 
         Description newDescription = new Description();
-        newDescription.setBeginningDate(dateService.createIfNotExistAndGetDateEntity(new Date()));
+        newDescription.setBeginningDate(dateService.createIfNotExistAndGetDateEntity(
+                shiftDate(new Date(), DateUtils.TimeUnit.DAY, 1)));
         newDescription.setText(newDescText);
         newDescription.setHabit(habit);
         descriptionRepo.save(newDescription);
 
         if (habit.getCurrentDescription() != null) {
             Description oldDescription = habit.getCurrentDescription();
-            oldDescription.setEndDate(dateService.createIfNotExistAndGetDateEntity(
-                    shiftDate(new Date(), DateUtils.TimeUnit.DAY, -1)));
+            oldDescription.setEndDate(dateService.createIfNotExistAndGetDateEntity(new Date()));
             descriptionRepo.save(oldDescription);
         }
 
