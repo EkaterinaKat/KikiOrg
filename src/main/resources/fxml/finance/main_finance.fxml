@@ -12,13 +12,13 @@
                 <Pane minWidth="30" maxWidth="30"/>
                 <Button fx:id="ledgerButton" text="Ledger"/>
                 <Pane minWidth="30" maxWidth="30"/>
+                <Button fx:id="adminButton" text="Admin"/>
+                <Pane minWidth="30" maxWidth="30"/>
                 <Button fx:id="historyButton" text="History"/>
                 <Pane minWidth="30" maxWidth="30"/>
                 <Button fx:id="itemHierarchyButton" text="Item Hierarchy"/>
                 <Pane minWidth="30" maxWidth="30"/>
                 <Button fx:id="reportButton" text="Report"/>
-                <Pane minWidth="30" maxWidth="30"/>
-                <Button fx:id="adminButton" text="Admin"/>
             </HBox>
             <Pane minHeight="10" maxHeight="10"/>
         </VBox>

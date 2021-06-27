@@ -47,7 +47,7 @@ public class TrackerService {
 
     public List<Task> getTodoTasks() {
         return taskRepo.findAllByTaskStatus(TaskStatus.TODO).stream()
-                .sorted(Comparator.comparing(Task::getProject).thenComparing(Task::getNumber)).collect(Collectors.toList());
+                .sorted(Comparator.comparing(Task::getCreationDate).thenComparing(Task::getProject)).collect(Collectors.toList());
     }
 
     public List<Task> getAllDoneAndRejectedTasks() {
