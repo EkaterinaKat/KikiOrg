@@ -1,6 +1,5 @@
 package com.katyshevtseva.kikiorg.core.sections.habits.entity;
 
-import com.katyshevtseva.kikiorg.core.sections.habits.HabitGroup;
 import com.katyshevtseva.kikiorg.core.sections.habits.StabilityStatus;
 import lombok.Data;
 
@@ -15,9 +14,6 @@ public class Habit {
     private long id;
 
     private String title;
-
-    @Enumerated(EnumType.STRING)
-    private HabitGroup habitGroup;
 
     private boolean active;
 

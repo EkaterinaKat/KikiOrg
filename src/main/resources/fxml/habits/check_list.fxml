@@ -9,7 +9,7 @@
     <Pane minHeight="25" maxHeight="25"/>
     <DatePicker fx:id="datePicker"/>
     <Pane minHeight="25" maxHeight="25"/>
-    <HBox fx:id="hPane"/>
+    <VBox fx:id="habitsPane"/>
     <Pane minHeight="25" maxHeight="25"/>
     <Button fx:id="saveButton" text="Save"/>
 

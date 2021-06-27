@@ -24,8 +24,6 @@
                     <Pane minHeight="25" maxHeight="25"/>
                     <Label fx:id="titleLabel" styleClass="font_25" wrapText="true" minWidth="650" maxWidth="650"/>
                     <Pane minHeight="25" maxHeight="25"/>
-                    <Label fx:id="groupLabel"/>
-                    <Pane minHeight="25" maxHeight="25"/>
                     <Label fx:id="descLabel" wrapText="true" minWidth="650" maxWidth="650"/>
                 </VBox>
                 <Pane minWidth="25" maxWidth="25"/>

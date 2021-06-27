@@ -3,13 +3,16 @@ package com.katyshevtseva.kikiorg.view.controller.habits;
 import com.katyshevtseva.fx.WindowBuilder.FxController;
 import com.katyshevtseva.general.OneArgKnob;
 import com.katyshevtseva.kikiorg.core.Core;
-import com.katyshevtseva.kikiorg.core.sections.habits.HabitGroup;
 import com.katyshevtseva.kikiorg.core.sections.habits.entity.Habit;
 import com.katyshevtseva.kikiorg.view.utils.OrgUtils;
 import javafx.fxml.FXML;
-import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
+import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
 
-import static com.katyshevtseva.fx.FxUtils.*;
+import static com.katyshevtseva.fx.FxUtils.associateButtonWithControls;
+import static com.katyshevtseva.fx.FxUtils.closeWindowThatContains;
 
 class HabitEditDialogController implements FxController {
     @FXML
@@ -20,8 +23,6 @@ class HabitEditDialogController implements FxController {
     private TextArea descTextArea;
     @FXML
     private Button saveButton;
-    @FXML
-    private ComboBox<HabitGroup> groupComboBox;
     private Habit habit;
     private OneArgKnob<Habit> habitSaveHandler;
 
@@ -32,8 +33,7 @@ class HabitEditDialogController implements FxController {
 
     @FXML
     private void initialize() {
-        associateButtonWithControls(saveButton, titleTextField, descTextArea, groupComboBox);
-        setComboBoxItems(groupComboBox, HabitGroup.values());
+        associateButtonWithControls(saveButton, titleTextField, descTextArea);
         tuneControls();
         saveButton.setOnAction(event -> {
             if (needToAskAboutDesc())
@@ -56,8 +56,6 @@ class HabitEditDialogController implements FxController {
             titleTextField.setText(habit.getTitle());
             descTextArea.setText(habit.getCurrentDescription() == null ? "описания нет патчимута" : habit.getCurrentDescription().getText());
             activeCheckBox.setSelected(habit.isActive());
-            groupComboBox.setValue(habit.getHabitGroup());
-            groupComboBox.setDisable(true);
         }
     }
 
@@ -67,7 +65,6 @@ class HabitEditDialogController implements FxController {
         }
         habit.setTitle(titleTextField.getText());
         habit.setActive(activeCheckBox.isSelected());
-        habit.setHabitGroup(groupComboBox.getValue());
         Core.getInstance().habitsService().saveHabit(habit);
         Core.getInstance().habitsService().newHabitDesc(habit, descTextArea.getText(), createNewDeck);
 
