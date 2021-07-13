@@ -2,6 +2,7 @@ package com.katyshevtseva.kikiorg.view.controller.finance;
 
 import com.katyshevtseva.fx.FxUtils;
 import com.katyshevtseva.fx.WindowBuilder.FxController;
+import com.katyshevtseva.fx.dialog.StandardDialogBuilder;
 import com.katyshevtseva.kikiorg.core.Core;
 import com.katyshevtseva.kikiorg.core.exeption.SchemaException;
 import com.katyshevtseva.kikiorg.core.sections.finance.ItemHierarchyService;
@@ -11,7 +12,6 @@ import com.katyshevtseva.kikiorg.core.sections.finance.ItemSchemaService.AddButt
 import com.katyshevtseva.kikiorg.core.sections.finance.ItemSchemaService.Entry;
 import com.katyshevtseva.kikiorg.core.sections.finance.ItemSchemaService.SchemaLine;
 import com.katyshevtseva.kikiorg.core.sections.finance.entity.ItemGroup;
-import com.katyshevtseva.kikiorg.view.utils.OrgUtils;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -19,7 +19,6 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
-import javafx.util.Callback;
 
 import java.util.List;
 
@@ -76,7 +75,7 @@ class ItemHierarchyController implements FxController {
                     addButton.add(comboBox.getValue());
                     fillSchema();
                 } catch (SchemaException e) {
-                    OrgUtils.getDialogBuilder().openInfoDialog(e.getMessage());
+                    new StandardDialogBuilder().openInfoDialog(e.getMessage());
                     comboBox.setVisible(false);
                     e.printStackTrace();
                 }
@@ -115,14 +114,14 @@ class ItemHierarchyController implements FxController {
         titleColumn.setCellValueFactory(new PropertyValueFactory<>("title"));
         FxUtils.adjustButtonColumn(deleteColumn, "[x]",
                 itemGroup ->
-                        OrgUtils.getDialogBuilder().openQuestionDialog("Delete?", b -> {
+                        new StandardDialogBuilder().openQuestionDialog("Delete?", b -> {
                             if (b) {
                                 Core.getInstance().itemHierarchyService().destroyTreeAndDeleteGroup(itemGroup);
                                 fillTable();
                                 fillSchema();
                             }
                         }),
-                button ->  button.setMaxHeight(10));
+                button -> button.setMaxHeight(10));
     }
 
     private void fillTable() {

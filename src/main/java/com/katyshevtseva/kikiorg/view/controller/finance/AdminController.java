@@ -2,13 +2,13 @@ package com.katyshevtseva.kikiorg.view.controller.finance;
 
 import com.katyshevtseva.fx.FxUtils;
 import com.katyshevtseva.fx.WindowBuilder.FxController;
+import com.katyshevtseva.fx.dialog.StandardDialogBuilder;
 import com.katyshevtseva.kikiorg.core.Core;
 import com.katyshevtseva.kikiorg.core.sections.finance.OperationEnd;
 import com.katyshevtseva.kikiorg.core.sections.finance.OperationEnd.OperationEndType;
 import com.katyshevtseva.kikiorg.core.sections.finance.entity.Account;
 import com.katyshevtseva.kikiorg.core.sections.finance.entity.Item;
 import com.katyshevtseva.kikiorg.core.sections.finance.entity.Source;
-import com.katyshevtseva.kikiorg.view.utils.OrgUtils;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -57,7 +57,7 @@ class AdminController implements FxController {
     }
 
     private void newButtonListener() {
-        OrgUtils.getDialogBuilder().openTextFieldAndTextAreaDialog("", "", (title, desc) -> {
+        new StandardDialogBuilder().openTextFieldAndTextAreaDialog("", "", (title, desc) -> {
             switch (typeComboBox.getValue()) {
                 case ITEM:
                     Core.getInstance().financeService().addItem(title, desc);
@@ -85,7 +85,7 @@ class AdminController implements FxController {
             return cell;
         });
         FxUtils.adjustButtonColumn(editColumn, "Edit", operationEnd ->
-                OrgUtils.getDialogBuilder().openTextFieldAndTextAreaDialog(operationEnd.getTitle(), operationEnd.getDescription(),
+                new StandardDialogBuilder().openTextFieldAndTextAreaDialog(operationEnd.getTitle(), operationEnd.getDescription(),
                         (title, desc) -> {
                             switch (operationEnd.getType()) {
                                 case ITEM:

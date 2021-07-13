@@ -3,6 +3,7 @@ package com.katyshevtseva.kikiorg.view.controller.finance;
 import com.katyshevtseva.fx.FxUtils;
 import com.katyshevtseva.fx.Size;
 import com.katyshevtseva.fx.WindowBuilder.FxController;
+import com.katyshevtseva.fx.component.ComponentBuilder;
 import com.katyshevtseva.fx.component.ComponentBuilder.Component;
 import com.katyshevtseva.fx.component.MultipleChoiceController;
 import com.katyshevtseva.general.OneArgKnob;
@@ -23,7 +24,6 @@ import java.util.List;
 
 import static com.katyshevtseva.fx.FxUtils.associateButtonWithControls;
 import static com.katyshevtseva.fx.FxUtils.setComboBoxItems;
-import static com.katyshevtseva.kikiorg.view.utils.OrgUtils.getComponentBuilder;
 
 class SearchController implements FxController {
     private final Size fromAndToComponentSize = new Size(150, 240);
@@ -84,9 +84,9 @@ class SearchController implements FxController {
         fromPane.getChildren().clear();
         toPane.getChildren().clear();
 
-        Component<MultipleChoiceController<OperationEnd>> fromComponent = getComponentBuilder().setSize(fromAndToComponentSize)
+        Component<MultipleChoiceController<OperationEnd>> fromComponent = new ComponentBuilder().setSize(fromAndToComponentSize)
                 .getMultipleChoiceComponent(searchService.getFrom(typeComboBox.getValue()));
-        Component<MultipleChoiceController<OperationEnd>> toComponent = getComponentBuilder().setSize(fromAndToComponentSize)
+        Component<MultipleChoiceController<OperationEnd>> toComponent = new ComponentBuilder().setSize(fromAndToComponentSize)
                 .getMultipleChoiceComponent(searchService.getTo(typeComboBox.getValue()));
 
         fromController = fromComponent.getController();

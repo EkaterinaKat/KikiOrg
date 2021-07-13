@@ -2,10 +2,10 @@ package com.katyshevtseva.kikiorg.view.controller.finance;
 
 import com.katyshevtseva.fx.FxUtils;
 import com.katyshevtseva.fx.WindowBuilder.FxController;
+import com.katyshevtseva.fx.dialog.StandardDialogBuilder;
 import com.katyshevtseva.kikiorg.core.Core;
 import com.katyshevtseva.kikiorg.core.sections.finance.entity.Account;
 import com.katyshevtseva.kikiorg.core.sections.finance.entity.Huddle;
-import com.katyshevtseva.kikiorg.view.utils.OrgUtils;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
@@ -37,7 +37,7 @@ class HuddleCheckController implements FxController {
         setComboBoxItems();
         fillGridPane();
         associateButtonWithControls(checkButton, comboBox);
-        addButton.setOnAction(event -> OrgUtils.getDialogBuilder().openTextFieldDialog("", s -> {
+        addButton.setOnAction(event -> new StandardDialogBuilder().openTextFieldDialog("", s -> {
             Core.getInstance().huddleCheckService().createHuddle(s);
             emptyAllCheckBoxes();
             resultLabel.setText("");

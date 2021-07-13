@@ -1,10 +1,10 @@
 package com.katyshevtseva.kikiorg.view.controller.habits;
 
 import com.katyshevtseva.fx.WindowBuilder.FxController;
+import com.katyshevtseva.fx.dialog.StandardDialogBuilder;
 import com.katyshevtseva.general.OneArgKnob;
 import com.katyshevtseva.kikiorg.core.Core;
 import com.katyshevtseva.kikiorg.core.sections.habits.entity.Habit;
-import com.katyshevtseva.kikiorg.view.utils.OrgUtils;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
@@ -37,7 +37,7 @@ class HabitEditDialogController implements FxController {
         tuneControls();
         saveButton.setOnAction(event -> {
             if (needToAskAboutDesc())
-                OrgUtils.getDialogBuilder().openQuestionDialog("Create new habit description?", this::saveAndCloseDialog);
+                new StandardDialogBuilder().openQuestionDialog("Create new habit description?", this::saveAndCloseDialog);
             else
                 saveAndCloseDialog(false);
         });

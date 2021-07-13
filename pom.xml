@@ -67,6 +67,12 @@
             <scope>provided</scope>
         </dependency>
 
+        <dependency>
+            <groupId>com.katyshevtseva</groupId>
+            <artifactId>KikiLib</artifactId>
+            <version>1.0</version>
+        </dependency>
+
     </dependencies>
 
     <build>
@@ -76,10 +82,10 @@
                 <artifactId>spring-boot-maven-plugin</artifactId>
             </plugin>
         </plugins>
-<!--        Если проект собирается с помощью Maven'а, то после сборки-->
-<!--        он запускается из папки target, при этом все остальные-->
-<!--        файлы, в том числе *.fxml, в неё не копируются, для этого-->
-<!--        нужно дополнить pom.xml-->
+        <!--        Если проект собирается с помощью Maven'а, то после сборки-->
+        <!--        он запускается из папки target, при этом все остальные-->
+        <!--        файлы, в том числе *.fxml, в неё не копируются, для этого-->
+        <!--        нужно дополнить pom.xml-->
         <resources>
             <resource>
                 <directory>src/main/java</directory>

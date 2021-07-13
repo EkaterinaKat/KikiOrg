@@ -3,10 +3,10 @@ package com.katyshevtseva.kikiorg.view.controller.finance;
 import com.katyshevtseva.fx.FxUtils;
 import com.katyshevtseva.fx.Styler;
 import com.katyshevtseva.fx.WindowBuilder.FxController;
+import com.katyshevtseva.fx.dialog.StandardDialogBuilder;
 import com.katyshevtseva.kikiorg.core.Core;
 import com.katyshevtseva.kikiorg.core.sections.finance.FinanceOperationService.Operation;
 import com.katyshevtseva.kikiorg.core.sections.finance.FinanceOperationService.OperationType;
-import com.katyshevtseva.kikiorg.view.utils.OrgUtils;
 import com.katyshevtseva.kikiorg.view.utils.OrganizerWindowCreator;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -56,7 +56,7 @@ class HistoryController implements FxController {
         amountColumn.setCellValueFactory(new PropertyValueFactory<>("amountString"));
         FxUtils.adjustButtonColumn(deleteColumn, "",
                 operation ->
-                        OrgUtils.getDialogBuilder().openQuestionDialog("Delete?", b -> {
+                        new StandardDialogBuilder().openQuestionDialog("Delete?", b -> {
                             if (b) {
                                 Core.getInstance().financeOperationService().deleteOperation(operation);
                                 setTableInitContent();
