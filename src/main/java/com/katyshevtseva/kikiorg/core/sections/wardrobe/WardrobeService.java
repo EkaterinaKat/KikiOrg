@@ -1,26 +1,42 @@
 package com.katyshevtseva.kikiorg.core.sections.wardrobe;
 
+import com.katyshevtseva.kikiorg.core.date.DateService;
 import com.katyshevtseva.kikiorg.core.repo.OutfitRepo;
 import com.katyshevtseva.kikiorg.core.repo.PieceRepo;
 import com.katyshevtseva.kikiorg.core.sections.wardrobe.entity.Outfit;
 import com.katyshevtseva.kikiorg.core.sections.wardrobe.entity.Piece;
+import com.katyshevtseva.kikiorg.core.sections.wardrobe.enums.ClothesType;
 import com.katyshevtseva.kikiorg.core.sections.wardrobe.enums.Purpose;
 import com.katyshevtseva.kikiorg.core.sections.wardrobe.enums.Season;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 @Service
+@RequiredArgsConstructor
 public class WardrobeService {
-    @Autowired
-    private PieceRepo pieceRepo;
-    @Autowired
-    private OutfitRepo outfitRepo;
+    private final PieceRepo pieceRepo;
+    private final OutfitRepo outfitRepo;
+    private final DateService dateService;
 
-    public void savePiece(Piece piece) {
-        pieceRepo.save(piece);
+    public Piece savePiece(Piece existing, String imageName, String description, Date start, Date end, ClothesType type,
+                           Set<Purpose> purposes, Set<Season> seasons) {
+
+        if (existing == null)
+            existing = new Piece();
+        existing.setImageName(imageName);
+        existing.setDescription(description);
+        existing.setStartDate(dateService.createIfNotExistAndGetDateEntity(start));
+        existing.setEndDate(dateService.createIfNotExistAndGetDateEntity(end));
+        existing.setType(type);
+        existing.setPurposes(purposes);
+        existing.setSeasons(seasons);
+
+        return pieceRepo.save(existing);
     }
 
     public void saveOutfit(Outfit outfit) {

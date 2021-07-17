@@ -1,5 +1,6 @@
 package com.katyshevtseva.kikiorg.core.sections.wardrobe.entity;
 
+import com.katyshevtseva.kikiorg.core.date.DateEntity;
 import com.katyshevtseva.kikiorg.core.sections.wardrobe.Imagable;
 import com.katyshevtseva.kikiorg.core.sections.wardrobe.enums.ClothesType;
 import com.katyshevtseva.kikiorg.core.sections.wardrobe.enums.Purpose;
@@ -8,6 +9,8 @@ import lombok.Data;
 
 import javax.persistence.*;
 import java.util.Set;
+
+import static com.katyshevtseva.date.DateUtils.READABLE_DATE_FORMAT;
 
 @Data
 @Entity
@@ -23,6 +26,14 @@ public class Piece implements Imagable {
     @Enumerated(EnumType.STRING)
     private ClothesType type;
 
+    @ManyToOne
+    @JoinColumn(name = "start_date_entity_id")
+    private DateEntity startDate;
+
+    @ManyToOne
+    @JoinColumn(name = "end_date_entity_id")
+    private DateEntity endDate;
+
     @ElementCollection(fetch = FetchType.EAGER)
     @JoinTable(name = "pieces_seasons", joinColumns = @JoinColumn(name = "piece_id"))
     @Enumerated(EnumType.STRING)
@@ -34,12 +45,19 @@ public class Piece implements Imagable {
     Set<Purpose> purposes;
 
     public String getFullDesc() {
-        String fullDesc = description + "\n\n" + "Type: " + type + "\n\n" + "Seasons: ";
+        StringBuilder fullDesc = new StringBuilder(description + "\n\n" + "Type: " + type + "\n\n" + "Seasons: ");
         for (Season season : seasons)
-            fullDesc += season + " ";
-        fullDesc += "\n\nPurposes: ";
+            fullDesc.append(season).append(", ");
+        fullDesc.delete(fullDesc.length() - 2, fullDesc.length());
+        fullDesc.append(".");
+        fullDesc.append("\n\nPurposes: ");
         for (Purpose purpose : purposes)
-            fullDesc += purpose + " ";
-        return fullDesc;
+            fullDesc.append(purpose).append(", ");
+        fullDesc.delete(fullDesc.length() - 2, fullDesc.length());
+        fullDesc.append(".\n\n")
+                .append(startDate != null ? READABLE_DATE_FORMAT.format(startDate.getValue()) : "*")
+                .append("-")
+                .append(endDate != null ? READABLE_DATE_FORMAT.format(endDate.getValue()) : "*");
+        return fullDesc.toString();
     }
 }

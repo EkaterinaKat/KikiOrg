@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ComboBox?>
-<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.*?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.*?>
 <?import java.net.URL?>
@@ -24,6 +22,12 @@
 
         <VBox maxWidth="310">
             <TextArea fx:id="descTextArea" text="-" prefHeight="100" wrapText="true"/>
+            <Pane prefHeight="20"/>
+            <HBox>
+                <DatePicker fx:id="startDatePicker"/>
+                <Pane maxWidth="10" minWidth="10"/>
+                <DatePicker fx:id="endDatePicker"/>
+            </HBox>
             <Pane prefHeight="20"/>
             <ComboBox fx:id="clothesTypeComboBox"/>
             <Pane prefHeight="20"/>

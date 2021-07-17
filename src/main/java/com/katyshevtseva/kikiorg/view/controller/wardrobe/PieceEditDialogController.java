@@ -8,14 +8,12 @@ import com.katyshevtseva.kikiorg.core.sections.wardrobe.enums.Purpose;
 import com.katyshevtseva.kikiorg.core.sections.wardrobe.enums.Season;
 import com.katyshevtseva.kikiorg.view.utils.OrganizerWindowCreator;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.TextArea;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
 
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -29,6 +27,10 @@ class PieceEditDialogController implements FxController {
     @FXML
     private TextArea descTextArea;
     @FXML
+    private DatePicker startDatePicker;
+    @FXML
+    private DatePicker endDatePicker;
+    @FXML
     private ComboBox<ClothesType> clothesTypeComboBox;
     @FXML
     private VBox seasonsPane;
@@ -39,11 +41,11 @@ class PieceEditDialogController implements FxController {
     private String selectedImageName;
     private List<CheckBox> seasonsCheckBoxes;
     private List<CheckBox> purposesCheckBoxes;
-    private Piece piece;
+    private Piece existing;
     private PieceSavingHandler pieceSavingHandler;
 
-    PieceEditDialogController(Piece piece, PieceSavingHandler pieceSavingHandler) {
-        this.piece = piece;
+    PieceEditDialogController(Piece existing, PieceSavingHandler pieceSavingHandler) {
+        this.existing = existing;
         this.pieceSavingHandler = pieceSavingHandler;
     }
 
@@ -58,11 +60,15 @@ class PieceEditDialogController implements FxController {
     }
 
     private void setExistingPieceInfo() {
-        if (piece != null) {
-            imageView.setImage(ImageService.getJavafxImageByImagable(piece));
-            descTextArea.setText(piece.getDescription());
-            clothesTypeComboBox.setValue(piece.getType());
-            selectedImageName = piece.getImageName();
+        if (existing != null) {
+            imageView.setImage(ImageService.getJavafxImageByImagable(existing));
+            descTextArea.setText(existing.getDescription());
+            clothesTypeComboBox.setValue(existing.getType());
+            selectedImageName = existing.getImageName();
+            startDatePicker.setValue(existing.getStartDate() != null ?
+                    new java.sql.Date(existing.getStartDate().getValue().getTime()).toLocalDate() : null);
+            endDatePicker.setValue(existing.getEndDate() != null ?
+                    new java.sql.Date(existing.getEndDate().getValue().getTime()).toLocalDate() : null);
         }
     }
 
@@ -79,16 +85,17 @@ class PieceEditDialogController implements FxController {
     }
 
     private void save() {
-        if (piece == null)
-            piece = new Piece();
-        piece.setImageName(selectedImageName);
-        piece.setDescription(descTextArea.getText().trim());
-        piece.setType(clothesTypeComboBox.getValue());
-        piece.setPurposes(getSelectedPurposes());
-        piece.setSeasons(getSelectedSeasons());
-        Core.getInstance().wardrobeService().savePiece(piece);
+        Piece saved = Core.getInstance().wardrobeService().savePiece(
+                existing,
+                selectedImageName,
+                descTextArea.getText().trim(),
+                startDatePicker.getValue() != null ? Date.valueOf(startDatePicker.getValue()) : null,
+                endDatePicker.getValue() != null ? Date.valueOf(endDatePicker.getValue()) : null,
+                clothesTypeComboBox.getValue(),
+                getSelectedPurposes(),
+                getSelectedSeasons());
 
-        pieceSavingHandler.execute(piece);
+        pieceSavingHandler.execute(saved);
         closeWindowThatContains(clothesTypeComboBox);
     }
 
@@ -119,16 +126,16 @@ class PieceEditDialogController implements FxController {
             CheckBox checkBox = new CheckBox(season.getTitle());
             seasonsCheckBoxes.add(checkBox);
             seasonsPane.getChildren().addAll(checkBox, getPaneWithHeight(10));
-            if (piece != null)
-                checkBox.setSelected(piece.getSeasons().contains(season));
+            if (existing != null)
+                checkBox.setSelected(existing.getSeasons().contains(season));
         }
 
         for (Purpose purpose : Purpose.values()) {
             CheckBox checkBox = new CheckBox(purpose.getTitle());
             purposesCheckBoxes.add(checkBox);
             purposesPane.getChildren().addAll(checkBox, getPaneWithHeight(10));
-            if (piece != null)
-                checkBox.setSelected(piece.getPurposes().contains(purpose));
+            if (existing != null)
+                checkBox.setSelected(existing.getPurposes().contains(purpose));
         }
     }
 
