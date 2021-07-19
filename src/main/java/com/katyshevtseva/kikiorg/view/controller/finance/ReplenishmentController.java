@@ -37,7 +37,7 @@ class ReplenishmentController implements FxController {
         doneButton.setOnAction(event -> saveReplenishment());
         associateButtonWithControls(doneButton, amountTextField, sourceComboBox, accountComboBox, datePicker);
         setComboBoxItems(sourceComboBox, Core.getInstance().financeService().getAllSources());
-        setComboBoxItemsAndSetSelectedFirstItem(accountComboBox, Core.getInstance().financeService().getAllAccounts());
+        setComboBoxItemsAndSetSelectedFirstItem(accountComboBox, Core.getInstance().financeService().getActiveAccounts());
         datePicker.setValue(new java.sql.Date(DateCorrector.getProperDate().getTime()).toLocalDate());
     }
 

@@ -40,7 +40,7 @@ class ExpensesController implements FxController {
         doneButton.setOnAction(event -> saveExpense());
         associateButtonWithControls(doneButton, amountTextField, accountComboBox, itemComboBox, datePicker);
         setItemComboBoxItems();
-        setComboBoxItemsAndSetSelectedFirstItem(accountComboBox, Core.getInstance().financeService().getAllAccounts());
+        setComboBoxItemsAndSetSelectedFirstItem(accountComboBox, Core.getInstance().financeService().getActiveAccounts());
         datePicker.setValue(new java.sql.Date(DateCorrector.getProperDate().getTime()).toLocalDate());
     }
 

@@ -57,7 +57,7 @@ class ScatterCheckController implements FxController {
         Arrays.asList(amountField1, amountField2, amountField3, amountField4,
                 amountField5, amountField6, amountField7).forEach(FxUtils::disableNonNumericChars);
         checkButton.setOnAction(event -> checkButtonListener());
-        setComboBoxItems(accountComboBox, Core.getInstance().financeService().getAllAccounts());
+        setComboBoxItems(accountComboBox, Core.getInstance().financeService().getActiveAccounts());
         accountComboBox.valueProperty().addListener(observable -> prepareSectionForAccountCheck());
         associateButtonWithControls(checkButton, accountComboBox);
     }

@@ -31,13 +31,14 @@ class AdminController implements FxController {
     private TableColumn<OperationEnd, String> descColumn;
     @FXML
     private TableColumn<OperationEnd, Void> editColumn;
+    @FXML
+    private TableColumn<OperationEnd, Void> archiveColumn;
 
     @FXML
     private void initialize() {
         FxUtils.setComboBoxItemsAndSetSelectedFirstItem(typeComboBox, Arrays.asList(OperationEndType.values()));
         typeComboBox.setOnAction(event -> updateTable());
         newButton.setOnAction(event -> newButtonListener());
-        adjustColumns();
         updateTable();
     }
 
@@ -53,6 +54,7 @@ class AdminController implements FxController {
             case ACCOUNT:
                 items.addAll(Core.getInstance().financeService().getAllAccounts());
         }
+        adjustColumns();
         table.setItems(items);
     }
 
@@ -99,5 +101,17 @@ class AdminController implements FxController {
                             }
                             updateTable();
                         }));
+        FxUtils.adjustButtonColumn(archiveColumn, "-", operationEnd -> {
+            if (operationEnd.getType() == OperationEndType.ACCOUNT) {
+                Core.getInstance().financeService().archive((Account) operationEnd);
+                updateTable();
+            }
+        }, button -> {
+            if (typeComboBox.getValue() == OperationEndType.ACCOUNT) {
+                button.setText("Archive");
+            } else {
+                button.setDisable(true);
+            }
+        });
     }
 }

@@ -58,7 +58,7 @@ class CheckController implements FxController {
     }
 
     void updateTable() {
-        List<Account> accounts = Core.getInstance().financeService().getAllAccounts().stream()
+        List<Account> accounts = Core.getInstance().financeService().getActiveAccounts().stream()
                 .sorted(Comparator.comparing(Account::getTitle)).collect(Collectors.toList());
         ObservableList<Account> observableList = FXCollections.observableArrayList();
         observableList.addAll(accounts);

@@ -64,11 +64,16 @@ public class FinanceService {
         account.setTitle(title);
         account.setDescription(desc);
         account.setAmount(0);
+        account.setArchived(false);
         accountRepo.saveAndFlush(account);
     }
 
     public List<Account> getAllAccounts() {
-        return accountRepo.findAll();
+        return accountRepo.findAll().stream().sorted(Comparator.comparing(Account::isArchived)).collect(Collectors.toList());
+    }
+
+    public List<Account> getActiveAccounts() {
+        return accountRepo.findAllByArchivedFalse();
     }
 
     public List<Source> getAllSources() {
@@ -184,5 +189,10 @@ public class FinanceService {
         Account actualAccount = accountRepo.findById(account.getId()).orElse(null);
         actualAccount.setAmount(actualAccount.getAmount() + amount);
         accountRepo.saveAndFlush(actualAccount);
+    }
+
+    public void archive(Account account) {
+        account.setArchived(!account.isArchived());
+        accountRepo.save(account);
     }
 }

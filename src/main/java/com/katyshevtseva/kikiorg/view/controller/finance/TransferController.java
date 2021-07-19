@@ -34,8 +34,8 @@ class TransferController implements FxController {
     private void initialize() {
         adjustComboBox(fromComboBox);
         adjustComboBox(toComboBox);
-        FxUtils.setComboBoxItems(fromComboBox, Core.getInstance().financeService().getAllAccounts());
-        FxUtils.setComboBoxItems(toComboBox, Core.getInstance().financeService().getAllAccounts());
+        FxUtils.setComboBoxItems(fromComboBox, Core.getInstance().financeService().getActiveAccounts());
+        FxUtils.setComboBoxItems(toComboBox, Core.getInstance().financeService().getActiveAccounts());
         disableNonNumericChars(amountTextField);
         associateButtonWithControls(transferButton, amountTextField, fromComboBox, toComboBox, datePicker);
         transferButton.setOnAction(event -> transfer());

@@ -21,6 +21,14 @@ public class Account implements OperationEnd {
 
     private String description;
 
+    private boolean archived;
+
+    public String getTitle() {
+        if (archived)
+            return title + " (archived)";
+        return title;
+    }
+
     @Override
     public String toString() {
         return title;
