@@ -19,6 +19,8 @@
                 <Pane prefHeight="40"/>
                 <Pane fx:id="checkPane"/>
                 <Pane prefHeight="40"/>
+                <Pane fx:id="historyTablePane"/>
+                <Pane prefHeight="40"/>
             </VBox>
         </HBox>
     </ScrollPane>

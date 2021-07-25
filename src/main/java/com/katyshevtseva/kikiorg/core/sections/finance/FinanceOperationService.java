@@ -1,5 +1,6 @@
 package com.katyshevtseva.kikiorg.core.sections.finance;
 
+import com.katyshevtseva.date.Period;
 import com.katyshevtseva.kikiorg.core.repo.AccountRepo;
 import com.katyshevtseva.kikiorg.core.repo.ExpenseRepo;
 import com.katyshevtseva.kikiorg.core.repo.ReplenishmentRepo;
@@ -35,10 +36,18 @@ public class FinanceOperationService {
     private AccountRepo accountRepo;
 
     public List<Operation> getOperationsForLastMonth() {
+        return getOperationsForPeriod(getLastMonthPeriod());
+    }
+
+    public List<Operation> getTodayOperations() {
+        return getOperationsForPeriod(new Period(new Date(), new Date()));
+    }
+
+    private List<Operation> getOperationsForPeriod(Period period) {
         List<Operation> operations = new ArrayList<>();
-        operations.addAll(financeService.getReplenishmentsByPeriod(getLastMonthPeriod()));
-        operations.addAll(financeService.getExpensesByPeriod(getLastMonthPeriod()));
-        operations.addAll(financeService.getTransfersForCuByPeriod(getLastMonthPeriod(), ALL));
+        operations.addAll(financeService.getReplenishmentsByPeriod(period));
+        operations.addAll(financeService.getExpensesByPeriod(period));
+        operations.addAll(financeService.getTransfersForCuByPeriod(period, ALL));
         operations.sort(Comparator.comparing(Operation::getDate).reversed());
         return operations;
     }

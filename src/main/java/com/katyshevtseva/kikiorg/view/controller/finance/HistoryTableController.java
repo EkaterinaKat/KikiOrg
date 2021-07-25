@@ -4,6 +4,7 @@ import com.katyshevtseva.fx.FxUtils;
 import com.katyshevtseva.fx.Styler;
 import com.katyshevtseva.fx.WindowBuilder.FxController;
 import com.katyshevtseva.fx.dialog.StandardDialogBuilder;
+import com.katyshevtseva.general.NoArgsKnob;
 import com.katyshevtseva.kikiorg.core.Core;
 import com.katyshevtseva.kikiorg.core.sections.finance.FinanceOperationService;
 import com.katyshevtseva.kikiorg.core.sections.finance.FinanceOperationService.Operation;
@@ -24,6 +25,7 @@ import static com.katyshevtseva.fx.Styler.ThingToColor.BACKGROUND;
 
 class HistoryTableController implements FxController {
     private List<Operation> operations;
+    private NoArgsKnob operationDeleteListener;
     @FXML
     private TableView<Operation> table;
     @FXML
@@ -39,6 +41,11 @@ class HistoryTableController implements FxController {
 
     HistoryTableController(List<Operation> initOperationList) {
         operations = initOperationList;
+    }
+
+    HistoryTableController(List<Operation> operations, NoArgsKnob operationDeleteListener) {
+        this.operations = operations;
+        this.operationDeleteListener = operationDeleteListener;
     }
 
     @FXML
@@ -60,12 +67,16 @@ class HistoryTableController implements FxController {
                                 Core.getInstance().financeOperationService().deleteOperation(operation);
                                 operations.remove(operation);
                                 setTableContent(operations);
+                                if (operationDeleteListener != null)
+                                    operationDeleteListener.execute();
                             }
                         }),
                 button -> setImageOnButton("images/delete.png", button, 20));
     }
 
     void setTableContent(List<Operation> operations) {
+        this.operations = operations;
+
         table.getItems().clear();
         ObservableList<Operation> operationObservableList = FXCollections.observableArrayList();
         operationObservableList.addAll(operations);
