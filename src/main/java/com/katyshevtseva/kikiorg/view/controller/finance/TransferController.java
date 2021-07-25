@@ -7,8 +7,10 @@ import com.katyshevtseva.general.NoArgsKnob;
 import com.katyshevtseva.kikiorg.core.Core;
 import com.katyshevtseva.kikiorg.core.sections.finance.entity.Account;
 import javafx.fxml.FXML;
-import javafx.scene.control.*;
-import javafx.util.Callback;
+import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.DatePicker;
+import javafx.scene.control.TextField;
 
 import static com.katyshevtseva.fx.FxUtils.associateButtonWithControls;
 import static com.katyshevtseva.fx.FxUtils.disableNonNumericChars;
@@ -32,8 +34,6 @@ class TransferController implements FxController {
 
     @FXML
     private void initialize() {
-        adjustComboBox(fromComboBox);
-        adjustComboBox(toComboBox);
         FxUtils.setComboBoxItems(fromComboBox, Core.getInstance().financeService().getActiveAccounts());
         FxUtils.setComboBoxItems(toComboBox, Core.getInstance().financeService().getActiveAccounts());
         disableNonNumericChars(amountTextField);
@@ -47,39 +47,5 @@ class TransferController implements FxController {
                 Long.parseLong(amountTextField.getText()), java.sql.Date.valueOf(datePicker.getValue()));
         amountTextField.clear();
         operationListener.execute();
-    }
-
-    // Этот метод только устанавливает отображение имени счета вместе с информацией о владельце
-    private void adjustComboBox(ComboBox<Account> comboBox) {
-        comboBox.setCellFactory(
-                new Callback<ListView<Account>, ListCell<Account>>() {
-                    @Override
-                    public ListCell<Account> call(ListView<Account> p) {
-                        return new ListCell<Account>() {
-                            @Override
-                            protected void updateItem(Account item, boolean empty) {
-                                super.updateItem(item, empty);
-                                if (empty) {
-                                    setText("");
-                                } else {
-                                    setText(item.toString());
-                                }
-                            }
-                        };
-                    }
-                });
-
-        comboBox.setButtonCell(
-                new ListCell<Account>() {
-                    @Override
-                    protected void updateItem(Account t, boolean bln) {
-                        super.updateItem(t, bln);
-                        if (bln) {
-                            setText("");
-                        } else {
-                            setText(t.toString());
-                        }
-                    }
-                });
     }
 }
