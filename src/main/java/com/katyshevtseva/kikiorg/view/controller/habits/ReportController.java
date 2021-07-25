@@ -100,6 +100,7 @@ class ReportController implements FxController {
         if (selectedHabits.size() == 0)
             return;
 
-        tableController.showReport(selectedHabits, OrgUtils.getPeriodByDp(startDatePicker, endDatePicker));
+        tableController.showReport(Core.getInstance().habitsReportService()
+                .getReport(selectedHabits, OrgUtils.getPeriodByDp(startDatePicker, endDatePicker)));
     }
 }
