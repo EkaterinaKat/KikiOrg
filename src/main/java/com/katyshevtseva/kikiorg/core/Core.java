@@ -4,6 +4,7 @@ import com.katyshevtseva.kikiorg.core.sections.finance.*;
 import com.katyshevtseva.kikiorg.core.sections.finance.report.ExpensesReportService;
 import com.katyshevtseva.kikiorg.core.sections.finance.report.IncomeReportService;
 import com.katyshevtseva.kikiorg.core.sections.habits.*;
+import com.katyshevtseva.kikiorg.core.sections.tracker.BoardSortService;
 import com.katyshevtseva.kikiorg.core.sections.tracker.TrackerService;
 import com.katyshevtseva.kikiorg.core.sections.wardrobe.WardrobeService;
 import com.katyshevtseva.kikiorg.core.sections.work.WorkReportService;
@@ -34,6 +35,7 @@ public class Core implements InitializingBean {
     private final HuddleCheckService huddleCheckService;
     private final FinanceSearchService financeSearchService;
     private final TrackerService trackerService;
+    private final BoardSortService boardSortService;
 
     public static Core getInstance() {
         while (INSTANCE == null) {
@@ -121,5 +123,9 @@ public class Core implements InitializingBean {
 
     public TrackerService trackerService() {
         return trackerService;
+    }
+
+    public BoardSortService boardSortService() {
+        return boardSortService;
     }
 }
