@@ -3,10 +3,9 @@ package com.katyshevtseva.kikiorg.view.controller.habits;
 import com.katyshevtseva.date.DateUtils.TimeUnit;
 import com.katyshevtseva.fx.WindowBuilder.FxController;
 import com.katyshevtseva.kikiorg.core.Core;
-import com.katyshevtseva.kikiorg.core.report.ReportCell;
 import com.katyshevtseva.kikiorg.core.sections.habits.entity.Habit;
 import com.katyshevtseva.kikiorg.view.utils.OrgUtils;
-import com.katyshevtseva.kikiorg.view.utils.ReportUtils;
+import com.katyshevtseva.kikiorg.view.utils.OrganizerWindowCreator;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -18,7 +17,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.CheckBoxTableCell;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Pane;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -40,13 +39,17 @@ class ReportController implements FxController {
     @FXML
     private DatePicker endDatePicker;
     @FXML
-    private GridPane reportTable;
-    @FXML
     private Button showButton;
+    @FXML
+    private Pane tablePane;
+    private ReportTableController tableController;
     private List<Habit> selectedHabits;
 
     @FXML
     private void initialize() {
+        tableController = new ReportTableController();
+        tablePane.getChildren().add(OrganizerWindowCreator.getInstance().getHabitsReportTableNode(tableController));
+
         selectedHabits = new ArrayList<>();
         showButton.setOnAction(event -> showReport());
         associateButtonWithControls(showButton, startDatePicker, endDatePicker);
@@ -97,9 +100,6 @@ class ReportController implements FxController {
         if (selectedHabits.size() == 0)
             return;
 
-        List<List<ReportCell>> report = Core.getInstance().habitsReportService().getReport(selectedHabits,
-                OrgUtils.getPeriodByDp(startDatePicker, endDatePicker));
-
-        ReportUtils.showReport(report, reportTable);
+        tableController.showReport(selectedHabits, OrgUtils.getPeriodByDp(startDatePicker, endDatePicker));
     }
 }
