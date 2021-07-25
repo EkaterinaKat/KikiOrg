@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.*?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
 <VBox xmlns="http://javafx.com/javafx"
@@ -10,15 +9,7 @@
 
     <Pane maxHeight="30" minHeight="30"/>
 
-    <TableView fx:id="table" prefWidth="1000" prefHeight="630">
-        <columns>
-            <TableColumn prefWidth="120" text="Date" fx:id="dateColumn"/>
-            <TableColumn prefWidth="340" text="From" fx:id="fromColumn"/>
-            <TableColumn prefWidth="340" text="To" fx:id="toColumn"/>
-            <TableColumn prefWidth="100" text="amount" fx:id="amountColumn"/>
-            <TableColumn prefWidth="75" fx:id="deleteColumn"/>
-        </columns>
-    </TableView>
+    <Pane fx:id="tablePane"/>
 
 </VBox>
 

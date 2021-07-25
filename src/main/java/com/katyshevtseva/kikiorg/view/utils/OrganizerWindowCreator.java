@@ -151,6 +151,9 @@ public class OrganizerWindowCreator {
         return new WindowBuilder(FINANCE_FXML_LOCATION + "check/huddle_check.fxml").setController(controller).getNode();
     }
 
+    public Node getHistoryTableNode(FxController controller) {
+        return new WindowBuilder(FINANCE_FXML_LOCATION + "history_table.fxml").setController(controller).getNode();
+    }
 
     public Node getCheckNode(FxController controller) {
         return new WindowBuilder(FINANCE_FXML_LOCATION + "check/check.fxml").setController(controller).getNode();
