@@ -9,12 +9,12 @@ import com.katyshevtseva.kikiorg.core.sections.habits.entity.Habit;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
 import static com.katyshevtseva.date.DateUtils.shiftDate;
+import static java.util.Comparator.*;
 
 @RequiredArgsConstructor
 @Service
@@ -22,19 +22,23 @@ public class HabitsService {
     private final HabitRepo habitRepo;
     private final DescriptionRepo descriptionRepo;
     private final DateService dateService;
+    private final HabitMarkService habitMarkService;
 
     public void saveHabit(Habit habit) {
         habitRepo.save(habit);
     }
 
     public List<Habit> getAllHabits() {
-        List<Habit> habits = habitRepo.findAll();
-        habits.sort(Comparator.comparing(Habit::isActive).reversed());
-        return habits;
+        return habitRepo.findAll().stream()
+                .sorted(nullsLast(comparing(Habit::isActive).reversed()
+                        .thenComparing(habitMarkService::getFirstHabitMarkDateOrNull, nullsLast(naturalOrder()))))
+                .collect(Collectors.toList());
     }
 
     public List<Habit> getActiveHabits() {
-        return habitRepo.findByActiveTrue();
+        return habitRepo.findByActiveTrue().stream()
+                .sorted(nullsLast(comparing(habitMarkService::getFirstHabitMarkDateOrNull, nullsLast(naturalOrder()))))
+                .collect(Collectors.toList());
     }
 
     public Habit getHabitById(Long id) {
@@ -43,7 +47,7 @@ public class HabitsService {
 
     public List<Description> getAllHabitDescriptions(Habit habit) {
         return descriptionRepo.findByHabit(habit).stream().sorted(
-                Comparator.comparing(o -> ((Description) o).getBeginningDate().getValue()).reversed()).collect(Collectors.toList());
+                comparing(o -> ((Description) o).getBeginningDate().getValue()).reversed()).collect(Collectors.toList());
     }
 
     public void newHabitDesc(Habit habit, String newDescText, boolean createNewDesc) {
