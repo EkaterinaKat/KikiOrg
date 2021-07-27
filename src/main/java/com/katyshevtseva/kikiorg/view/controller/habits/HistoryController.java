@@ -9,7 +9,6 @@ import com.katyshevtseva.kikiorg.core.Core;
 import com.katyshevtseva.kikiorg.core.sections.habits.entity.Description;
 import com.katyshevtseva.kikiorg.core.sections.habits.entity.Habit;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
@@ -22,19 +21,16 @@ import static com.katyshevtseva.date.DateUtils.READABLE_DATE_FORMAT;
 import static com.katyshevtseva.fx.FxUtils.*;
 
 class HistoryController implements FxController {
-    private static final int BLOCK_WIDTH = 760;
+    private static final int BLOCK_WIDTH = 720;
     @FXML
     private ComboBox<Habit> habitComboBox;
-    @FXML
-    private Button showButton;
     @FXML
     private VBox historyPane;
 
     @FXML
     private void initialize() {
-        associateButtonWithControls(showButton, habitComboBox);
         setComboBoxItems(habitComboBox, Core.getInstance().habitsService().getAllHabits());
-        showButton.setOnAction(event -> show());
+        habitComboBox.setOnAction(event -> show());
     }
 
     private void show() {
