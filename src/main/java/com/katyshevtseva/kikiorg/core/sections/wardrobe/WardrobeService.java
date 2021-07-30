@@ -23,12 +23,12 @@ public class WardrobeService {
     private final OutfitRepo outfitRepo;
     private final DateService dateService;
 
-    public Piece savePiece(Piece existing, String imageName, String description, Date start, Date end, ClothesType type,
+    public Piece savePiece(Piece existing, String imageUrl, String description, Date start, Date end, ClothesType type,
                            Set<Purpose> purposes, Set<Season> seasons) {
 
         if (existing == null)
             existing = new Piece();
-        existing.setImageName(imageName);
+        existing.setImageUrl(imageUrl);
         existing.setDescription(description);
         existing.setStartDate(dateService.createIfNotExistAndGetDateEntity(start));
         existing.setEndDate(dateService.createIfNotExistAndGetDateEntity(end));

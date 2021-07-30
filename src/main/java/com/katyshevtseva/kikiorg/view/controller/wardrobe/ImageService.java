@@ -18,7 +18,7 @@ class ImageService {
         for (File image : images) {
             boolean imageIsFree = true;
             for (Piece piece : existingPieces)
-                if (piece.getImageName().equals(image.getName()))
+                if (piece.getImageUrl().equals(image.getName()))
                     imageIsFree = false;
             if (imageIsFree)
                 freeImages.add(new FreeImage(image.getName()));
@@ -29,7 +29,7 @@ class ImageService {
     // Папка wardrobe должна быть либо в корне проекта, либо в папке \KikiOrg\bundles\KikiOrg\app
     // если речь идет о собранном проекте
     static Image getJavafxImageByImagable(Imagable imagable) {
-        File file = new File("wardrobe\\" + imagable.getImageName());
+        File file = new File("wardrobe\\" + imagable.getImageUrl());
         if (file.exists()) {
             try {
                 return new Image(file.toURI().toURL().toString());
@@ -48,7 +48,7 @@ class ImageService {
             this.imageName = imageName;
         }
 
-        public String getImageName() {
+        public String getImageUrl() {
             return imageName;
         }
     }

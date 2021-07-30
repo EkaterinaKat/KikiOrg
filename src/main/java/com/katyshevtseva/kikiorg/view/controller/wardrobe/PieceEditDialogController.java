@@ -64,7 +64,7 @@ class PieceEditDialogController implements FxController {
             imageView.setImage(ImageService.getJavafxImageByImagable(existing));
             descTextArea.setText(existing.getDescription());
             clothesTypeComboBox.setValue(existing.getType());
-            selectedImageName = existing.getImageName();
+            selectedImageName = existing.getImageUrl();
             startDatePicker.setValue(existing.getStartDate() != null ?
                     new java.sql.Date(existing.getStartDate().getValue().getTime()).toLocalDate() : null);
             endDatePicker.setValue(existing.getEndDate() != null ?
@@ -78,7 +78,7 @@ class PieceEditDialogController implements FxController {
             OrganizerWindowCreator.getInstance().openImageSelectionDialog(new ImageSelectionDialogController(
                     ImageService.getFreeImages(Core.getInstance().wardrobeService().getAllPieces()),
                     imagable -> {
-                        selectedImageName = imagable.getImageName();
+                        selectedImageName = imagable.getImageUrl();
                         imageView.setImage(ImageService.getJavafxImageByImagable(imagable));
                     }));
         });

@@ -21,7 +21,7 @@ public class Piece implements Imagable {
 
     private String description;
 
-    private String imageName;
+    private String imageUrl;
 
     @Enumerated(EnumType.STRING)
     private ClothesType type;

@@ -14,14 +14,6 @@ public class Outfit {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(name = "outfits_arrays",
-            joinColumns = @JoinColumn(name = "outfit_id"),
-            inverseJoinColumns = @JoinColumn(name = "arrays_id")
-    )
-    private List<PieceArray> arrays;
-
-
     @ElementCollection
     @JoinTable(name = "outfits_seasons", joinColumns = @JoinColumn(name = "outfit_id"))
     @Enumerated(EnumType.STRING)
