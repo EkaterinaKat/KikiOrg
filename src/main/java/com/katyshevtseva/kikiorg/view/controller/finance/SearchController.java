@@ -5,7 +5,7 @@ import com.katyshevtseva.fx.Size;
 import com.katyshevtseva.fx.WindowBuilder.FxController;
 import com.katyshevtseva.fx.component.ComponentBuilder;
 import com.katyshevtseva.fx.component.ComponentBuilder.Component;
-import com.katyshevtseva.fx.component.MultipleChoiceController;
+import com.katyshevtseva.fx.component.controller.MultipleChoiceController;
 import com.katyshevtseva.general.OneArgKnob;
 import com.katyshevtseva.kikiorg.core.Core;
 import com.katyshevtseva.kikiorg.core.sections.finance.FinanceOperationService.Operation;
