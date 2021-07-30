@@ -1,7 +1,6 @@
 package com.katyshevtseva.kikiorg.core.sections.wardrobe.entity;
 
 import com.katyshevtseva.kikiorg.core.date.DateEntity;
-import com.katyshevtseva.kikiorg.core.sections.wardrobe.Imagable;
 import com.katyshevtseva.kikiorg.core.sections.wardrobe.enums.ClothesType;
 import com.katyshevtseva.kikiorg.core.sections.wardrobe.enums.Purpose;
 import com.katyshevtseva.kikiorg.core.sections.wardrobe.enums.Season;
@@ -14,14 +13,15 @@ import static com.katyshevtseva.date.DateUtils.READABLE_DATE_FORMAT;
 
 @Data
 @Entity
-public class Piece implements Imagable {
+public class Piece {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String description;
 
-    private String imageUrl;
+    @Column(name = "image_file_name")
+    private String imageFileName;
 
     @Enumerated(EnumType.STRING)
     private ClothesType type;
