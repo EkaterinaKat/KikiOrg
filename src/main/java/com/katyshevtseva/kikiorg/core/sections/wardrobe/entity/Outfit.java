@@ -5,7 +5,7 @@ import com.katyshevtseva.kikiorg.core.sections.wardrobe.enums.Season;
 import lombok.Data;
 
 import javax.persistence.*;
-import java.util.List;
+import java.util.Set;
 
 @Data
 @Entity
@@ -14,13 +14,13 @@ public class Outfit {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ElementCollection
+    @ElementCollection(fetch = FetchType.EAGER)
     @JoinTable(name = "outfits_seasons", joinColumns = @JoinColumn(name = "outfit_id"))
     @Enumerated(EnumType.STRING)
-    List<Season> seasons;
+    Set<Season> seasons;
 
-    @ElementCollection
+    @ElementCollection(fetch = FetchType.EAGER)
     @JoinTable(name = "outfits_purposes", joinColumns = @JoinColumn(name = "outfit_id"))
     @Enumerated(EnumType.STRING)
-    List<Purpose> purposes;
+    Set<Purpose> purposes;
 }

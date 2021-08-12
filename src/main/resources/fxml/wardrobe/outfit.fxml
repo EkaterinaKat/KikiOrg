@@ -21,10 +21,9 @@
     <Pane prefWidth="20"/>
 
     <VBox prefWidth="190">
-        <Button fx:id="newOutfitButton" text="New Outfit"/>
-        <VBox fx:id="searchPane">
-
-        </VBox>
+        <Button fx:id="outfitCreateButton" text="New Outfit"/>
+        <Pane prefHeight="10"/>
+        <Button fx:id="outfitEditButton" text="Edit"/>
     </VBox>
 
 </HBox>
