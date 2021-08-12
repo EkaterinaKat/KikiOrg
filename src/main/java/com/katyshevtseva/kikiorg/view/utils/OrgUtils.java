@@ -1,6 +1,7 @@
 package com.katyshevtseva.kikiorg.view.utils;
 
 import com.katyshevtseva.date.Period;
+import com.katyshevtseva.kikiorg.core.date.DateEntity;
 import com.katyshevtseva.kikiorg.core.sections.tracker.ColorEntity;
 import javafx.scene.control.DatePicker;
 import javafx.scene.paint.Color;
@@ -19,5 +20,10 @@ public class OrgUtils {
 
     public static String getColorString(ColorEntity color) {
         return " rgb(" + color.getRed() * 100 + "%, " + color.getGreen() * 100 + "%, " + color.getBlue() * 100 + "%) ";
+    }
+
+    public static void setDate(DatePicker datePicker, DateEntity dateEntity) {
+        datePicker.setValue(dateEntity != null ?
+                new java.sql.Date(dateEntity.getValue().getTime()).toLocalDate() : null);
     }
 }

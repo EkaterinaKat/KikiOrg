@@ -3,13 +3,8 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.*?>
-<?import java.net.URL?>
 <VBox xmlns="http://javafx.com/javafx"
       xmlns:fx="http://javafx.com/fxml">
-
-    <stylesheets>
-        <URL value="@/css/general_style.css"/>
-    </stylesheets>
 
     <Pane prefHeight="30"/>
 
