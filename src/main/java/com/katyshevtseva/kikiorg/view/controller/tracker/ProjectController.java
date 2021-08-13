@@ -20,7 +20,7 @@ import static com.katyshevtseva.fx.Styler.StandardColor.BLACK;
 import static com.katyshevtseva.fx.Styler.ThingToColor.BACKGROUND;
 import static com.katyshevtseva.fx.Styler.ThingToColor.TABLE_TEXT;
 
-class ProjectsController implements FxController {
+class ProjectController implements FxController {
     @FXML
     private Button addProjectButton;
     @FXML

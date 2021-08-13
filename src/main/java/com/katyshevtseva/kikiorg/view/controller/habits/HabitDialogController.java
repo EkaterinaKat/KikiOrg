@@ -14,7 +14,7 @@ import javafx.scene.control.TextField;
 import static com.katyshevtseva.fx.FxUtils.associateButtonWithControls;
 import static com.katyshevtseva.fx.FxUtils.closeWindowThatContains;
 
-class HabitEditDialogController implements FxController {
+class HabitDialogController implements FxController {
     @FXML
     private TextField titleTextField;
     @FXML
@@ -26,7 +26,7 @@ class HabitEditDialogController implements FxController {
     private Habit habit;
     private OneArgKnob<Habit> habitSaveHandler;
 
-    HabitEditDialogController(Habit habitToEdit, OneArgKnob<Habit> habitSaveHandler) {
+    HabitDialogController(Habit habitToEdit, OneArgKnob<Habit> habitSaveHandler) {
         this.habit = habitToEdit;
         this.habitSaveHandler = habitSaveHandler;
     }
@@ -34,7 +34,7 @@ class HabitEditDialogController implements FxController {
     @FXML
     private void initialize() {
         associateButtonWithControls(saveButton, titleTextField, descTextArea);
-        tuneControls();
+        setExistingPieceInfo();
         saveButton.setOnAction(event -> {
             if (needToAskAboutDesc())
                 new StandardDialogBuilder().openQuestionDialog("Create new habit description?", this::saveAndCloseDialog);
@@ -51,7 +51,7 @@ class HabitEditDialogController implements FxController {
         return descWasEdited;
     }
 
-    private void tuneControls() {
+    private void setExistingPieceInfo() {
         if (habit != null) {
             titleTextField.setText(habit.getTitle());
             descTextArea.setText(habit.getCurrentDescription() == null ? "описания нет патчимута" : habit.getCurrentDescription().getText());

@@ -42,7 +42,7 @@ public class OrganizerWindowCreator {
     }
 
     public Node getProjectsNode(FxController controller) {
-        return new WindowBuilder(TRACKER_FXML_LOCATION + "projects.fxml").setController(controller).getNode();
+        return new WindowBuilder(TRACKER_FXML_LOCATION + "project.fxml").setController(controller).getNode();
     }
 
     public void openProjectDialog(FxController controller) {
@@ -70,11 +70,11 @@ public class OrganizerWindowCreator {
     }
 
     public Node getPiecesNode(FxController controller) {
-        return new WindowBuilder(WARDROBE_FXML_LOCATION + "pieces.fxml").setController(controller).getNode();
+        return new WindowBuilder(WARDROBE_FXML_LOCATION + "piece.fxml").setController(controller).getNode();
     }
 
     public void openPieceEditDialog(FxController controller) {
-        new WindowBuilder(WARDROBE_FXML_LOCATION + "piece_edit_dialog.fxml").
+        new WindowBuilder(WARDROBE_FXML_LOCATION + "piece_dialog.fxml").
                 setController(controller).setHeight(700).setWidth(800).setTitle(CoreConstants.APP_NAME).showWindow();
     }
 
@@ -118,7 +118,7 @@ public class OrganizerWindowCreator {
     }
 
     public void openHabitEditDialog(FxController controller) {
-        new WindowBuilder(HABITS_FXML_LOCATION + "habit_edit_dialog.fxml").
+        new WindowBuilder(HABITS_FXML_LOCATION + "habit_dialog.fxml").
                 setController(controller).setHeight(BIG_DIALOG_HEIGHT).
                 setWidth(BIG_DIALOG_WIDTH).setTitle(CoreConstants.APP_NAME).showWindow();
     }
@@ -138,7 +138,7 @@ public class OrganizerWindowCreator {
     }
 
     public Node getExpensesNode(FxController controller) {
-        return new WindowBuilder(FINANCE_FXML_LOCATION + "expenses.fxml").setController(controller).getNode();
+        return new WindowBuilder(FINANCE_FXML_LOCATION + "expense.fxml").setController(controller).getNode();
     }
 
     public Node getScatterCheckNode(FxController controller) {

@@ -36,7 +36,7 @@ class LedgerController implements FxController {
                 })));
 
         expensePane.getChildren().add(OrganizerWindowCreator.getInstance().getExpensesNode(
-                new ExpensesController(() -> {
+                new ExpenseController(() -> {
                     checkController.updateTable();
                     historyTableController.setTableContent(service.getTodayOperations());
                 })));

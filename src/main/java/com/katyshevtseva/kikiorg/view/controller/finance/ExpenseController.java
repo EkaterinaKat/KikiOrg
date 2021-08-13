@@ -17,7 +17,7 @@ import javafx.scene.control.TextField;
 
 import static com.katyshevtseva.fx.FxUtils.*;
 
-class ExpensesController implements FxController {
+class ExpenseController implements FxController {
     private NoArgsKnob operationListener;
     @FXML
     private ComboBox<Account> accountComboBox;
@@ -30,7 +30,7 @@ class ExpensesController implements FxController {
     @FXML
     private Button doneButton;
 
-    ExpensesController(NoArgsKnob operationListener) {
+    ExpenseController(NoArgsKnob operationListener) {
         this.operationListener = operationListener;
     }
 

@@ -22,7 +22,7 @@ public class MainWardrobeController extends AbstractSwitchController implements 
     private Node piecesNode;
 
     private OutfitController outfitController = new OutfitController();
-    private PiecesController piecesController = new PiecesController();
+    private PieceController pieceController = new PieceController();
 
     @FXML
     private void initialize() {
@@ -38,6 +38,6 @@ public class MainWardrobeController extends AbstractSwitchController implements 
     }
 
     private void piecesButtonListener() {
-        activateMode(piecesButton, piecesNode, OrganizerWindowCreator.getInstance()::getPiecesNode, piecesController);
+        activateMode(piecesButton, piecesNode, OrganizerWindowCreator.getInstance()::getPiecesNode, pieceController);
     }
 }

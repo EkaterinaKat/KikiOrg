@@ -22,7 +22,7 @@ public class MainTrackerController extends AbstractSwitchController implements F
     private Node projectsNode;
 
     private BoardController boardController = new BoardController();
-    private ProjectsController projectsController = new ProjectsController();
+    private ProjectController projectController = new ProjectController();
 
     @FXML
     private void initialize() {
@@ -34,7 +34,7 @@ public class MainTrackerController extends AbstractSwitchController implements F
     }
 
     private void projectsButtonListener() {
-        activateMode(projectsButton, projectsNode, OrganizerWindowCreator.getInstance()::getProjectsNode, projectsController);
+        activateMode(projectsButton, projectsNode, OrganizerWindowCreator.getInstance()::getProjectsNode, projectController);
     }
 
     private void boardButtonListener() {

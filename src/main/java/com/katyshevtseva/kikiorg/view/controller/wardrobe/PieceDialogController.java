@@ -24,7 +24,7 @@ import static com.katyshevtseva.fx.FxUtils.*;
 import static com.katyshevtseva.kikiorg.view.controller.wardrobe.WrdImageUtils.toImageContainer;
 import static com.katyshevtseva.kikiorg.view.utils.OrgUtils.setDate;
 
-class PieceEditDialogController implements FxController {
+class PieceDialogController implements FxController {
     private ImageUrlAndFileNameContainer selectedImage;
     private List<CheckBox> seasonsCheckBoxes = new ArrayList<>();
     private List<CheckBox> purposesCheckBoxes = new ArrayList<>();
@@ -47,7 +47,7 @@ class PieceEditDialogController implements FxController {
     @FXML
     private Button saveButton;
 
-    PieceEditDialogController(Piece existing, OneArgKnob<Piece> onSaveListener) {
+    PieceDialogController(Piece existing, OneArgKnob<Piece> onSaveListener) {
         this.existing = existing;
         this.onSaveListener = onSaveListener;
     }

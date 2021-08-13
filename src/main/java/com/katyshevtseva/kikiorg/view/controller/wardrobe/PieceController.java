@@ -16,7 +16,7 @@ import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
 
-class PiecesController implements FxController {
+class PieceController implements FxController {
     private final WardrobeService service = Core.getInstance().wardrobeService();
     private GalleryController galleryController;
     @FXML
@@ -35,7 +35,7 @@ class PiecesController implements FxController {
         tunePiecesGallery();
         pieceCreateButton.setOnAction(event ->
                 OrganizerWindowCreator.getInstance().openPieceEditDialog(
-                        new PieceEditDialogController(null, piece -> {
+                        new PieceDialogController(null, piece -> {
                             galleryController.setImageContainers(WrdImageUtils.toImageUrlAndPieceContainers(service.getAllPieces()));
                             showPieceFullInfo(piece);
                         })));
@@ -47,7 +47,7 @@ class PiecesController implements FxController {
         editButton.setVisible(true);
         editButton.setOnAction(event ->
                 OrganizerWindowCreator.getInstance().openPieceEditDialog(
-                        new PieceEditDialogController(piece, savedPiece -> {
+                        new PieceDialogController(piece, savedPiece -> {
                             galleryController.setImageContainers(WrdImageUtils.toImageUrlAndPieceContainers(service.getAllPieces()));
                             showPieceFullInfo(savedPiece);
                         })));

@@ -69,7 +69,7 @@ class AdminController implements FxController {
         habitIdPointLabelMap.values().forEach(label -> label.setText(""));
         habitIdPointLabelMap.get(habit.getId()).setText("* ");
         editButton.setOnAction(event1 -> OrganizerWindowCreator.getInstance().openHabitEditDialog(
-                new HabitEditDialogController(habit, savedHabit -> {
+                new HabitDialogController(habit, savedHabit -> {
                     fillHabitTable();
                     showHabit(savedHabit);
                 })));
@@ -77,7 +77,7 @@ class AdminController implements FxController {
 
     private void createHabit() {
         OrganizerWindowCreator.getInstance().openHabitEditDialog(
-                new HabitEditDialogController(null, savedHabit -> {
+                new HabitDialogController(null, savedHabit -> {
                     fillHabitTable();
                     showHabit(savedHabit);
                 }));
