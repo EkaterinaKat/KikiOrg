@@ -30,7 +30,7 @@ class WrdImageUtils {
                 }
             }
             if (imageIsFree) {
-                freeImages.add(new ImageNameAndUrlContainer() {
+                freeImages.add(new ImageUrlAndFileNameContainer() {
                     @Override
                     public String getFileName() {
                         return file.getName();
@@ -50,9 +50,9 @@ class WrdImageUtils {
         return Arrays.asList(Objects.requireNonNull(new File(DIRECTORY_URL).listFiles()));
     }
 
-    static List<ImageContainer> toExtendedImageContainers(List<Piece> pieces) {
+    static List<ImageContainer> toImageUrlAndPieceContainers(List<Piece> pieces) {
         return pieces.stream()
-                .map(piece -> new ImageNameAndPieceContainer() {
+                .map(piece -> new ImageUrlAndPieceContainer() {
                     @Override
                     public Piece getPiece() {
                         return piece;
@@ -66,8 +66,8 @@ class WrdImageUtils {
                 .collect(Collectors.toList());
     }
 
-    static ImageNameAndUrlContainer toImageContainer(Piece piece) {
-        return new ImageNameAndUrlContainer() {
+    static ImageUrlAndFileNameContainer toImageContainer(Piece piece) {
+        return new ImageUrlAndFileNameContainer() {
             @Override
             public String getFileName() {
                 return piece.getImageFileName();
@@ -101,11 +101,11 @@ class WrdImageUtils {
         return DIRECTORY_URL + piece.getImageFileName();
     }
 
-    interface ImageNameAndPieceContainer extends ImageContainer {
+    interface ImageUrlAndPieceContainer extends ImageContainer {
         Piece getPiece();
     }
 
-    interface ImageNameAndUrlContainer extends ImageContainer {
+    interface ImageUrlAndFileNameContainer extends ImageContainer {
         String getFileName();
     }
 }

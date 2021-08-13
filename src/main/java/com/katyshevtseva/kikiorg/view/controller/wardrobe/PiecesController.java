@@ -8,7 +8,7 @@ import com.katyshevtseva.fx.component.controller.GalleryController;
 import com.katyshevtseva.kikiorg.core.Core;
 import com.katyshevtseva.kikiorg.core.sections.wardrobe.WardrobeService;
 import com.katyshevtseva.kikiorg.core.sections.wardrobe.entity.Piece;
-import com.katyshevtseva.kikiorg.view.controller.wardrobe.WrdImageUtils.ImageNameAndPieceContainer;
+import com.katyshevtseva.kikiorg.view.controller.wardrobe.WrdImageUtils.ImageUrlAndPieceContainer;
 import com.katyshevtseva.kikiorg.view.utils.OrganizerWindowCreator;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -36,7 +36,7 @@ class PiecesController implements FxController {
         pieceCreateButton.setOnAction(event ->
                 OrganizerWindowCreator.getInstance().openPieceEditDialog(
                         new PieceEditDialogController(null, piece -> {
-                            galleryController.setImageContainers(WrdImageUtils.toExtendedImageContainers(service.getAllPieces()));
+                            galleryController.setImageContainers(WrdImageUtils.toImageUrlAndPieceContainers(service.getAllPieces()));
                             showPieceFullInfo(piece);
                         })));
     }
@@ -48,7 +48,7 @@ class PiecesController implements FxController {
         editButton.setOnAction(event ->
                 OrganizerWindowCreator.getInstance().openPieceEditDialog(
                         new PieceEditDialogController(piece, savedPiece -> {
-                            galleryController.setImageContainers(WrdImageUtils.toExtendedImageContainers(service.getAllPieces()));
+                            galleryController.setImageContainers(WrdImageUtils.toImageUrlAndPieceContainers(service.getAllPieces()));
                             showPieceFullInfo(savedPiece);
                         })));
     }
@@ -56,8 +56,8 @@ class PiecesController implements FxController {
     private void tunePiecesGallery() {
         Component<GalleryController> component = new ComponentBuilder().setSize(new Size(800, 750))
                 .getGalleryComponent(3,
-                        WrdImageUtils.toExtendedImageContainers(service.getAllPieces()),
-                        imageContainer -> showPieceFullInfo(((ImageNameAndPieceContainer) imageContainer).getPiece()));
+                        WrdImageUtils.toImageUrlAndPieceContainers(service.getAllPieces()),
+                        imageContainer -> showPieceFullInfo(((ImageUrlAndPieceContainer) imageContainer).getPiece()));
 
         galleryController = component.getController();
         galleryPane.getChildren().add(component.getNode());

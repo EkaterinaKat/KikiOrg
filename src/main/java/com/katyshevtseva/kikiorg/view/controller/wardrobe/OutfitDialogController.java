@@ -1,5 +1,6 @@
 package com.katyshevtseva.kikiorg.view.controller.wardrobe;
 
+import com.katyshevtceva.collage.logic.Collage;
 import com.katyshevtseva.fx.WindowBuilder.FxController;
 import com.katyshevtseva.general.OneArgKnob;
 import com.katyshevtseva.kikiorg.core.Core;
@@ -29,6 +30,8 @@ class OutfitDialogController implements FxController {
     @FXML
     private Pane collagePane;
     @FXML
+    private Button componentAddButton;
+    @FXML
     private VBox seasonsPane;
     @FXML
     private VBox purposesPane;
@@ -45,6 +48,13 @@ class OutfitDialogController implements FxController {
         adjustCheckBoxPanes();
         saveButton.setOnAction(event -> save());
         setCollagePaneSize();
+        tuneCollage();
+    }
+
+    private void tuneCollage() {
+        Collage collage = CollageUtils.createEmptyCollage();
+        collagePane.getChildren().add(collage.getPane());
+        componentAddButton.setOnAction(event -> collage.createComponent());
     }
 
     private void setCollagePaneSize() {

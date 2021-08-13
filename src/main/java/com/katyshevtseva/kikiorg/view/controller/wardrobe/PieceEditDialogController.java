@@ -8,7 +8,7 @@ import com.katyshevtseva.kikiorg.core.sections.wardrobe.entity.Piece;
 import com.katyshevtseva.kikiorg.core.sections.wardrobe.enums.ClothesType;
 import com.katyshevtseva.kikiorg.core.sections.wardrobe.enums.Purpose;
 import com.katyshevtseva.kikiorg.core.sections.wardrobe.enums.Season;
-import com.katyshevtseva.kikiorg.view.controller.wardrobe.WrdImageUtils.ImageNameAndUrlContainer;
+import com.katyshevtseva.kikiorg.view.controller.wardrobe.WrdImageUtils.ImageUrlAndFileNameContainer;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
@@ -25,7 +25,7 @@ import static com.katyshevtseva.kikiorg.view.controller.wardrobe.WrdImageUtils.t
 import static com.katyshevtseva.kikiorg.view.utils.OrgUtils.setDate;
 
 class PieceEditDialogController implements FxController {
-    private ImageNameAndUrlContainer selectedImage;
+    private ImageUrlAndFileNameContainer selectedImage;
     private List<CheckBox> seasonsCheckBoxes = new ArrayList<>();
     private List<CheckBox> purposesCheckBoxes = new ArrayList<>();
     private Piece existing;
@@ -82,7 +82,7 @@ class PieceEditDialogController implements FxController {
         imageView.setOnMouseClicked(event -> new StandardDialogBuilder().openImageSelectionDialog(
                 WrdImageUtils.getFreeImagesForPieceCreation(),
                 imageContainer -> {
-                    selectedImage = (ImageNameAndUrlContainer) imageContainer;
+                    selectedImage = (ImageUrlAndFileNameContainer) imageContainer;
                     imageView.setImage(WrdImageUtils.getImageByImageContainer(selectedImage));
                 }));
     }

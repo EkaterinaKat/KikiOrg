@@ -15,6 +15,8 @@
         <Pane prefWidth="30"/>
 
         <VBox maxWidth="310">
+            <Button fx:id="componentAddButton" text=" + "/>
+            <Pane prefHeight="20"/>
             <VBox fx:id="seasonsPane"/>
             <Pane prefHeight="20"/>
             <VBox fx:id="purposesPane"/>
