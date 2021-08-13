@@ -68,7 +68,8 @@ class OutfitDialogController implements FxController {
         Outfit saved = Core.getInstance().wardrobeService().saveOutfit(
                 existing,
                 getSelectedSeasons(),
-                getSelectedPurposes());
+                getSelectedPurposes(),
+                null);  //todo
         onSaveListener.execute(saved);
         closeWindowThatContains(saveButton);
     }

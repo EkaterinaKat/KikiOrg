@@ -1,8 +1,12 @@
 package com.katyshevtseva.kikiorg.core.sections.wardrobe;
 
 import com.katyshevtseva.kikiorg.core.date.DateService;
+import com.katyshevtseva.kikiorg.core.repo.CollageEntityRepo;
+import com.katyshevtseva.kikiorg.core.repo.ComponentEntityRepo;
 import com.katyshevtseva.kikiorg.core.repo.OutfitRepo;
 import com.katyshevtseva.kikiorg.core.repo.PieceRepo;
+import com.katyshevtseva.kikiorg.core.sections.wardrobe.entity.CollageEntity;
+import com.katyshevtseva.kikiorg.core.sections.wardrobe.entity.ComponentEntity;
 import com.katyshevtseva.kikiorg.core.sections.wardrobe.entity.Outfit;
 import com.katyshevtseva.kikiorg.core.sections.wardrobe.entity.Piece;
 import com.katyshevtseva.kikiorg.core.sections.wardrobe.enums.ClothesType;
@@ -25,6 +29,8 @@ import static java.util.Comparator.nullsFirst;
 public class WardrobeService {
     private final PieceRepo pieceRepo;
     private final OutfitRepo outfitRepo;
+    private final CollageEntityRepo collageEntityRepo;
+    private final ComponentEntityRepo componentEntityRepo;
     private final DateService dateService;
 
     public List<Piece> getAllPieces() {
@@ -59,11 +65,35 @@ public class WardrobeService {
         return outfitRepo.findAll();
     }
 
-    public Outfit saveOutfit(Outfit existing, Set<Season> seasons, Set<Purpose> purposes) {
+    public CollageEntity saveCollage(CollageEntity existing, int width, int height, String color) {
+        if (existing == null)
+            existing = new CollageEntity();
+        existing.setWidth(width);
+        existing.setHeight(height);
+        existing.setColor(color);
+
+        return collageEntityRepo.save(existing);
+    }
+
+    public ComponentEntity saveComponent(ComponentEntity existing, int x, int y,
+                                         double relativeWidth, List<Piece> pieces, CollageEntity collageEntity) {
+        if (existing == null)
+            existing = new ComponentEntity();
+        existing.setX(x);
+        existing.setY(y);
+        existing.setRelativeWidth(relativeWidth);
+        existing.setPieces(pieces);
+        existing.setCollageEntity(collageEntity);
+
+        return componentEntityRepo.save(existing);
+    }
+
+    public Outfit saveOutfit(Outfit existing, Set<Season> seasons, Set<Purpose> purposes, CollageEntity collageEntity) {
         if (existing == null)
             existing = new Outfit();
         existing.setPurposes(purposes);
         existing.setSeasons(seasons);
+        existing.setCollageEntity(collageEntity);
 
         return outfitRepo.save(existing);
     }

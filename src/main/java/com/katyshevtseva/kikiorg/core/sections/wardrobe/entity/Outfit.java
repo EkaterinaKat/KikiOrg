@@ -23,4 +23,8 @@ public class Outfit {
     @JoinTable(name = "outfits_purposes", joinColumns = @JoinColumn(name = "outfit_id"))
     @Enumerated(EnumType.STRING)
     Set<Purpose> purposes;
+
+    @OneToOne
+    @JoinColumn(name = "collage_id")
+    private CollageEntity collageEntity;
 }
