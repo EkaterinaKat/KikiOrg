@@ -12,10 +12,6 @@ public class CollageEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private Integer width;
-
-    private Integer height;
-
     private String color;
 
     @OneToMany(mappedBy = "collageEntity", fetch = FetchType.EAGER)

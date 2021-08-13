@@ -65,27 +65,31 @@ public class WardrobeService {
         return outfitRepo.findAll();
     }
 
-    public CollageEntity saveCollage(CollageEntity existing, int width, int height, String color) {
+    public CollageEntity saveCollage(CollageEntity existing, String color) {
         if (existing == null)
             existing = new CollageEntity();
-        existing.setWidth(width);
-        existing.setHeight(height);
         existing.setColor(color);
 
         return collageEntityRepo.save(existing);
     }
 
-    public ComponentEntity saveComponent(ComponentEntity existing, int x, int y,
-                                         double relativeWidth, List<Piece> pieces, CollageEntity collageEntity) {
-        if (existing == null)
-            existing = new ComponentEntity();
-        existing.setX(x);
-        existing.setY(y);
-        existing.setRelativeWidth(relativeWidth);
-        existing.setPieces(pieces);
-        existing.setCollageEntity(collageEntity);
+    public ComponentEntity saveComponent(Long existingId, double relativeX, double relativeY, int z, double relativeWidth,
+                                         List<Piece> pieces, Piece frontPiece, CollageEntity collageEntity) {
+        ComponentEntity componentEntity;
+        if (existingId == null)
+            componentEntity = new ComponentEntity();
+        else
+            componentEntity = componentEntityRepo.findById(existingId).orElseThrow(RuntimeException::new);
 
-        return componentEntityRepo.save(existing);
+        componentEntity.setRelativeX(relativeX);
+        componentEntity.setRelativeY(relativeY);
+        componentEntity.setZ(z);
+        componentEntity.setRelativeWidth(relativeWidth);
+        componentEntity.setPieces(pieces);
+        componentEntity.setFrontPiece(frontPiece);
+        componentEntity.setCollageEntity(collageEntity);
+
+        return componentEntityRepo.save(componentEntity);
     }
 
     public Outfit saveOutfit(Outfit existing, Set<Season> seasons, Set<Purpose> purposes, CollageEntity collageEntity) {

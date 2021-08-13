@@ -51,22 +51,24 @@ class WrdImageUtils {
     }
 
     static List<ImageContainer> toImageUrlAndPieceContainers(List<Piece> pieces) {
-        return pieces.stream()
-                .map(piece -> new ImageUrlAndPieceContainer() {
-                    @Override
-                    public Piece getPiece() {
-                        return piece;
-                    }
-
-                    @Override
-                    public String getUrl() {
-                        return getPieceImageAbsolutePath(piece);
-                    }
-                })
-                .collect(Collectors.toList());
+        return pieces.stream().map(WrdImageUtils::toImageUrlAndPieceContainer).collect(Collectors.toList());
     }
 
-    static ImageUrlAndFileNameContainer toImageContainer(Piece piece) {
+    static ImageContainer toImageUrlAndPieceContainer(Piece piece) {
+        return new ImageUrlAndPieceContainer() {
+            @Override
+            public Piece getPiece() {
+                return piece;
+            }
+
+            @Override
+            public String getUrl() {
+                return getPieceImageAbsolutePath(piece);
+            }
+        };
+    }
+
+    static ImageUrlAndFileNameContainer toImageUrlAndFileNameContainer(Piece piece) {
         return new ImageUrlAndFileNameContainer() {
             @Override
             public String getFileName() {

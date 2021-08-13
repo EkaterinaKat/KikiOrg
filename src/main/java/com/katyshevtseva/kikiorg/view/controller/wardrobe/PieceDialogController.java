@@ -21,7 +21,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import static com.katyshevtseva.fx.FxUtils.*;
-import static com.katyshevtseva.kikiorg.view.controller.wardrobe.WrdImageUtils.toImageContainer;
+import static com.katyshevtseva.kikiorg.view.controller.wardrobe.WrdImageUtils.toImageUrlAndFileNameContainer;
 import static com.katyshevtseva.kikiorg.view.utils.OrgUtils.setDate;
 
 class PieceDialogController implements FxController {
@@ -92,7 +92,7 @@ class PieceDialogController implements FxController {
             imageView.setImage(WrdImageUtils.getImageByPiece(existing));
             descTextArea.setText(existing.getDescription());
             clothesTypeComboBox.setValue(existing.getType());
-            selectedImage = toImageContainer(existing);
+            selectedImage = toImageUrlAndFileNameContainer(existing);
             setDate(startDatePicker, existing.getStartDate());
             setDate(endDatePicker, existing.getEndDate());
         }

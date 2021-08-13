@@ -12,9 +12,11 @@ public class ComponentEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private Integer x;
+    private Double relativeX;
 
-    private Integer y;
+    private Double relativeY;
+
+    private Integer z;
 
     private Double relativeWidth;
 
@@ -23,6 +25,10 @@ public class ComponentEntity {
             joinColumns = @JoinColumn(name = "component_id"),
             inverseJoinColumns = @JoinColumn(name = "piece_id"))
     private List<Piece> pieces;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "front_piece_id", nullable = false)
+    private Piece frontPiece;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "collage_id", nullable = false)
