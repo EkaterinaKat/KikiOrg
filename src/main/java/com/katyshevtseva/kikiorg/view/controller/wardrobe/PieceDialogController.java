@@ -10,9 +10,11 @@ import com.katyshevtseva.kikiorg.core.sections.wardrobe.enums.Purpose;
 import com.katyshevtseva.kikiorg.core.sections.wardrobe.enums.Season;
 import com.katyshevtseva.kikiorg.view.controller.wardrobe.WrdImageUtils.ImageUrlAndFileNameContainer;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 
 import java.util.ArrayList;
@@ -21,6 +23,8 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import static com.katyshevtseva.fx.FxUtils.*;
+import static com.katyshevtseva.fx.ImageSizeUtil.placeImageInSquare;
+import static com.katyshevtseva.kikiorg.view.controller.wardrobe.WrdImageUtils.getImageByImageContainer;
 import static com.katyshevtseva.kikiorg.view.controller.wardrobe.WrdImageUtils.toImageUrlAndFileNameContainer;
 import static com.katyshevtseva.kikiorg.view.utils.OrgUtils.setDate;
 
@@ -31,7 +35,7 @@ class PieceDialogController implements FxController {
     private Piece existing;
     private OneArgKnob<Piece> onSaveListener;
     @FXML
-    private ImageView imageView;
+    private Pane imagePane;
     @FXML
     private TextArea descTextArea;
     @FXML
@@ -58,7 +62,7 @@ class PieceDialogController implements FxController {
         saveButton.setOnAction(event -> save());
         setComboBoxItems(clothesTypeComboBox, ClothesType.values());
         adjustCheckBoxPanes();
-        adjustImageAdding();
+        showImage(new Image("images/piece_creation_plus.png"));
         setExistingPieceInfo();
     }
 
@@ -76,20 +80,25 @@ class PieceDialogController implements FxController {
         closeWindowThatContains(clothesTypeComboBox);
     }
 
-    private void adjustImageAdding() {
-        imageView.setImage(new Image("images/piece_creation_plus.png"));
-
-        imageView.setOnMouseClicked(event -> new StandardDialogBuilder().openImageSelectionDialog(
+    private void openImageSelectionDialog() {
+        new StandardDialogBuilder().openImageSelectionDialog(
                 WrdImageUtils.getFreeImagesForPieceCreation(),
                 imageContainer -> {
                     selectedImage = (ImageUrlAndFileNameContainer) imageContainer;
-                    imageView.setImage(WrdImageUtils.getImageByImageContainer(selectedImage));
-                }));
+                    showImage(getImageByImageContainer(selectedImage));
+                });
+    }
+
+    private void showImage(Image image) {
+        imagePane.getChildren().clear();
+        Node imageNode = placeImageInSquare(new ImageView(image), 400);
+        imageNode.setOnMouseClicked(event -> openImageSelectionDialog());
+        imagePane.getChildren().add(imageNode);
     }
 
     private void setExistingPieceInfo() {
         if (existing != null) {
-            imageView.setImage(WrdImageUtils.getImageByPiece(existing));
+            showImage(WrdImageUtils.getImageByPiece(existing));
             descTextArea.setText(existing.getDescription());
             clothesTypeComboBox.setValue(existing.getType());
             selectedImage = toImageUrlAndFileNameContainer(existing);

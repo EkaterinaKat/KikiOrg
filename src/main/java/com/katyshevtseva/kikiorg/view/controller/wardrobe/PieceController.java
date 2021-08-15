@@ -14,7 +14,11 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+
+import static com.katyshevtseva.fx.ImageSizeUtil.placeImageInSquare;
+import static com.katyshevtseva.kikiorg.view.controller.wardrobe.WrdImageUtils.getImageByPiece;
 
 class PieceController implements FxController {
     private final WardrobeService service = Core.getInstance().wardrobeService();
@@ -22,7 +26,7 @@ class PieceController implements FxController {
     @FXML
     private Button pieceCreateButton;
     @FXML
-    private ImageView imageView;
+    private Pane imagePane;
     @FXML
     private Label infoLabel;
     @FXML
@@ -42,7 +46,8 @@ class PieceController implements FxController {
     }
 
     private void showPieceFullInfo(Piece piece) {
-        imageView.setImage(WrdImageUtils.getImageByPiece(piece));
+        imagePane.getChildren().clear();
+        imagePane.getChildren().add(placeImageInSquare(new ImageView(getImageByPiece(piece)), 350));
         infoLabel.setText(piece.getFullDesc());
         editButton.setVisible(true);
         editButton.setOnAction(event ->

@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.*?>
-<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.*?>
 <VBox xmlns="http://javafx.com/javafx"
       xmlns:fx="http://javafx.com/fxml">
@@ -11,7 +10,7 @@
     <HBox>
         <Pane prefWidth="30"/>
 
-        <ImageView fx:id="imageView" fitWidth="400" fitHeight="400"/>
+        <Pane fx:id="imagePane"/>
 
         <Pane prefWidth="30"/>
 
