@@ -16,6 +16,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static com.katyshevtseva.kikiorg.view.controller.wardrobe.WrdImageUtils.toImageUrlAndPieceContainers;
+
 class CollageUtils {
     static final int COLLAGE_SIZE = 850;
     static final int PREVIEW_COLLAGE_SIZE = 200;
@@ -69,7 +71,7 @@ class CollageUtils {
     }
 
     private static Component entityToComponent(ComponentEntity componentEntity, Collage collage) {
-        List<ImageContainer> imageContainers = WrdImageUtils.toImageUrlAndPieceContainers(componentEntity.getPieces());
+        List<ImageContainer> imageContainers = toImageUrlAndPieceContainers(new ArrayList<>(componentEntity.getPieces()));
         ImageContainer frontImageContainer = WrdImageUtils.toImageUrlAndPieceContainer(componentEntity.getFrontPiece());
 
         return new ComponentBuilder(collage, imageContainers)
@@ -96,7 +98,7 @@ class CollageUtils {
 
     private static List<ImageContainer> getAllExistingImages(CollageType collageType) {
         return collageType == CollageType.EDITABLE ?
-                WrdImageUtils.toImageUrlAndPieceContainers(Core.getInstance().wardrobeService().getAllPieces())
+                toImageUrlAndPieceContainers(Core.getInstance().wardrobeService().getAllPieces())
                 : new ArrayList<>();
     }
 

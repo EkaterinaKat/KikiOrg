@@ -15,10 +15,7 @@ import com.katyshevtseva.kikiorg.core.sections.wardrobe.enums.Season;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.Comparator;
-import java.util.Date;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import static java.util.Comparator.naturalOrder;
@@ -62,7 +59,7 @@ public class WardrobeService {
     }
 
     public List<Outfit> getAllOutfits() {
-        return outfitRepo.findAll();
+        return new ArrayList<>(outfitRepo.findAll());
     }
 
     public CollageEntity saveCollage(CollageEntity existing, String color) {
@@ -73,8 +70,8 @@ public class WardrobeService {
         return collageEntityRepo.save(existing);
     }
 
-    public ComponentEntity saveComponent(Long existingId, double relativeX, double relativeY, int z, double relativeWidth,
-                                         List<Piece> pieces, Piece frontPiece, CollageEntity collageEntity) {
+    public void saveComponent(Long existingId, double relativeX, double relativeY, int z, double relativeWidth,
+                              List<Piece> pieces, Piece frontPiece, CollageEntity collageEntity) {
         ComponentEntity componentEntity;
         if (existingId == null)
             componentEntity = new ComponentEntity();
@@ -85,11 +82,11 @@ public class WardrobeService {
         componentEntity.setRelativeY(relativeY);
         componentEntity.setZ(z);
         componentEntity.setRelativeWidth(relativeWidth);
-        componentEntity.setPieces(pieces);
+        componentEntity.setPieces(new HashSet<>(pieces));
         componentEntity.setFrontPiece(frontPiece);
         componentEntity.setCollageEntity(collageEntity);
 
-        return componentEntityRepo.save(componentEntity);
+        componentEntityRepo.save(componentEntity);
     }
 
     public Outfit saveOutfit(Outfit existing, Set<Season> seasons, Set<Purpose> purposes, CollageEntity collageEntity) {

@@ -3,7 +3,7 @@ package com.katyshevtseva.kikiorg.core.sections.wardrobe.entity;
 import lombok.Data;
 
 import javax.persistence.*;
-import java.util.Collection;
+import java.util.Set;
 
 @Data
 @Entity
@@ -15,6 +15,6 @@ public class CollageEntity {
     private String color;
 
     @OneToMany(mappedBy = "collageEntity", fetch = FetchType.EAGER)
-    private Collection<ComponentEntity> components;
+    private Set<ComponentEntity> components;
 
 }

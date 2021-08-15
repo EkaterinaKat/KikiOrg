@@ -7,6 +7,7 @@ import com.katyshevtseva.kikiorg.core.sections.wardrobe.enums.Season;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.util.Objects;
 import java.util.Set;
 
 import static com.katyshevtseva.date.DateUtils.READABLE_DATE_FORMAT;
@@ -59,5 +60,18 @@ public class Piece {
                 .append("-")
                 .append(endDate != null ? READABLE_DATE_FORMAT.format(endDate.getValue()) : "*");
         return fullDesc.toString();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Piece piece = (Piece) o;
+        return id.equals(piece.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
     }
 }
