@@ -81,7 +81,7 @@ class CollageUtils {
                 .build();
     }
 
-    private static Collage createEmptyCollage(CollageType collageType) {
+    static Collage createEmptyCollage(CollageType collageType) {
         return new CollageBuilder()
                 .height(getCollageSize(collageType))
                 .width(getCollageSize(collageType))

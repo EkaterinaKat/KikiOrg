@@ -21,6 +21,7 @@ import java.util.stream.Collectors;
 import static com.katyshevtseva.fx.FxUtils.closeWindowThatContains;
 import static com.katyshevtseva.fx.FxUtils.getPaneWithHeight;
 import static com.katyshevtseva.kikiorg.view.controller.wardrobe.CollageUtils.COLLAGE_SIZE;
+import static com.katyshevtseva.kikiorg.view.controller.wardrobe.CollageUtils.CollageType.EDITABLE;
 
 class OutfitDialogController implements FxController {
     private Outfit existing;
@@ -52,7 +53,7 @@ class OutfitDialogController implements FxController {
     }
 
     private void tuneCollage() {
-        Collage collage = CollageUtils.createEmptyCollage();
+        Collage collage = CollageUtils.createEmptyCollage(EDITABLE);
         collagePane.getChildren().add(collage.getPane());
         componentAddButton.setOnAction(event -> collage.createComponent());
     }
