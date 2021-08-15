@@ -27,4 +27,17 @@ public class Outfit {
     @OneToOne
     @JoinColumn(name = "collage_id")
     private CollageEntity collageEntity;
+
+    public String getFullDesc() {
+        StringBuilder fullDesc = new StringBuilder("Seasons: ");
+        for (Season season : seasons)
+            fullDesc.append(season).append(", ");
+        fullDesc.delete(fullDesc.length() - 2, fullDesc.length());
+        fullDesc.append(".");
+        fullDesc.append("\n\nPurposes: ");
+        for (Purpose purpose : purposes)
+            fullDesc.append(purpose).append(", ");
+        fullDesc.delete(fullDesc.length() - 2, fullDesc.length());
+        return fullDesc.toString();
+    }
 }

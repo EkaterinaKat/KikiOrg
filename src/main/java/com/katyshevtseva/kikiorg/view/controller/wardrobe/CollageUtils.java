@@ -20,7 +20,7 @@ import static com.katyshevtseva.kikiorg.view.controller.wardrobe.WrdImageUtils.t
 
 class CollageUtils {
     static final int COLLAGE_SIZE = 850;
-    static final int PREVIEW_COLLAGE_SIZE = 200;
+    static final int PREVIEW_COLLAGE_SIZE = 400;
 
     enum CollageType {
         EDITABLE, PREVIEW
@@ -97,9 +97,11 @@ class CollageUtils {
     }
 
     private static List<ImageContainer> getAllExistingImages(CollageType collageType) {
-        return collageType == CollageType.EDITABLE ?
-                toImageUrlAndPieceContainers(Core.getInstance().wardrobeService().getAllPieces())
-                : new ArrayList<>();
+        return toImageUrlAndPieceContainers(Core.getInstance().wardrobeService().getAllPieces());
+
+//        return collageType == CollageType.EDITABLE ?
+//                toImageUrlAndPieceContainers(Core.getInstance().wardrobeService().getAllPieces())
+//                : new ArrayList<>();
     }
 
 }
