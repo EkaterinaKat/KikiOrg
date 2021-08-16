@@ -8,7 +8,7 @@ import com.katyshevtseva.fx.component.controller.GalleryController;
 import com.katyshevtseva.kikiorg.core.Core;
 import com.katyshevtseva.kikiorg.core.sections.wardrobe.WardrobeService;
 import com.katyshevtseva.kikiorg.core.sections.wardrobe.entity.Piece;
-import com.katyshevtseva.kikiorg.view.controller.wardrobe.WrdImageUtils.ImageUrlAndPieceContainer;
+import com.katyshevtseva.kikiorg.view.controller.wardrobe.WrdImageUtils.ImageAndPieceContainer;
 import com.katyshevtseva.kikiorg.view.utils.OrganizerWindowCreator;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -62,7 +62,7 @@ class PieceController implements FxController {
         Component<GalleryController> component = new ComponentBuilder().setSize(new Size(800, 750))
                 .getGalleryComponent(3,
                         WrdImageUtils.toImageUrlAndPieceContainers(service.getAllPieces()),
-                        imageContainer -> showPieceFullInfo(((ImageUrlAndPieceContainer) imageContainer).getPiece()));
+                        imageContainer -> showPieceFullInfo(((ImageAndPieceContainer) imageContainer).getPiece()));
 
         galleryController = component.getController();
         galleryPane.getChildren().add(component.getNode());

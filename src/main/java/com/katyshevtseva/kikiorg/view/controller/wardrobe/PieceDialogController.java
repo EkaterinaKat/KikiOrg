@@ -8,7 +8,7 @@ import com.katyshevtseva.kikiorg.core.sections.wardrobe.entity.Piece;
 import com.katyshevtseva.kikiorg.core.sections.wardrobe.enums.ClothesType;
 import com.katyshevtseva.kikiorg.core.sections.wardrobe.enums.Purpose;
 import com.katyshevtseva.kikiorg.core.sections.wardrobe.enums.Season;
-import com.katyshevtseva.kikiorg.view.controller.wardrobe.WrdImageUtils.ImageUrlAndFileNameContainer;
+import com.katyshevtseva.kikiorg.view.controller.wardrobe.WrdImageUtils.ImageAndFileNameContainer;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.*;
@@ -24,12 +24,11 @@ import java.util.stream.Collectors;
 
 import static com.katyshevtseva.fx.FxUtils.*;
 import static com.katyshevtseva.fx.ImageSizeUtil.placeImageInSquare;
-import static com.katyshevtseva.kikiorg.view.controller.wardrobe.WrdImageUtils.getImageByImageContainer;
 import static com.katyshevtseva.kikiorg.view.controller.wardrobe.WrdImageUtils.toImageUrlAndFileNameContainer;
 import static com.katyshevtseva.kikiorg.view.utils.OrgUtils.setDate;
 
 class PieceDialogController implements FxController {
-    private ImageUrlAndFileNameContainer selectedImage;
+    private ImageAndFileNameContainer selectedImage;
     private List<CheckBox> seasonsCheckBoxes = new ArrayList<>();
     private List<CheckBox> purposesCheckBoxes = new ArrayList<>();
     private Piece existing;
@@ -84,8 +83,8 @@ class PieceDialogController implements FxController {
         new StandardDialogBuilder().openImageSelectionDialog(
                 WrdImageUtils.getFreeImagesForPieceCreation(),
                 imageContainer -> {
-                    selectedImage = (ImageUrlAndFileNameContainer) imageContainer;
-                    showImage(getImageByImageContainer(selectedImage));
+                    selectedImage = (ImageAndFileNameContainer) imageContainer;
+                    showImage(selectedImage.getImage());
                 });
     }
 

@@ -2,13 +2,11 @@ package com.katyshevtseva.kikiorg.view.controller.wardrobe;
 
 import com.katyshevtseva.fx.ImageContainer;
 import com.katyshevtseva.fx.ImageUtils;
-import com.katyshevtseva.fx.dialog.StandardDialogBuilder;
 import com.katyshevtseva.kikiorg.core.Core;
 import com.katyshevtseva.kikiorg.core.sections.wardrobe.entity.Piece;
 import javafx.scene.image.Image;
 
 import java.io.File;
-import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -30,15 +28,20 @@ class WrdImageUtils {
                 }
             }
             if (imageIsFree) {
-                freeImages.add(new ImageUrlAndFileNameContainer() {
+                freeImages.add(new ImageAndFileNameContainer() {
                     @Override
-                    public String getFileName() {
-                        return file.getName();
+                    public Image getImage() {
+                        return ImageUtils.getImageByAbsolutePath(file.getAbsolutePath());
                     }
 
                     @Override
-                    public String getUrl() {
+                    public String getPath() {
                         return file.getAbsolutePath();
+                    }
+
+                    @Override
+                    public String getFileName() {
+                        return file.getName();
                     }
                 });
             }
@@ -55,29 +58,39 @@ class WrdImageUtils {
     }
 
     static ImageContainer toImageUrlAndPieceContainer(Piece piece) {
-        return new ImageUrlAndPieceContainer() {
+        return new ImageAndPieceContainer() {
             @Override
             public Piece getPiece() {
                 return piece;
             }
 
             @Override
-            public String getUrl() {
+            public Image getImage() {
+                return ImageUtils.getImageByAbsolutePath(getPieceImageAbsolutePath(piece));
+            }
+
+            @Override
+            public String getPath() {
                 return getPieceImageAbsolutePath(piece);
             }
         };
     }
 
-    static ImageUrlAndFileNameContainer toImageUrlAndFileNameContainer(Piece piece) {
-        return new ImageUrlAndFileNameContainer() {
+    static ImageAndFileNameContainer toImageUrlAndFileNameContainer(Piece piece) {
+        return new ImageAndFileNameContainer() {
             @Override
             public String getFileName() {
                 return piece.getImageFileName();
             }
 
             @Override
-            public String getUrl() {
-                return DIRECTORY_URL + piece.getImageFileName();
+            public Image getImage() {
+                return ImageUtils.getImageByAbsolutePath(getPieceImageAbsolutePath(piece));
+            }
+
+            @Override
+            public String getPath() {
+                return getPieceImageAbsolutePath(piece);
             }
         };
     }
@@ -86,28 +99,15 @@ class WrdImageUtils {
         return ImageUtils.getImageByAbsolutePath(getPieceImageAbsolutePath(piece));
     }
 
-    static Image getImageByImageContainer(ImageContainer imageContainer) {
-        File file = new File(imageContainer.getUrl());
-        if (file.exists()) {
-            try {
-                return new Image(file.toURI().toURL().toString());
-            } catch (MalformedURLException e) {
-                e.printStackTrace();
-            }
-        }
-        new StandardDialogBuilder().openInfoDialog("Ошибка!\n Файл с изображением не найден");
-        throw new RuntimeException();
-    }
-
     private static String getPieceImageAbsolutePath(Piece piece) {
         return DIRECTORY_URL + piece.getImageFileName();
     }
 
-    interface ImageUrlAndPieceContainer extends ImageContainer {
+    interface ImageAndPieceContainer extends ImageContainer {
         Piece getPiece();
     }
 
-    interface ImageUrlAndFileNameContainer extends ImageContainer {
+    interface ImageAndFileNameContainer extends ImageContainer {
         String getFileName();
     }
 }

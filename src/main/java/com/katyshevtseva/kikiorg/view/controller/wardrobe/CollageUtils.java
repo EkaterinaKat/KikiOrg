@@ -10,7 +10,7 @@ import com.katyshevtseva.kikiorg.core.Core;
 import com.katyshevtseva.kikiorg.core.sections.wardrobe.entity.CollageEntity;
 import com.katyshevtseva.kikiorg.core.sections.wardrobe.entity.ComponentEntity;
 import com.katyshevtseva.kikiorg.core.sections.wardrobe.entity.Piece;
-import com.katyshevtseva.kikiorg.view.controller.wardrobe.WrdImageUtils.ImageUrlAndPieceContainer;
+import com.katyshevtseva.kikiorg.view.controller.wardrobe.WrdImageUtils.ImageAndPieceContainer;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,8 +37,8 @@ class CollageUtils {
 
     private static void saveComponent(Component component, CollageEntity savedCollageEntity) {
         List<Piece> pieces = component.getImageContainers().stream()
-                .map(imageContainer -> ((ImageUrlAndPieceContainer) imageContainer).getPiece()).collect(Collectors.toList());
-        Piece frontPiece = ((ImageUrlAndPieceContainer) component.getFrontImageContainer()).getPiece();
+                .map(imageContainer -> ((ImageAndPieceContainer) imageContainer).getPiece()).collect(Collectors.toList());
+        Piece frontPiece = ((ImageAndPieceContainer) component.getFrontImageContainer()).getPiece();
 
         Core.getInstance().wardrobeService().saveComponent(
                 component.getId(),
@@ -56,7 +56,7 @@ class CollageUtils {
             return createEmptyCollage(collageType);
 
         Collage collage = new CollageBuilder()
-                .allExistingImages(getAllExistingImages(collageType))
+                .allExistingImages(getAllExistingImages())
                 .height(getCollageSize(collageType))
                 .width(getCollageSize(collageType))
                 .editingMode(collageType == CollageType.EDITABLE)
@@ -87,7 +87,7 @@ class CollageUtils {
                 .height(getCollageSize(collageType))
                 .width(getCollageSize(collageType))
                 .editingMode(collageType == CollageType.EDITABLE)
-                .allExistingImages(getAllExistingImages(collageType))
+                .allExistingImages(getAllExistingImages())
                 .build();
     }
 
@@ -95,12 +95,7 @@ class CollageUtils {
         return collageType == CollageType.EDITABLE ? COLLAGE_SIZE : PREVIEW_COLLAGE_SIZE;
     }
 
-    private static List<ImageContainer> getAllExistingImages(CollageType collageType) {
+    private static List<ImageContainer> getAllExistingImages() {
         return toImageUrlAndPieceContainers(Core.getInstance().wardrobeService().getAllPieces());
-
-//        return collageType == CollageType.EDITABLE ?
-//                toImageUrlAndPieceContainers(Core.getInstance().wardrobeService().getAllPieces())
-//                : new ArrayList<>();
     }
-
 }
