@@ -62,10 +62,9 @@ public class WardrobeService {
         return new ArrayList<>(outfitRepo.findAll());
     }
 
-    public CollageEntity saveCollage(CollageEntity existing, String color) {
+    public CollageEntity saveCollage(CollageEntity existing) {
         if (existing == null)
             existing = new CollageEntity();
-        existing.setColor(color);
 
         return collageEntityRepo.save(existing);
     }

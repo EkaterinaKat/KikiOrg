@@ -27,7 +27,7 @@ class CollageUtils {
     }
 
     static CollageEntity saveCollage(CollageEntity existing, Collage collage) {
-        CollageEntity savedCollageEntity = Core.getInstance().wardrobeService().saveCollage(existing, collage.getColor());
+        CollageEntity savedCollageEntity = Core.getInstance().wardrobeService().saveCollage(existing);
 
         for (Component component : collage.getComponents())
             saveComponent(component, savedCollageEntity);
@@ -59,7 +59,6 @@ class CollageUtils {
                 .allExistingImages(getAllExistingImages(collageType))
                 .height(getCollageSize(collageType))
                 .width(getCollageSize(collageType))
-                .color(collageEntity.getColor())
                 .editingMode(collageType == CollageType.EDITABLE)
                 .build();
 
