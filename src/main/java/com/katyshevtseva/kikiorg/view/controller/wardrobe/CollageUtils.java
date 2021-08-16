@@ -1,30 +1,25 @@
 package com.katyshevtseva.kikiorg.view.controller.wardrobe;
 
-import com.katyshevtceva.collage.logic.Collage;
-import com.katyshevtceva.collage.logic.CollageBuilder;
-import com.katyshevtceva.collage.logic.Component;
-import com.katyshevtceva.collage.logic.ComponentBuilder;
+import com.katyshevtceva.collage.logic.*;
 import com.katyshevtseva.fx.ImageContainer;
 import com.katyshevtseva.fx.Point;
+import com.katyshevtseva.fx.Size;
 import com.katyshevtseva.kikiorg.core.Core;
 import com.katyshevtseva.kikiorg.core.sections.wardrobe.entity.CollageEntity;
 import com.katyshevtseva.kikiorg.core.sections.wardrobe.entity.ComponentEntity;
 import com.katyshevtseva.kikiorg.core.sections.wardrobe.entity.Piece;
 import com.katyshevtseva.kikiorg.view.controller.wardrobe.WrdImageUtils.ImageAndPieceContainer;
+import javafx.scene.layout.Pane;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static com.katyshevtseva.kikiorg.view.controller.wardrobe.WrdImageUtils.toImageContainer;
 import static com.katyshevtseva.kikiorg.view.controller.wardrobe.WrdImageUtils.toImageUrlAndPieceContainers;
 
 class CollageUtils {
     static final int COLLAGE_SIZE = 850;
-    static final int PREVIEW_COLLAGE_SIZE = 400;
-
-    enum CollageType {
-        EDITABLE, PREVIEW
-    }
 
     static CollageEntity saveCollage(CollageEntity existing, Collage collage) {
         CollageEntity savedCollageEntity = Core.getInstance().wardrobeService().saveCollage(existing);
@@ -51,15 +46,26 @@ class CollageUtils {
                 savedCollageEntity);
     }
 
-    static Collage reproduceCollage(CollageEntity collageEntity, CollageType collageType) {
+    static Pane getCollagePreview(CollageEntity collageEntity) {
+        List<StaticComponent> staticComponents = collageEntity.getComponents().stream()
+                .map(componentEntity -> new StaticComponent(
+                        toImageContainer(componentEntity.getFrontPiece()),
+                        new Point(componentEntity.getRelativeX(), componentEntity.getRelativeY()),
+                        componentEntity.getRelativeWidth(),
+                        componentEntity.getZ()))
+                .collect(Collectors.toList());
+
+        return CollagePreviewBuilder.buildPreview(new Size(400, 400), staticComponents);
+    }
+
+    static Collage reproduceCollage(CollageEntity collageEntity) {
         if (collageEntity == null)
-            return createEmptyCollage(collageType);
+            return createEmptyCollage();
 
         Collage collage = new CollageBuilder()
                 .allExistingImages(getAllExistingImages())
-                .height(getCollageSize(collageType))
-                .width(getCollageSize(collageType))
-                .editingMode(collageType == CollageType.EDITABLE)
+                .height(COLLAGE_SIZE)
+                .width(COLLAGE_SIZE)
                 .build();
 
         for (ComponentEntity componentEntity : collageEntity.getComponents()) {
@@ -82,17 +88,12 @@ class CollageUtils {
                 .build();
     }
 
-    static Collage createEmptyCollage(CollageType collageType) {
+    static Collage createEmptyCollage() {
         return new CollageBuilder()
-                .height(getCollageSize(collageType))
-                .width(getCollageSize(collageType))
-                .editingMode(collageType == CollageType.EDITABLE)
+                .height(COLLAGE_SIZE)
+                .width(COLLAGE_SIZE)
                 .allExistingImages(getAllExistingImages())
                 .build();
-    }
-
-    private static int getCollageSize(CollageType collageType) {
-        return collageType == CollageType.EDITABLE ? COLLAGE_SIZE : PREVIEW_COLLAGE_SIZE;
     }
 
     private static List<ImageContainer> getAllExistingImages() {

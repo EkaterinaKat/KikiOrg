@@ -95,6 +95,20 @@ class WrdImageUtils {
         };
     }
 
+    static ImageContainer toImageContainer(Piece piece) {
+        return new ImageContainer() {
+            @Override
+            public Image getImage() {
+                return ImageUtils.getImageByAbsolutePath(getPieceImageAbsolutePath(piece));
+            }
+
+            @Override
+            public String getPath() {
+                return getPieceImageAbsolutePath(piece);
+            }
+        };
+    }
+
     static Image getImageByPiece(Piece piece) {
         return ImageUtils.getImageByAbsolutePath(getPieceImageAbsolutePath(piece));
     }

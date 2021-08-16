@@ -1,6 +1,5 @@
 package com.katyshevtseva.kikiorg.view.controller.wardrobe;
 
-import com.katyshevtceva.collage.logic.Collage;
 import com.katyshevtseva.fx.WindowBuilder.FxController;
 import com.katyshevtseva.general.GeneralUtils;
 import com.katyshevtseva.kikiorg.core.Core;
@@ -11,9 +10,10 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Pane;
 
 class OutfitController implements FxController {
-    private WardrobeService service = Core.getInstance().wardrobeService();
+    private final WardrobeService service = Core.getInstance().wardrobeService();
     @FXML
     private Button outfitCreateButton;
     @FXML
@@ -49,9 +49,9 @@ class OutfitController implements FxController {
         int index = 0;
 
         for (Outfit outfit : service.getAllOutfits()) {
-            Collage collage = CollageUtils.reproduceCollage(outfit.getCollageEntity(), CollageUtils.CollageType.PREVIEW);
-            collage.getPane().setOnMouseClicked(event -> showOutfitInfo(outfit));
-            gridPane.add(collage.getPane(), GeneralUtils.getColumnByIndexAndColumnNum(index, 2),
+            Pane pane = CollageUtils.getCollagePreview(outfit.getCollageEntity());
+            pane.setOnMouseClicked(event -> showOutfitInfo(outfit));
+            gridPane.add(pane, GeneralUtils.getColumnByIndexAndColumnNum(index, 2),
                     GeneralUtils.getRowByIndexAndColumnNum(index, 2));
             index++;
         }
