@@ -29,10 +29,10 @@ import static com.katyshevtseva.kikiorg.view.utils.OrgUtils.setDate;
 
 class PieceDialogController implements FxController {
     private ImageAndFileNameContainer selectedImage;
-    private List<CheckBox> seasonsCheckBoxes = new ArrayList<>();
-    private List<CheckBox> purposesCheckBoxes = new ArrayList<>();
-    private Piece existing;
-    private OneArgKnob<Piece> onSaveListener;
+    private final List<CheckBox> seasonsCheckBoxes = new ArrayList<>();
+    private final List<CheckBox> purposesCheckBoxes = new ArrayList<>();
+    private final Piece existing;
+    private final OneArgKnob<Piece> onSaveListener;
     @FXML
     private Pane imagePane;
     @FXML
@@ -97,7 +97,7 @@ class PieceDialogController implements FxController {
 
     private void setExistingPieceInfo() {
         if (existing != null) {
-            showImage(WrdImageUtils.getImageByPiece(existing));
+            showImage(ImageCreator.getInstance().getImageContainer(existing).getImage());
             descTextArea.setText(existing.getDescription());
             clothesTypeComboBox.setValue(existing.getType());
             selectedImage = toImageUrlAndFileNameContainer(existing);

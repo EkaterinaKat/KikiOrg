@@ -12,6 +12,8 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 
+import java.util.Date;
+
 class OutfitController implements FxController {
     private final WardrobeService service = Core.getInstance().wardrobeService();
     @FXML
@@ -45,6 +47,8 @@ class OutfitController implements FxController {
     }
 
     private void updateOutfitGallery() {
+        Date start = new Date();
+
         gridPane.getChildren().clear();
         int index = 0;
 
@@ -55,5 +59,8 @@ class OutfitController implements FxController {
                     GeneralUtils.getRowByIndexAndColumnNum(index, 2));
             index++;
         }
+
+        Date end = new Date();
+        System.out.println(end.getTime() - start.getTime());
     }
 }

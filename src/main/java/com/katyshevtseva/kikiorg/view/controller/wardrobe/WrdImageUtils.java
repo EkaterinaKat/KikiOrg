@@ -1,7 +1,6 @@
 package com.katyshevtseva.kikiorg.view.controller.wardrobe;
 
 import com.katyshevtseva.fx.ImageContainer;
-import com.katyshevtseva.fx.ImageUtils;
 import com.katyshevtseva.kikiorg.core.Core;
 import com.katyshevtseva.kikiorg.core.sections.wardrobe.entity.Piece;
 import javafx.scene.image.Image;
@@ -28,15 +27,17 @@ class WrdImageUtils {
                 }
             }
             if (imageIsFree) {
+                ImageContainer imageContainer = ImageCreator.getInstance().getImageContainer(file.getName());
+
                 freeImages.add(new ImageAndFileNameContainer() {
                     @Override
                     public Image getImage() {
-                        return ImageUtils.getImageByAbsolutePath(file.getAbsolutePath());
+                        return imageContainer.getImage();
                     }
 
                     @Override
                     public String getPath() {
-                        return file.getAbsolutePath();
+                        return imageContainer.getPath();
                     }
 
                     @Override
@@ -58,6 +59,8 @@ class WrdImageUtils {
     }
 
     static ImageContainer toImageUrlAndPieceContainer(Piece piece) {
+        ImageContainer imageContainer = ImageCreator.getInstance().getImageContainer(piece);
+
         return new ImageAndPieceContainer() {
             @Override
             public Piece getPiece() {
@@ -66,17 +69,19 @@ class WrdImageUtils {
 
             @Override
             public Image getImage() {
-                return ImageUtils.getImageByAbsolutePath(getPieceImageAbsolutePath(piece));
+                return imageContainer.getImage();
             }
 
             @Override
             public String getPath() {
-                return getPieceImageAbsolutePath(piece);
+                return imageContainer.getPath();
             }
         };
     }
 
     static ImageAndFileNameContainer toImageUrlAndFileNameContainer(Piece piece) {
+        ImageContainer imageContainer = ImageCreator.getInstance().getImageContainer(piece);
+
         return new ImageAndFileNameContainer() {
             @Override
             public String getFileName() {
@@ -85,36 +90,14 @@ class WrdImageUtils {
 
             @Override
             public Image getImage() {
-                return ImageUtils.getImageByAbsolutePath(getPieceImageAbsolutePath(piece));
+                return imageContainer.getImage();
             }
 
             @Override
             public String getPath() {
-                return getPieceImageAbsolutePath(piece);
+                return imageContainer.getPath();
             }
         };
-    }
-
-    static ImageContainer toImageContainer(Piece piece) {
-        return new ImageContainer() {
-            @Override
-            public Image getImage() {
-                return ImageUtils.getImageByAbsolutePath(getPieceImageAbsolutePath(piece));
-            }
-
-            @Override
-            public String getPath() {
-                return getPieceImageAbsolutePath(piece);
-            }
-        };
-    }
-
-    static Image getImageByPiece(Piece piece) {
-        return ImageUtils.getImageByAbsolutePath(getPieceImageAbsolutePath(piece));
-    }
-
-    private static String getPieceImageAbsolutePath(Piece piece) {
-        return DIRECTORY_URL + piece.getImageFileName();
     }
 
     interface ImageAndPieceContainer extends ImageContainer {

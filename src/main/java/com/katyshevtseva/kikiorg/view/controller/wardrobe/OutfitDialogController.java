@@ -23,10 +23,10 @@ import static com.katyshevtseva.fx.FxUtils.getPaneWithHeight;
 import static com.katyshevtseva.kikiorg.view.controller.wardrobe.CollageUtils.*;
 
 class OutfitDialogController implements FxController {
-    private Outfit existing;
-    private OneArgKnob<Outfit> onSaveListener;
-    private List<CheckBox> seasonsCheckBoxes = new ArrayList<>();
-    private List<CheckBox> purposesCheckBoxes = new ArrayList<>();
+    private final Outfit existing;
+    private final OneArgKnob<Outfit> onSaveListener;
+    private final List<CheckBox> seasonsCheckBoxes = new ArrayList<>();
+    private final List<CheckBox> purposesCheckBoxes = new ArrayList<>();
     private Collage collage;
     @FXML
     private Pane collagePane;

@@ -15,7 +15,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static com.katyshevtseva.kikiorg.view.controller.wardrobe.WrdImageUtils.toImageContainer;
 import static com.katyshevtseva.kikiorg.view.controller.wardrobe.WrdImageUtils.toImageUrlAndPieceContainers;
 
 class CollageUtils {
@@ -49,7 +48,7 @@ class CollageUtils {
     static Pane getCollagePreview(CollageEntity collageEntity) {
         List<StaticComponent> staticComponents = collageEntity.getComponents().stream()
                 .map(componentEntity -> new StaticComponent(
-                        toImageContainer(componentEntity.getFrontPiece()),
+                        ImageCreator.getInstance().getImageContainer(componentEntity.getFrontPiece()),
                         new Point(componentEntity.getRelativeX(), componentEntity.getRelativeY()),
                         componentEntity.getRelativeWidth(),
                         componentEntity.getZ()))
@@ -63,7 +62,7 @@ class CollageUtils {
             return createEmptyCollage();
 
         Collage collage = new CollageBuilder()
-                .allExistingImages(getAllExistingImages())
+                .allExistingImages(toImageUrlAndPieceContainers(Core.getInstance().wardrobeService().getAllPieces()))
                 .height(COLLAGE_SIZE)
                 .width(COLLAGE_SIZE)
                 .build();
@@ -92,11 +91,7 @@ class CollageUtils {
         return new CollageBuilder()
                 .height(COLLAGE_SIZE)
                 .width(COLLAGE_SIZE)
-                .allExistingImages(getAllExistingImages())
+                .allExistingImages(toImageUrlAndPieceContainers(Core.getInstance().wardrobeService().getAllPieces()))
                 .build();
-    }
-
-    private static List<ImageContainer> getAllExistingImages() {
-        return toImageUrlAndPieceContainers(Core.getInstance().wardrobeService().getAllPieces());
     }
 }
