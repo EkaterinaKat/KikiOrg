@@ -1,7 +1,7 @@
 package com.katyshevtseva.kikiorg.view.controller.wardrobe;
 
+import com.katyshevtseva.fx.FxImageCreationUtil;
 import com.katyshevtseva.fx.ImageContainer;
-import com.katyshevtseva.fx.ImageUtils;
 import com.katyshevtseva.kikiorg.core.sections.wardrobe.entity.Piece;
 import javafx.scene.image.Image;
 
@@ -33,7 +33,7 @@ class ImageCreator {
         imageContainer = new ImageContainer() {
             @Override
             public Image getImage() {
-                return ImageUtils.getImageByAbsolutePath(DIRECTORY_URL + fileName);
+                return FxImageCreationUtil.getImageByAbsolutePath(DIRECTORY_URL + fileName, 400.0, true);
             }
 
             @Override
