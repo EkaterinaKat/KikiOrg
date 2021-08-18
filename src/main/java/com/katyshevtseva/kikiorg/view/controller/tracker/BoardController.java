@@ -29,7 +29,7 @@ class BoardController implements FxController {
     private ComboBox<SortType> sortComboBox;
 
     private enum TaskType {
-        CURRENT, ARCHIVE
+        CURRENT, ARCHIVE, SHELVED
     }
 
     @FXML
@@ -50,6 +50,9 @@ class BoardController implements FxController {
         switch (taskTypeComboBox.getValue()) {
             case CURRENT:
                 tasks = Core.getInstance().boardSortService().getTodoTasks(sortComboBox.getValue());
+                break;
+            case SHELVED:
+                tasks = Core.getInstance().boardSortService().getShelvedTasks(sortComboBox.getValue());
                 break;
             case ARCHIVE:
                 tasks = Core.getInstance().boardSortService().getAllDoneAndRejectedTasks(sortComboBox.getValue());

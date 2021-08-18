@@ -20,8 +20,8 @@ import static com.katyshevtseva.fx.Styler.getColorfullStyle;
 import static com.katyshevtseva.kikiorg.view.utils.OrgUtils.getColorString;
 
 class TaskPaneController implements FxController {
-    private Task task;
-    private NoArgsKnob boardUpdateKnob;
+    private final Task task;
+    private final NoArgsKnob boardUpdateKnob;
     @FXML
     private HBox root;
     @FXML
@@ -45,15 +45,27 @@ class TaskPaneController implements FxController {
         descLabel.setWrapText(true);
 
         titleLabel.setText(String.format("%s-%d: %s", task.getProject().getCode(), task.getNumber(), task.getTitle()));
+
         if (task.getTaskStatus() == TaskStatus.TODO) {
             descLabel.setText(task.getDescription() + "\n\nCreation date: " + READABLE_DATE_FORMAT.format(task.getCreationDate().getValue()));
             buttonsPane.getChildren().addAll(
                     getEditButton(),
                     getPaneWithWidth(25),
+                    getShelveButton(),
+                    getPaneWithWidth(25),
                     getRejectButton(),
                     getPaneWithWidth(25),
                     getDoneButton());
         }
+
+        if (task.getTaskStatus() == TaskStatus.SHELVED) {
+            descLabel.setText(task.getDescription() + "\n\nCreation date: " + READABLE_DATE_FORMAT.format(task.getCreationDate().getValue()));
+            buttonsPane.getChildren().addAll(
+                    getEditButton(),
+                    getPaneWithWidth(25),
+                    getReturnToWorkButton());
+        }
+
         if (task.getTaskStatus() == TaskStatus.DONE) {
             imageView.setImage(new Image("images/green_tick.png"));
             descLabel.setText(task.getDescription() + "\n\nCreation date: " + READABLE_DATE_FORMAT.format(task.getCreationDate().getValue())
@@ -63,6 +75,7 @@ class TaskPaneController implements FxController {
                     getPaneWithWidth(25),
                     getReturnToWorkButton());
         }
+
         if (task.getTaskStatus() == TaskStatus.REJECTED) {
             imageView.setImage(new Image("images/gray_cross.png"));
             descLabel.setText(task.getDescription() + "\n\nCreation date: " + READABLE_DATE_FORMAT.format(task.getCreationDate().getValue()));
@@ -95,6 +108,15 @@ class TaskPaneController implements FxController {
             boardUpdateKnob.execute();
         });
         return doneButton;
+    }
+
+    private Button getShelveButton() {
+        Button shelveButton = new Button("Shelve");
+        shelveButton.setOnAction(event -> {
+            Core.getInstance().trackerService().shelveTask(task);
+            boardUpdateKnob.execute();
+        });
+        return shelveButton;
     }
 
     private Button getRejectButton() {

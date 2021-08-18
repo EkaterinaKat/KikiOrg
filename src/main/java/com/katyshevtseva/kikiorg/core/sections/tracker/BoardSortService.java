@@ -30,6 +30,20 @@ public class BoardSortService {
         return tasks;
     }
 
+    public List<Task> getShelvedTasks(SortType sortType) {
+        List<Task> tasks = taskRepo.findAllByTaskStatus(TaskStatus.SHELVED);
+
+        switch (sortType) {
+            case PROJECT:
+            case COMPLETION_DATE:
+                tasks.sort(Comparator.comparing(Task::getProject).thenComparing(Task::getCreationDate));
+                break;
+            case CREATION_DATE:
+                tasks.sort(Comparator.comparing(Task::getCreationDate).thenComparing(Task::getProject));
+        }
+        return tasks;
+    }
+
     public List<Task> getAllDoneAndRejectedTasks(SortType sortType) {
         List<Task> tasks = taskRepo.findAllByTaskStatus(TaskStatus.REJECTED);
         tasks.addAll(taskRepo.findAllByTaskStatus(TaskStatus.DONE));

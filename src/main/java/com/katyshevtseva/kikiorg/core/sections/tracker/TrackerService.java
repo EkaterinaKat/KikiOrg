@@ -55,6 +55,11 @@ public class TrackerService {
         taskRepo.save(task);
     }
 
+    public void shelveTask(Task task) {
+        task.setTaskStatus(TaskStatus.SHELVED);
+        taskRepo.save(task);
+    }
+
     public void returnTaskToWork(Task task) {
         task.setCompletionDate(null);
         task.setTaskStatus(TaskStatus.TODO);
@@ -62,8 +67,9 @@ public class TrackerService {
     }
 
     public String getStatistics() {
-        return String.format("To Do: %d. Done: %d. Rejected: %d.",
+        return String.format("To Do: %d. Shelved: %d. Done: %d. Rejected: %d.",
                 taskRepo.countByTaskStatus(TaskStatus.TODO),
+                taskRepo.countByTaskStatus(TaskStatus.SHELVED),
                 taskRepo.countByTaskStatus(TaskStatus.DONE),
                 taskRepo.countByTaskStatus(TaskStatus.REJECTED));
     }
