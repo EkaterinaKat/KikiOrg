@@ -1,5 +1,6 @@
 package com.katyshevtseva.kikiorg.core.sections.wardrobe;
 
+import com.katyshevtseva.general.Page;
 import com.katyshevtseva.kikiorg.core.date.DateService;
 import com.katyshevtseva.kikiorg.core.repo.CollageEntityRepo;
 import com.katyshevtseva.kikiorg.core.repo.ComponentEntityRepo;
@@ -13,6 +14,7 @@ import com.katyshevtseva.kikiorg.core.sections.wardrobe.enums.ClothesType;
 import com.katyshevtseva.kikiorg.core.sections.wardrobe.enums.Purpose;
 import com.katyshevtseva.kikiorg.core.sections.wardrobe.enums.Season;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -35,6 +37,12 @@ public class WardrobeService {
         return pieceRepo.findAll().stream()
                 .sorted(Comparator.comparing(Piece::getStartDate, nullsFirst(naturalOrder())))
                 .collect(Collectors.toList());
+    }
+
+    public Page<Piece> getPiecePage(int pageNum) {
+        org.springframework.data.domain.Page<Piece> piecePage = pieceRepo.findAll(PageRequest.of(pageNum, 9));
+        return new Page<>(piecePage.stream().sorted(Comparator.comparing(Piece::getStartDate, nullsFirst(naturalOrder())))
+                .collect(Collectors.toList()), pageNum, piecePage.getTotalPages());
     }
 
     public Piece savePiece(Piece existing,

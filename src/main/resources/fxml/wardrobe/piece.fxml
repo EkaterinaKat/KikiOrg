@@ -11,7 +11,10 @@
     <Pane prefHeight="20"/>
 
     <HBox>
-        <VBox fx:id="galleryPane"/>
+        <GridPane vgap="10">
+            <VBox fx:id="galleryPane" GridPane.columnIndex="0" GridPane.rowIndex="0"/>
+            <VBox fx:id="paginationPane" GridPane.columnIndex="0" GridPane.rowIndex="1"/>
+        </GridPane>
         <Pane prefWidth="20"/>
         <VBox>
             <Pane fx:id="imagePane"/>

@@ -21,8 +21,8 @@ public class MainWardrobeController extends AbstractSwitchController implements 
     private Node outfitsNode;
     private Node piecesNode;
 
-    private OutfitController outfitController = new OutfitController();
-    private PieceController pieceController = new PieceController();
+    private final OutfitController outfitController = new OutfitController();
+    private final PieceController pieceController = new PieceController();
 
     @FXML
     private void initialize() {
@@ -30,7 +30,7 @@ public class MainWardrobeController extends AbstractSwitchController implements 
         buttons.addAll(Arrays.asList(outfitsButton, piecesButton));
         outfitsButton.setOnAction(event -> outfitsButtonListener());
         piecesButton.setOnAction(event -> piecesButtonListener());
-        outfitsButtonListener();
+        piecesButtonListener();
     }
 
     private void outfitsButtonListener() {
