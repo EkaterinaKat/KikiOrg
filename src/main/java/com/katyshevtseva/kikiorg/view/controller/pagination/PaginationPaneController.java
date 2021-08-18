@@ -41,7 +41,7 @@ public class PaginationPaneController<T> implements FxController {
         this.contentReceiver = contentReceiver;
     }
 
-    private void loadPage() {
+    public void loadPage() {
         Page<T> page = pageSource.getPage(pageNum);
         contentReceiver.execute(page.getContent());
         totalPages = page.getTotalPages();

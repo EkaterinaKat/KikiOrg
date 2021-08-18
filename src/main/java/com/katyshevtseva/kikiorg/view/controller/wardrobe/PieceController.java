@@ -28,6 +28,7 @@ import static com.katyshevtseva.fx.ImageSizeUtil.placeImageInSquare;
 class PieceController implements FxController {
     private final WardrobeService service = Core.getInstance().wardrobeService();
     private GalleryController galleryController;
+    private PaginationPaneController<Piece> paginationPaneController;
     @FXML
     private Button pieceCreateButton;
     @FXML
@@ -47,14 +48,14 @@ class PieceController implements FxController {
         pieceCreateButton.setOnAction(event ->
                 OrganizerWindowCreator.getInstance().openPieceEditDialog(
                         new PieceDialogController(null, piece -> {
-                            galleryController.setImageContainers(WrdImageUtils.toImageUrlAndPieceContainers(service.getAllPieces()));
+                            paginationPaneController.loadPage();
                             showPieceFullInfo(piece);
                         })));
         tunePagination();
     }
 
     private void tunePagination() {
-        PaginationPaneController<Piece> paginationPaneController = new PaginationPaneController<>(service::getPiecePage, this::setContent);
+        paginationPaneController = new PaginationPaneController<>(service::getPiecePage, this::setContent);
         paginationPane.getChildren().add(OrganizerWindowCreator.getInstance().getPaginationPaneNode(paginationPaneController));
     }
 
@@ -73,7 +74,7 @@ class PieceController implements FxController {
         editButton.setOnAction(event ->
                 OrganizerWindowCreator.getInstance().openPieceEditDialog(
                         new PieceDialogController(piece, savedPiece -> {
-                            galleryController.setImageContainers(WrdImageUtils.toImageUrlAndPieceContainers(service.getAllPieces()));
+                            paginationPaneController.loadPage();
                             showPieceFullInfo(savedPiece);
                         })));
     }
