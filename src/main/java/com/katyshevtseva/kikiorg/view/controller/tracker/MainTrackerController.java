@@ -1,7 +1,7 @@
 package com.katyshevtseva.kikiorg.view.controller.tracker;
 
+import com.katyshevtseva.fx.AbstractSwitchController;
 import com.katyshevtseva.fx.WindowBuilder.FxController;
-import com.katyshevtseva.kikiorg.view.controller.AbstractSwitchController;
 import com.katyshevtseva.kikiorg.view.utils.OrganizerWindowCreator;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
@@ -21,8 +21,8 @@ public class MainTrackerController extends AbstractSwitchController implements F
     private Node boardNode;
     private Node projectsNode;
 
-    private BoardController boardController = new BoardController();
-    private ProjectController projectController = new ProjectController();
+    private final BoardController boardController = new BoardController();
+    private final ProjectController projectController = new ProjectController();
 
     @FXML
     private void initialize() {

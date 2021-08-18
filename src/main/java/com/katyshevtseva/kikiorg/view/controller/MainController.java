@@ -1,5 +1,6 @@
 package com.katyshevtseva.kikiorg.view.controller;
 
+import com.katyshevtseva.fx.AbstractSwitchController;
 import com.katyshevtseva.fx.WindowBuilder.FxController;
 import com.katyshevtseva.kikiorg.view.controller.finance.MainFinanceController;
 import com.katyshevtseva.kikiorg.view.controller.habits.MainHabitsController;

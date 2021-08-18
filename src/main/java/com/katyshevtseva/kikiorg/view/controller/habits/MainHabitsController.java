@@ -1,7 +1,7 @@
 package com.katyshevtseva.kikiorg.view.controller.habits;
 
+import com.katyshevtseva.fx.AbstractSwitchController;
 import com.katyshevtseva.fx.WindowBuilder.FxController;
-import com.katyshevtseva.kikiorg.view.controller.AbstractSwitchController;
 import com.katyshevtseva.kikiorg.view.utils.OrganizerWindowCreator;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
@@ -33,12 +33,12 @@ public class MainHabitsController extends AbstractSwitchController implements Fx
     private Node criterionNode;
     private Node historyNode;
 
-    private AdminController adminController = new AdminController();
-    private CheckListController checkListController = new CheckListController();
-    private ReportController reportController = new ReportController();
-    private AnalysisController analysisController = new AnalysisController();
-    private CriterionController criterionController = new CriterionController();
-    private HistoryController historyController = new HistoryController();
+    private final AdminController adminController = new AdminController();
+    private final CheckListController checkListController = new CheckListController();
+    private final ReportController reportController = new ReportController();
+    private final AnalysisController analysisController = new AnalysisController();
+    private final CriterionController criterionController = new CriterionController();
+    private final HistoryController historyController = new HistoryController();
 
     @FXML
     private void initialize() {
