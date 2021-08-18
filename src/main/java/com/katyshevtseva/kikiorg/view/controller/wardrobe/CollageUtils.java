@@ -13,6 +13,7 @@ import javafx.scene.layout.Pane;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import static com.katyshevtseva.kikiorg.view.controller.wardrobe.WrdImageUtils.toImageUrlAndPieceContainers;
@@ -23,26 +24,29 @@ class CollageUtils {
     static CollageEntity saveCollage(CollageEntity existing, Collage collage) {
         CollageEntity savedCollageEntity = Core.getInstance().wardrobeService().saveCollage(existing);
 
-        for (Component component : collage.getComponents())
-            saveComponent(component, savedCollageEntity);
+        List<ComponentEntity> componentEntities = collage.getComponents().stream()
+                .map(component -> toEntity(component, savedCollageEntity)).collect(Collectors.toList());
+
+        Core.getInstance().wardrobeService().saveComponents(componentEntities, savedCollageEntity);
 
         return savedCollageEntity;
     }
 
-    private static void saveComponent(Component component, CollageEntity savedCollageEntity) {
-        List<Piece> pieces = component.getImageContainers().stream()
-                .map(imageContainer -> ((ImageAndPieceContainer) imageContainer).getPiece()).collect(Collectors.toList());
+    private static ComponentEntity toEntity(Component component, CollageEntity collageEntity) {
+        Set<Piece> pieces = component.getImageContainers().stream()
+                .map(imageContainer -> ((ImageAndPieceContainer) imageContainer).getPiece()).collect(Collectors.toSet());
         Piece frontPiece = ((ImageAndPieceContainer) component.getFrontImageContainer()).getPiece();
 
-        Core.getInstance().wardrobeService().saveComponent(
-                component.getId(),
-                component.getRelativeX(),
-                component.getRelativeY(),
-                component.getZ(),
-                component.getRelativeWidth(),
-                pieces,
-                frontPiece,
-                savedCollageEntity);
+        ComponentEntity entity = new ComponentEntity();
+        entity.setRelativeX(component.getRelativeX());
+        entity.setRelativeY(component.getRelativeY());
+        entity.setRelativeWidth(component.getRelativeWidth());
+        entity.setZ(component.getZ());
+        entity.setPieces(pieces);
+        entity.setFrontPiece(frontPiece);
+        entity.setCollageEntity(collageEntity);
+
+        return entity;
     }
 
     static Pane getCollagePreview(CollageEntity collageEntity) {
@@ -79,7 +83,6 @@ class CollageUtils {
         ImageContainer frontImageContainer = WrdImageUtils.toImageUrlAndPieceContainer(componentEntity.getFrontPiece());
 
         return new ComponentBuilder(collage, imageContainers)
-                .id(componentEntity.getId())
                 .relativeWidth(componentEntity.getRelativeWidth())
                 .z(componentEntity.getZ())
                 .frontImage(frontImageContainer)

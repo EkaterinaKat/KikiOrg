@@ -14,6 +14,7 @@ import com.katyshevtseva.kikiorg.core.sections.wardrobe.enums.Purpose;
 import com.katyshevtseva.kikiorg.core.sections.wardrobe.enums.Season;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -69,23 +70,13 @@ public class WardrobeService {
         return collageEntityRepo.save(existing);
     }
 
-    public void saveComponent(Long existingId, double relativeX, double relativeY, int z, double relativeWidth,
-                              List<Piece> pieces, Piece frontPiece, CollageEntity collageEntity) {
-        ComponentEntity componentEntity;
-        if (existingId == null)
-            componentEntity = new ComponentEntity();
-        else
-            componentEntity = componentEntityRepo.findById(existingId).orElseThrow(RuntimeException::new);
+    @Transactional
+    public void saveComponents(List<ComponentEntity> components, CollageEntity collageEntity) {
+        componentEntityRepo.deleteByCollageEntity(collageEntity);
 
-        componentEntity.setRelativeX(relativeX);
-        componentEntity.setRelativeY(relativeY);
-        componentEntity.setZ(z);
-        componentEntity.setRelativeWidth(relativeWidth);
-        componentEntity.setPieces(new HashSet<>(pieces));
-        componentEntity.setFrontPiece(frontPiece);
-        componentEntity.setCollageEntity(collageEntity);
-
-        componentEntityRepo.save(componentEntity);
+        for (ComponentEntity componentEntity : components) {
+            componentEntityRepo.save(componentEntity);
+        }
     }
 
     public Outfit saveOutfit(Outfit existing, Set<Season> seasons, Set<Purpose> purposes, CollageEntity collageEntity) {
