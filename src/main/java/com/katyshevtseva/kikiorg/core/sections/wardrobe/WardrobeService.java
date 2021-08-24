@@ -45,6 +45,11 @@ public class WardrobeService {
                 .collect(Collectors.toList()), pageNum, piecePage.getTotalPages());
     }
 
+    public Page<Outfit> getOutfitPage(int pageNum) {
+        org.springframework.data.domain.Page<Outfit> outfitPage = outfitRepo.findAll(PageRequest.of(pageNum, 4));
+        return new Page<>(outfitPage.getContent(), pageNum, outfitPage.getTotalPages());
+    }
+
     public Piece savePiece(Piece existing,
                            String description,
                            String imageFileName,

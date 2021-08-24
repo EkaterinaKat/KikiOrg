@@ -12,17 +12,20 @@
     <Pane prefHeight="20"/>
 
     <HBox>
-        <ScrollPane prefWidth="890" prefHeight="800">
-            <HBox>
-                <Pane prefWidth="10"/>
-                <VBox>
-                    <Pane prefHeight="10"/>
-                    <GridPane fx:id="gridPane" vgap="10" hgap="10"/>
-                    <Pane prefHeight="10"/>
-                </VBox>
-                <Pane prefWidth="10"/>
-            </HBox>
-        </ScrollPane>
+        <GridPane vgap="10">
+            <ScrollPane prefWidth="890" prefHeight="800" GridPane.columnIndex="0" GridPane.rowIndex="0">
+                <HBox>
+                    <Pane prefWidth="10"/>
+                    <VBox>
+                        <Pane prefHeight="10"/>
+                        <GridPane fx:id="gridPane" vgap="10" hgap="10"/>
+                        <Pane prefHeight="10"/>
+                    </VBox>
+                    <Pane prefWidth="10"/>
+                </HBox>
+            </ScrollPane>
+            <VBox fx:id="paginationPane" GridPane.columnIndex="0" GridPane.rowIndex="1"/>
+        </GridPane>
         <Pane prefWidth="20"/>
         <VBox>
             <Label fx:id="infoLabel" maxWidth="220" wrapText="true"/>
