@@ -1,6 +1,5 @@
 package com.katyshevtseva.kikiorg.view.controller.wardrobe;
 
-import com.katyshevtseva.fx.ImageContainer;
 import com.katyshevtseva.fx.Size;
 import com.katyshevtseva.fx.WindowBuilder.FxController;
 import com.katyshevtseva.fx.component.ComponentBuilder;
@@ -20,7 +19,6 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import static com.katyshevtseva.fx.ImageSizeUtil.placeImageInSquare;
@@ -61,13 +59,6 @@ class PieceController implements FxController {
 
     private void showPieceFullInfo(Piece piece) {
         imagePane.getChildren().clear();
-
-        if (piece == null) {
-            infoLabel.setText("");
-            editButton.setVisible(false);
-            return;
-        }
-
         imagePane.getChildren().add(placeImageInSquare(new ImageView(ImageCreator.getInstance().getImageContainer(piece).getImage()), 350));
         infoLabel.setText(piece.getFullDesc());
         editButton.setVisible(true);
@@ -80,10 +71,14 @@ class PieceController implements FxController {
     }
 
     private void setContent(List<Piece> pieces) {
-        List<ImageContainer> imageContainers = WrdImageUtils.toImageUrlAndPieceContainers(pieces);
-        Collections.reverse(imageContainers);
-        galleryController.setImageContainers(imageContainers);
-        showPieceFullInfo(null);
+        galleryController.setImageContainers(WrdImageUtils.toImageUrlAndPieceContainers(pieces));
+        clearPieceInfo();
+    }
+
+    private void clearPieceInfo() {
+        imagePane.getChildren().clear();
+        infoLabel.setText("");
+        editButton.setVisible(false);
     }
 
     private void tunePiecesGallery() {
