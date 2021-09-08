@@ -55,9 +55,7 @@ public class WardrobeService {
                            String imageFileName,
                            ClothesType type,
                            Date start,
-                           Date end,
-                           Set<Season> seasons,
-                           Set<Purpose> purposes) {
+                           Date end) {
 
         if (existing == null)
             existing = new Piece();
@@ -66,8 +64,6 @@ public class WardrobeService {
         existing.setStartDate(dateService.createIfNotExistAndGetDateEntity(start));
         existing.setEndDate(dateService.createIfNotExistAndGetDateEntity(end));
         existing.setType(type);
-        existing.setPurposes(purposes);
-        existing.setSeasons(seasons);
 
         return pieceRepo.save(existing);
     }

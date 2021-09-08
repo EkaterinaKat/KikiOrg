@@ -2,9 +2,10 @@ package com.katyshevtseva.kikiorg.core.sections.wardrobe.enums;
 
 public enum Purpose {
 
-    H("Дом"), W("Работа"), Sp("Спорт"), Sh("В магазин"), St("Прогулка"), O("Выход в свет");
+    HOME("Дом"), WORK("Работа"), SPORT("Спорт"), SHOP("В магазин"), STROLL("Прогулка"),
+    HANGING_OUT("Выход в свет");
 
-    private String title;
+    private final String title;
 
     Purpose(String title) {
         this.title = title;
