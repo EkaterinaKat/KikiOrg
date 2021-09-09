@@ -55,7 +55,8 @@ class CollageUtils {
                         ImageCreator.getInstance().getImageContainer(componentEntity.getFrontPiece()),
                         new Point(componentEntity.getRelativeX(), componentEntity.getRelativeY()),
                         componentEntity.getRelativeWidth(),
-                        componentEntity.getZ()))
+                        componentEntity.getZ(),
+                        componentEntity.getPieces().size() > 1))
                 .collect(Collectors.toList());
 
         return CollagePreviewBuilder.buildPreview(new Size(370, 370), staticComponents);
