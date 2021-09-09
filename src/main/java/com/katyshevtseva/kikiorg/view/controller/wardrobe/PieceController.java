@@ -1,18 +1,22 @@
 package com.katyshevtseva.kikiorg.view.controller.wardrobe;
 
+import com.katyshevtseva.fx.FxUtils;
 import com.katyshevtseva.fx.Size;
 import com.katyshevtseva.fx.WindowBuilder.FxController;
 import com.katyshevtseva.fx.component.ComponentBuilder;
 import com.katyshevtseva.fx.component.ComponentBuilder.Component;
 import com.katyshevtseva.fx.component.controller.GalleryController;
+import com.katyshevtseva.general.Page;
 import com.katyshevtseva.kikiorg.core.Core;
 import com.katyshevtseva.kikiorg.core.sections.wardrobe.WardrobeService;
 import com.katyshevtseva.kikiorg.core.sections.wardrobe.entity.Piece;
+import com.katyshevtseva.kikiorg.core.sections.wardrobe.enums.ClothesType;
 import com.katyshevtseva.kikiorg.view.controller.pagination.PaginationPaneController;
 import com.katyshevtseva.kikiorg.view.controller.wardrobe.WrdImageUtils.ImageAndPieceContainer;
 import com.katyshevtseva.kikiorg.view.utils.OrganizerWindowCreator;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
@@ -39,6 +43,10 @@ class PieceController implements FxController {
     private VBox galleryPane;
     @FXML
     private Pane paginationPane;
+    @FXML
+    private ComboBox<ClothesType> typeComboBox;
+    @FXML
+    private Button showAllButton;
 
     @FXML
     private void initialize() {
@@ -50,11 +58,21 @@ class PieceController implements FxController {
                             showPieceFullInfo(piece);
                         })));
         tunePagination();
+        FxUtils.setComboBoxItems(typeComboBox, ClothesType.getSortedByTitleValues());
+        typeComboBox.setOnAction(event -> paginationPaneController.loadPage());
+        showAllButton.setOnAction(event -> {
+            typeComboBox.setValue(null);
+            paginationPaneController.loadPage();
+        });
     }
 
     private void tunePagination() {
-        paginationPaneController = new PaginationPaneController<>(service::getPiecePage, this::setContent);
+        paginationPaneController = new PaginationPaneController<>(this::getPiecePage, this::setContent);
         paginationPane.getChildren().add(OrganizerWindowCreator.getInstance().getPaginationPaneNode(paginationPaneController));
+    }
+
+    private Page<Piece> getPiecePage(int pageNum) {
+        return service.getPiecePage(pageNum, typeComboBox.getValue());
     }
 
     private void showPieceFullInfo(Piece piece) {

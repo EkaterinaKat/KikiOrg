@@ -1,5 +1,10 @@
 package com.katyshevtseva.kikiorg.core.sections.wardrobe.enums;
 
+import java.util.Arrays;
+import java.util.Comparator;
+import java.util.List;
+import java.util.stream.Collectors;
+
 public enum ClothesType {
 
     FOOTWEAR("Прочая обувь"), TROUSERS("Прочие штаны"), SKIRT("Юбка"), DRESS("Платье"),
@@ -24,5 +29,9 @@ public enum ClothesType {
     @Override
     public String toString() {
         return title;
+    }
+
+    public static List<ClothesType> getSortedByTitleValues() {
+        return Arrays.stream(ClothesType.values()).sorted(Comparator.comparing(ClothesType::getTitle)).collect(Collectors.toList());
     }
 }

@@ -17,10 +17,6 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 
-import java.util.Arrays;
-import java.util.Comparator;
-import java.util.stream.Collectors;
-
 import static com.katyshevtseva.fx.FxUtils.*;
 import static com.katyshevtseva.fx.ImageSizeUtil.placeImageInSquare;
 import static com.katyshevtseva.kikiorg.view.controller.wardrobe.WrdImageUtils.toImageUrlAndFileNameContainer;
@@ -52,8 +48,7 @@ class PieceDialogController implements FxController {
     private void initialize() {
         associateButtonWithControls(saveButton, clothesTypeComboBox, descTextArea);
         saveButton.setOnAction(event -> save());
-        setComboBoxItems(clothesTypeComboBox,
-                Arrays.stream(ClothesType.values()).sorted(Comparator.comparing(ClothesType::getTitle)).collect(Collectors.toList()));
+        setComboBoxItems(clothesTypeComboBox, ClothesType.getSortedByTitleValues());
         showImage(new Image("images/piece_creation_plus.png"));
         setExistingPieceInfo();
     }

@@ -15,6 +15,7 @@ import com.katyshevtseva.kikiorg.core.sections.wardrobe.enums.Purpose;
 import com.katyshevtseva.kikiorg.core.sections.wardrobe.enums.Season;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -40,8 +41,12 @@ public class WardrobeService {
                 .collect(Collectors.toList());
     }
 
-    public Page<Piece> getPiecePage(int pageNum) {
-        org.springframework.data.domain.Page<Piece> piecePage = pieceRepo.findAll(PageRequest.of(pageNum, 9, Sort.by("id").descending()));
+    public Page<Piece> getPiecePage(int pageNum, ClothesType clothesType) {
+        Pageable pageable = PageRequest.of(pageNum, 9, Sort.by("id").descending());
+
+        org.springframework.data.domain.Page<Piece> piecePage = clothesType == null ?
+                pieceRepo.findAll(pageable) : pieceRepo.findByType(clothesType, pageable);
+
         return new Page<>(piecePage.getContent(), pageNum, piecePage.getTotalPages());
     }
 

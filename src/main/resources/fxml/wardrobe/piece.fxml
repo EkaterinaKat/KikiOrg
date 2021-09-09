@@ -1,12 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <VBox xmlns="http://javafx.com/javafx"
       xmlns:fx="http://javafx.com/fxml">
 
-    <Button fx:id="pieceCreateButton" text="New Piece"/>
+
+    <HBox>
+        <Button fx:id="pieceCreateButton" text="New Piece"/>
+        <Pane prefWidth="20"/>
+        <ComboBox fx:id="typeComboBox"/>
+        <Pane prefWidth="10"/>
+        <Button fx:id="showAllButton" text="Show all"/>
+    </HBox>
+
 
     <Pane prefHeight="20"/>
 
