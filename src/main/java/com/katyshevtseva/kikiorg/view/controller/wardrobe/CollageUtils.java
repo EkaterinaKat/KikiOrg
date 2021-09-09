@@ -58,7 +58,7 @@ class CollageUtils {
                         componentEntity.getZ()))
                 .collect(Collectors.toList());
 
-        return CollagePreviewBuilder.buildPreview(new Size(400, 400), staticComponents);
+        return CollagePreviewBuilder.buildPreview(new Size(370, 370), staticComponents);
     }
 
     static Collage reproduceCollage(CollageEntity collageEntity) {

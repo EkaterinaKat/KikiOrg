@@ -33,7 +33,7 @@ class ImageCreator {
         imageContainer = new ImageContainer() {
             @Override
             public Image getImage() {
-                return FxImageCreationUtil.getImageByAbsolutePath(DIRECTORY_URL + fileName, 400.0, true);
+                return FxImageCreationUtil.getImageByAbsolutePath(DIRECTORY_URL + fileName, 400.0, false);
             }
 
             @Override

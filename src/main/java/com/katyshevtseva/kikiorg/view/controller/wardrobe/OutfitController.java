@@ -67,6 +67,7 @@ class OutfitController implements FxController {
 
         for (Outfit outfit : outfits) {
             Pane pane = CollageUtils.getCollagePreview(outfit.getCollageEntity());
+            pane.setStyle("-fx-border-color: #000000;");
             pane.setOnMouseClicked(event -> showOutfitInfo(outfit));
             gridPane.add(pane, GeneralUtils.getColumnByIndexAndColumnNum(index, 2),
                     GeneralUtils.getRowByIndexAndColumnNum(index, 2));
