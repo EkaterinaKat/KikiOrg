@@ -35,8 +35,8 @@ public class WardrobeService {
     private final ComponentEntityRepo componentEntityRepo;
     private final DateService dateService;
 
-    public enum PieceStatus {
-        ARCHIVE, ACTIVE
+    public enum PieceFilter {
+        ARCHIVE, ACTIVE, UNUSED
     }
 
     public List<Piece> getAllPieces() {
@@ -51,15 +51,21 @@ public class WardrobeService {
                 .collect(Collectors.toList());
     }
 
-    public Page<Piece> getPiecePage(int pageNum, ClothesType clothesType, PieceStatus pieceStatus) {
+    public Page<Piece> getPiecePage(int pageNum, ClothesType clothesType, PieceFilter pieceFilter) {
         Pageable pageable = PageRequest.of(pageNum, 9, Sort.by("id").descending());
+        org.springframework.data.domain.Page<Piece> piecePage = null;
 
-        org.springframework.data.domain.Page<Piece> piecePage;
-
-        if (pieceStatus == PieceStatus.ARCHIVE)
-            piecePage = clothesType == null ? pieceRepo.findByEndDateIsNotNull(pageable) : pieceRepo.findByTypeAndEndDateIsNotNull(clothesType, pageable);
-        else
-            piecePage = clothesType == null ? pieceRepo.findByEndDateIsNull(pageable) : pieceRepo.findByTypeAndEndDateIsNull(clothesType, pageable);
+        switch (pieceFilter) {
+            case ACTIVE:
+                piecePage = clothesType == null ? pieceRepo.findByEndDateIsNull(pageable) : pieceRepo.findByTypeAndEndDateIsNull(clothesType, pageable);
+                break;
+            case ARCHIVE:
+                piecePage = clothesType == null ? pieceRepo.findByEndDateIsNotNull(pageable) : pieceRepo.findByTypeAndEndDateIsNotNull(clothesType, pageable);
+                break;
+            case UNUSED:
+                List<ClothesType> types = clothesType == null ? Arrays.asList(ClothesType.values()) : Collections.singletonList(clothesType);
+                piecePage = pieceRepo.findUnusedPieces(types, pageable);
+        }
 
         return new Page<>(piecePage.getContent(), pageNum, piecePage.getTotalPages());
     }

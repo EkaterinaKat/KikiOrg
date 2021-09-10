@@ -10,7 +10,7 @@ import com.katyshevtseva.fx.dialog.StandardDialogBuilder;
 import com.katyshevtseva.general.Page;
 import com.katyshevtseva.kikiorg.core.Core;
 import com.katyshevtseva.kikiorg.core.sections.wardrobe.WardrobeService;
-import com.katyshevtseva.kikiorg.core.sections.wardrobe.WardrobeService.PieceStatus;
+import com.katyshevtseva.kikiorg.core.sections.wardrobe.WardrobeService.PieceFilter;
 import com.katyshevtseva.kikiorg.core.sections.wardrobe.entity.Piece;
 import com.katyshevtseva.kikiorg.core.sections.wardrobe.enums.ClothesType;
 import com.katyshevtseva.kikiorg.view.controller.pagination.PaginationPaneController;
@@ -52,13 +52,13 @@ class PieceController implements FxController {
     @FXML
     private Button archiveButton;
     @FXML
-    private ComboBox<PieceStatus> statusComboBox;
+    private ComboBox<PieceFilter> filterComboBox;
 
     @FXML
     private void initialize() {
-        FxUtils.setComboBoxItems(statusComboBox, PieceStatus.values());
-        statusComboBox.setValue(PieceStatus.ACTIVE);
-        statusComboBox.setOnAction(event -> paginationPaneController.loadPage());
+        FxUtils.setComboBoxItems(filterComboBox, PieceFilter.values());
+        filterComboBox.setValue(PieceFilter.ACTIVE);
+        filterComboBox.setOnAction(event -> paginationPaneController.loadPage());
         tunePiecesGallery();
         pieceCreateButton.setOnAction(event ->
                 OrganizerWindowCreator.getInstance().openPieceEditDialog(
@@ -81,7 +81,7 @@ class PieceController implements FxController {
     }
 
     private Page<Piece> getPiecePage(int pageNum) {
-        return service.getPiecePage(pageNum, typeComboBox.getValue(), statusComboBox.getValue());
+        return service.getPiecePage(pageNum, typeComboBox.getValue(), filterComboBox.getValue());
     }
 
     private void showPieceFullInfo(Piece piece) {
