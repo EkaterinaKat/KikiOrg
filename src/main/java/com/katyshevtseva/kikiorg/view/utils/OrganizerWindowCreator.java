@@ -77,6 +77,10 @@ public class OrganizerWindowCreator {
         return new WindowBuilder(WARDROBE_FXML_LOCATION + "piece.fxml").setController(controller).getNode();
     }
 
+    public Node getWardrobeStatisticsNode(FxController controller) {
+        return new WindowBuilder(WARDROBE_FXML_LOCATION + "statistics.fxml").setController(controller).getNode();
+    }
+
     public void openPieceEditDialog(FxController controller) {
         new WindowBuilder(WARDROBE_FXML_LOCATION + "piece_dialog.fxml").
                 setController(controller).setHeight(700).setWidth(800).setTitle(CoreConstants.APP_NAME).showWindow();

@@ -7,6 +7,7 @@ import com.katyshevtseva.kikiorg.core.sections.habits.*;
 import com.katyshevtseva.kikiorg.core.sections.tracker.BoardSortService;
 import com.katyshevtseva.kikiorg.core.sections.tracker.TrackerService;
 import com.katyshevtseva.kikiorg.core.sections.wardrobe.WardrobeService;
+import com.katyshevtseva.kikiorg.core.sections.wardrobe.WardrobeStatisticsService;
 import com.katyshevtseva.kikiorg.core.sections.work.WorkReportService;
 import com.katyshevtseva.kikiorg.core.sections.work.WorkService;
 import lombok.RequiredArgsConstructor;
@@ -36,6 +37,7 @@ public class Core implements InitializingBean {
     private final FinanceSearchService financeSearchService;
     private final TrackerService trackerService;
     private final BoardSortService boardSortService;
+    private final WardrobeStatisticsService wardrobeStatisticsService;
 
     public static Core getInstance() {
         while (INSTANCE == null) {
@@ -127,5 +129,9 @@ public class Core implements InitializingBean {
 
     public BoardSortService boardSortService() {
         return boardSortService;
+    }
+
+    public WardrobeStatisticsService wardrobeStatisticsService() {
+        return wardrobeStatisticsService;
     }
 }

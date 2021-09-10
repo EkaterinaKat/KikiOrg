@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.layout.*?>
+<VBox xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml">
+    <Pane prefHeight="20"/>
+
+    <ScrollPane maxWidth="800" minWidth="800" maxHeight="400" minHeight="400">
+        <VBox>
+            <Pane prefHeight="20"/>
+            <HBox>
+                <Pane prefWidth="20"/>
+
+            </HBox>
+        </VBox>
+        <Label fx:id="label" maxWidth="700" wrapText="true"/>
+    </ScrollPane>
+
+
+    <Pane prefHeight="20"/>
+
+    <ScrollPane maxWidth="800" minWidth="800" maxHeight="400" minHeight="400">
+        <GridPane fx:id="gridPane" alignment="CENTER" hgap="1" vgap="1" gridLinesVisible="true"/>
+    </ScrollPane>
+
+</VBox>

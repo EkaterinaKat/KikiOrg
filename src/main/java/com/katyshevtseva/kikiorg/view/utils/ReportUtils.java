@@ -50,6 +50,10 @@ public class ReportUtils {
             cell.getChildren().add(label);
         }
 
+        if (reportCell.getWidth() != null) {
+            cell.setPrefWidth(reportCell.getWidth());
+        }
+
         HBox.setMargin(label, new Insets(8));
         StackPane.setAlignment(label, Pos.CENTER);
         table.add(cell, column, row);

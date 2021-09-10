@@ -16,20 +16,25 @@ public class MainWardrobeController extends AbstractSwitchController implements 
     @FXML
     private Button piecesButton;
     @FXML
+    private Button statisticsButton;
+    @FXML
     private Pane mainPane;
 
     private Node outfitsNode;
     private Node piecesNode;
+    private Node statisticsNode;
 
     private final OutfitController outfitController = new OutfitController();
     private final PieceController pieceController = new PieceController();
+    private final StatisticsController statisticsController = new StatisticsController();
 
     @FXML
     private void initialize() {
         pane = mainPane;
-        buttons.addAll(Arrays.asList(outfitsButton, piecesButton));
+        buttons.addAll(Arrays.asList(outfitsButton, piecesButton, statisticsButton));
         outfitsButton.setOnAction(event -> outfitsButtonListener());
         piecesButton.setOnAction(event -> piecesButtonListener());
+        statisticsButton.setOnAction(event -> statisticsButtonListener());
         piecesButtonListener();
     }
 
@@ -39,5 +44,9 @@ public class MainWardrobeController extends AbstractSwitchController implements 
 
     private void piecesButtonListener() {
         activateMode(piecesButton, piecesNode, OrganizerWindowCreator.getInstance()::getPiecesNode, pieceController);
+    }
+
+    private void statisticsButtonListener() {
+        activateMode(statisticsButton, statisticsNode, OrganizerWindowCreator.getInstance()::getWardrobeStatisticsNode, statisticsController);
     }
 }
