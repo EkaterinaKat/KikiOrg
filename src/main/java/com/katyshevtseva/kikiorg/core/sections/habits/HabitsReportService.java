@@ -43,7 +43,7 @@ public class HabitsReportService {
 
     private List<ReportCell> getReportLine(Date date, List<Habit> habits) {
         List<ReportCell> result = new ArrayList<>();
-        result.add(ReportCell.date(READABLE_DATE_FORMAT.format(date)));
+        result.add(ReportCell.filled(READABLE_DATE_FORMAT.format(date), ReportCell.Color.WHITE, 100));
         for (Habit habit : habits) {
             result.add(convertToCell(habit, date));
         }
@@ -54,7 +54,7 @@ public class HabitsReportService {
         Mark mark = habitMarkService.getMarkOrNull(habit, date);
         if (mark == null)
             return ReportCell.empty();
-        return ReportCell.filled("");
+        return ReportCell.filled("", ReportCell.Color.GREEN);
     }
 
     private List<ReportCell> getReportHead(List<Habit> habits) {

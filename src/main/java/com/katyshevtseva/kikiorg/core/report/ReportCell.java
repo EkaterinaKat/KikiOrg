@@ -23,27 +23,23 @@ public class ReportCell {
     }
 
     public static ReportCell empty() {
-        return new ReportCell("", Color.WHITE.code, Type.EMPTY, null);
-    }
-
-    public static ReportCell date(String text) {
-        return new ReportCell(text, Color.WHITE.code, Type.DATE, null);
+        return new ReportCell("", Color.WHITE.code, Type.REGULAR, null);
     }
 
     public static ReportCell columnHead(String text) {
-        return new ReportCell(text, Color.WHITE.code, Type.COLUMN_HEAD, null);
+        return new ReportCell(text, Color.WHITE.code, Type.HEAD_COLUMN, null);
     }
 
     public static ReportCell filled(String text) {
-        return new ReportCell(text, Color.GREEN.code, Type.FILLED, null);
+        return new ReportCell(text, Color.WHITE.code, Type.REGULAR, null);
     }
 
     public static ReportCell filled(String text, Color color) {
-        return new ReportCell(text, color.code, Type.FILLED, null);
+        return new ReportCell(text, color.code, Type.REGULAR, null);
     }
 
     public static ReportCell filled(String text, Color color, int width) {
-        return new ReportCell(text, color.code, Type.FILLED, width);
+        return new ReportCell(text, color.code, Type.REGULAR, width);
     }
 
     public String getText() {
@@ -55,11 +51,7 @@ public class ReportCell {
     }
 
     public boolean isColumnHead() {
-        return type == Type.COLUMN_HEAD;
-    }
-
-    public boolean isDate() {
-        return type == Type.DATE;
+        return type == Type.HEAD_COLUMN;
     }
 
     public Integer getWidth() {
@@ -67,6 +59,6 @@ public class ReportCell {
     }
 
     enum Type {
-        DATE, COLUMN_HEAD, EMPTY, FILLED
+        HEAD_COLUMN, REGULAR
     }
 }

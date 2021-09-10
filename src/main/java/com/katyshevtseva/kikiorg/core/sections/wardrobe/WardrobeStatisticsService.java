@@ -23,7 +23,8 @@ public class WardrobeStatisticsService {
             List<ReportCell> line = new ArrayList<>();
             line.add(ReportCell.filled(purpose.toString(), ReportCell.Color.WHITE, 200));
             for (Season season : Season.values()) {
-                line.add(ReportCell.filled("" + getCount(season, purpose), ReportCell.Color.WHITE));
+                int count = getCount(season, purpose);
+                line.add(ReportCell.filled("" + count, count == 0 ? ReportCell.Color.WHITE : ReportCell.Color.SLATE_BLUE));
             }
             report.add(line);
         }

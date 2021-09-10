@@ -40,10 +40,6 @@ public class ReportUtils {
             cell.setPrefHeight(170);
             cell.setPrefWidth(50);
             cell.getChildren().add(new Group(vBox));
-        } else if (reportCell.isDate()) {
-            cell.setPrefWidth(100);
-            cell.setPrefHeight(30);
-            cell.getChildren().add(label);
         } else {
             cell.setPrefHeight(30);
             cell.setPrefWidth(50);

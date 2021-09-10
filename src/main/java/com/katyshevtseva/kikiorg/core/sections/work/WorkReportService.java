@@ -42,7 +42,7 @@ public class WorkReportService {
 
     private List<ReportCell> getReportLine(Date date) {
         List<ReportCell> result = new ArrayList<>();
-        result.add(ReportCell.date(READABLE_DATE_FORMAT.format(date)));
+        result.add(ReportCell.filled(READABLE_DATE_FORMAT.format(date), ReportCell.Color.WHITE, 100));
         for (WorkArea workArea : WorkArea.values()) {
             result.add(convertToCell(workArea, date));
         }
@@ -54,7 +54,7 @@ public class WorkReportService {
         WorkLog workLog = workService.getWorkLogOrNull(workArea, date);
         if (workLog == null)
             return ReportCell.empty();
-        return ReportCell.filled("" + workLog.getMinutes());
+        return ReportCell.filled("" + workLog.getMinutes(), ReportCell.Color.GREEN);
     }
 
     private ReportCell getTotalCellByDate(Date date) {
