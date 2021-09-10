@@ -89,6 +89,8 @@ class PieceDialogController implements FxController {
             selectedImage = toImageUrlAndFileNameContainer(existing);
             setDate(startDatePicker, existing.getStartDate());
             setDate(endDatePicker, existing.getEndDate());
+            startDatePicker.setDisable(true);
+            endDatePicker.setDisable(true);
         }
     }
 }

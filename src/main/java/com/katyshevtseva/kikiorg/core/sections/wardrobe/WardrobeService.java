@@ -35,17 +35,31 @@ public class WardrobeService {
     private final ComponentEntityRepo componentEntityRepo;
     private final DateService dateService;
 
+    public enum PieceStatus {
+        ARCHIVE, ACTIVE
+    }
+
     public List<Piece> getAllPieces() {
         return pieceRepo.findAll().stream()
                 .sorted(Comparator.comparing(Piece::getStartDate, nullsFirst(naturalOrder())))
                 .collect(Collectors.toList());
     }
 
-    public Page<Piece> getPiecePage(int pageNum, ClothesType clothesType) {
+    public List<Piece> getActivePieces() {
+        return pieceRepo.findByEndDateIsNull().stream()
+                .sorted(Comparator.comparing(Piece::getStartDate, nullsFirst(naturalOrder())))
+                .collect(Collectors.toList());
+    }
+
+    public Page<Piece> getPiecePage(int pageNum, ClothesType clothesType, PieceStatus pieceStatus) {
         Pageable pageable = PageRequest.of(pageNum, 9, Sort.by("id").descending());
 
-        org.springframework.data.domain.Page<Piece> piecePage = clothesType == null ?
-                pieceRepo.findAll(pageable) : pieceRepo.findByType(clothesType, pageable);
+        org.springframework.data.domain.Page<Piece> piecePage;
+
+        if (pieceStatus == PieceStatus.ARCHIVE)
+            piecePage = clothesType == null ? pieceRepo.findByEndDateIsNotNull(pageable) : pieceRepo.findByTypeAndEndDateIsNotNull(clothesType, pageable);
+        else
+            piecePage = clothesType == null ? pieceRepo.findByEndDateIsNull(pageable) : pieceRepo.findByTypeAndEndDateIsNull(clothesType, pageable);
 
         return new Page<>(piecePage.getContent(), pageNum, piecePage.getTotalPages());
     }
@@ -101,5 +115,27 @@ public class WardrobeService {
         existing.setCollageEntity(collageEntity);
 
         return outfitRepo.save(existing);
+    }
+
+    public void archivePiece(Piece piece) {
+        piece.setEndDate(dateService.createIfNotExistAndGetDateEntity(new Date()));
+        pieceRepo.save(piece);
+        deletePieceFromAllComponents(piece);
+    }
+
+    private void deletePieceFromAllComponents(Piece piece) {
+        for (ComponentEntity componentEntity : componentEntityRepo.findAll()) {
+            if (componentEntity.getPieces().contains(piece)) {
+                componentEntity.getPieces().remove(piece);
+                if (componentEntity.getPieces().isEmpty()) {
+                    componentEntityRepo.delete(componentEntity);
+                } else {
+                    if (componentEntity.getFrontPiece().equals(piece)) {
+                        componentEntity.setFrontPiece(new ArrayList<>(componentEntity.getPieces()).get(0));
+                    }
+                    componentEntityRepo.save(componentEntity);
+                }
+            }
+        }
     }
 }

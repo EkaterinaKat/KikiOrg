@@ -67,7 +67,7 @@ class CollageUtils {
             return createEmptyCollage();
 
         Collage collage = new CollageBuilder()
-                .allExistingImages(toImageUrlAndPieceContainers(Core.getInstance().wardrobeService().getAllPieces()))
+                .allExistingImages(toImageUrlAndPieceContainers(Core.getInstance().wardrobeService().getActivePieces()))
                 .height(COLLAGE_SIZE)
                 .width(COLLAGE_SIZE)
                 .build();
@@ -95,7 +95,7 @@ class CollageUtils {
         return new CollageBuilder()
                 .height(COLLAGE_SIZE)
                 .width(COLLAGE_SIZE)
-                .allExistingImages(toImageUrlAndPieceContainers(Core.getInstance().wardrobeService().getAllPieces()))
+                .allExistingImages(toImageUrlAndPieceContainers(Core.getInstance().wardrobeService().getActivePieces()))
                 .build();
     }
 }

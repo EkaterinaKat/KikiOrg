@@ -5,15 +5,15 @@
 <VBox xmlns="http://javafx.com/javafx"
       xmlns:fx="http://javafx.com/fxml">
 
-
     <HBox>
         <Button fx:id="pieceCreateButton" text="New Piece"/>
         <Pane prefWidth="20"/>
         <ComboBox fx:id="typeComboBox"/>
         <Pane prefWidth="10"/>
         <Button fx:id="showAllButton" text="Show all"/>
+        <Pane prefWidth="20"/>
+        <ComboBox fx:id="statusComboBox"/>
     </HBox>
-
 
     <Pane prefHeight="20"/>
 
@@ -29,6 +29,8 @@
             <Label fx:id="infoLabel" maxWidth="350" wrapText="true"/>
             <Pane prefHeight="20"/>
             <Button fx:id="editButton" text="Edit" visible="false"/>
+            <Pane prefHeight="20"/>
+            <Button fx:id="archiveButton" text="Archive" visible="false"/>
         </VBox>
     </HBox>
 

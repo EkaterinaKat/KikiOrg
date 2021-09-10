@@ -6,9 +6,11 @@ import com.katyshevtseva.fx.WindowBuilder.FxController;
 import com.katyshevtseva.fx.component.ComponentBuilder;
 import com.katyshevtseva.fx.component.ComponentBuilder.Component;
 import com.katyshevtseva.fx.component.controller.GalleryController;
+import com.katyshevtseva.fx.dialog.StandardDialogBuilder;
 import com.katyshevtseva.general.Page;
 import com.katyshevtseva.kikiorg.core.Core;
 import com.katyshevtseva.kikiorg.core.sections.wardrobe.WardrobeService;
+import com.katyshevtseva.kikiorg.core.sections.wardrobe.WardrobeService.PieceStatus;
 import com.katyshevtseva.kikiorg.core.sections.wardrobe.entity.Piece;
 import com.katyshevtseva.kikiorg.core.sections.wardrobe.enums.ClothesType;
 import com.katyshevtseva.kikiorg.view.controller.pagination.PaginationPaneController;
@@ -47,9 +49,16 @@ class PieceController implements FxController {
     private ComboBox<ClothesType> typeComboBox;
     @FXML
     private Button showAllButton;
+    @FXML
+    private Button archiveButton;
+    @FXML
+    private ComboBox<PieceStatus> statusComboBox;
 
     @FXML
     private void initialize() {
+        FxUtils.setComboBoxItems(statusComboBox, PieceStatus.values());
+        statusComboBox.setValue(PieceStatus.ACTIVE);
+        statusComboBox.setOnAction(event -> paginationPaneController.loadPage());
         tunePiecesGallery();
         pieceCreateButton.setOnAction(event ->
                 OrganizerWindowCreator.getInstance().openPieceEditDialog(
@@ -72,7 +81,7 @@ class PieceController implements FxController {
     }
 
     private Page<Piece> getPiecePage(int pageNum) {
-        return service.getPiecePage(pageNum, typeComboBox.getValue());
+        return service.getPiecePage(pageNum, typeComboBox.getValue(), statusComboBox.getValue());
     }
 
     private void showPieceFullInfo(Piece piece) {
@@ -80,12 +89,19 @@ class PieceController implements FxController {
         imagePane.getChildren().add(placeImageInSquare(new ImageView(ImageCreator.getInstance().getImageContainer(piece).getImage()), 350));
         infoLabel.setText(piece.getFullDesc());
         editButton.setVisible(true);
+        archiveButton.setVisible(true);
         editButton.setOnAction(event ->
                 OrganizerWindowCreator.getInstance().openPieceEditDialog(
                         new PieceDialogController(piece, savedPiece -> {
                             paginationPaneController.loadPage();
                             showPieceFullInfo(savedPiece);
                         })));
+        archiveButton.setOnAction(event -> new StandardDialogBuilder().openQuestionDialog("Archive?", b -> {
+            if (b) {
+                service.archivePiece(piece);
+                paginationPaneController.loadPage();
+            }
+        }));
     }
 
     private void setContent(List<Piece> pieces) {
@@ -97,6 +113,7 @@ class PieceController implements FxController {
         imagePane.getChildren().clear();
         infoLabel.setText("");
         editButton.setVisible(false);
+        archiveButton.setVisible(false);
     }
 
     private void tunePiecesGallery() {
