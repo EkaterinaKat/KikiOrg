@@ -1,14 +1,19 @@
 package com.katyshevtseva.kikiorg.view.controller.wardrobe;
 
+import com.katyshevtseva.fx.FxUtils;
 import com.katyshevtseva.fx.WindowBuilder.FxController;
 import com.katyshevtseva.general.GeneralUtils;
+import com.katyshevtseva.general.Page;
 import com.katyshevtseva.kikiorg.core.Core;
 import com.katyshevtseva.kikiorg.core.sections.wardrobe.WardrobeService;
 import com.katyshevtseva.kikiorg.core.sections.wardrobe.entity.Outfit;
+import com.katyshevtseva.kikiorg.core.sections.wardrobe.enums.Purpose;
+import com.katyshevtseva.kikiorg.core.sections.wardrobe.enums.Season;
 import com.katyshevtseva.kikiorg.view.controller.pagination.PaginationPaneController;
 import com.katyshevtseva.kikiorg.view.utils.OrganizerWindowCreator;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
@@ -19,6 +24,12 @@ class OutfitController implements FxController {
     private final WardrobeService service = Core.getInstance().wardrobeService();
     @FXML
     private Button outfitCreateButton;
+    @FXML
+    private ComboBox<Purpose> purposeComboBox;
+    @FXML
+    private ComboBox<Season> seasonComboBox;
+    @FXML
+    private Button showAllButton;
     @FXML
     private Button outfitEditButton;
     @FXML
@@ -38,11 +49,28 @@ class OutfitController implements FxController {
                 })));
 
         tunePagination();
+        tuneFilters();
     }
 
     private void tunePagination() {
-        paginationPaneController = new PaginationPaneController<>(service::getOutfitPage, this::setContent);
+        paginationPaneController = new PaginationPaneController<>(this::getOutfitPage, this::setContent);
         paginationPane.getChildren().add(OrganizerWindowCreator.getInstance().getPaginationPaneNode(paginationPaneController));
+    }
+
+    Page<Outfit> getOutfitPage(int pageNum) {
+        return service.getOutfitPage(pageNum, purposeComboBox.getValue(), seasonComboBox.getValue());
+    }
+
+    private void tuneFilters() {
+        FxUtils.setComboBoxItems(purposeComboBox, Purpose.values());
+        FxUtils.setComboBoxItems(seasonComboBox, Season.values());
+        purposeComboBox.setOnAction(event -> paginationPaneController.loadPage());
+        seasonComboBox.setOnAction(event -> paginationPaneController.loadPage());
+        showAllButton.setOnAction(event -> {
+            purposeComboBox.setValue(null);
+            seasonComboBox.setValue(null);
+            paginationPaneController.loadPage();
+        });
     }
 
     private void showOutfitInfo(Outfit outfit) {

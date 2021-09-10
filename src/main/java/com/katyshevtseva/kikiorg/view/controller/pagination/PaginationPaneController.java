@@ -47,6 +47,18 @@ public class PaginationPaneController<T> implements FxController {
         totalPages = page.getTotalPages();
         label.setText((pageNum + 1) + "/" + page.getTotalPages());
         setButtonAbility();
+        handleSpecificSituations(page);
+    }
+
+    private void handleSpecificSituations(Page<T> page) {
+        if (page.getTotalPages() == 0) {
+            prevButton.setDisable(true);
+            nextButton.setDisable(true);
+            label.setText("0/0");
+        } else if (page.getTotalPages() <= pageNum) {
+            pageNum = 0;
+            loadPage();
+        }
     }
 
     private void setButtonAbility() {

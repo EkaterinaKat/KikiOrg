@@ -64,8 +64,13 @@ public class WardrobeService {
         return new Page<>(piecePage.getContent(), pageNum, piecePage.getTotalPages());
     }
 
-    public Page<Outfit> getOutfitPage(int pageNum) {
-        org.springframework.data.domain.Page<Outfit> outfitPage = outfitRepo.findAll(PageRequest.of(pageNum, 4));
+    public Page<Outfit> getOutfitPage(int pageNum, Purpose purpose, Season season) {
+        List<Purpose> purposes = purpose == null ? Arrays.asList(Purpose.values()) : Collections.singletonList(purpose);
+        List<Season> seasons = season == null ? Arrays.asList(Season.values()) : Collections.singletonList(season);
+
+        org.springframework.data.domain.Page<Outfit> outfitPage = outfitRepo.findByPurposesAndSeasons(
+                purposes, seasons, PageRequest.of(pageNum, 4, Sort.by("id").descending()));
+
         return new Page<>(outfitPage.getContent(), pageNum, outfitPage.getTotalPages());
     }
 
@@ -85,10 +90,6 @@ public class WardrobeService {
         existing.setType(type);
 
         return pieceRepo.save(existing);
-    }
-
-    public List<Outfit> getAllOutfits() {
-        return new ArrayList<>(outfitRepo.findAll());
     }
 
     public CollageEntity saveCollage(CollageEntity existing) {
