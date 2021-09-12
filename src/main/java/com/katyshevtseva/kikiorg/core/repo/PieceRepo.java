@@ -23,6 +23,8 @@ public interface PieceRepo extends JpaRepository<Piece, Long> {
 
     List<Piece> findByEndDateIsNull();
 
+    Long countByType(ClothesType type);
+
     @Query("SELECT p FROM Piece p " +
             "WHERE p.id NOT IN (SELECT cp.id FROM ComponentEntity c JOIN c.pieces cp) " +
             "AND p.endDate IS NULL " +
