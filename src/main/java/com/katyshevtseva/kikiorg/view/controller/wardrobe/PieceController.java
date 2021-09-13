@@ -102,6 +102,7 @@ class PieceController implements FxController {
                 paginationPaneController.loadPage();
             }
         }));
+        archiveButton.setDisable(piece.getEndDate() != null);
     }
 
     private void setContent(List<Piece> pieces) {

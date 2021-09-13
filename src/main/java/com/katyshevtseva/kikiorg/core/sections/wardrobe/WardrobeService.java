@@ -135,6 +135,10 @@ public class WardrobeService {
     }
 
     public void archivePiece(Piece piece) {
+        if (piece.getEndDate() != null) {
+            throw new RuntimeException("Вещь уже архивирована");
+        }
+
         piece.setEndDate(dateService.createIfNotExistAndGetDateEntity(new Date()));
         pieceRepo.save(piece);
         deletePieceFromAllComponents(piece);
