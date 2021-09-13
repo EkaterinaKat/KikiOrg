@@ -50,6 +50,25 @@ class OutfitDialogController implements FxController {
         saveButton.setOnAction(event -> save());
         setCollagePaneSize();
         tuneCollage();
+        setSaveButtonAbility();
+    }
+
+    private void setSaveButtonAbility() {
+        boolean purposeSelected = false;
+        for (CheckBox checkBox : purposesCheckBoxes) {
+            if (checkBox.isSelected()) {
+                purposeSelected = true;
+            }
+        }
+
+        boolean seasonSelected = false;
+        for (CheckBox checkBox : seasonsCheckBoxes) {
+            if (checkBox.isSelected()) {
+                seasonSelected = true;
+            }
+        }
+
+        saveButton.setDisable(!purposeSelected || !seasonSelected);
     }
 
     private void tuneCollage() {
@@ -92,6 +111,7 @@ class OutfitDialogController implements FxController {
     private void adjustCheckBoxPanes() {
         for (Season season : Season.values()) {
             CheckBox checkBox = new CheckBox(season.getTitle());
+            checkBox.setOnAction(event -> setSaveButtonAbility());
             seasonsCheckBoxes.add(checkBox);
             seasonsPane.getChildren().addAll(checkBox, getPaneWithHeight(10));
             if (existing != null)
@@ -100,6 +120,7 @@ class OutfitDialogController implements FxController {
 
         for (Purpose purpose : Purpose.values()) {
             CheckBox checkBox = new CheckBox(purpose.getTitle());
+            checkBox.setOnAction(event -> setSaveButtonAbility());
             purposesCheckBoxes.add(checkBox);
             purposesPane.getChildren().addAll(checkBox, getPaneWithHeight(10));
             if (existing != null)

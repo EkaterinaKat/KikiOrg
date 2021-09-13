@@ -71,11 +71,17 @@ public class WardrobeService {
     }
 
     public Page<Outfit> getOutfitPage(int pageNum, Purpose purpose, Season season) {
-        List<Purpose> purposes = purpose == null ? Arrays.asList(Purpose.values()) : Collections.singletonList(purpose);
-        List<Season> seasons = season == null ? Arrays.asList(Season.values()) : Collections.singletonList(season);
+        Pageable pageable = PageRequest.of(pageNum, 4, Sort.by("id").descending());
+        org.springframework.data.domain.Page<Outfit> outfitPage;
 
-        org.springframework.data.domain.Page<Outfit> outfitPage = outfitRepo.findByPurposesAndSeasons(
-                purposes, seasons, PageRequest.of(pageNum, 4, Sort.by("id").descending()));
+        if (purpose == null && season == null) {
+            outfitPage = outfitRepo.findAll(pageable);
+        } else {
+            List<Purpose> purposes = purpose == null ? Arrays.asList(Purpose.values()) : Collections.singletonList(purpose);
+            List<Season> seasons = season == null ? Arrays.asList(Season.values()) : Collections.singletonList(season);
+
+            outfitPage = outfitRepo.findByPurposesAndSeasons(purposes, seasons, pageable);
+        }
 
         return new Page<>(outfitPage.getContent(), pageNum, outfitPage.getTotalPages());
     }
@@ -115,6 +121,10 @@ public class WardrobeService {
     }
 
     public Outfit saveOutfit(Outfit existing, Set<Season> seasons, Set<Purpose> purposes, CollageEntity collageEntity) {
+        if (seasons.isEmpty() || purposes.isEmpty()) {
+            throw new RuntimeException("Цели или сезоны не заполнены");
+        }
+
         if (existing == null)
             existing = new Outfit();
         existing.setPurposes(purposes);
