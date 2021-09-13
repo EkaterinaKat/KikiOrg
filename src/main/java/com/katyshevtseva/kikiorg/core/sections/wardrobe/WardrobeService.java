@@ -120,13 +120,14 @@ public class WardrobeService {
         }
     }
 
-    public Outfit saveOutfit(Outfit existing, Set<Season> seasons, Set<Purpose> purposes, CollageEntity collageEntity) {
+    public Outfit saveOutfit(Outfit existing, String comment, Set<Season> seasons, Set<Purpose> purposes, CollageEntity collageEntity) {
         if (seasons.isEmpty() || purposes.isEmpty()) {
             throw new RuntimeException("Цели или сезоны не заполнены");
         }
 
         if (existing == null)
             existing = new Outfit();
+        existing.setComment(comment != null ? comment.trim() : null);
         existing.setPurposes(purposes);
         existing.setSeasons(seasons);
         existing.setCollageEntity(collageEntity);

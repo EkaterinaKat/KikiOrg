@@ -10,6 +10,7 @@ import com.katyshevtseva.kikiorg.core.sections.wardrobe.enums.Season;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
+import javafx.scene.control.TextArea;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 
@@ -33,6 +34,8 @@ class OutfitDialogController implements FxController {
     @FXML
     private Button componentAddButton;
     @FXML
+    private TextArea commentTextArea;
+    @FXML
     private VBox seasonsPane;
     @FXML
     private VBox purposesPane;
@@ -51,6 +54,10 @@ class OutfitDialogController implements FxController {
         setCollagePaneSize();
         tuneCollage();
         setSaveButtonAbility();
+
+        if (existing != null) {
+            commentTextArea.setText(existing.getComment());
+        }
     }
 
     private void setSaveButtonAbility() {
@@ -87,6 +94,7 @@ class OutfitDialogController implements FxController {
     private void save() {
         Outfit saved = Core.getInstance().wardrobeService().saveOutfit(
                 existing,
+                commentTextArea.getText(),
                 getSelectedSeasons(),
                 getSelectedPurposes(),
                 CollageUtils.saveCollage(existing != null ? existing.getCollageEntity() : null, collage));

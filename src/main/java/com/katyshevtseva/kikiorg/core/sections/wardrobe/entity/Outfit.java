@@ -14,6 +14,8 @@ public class Outfit {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    private String comment;
+
     @ElementCollection(fetch = FetchType.EAGER)
     @JoinTable(name = "outfits_seasons", joinColumns = @JoinColumn(name = "outfit_id"))
     @Enumerated(EnumType.STRING)
@@ -29,7 +31,7 @@ public class Outfit {
     private CollageEntity collageEntity;
 
     public String getFullDesc() {
-        StringBuilder fullDesc = new StringBuilder("Seasons: ");
+        StringBuilder fullDesc = new StringBuilder(comment != null ? comment : "").append("\n\nSeasons: ");
         for (Season season : seasons)
             fullDesc.append(season).append(", ");
         fullDesc.delete(fullDesc.length() - 2, fullDesc.length());
