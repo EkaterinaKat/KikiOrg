@@ -14,7 +14,7 @@ public enum ClothesType {
     LIGHT_OUTWEAR("Легкая верхняя одежда"), JUMPER("Джемпер"), OTHER("Прочее"), JEANS("Джинсы"),
     LEGGINGS("Леггинсы"), TOP("Топ/майка"), PANTS("Брюки"), SNEAKERS("Кроссовки/кеды"),
     BOOTS("Сапоги"), SPORTS_TROUSERS("Спортивные штаны"), SHIRT("Рубашка"), LOW_BOOTS("Ботинки"),
-    SHOES("Туфли"), UNDERWEAR("Нижнее бельё"), UP("Прочий верх");
+    SHOES("Туфли"), UP("Прочий верх");
 
     private final String title;
 

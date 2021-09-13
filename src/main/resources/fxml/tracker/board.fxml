@@ -9,7 +9,7 @@
     <HBox>
         <Button fx:id="addTaskButton" text="Add Task"/>
         <Pane maxWidth="20" minWidth="20"/>
-        <ComboBox fx:id="taskTypeComboBox"/>
+        <ComboBox fx:id="statusComboBox"/>
         <Pane maxWidth="20" minWidth="20"/>
         <Label text="Sort: "/>
         <ComboBox fx:id="sortComboBox"/>
@@ -17,13 +17,17 @@
         <Label fx:id="statisticsLabel"/>
     </HBox>
     <Pane minHeight="25" maxHeight="25"/>
-    <ScrollPane minHeight="750" maxHeight="750" minWidth="900" maxWidth="900">
-        <HBox>
-            <Pane maxWidth="20" minWidth="20"/>
-            <VBox fx:id="taskPane"/>
-        </HBox>
 
-    </ScrollPane>
+    <GridPane vgap="10">
+        <ScrollPane minHeight="750" maxHeight="750" minWidth="900" maxWidth="900" GridPane.columnIndex="0"
+                    GridPane.rowIndex="0">
+            <HBox>
+                <Pane maxWidth="20" minWidth="20"/>
+                <VBox fx:id="taskPane"/>
+            </HBox>
+        </ScrollPane>
+        <VBox fx:id="paginationPane" GridPane.columnIndex="0" GridPane.rowIndex="1"/>
+    </GridPane>
 
 
 </VBox>
