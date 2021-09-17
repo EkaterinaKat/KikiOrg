@@ -1,8 +1,6 @@
 package com.katyshevtseva.kikiorg.core;
 
 import com.katyshevtseva.kikiorg.core.sections.finance.*;
-import com.katyshevtseva.kikiorg.core.sections.finance.report.ExpensesReportService;
-import com.katyshevtseva.kikiorg.core.sections.finance.report.IncomeReportService;
 import com.katyshevtseva.kikiorg.core.sections.habits.*;
 import com.katyshevtseva.kikiorg.core.sections.tracker.BoardSortService;
 import com.katyshevtseva.kikiorg.core.sections.tracker.TrackerService;
@@ -25,8 +23,6 @@ public class Core implements InitializingBean {
     private final FinanceOperationService financeOperationService;
     private final ItemHierarchyService itemHierarchyService;
     private final ItemSchemaService itemSchemaService;
-    private final ExpensesReportService expensesReportService;
-    private final IncomeReportService incomeReportService;
     private final HabitMarkService habitMarkService;
     private final WardrobeService wardrobeService;
     private final AnalysisService analysisService;
@@ -81,14 +77,6 @@ public class Core implements InitializingBean {
 
     public ItemSchemaService itemSchemaService() {
         return itemSchemaService;
-    }
-
-    public ExpensesReportService expensesReportService() {
-        return expensesReportService;
-    }
-
-    public IncomeReportService incomeReportService() {
-        return incomeReportService;
     }
 
     public HabitMarkService habitMarkService() {
