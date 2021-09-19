@@ -1,11 +1,75 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.layout.HBox?>
-<HBox xmlns="http://javafx.com/javafx"
+<?import javafx.scene.chart.PieChart?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<VBox xmlns="http://javafx.com/javafx"
       xmlns:fx="http://javafx.com/fxml">
 
-    <Label text="Здесь будет отчет"/>
+    <Pane minHeight="20" maxHeight="20"/>
 
-</HBox>
+    <HBox>
+        <Pane minWidth="20" maxWidth="20"/>
+
+        <VBox>
+            <ScrollPane maxWidth="300" minWidth="300" maxHeight="400" minHeight="400">
+                <HBox>
+                    <Pane minWidth="15" maxWidth="15"/>
+                    <VBox fx:id="accountPane">
+
+                    </VBox>
+                </HBox>
+            </ScrollPane>
+            <Pane minHeight="20" maxHeight="20"/>
+            <ScrollPane maxWidth="300" minWidth="300" maxHeight="400" minHeight="400">
+                <HBox>
+                    <Pane minWidth="15" maxWidth="15"/>
+                    <VBox fx:id="periodPane">
+
+                    </VBox>
+                </HBox>
+            </ScrollPane>
+            <Pane minHeight="20" maxHeight="20"/>
+            <Button fx:id="showButton" text="Show" maxWidth="300" minWidth="300"/>
+        </VBox>
+
+        <Pane minWidth="20" maxWidth="20"/>
+
+        <VBox>
+            <HBox maxHeight="400" minHeight="400" maxWidth="1100" minWidth="1100" styleClass="black_border">
+                <Pane minWidth="20" maxWidth="20"/>
+                <VBox>
+                    <Pane minHeight="10" maxHeight="10"/>
+                    <Label fx:id="replenishmentLabel" text="replenishmentLabel"/>
+                    <Pane minHeight="10" maxHeight="10"/>
+                    <ScrollPane minWidth="400" maxWidth="400" minHeight="300" maxHeight="300">
+                        <GridPane fx:id="replenishmentTable" alignment="CENTER" hgap="1" vgap="1"
+                                  gridLinesVisible="true"/>
+                    </ScrollPane>
+                </VBox>
+                <Pane minWidth="10" maxWidth="10"/>
+                <PieChart fx:id="replenishmentChart"/>
+            </HBox>
+            <Pane minHeight="20" maxHeight="20"/>
+
+            <HBox maxHeight="400" minHeight="400" maxWidth="1100" minWidth="1100" styleClass="black_border">
+                <Pane minWidth="20" maxWidth="20"/>
+                <VBox>
+                    <Pane minHeight="10" maxHeight="10"/>
+                    <Label fx:id="expenseLabel" text="expenseLabel"/>
+                    <Pane minHeight="10" maxHeight="10"/>
+                    <ScrollPane minWidth="400" maxWidth="400" minHeight="300" maxHeight="300">
+                        <GridPane fx:id="expenseTable" alignment="CENTER" hgap="1" vgap="1" gridLinesVisible="true"/>
+                    </ScrollPane>
+                </VBox>
+                <Pane minWidth="10" maxWidth="10"/>
+                <PieChart fx:id="expenseChart"/>
+            </HBox>
+            <Pane minHeight="20" maxHeight="20"/>
+
+            <Label fx:id="resultLabel" text="resultLabel"/>
+        </VBox>
+    </HBox>
+
+</VBox>

@@ -32,14 +32,13 @@ public class MainFinanceController extends AbstractSwitchController implements F
 
     private Node historyNode;
     private Node itemHierarchyNode;
-    private Node reportNode;
     private Node adminNode;
     private Node ledgerNode;
 
     @FXML
     private void initialize() {
         pane = mainPane;
-        buttons.addAll(Arrays.asList(ledgerButton, historyButton, itemHierarchyButton, reportButton, adminButton));
+        buttons.addAll(Arrays.asList(ledgerButton, historyButton, itemHierarchyButton, adminButton));
         ledgerButtonListener();
         historyButton.setOnAction(event -> historyButtonListener());
         itemHierarchyButton.setOnAction(event -> itemHierarchyButtonListener());
@@ -64,8 +63,7 @@ public class MainFinanceController extends AbstractSwitchController implements F
     }
 
     private void reportButtonListener() {
-        activateMode(reportButton, reportNode,
-                OrganizerWindowCreator.getInstance()::getFinanceReportNode, reportController);
+        OrganizerWindowCreator.getInstance().openFinanceReportDialog(reportController);
     }
 
     private void historyButtonListener() {

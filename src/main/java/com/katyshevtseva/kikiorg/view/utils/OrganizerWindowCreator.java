@@ -177,8 +177,10 @@ public class OrganizerWindowCreator {
         return new WindowBuilder(FINANCE_FXML_LOCATION + "item_hierarchy.fxml").setController(controller).getNode();
     }
 
-    public Node getFinanceReportNode(FxController controller) {
-        return new WindowBuilder(FINANCE_FXML_LOCATION + "report.fxml").setController(controller).getNode();
+    public void openFinanceReportDialog(FxController controller) {
+        new WindowBuilder(FINANCE_FXML_LOCATION + "report.fxml")
+                .setController(controller).setHeight(WINDOW_HEIGHT).
+                setWidth(WINDOW_WIDTH).setTitle("Finance report").showWindow();
     }
 
     public Node getFinanceAdminNode(FxController controller) {
