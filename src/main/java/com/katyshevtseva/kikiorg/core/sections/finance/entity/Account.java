@@ -23,6 +23,8 @@ public class Account implements OperationEnd {
 
     private boolean archived;
 
+    private Boolean my;
+
     public String getTitle() {
         if (archived)
             return title + " (archived)";
