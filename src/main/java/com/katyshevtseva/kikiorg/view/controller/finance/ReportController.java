@@ -16,6 +16,7 @@ import javafx.scene.layout.VBox;
 
 import java.util.Comparator;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
@@ -55,14 +56,15 @@ class ReportController implements FxController {
     }
 
     private void showReport() {
-        if (toggleGroup.getSelectedToggle() == null) {
+        List<Account> accounts = checkBoxAccountMap.keySet().stream().filter(CheckBox::isSelected)
+                .map(checkBox -> checkBoxAccountMap.get(checkBox)).collect(Collectors.toList());
+        ReportPeriod reportPeriod = radioButtonPeriodMap.get((RadioButton) toggleGroup.getSelectedToggle());
+
+        if (accounts.isEmpty() || reportPeriod == null) {
             return;
         }
 
-        reportService.getReport(
-                checkBoxAccountMap.keySet().stream().filter(CheckBox::isSelected)
-                        .map(checkBox -> checkBoxAccountMap.get(checkBox)).collect(Collectors.toList()),
-                radioButtonPeriodMap.get((RadioButton) toggleGroup.getSelectedToggle()));
+        reportService.getReport(accounts, reportPeriod);
     }
 
     private void tuneAccountPane() {

@@ -1,6 +1,7 @@
 package com.katyshevtseva.kikiorg.core.sections.finance;
 
 import com.katyshevtseva.date.DateUtils;
+import com.katyshevtseva.date.Period;
 import com.katyshevtseva.kikiorg.core.sections.finance.FinanceOperationService.OperationType;
 import lombok.Getter;
 
@@ -33,6 +34,11 @@ public class SearchRequest {
             this.end = java.sql.Date.valueOf(end);
     }
 
+    public void setPeriod(Period period) {
+        start = period.start();
+        end = period.end();
+    }
+
     public void setMinAmount(String minAmountString) {
         if (!isEmpty(minAmountString))
             minAmount = Long.parseLong(minAmountString);
@@ -53,5 +59,21 @@ public class SearchRequest {
 
     public void setTo(List<OperationEnd> to, List<OperationEnd> fullList) {
         this.to = to.isEmpty() ? fullList : to;
+    }
+
+    public void setFrom(List<OperationEnd> from) {
+        if (from == null || from.isEmpty()) {
+            throw new RuntimeException();
+        }
+
+        this.from = from;
+    }
+
+    public void setTo(List<OperationEnd> to) {
+        if (to == null || to.isEmpty()) {
+            throw new RuntimeException();
+        }
+
+        this.to = to;
     }
 }

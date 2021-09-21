@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -55,6 +56,17 @@ public class ItemHierarchyService {
             }
         }
         return leaves;
+    }
+
+    public List<Item> getAllDescendantItemsByHierarchyNode(ItemHierarchyNode root) {
+        if (root.isLeaf())
+            return Collections.singletonList(((ItemHierarchyLeaf) root).getItem());
+
+        List<Item> items = new ArrayList<>();
+        for (ItemHierarchyNode node : getNodesByParent(root)) {
+            items.addAll(getAllDescendantItemsByHierarchyNode(node));
+        }
+        return items;
     }
 
     public List<ItemHierarchyNode> getNodesByParent(ItemHierarchyNode parentNode) {
