@@ -61,17 +61,24 @@ public class FinanceReport {
             initializePieChartData();
 
         table = new ArrayList<>();
+
+        List<ReportCell> headline = new ArrayList<>();
+        headline.add(ReportCell.filled("Total", ReportCell.Color.WHITE, 180));
+        headline.add(ReportCell.filled(getTotal() + "", ReportCell.Color.WHITE, 100));
+        headline.add(ReportCell.filled("100%", ReportCell.Color.WHITE, 100));
+        table.add(headline);
+
         for (PieChartData.Segment segment : pieChartData.getGetSegmentList()) {
             List<ReportCell> line = new ArrayList<>();
-            line.add(ReportCell.filled(segment.getTitle(), ReportCell.Color.WHITE, 200));
+            line.add(ReportCell.filled(segment.getTitle(), ReportCell.Color.WHITE, 180));
             line.add(ReportCell.filled(segment.getAmount() + "", ReportCell.Color.WHITE, 100));
-            line.add(ReportCell.filled(segment.getPercent() + "", ReportCell.Color.WHITE, 100));
+            line.add(ReportCell.filled(segment.getPercent() + "%", ReportCell.Color.WHITE, 100));
             table.add(line);
         }
     }
 
     private void initializePieChartData() {
-        PieChartData pieChartData = new PieChartData(title);
+        pieChartData = new PieChartData(title);
         for (Line line : lines) {
             pieChartData.addSegment(new PieChartData.Segment(line.value.intValue(), line.title, null)); //todo
         }

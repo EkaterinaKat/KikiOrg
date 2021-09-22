@@ -44,7 +44,7 @@
             <Pane fx:id="outgoPane"/>
             <Pane minHeight="20" maxHeight="20"/>
 
-            <Label fx:id="resultLabel" text="resultLabel"/>
+            <Label fx:id="resultLabel"/>
         </VBox>
     </HBox>
 

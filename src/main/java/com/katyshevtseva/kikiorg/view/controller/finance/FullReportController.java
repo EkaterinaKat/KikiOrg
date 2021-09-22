@@ -6,6 +6,7 @@ import com.katyshevtseva.kikiorg.core.Core;
 import com.katyshevtseva.kikiorg.core.sections.finance.FinanceService;
 import com.katyshevtseva.kikiorg.core.sections.finance.entity.Account;
 import com.katyshevtseva.kikiorg.core.sections.finance.report.FinanceReportService;
+import com.katyshevtseva.kikiorg.core.sections.finance.report.FullFinanceReport;
 import com.katyshevtseva.kikiorg.core.sections.finance.report.ReportPeriodService;
 import com.katyshevtseva.kikiorg.core.sections.finance.report.ReportPeriodService.ReportPeriod;
 import com.katyshevtseva.kikiorg.view.utils.OrganizerWindowCreator;
@@ -61,7 +62,10 @@ class FullReportController implements FxController {
             return;
         }
 
-        reportService.getReport(accounts, reportPeriod);
+        FullFinanceReport report = reportService.getReport(accounts, reportPeriod);
+        resultLabel.setText("Total: " + report.getTotal());
+        incomePaneController.showReport(report.getIncomeReport());
+        outgoPaneController.showReport(report.getOutgoReport());
     }
 
     private void tuneAccountPane() {

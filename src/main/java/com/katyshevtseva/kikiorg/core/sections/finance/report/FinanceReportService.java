@@ -82,7 +82,7 @@ public class FinanceReportService {
 
         Map<String, Long> titleValueMap = new HashMap<>();
         for (Transfer transfer : transfers) {
-            String lineTitle = "Перевод с " + transfer.getFrom().getTitle();
+            String lineTitle = "tr: " + transfer.getFrom().getTitle();
             titleValueMap.put(lineTitle, titleValueMap.getOrDefault(lineTitle, 0L) + transfer.getAmount());
         }
         for (Map.Entry<String, Long> entry : titleValueMap.entrySet()) {
@@ -119,7 +119,7 @@ public class FinanceReportService {
 
         Map<String, Long> titleValueMap = new HashMap<>();
         for (Transfer transfer : transfers) {
-            String lineTitle = "Перевод на " + transfer.getFrom().getTitle();
+            String lineTitle = "tr: " + transfer.getTo().getTitle();
             titleValueMap.put(lineTitle, titleValueMap.getOrDefault(lineTitle, 0L) + transfer.getAmount());
         }
         for (Map.Entry<String, Long> entry : titleValueMap.entrySet()) {
