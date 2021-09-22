@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+<?import javafx.scene.chart.PieChart?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.layout.*?>
+<HBox xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml"
+      maxHeight="400" minHeight="400" maxWidth="1100" minWidth="1100" styleClass="black_border">
+
+    <Pane minWidth="20" maxWidth="20"/>
+
+    <VBox>
+        <Pane minHeight="10" maxHeight="10"/>
+        <Label fx:id="label" text="replenishmentLabel"/>
+        <Pane minHeight="10" maxHeight="10"/>
+        <ScrollPane minWidth="400" maxWidth="400" minHeight="300" maxHeight="300">
+            <GridPane fx:id="table" alignment="CENTER" hgap="1" vgap="1"
+                      gridLinesVisible="true"/>
+        </ScrollPane>
+    </VBox>
+
+    <Pane minWidth="10" maxWidth="10"/>
+
+    <PieChart fx:id="pieChart"/>
+
+</HBox>
+
+

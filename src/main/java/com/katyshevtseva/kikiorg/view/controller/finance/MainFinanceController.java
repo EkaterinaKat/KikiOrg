@@ -26,7 +26,7 @@ public class MainFinanceController extends AbstractSwitchController implements F
 
     private final HistoryController historyController = new HistoryController();
     private final ItemHierarchyController itemHierarchyController = new ItemHierarchyController();
-    private final ReportController reportController = new ReportController();
+    private final FullReportController fullReportController = new FullReportController();
     private final AdminController adminController = new AdminController();
     private final LedgerController ledgerController = new LedgerController();
 
@@ -63,7 +63,7 @@ public class MainFinanceController extends AbstractSwitchController implements F
     }
 
     private void reportButtonListener() {
-        OrganizerWindowCreator.getInstance().openFinanceReportDialog(reportController);
+        OrganizerWindowCreator.getInstance().openFinanceReportDialog(fullReportController);
     }
 
     private void historyButtonListener() {

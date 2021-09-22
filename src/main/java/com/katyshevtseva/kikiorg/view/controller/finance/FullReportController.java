@@ -8,10 +8,10 @@ import com.katyshevtseva.kikiorg.core.sections.finance.entity.Account;
 import com.katyshevtseva.kikiorg.core.sections.finance.report.FinanceReportService;
 import com.katyshevtseva.kikiorg.core.sections.finance.report.ReportPeriodService;
 import com.katyshevtseva.kikiorg.core.sections.finance.report.ReportPeriodService.ReportPeriod;
+import com.katyshevtseva.kikiorg.view.utils.OrganizerWindowCreator;
 import javafx.fxml.FXML;
-import javafx.scene.chart.PieChart;
 import javafx.scene.control.*;
-import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 
 import java.util.Comparator;
@@ -20,13 +20,15 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-class ReportController implements FxController {
+class FullReportController implements FxController {
     private final FinanceReportService reportService = Core.getInstance().financeReportService();
     private final ReportPeriodService periodService = Core.getInstance().reportPeriodService();
     private final FinanceService financeService = Core.getInstance().financeService();
     private Map<CheckBox, Account> checkBoxAccountMap;
     private ToggleGroup toggleGroup;
     private Map<RadioButton, ReportPeriod> radioButtonPeriodMap;
+    private final ReportPaneController incomePaneController = new ReportPaneController();
+    private final ReportPaneController outgoPaneController = new ReportPaneController();
     @FXML
     private VBox accountPane;
     @FXML
@@ -34,17 +36,9 @@ class ReportController implements FxController {
     @FXML
     private Button showButton;
     @FXML
-    private Label replenishmentLabel;
+    private Pane incomePane;
     @FXML
-    private GridPane replenishmentTable;
-    @FXML
-    private PieChart replenishmentChart;
-    @FXML
-    private Label expenseLabel;
-    @FXML
-    private GridPane expenseTable;
-    @FXML
-    private PieChart expenseChart;
+    private Pane outgoPane;
     @FXML
     private Label resultLabel;
 
@@ -53,6 +47,9 @@ class ReportController implements FxController {
         tuneAccountPane();
         tunePeriodPane();
         showButton.setOnAction(event -> showReport());
+
+        incomePane.getChildren().add(OrganizerWindowCreator.getInstance().getReportPaneNode(incomePaneController));
+        outgoPane.getChildren().add(OrganizerWindowCreator.getInstance().getReportPaneNode(outgoPaneController));
     }
 
     private void showReport() {
