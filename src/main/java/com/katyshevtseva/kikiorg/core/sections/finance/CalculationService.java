@@ -27,18 +27,19 @@ public class CalculationService {
         List<Transfer> transfersToAccount = transferRepo.findAllByTo(account);
         List<Transfer> transfersFromAccount = transferRepo.findAllByFrom(account);
         long amount = 0;
-        for (Replenishment replenishment : replenishments) {
-            amount += replenishment.getAmount();
-        }
-        for (Expense expense : expenses) {
-            amount -= expense.getAmount();
-        }
-        for (Transfer transfer : transfersToAccount) {
-            amount += transfer.getAmount();
-        }
-        for (Transfer transfer : transfersFromAccount) {
-            amount -= transfer.getAmount();
-        }
+
+        long replenishmentAmount = replenishments.stream().map(Replenishment::getAmount).reduce(Long::sum).orElse(0L);
+        amount += replenishmentAmount;
+
+        long expenseAmount = expenses.stream().map(Expense::getAmount).reduce(Long::sum).orElse(0L);
+        amount -= expenseAmount;
+
+        long transfersToAccountAmount = transfersToAccount.stream().map(Transfer::getAmount).reduce(Long::sum).orElse(0L);
+        amount += transfersToAccountAmount;
+
+        long transfersFromAccountAmount = transfersFromAccount.stream().map(Transfer::getAmount).reduce(Long::sum).orElse(0L);
+        amount -= transfersFromAccountAmount;
+
         return amount;
     }
 }

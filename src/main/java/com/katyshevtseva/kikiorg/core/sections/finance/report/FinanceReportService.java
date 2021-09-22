@@ -61,7 +61,7 @@ public class FinanceReportService {
 
         Map<String, Long> titleValueMap = new HashMap<>();
         for (Replenishment replenishment : replenishments) {
-            String lineTitle = replenishment.getAccount().getTitle();
+            String lineTitle = replenishment.getSource().getTitle();
             titleValueMap.put(lineTitle, titleValueMap.getOrDefault(lineTitle, 0L) + replenishment.getAmount());
         }
         for (Map.Entry<String, Long> entry : titleValueMap.entrySet()) {
@@ -77,7 +77,7 @@ public class FinanceReportService {
         searchRequest.setPeriod(period);
         List<Transfer> transfers = searchService.search(searchRequest).stream()
                 .map(operation -> (Transfer) operation)
-                .filter(transfer -> accounts.contains(transfer.getTo()) && accounts.contains(transfer.getFrom()))
+                .filter(transfer -> !accounts.contains(transfer.getFrom()))
                 .collect(Collectors.toList());
 
         Map<String, Long> titleValueMap = new HashMap<>();
@@ -114,7 +114,7 @@ public class FinanceReportService {
         searchRequest.setPeriod(period);
         List<Transfer> transfers = searchService.search(searchRequest).stream()
                 .map(operation -> (Transfer) operation)
-                .filter(transfer -> accounts.contains(transfer.getTo()) && accounts.contains(transfer.getFrom()))
+                .filter(transfer -> !accounts.contains(transfer.getTo()))
                 .collect(Collectors.toList());
 
         Map<String, Long> titleValueMap = new HashMap<>();
