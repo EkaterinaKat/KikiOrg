@@ -17,6 +17,14 @@ import static com.katyshevtseva.kikiorg.core.CoreConstants.FINANCIAL_ACCOUNTING_
 public class ReportPeriodService {
 
     public List<ReportPeriod> getReportPeriods() {
+        List<ReportPeriod> periods = new ArrayList<>(getAllPastMonthsReportPeriods());
+        periods.add(new ReportPeriod());
+        periods.add(new ReportPeriod(new Period(FINANCIAL_ACCOUNTING_START_DATE, new Date()), "All time"));
+        Collections.reverse(periods);
+        return periods;
+    }
+
+    List<ReportPeriod> getAllPastMonthsReportPeriods() {
         List<ReportPeriod> periods = new ArrayList<>();
 
         Date date = DateUtils.getNextMonthFirstDate(FINANCIAL_ACCOUNTING_START_DATE);
@@ -31,18 +39,23 @@ public class ReportPeriodService {
             }
         }
 
-        periods.add(new ReportPeriod(new Period(FINANCIAL_ACCOUNTING_START_DATE, new Date()), "All time"));
-        Collections.reverse(periods);
         return periods;
     }
 
     public static class ReportPeriod {
-        private final Period period;
+        private Period period;
         private final String title;
+        private final boolean averageMonthly;
 
         public ReportPeriod(Period period, String title) {
             this.period = period;
             this.title = title;
+            averageMonthly = false;
+        }
+
+        public ReportPeriod() {
+            title = "Среднемесячный отчет";
+            averageMonthly = true;
         }
 
         @Override
@@ -56,6 +69,10 @@ public class ReportPeriodService {
 
         public String getTitle() {
             return title;
+        }
+
+        public boolean isAverageMonthly() {
+            return averageMonthly;
         }
     }
 }

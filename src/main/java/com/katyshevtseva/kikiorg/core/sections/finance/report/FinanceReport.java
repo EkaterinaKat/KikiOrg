@@ -56,6 +56,10 @@ public class FinanceReport {
         return title;
     }
 
+    List<Line> getLines() {
+        return lines;
+    }
+
     private void initializeTable() {
         if (pieChartData == null)
             initializePieChartData();
@@ -93,6 +97,14 @@ public class FinanceReport {
             this.title = title;
             this.value = value;
             this.itemGroup = itemGroup;
+        }
+
+        public String getTitle() {
+            return title;
+        }
+
+        public Long getValue() {
+            return value;
         }
     }
 }

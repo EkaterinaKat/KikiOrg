@@ -19,15 +19,47 @@ public class FinanceReportService {
     private final FinanceSearchService searchService;
     private final FinanceService financeService;
     private final ItemHierarchyService itemHierarchyService;
+    private final ReportPeriodService reportPeriodService;
 
     public FullFinanceReport getReport(List<Account> accounts, ReportPeriod reportPeriod) {
         if (accounts == null || accounts.isEmpty() || reportPeriod == null) {
             throw new RuntimeException();
         }
 
+        if (reportPeriod.isAverageMonthly()) {
+            return getAverageMonthlyReport(accounts);
+        }
+
         return new FullFinanceReport(
                 getIncomeReport(accounts, reportPeriod.getPeriod()),
                 getOutgoReport(accounts, reportPeriod.getPeriod()));
+    }
+
+    public FullFinanceReport getAverageMonthlyReport(List<Account> accounts) {
+        List<Period> periods = reportPeriodService.getAllPastMonthsReportPeriods()
+                .stream().map(ReportPeriod::getPeriod).collect(Collectors.toList());
+
+        List<FinanceReport> incomeReports = periods.stream()
+                .map(period -> getIncomeReport(accounts, period)).collect(Collectors.toList());
+
+        List<FinanceReport> outgoReports = periods.stream()
+                .map(period -> getOutgoReport(accounts, period)).collect(Collectors.toList());
+
+        return new FullFinanceReport(getAverageReport(incomeReports), getAverageReport(outgoReports));
+    }
+
+    private FinanceReport getAverageReport(List<FinanceReport> reports) {
+        Map<String, Long> titleAmountSumMap = new HashMap<>();
+        for (FinanceReport report : reports) {
+            for (FinanceReport.Line line : report.getLines()) {
+                titleAmountSumMap.put(line.getTitle(), titleAmountSumMap.getOrDefault(line.getTitle(), 0L) + line.getValue());
+            }
+        }
+        FinanceReport report = new FinanceReport("Average report");
+        for (Map.Entry<String, Long> entry : titleAmountSumMap.entrySet()) {
+            report.addLine(entry.getKey(), entry.getValue() / reports.size());
+        }
+        return report;
     }
 
     public FinanceReport getSubreport(List<Account> accounts, ReportPeriod reportPeriod, ItemGroup itemGroup) {
