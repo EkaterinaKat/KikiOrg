@@ -96,12 +96,20 @@ class PieceController implements FxController {
                             paginationPaneController.loadPage();
                             showPieceFullInfo(savedPiece);
                         })));
-        archiveButton.setOnAction(event -> new StandardDialogBuilder().openQuestionDialog("Archive?", b -> {
-            if (b) {
-                service.archivePiece(piece);
-                paginationPaneController.loadPage();
-            }
-        }));
+        archiveButton.setOnAction(event -> {
+                    boolean availableForArchive = service.pieceAvailableForArchive(piece);
+                    if (availableForArchive) {
+                        new StandardDialogBuilder().openQuestionDialog("Archive?", b -> {
+                            if (b) {
+                                service.archivePiece(piece);
+                                paginationPaneController.loadPage();
+                            }
+                        });
+                    } else {
+                        new StandardDialogBuilder().openInfoDialog("Невозможно архивировать используемую вещь");
+                    }
+                }
+        );
         archiveButton.setDisable(piece.getEndDate() != null);
     }
 

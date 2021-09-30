@@ -139,25 +139,20 @@ public class WardrobeService {
         if (piece.getEndDate() != null) {
             throw new RuntimeException("Вещь уже архивирована");
         }
+        if (!pieceAvailableForArchive(piece)) {
+            throw new RuntimeException("Невозможно архивировать используемую вещь");
+        }
 
         piece.setEndDate(dateService.createIfNotExistAndGetDateEntity(new Date()));
         pieceRepo.save(piece);
-        deletePieceFromAllComponents(piece);
     }
 
-    private void deletePieceFromAllComponents(Piece piece) {
+    public boolean pieceAvailableForArchive(Piece piece) {
         for (ComponentEntity componentEntity : componentEntityRepo.findAll()) {
             if (componentEntity.getPieces().contains(piece)) {
-                componentEntity.getPieces().remove(piece);
-                if (componentEntity.getPieces().isEmpty()) {
-                    componentEntityRepo.delete(componentEntity);
-                } else {
-                    if (componentEntity.getFrontPiece().equals(piece)) {
-                        componentEntity.setFrontPiece(new ArrayList<>(componentEntity.getPieces()).get(0));
-                    }
-                    componentEntityRepo.save(componentEntity);
-                }
+                return false;
             }
         }
+        return true;
     }
 }
