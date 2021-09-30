@@ -2,6 +2,7 @@ package com.katyshevtseva.kikiorg.view.controller.wardrobe;
 
 import com.katyshevtseva.fx.FxUtils;
 import com.katyshevtseva.fx.WindowBuilder.FxController;
+import com.katyshevtseva.fx.dialog.StandardDialogBuilder;
 import com.katyshevtseva.general.GeneralUtils;
 import com.katyshevtseva.general.Page;
 import com.katyshevtseva.kikiorg.core.Core;
@@ -32,6 +33,8 @@ class OutfitController implements FxController {
     private Button showAllButton;
     @FXML
     private Button outfitEditButton;
+    @FXML
+    private Button outfitDeleteButton;
     @FXML
     private GridPane gridPane;
     @FXML
@@ -76,16 +79,25 @@ class OutfitController implements FxController {
     private void showOutfitInfo(Outfit outfit) {
         infoLabel.setText(outfit.getFullDesc());
         outfitEditButton.setVisible(true);
+        outfitDeleteButton.setVisible(true);
         outfitEditButton.setOnAction(event -> OrganizerWindowCreator.getInstance().openOutfitDialog(
                 new OutfitDialogController(outfit, savedOutfit -> {
                     paginationPaneController.loadPage();
                     showOutfitInfo(savedOutfit);
                 })));
+        outfitDeleteButton.setOnAction(event -> new StandardDialogBuilder().openQuestionDialog("Delete?",
+                b -> {
+                    if (b) {
+                        service.deleteOutfit(outfit);
+                        paginationPaneController.loadPage();
+                    }
+                }));
     }
 
     private void clearOutfitInfo() {
         infoLabel.setText("");
         outfitEditButton.setVisible(false);
+        outfitDeleteButton.setVisible(false);
     }
 
     private void setContent(List<Outfit> outfits) {

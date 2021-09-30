@@ -38,6 +38,8 @@
             <Label fx:id="infoLabel" maxWidth="220" wrapText="true"/>
             <Pane prefHeight="20"/>
             <Button fx:id="outfitEditButton" text="Edit" visible="false"/>
+            <Pane prefHeight="20"/>
+            <Button fx:id="outfitDeleteButton" text="Delete" visible="false"/>
         </VBox>
     </HBox>
 

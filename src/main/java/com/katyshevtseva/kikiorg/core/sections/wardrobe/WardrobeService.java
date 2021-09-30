@@ -135,6 +135,15 @@ public class WardrobeService {
         return outfitRepo.save(existing);
     }
 
+    public void deleteOutfit(Outfit outfit) {
+        for (ComponentEntity componentEntity : outfit.getCollageEntity().getComponents()) {
+            componentEntityRepo.delete(componentEntity);
+        }
+        outfit.getCollageEntity().setComponents(new HashSet<>());
+        outfitRepo.delete(outfit);
+        collageEntityRepo.delete(outfit.getCollageEntity());
+    }
+
     public void archivePiece(Piece piece) {
         if (piece.getEndDate() != null) {
             throw new RuntimeException("Вещь уже архивирована");
