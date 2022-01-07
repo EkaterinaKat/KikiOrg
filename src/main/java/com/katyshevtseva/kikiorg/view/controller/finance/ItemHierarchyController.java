@@ -93,6 +93,7 @@ class ItemHierarchyController implements FxController {
 
             Label entryLabel = new Label(entry.isLeaf() ? entry.getText() : entry.getText().toUpperCase());
             entryLabel.setStyle(" -fx-text-fill: " + entry.getColor() + "; ");
+            entryLabel.setTooltip(new Tooltip(entry.getTooltip()));
 
             HBox hBox = new HBox();
             hBox.getChildren().add(entryLabel);

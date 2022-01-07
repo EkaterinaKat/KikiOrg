@@ -10,6 +10,6 @@ public interface OperationEnd {
     OperationEndType getType();
 
     enum OperationEndType {
-        ACCOUNT, SOURCE, ITEM
+        ITEM, ACCOUNT, SOURCE
     }
 }

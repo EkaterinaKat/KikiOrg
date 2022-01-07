@@ -27,7 +27,7 @@ public class ItemSchemaService {
 
     private List<SchemaLine> getSchemaByRoot(ItemHierarchyNode node, int level) {
         List<SchemaLine> schema = new ArrayList<>();
-        schema.add(new Entry(node.getTitle(), level, getColorByLevel(level), node));
+        schema.add(new Entry(node.getTitle(), level, getColorByLevel(level), node, getTooltip(node)));
 
         if (node.isLeaf())
             return schema;
@@ -40,13 +40,20 @@ public class ItemSchemaService {
         return schema;
     }
 
+    private String getTooltip(ItemHierarchyNode node) {
+        if (node instanceof ItemHierarchyLeaf) {
+            return ((ItemHierarchyLeaf) node).getItem().getDescription();
+        }
+        return "";
+    }
+
     private String getColorByLevel(int level) {
         if (level == 0)
             return "#ff0000";
         if (level == 1)
             return "#0000ff";
         if (level == 2)
-            return "#00ff00";
+            return "#118f06";
         return "#000000";
     }
 
@@ -55,12 +62,14 @@ public class ItemSchemaService {
         private final int level;
         private final String color;
         private final ItemHierarchyNode node;
+        private final String tooltip;
 
-        public Entry(String text, int level, String color, ItemHierarchyNode node) {
+        public Entry(String text, int level, String color, ItemHierarchyNode node, String tooltip) {
             this.text = text;
             this.level = level;
             this.color = color;
             this.node = node;
+            this.tooltip = tooltip;
         }
 
         public void deleteFromSchema() {
@@ -91,6 +100,10 @@ public class ItemSchemaService {
             if (!node.isLeaf())
                 throw new RuntimeException("Попытка получить Item из узла, который является ItemGroup");
             return ((ItemHierarchyLeaf) node).getItem();
+        }
+
+        public String getTooltip() {
+            return tooltip;
         }
     }
 
