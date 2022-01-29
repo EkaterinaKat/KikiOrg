@@ -1,5 +1,6 @@
 package com.katyshevtseva.kikiorg.core.sections.finance;
 
+import com.katyshevtseva.date.DateUtils;
 import com.katyshevtseva.date.Period;
 import com.katyshevtseva.kikiorg.core.repo.AccountRepo;
 import com.katyshevtseva.kikiorg.core.repo.ExpenseRepo;
@@ -18,6 +19,7 @@ import java.util.Date;
 import java.util.List;
 
 import static com.katyshevtseva.date.DateUtils.getLastMonthPeriod;
+import static com.katyshevtseva.date.DateUtils.shiftDate;
 import static com.katyshevtseva.kikiorg.core.sections.finance.FinanceService.TransferType.ALL;
 
 @Service
@@ -39,8 +41,8 @@ public class FinanceOperationService {
         return getOperationsForPeriod(getLastMonthPeriod());
     }
 
-    public List<Operation> getTodayOperations() {
-        return getOperationsForPeriod(new Period(new Date(), new Date()));
+    public List<Operation> getLastWeekOperations() {
+        return getOperationsForPeriod(new Period(shiftDate(new Date(), DateUtils.TimeUnit.DAY, -7), new Date()));
     }
 
     private List<Operation> getOperationsForPeriod(Period period) {

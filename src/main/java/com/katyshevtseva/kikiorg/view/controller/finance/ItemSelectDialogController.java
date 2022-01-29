@@ -10,6 +10,7 @@ import com.katyshevtseva.kikiorg.core.sections.finance.ItemSchemaService.SchemaL
 import com.katyshevtseva.kikiorg.core.sections.finance.entity.Item;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import javafx.scene.control.Tooltip;
 import javafx.scene.layout.VBox;
 
 import java.util.List;
@@ -41,6 +42,7 @@ class ItemSelectDialogController implements FxController {
             } else if (line instanceof Entry) {
                 Entry entry = (Entry) line;
                 label.setText(getIndentByLevel(entry.getLevel()) + entry.getText());
+                label.setTooltip(new Tooltip(entry.getTooltip()));
                 if (entry.isLeaf()) {
                     label.setStyle(Styler.getColorfullStyle(TEXT, PURPLE) + Styler.getBoldTextStyle());
                     label.setOnMouseClicked(event -> {

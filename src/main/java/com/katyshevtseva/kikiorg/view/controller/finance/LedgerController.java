@@ -26,25 +26,25 @@ class LedgerController implements FxController {
         checkPane.getChildren().add(OrganizerWindowCreator.getInstance().getCheckNode(checkController));
 
         HistoryTableController historyTableController =
-                new HistoryTableController(service.getTodayOperations(), checkController::updateTable);
+                new HistoryTableController(service.getLastWeekOperations(), checkController::updateTable);
         historyTablePane.getChildren().add(OrganizerWindowCreator.getInstance().getHistoryTableNode(historyTableController));
 
         replenishmentPane.getChildren().add(OrganizerWindowCreator.getInstance().getReplenishmentNode(
                 new ReplenishmentController(() -> {
                     checkController.updateTable();
-                    historyTableController.setTableContent(service.getTodayOperations());
+                    historyTableController.setTableContent(service.getLastWeekOperations());
                 })));
 
         expensePane.getChildren().add(OrganizerWindowCreator.getInstance().getExpensesNode(
                 new ExpenseController(() -> {
                     checkController.updateTable();
-                    historyTableController.setTableContent(service.getTodayOperations());
+                    historyTableController.setTableContent(service.getLastWeekOperations());
                 })));
 
         transferPane.getChildren().add(OrganizerWindowCreator.getInstance().getTransferNode(
                 new TransferController(() -> {
                     checkController.updateTable();
-                    historyTableController.setTableContent(service.getTodayOperations());
+                    historyTableController.setTableContent(service.getLastWeekOperations());
                 })));
     }
 }
