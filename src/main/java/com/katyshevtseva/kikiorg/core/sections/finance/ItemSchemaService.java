@@ -4,7 +4,6 @@ import com.katyshevtseva.kikiorg.core.exeption.SchemaException;
 import com.katyshevtseva.kikiorg.core.sections.finance.ItemHierarchyService.ItemHierarchyNode;
 import com.katyshevtseva.kikiorg.core.sections.finance.entity.Item;
 import com.katyshevtseva.kikiorg.core.sections.finance.entity.ItemGroup;
-import com.katyshevtseva.kikiorg.core.sections.finance.entity.ItemHierarchyLeaf;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -41,8 +40,8 @@ public class ItemSchemaService {
     }
 
     private String getTooltip(ItemHierarchyNode node) {
-        if (node instanceof ItemHierarchyLeaf) {
-            return ((ItemHierarchyLeaf) node).getItem().getDescription();
+        if (node instanceof Item) {
+            return ((Item) node).getDescription();
         }
         return "";
     }
@@ -99,7 +98,7 @@ public class ItemSchemaService {
         public Item getItem() {
             if (!node.isLeaf())
                 throw new RuntimeException("Попытка получить Item из узла, который является ItemGroup");
-            return ((ItemHierarchyLeaf) node).getItem();
+            return (Item) node;
         }
 
         public String getTooltip() {

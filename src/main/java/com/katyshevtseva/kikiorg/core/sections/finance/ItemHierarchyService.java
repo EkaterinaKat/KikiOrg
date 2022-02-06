@@ -1,24 +1,23 @@
 package com.katyshevtseva.kikiorg.core.sections.finance;
 
 import com.katyshevtseva.kikiorg.core.repo.ItemGroupRepo;
-import com.katyshevtseva.kikiorg.core.repo.ItemHierarchyLeafRepo;
+import com.katyshevtseva.kikiorg.core.repo.ItemRepo;
 import com.katyshevtseva.kikiorg.core.sections.finance.entity.Item;
 import com.katyshevtseva.kikiorg.core.sections.finance.entity.ItemGroup;
-import com.katyshevtseva.kikiorg.core.sections.finance.entity.ItemHierarchyLeaf;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
 public class ItemHierarchyService {
     private final ItemGroupRepo itemGroupRepo;
     private final FinanceService financeService;
-    private final ItemHierarchyLeafRepo itemHierarchyLeafRepo;
+    private final ItemRepo itemRepo;
 
     public void addGroup(String name) {
         ItemGroup itemGroup = new ItemGroup();
@@ -42,25 +41,13 @@ public class ItemHierarchyService {
         return nodes;
     }
 
-    private List<ItemHierarchyLeaf> getTopLevelLeaves() {
-        List<Item> items = financeService.getAllItems();
-        List<ItemHierarchyLeaf> leaves = new ArrayList<>();
-        for (Item item : items) {
-            Optional<ItemHierarchyLeaf> optionalLeaf = itemHierarchyLeafRepo.findByItem(item);
-            if (optionalLeaf.isPresent() && optionalLeaf.get().getParentGroup() == null)
-                leaves.add(optionalLeaf.get());
-            else if (!optionalLeaf.isPresent()) {
-                ItemHierarchyLeaf leaf = new ItemHierarchyLeaf();
-                leaf.setItem(item);
-                leaves.add(leaf);
-            }
-        }
-        return leaves;
+    private List<Item> getTopLevelLeaves() {
+        return financeService.getAllItems().stream().filter(item -> item.getParentGroup() == null).collect(Collectors.toList());
     }
 
     public List<Item> getAllDescendantItemsByHierarchyNode(ItemHierarchyNode root) {
         if (root.isLeaf())
-            return Collections.singletonList(((ItemHierarchyLeaf) root).getItem());
+            return Collections.singletonList((Item) root);
 
         List<Item> items = new ArrayList<>();
         for (ItemHierarchyNode node : getNodesByParent(root)) {
@@ -73,7 +60,7 @@ public class ItemHierarchyService {
         List<ItemHierarchyNode> nodes = new ArrayList<>();
         if (parentNode.isLeaf())
             return nodes;
-        nodes.addAll(itemHierarchyLeafRepo.findByParentGroup((ItemGroup) parentNode));
+        nodes.addAll(itemRepo.findByParentGroup((ItemGroup) parentNode));
         nodes.addAll(itemGroupRepo.findByParentGroup((ItemGroup) parentNode));
         return nodes;
     }
@@ -91,7 +78,7 @@ public class ItemHierarchyService {
 
     void saveModifiedNode(ItemHierarchyNode node) {
         if (node.isLeaf())
-            itemHierarchyLeafRepo.save((ItemHierarchyLeaf) node);
+            itemRepo.save((Item) node);
         else
             itemGroupRepo.save((ItemGroup) node);
     }

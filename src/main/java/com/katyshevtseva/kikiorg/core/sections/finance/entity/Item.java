@@ -1,18 +1,16 @@
 package com.katyshevtseva.kikiorg.core.sections.finance.entity;
 
 
+import com.katyshevtseva.kikiorg.core.sections.finance.ItemHierarchyService.ItemHierarchyNode;
 import com.katyshevtseva.kikiorg.core.sections.finance.OperationEnd;
 import lombok.Data;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.util.Objects;
 
 @Data
 @Entity
-public class Item implements OperationEnd {
+public class Item implements OperationEnd, ItemHierarchyNode {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
@@ -20,6 +18,10 @@ public class Item implements OperationEnd {
     private String title;
 
     private String description;
+
+    @ManyToOne
+    @JoinColumn(name = "parent_group_id")
+    private ItemGroup parentGroup;
 
     @Override
     public String toString() {
@@ -42,5 +44,10 @@ public class Item implements OperationEnd {
     @Override
     public OperationEndType getType() {
         return OperationEndType.ITEM;
+    }
+
+    @Override
+    public boolean isLeaf() {
+        return true;
     }
 }
