@@ -36,7 +36,7 @@ public class FinanceReportService {
     }
 
     public FullFinanceReport getAverageMonthlyReport(List<Account> accounts) {
-        List<Period> periods = reportPeriodService.getAllPastMonthsReportPeriods()
+        List<Period> periods = reportPeriodService.getAllPastMonthsReportPeriods(false)
                 .stream().map(ReportPeriod::getPeriod).collect(Collectors.toList());
 
         List<FinanceReport> incomeReports = periods.stream()

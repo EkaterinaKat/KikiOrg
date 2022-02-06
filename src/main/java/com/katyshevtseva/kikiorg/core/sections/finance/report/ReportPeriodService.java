@@ -17,14 +17,14 @@ import static com.katyshevtseva.kikiorg.core.CoreConstants.FINANCIAL_ACCOUNTING_
 public class ReportPeriodService {
 
     public List<ReportPeriod> getReportPeriods() {
-        List<ReportPeriod> periods = new ArrayList<>(getAllPastMonthsReportPeriods());
+        List<ReportPeriod> periods = new ArrayList<>(getAllPastMonthsReportPeriods(true));
         periods.add(new ReportPeriod());
         periods.add(new ReportPeriod(new Period(FINANCIAL_ACCOUNTING_START_DATE, new Date()), "All time"));
         Collections.reverse(periods);
         return periods;
     }
 
-    List<ReportPeriod> getAllPastMonthsReportPeriods() {
+    List<ReportPeriod> getAllPastMonthsReportPeriods(boolean includeLastMonth) {
         List<ReportPeriod> periods = new ArrayList<>();
 
         Date date = DateUtils.getNextMonthFirstDate(FINANCIAL_ACCOUNTING_START_DATE);
@@ -32,10 +32,16 @@ public class ReportPeriodService {
             Date monthFirstDate = new Date(date.getTime());
             date = DateUtils.shiftDate(date, DateUtils.TimeUnit.MONTH, 1);
             Date monthLastDate = DateUtils.shiftDate(date, DateUtils.TimeUnit.DAY, -1);
-            if (monthLastDate.after(new Date())) {
+            ReportPeriod period = new ReportPeriod(new Period(monthFirstDate, monthLastDate), DateUtils.getMonthYearString(monthFirstDate));
+            boolean itIsLastMonth = monthLastDate.after(new Date());
+
+            if (itIsLastMonth) {
+                if (includeLastMonth) {
+                    periods.add(period);
+                }
                 break;
             } else {
-                periods.add(new ReportPeriod(new Period(monthFirstDate, monthLastDate), DateUtils.getMonthYearString(monthFirstDate)));
+                periods.add(period);
             }
         }
 
