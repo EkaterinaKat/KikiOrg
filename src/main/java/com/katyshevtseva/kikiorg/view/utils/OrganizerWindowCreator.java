@@ -173,10 +173,6 @@ public class OrganizerWindowCreator {
         return new WindowBuilder(FINANCE_FXML_LOCATION + "transfer.fxml").setController(controller).getNode();
     }
 
-    public Node getItemHierarchyNode(FxController controller) {
-        return new WindowBuilder(FINANCE_FXML_LOCATION + "item_hierarchy.fxml").setController(controller).getNode();
-    }
-
     public Node getReportPaneNode(FxController controller) {
         return new WindowBuilder(FINANCE_FXML_LOCATION + "report_pane.fxml").setController(controller).getNode();
     }

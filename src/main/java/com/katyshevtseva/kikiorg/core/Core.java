@@ -23,8 +23,6 @@ public class Core implements InitializingBean {
     private final HabitsReportService habitsReportService;
     private final ScuttleCheckService scuttleCheckService;
     private final FinanceOperationService financeOperationService;
-    private final OldItemHierarchyService oldItemHierarchyService;
-    private final ItemSchemaService itemSchemaService;
     private final HabitMarkService habitMarkService;
     private final WardrobeService wardrobeService;
     private final AnalysisService analysisService;
@@ -74,14 +72,6 @@ public class Core implements InitializingBean {
 
     public FinanceOperationService financeOperationService() {
         return financeOperationService;
-    }
-
-    public OldItemHierarchyService itemHierarchyService() {
-        return oldItemHierarchyService;
-    }
-
-    public ItemSchemaService itemSchemaService() {
-        return itemSchemaService;
     }
 
     public HabitMarkService habitMarkService() {

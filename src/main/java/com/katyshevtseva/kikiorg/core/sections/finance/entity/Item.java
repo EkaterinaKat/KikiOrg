@@ -3,7 +3,6 @@ package com.katyshevtseva.kikiorg.core.sections.finance.entity;
 
 import com.katyshevtseva.hierarchy.Group;
 import com.katyshevtseva.hierarchy.Leaf;
-import com.katyshevtseva.kikiorg.core.sections.finance.OldItemHierarchyService.ItemHierarchyNode;
 import com.katyshevtseva.kikiorg.core.sections.finance.OperationEnd;
 import lombok.Data;
 
@@ -12,7 +11,7 @@ import java.util.Objects;
 
 @Data
 @Entity
-public class Item implements OperationEnd, ItemHierarchyNode, Leaf {
+public class Item implements OperationEnd, Leaf {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
@@ -51,11 +50,6 @@ public class Item implements OperationEnd, ItemHierarchyNode, Leaf {
     @Override
     public boolean isLeaf() {
         return true;
-    }
-
-    @Override
-    public void setParentGroup(ItemGroup group) {
-        this.parentGroup = group;
     }
 
     @Override

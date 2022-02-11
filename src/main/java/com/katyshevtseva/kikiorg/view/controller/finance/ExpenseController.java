@@ -18,7 +18,8 @@ import javafx.scene.control.TextField;
 import static com.katyshevtseva.fx.FxUtils.*;
 
 class ExpenseController implements FxController {
-    private NoArgsKnob operationListener;
+    private final NoArgsKnob operationListener;
+    private final ItemSelectDialogController itemSelectDialogController;
     @FXML
     private ComboBox<Account> accountComboBox;
     @FXML
@@ -32,6 +33,7 @@ class ExpenseController implements FxController {
 
     ExpenseController(NoArgsKnob operationListener) {
         this.operationListener = operationListener;
+        itemSelectDialogController = new ItemSelectDialogController(item -> itemComboBox.setValue(item));
     }
 
     @FXML
@@ -54,8 +56,7 @@ class ExpenseController implements FxController {
 
         itemComboBox.setOnAction(event -> {
             if (itemComboBox.getValue() == more) {
-                OrganizerWindowCreator.getInstance().openItemSelectDialog(new ItemSelectDialogController(
-                        item -> itemComboBox.setValue(item)));
+                OrganizerWindowCreator.getInstance().openItemSelectDialog(itemSelectDialogController);
             }
         });
     }

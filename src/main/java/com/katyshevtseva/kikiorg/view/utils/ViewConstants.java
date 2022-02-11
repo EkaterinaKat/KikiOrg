@@ -15,10 +15,10 @@ class ViewConstants {
 
     static final int WINDOW_HEIGHT = 1000;
     static final int WINDOW_WIDTH = 1500;
-    static final int ITEM_SELECT_DIALOG_WIDTH = 500;
-    static final int ITEM_SELECT_DIALOG_HEIGHT = 500;
+    static final int ITEM_SELECT_DIALOG_WIDTH = 700;
+    static final int ITEM_SELECT_DIALOG_HEIGHT = 800;
     static final int BIG_DIALOG_WIDTH = 600;
     static final int BIG_DIALOG_HEIGHT = 600;
-    static final int IMAGE_SELECTION_DIALOG_WIDTH = 1050;
+    static final int IMAGE_SELECTION_DIALOG_WIDTH = 1050; //todo
     static final int IMAGE_SELECTION_DIALOG_HEIGHT = 900;
 }
