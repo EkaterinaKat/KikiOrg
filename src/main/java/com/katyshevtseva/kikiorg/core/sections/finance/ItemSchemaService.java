@@ -1,7 +1,7 @@
 package com.katyshevtseva.kikiorg.core.sections.finance;
 
 import com.katyshevtseva.kikiorg.core.exeption.SchemaException;
-import com.katyshevtseva.kikiorg.core.sections.finance.ItemHierarchyService.ItemHierarchyNode;
+import com.katyshevtseva.kikiorg.core.sections.finance.OldItemHierarchyService.ItemHierarchyNode;
 import com.katyshevtseva.kikiorg.core.sections.finance.entity.Item;
 import com.katyshevtseva.kikiorg.core.sections.finance.entity.ItemGroup;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +13,7 @@ import java.util.List;
 @Service
 public class ItemSchemaService {
     @Autowired
-    private ItemHierarchyService service;
+    private OldItemHierarchyService service;
 
     public List<SchemaLine> getSchema() {
         List<SchemaLine> schema = new ArrayList<>();
