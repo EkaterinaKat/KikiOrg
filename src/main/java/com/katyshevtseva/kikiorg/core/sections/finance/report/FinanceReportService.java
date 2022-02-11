@@ -2,7 +2,7 @@ package com.katyshevtseva.kikiorg.core.sections.finance.report;
 
 import com.katyshevtseva.date.Period;
 import com.katyshevtseva.kikiorg.core.sections.finance.*;
-import com.katyshevtseva.kikiorg.core.sections.finance.ItemHierarchyService.ItemHierarchyNode;
+import com.katyshevtseva.kikiorg.core.sections.finance.OldItemHierarchyService.ItemHierarchyNode;
 import com.katyshevtseva.kikiorg.core.sections.finance.entity.*;
 import com.katyshevtseva.kikiorg.core.sections.finance.report.ReportPeriodService.ReportPeriod;
 import lombok.RequiredArgsConstructor;
@@ -18,7 +18,7 @@ import java.util.stream.Collectors;
 public class FinanceReportService {
     private final FinanceSearchService searchService;
     private final FinanceService financeService;
-    private final ItemHierarchyService itemHierarchyService;
+    private final OldItemHierarchyService oldItemHierarchyService;
     private final ReportPeriodService reportPeriodService;
 
     public FullFinanceReport getReport(List<Account> accounts, ReportPeriod reportPeriod) {
@@ -64,7 +64,7 @@ public class FinanceReportService {
 
     public FinanceReport getSubreport(List<Account> accounts, ReportPeriod reportPeriod, ItemGroup itemGroup) {
         FinanceReport outgoReport = new FinanceReport(itemGroup.getTitle());
-        addExpenseLinesToOutgoReport(outgoReport, accounts, reportPeriod.getPeriod(), itemHierarchyService.getNodesByParent(itemGroup));
+        addExpenseLinesToOutgoReport(outgoReport, accounts, reportPeriod.getPeriod(), oldItemHierarchyService.getNodesByParent(itemGroup));
         return outgoReport;
     }
 
@@ -77,7 +77,7 @@ public class FinanceReportService {
 
     private FinanceReport getOutgoReport(List<Account> accounts, Period period) {
         FinanceReport outgoReport = new FinanceReport("Расход");
-        addExpenseLinesToOutgoReport(outgoReport, accounts, period, itemHierarchyService.getTopLevelNodes());
+        addExpenseLinesToOutgoReport(outgoReport, accounts, period, oldItemHierarchyService.getTopLevelNodes());
         addTransferLinesToOutgoReport(outgoReport, accounts, period);
         return outgoReport;
     }
@@ -127,7 +127,7 @@ public class FinanceReportService {
             SearchRequest searchRequest = new SearchRequest();
             searchRequest.setOperationType(FinanceOperationService.OperationType.EXPENSE);
             searchRequest.setFrom(accounts.stream().map(account -> (OperationEnd) account).collect(Collectors.toList()));
-            searchRequest.setTo(itemHierarchyService.getAllDescendantItemsByHierarchyNode(node)
+            searchRequest.setTo(oldItemHierarchyService.getAllDescendantItemsByHierarchyNode(node)
                     .stream().map(item -> (OperationEnd) item).collect(Collectors.toList()));
             searchRequest.setPeriod(period);
             Long amount = searchService.search(searchRequest).stream()

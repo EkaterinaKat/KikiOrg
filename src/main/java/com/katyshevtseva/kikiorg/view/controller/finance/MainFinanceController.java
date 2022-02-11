@@ -1,7 +1,11 @@
 package com.katyshevtseva.kikiorg.view.controller.finance;
 
 import com.katyshevtseva.fx.AbstractSwitchController;
+import com.katyshevtseva.fx.Size;
 import com.katyshevtseva.fx.WindowBuilder.FxController;
+import com.katyshevtseva.fx.component.ComponentBuilder;
+import com.katyshevtseva.fx.component.controller.HierarchyController;
+import com.katyshevtseva.kikiorg.core.Core;
 import com.katyshevtseva.kikiorg.view.utils.OrganizerWindowCreator;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
@@ -25,15 +29,15 @@ public class MainFinanceController extends AbstractSwitchController implements F
     private Button ledgerButton;
 
     private final HistoryController historyController = new HistoryController();
-    private final ItemHierarchyController itemHierarchyController = new ItemHierarchyController();
     private final FullReportController fullReportController = new FullReportController();
     private final AdminController adminController = new AdminController();
     private final LedgerController ledgerController = new LedgerController();
 
     private Node historyNode;
-    private Node itemHierarchyNode;
     private Node adminNode;
     private Node ledgerNode;
+
+    private ComponentBuilder.Component<HierarchyController> hierarchyComponent;
 
     @FXML
     private void initialize() {
@@ -58,8 +62,11 @@ public class MainFinanceController extends AbstractSwitchController implements F
     }
 
     private void itemHierarchyButtonListener() {
-        activateMode(itemHierarchyButton, itemHierarchyNode,
-                OrganizerWindowCreator.getInstance()::getItemHierarchyNode, itemHierarchyController);
+        if (hierarchyComponent == null) {
+            hierarchyComponent = new ComponentBuilder().setSize(new Size(800, 1090))
+                    .getHierarchyComponent(Core.getInstance().newItemHierarchyService(), true);
+        }
+        activateMode(itemHierarchyButton, hierarchyComponent);
     }
 
     private void reportButtonListener() {

@@ -23,7 +23,7 @@ public class Core implements InitializingBean {
     private final HabitsReportService habitsReportService;
     private final ScuttleCheckService scuttleCheckService;
     private final FinanceOperationService financeOperationService;
-    private final ItemHierarchyService itemHierarchyService;
+    private final OldItemHierarchyService oldItemHierarchyService;
     private final ItemSchemaService itemSchemaService;
     private final HabitMarkService habitMarkService;
     private final WardrobeService wardrobeService;
@@ -38,6 +38,7 @@ public class Core implements InitializingBean {
     private final WardrobeStatisticsService wardrobeStatisticsService;
     private final FinanceReportService financeReportService;
     private final ReportPeriodService reportPeriodService;
+    private final ItemHierarchyService itemHierarchyService;
 
     public static Core getInstance() {
         while (INSTANCE == null) {
@@ -75,8 +76,8 @@ public class Core implements InitializingBean {
         return financeOperationService;
     }
 
-    public ItemHierarchyService itemHierarchyService() {
-        return itemHierarchyService;
+    public OldItemHierarchyService itemHierarchyService() {
+        return oldItemHierarchyService;
     }
 
     public ItemSchemaService itemSchemaService() {
@@ -133,5 +134,9 @@ public class Core implements InitializingBean {
 
     public ReportPeriodService reportPeriodService() {
         return reportPeriodService;
+    }
+
+    public ItemHierarchyService newItemHierarchyService() {
+        return itemHierarchyService;
     }
 }
