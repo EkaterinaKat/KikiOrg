@@ -15,7 +15,8 @@ import java.util.List;
 import java.util.Optional;
 
 import static com.katyshevtseva.date.DateUtils.*;
-import static com.katyshevtseva.kikiorg.core.specials.TestConstants.*;
+import static com.katyshevtseva.kikiorg.core.specials.TestConstants.ERROR_STRING;
+import static com.katyshevtseva.kikiorg.core.specials.TestConstants.FAILED_STRING;
 
 @Service
 @RequiredArgsConstructor
@@ -58,7 +59,7 @@ public class HabitDescTest {
             }
         }
         if (succes)
-            System.out.println(BIG_SUCCESS_BANNER);
+            System.out.println(String.format(TestConstants.BIG_SUCCESS_BANNER, "HABIT"));
         else
             System.out.println(FAILED_STRING);
     }

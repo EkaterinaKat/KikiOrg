@@ -8,12 +8,15 @@ import com.katyshevtseva.kikiorg.core.sections.finance.SearchRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.PostConstruct;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
 import static com.katyshevtseva.kikiorg.core.sections.finance.FinanceOperationService.OperationType.*;
+import static com.katyshevtseva.kikiorg.core.specials.TestConstants.BIG_SUCCESS_BANNER;
+import static com.katyshevtseva.kikiorg.core.specials.TestConstants.FAILED_STRING;
 
 @Service
 @RequiredArgsConstructor
@@ -24,12 +27,40 @@ public class FinanceSearchTest {
 
 //    @PostConstruct
     private void test() {
-        System.out.println(searchService.search(getRequest1()).size() + " - " + testRepo.count1(getIds(getSomeAccounts())));
-        System.out.println(searchService.search(getRequest2()).size() + " - " + testRepo.count2(getIds(getSomeAccounts())));
-        System.out.println(searchService.search(getRequest3()).size() + " - " + testRepo.count3(getIds(getSomeAccounts())));
-        System.out.println(searchService.search(getRequest4()).size() + " - " + testRepo.count4(getIds(getSomeSources())));
-        System.out.println(searchService.search(getRequest5()).size() + " - " + testRepo.count5(getIds(getSomeAccounts()), getIds(getSomeItems())));
-        System.out.println(searchService.search(getRequest6()).size() + " - " + testRepo.count6());
+        int result11 = searchService.search(getRequest1()).size();
+        long result12 = testRepo.count1(getIds(getSomeAccounts()));
+        System.out.println(result11 + " - " + result12);
+
+        int result21 = searchService.search(getRequest2()).size();
+        long result22 = testRepo.count2(getIds(getSomeAccounts()));
+        System.out.println(result21 + " - " + result22);
+
+        int result31 = searchService.search(getRequest3()).size();
+        long result32 = testRepo.count3(getIds(getSomeAccounts()));
+        System.out.println(result31 + " - " + result32);
+
+        int result41 = searchService.search(getRequest4()).size();
+        long result42 = testRepo.count4(getIds(getSomeSources()));
+        System.out.println(result41 + " - " + result42);
+
+        int result51 = searchService.search(getRequest5()).size();
+        long result52 = testRepo.count5(getIds(getSomeAccounts()), getIds(getSomeItems()));
+        System.out.println(result51 + " - " + result52);
+
+        int result61 = searchService.search(getRequest6()).size();
+        long result62 = testRepo.count6();
+        System.out.println(result61 + " - " + result62);
+
+        if (result11 == result12
+                && result21 == result22
+                && result31 == result32
+                && result41 == result42
+                && result51 == result52
+                && result61 == result62) {
+            System.out.println(String.format(BIG_SUCCESS_BANNER, "FINANCE SEARCH"));
+        } else {
+            System.out.println(FAILED_STRING);
+        }
     }
 
     private SearchRequest getRequest1() {

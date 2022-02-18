@@ -5,8 +5,6 @@ class ViewConstants {
     }
 
     static final String FXML_LOCATION = "/fxml/";
-    // Изображения должны лежать в папке, которая помечена как ресурсы, путь не нужен
-    static final String IMAGE_LOCATION = "";
     static final String FINANCE_FXML_LOCATION = "/fxml/finance/";
     static final String HABITS_FXML_LOCATION = "/fxml/habits/";
     static final String WARDROBE_FXML_LOCATION = "/fxml/wardrobe/";
@@ -19,6 +17,4 @@ class ViewConstants {
     static final int ITEM_SELECT_DIALOG_HEIGHT = 800;
     static final int BIG_DIALOG_WIDTH = 600;
     static final int BIG_DIALOG_HEIGHT = 600;
-    static final int IMAGE_SELECTION_DIALOG_WIDTH = 1050; //todo
-    static final int IMAGE_SELECTION_DIALOG_HEIGHT = 900;
 }

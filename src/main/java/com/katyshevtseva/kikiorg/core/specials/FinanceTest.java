@@ -52,7 +52,7 @@ public class FinanceTest {
 
         //result
         if (success) {
-            System.out.println("\n" + TestConstants.BIG_SUCCESS_BANNER);
+            System.out.println("\n" + String.format(TestConstants.BIG_SUCCESS_BANNER, "FINANCE"));
         } else {
             System.out.println("\n" + TestConstants.FAILED_STRING);
         }
