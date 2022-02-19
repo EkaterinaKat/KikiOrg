@@ -59,7 +59,7 @@ class AdminController implements FxController {
     }
 
     private void newButtonListener() {
-        new StandardDialogBuilder().openTextFieldAndTextAreaDialog("", "", (title, desc) -> {
+        new StandardDialogBuilder().openTextFieldAndTextAreaDialog((title, desc) -> {
             switch (typeComboBox.getValue()) {
                 case ITEM:
                     Core.getInstance().financeService().addItem(title, desc);
