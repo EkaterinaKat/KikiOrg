@@ -3,6 +3,7 @@ package com.katyshevtseva.kikiorg.core.date;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 @Data
@@ -22,6 +23,6 @@ public class DateEntity implements Comparable<DateEntity> {
 
     @Override
     public String toString() {
-        return value.toString();
+        return new SimpleDateFormat("dd.MM.yyyy").toString();
     }
 }

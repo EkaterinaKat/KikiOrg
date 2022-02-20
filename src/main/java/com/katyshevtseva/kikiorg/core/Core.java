@@ -4,6 +4,11 @@ import com.katyshevtseva.kikiorg.core.sections.finance.*;
 import com.katyshevtseva.kikiorg.core.sections.finance.report.FinanceReportService;
 import com.katyshevtseva.kikiorg.core.sections.finance.report.ReportPeriodService;
 import com.katyshevtseva.kikiorg.core.sections.habits.*;
+import com.katyshevtseva.kikiorg.core.sections.structure.StructureHierarchyService;
+import com.katyshevtseva.kikiorg.core.sections.structure.StructureService;
+import com.katyshevtseva.kikiorg.core.sections.structure.entity.CourseOfAction;
+import com.katyshevtseva.kikiorg.core.sections.structure.repo.TargetGroupRepo;
+import com.katyshevtseva.kikiorg.core.sections.structure.repo.TargetRepo;
 import com.katyshevtseva.kikiorg.core.sections.tracker.BoardSortService;
 import com.katyshevtseva.kikiorg.core.sections.tracker.TrackerService;
 import com.katyshevtseva.kikiorg.core.sections.wardrobe.WardrobeService;
@@ -37,6 +42,9 @@ public class Core implements InitializingBean {
     private final FinanceReportService financeReportService;
     private final ReportPeriodService reportPeriodService;
     private final ItemHierarchyService itemHierarchyService;
+    private final StructureService structureService;
+    private final TargetGroupRepo targetGroupRepo;
+    private final TargetRepo targetRepo;
 
     public static Core getInstance() {
         while (INSTANCE == null) {
@@ -52,6 +60,14 @@ public class Core implements InitializingBean {
     @Override
     public void afterPropertiesSet() throws Exception {
         INSTANCE = this;
+    }
+
+    public StructureService structureService() {
+        return structureService;
+    }
+
+    public StructureHierarchyService structureHierarchyService(CourseOfAction courseOfAction) {
+        return new StructureHierarchyService(courseOfAction, structureService, targetGroupRepo, targetRepo);
     }
 
     public FinanceService financeService() {

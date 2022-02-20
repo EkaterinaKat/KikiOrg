@@ -22,4 +22,9 @@ public class PolarPeriod {
     private PeriodType periodType;
 
     private int period;
+
+    @Override
+    public String toString() {
+        return period + " " + periodType + " from " + start.toString();
+    }
 }

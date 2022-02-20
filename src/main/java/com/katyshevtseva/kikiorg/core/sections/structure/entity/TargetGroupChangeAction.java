@@ -10,7 +10,7 @@ import java.util.Date;
 @Data
 @Entity
 @Table(schema = "structure")
-public class TargetGroupChangeAction implements Action {
+public class TargetGroupChangeAction implements Action<TargetGroup> {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
@@ -28,5 +28,10 @@ public class TargetGroupChangeAction implements Action {
     @Override
     public Date getDate() {
         return dateEntity.getValue();
+    }
+
+    @Override
+    public void setEntity(TargetGroup targetGroup) {
+        this.setTargetGroup(targetGroup);
     }
 }

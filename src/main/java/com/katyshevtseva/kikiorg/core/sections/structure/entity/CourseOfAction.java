@@ -32,4 +32,25 @@ public class CourseOfAction implements HasHistory<CourseChangeAction> {
 
     @OneToMany(mappedBy = "courseOfAction", fetch = FetchType.EAGER)
     private List<CourseChangeAction> history;
+
+    public CourseOfAction(String title, String description, TargetGroup rootTargetGroup, CourseOfActionStatus status, Sphere sphere) {
+        this.title = title;
+        this.description = description;
+        this.rootTargetGroup = rootTargetGroup;
+        this.status = status;
+        this.sphere = sphere;
+    }
+
+    public CourseOfAction() {
+    }
+
+    @Override
+    public String toString() {
+        return "CourseOfAction{" +
+                ", title='" + title + '\'' +
+                ", description='" + description + '\'' +
+                ", status=" + status +
+                ", sphere=" + sphere +
+                '}';
+    }
 }

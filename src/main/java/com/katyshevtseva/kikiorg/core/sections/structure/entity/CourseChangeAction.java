@@ -10,7 +10,7 @@ import java.util.Date;
 @Data
 @Entity
 @Table(schema = "structure")
-public class CourseChangeAction implements Action {
+public class CourseChangeAction implements Action<CourseOfAction> {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
@@ -28,5 +28,10 @@ public class CourseChangeAction implements Action {
     @Override
     public Date getDate() {
         return dateEntity.getValue();
+    }
+
+    @Override
+    public void setEntity(CourseOfAction courseOfAction) {
+        this.setCourseOfAction(courseOfAction);
     }
 }
