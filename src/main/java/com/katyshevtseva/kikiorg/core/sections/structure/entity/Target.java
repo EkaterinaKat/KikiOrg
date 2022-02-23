@@ -3,6 +3,7 @@ package com.katyshevtseva.kikiorg.core.sections.structure.entity;
 import com.katyshevtseva.hierarchy.Group;
 import com.katyshevtseva.hierarchy.Leaf;
 import com.katyshevtseva.history.HasHistory;
+import com.katyshevtseva.kikiorg.core.polarperiod.PolarPeriod;
 import com.katyshevtseva.kikiorg.core.sections.structure.enums.TargetStatus;
 import lombok.Data;
 

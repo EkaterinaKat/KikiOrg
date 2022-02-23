@@ -1,14 +1,12 @@
-package com.katyshevtseva.kikiorg.core.sections.structure.entity;
+package com.katyshevtseva.kikiorg.core.polarperiod;
 
 import com.katyshevtseva.kikiorg.core.date.DateEntity;
-import com.katyshevtseva.kikiorg.core.sections.structure.enums.PeriodType;
 import lombok.Data;
 
 import javax.persistence.*;
 
 @Data
 @Entity
-@Table(schema = "structure")
 public class PolarPeriod {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -19,12 +17,12 @@ public class PolarPeriod {
     private DateEntity start;
 
     @Enumerated(EnumType.STRING)
-    private PeriodType periodType;
+    private TimeUnit timeUnit;
 
     private int period;
 
     @Override
     public String toString() {
-        return period + " " + periodType + " from " + start.toString();
+        return period + " " + timeUnit + " from " + start.toString();
     }
 }
