@@ -29,7 +29,7 @@ class ItemSelectDialogController implements FxController {
         if (hierarchyComponent == null) {
             hierarchyComponent = new ComponentBuilder()
                     .setSize(new Size(750, 680))
-                    .getHierarchyComponent(Core.getInstance().newItemHierarchyService(), false, getNodeLabelAdjuster());
+                    .getHierarchyComponent(Core.getInstance().itemHierarchyService(), false, false, getNodeLabelAdjuster());
         }
         container.getChildren().clear();
         container.getChildren().add(hierarchyComponent.getNode());

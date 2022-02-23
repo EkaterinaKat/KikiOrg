@@ -67,7 +67,7 @@ public class Core implements InitializingBean {
     }
 
     public StructureHierarchyService structureHierarchyService(CourseOfAction courseOfAction) {
-        return new StructureHierarchyService(courseOfAction, structureService, targetGroupRepo, targetRepo);
+        return new StructureHierarchyService(courseOfAction, targetGroupRepo, targetRepo);
     }
 
     public FinanceService financeService() {
@@ -142,7 +142,7 @@ public class Core implements InitializingBean {
         return reportPeriodService;
     }
 
-    public ItemHierarchyService newItemHierarchyService() {
+    public ItemHierarchyService itemHierarchyService() {
         return itemHierarchyService;
     }
 }

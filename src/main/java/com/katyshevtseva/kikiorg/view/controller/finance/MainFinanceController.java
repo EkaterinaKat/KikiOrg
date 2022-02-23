@@ -64,7 +64,7 @@ public class MainFinanceController extends AbstractSwitchController implements F
     private void itemHierarchyButtonListener() {
         if (hierarchyComponent == null) {
             hierarchyComponent = new ComponentBuilder().setSize(new Size(800, 1090))
-                    .getHierarchyComponent(Core.getInstance().newItemHierarchyService(), true);
+                    .getHierarchyComponent(Core.getInstance().itemHierarchyService(), true, true);
         }
         activateMode(itemHierarchyButton, hierarchyComponent);
     }

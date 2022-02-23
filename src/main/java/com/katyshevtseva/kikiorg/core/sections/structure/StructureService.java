@@ -37,7 +37,6 @@ public class StructureService {
         courseOfActionHistoryService.createNewAction(course, "CREATED:\n" + course);
     }
 
-    //этот метод нужен?
     public void createTargetGroup(CourseOfAction courseOfAction, String title, String desc) {
         TargetGroup targetGroup = targetGroupRepo.save(new TargetGroup(title, desc, courseOfAction.getRootTargetGroup(), NEW));
         targetGroupHistoryService.createNewAction(targetGroup, "CREATED:\n" + targetGroup);

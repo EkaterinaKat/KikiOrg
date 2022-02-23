@@ -7,19 +7,19 @@ import com.katyshevtseva.kikiorg.core.sections.structure.entity.TargetGroup;
 import com.katyshevtseva.kikiorg.core.sections.structure.repo.TargetGroupRepo;
 import com.katyshevtseva.kikiorg.core.sections.structure.repo.TargetRepo;
 import lombok.RequiredArgsConstructor;
+import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import java.util.List;
 
 @RequiredArgsConstructor
 public class StructureHierarchyService extends HierarchyService<Target, TargetGroup> {
     private final CourseOfAction courseOfAction;
-    private final StructureService structureService;
     private final TargetGroupRepo targetGroupRepo;
     private final TargetRepo targetRepo;
 
     @Override
     protected void createNewGroup(String s) {
-        structureService.createTargetGroup(courseOfAction, s, null);
+        throw new NotImplementedException();
     }
 
     @Override
@@ -44,7 +44,7 @@ public class StructureHierarchyService extends HierarchyService<Target, TargetGr
 
     @Override
     protected void deleteGroup(TargetGroup targetGroup) {
-        structureService.deleteTargetGroup(targetGroup);
+        throw new NotImplementedException();
     }
 
     @Override
