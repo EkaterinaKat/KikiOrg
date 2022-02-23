@@ -29,6 +29,20 @@ public class OrganizerWindowCreator {
         return new WindowBuilder(FXML_LOCATION + "pagination/pagination_pane.fxml").setController(controller).getNode();
     }
 
+    /* ----------------------------------  Привычки ---------------------------------------------- */
+
+    public Node getMainStructureNode(FxController controller) {
+        return new WindowBuilder(STRUCTURE_FXML_LOCATION + "main_structure.fxml").setController(controller).getNode();
+    }
+
+    public Node getStructureBoardNode(FxController controller) {
+        return new WindowBuilder(STRUCTURE_FXML_LOCATION + "board.fxml").setController(controller).getNode();
+    }
+
+    public Node getCoursesNode(FxController controller) {
+        return new WindowBuilder(STRUCTURE_FXML_LOCATION + "courses.fxml").setController(controller).getNode();
+    }
+
     /* ---------------------------------- Работа ---------------------------------------------- */
 
     public Node getMainWorkNode(FxController controller) {

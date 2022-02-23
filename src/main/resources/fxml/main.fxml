@@ -25,6 +25,8 @@
                     GridPane.rowIndex="5" GridPane.columnIndex="0"/>
             <Button text="Tracker" fx:id="trackerButton" prefWidth="180"
                     GridPane.rowIndex="6" GridPane.columnIndex="0"/>
+            <Button text="Structure" fx:id="structureButton" prefWidth="180"
+                    GridPane.rowIndex="7" GridPane.columnIndex="0"/>
         </GridPane>
     </VBox>
 

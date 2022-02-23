@@ -10,6 +10,7 @@ class ViewConstants {
     static final String WARDROBE_FXML_LOCATION = "/fxml/wardrobe/";
     static final String WORK_FXML_LOCATION = "/fxml/work/";
     static final String TRACKER_FXML_LOCATION = "/fxml/tracker/";
+    static final String STRUCTURE_FXML_LOCATION = "/fxml/structure/";
 
     static final int WINDOW_HEIGHT = 1000;
     static final int WINDOW_WIDTH = 1500;
