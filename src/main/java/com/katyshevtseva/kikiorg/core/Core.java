@@ -4,8 +4,10 @@ import com.katyshevtseva.kikiorg.core.sections.finance.*;
 import com.katyshevtseva.kikiorg.core.sections.finance.report.FinanceReportService;
 import com.katyshevtseva.kikiorg.core.sections.finance.report.ReportPeriodService;
 import com.katyshevtseva.kikiorg.core.sections.habits.*;
+import com.katyshevtseva.kikiorg.core.sections.structure.CourseOfActionService;
 import com.katyshevtseva.kikiorg.core.sections.structure.StructureHierarchyService;
-import com.katyshevtseva.kikiorg.core.sections.structure.StructureService;
+import com.katyshevtseva.kikiorg.core.sections.structure.TargetGroupService;
+import com.katyshevtseva.kikiorg.core.sections.structure.TargetService;
 import com.katyshevtseva.kikiorg.core.sections.structure.entity.CourseOfAction;
 import com.katyshevtseva.kikiorg.core.sections.structure.repo.TargetGroupRepo;
 import com.katyshevtseva.kikiorg.core.sections.structure.repo.TargetRepo;
@@ -42,9 +44,11 @@ public class Core implements InitializingBean {
     private final FinanceReportService financeReportService;
     private final ReportPeriodService reportPeriodService;
     private final ItemHierarchyService itemHierarchyService;
-    private final StructureService structureService;
+    private final CourseOfActionService courseOfActionService;
     private final TargetGroupRepo targetGroupRepo;
     private final TargetRepo targetRepo;
+    private final TargetService targetService;
+    private final TargetGroupService targetGroupService;
 
     public static Core getInstance() {
         while (INSTANCE == null) {
@@ -62,8 +66,16 @@ public class Core implements InitializingBean {
         INSTANCE = this;
     }
 
-    public StructureService structureService() {
-        return structureService;
+    private TargetGroupService targetGroupService() {
+        return targetGroupService;
+    }
+
+    private TargetService targetService() {
+        return targetService;
+    }
+
+    public CourseOfActionService courseOfActionService() {
+        return courseOfActionService;
     }
 
     public StructureHierarchyService structureHierarchyService(CourseOfAction courseOfAction) {

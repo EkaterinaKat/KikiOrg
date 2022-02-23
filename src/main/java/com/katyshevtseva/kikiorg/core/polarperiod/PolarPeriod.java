@@ -25,4 +25,13 @@ public class PolarPeriod {
     public String toString() {
         return period + " " + timeUnit + " from " + start.toString();
     }
+
+    public PolarPeriod() {
+    }
+
+    public PolarPeriod(DateEntity start, TimeUnit timeUnit, int period) {
+        this.start = start;
+        this.timeUnit = timeUnit;
+        this.period = period;
+    }
 }

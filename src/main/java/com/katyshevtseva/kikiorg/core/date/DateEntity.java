@@ -25,4 +25,11 @@ public class DateEntity implements Comparable<DateEntity> {
     public String toString() {
         return new SimpleDateFormat("dd.MM.yyyy").toString();
     }
+
+    public DateEntity() {
+    }
+
+    public DateEntity(Date value) {
+        this.value = value;
+    }
 }
