@@ -20,14 +20,12 @@ public class TargetGroupService {
     private final TargetGroupChangeActionRepo targetGroupChangeActionRepo;
 
     public TargetGroup createRootGroup(String courseOfActionTitle) {
-        TargetGroup rootGroup = targetGroupRepo.save(new TargetGroup(courseOfActionTitle + " root", null, null, NEW));
-        targetGroupHistoryService.createNewAction(rootGroup, "CREATED:\n" + rootGroup);
-        return rootGroup;
+        return targetGroupRepo.save(new TargetGroup(courseOfActionTitle + " root", null, null, NEW));
     }
 
     public TargetGroup create(CourseOfAction courseOfAction, String title, String desc) {
         TargetGroup targetGroup = targetGroupRepo.save(new TargetGroup(title, desc, courseOfAction.getRootTargetGroup(), NEW));
-        targetGroupHistoryService.createNewAction(targetGroup, "CREATED:\n" + targetGroup);
+        targetGroupHistoryService.commitCreateAction(targetGroup);
         return targetGroup;
     }
 
@@ -36,7 +34,7 @@ public class TargetGroupService {
         targetGroup.setDescription(desc);
 
         targetGroup = targetGroupRepo.save(targetGroup);
-        targetGroupHistoryService.createNewAction(targetGroup, "EDITED:\n" + targetGroup);
+        targetGroupHistoryService.commitEditedAction(targetGroup);
     }
 
     public void delete(TargetGroup targetGroup) {
@@ -59,7 +57,7 @@ public class TargetGroupService {
     private void changeStatus(TargetGroup targetGroup, TargetStatus status) {
         validateStatusChange(targetGroup.getStatus(), status);
 
-        targetGroupHistoryService.createNewChangeStatusAction(targetGroup, targetGroup.getStatus(), status);
+        targetGroupHistoryService.commitChangeStatusAction(targetGroup, targetGroup.getStatus(), status);
 
         targetGroup.setStatus(status);
         targetGroupRepo.save(targetGroup);

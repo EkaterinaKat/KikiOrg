@@ -7,6 +7,7 @@ import lombok.Data;
 
 import javax.persistence.*;
 import java.util.List;
+import java.util.Objects;
 
 @Data
 @Entity
@@ -46,11 +47,31 @@ public class CourseOfAction implements HasHistory<CourseChangeAction> {
 
     @Override
     public String toString() {
-        return "CourseOfAction{" +
-                ", title='" + title + '\'' +
+        return title;
+    }
+
+    public String getFullDesc() {
+        return "Sphere: " + sphere + "\n" + "Status: " + status + "\n\n" + description;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        CourseOfAction course = (CourseOfAction) o;
+        return id == course.id;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
+    }
+
+    @Override
+    public String getConditionDescForHistory() {
+        return "{title='" + title + '\'' +
                 ", description='" + description + '\'' +
-                ", status=" + status +
-                ", sphere=" + sphere +
-                '}';
+                ", status='" + status + '\'' +
+                ", sphere=" + sphere + '}';
     }
 }

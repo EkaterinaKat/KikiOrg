@@ -6,9 +6,8 @@ import com.katyshevtseva.kikiorg.core.sections.structure.enums.TargetStatus;
 import lombok.Data;
 
 import javax.persistence.*;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
+import java.util.Objects;
 
 @Data
 @Entity
@@ -29,13 +28,9 @@ public class TargetGroup implements HasHistory<TargetGroupChangeAction>, Group {
     @Enumerated(EnumType.STRING)
     private TargetStatus status;
 
+    @OrderColumn(name = "id")
     @OneToMany(mappedBy = "targetGroup", fetch = FetchType.EAGER)
-    private Set<TargetGroupChangeAction> history;
-
-    @Override
-    public List<TargetGroupChangeAction> getHistory() {
-        return new ArrayList<>(history);
-    }
+    private List<TargetGroupChangeAction> history;
 
     public TargetGroup(String title, String description, TargetGroup parent, TargetStatus status) {
         this.title = title;
@@ -49,11 +44,7 @@ public class TargetGroup implements HasHistory<TargetGroupChangeAction>, Group {
 
     @Override
     public String toString() {
-        return "TargetGroup{" +
-                ", title='" + title + '\'' +
-                ", description='" + description + '\'' +
-                ", status=" + status +
-                '}';
+        return title;
     }
 
     @Override
@@ -64,5 +55,24 @@ public class TargetGroup implements HasHistory<TargetGroupChangeAction>, Group {
     @Override
     public Group getParentGroup() {
         return parent;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        TargetGroup that = (TargetGroup) o;
+        return id == that.id;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
+    }
+
+    @Override
+    public String getConditionDescForHistory() {
+        return "{title='" + title + '\'' +
+                ", description='" + description + '}';
     }
 }

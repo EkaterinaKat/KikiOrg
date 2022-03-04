@@ -1,5 +1,6 @@
 package com.katyshevtseva.kikiorg.view.utils;
 
+import com.katyshevtseva.fx.Size;
 import com.katyshevtseva.fx.WindowBuilder;
 import com.katyshevtseva.fx.WindowBuilder.FxController;
 import com.katyshevtseva.kikiorg.core.CoreConstants;
@@ -20,8 +21,9 @@ public class OrganizerWindowCreator {
 
     public void openMainWindow(FxController controller) {
         new WindowBuilder(FXML_LOCATION + "main.fxml").
-                setController(controller).setHeight(WINDOW_HEIGHT).
-                setWidth(WINDOW_WIDTH).setTitle(CoreConstants.APP_NAME).
+                setController(controller)
+                .setSize(WINDOW_HEIGHT, WINDOW_WIDTH)
+                .setTitle(CoreConstants.APP_NAME).
                 setOnWindowCloseEventHandler(event -> System.exit(0)).showWindow();
     }
 
@@ -29,7 +31,7 @@ public class OrganizerWindowCreator {
         return new WindowBuilder(FXML_LOCATION + "pagination/pagination_pane.fxml").setController(controller).getNode();
     }
 
-    /* ----------------------------------  Привычки ---------------------------------------------- */
+    /* ----------------------------------  Структура ---------------------------------------------- */
 
     public Node getMainStructureNode(FxController controller) {
         return new WindowBuilder(STRUCTURE_FXML_LOCATION + "main_structure.fxml").setController(controller).getNode();
@@ -41,6 +43,17 @@ public class OrganizerWindowCreator {
 
     public Node getCoursesNode(FxController controller) {
         return new WindowBuilder(STRUCTURE_FXML_LOCATION + "courses.fxml").setController(controller).getNode();
+    }
+
+    public void openCourseEditDialog(FxController controller) {
+        new WindowBuilder(STRUCTURE_FXML_LOCATION + "course_dialog.fxml").setSize(new Size(560, 500))
+                .setController(controller).setTitle(CoreConstants.APP_NAME).showWindow();
+    }
+
+    public void openCourseViewDialog(FxController controller) {
+        new WindowBuilder(STRUCTURE_FXML_LOCATION + "course.fxml")
+                .setSize(WINDOW_HEIGHT, WINDOW_WIDTH)
+                .setController(controller).setTitle(CoreConstants.APP_NAME).showWindow();
     }
 
     /* ---------------------------------- Работа ---------------------------------------------- */

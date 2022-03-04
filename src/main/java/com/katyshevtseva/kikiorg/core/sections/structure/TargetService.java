@@ -28,7 +28,7 @@ public class TargetService {
 
     public void create(CourseOfAction courseOfAction, String title, String desc) {
         Target target = targetRepo.save(new Target(title, desc, courseOfAction.getRootTargetGroup(), NEW));
-        targetHistoryService.createNewAction(target, "CREATED:\n" + target);
+        targetHistoryService.commitCreateAction(target);
     }
 
     public void edit(Target target, String title, String desc) {
@@ -36,7 +36,7 @@ public class TargetService {
         target.setDescription(desc);
 
         target = targetRepo.save(target);
-        targetHistoryService.createNewAction(target, "EDITED:\n" + target);
+        targetHistoryService.commitEditedAction(target);
     }
 
     public void delete(Target target) {
@@ -64,7 +64,7 @@ public class TargetService {
     public void setStatusAndPeriod(Target target, TargetStatus status, PolarPeriod period) {
         validateStatusChange(target.getStatus(), status);
 
-        targetHistoryService.createNewChangeStatusAction(target, target.getStatus(), status, period != null ? period.toString() : null);
+        targetHistoryService.commitChangeStatusAction(target, target.getStatus(), status, period != null ? period.toString() : null);
 
         target.setPeriod(period);
         target.setStatus(status);

@@ -6,6 +6,7 @@ import lombok.Data;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.Objects;
 
 @Data
 @Entity
@@ -21,7 +22,7 @@ public class TargetGroupChangeAction implements Action<TargetGroup> {
     @JoinColumn(name = "date_entity_id")
     private DateEntity dateEntity;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "group_id", nullable = false)
     private TargetGroup targetGroup;
 
@@ -33,5 +34,23 @@ public class TargetGroupChangeAction implements Action<TargetGroup> {
     @Override
     public void setEntity(TargetGroup targetGroup) {
         this.setTargetGroup(targetGroup);
+    }
+
+    @Override
+    public long getOrder() {
+        return id;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        TargetGroupChangeAction that = (TargetGroupChangeAction) o;
+        return id == that.id;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
     }
 }

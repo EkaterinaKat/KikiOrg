@@ -6,6 +6,7 @@ import lombok.Data;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.Objects;
 
 @Data
 @Entity
@@ -21,7 +22,7 @@ public class CourseChangeAction implements Action<CourseOfAction> {
     @JoinColumn(name = "date_entity_id")
     private DateEntity dateEntity;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "course_id", nullable = false)
     private CourseOfAction courseOfAction;
 
@@ -33,5 +34,23 @@ public class CourseChangeAction implements Action<CourseOfAction> {
     @Override
     public void setEntity(CourseOfAction courseOfAction) {
         this.setCourseOfAction(courseOfAction);
+    }
+
+    @Override
+    public long getOrder() {
+        return id;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        CourseChangeAction that = (CourseChangeAction) o;
+        return id == that.id;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
     }
 }

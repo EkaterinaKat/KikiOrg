@@ -1,5 +1,6 @@
 package com.katyshevtseva.kikiorg.core.sections.structure;
 
+import com.katyshevtseva.hierarchy.HierarchyNode;
 import com.katyshevtseva.hierarchy.HierarchyService;
 import com.katyshevtseva.kikiorg.core.sections.structure.entity.CourseOfAction;
 import com.katyshevtseva.kikiorg.core.sections.structure.entity.Target;
@@ -10,6 +11,7 @@ import lombok.RequiredArgsConstructor;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 public class StructureHierarchyService extends HierarchyService<Target, TargetGroup> {
@@ -55,5 +57,26 @@ public class StructureHierarchyService extends HierarchyService<Target, TargetGr
     @Override
     protected List<TargetGroup> getGroupsByParentGroup(TargetGroup targetGroup) {
         return targetGroupRepo.findAllByParent(targetGroup);
+    }
+
+    @Override
+    protected List<Target> getTopLevelLeaves() {
+        return getAllLeaves().stream().filter(leaf -> leaf.getParentGroup().equals(courseOfAction.getRootTargetGroup())).collect(Collectors.toList());
+    }
+
+    @Override
+    protected List<TargetGroup> getTopLevelGroups() {
+        return getAllGroups().stream().filter(group -> group.getParentGroup().equals(courseOfAction.getRootTargetGroup())).collect(Collectors.toList());
+    }
+
+    @Override
+    public boolean isTopLevel(HierarchyNode node) {
+        return node.getParentGroup().equals(courseOfAction.getRootTargetGroup());
+    }
+
+    @Override
+    public void deleteFromSchema(HierarchyNode node) {
+        node.setParentGroup(courseOfAction.getRootTargetGroup());
+        saveModifiedNode(node);
     }
 }

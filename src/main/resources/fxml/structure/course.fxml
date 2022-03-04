@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<VBox xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml">
+
+    <Pane minHeight="20" maxHeight="20"/>
+
+    <HBox>
+        <Pane minWidth="20" maxWidth="20"/>
+
+        <VBox>
+            <Label fx:id="titleLabel" wrapText="true" maxWidth="300" minWidth="300"/>
+            <Pane minHeight="20" maxHeight="20"/>
+            <Label fx:id="descLabel" wrapText="true" maxWidth="300" minWidth="300"/>
+            <Pane minHeight="20" maxHeight="20"/>
+            <Button fx:id="editButton" text="Edit" maxWidth="300" minWidth="300"/>
+            <Pane minHeight="20" maxHeight="20"/>
+            <Button fx:id="addGroupButton" text="Add Group" maxWidth="300" minWidth="300"/>
+            <Pane minHeight="20" maxHeight="20"/>
+            <Button fx:id="addTargetButton" text="Add Target" maxWidth="300" minWidth="300"/>
+            <Pane minHeight="20" maxHeight="20"/>
+            <Button fx:id="historyButton" text="History" maxWidth="300" minWidth="300"/>
+            <Pane minHeight="20" maxHeight="20"/>
+            <Button fx:id="deleteButton" text="Delete" maxWidth="300" minWidth="300"/>
+        </VBox>
+
+        <Pane minWidth="20" maxWidth="20"/>
+
+        <Pane fx:id="hierarchyPane"/>
+    </HBox>
+
+</VBox>

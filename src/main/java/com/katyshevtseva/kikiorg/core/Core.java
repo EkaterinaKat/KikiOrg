@@ -66,11 +66,11 @@ public class Core implements InitializingBean {
         INSTANCE = this;
     }
 
-    private TargetGroupService targetGroupService() {
+    public TargetGroupService targetGroupService() {
         return targetGroupService;
     }
 
-    private TargetService targetService() {
+    public TargetService targetService() {
         return targetService;
     }
 
