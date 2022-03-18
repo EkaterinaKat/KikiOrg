@@ -41,6 +41,10 @@ public class CourseOfActionService {
         return new Page<>(courseOfActionPage.getContent(), pageNum, courseOfActionPage.getTotalPages());
     }
 
+    public CourseOfAction getCourseWithLastChanges(CourseOfAction courseOfAction) {
+        return courseOfActionRepo.findById(courseOfAction.getId()).get();
+    }
+
     public CourseOfAction edit(CourseOfAction courseOfAction, String title, String desc, CourseOfActionStatus status, Sphere sphere) {
         if (courseOfAction.getStatus() != status) {
             courseOfActionHistoryService.commitChangeStatusAction(courseOfAction, courseOfAction.getStatus(), status);
@@ -56,7 +60,7 @@ public class CourseOfActionService {
         }
 
         courseOfActionRepo.save(courseOfAction);
-        return courseOfActionRepo.findById(courseOfAction.getId()).get();
+        return getCourseWithLastChanges(courseOfAction);
     }
 
     @Transactional
