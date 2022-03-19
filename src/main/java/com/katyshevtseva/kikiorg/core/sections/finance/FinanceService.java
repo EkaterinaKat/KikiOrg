@@ -13,7 +13,6 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 import static com.katyshevtseva.date.DateUtils.getLastMonthPeriod;
-import static com.katyshevtseva.kikiorg.core.sections.finance.FinanceService.TransferType.*;
 
 @Service
 public class FinanceService {
@@ -151,29 +150,14 @@ public class FinanceService {
         sourceRepo.saveAndFlush(source);
     }
 
-    @Transactional
-    public void addTransfer(Account from, Account to, Long amount, Date date) {
-        Transfer transfer = new Transfer();
-        transfer.setFrom(from);
-        transfer.setTo(to);
-        transfer.setAmount(amount);
-        transfer.setDateEntity(dateService.createIfNotExistAndGetDateEntity(date));
-        transferRepo.saveAndFlush(transfer);
-
-        addToAccountAmount(from, (-1) * amount);
-        addToAccountAmount(to, amount);
-    }
-
     // Если нет мд public то FinanceService не может получить доступ к этому методу в собраном в exe приложении
-    public List<Transfer> getTransfersForCuByPeriod(Period period, TransferType transferType) {
+    public List<Transfer> getTransfersByPeriod(Period period) {
         Set<Transfer> transferSet = new HashSet<>();
         List<DateEntity> dateEntities = dateService.getOnlyExistingDateEntitiesByPeriod(period);
         for (DateEntity dateEntity : dateEntities) {
             for (Account account : getAllAccounts()) {
-                if (transferType == TO_USER_ACCOUNTS || transferType == ALL)
-                    transferSet.addAll(transferRepo.findAllByToAndDateEntity(account, dateEntity));
-                if (transferType == FROM_USER_ACCOUNTS || transferType == ALL)
-                    transferSet.addAll(transferRepo.findAllByFromAndDateEntity(account, dateEntity));
+                transferSet.addAll(transferRepo.findAllByToAndDateEntity(account, dateEntity));
+                transferSet.addAll(transferRepo.findAllByFromAndDateEntity(account, dateEntity));
             }
         }
         List<Transfer> transferList = new ArrayList<>(transferSet);
@@ -185,7 +169,7 @@ public class FinanceService {
         TO_USER_ACCOUNTS, FROM_USER_ACCOUNTS, ALL
     }
 
-    private void addToAccountAmount(Account account, long amount) {
+    public void addToAccountAmount(Account account, long amount) {
         Account actualAccount = accountRepo.findById(account.getId()).orElse(null);
         actualAccount.setAmount(actualAccount.getAmount() + amount);
         accountRepo.saveAndFlush(actualAccount);

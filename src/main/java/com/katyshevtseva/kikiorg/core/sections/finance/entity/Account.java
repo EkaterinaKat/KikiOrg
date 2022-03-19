@@ -1,12 +1,10 @@
 package com.katyshevtseva.kikiorg.core.sections.finance.entity;
 
+import com.katyshevtseva.kikiorg.core.sections.finance.Currency;
 import com.katyshevtseva.kikiorg.core.sections.finance.OperationEnd;
 import lombok.Data;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Data
 @Entity
@@ -25,15 +23,19 @@ public class Account implements OperationEnd {
 
     private Boolean my;
 
+    @Enumerated(EnumType.STRING)
+    private Currency currency;
+
     public String getTitle() {
+        String result = title + " " + ((char) currency.getCode());
         if (archived)
-            return title + " (archived)";
-        return title;
+            return result + " (archived)";
+        return result;
     }
 
     @Override
     public String toString() {
-        return title;
+        return title + " " + ((char) currency.getCode());
     }
 
     @Override

@@ -20,7 +20,6 @@ import java.util.List;
 
 import static com.katyshevtseva.date.DateUtils.getLastMonthPeriod;
 import static com.katyshevtseva.date.DateUtils.shiftDate;
-import static com.katyshevtseva.kikiorg.core.sections.finance.FinanceService.TransferType.ALL;
 
 @Service
 public class FinanceOperationService {
@@ -49,7 +48,7 @@ public class FinanceOperationService {
         List<Operation> operations = new ArrayList<>();
         operations.addAll(financeService.getReplenishmentsByPeriod(period));
         operations.addAll(financeService.getExpensesByPeriod(period));
-        operations.addAll(financeService.getTransfersForCuByPeriod(period, ALL));
+        operations.addAll(financeService.getTransfersByPeriod(period));
         operations.sort(Comparator.comparing(Operation::getDate).reversed());
         return operations;
     }

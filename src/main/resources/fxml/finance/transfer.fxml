@@ -3,23 +3,45 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <VBox xmlns="http://javafx.com/javafx"
-      xmlns:fx="http://javafx.com/fxml">
-    <Pane minHeight="40" maxHeight="40"/>
-    <DatePicker fx:id="datePicker" minWidth="250" maxWidth="250"/>
-    <Pane minHeight="40" maxHeight="40"/>
-    <HBox>
-        <ComboBox fx:id="fromComboBox" minWidth="300" maxWidth="300"/>
-        <Pane minWidth="8" maxWidth="8"/>
-        <Label text="->"/>
-        <Pane minWidth="8" maxWidth="8"/>
-        <TextField fx:id="amountTextField" minWidth="150" maxWidth="150"/>
-        <Pane minWidth="8" maxWidth="8"/>
-        <Label text="->"/>
-        <Pane minWidth="8" maxWidth="8"/>
-        <ComboBox fx:id="toComboBox" minWidth="300" maxWidth="300"/>
-        <Pane minWidth="8" maxWidth="8"/>
-        <Button fx:id="transferButton" text="Transfer"/>
-    </HBox>
+      xmlns:fx="http://javafx.com/fxml"
+      alignment="CENTER">
+
+    <Pane prefHeight="15"/>
+
+    <GridPane alignment="CENTER" hgap="25" vgap="25">
+        <Label text="From: " GridPane.halignment="LEFT"
+               GridPane.columnIndex="0" GridPane.rowIndex="0"/>
+
+        <ComboBox fx:id="fromComboBox" minWidth="250" maxWidth="250"
+                  GridPane.columnIndex="1" GridPane.rowIndex="0"/>
+
+        <Label text="To: " GridPane.halignment="LEFT"
+               GridPane.columnIndex="0" GridPane.rowIndex="1"
+               minWidth="150" maxWidth="150"/>
+
+        <ComboBox fx:id="toComboBox" minWidth="250" maxWidth="250"
+                  GridPane.columnIndex="1" GridPane.rowIndex="1"/>
+
+        <Label text="Date: " GridPane.halignment="LEFT"
+               GridPane.columnIndex="2" GridPane.rowIndex="0"
+               minWidth="150" maxWidth="150"/>
+
+        <DatePicker fx:id="datePicker" minWidth="250" maxWidth="250"
+                    GridPane.columnIndex="3" GridPane.rowIndex="0"/>
+
+        <Label text="Amount: " GridPane.halignment="LEFT"
+               GridPane.columnIndex="2" GridPane.rowIndex="1"/>
+
+        <HBox GridPane.columnIndex="3" GridPane.rowIndex="1">
+            <TextField fx:id="amountGoneTextField" minWidth="120" maxWidth="120"/>
+            <Pane maxWidth="10" minWidth="10"/>
+            <TextField fx:id="amountCameTextField" minWidth="120" maxWidth="120"/>
+        </HBox>
+
+        <Button fx:id="transferButton" text="Ok" GridPane.halignment="RIGHT"
+                GridPane.columnIndex="3" GridPane.rowIndex="2"/>
+    </GridPane>
+
 </VBox>
 
 

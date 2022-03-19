@@ -26,11 +26,24 @@ public class Transfer implements Operation {
     @JoinColumn(name = "to_account_id", nullable = false)
     private Account to;
 
-    private Long amount;
+    private Long goneAmount;
+
+    private Long cameAmount;
 
     @ManyToOne
     @JoinColumn(name = "date_entity_id")
     private DateEntity dateEntity;
+
+    public Transfer() {
+    }
+
+    public Transfer(Account from, Account to, Long goneAmount, Long cameAmount, DateEntity dateEntity) {
+        this.from = from;
+        this.to = to;
+        this.goneAmount = goneAmount;
+        this.cameAmount = cameAmount;
+        this.dateEntity = dateEntity;
+    }
 
     @Override
     public Date getDate() {
@@ -59,11 +72,14 @@ public class Transfer implements Operation {
 
     @Override
     public String getAmountString() {
-        return "" + amount;
+        if (isIntercurrency()) {
+            return goneAmount + "->" + cameAmount;
+        }
+        return "" + goneAmount;
     }
 
-    public boolean isOuter() {
-        return false;
+    private boolean isIntercurrency() {
+        return from.getCurrency() != to.getCurrency();
     }
 
     @Override

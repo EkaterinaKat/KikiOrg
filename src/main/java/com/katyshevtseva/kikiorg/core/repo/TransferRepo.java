@@ -20,7 +20,7 @@ public interface TransferRepo extends JpaRepository<Transfer, Long> {
     List<Transfer> findAllByToAndDateEntity(Account to, DateEntity dateEntity);
 
     @Query("SELECT t FROM Transfer t WHERE " +
-            "t.amount BETWEEN :minAmount AND :maxAmount " +
+            "t.goneAmount BETWEEN :minAmount AND :maxAmount " +
             "AND t.dateEntity.value BETWEEN :startDate AND :endDate " +
             "AND t.from IN :from " +
             "AND t.to IN :to ")

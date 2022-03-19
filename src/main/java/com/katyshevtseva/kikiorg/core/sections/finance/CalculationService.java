@@ -34,10 +34,10 @@ public class CalculationService {
         long expenseAmount = expenses.stream().map(Expense::getAmount).reduce(Long::sum).orElse(0L);
         amount -= expenseAmount;
 
-        long transfersToAccountAmount = transfersToAccount.stream().map(Transfer::getAmount).reduce(Long::sum).orElse(0L);
+        long transfersToAccountAmount = transfersToAccount.stream().map(Transfer::getCameAmount).reduce(Long::sum).orElse(0L);
         amount += transfersToAccountAmount;
 
-        long transfersFromAccountAmount = transfersFromAccount.stream().map(Transfer::getAmount).reduce(Long::sum).orElse(0L);
+        long transfersFromAccountAmount = transfersFromAccount.stream().map(Transfer::getGoneAmount).reduce(Long::sum).orElse(0L);
         amount -= transfersFromAccountAmount;
 
         return amount;
