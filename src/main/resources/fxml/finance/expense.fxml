@@ -9,7 +9,7 @@
     <Pane prefHeight="15"/>
 
     <GridPane alignment="CENTER" hgap="25" vgap="25">
-        <Label text="Amount(₽): " GridPane.halignment="LEFT"
+        <Label text="Amount: " GridPane.halignment="LEFT"
                GridPane.columnIndex="0" GridPane.rowIndex="0"
                minWidth="150" maxWidth="150"/>
 

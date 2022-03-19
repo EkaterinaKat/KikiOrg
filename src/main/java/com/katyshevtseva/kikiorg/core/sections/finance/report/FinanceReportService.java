@@ -115,7 +115,7 @@ public class FinanceReportService {
         Map<String, Long> titleValueMap = new HashMap<>();
         for (Transfer transfer : transfers) {
             String lineTitle = "tr: " + transfer.getFrom().getTitle();
-            titleValueMap.put(lineTitle, titleValueMap.getOrDefault(lineTitle, 0L) + transfer.getAmount());
+            titleValueMap.put(lineTitle, titleValueMap.getOrDefault(lineTitle, 0L) + transfer.getCameAmount());
         }
         for (Map.Entry<String, Long> entry : titleValueMap.entrySet()) {
             report.addLine(entry.getKey(), entry.getValue());
@@ -152,7 +152,7 @@ public class FinanceReportService {
         Map<String, Long> titleValueMap = new HashMap<>();
         for (Transfer transfer : transfers) {
             String lineTitle = "tr: " + transfer.getTo().getTitle();
-            titleValueMap.put(lineTitle, titleValueMap.getOrDefault(lineTitle, 0L) + transfer.getAmount());
+            titleValueMap.put(lineTitle, titleValueMap.getOrDefault(lineTitle, 0L) + transfer.getGoneAmount());
         }
         for (Map.Entry<String, Long> entry : titleValueMap.entrySet()) {
             report.addLine(entry.getKey(), entry.getValue());
