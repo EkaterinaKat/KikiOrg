@@ -78,7 +78,6 @@ public class Target implements HasHistory<TargetChangeAction>, Leaf {
 
     @Override
     public String getConditionDescForHistory() {
-        return "{title='" + title + '\'' +
-                ", description='" + description + '}';
+        return "{title='" + title + "', description='" + description + "'}";
     }
 }

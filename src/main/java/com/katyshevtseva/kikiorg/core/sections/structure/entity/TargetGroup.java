@@ -72,7 +72,6 @@ public class TargetGroup implements HasHistory<TargetGroupChangeAction>, Group {
 
     @Override
     public String getConditionDescForHistory() {
-        return "{title='" + title + '\'' +
-                ", description='" + description + '}';
+        return "{title='" + title + "', description='" + description + "'}";
     }
 }
