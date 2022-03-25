@@ -6,8 +6,11 @@ import com.katyshevtseva.kikiorg.core.sections.structure.enums.TargetStatus;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Data
 @Entity
@@ -28,9 +31,8 @@ public class TargetGroup implements HasHistory<TargetGroupChangeAction>, Group {
     @Enumerated(EnumType.STRING)
     private TargetStatus status;
 
-    @OrderColumn(name = "id")
     @OneToMany(mappedBy = "targetGroup", fetch = FetchType.EAGER)
-    private List<TargetGroupChangeAction> history;
+    private Set<TargetGroupChangeAction> history;
 
     public TargetGroup(String title, String description, TargetGroup parent, TargetStatus status) {
         this.title = title;
@@ -73,5 +75,12 @@ public class TargetGroup implements HasHistory<TargetGroupChangeAction>, Group {
     @Override
     public String getConditionDescForHistory() {
         return "{title='" + title + "', description='" + description + "'}";
+    }
+
+    @Override
+    public List<TargetGroupChangeAction> getHistory() {
+        return history.stream()
+                .sorted(Comparator.comparing(action -> action.getDateEntity().getValue()))
+                .collect(Collectors.toList());
     }
 }

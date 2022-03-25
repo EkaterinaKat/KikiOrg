@@ -23,7 +23,7 @@ public class DateEntity implements Comparable<DateEntity> {
 
     @Override
     public String toString() {
-        return new SimpleDateFormat("dd.MM.yyyy").toString();
+        return new SimpleDateFormat("dd.MM.yyyy").format(value);
     }
 
     public DateEntity() {

@@ -2,8 +2,6 @@ package com.katyshevtseva.kikiorg.core.sections.structure;
 
 import com.katyshevtseva.hierarchy.HierarchyNode;
 import com.katyshevtseva.hierarchy.HierarchyService;
-import com.katyshevtseva.history.Action;
-import com.katyshevtseva.history.HasHistory;
 import com.katyshevtseva.kikiorg.core.sections.structure.entity.CourseOfAction;
 import com.katyshevtseva.kikiorg.core.sections.structure.entity.Target;
 import com.katyshevtseva.kikiorg.core.sections.structure.entity.TargetGroup;
@@ -13,7 +11,6 @@ import lombok.RequiredArgsConstructor;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import java.util.List;
-import java.util.Objects;
 
 @RequiredArgsConstructor
 public class StructureHierarchyService extends HierarchyService<Target, TargetGroup> {
@@ -58,22 +55,22 @@ public class StructureHierarchyService extends HierarchyService<Target, TargetGr
 
     @Override
     protected List<Target> getLeavesByParentGroup(TargetGroup targetGroup) {
-        return clearHistoryFromNulls(targetRepo.findByParent(targetGroup));
+        return targetRepo.findByParent(targetGroup);
     }
 
     @Override
     protected List<TargetGroup> getGroupsByParentGroup(TargetGroup targetGroup) {
-        return clearHistoryFromNulls(targetGroupRepo.findAllByParent(targetGroup));
+        return targetGroupRepo.findAllByParent(targetGroup);
     }
 
     @Override
     protected List<Target> getTopLevelLeaves() {
-        return clearHistoryFromNulls(targetRepo.findByParent(courseOfAction.getRootTargetGroup()));
+        return targetRepo.findByParent(courseOfAction.getRootTargetGroup());
     }
 
     @Override
     protected List<TargetGroup> getTopLevelGroups() {
-        return clearHistoryFromNulls(targetGroupRepo.findAllByParent(courseOfAction.getRootTargetGroup()));
+        return targetGroupRepo.findAllByParent(courseOfAction.getRootTargetGroup());
     }
 
     @Override
@@ -85,12 +82,5 @@ public class StructureHierarchyService extends HierarchyService<Target, TargetGr
     public void deleteFromSchema(HierarchyNode node) {
         node.setParentGroup(courseOfAction.getRootTargetGroup());
         saveModifiedNode(node);
-    }
-
-    private <E extends HasHistory<A>, A extends Action<?>> List<E> clearHistoryFromNulls(List<E> list) {
-        //это приходится делать потому что из-за @OrderColumn(name = "id") в TargetGroup/Target коллекция заполняется нулями
-        //@OrderColumn используем, чтобы избежать MultipleBagFetchException: cannot simultaneously fetch multiple bags
-        list.forEach(targetGroup -> targetGroup.getHistory().removeIf(Objects::isNull));
-        return list;
     }
 }

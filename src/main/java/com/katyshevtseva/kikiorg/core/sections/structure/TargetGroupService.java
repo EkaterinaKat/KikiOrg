@@ -1,5 +1,7 @@
 package com.katyshevtseva.kikiorg.core.sections.structure;
 
+import com.katyshevtseva.hierarchy.HierarchyNode;
+import com.katyshevtseva.kikiorg.core.Core;
 import com.katyshevtseva.kikiorg.core.sections.structure.entity.CourseOfAction;
 import com.katyshevtseva.kikiorg.core.sections.structure.entity.TargetGroup;
 import com.katyshevtseva.kikiorg.core.sections.structure.enums.TargetStatus;
@@ -8,6 +10,7 @@ import com.katyshevtseva.kikiorg.core.sections.structure.repo.TargetGroupChangeA
 import com.katyshevtseva.kikiorg.core.sections.structure.repo.TargetGroupRepo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import static com.katyshevtseva.kikiorg.core.sections.structure.StatusUtils.validateStatusChange;
 import static com.katyshevtseva.kikiorg.core.sections.structure.enums.TargetStatus.*;
@@ -37,6 +40,16 @@ public class TargetGroupService {
         targetGroupHistoryService.commitEditedAction(targetGroup);
     }
 
+    @Transactional
+    public void moveChildrenToRootAndDeleteGroup(TargetGroup groupToDelete, CourseOfAction course) {
+        StructureHierarchyService hierarchyService = Core.getInstance().structureHierarchyService(course);
+        for (HierarchyNode node : hierarchyService.getNodesByParent(groupToDelete)) {
+            hierarchyService.deleteFromSchema(node);
+        }
+        delete(groupToDelete);
+    }
+
+    @Transactional
     public void delete(TargetGroup targetGroup) {
         targetGroupChangeActionRepo.deleteByTargetGroup(targetGroup);
         targetGroupRepo.delete(targetGroup);
@@ -54,6 +67,7 @@ public class TargetGroupService {
         changeStatus(targetGroup, DONE);
     }
 
+    @Transactional
     private void changeStatus(TargetGroup targetGroup, TargetStatus status) {
         validateStatusChange(targetGroup.getStatus(), status);
 

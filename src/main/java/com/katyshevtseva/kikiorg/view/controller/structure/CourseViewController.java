@@ -7,10 +7,12 @@ import com.katyshevtseva.fx.WindowBuilder.FxController;
 import com.katyshevtseva.fx.component.ComponentBuilder;
 import com.katyshevtseva.fx.component.controller.HierarchyController;
 import com.katyshevtseva.fx.dialog.StandardDialogBuilder;
+import com.katyshevtseva.fx.dialog.controller.TextFieldAndComboBoxDialogController;
 import com.katyshevtseva.general.NoArgsKnob;
 import com.katyshevtseva.general.TwoArgKnob;
 import com.katyshevtseva.hierarchy.HierarchyNode;
 import com.katyshevtseva.kikiorg.core.Core;
+import com.katyshevtseva.kikiorg.core.polarperiod.TimeUnit;
 import com.katyshevtseva.kikiorg.core.sections.structure.entity.CourseOfAction;
 import com.katyshevtseva.kikiorg.core.sections.structure.entity.Target;
 import com.katyshevtseva.kikiorg.core.sections.structure.entity.TargetGroup;
@@ -127,8 +129,7 @@ public class CourseViewController implements FxController {
         MenuItem deleteItem = new MenuItem("Delete");
         deleteItem.setOnAction(event -> new StandardDialogBuilder().openQuestionDialog("Delete?", answer -> {
             if (answer) {
-                System.out.println("Delete " + node);
-                //todo действие
+                Core.getInstance().structureHierarchyNodeService().delete(node, courseOfAction);
                 fillHierarchyPane();
             }
         }));
@@ -139,8 +140,7 @@ public class CourseViewController implements FxController {
         MenuItem editItem = new MenuItem("Edit");
         editItem.setOnAction(event -> new StandardDialogBuilder().openTextFieldAndTextAreaDialog(node.getTitle(), node.getDescription(),
                 ((s, s2) -> {
-                    //todo действие
-                    System.out.println("Edit " + node);
+                    Core.getInstance().structureHierarchyNodeService().edit(node, s, s2);
                     fillHierarchyPane();
                 })));
         return editItem;
@@ -172,9 +172,18 @@ public class CourseViewController implements FxController {
     private MenuItem getStartMenuItem(HierarchyNode node) {
         MenuItem startItem = new MenuItem("Start");
         startItem.setOnAction(event -> {
-            //todo
-            System.out.println("Start " + node);
-            fillHierarchyPane();
+            if (node instanceof Target) {
+                TextFieldAndComboBoxDialogController<?> controller =
+                        new StandardDialogBuilder().openTextFieldAndComboBoxDialog(TimeUnit.values(), (s, timeUnit) -> {
+                            Core.getInstance().targetService().start((Target) node, timeUnit, Integer.parseInt(s));
+                            fillHierarchyPane();
+                        });
+                FxUtils.disableNonNumericChars(controller.getTextField());
+            }
+            if (node instanceof TargetGroup) {
+                Core.getInstance().targetGroupService().start((TargetGroup) node);
+                fillHierarchyPane();
+            }
         });
         return startItem;
     }
@@ -183,8 +192,7 @@ public class CourseViewController implements FxController {
         MenuItem rejectItem = new MenuItem("Reject");
         rejectItem.setOnAction(event -> new StandardDialogBuilder().openQuestionDialog("Reject?", answer -> {
             if (answer) {
-                //todo действие
-                System.out.println("Reject " + node);
+                Core.getInstance().structureHierarchyNodeService().reject(node);
                 fillHierarchyPane();
             }
         }));
@@ -195,8 +203,7 @@ public class CourseViewController implements FxController {
         MenuItem doneItem = new MenuItem("Done");
         doneItem.setOnAction(event -> new StandardDialogBuilder().openQuestionDialog("Done?", answer -> {
             if (answer) {
-                //todo действие
-                System.out.println("Done " + node);
+                Core.getInstance().structureHierarchyNodeService().done(node);
                 fillHierarchyPane();
             }
         }));
