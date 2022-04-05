@@ -4,9 +4,18 @@ import com.katyshevtseva.date.DateUtils;
 
 import java.util.Date;
 
-import static com.katyshevtseva.date.DateUtils.shiftDate;
+import static com.katyshevtseva.date.DateUtils.*;
 
 public class PeriodUtils {
+
+    public static String getFullPeriodInfo(PolarPeriod period) {
+        Date end = getEndDate(period);
+
+        return String.format("%s\nTill: %s\nLeft: %s",
+                period,
+                READABLE_DATE_FORMAT.format(end),
+                getNumberOfDays(period.getStart().getValue(), end));
+    }
 
     public static boolean isOverdue(PolarPeriod period) {
         return DateUtils.removeTimeFromDate(new Date()).after(getEndDate(period));

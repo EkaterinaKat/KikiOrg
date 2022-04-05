@@ -6,6 +6,26 @@
      -fx-font-size: 25;
 }
 
+.done_button {
+        -fx-background-color: #3bc72e;
+        -fx-text-fill: #FFFFFF;
+}
+
+.done_button:hover {
+    -fx-background-color: #FFFFFF;
+    -fx-text-fill: #3bc72e;
+}
+
+.reject_button {
+        -fx-background-color: #5c5c5c;
+        -fx-text-fill: #FFFFFF;
+}
+
+.reject_button:hover {
+    -fx-background-color: #FFFFFF;
+    -fx-text-fill: #5c5c5c;
+}
+
 .root {
     -fx-background-color: #fff1ad;
 }

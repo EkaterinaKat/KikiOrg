@@ -56,6 +56,10 @@ public class OrganizerWindowCreator {
                 .setController(controller).setTitle(CoreConstants.APP_NAME).showWindow();
     }
 
+    public Node getTargetPaneNode(FxController controller) {
+        return new WindowBuilder(STRUCTURE_FXML_LOCATION + "target_pane.fxml").setController(controller).getNode();
+    }
+
     /* ---------------------------------- Работа ---------------------------------------------- */
 
     public Node getMainWorkNode(FxController controller) {

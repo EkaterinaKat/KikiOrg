@@ -6,8 +6,10 @@ import com.katyshevtseva.kikiorg.core.polarperiod.PolarPeriodService;
 import com.katyshevtseva.kikiorg.core.polarperiod.TimeUnit;
 import com.katyshevtseva.kikiorg.core.sections.structure.entity.CourseOfAction;
 import com.katyshevtseva.kikiorg.core.sections.structure.entity.Target;
+import com.katyshevtseva.kikiorg.core.sections.structure.entity.TargetGroup;
 import com.katyshevtseva.kikiorg.core.sections.structure.enums.TargetStatus;
 import com.katyshevtseva.kikiorg.core.sections.structure.history.TargetHistoryService;
+import com.katyshevtseva.kikiorg.core.sections.structure.repo.CourseOfActionRepo;
 import com.katyshevtseva.kikiorg.core.sections.structure.repo.TargetChangeActionRepo;
 import com.katyshevtseva.kikiorg.core.sections.structure.repo.TargetRepo;
 import lombok.RequiredArgsConstructor;
@@ -28,6 +30,7 @@ public class TargetService {
     private final TargetChangeActionRepo targetChangeActionRepo;
     private final DateService dateService;
     private final PolarPeriodService polarPeriodService;
+    private final CourseOfActionRepo courseOfActionRepo;
 
     public void create(CourseOfAction courseOfAction, String title, String desc) {
         Target target = targetRepo.save(new Target(title, desc, courseOfAction.getRootTargetGroup(), NEW));
@@ -68,6 +71,17 @@ public class TargetService {
         PolarPeriod period = target.getPeriod();
         setStatusAndPeriod(target, DONE, null);
         polarPeriodService.delete(period);
+    }
+
+    public String getTargetHierarchyOverviewString(Target target) {
+        StringBuilder stringBuilder = new StringBuilder();
+        TargetGroup targetGroup = target.getParent();
+        while (targetGroup.getParent() != null) {
+            stringBuilder.append(targetGroup.getTitle()).append("\n");
+            targetGroup = targetGroup.getParent();
+        }
+        stringBuilder.append(courseOfActionRepo.findByRootTargetGroup(targetGroup).get().getTitle());
+        return stringBuilder.toString();
     }
 
     private void setStatusAndPeriod(Target target, TargetStatus status, PolarPeriod period) {
