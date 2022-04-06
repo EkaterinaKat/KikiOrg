@@ -1,6 +1,7 @@
 package com.katyshevtseva.kikiorg.core.sections.structure;
 
 import com.katyshevtseva.hierarchy.HierarchyNode;
+import com.katyshevtseva.kikiorg.core.polarperiod.PeriodUtils;
 import com.katyshevtseva.kikiorg.core.sections.structure.entity.CourseOfAction;
 import com.katyshevtseva.kikiorg.core.sections.structure.entity.Target;
 import com.katyshevtseva.kikiorg.core.sections.structure.entity.TargetGroup;
@@ -13,6 +14,27 @@ import org.springframework.stereotype.Service;
 public class StructureHierarchyNodeService {
     private final TargetService targetService;
     private final TargetGroupService targetGroupService;
+
+    public String getNodeFullDesc(HierarchyNode node) {
+        if (node instanceof Target) {
+            Target target = (Target) node;
+            StringBuilder stringBuilder = new StringBuilder();
+            stringBuilder.append("Target: ").append(target.getTitle()).append("\n\n");
+            stringBuilder.append("Status: ").append(target.getStatus()).append("\n\n");
+            if (target.getStatus() == TargetStatus.STARTED) {
+                stringBuilder.append(PeriodUtils.getFullPeriodInfo(target.getPeriod())).append("\n\n");
+            }
+            stringBuilder.append(target.getDescription());
+            return stringBuilder.toString();
+        }
+        if (node instanceof TargetGroup) {
+            TargetGroup group = (TargetGroup) node;
+            return "Group: " + group.getTitle() + "\n\n" +
+                    "Status: " + group.getStatus() + "\n\n" +
+                    group.getDescription();
+        }
+        throw new RuntimeException();
+    }
 
     public TargetStatus getNodeStatus(HierarchyNode node) {
         if (node instanceof Target) {
@@ -71,16 +93,4 @@ public class StructureHierarchyNodeService {
         }
         throw new RuntimeException();
     }
-
-//    public void deleteNode(HierarchyNode node) {
-//        if (node instanceof Target) {
-//            targetService.delete((Target) node);
-//            return;
-//        }
-//        if(node instanceof TargetGroup) {
-//            targetGroupService.delete((TargetGroup) node);
-//            return;
-//        }
-//        throw new RuntimeException();
-//    }
 }

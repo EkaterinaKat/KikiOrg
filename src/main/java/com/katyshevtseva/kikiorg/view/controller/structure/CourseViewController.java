@@ -22,6 +22,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
+import javafx.scene.input.MouseButton;
 import javafx.scene.layout.Pane;
 
 import java.util.Arrays;
@@ -105,13 +106,16 @@ public class CourseViewController implements FxController {
 
     private TwoArgKnob<HierarchyNode, Label> getNodeLabelAdjuster() {
         return (node, label) -> {
+            // set click listener
+            label.setOnMouseClicked(event -> {
+                if (event.getButton() == MouseButton.PRIMARY) {
+                    String fullDesc = Core.getInstance().structureHierarchyNodeService().getNodeFullDesc(node);
+                    new StandardDialogBuilder().setSize(500).openInfoDialog(fullDesc);
+                }
+            });
+
             // set color
-            TargetStatus status;
-            if (node instanceof Target) {
-                status = ((Target) node).getStatus();
-            } else {
-                status = ((TargetGroup) node).getStatus();
-            }
+            TargetStatus status = Core.getInstance().structureHierarchyNodeService().getNodeStatus(node);
             label.setStyle(Styler.getColorfullStyle(Styler.ThingToColor.TEXT, status.getColor()));
 
             //set context menu
