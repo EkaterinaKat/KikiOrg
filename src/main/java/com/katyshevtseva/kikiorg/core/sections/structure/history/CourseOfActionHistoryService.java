@@ -28,6 +28,6 @@ public class CourseOfActionHistoryService extends HistoryService<CourseOfAction,
 
     @Override
     protected void setDate(CourseChangeAction courseChangeAction, Date date) {
-        courseChangeAction.setDateEntity(dateService.createIfNotExistAndGetDateEntity(date));
+        courseChangeAction.setTimestamp(date);
     }
 }

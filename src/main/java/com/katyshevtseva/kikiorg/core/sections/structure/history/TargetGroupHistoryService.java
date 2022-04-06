@@ -28,6 +28,6 @@ public class TargetGroupHistoryService extends HistoryService<TargetGroup, Targe
 
     @Override
     protected void setDate(TargetGroupChangeAction targetGroupChangeAction, Date date) {
-        targetGroupChangeAction.setDateEntity(dateService.createIfNotExistAndGetDateEntity(date));
+        targetGroupChangeAction.setTimestamp(date);
     }
 }

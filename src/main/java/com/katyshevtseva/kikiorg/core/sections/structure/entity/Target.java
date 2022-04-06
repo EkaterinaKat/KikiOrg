@@ -86,7 +86,7 @@ public class Target implements HasHistory<TargetChangeAction>, Leaf {
     @Override
     public List<TargetChangeAction> getHistory() {
         return history.stream()
-                .sorted(Comparator.comparing(action -> action.getDateEntity().getValue()))
+                .sorted(Comparator.comparing(TargetChangeAction::getTimestamp))
                 .collect(Collectors.toList());
     }
 }

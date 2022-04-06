@@ -1,12 +1,13 @@
 package com.katyshevtseva.kikiorg.core.sections.structure.entity;
 
 import com.katyshevtseva.history.Action;
-import com.katyshevtseva.kikiorg.core.date.DateEntity;
 import lombok.Data;
 
 import javax.persistence.*;
 import java.util.Date;
 import java.util.Objects;
+
+import static com.katyshevtseva.date.DateUtils.READABLE_DATE_TIME_FORMAT;
 
 @Data
 @Entity
@@ -18,17 +19,16 @@ public class TargetGroupChangeAction implements Action<TargetGroup> {
 
     private String description;
 
-    @ManyToOne
-    @JoinColumn(name = "date_entity_id")
-    private DateEntity dateEntity;
-
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "group_id", nullable = false)
     private TargetGroup targetGroup;
 
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date timestamp;
+
     @Override
-    public Date getDate() {
-        return dateEntity.getValue();
+    public String getDateString() {
+        return READABLE_DATE_TIME_FORMAT.format(timestamp);
     }
 
     @Override

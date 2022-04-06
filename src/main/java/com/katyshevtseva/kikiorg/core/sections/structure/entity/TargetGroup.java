@@ -80,7 +80,7 @@ public class TargetGroup implements HasHistory<TargetGroupChangeAction>, Group {
     @Override
     public List<TargetGroupChangeAction> getHistory() {
         return history.stream()
-                .sorted(Comparator.comparing(action -> action.getDateEntity().getValue()))
+                .sorted(Comparator.comparing(TargetGroupChangeAction::getTimestamp))
                 .collect(Collectors.toList());
     }
 }
