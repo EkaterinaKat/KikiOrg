@@ -83,4 +83,8 @@ public class StructureHierarchyService extends HierarchyService<Target, TargetGr
         node.setParentGroup(courseOfAction.getRootTargetGroup());
         saveModifiedNode(node);
     }
+
+    public boolean nodeBelongToCourse(HierarchyNode node) {
+        return treeWithRootContainsNode(courseOfAction.getRootTargetGroup(), node);
+    }
 }

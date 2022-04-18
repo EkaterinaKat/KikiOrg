@@ -31,6 +31,7 @@ public class TargetService {
     private final DateService dateService;
     private final PolarPeriodService polarPeriodService;
     private final CourseOfActionRepo courseOfActionRepo;
+    private final StatusValidationService statusValidationService;
 
     public void create(CourseOfAction courseOfAction, String title, String desc) {
         Target target = targetRepo.save(new Target(title, desc, courseOfAction.getRootTargetGroup(), NEW));
@@ -56,7 +57,8 @@ public class TargetService {
         return targetRepo.findByStatus(STARTED);
     }
 
-    public void start(Target target, TimeUnit timeUnit, int period) {
+    public void start(CourseOfAction courseOfAction, Target target, TimeUnit timeUnit, int period) throws Exception {
+        statusValidationService.validateStart(courseOfAction, target);
         PolarPeriod polarPeriod = polarPeriodService.save(new PolarPeriod(dateService.createIfNotExistAndGetDateEntity(new Date()), timeUnit, period));
         setStatusAndPeriod(target, STARTED, polarPeriod);
     }
