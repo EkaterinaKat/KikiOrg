@@ -29,6 +29,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
+import static com.katyshevtseva.kikiorg.core.sections.structure.StructureHierarchyNodeService.getNodeStatus;
 import static com.katyshevtseva.kikiorg.view.utils.OrganizerWindowCreator.getInstance;
 
 
@@ -115,7 +116,7 @@ public class CourseViewController implements FxController {
             });
 
             // set color
-            TargetStatus status = Core.getInstance().structureHierarchyNodeService().getNodeStatus(node);
+            TargetStatus status = getNodeStatus(node);
             label.setStyle(Styler.getColorfullStyle(Styler.ThingToColor.TEXT, status.getColor()));
 
             //set context menu
@@ -161,7 +162,7 @@ public class CourseViewController implements FxController {
     }
 
     private List<MenuItem> getStatusSpecificMenuItems(HierarchyNode node) {
-        switch (Core.getInstance().structureHierarchyNodeService().getNodeStatus(node)) {
+        switch (getNodeStatus(node)) {
             case NEW:
                 return Arrays.asList(getStartMenuItem(node), getRejectMenuItem(node));
             case STARTED:

@@ -36,7 +36,7 @@ public class StructureHierarchyNodeService {
         throw new RuntimeException();
     }
 
-    public TargetStatus getNodeStatus(HierarchyNode node) {
+    public static TargetStatus getNodeStatus(HierarchyNode node) {
         if (node instanceof Target) {
             return ((Target) node).getStatus();
         }
