@@ -21,7 +21,6 @@ public class TargetGroupService {
     private final TargetGroupRepo targetGroupRepo;
     private final TargetGroupHistoryService targetGroupHistoryService;
     private final TargetGroupChangeActionRepo targetGroupChangeActionRepo;
-    private final StatusValidationService statusValidationService;
 
     public TargetGroup createRootGroup(String courseOfActionTitle) {
         return targetGroupRepo.save(new TargetGroup(courseOfActionTitle + " root", null, null, NEW));
@@ -60,8 +59,7 @@ public class TargetGroupService {
         changeStatus(targetGroup, REJECTED);
     }
 
-    public void start(TargetGroup targetGroup, CourseOfAction courseOfAction) throws Exception {
-        statusValidationService.validateStart(courseOfAction, targetGroup);
+    public void start(TargetGroup targetGroup) {
         changeStatus(targetGroup, STARTED);
     }
 

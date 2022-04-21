@@ -179,31 +179,17 @@ public class CourseViewController implements FxController {
             if (node instanceof Target) {
                 TextFieldAndComboBoxDialogController<?> controller =
                         new StandardDialogBuilder().openTextFieldAndComboBoxDialog(TimeUnit.values(), (s, timeUnit) -> {
-                            startTarget(courseOfAction, node, timeUnit, s);
+                            Core.getInstance().targetService().start((Target) node, timeUnit, Integer.parseInt(s));
                             fillHierarchyPane();
                         });
                 FxUtils.disableNonNumericChars(controller.getTextField());
             }
             if (node instanceof TargetGroup) {
-                try {
-                    Core.getInstance().targetGroupService().start((TargetGroup) node, courseOfAction);
-                } catch (Exception e) {
-                    new StandardDialogBuilder().setSize(300, 450).openInfoDialog(e.getMessage());
-                    e.printStackTrace();
-                }
+                Core.getInstance().targetGroupService().start((TargetGroup) node);
                 fillHierarchyPane();
             }
         });
         return startItem;
-    }
-
-    private void startTarget(CourseOfAction courseOfAction, HierarchyNode node, TimeUnit timeUnit, String period) {
-        try {
-            Core.getInstance().targetService().start(courseOfAction, (Target) node, timeUnit, Integer.parseInt(period));
-        } catch (Exception e) {
-            new StandardDialogBuilder().setSize(300, 450).openInfoDialog(e.getMessage());
-            e.printStackTrace();
-        }
     }
 
     private MenuItem getRejectMenuItem(HierarchyNode node) {
