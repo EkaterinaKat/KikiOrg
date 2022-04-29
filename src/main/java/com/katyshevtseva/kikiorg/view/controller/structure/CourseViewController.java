@@ -164,7 +164,7 @@ public class CourseViewController implements FxController {
     private List<MenuItem> getStatusSpecificMenuItems(HierarchyNode node) {
         switch (getNodeStatus(node)) {
             case NEW:
-                return Arrays.asList(getStartMenuItem(node), getRejectMenuItem(node));
+                return Arrays.asList(getStartMenuItem(node), getRejectMenuItem(node), getDoneMenuItem(node));
             case STARTED:
                 return Arrays.asList(getDoneMenuItem(node), getRejectMenuItem(node));
             case DONE:

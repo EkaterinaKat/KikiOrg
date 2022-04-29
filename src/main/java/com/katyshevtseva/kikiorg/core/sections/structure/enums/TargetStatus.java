@@ -2,9 +2,9 @@ package com.katyshevtseva.kikiorg.core.sections.structure.enums;
 
 public enum TargetStatus {
     NEW("#0e80c2"),
-    STARTED("#c20e50"),
+    STARTED("#ff621f"),
     REJECTED("#858585"),
-    DONE("#45b500");
+    DONE("#215203");
 
     private final String color;
 

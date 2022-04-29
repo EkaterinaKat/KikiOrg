@@ -2,7 +2,7 @@ package com.katyshevtseva.kikiorg.core.sections.structure.enums;
 
 public enum Sphere {
     MAINTENANCE("#b04f17"),
-    HOBBY("#b01773"),
+    HOBBY("#db4fa3"),
     LIFE_IMPROVEMENT("#19b017"),
     WORK("#6317b0");
 

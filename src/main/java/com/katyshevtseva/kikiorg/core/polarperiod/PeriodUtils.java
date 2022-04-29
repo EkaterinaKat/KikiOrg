@@ -14,7 +14,7 @@ public class PeriodUtils {
         return String.format("%s\nTill: %s\nLeft: %s",
                 period,
                 READABLE_DATE_FORMAT.format(end),
-                getNumberOfDays(period.getStart().getValue(), end));
+                getNumberOfDays(new Date(), end));
     }
 
     public static boolean isOverdue(PolarPeriod period) {
