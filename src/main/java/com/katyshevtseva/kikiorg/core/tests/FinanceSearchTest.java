@@ -1,4 +1,4 @@
-package com.katyshevtseva.kikiorg.core.specials;
+package com.katyshevtseva.kikiorg.core.tests;
 
 import com.katyshevtseva.kikiorg.core.repo.TestRepo;
 import com.katyshevtseva.kikiorg.core.sections.finance.FinanceSearchService;
@@ -8,15 +8,14 @@ import com.katyshevtseva.kikiorg.core.sections.finance.SearchRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import javax.annotation.PostConstruct;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
 import static com.katyshevtseva.kikiorg.core.sections.finance.FinanceOperationService.OperationType.*;
-import static com.katyshevtseva.kikiorg.core.specials.TestConstants.BIG_SUCCESS_BANNER;
-import static com.katyshevtseva.kikiorg.core.specials.TestConstants.FAILED_STRING;
+import static com.katyshevtseva.kikiorg.core.tests.TestConstants.BIG_SUCCESS_BANNER;
+import static com.katyshevtseva.kikiorg.core.tests.TestConstants.FAILED_STRING;
 
 @Service
 @RequiredArgsConstructor
@@ -25,8 +24,7 @@ public class FinanceSearchTest {
     private final FinanceSearchService searchService;
     private final FinanceService financeService;
 
-//    @PostConstruct
-    private void test() {
+    public void test() {
         int result11 = searchService.search(getRequest1()).size();
         long result12 = testRepo.count1(getIds(getSomeAccounts()));
         System.out.println(result11 + " - " + result12);

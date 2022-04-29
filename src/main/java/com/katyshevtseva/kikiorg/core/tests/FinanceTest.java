@@ -1,4 +1,4 @@
-package com.katyshevtseva.kikiorg.core.specials;
+package com.katyshevtseva.kikiorg.core.tests;
 
 import com.katyshevtseva.date.Period;
 import com.katyshevtseva.kikiorg.core.sections.finance.CalculationService;
@@ -8,21 +8,20 @@ import com.katyshevtseva.kikiorg.core.sections.finance.report.FinanceReportServi
 import com.katyshevtseva.kikiorg.core.sections.finance.report.FullFinanceReport;
 import com.katyshevtseva.kikiorg.core.sections.finance.report.ReportPeriodService.ReportPeriod;
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import java.util.Collections;
 import java.util.Date;
 
 import static com.katyshevtseva.kikiorg.core.CoreConstants.FINANCIAL_ACCOUNTING_START_DATE;
 
-@Component
+@Service
 @RequiredArgsConstructor
 public class FinanceTest {
     private final FinanceReportService reportService;
     private final FinanceService financeService;
     private final CalculationService calculationService;
 
-//    @PostConstruct
     public void test() {
         boolean success = true;
         ReportPeriod reportPeriod = new ReportPeriod(new Period(FINANCIAL_ACCOUNTING_START_DATE, new Date()), "");

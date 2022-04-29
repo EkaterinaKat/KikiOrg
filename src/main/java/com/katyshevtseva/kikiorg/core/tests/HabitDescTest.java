@@ -1,4 +1,4 @@
-package com.katyshevtseva.kikiorg.core.specials;
+package com.katyshevtseva.kikiorg.core.tests;
 
 import com.katyshevtseva.date.Period;
 import com.katyshevtseva.kikiorg.core.date.DateService;
@@ -9,14 +9,13 @@ import com.katyshevtseva.kikiorg.core.sections.habits.entity.Habit;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import javax.annotation.PostConstruct;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
 import static com.katyshevtseva.date.DateUtils.*;
-import static com.katyshevtseva.kikiorg.core.specials.TestConstants.ERROR_STRING;
-import static com.katyshevtseva.kikiorg.core.specials.TestConstants.FAILED_STRING;
+import static com.katyshevtseva.kikiorg.core.tests.TestConstants.ERROR_STRING;
+import static com.katyshevtseva.kikiorg.core.tests.TestConstants.FAILED_STRING;
 
 @Service
 @RequiredArgsConstructor
@@ -26,7 +25,6 @@ public class HabitDescTest {
     private final DateService dateService;
     private final boolean BREAK_AFTER_ERROR = true;
 
-//    @PostConstruct
     public void test() {
         boolean succes = true;
         for (Habit habit : habitRepo.findAll()) {

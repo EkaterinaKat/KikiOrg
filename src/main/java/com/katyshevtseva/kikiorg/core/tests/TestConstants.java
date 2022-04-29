@@ -1,4 +1,4 @@
-package com.katyshevtseva.kikiorg.core.specials;
+package com.katyshevtseva.kikiorg.core.tests;
 
 class TestConstants {
     static final String BIG_SUCCESS_BANNER =
