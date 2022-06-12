@@ -1,13 +1,12 @@
-package com.katyshevtseva.kikiorg.core.sections.finance;
+package com.katyshevtseva.kikiorg.core.sections.finance.search;
 
 import com.katyshevtseva.kikiorg.core.repo.ExpenseRepo;
 import com.katyshevtseva.kikiorg.core.repo.ReplenishmentRepo;
 import com.katyshevtseva.kikiorg.core.repo.TransferRepo;
 import com.katyshevtseva.kikiorg.core.sections.finance.FinanceOperationService.Operation;
 import com.katyshevtseva.kikiorg.core.sections.finance.FinanceOperationService.OperationType;
-import com.katyshevtseva.kikiorg.core.sections.finance.entity.Account;
-import com.katyshevtseva.kikiorg.core.sections.finance.entity.Item;
-import com.katyshevtseva.kikiorg.core.sections.finance.entity.Source;
+import com.katyshevtseva.kikiorg.core.sections.finance.FinanceService;
+import com.katyshevtseva.kikiorg.core.sections.finance.OperationEnd;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -28,32 +27,14 @@ public class FinanceSearchService {
         List<Operation> operations = new ArrayList<>();
 
         switch (request.getOperationType()) {
+            case REPLENISHMENT:
+                operations.addAll(replenishmentRepo.findAll(new ReplenishmentSpec(request)));
+                break;
             case EXPENSE:
-                operations.addAll(expenseRepo.search(
-                        request.getMinAmount(),
-                        request.getMaxAmount(),
-                        request.getStart(),
-                        request.getEnd(),
-                        request.getFrom().stream().map(operationEnd -> (Account) operationEnd).collect(Collectors.toList()),
-                        request.getTo().stream().map(operationEnd -> (Item) operationEnd).collect(Collectors.toList())));
+                operations.addAll(expenseRepo.findAll(new ExpenseSpec(request)));
                 break;
             case TRANSFER:
-                operations.addAll(transferRepo.search(
-                        request.getMinAmount(),
-                        request.getMaxAmount(),
-                        request.getStart(),
-                        request.getEnd(),
-                        request.getFrom().stream().map(operationEnd -> (Account) operationEnd).collect(Collectors.toList()),
-                        request.getTo().stream().map(operationEnd -> (Account) operationEnd).collect(Collectors.toList())));
-                break;
-            case REPLENISHMENT:
-                operations.addAll(replenishmentRepo.search(
-                        request.getMinAmount(),
-                        request.getMaxAmount(),
-                        request.getStart(),
-                        request.getEnd(),
-                        request.getFrom().stream().map(operationEnd -> (Source) operationEnd).collect(Collectors.toList()),
-                        request.getTo().stream().map(operationEnd -> (Account) operationEnd).collect(Collectors.toList())));
+                operations.addAll(transferRepo.findAll(new TransferSpec(request)));
         }
         return operations.stream().sorted(Comparator.comparing(Operation::getDate).reversed()).collect(Collectors.toList());
     }

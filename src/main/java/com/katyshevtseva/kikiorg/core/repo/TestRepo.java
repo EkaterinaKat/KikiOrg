@@ -32,7 +32,7 @@ public interface TestRepo extends JpaRepository<Account, Long> {
             "join date_entity d on r.date_entity_id = d.id \n" +
             "join account a1 on r.from_account_id = a1.id \n" +
             "join account a2 on r.to_account_id = a2.id \n" +
-            "where r.amount <= 1500 \n" +
+            "where (r.gone_amount <= 1500 and r.came_amount <= 1500) \n" +
             "and d.value >= '2020-11-06' \n" +
             "and a2.id in ?1 ", nativeQuery = true)
     long count3(List<Long> accountIds);

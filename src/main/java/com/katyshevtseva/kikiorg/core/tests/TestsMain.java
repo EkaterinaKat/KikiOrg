@@ -12,10 +12,10 @@ public class TestsMain {
     private final FinanceSearchTest financeSearchTest;
     private final HabitDescTest habitDescTest;
 
-    @PostConstruct
+//    @PostConstruct
     public void test() {
         financeTest.test();
-//        financeSearchTest.test(); //не работает
+        financeSearchTest.test();
         habitDescTest.test();
     }
 }

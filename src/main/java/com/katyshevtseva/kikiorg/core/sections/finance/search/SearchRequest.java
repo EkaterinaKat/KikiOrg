@@ -1,28 +1,25 @@
-package com.katyshevtseva.kikiorg.core.sections.finance;
+package com.katyshevtseva.kikiorg.core.sections.finance.search;
 
-import com.katyshevtseva.date.DateUtils;
 import com.katyshevtseva.date.Period;
 import com.katyshevtseva.kikiorg.core.sections.finance.FinanceOperationService.OperationType;
+import com.katyshevtseva.kikiorg.core.sections.finance.OperationEnd;
 import lombok.Getter;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import static com.katyshevtseva.date.DateUtils.TimeUnit.DAY;
 import static com.katyshevtseva.general.GeneralUtils.isEmpty;
-import static com.katyshevtseva.kikiorg.core.CoreConstants.FINANCIAL_ACCOUNTING_START_DATE;
 
 @Getter
 public class SearchRequest {
-    private Date start = FINANCIAL_ACCOUNTING_START_DATE;
-    private Date end = DateUtils.shiftDate(new Date(), DAY, 1);
-    private long minAmount = 0;
-    private long maxAmount = Long.MAX_VALUE;
+    private Date start;
+    private Date end;
+    private Long minAmount;
+    private Long maxAmount;
     private OperationType operationType;
-    private List<OperationEnd> from = new ArrayList<>();
-    private List<OperationEnd> to = new ArrayList<>();
+    private List<OperationEnd> from;
+    private List<OperationEnd> to;
 
     public void setStart(LocalDate start) {
         if (start != null)
@@ -35,8 +32,10 @@ public class SearchRequest {
     }
 
     public void setPeriod(Period period) {
-        start = period.start();
-        end = period.end();
+        if (period != null) {
+            start = period.start();
+            end = period.end();
+        }
     }
 
     public void setMinAmount(String minAmountString) {
@@ -53,27 +52,15 @@ public class SearchRequest {
         this.operationType = operationType;
     }
 
-    public void setFrom(List<OperationEnd> from, List<OperationEnd> fullList) {
-        this.from = from.isEmpty() ? fullList : from;
-    }
-
-    public void setTo(List<OperationEnd> to, List<OperationEnd> fullList) {
-        this.to = to.isEmpty() ? fullList : to;
-    }
-
     public void setFrom(List<OperationEnd> from) {
-        if (from == null || from.isEmpty()) {
-            throw new RuntimeException();
+        if (!isEmpty(from)) {
+            this.from = from;
         }
-
-        this.from = from;
     }
 
     public void setTo(List<OperationEnd> to) {
-        if (to == null || to.isEmpty()) {
-            throw new RuntimeException();
+        if (!isEmpty(to)) {
+            this.to = to;
         }
-
-        this.to = to;
     }
 }

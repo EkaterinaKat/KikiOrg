@@ -3,6 +3,7 @@ package com.katyshevtseva.kikiorg.core;
 import com.katyshevtseva.kikiorg.core.sections.finance.*;
 import com.katyshevtseva.kikiorg.core.sections.finance.report.FinanceReportService;
 import com.katyshevtseva.kikiorg.core.sections.finance.report.ReportPeriodService;
+import com.katyshevtseva.kikiorg.core.sections.finance.search.FinanceSearchService;
 import com.katyshevtseva.kikiorg.core.sections.habits.*;
 import com.katyshevtseva.kikiorg.core.sections.structure.*;
 import com.katyshevtseva.kikiorg.core.sections.structure.entity.CourseOfAction;

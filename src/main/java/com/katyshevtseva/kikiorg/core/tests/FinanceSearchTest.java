@@ -1,21 +1,20 @@
 package com.katyshevtseva.kikiorg.core.tests;
 
 import com.katyshevtseva.kikiorg.core.repo.TestRepo;
-import com.katyshevtseva.kikiorg.core.sections.finance.FinanceSearchService;
 import com.katyshevtseva.kikiorg.core.sections.finance.FinanceService;
 import com.katyshevtseva.kikiorg.core.sections.finance.OperationEnd;
-import com.katyshevtseva.kikiorg.core.sections.finance.SearchRequest;
+import com.katyshevtseva.kikiorg.core.sections.finance.search.FinanceSearchService;
+import com.katyshevtseva.kikiorg.core.sections.finance.search.SearchRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static com.katyshevtseva.general.GeneralUtils.getFailedBanner;
+import static com.katyshevtseva.general.GeneralUtils.getSuccessBanner;
 import static com.katyshevtseva.kikiorg.core.sections.finance.FinanceOperationService.OperationType.*;
-import static com.katyshevtseva.kikiorg.core.tests.TestConstants.BIG_SUCCESS_BANNER;
-import static com.katyshevtseva.kikiorg.core.tests.TestConstants.FAILED_STRING;
 
 @Service
 @RequiredArgsConstructor
@@ -55,9 +54,9 @@ public class FinanceSearchTest {
                 && result41 == result42
                 && result51 == result52
                 && result61 == result62) {
-            System.out.println(String.format(BIG_SUCCESS_BANNER, "FINANCE SEARCH"));
+            System.out.println(getSuccessBanner("FINANCE SEARCH"));
         } else {
-            System.out.println(FAILED_STRING);
+            System.out.println(getFailedBanner("FINANCE SEARCH"));
         }
     }
 
@@ -66,13 +65,11 @@ public class FinanceSearchTest {
         request.setOperationType(REPLENISHMENT);
 
         request.setMinAmount("600");
-        request.setMaxAmount("");
 
         request.setStart(LocalDate.of(2020, 11, 5));
         request.setEnd(LocalDate.of(2021, 3, 25));
 
-        request.setFrom(new ArrayList<>(), getAllSources());
-        request.setTo(getSomeAccounts(), getAllAccounts());
+        request.setTo(getSomeAccounts());
 
         return request;
     }
@@ -84,11 +81,9 @@ public class FinanceSearchTest {
         request.setMinAmount("600");
         request.setMaxAmount("1200");
 
-        request.setStart(null);
         request.setEnd(LocalDate.of(2021, 1, 25));
 
-        request.setFrom(getSomeAccounts(), getAllAccounts());
-        request.setTo(new ArrayList<>(), getAllItems());
+        request.setFrom(getSomeAccounts());
 
         return request;
     }
@@ -97,13 +92,11 @@ public class FinanceSearchTest {
         SearchRequest request = new SearchRequest();
         request.setOperationType(TRANSFER);
 
-        request.setMinAmount(null);
         request.setMaxAmount("1500");
 
         request.setStart(LocalDate.of(2020, 11, 6));
 
-        request.setFrom(new ArrayList<>(), getAllAccounts());
-        request.setTo(getSomeAccounts(), getAllAccounts());
+        request.setTo(getSomeAccounts());
 
         return request;
     }
@@ -116,8 +109,7 @@ public class FinanceSearchTest {
 
         request.setEnd(LocalDate.of(2021, 2, 15));
 
-        request.setFrom(getSomeSources(), getAllSources());
-        request.setTo(new ArrayList<>(), getAllAccounts());
+        request.setFrom(getSomeSources());
 
         return request;
     }
@@ -132,8 +124,8 @@ public class FinanceSearchTest {
         request.setStart(LocalDate.of(2020, 10, 11));
         request.setEnd(LocalDate.of(2021, 1, 25));
 
-        request.setFrom(getSomeAccounts(), getAllAccounts());
-        request.setTo(getSomeItems(), getAllItems());
+        request.setFrom(getSomeAccounts());
+        request.setTo(getSomeItems());
 
         return request;
     }
@@ -142,32 +134,15 @@ public class FinanceSearchTest {
         SearchRequest request = new SearchRequest();
         request.setOperationType(TRANSFER);
 
-        request.setEnd(null);
-
-        request.setFrom(new ArrayList<>(), getAllAccounts());
-        request.setTo(new ArrayList<>(), getAllAccounts());
-
         return request;
-    }
-
-    private List<OperationEnd> getAllAccounts() {
-        return financeService.getAllAccounts().stream().map(account -> (OperationEnd) account).collect(Collectors.toList());
     }
 
     private List<OperationEnd> getSomeAccounts() {
         return financeService.getAllAccounts().stream().filter(account -> account.getTitle().length() % 2 == 0).collect(Collectors.toList());
     }
 
-    private List<OperationEnd> getAllSources() {
-        return financeService.getAllSources().stream().map(source -> (OperationEnd) source).collect(Collectors.toList());
-    }
-
     private List<OperationEnd> getSomeSources() {
         return financeService.getAllSources().stream().filter(source -> source.getTitle().length() % 2 == 0).collect(Collectors.toList());
-    }
-
-    private List<OperationEnd> getAllItems() {
-        return financeService.getAllItems().stream().map(item -> (OperationEnd) item).collect(Collectors.toList());
     }
 
     private List<OperationEnd> getSomeItems() {

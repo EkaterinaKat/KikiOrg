@@ -10,9 +10,9 @@ import com.katyshevtseva.general.OneArgKnob;
 import com.katyshevtseva.kikiorg.core.Core;
 import com.katyshevtseva.kikiorg.core.sections.finance.FinanceOperationService.Operation;
 import com.katyshevtseva.kikiorg.core.sections.finance.FinanceOperationService.OperationType;
-import com.katyshevtseva.kikiorg.core.sections.finance.FinanceSearchService;
 import com.katyshevtseva.kikiorg.core.sections.finance.OperationEnd;
-import com.katyshevtseva.kikiorg.core.sections.finance.SearchRequest;
+import com.katyshevtseva.kikiorg.core.sections.finance.search.FinanceSearchService;
+import com.katyshevtseva.kikiorg.core.sections.finance.search.SearchRequest;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
@@ -75,8 +75,8 @@ class SearchController implements FxController {
         request.setMaxAmount(maxTextField.getText());
         request.setStart(startDatePicker.getValue());
         request.setEnd(endDatePicker.getValue());
-        request.setFrom(fromController.getSelectedItems(), fromController.getAllItems());
-        request.setTo(toController.getSelectedItems(), toController.getAllItems());
+        request.setFrom(fromController.getSelectedItems());
+        request.setTo(toController.getSelectedItems());
         tableUpdateKnob.execute(searchService.search(request));
     }
 
