@@ -1,8 +1,10 @@
 package com.katyshevtseva.kikiorg.view.utils;
 
-class ViewConstants {
+public class ViewConstants {
     private ViewConstants() {
     }
+
+    public static final String WARDROBE_IMAGES_LOCATION = "D:\\onedrive\\wardrobe\\";
 
     static final String FXML_LOCATION = "/fxml/";
     static final String FINANCE_FXML_LOCATION = "/fxml/finance/";

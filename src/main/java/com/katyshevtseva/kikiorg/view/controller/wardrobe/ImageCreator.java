@@ -8,8 +8,9 @@ import javafx.scene.image.Image;
 import java.util.HashMap;
 import java.util.Map;
 
+import static com.katyshevtseva.kikiorg.view.utils.ViewConstants.WARDROBE_IMAGES_LOCATION;
+
 class ImageCreator {
-    private static final String DIRECTORY_URL = "D:\\Some_files\\wardrobe\\";
     private static ImageCreator instance;
     private final Map<String, ImageContainer> cache = new HashMap<>();
 
@@ -33,12 +34,12 @@ class ImageCreator {
         imageContainer = new ImageContainer() {
             @Override
             public Image getImage() {
-                return FxImageCreationUtil.getImageByAbsolutePath(DIRECTORY_URL + fileName, 400.0, false);
+                return FxImageCreationUtil.getImageByAbsolutePath(WARDROBE_IMAGES_LOCATION + fileName, 400.0, false);
             }
 
             @Override
             public String getPath() {
-                return DIRECTORY_URL + fileName;
+                return WARDROBE_IMAGES_LOCATION + fileName;
             }
         };
         cache.put(fileName, imageContainer);

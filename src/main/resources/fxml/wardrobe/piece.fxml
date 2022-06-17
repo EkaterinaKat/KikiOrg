@@ -8,7 +8,7 @@
     <HBox>
         <Button fx:id="pieceCreateButton" text="New Piece"/>
         <Pane prefWidth="20"/>
-        <ComboBox fx:id="typeComboBox"/>
+        <Label fx:id="typeLabel" text="Select clothes type"/>
         <Pane prefWidth="10"/>
         <Button fx:id="showAllButton" text="Show all"/>
         <Pane prefWidth="20"/>

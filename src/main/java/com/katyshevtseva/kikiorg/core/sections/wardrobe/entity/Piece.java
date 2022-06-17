@@ -1,10 +1,11 @@
 package com.katyshevtseva.kikiorg.core.sections.wardrobe.entity;
 
 import com.katyshevtseva.kikiorg.core.date.DateEntity;
-import com.katyshevtseva.kikiorg.core.sections.wardrobe.enums.ClothesType;
+import com.katyshevtseva.kikiorg.core.sections.wardrobe.enums.ClothesSubtype;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.util.Collection;
 import java.util.Objects;
 
 import static com.katyshevtseva.date.DateUtils.READABLE_DATE_FORMAT;
@@ -22,7 +23,7 @@ public class Piece {
     private String imageFileName;
 
     @Enumerated(EnumType.STRING)
-    private ClothesType type;
+    private ClothesSubtype type;
 
     @ManyToOne
     @JoinColumn(name = "start_date_entity_id")
@@ -31,6 +32,9 @@ public class Piece {
     @ManyToOne
     @JoinColumn(name = "end_date_entity_id")
     private DateEntity endDate;
+
+    @ManyToMany(mappedBy = "pieces")
+    private Collection<ComponentEntity> components;
 
     public String getFullDesc() {
         return description + "\n\n" + "Type: " + type + "\n\n" +

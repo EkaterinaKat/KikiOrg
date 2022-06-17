@@ -12,8 +12,9 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
+import static com.katyshevtseva.kikiorg.view.utils.ViewConstants.WARDROBE_IMAGES_LOCATION;
+
 class WrdImageUtils {
-    private static final String DIRECTORY_URL = "D:\\Some_files\\wardrobe\\";
 
     static List<ImageContainer> getFreeImagesForPieceCreation() {
         List<ImageContainer> freeImages = new ArrayList<>();
@@ -51,7 +52,7 @@ class WrdImageUtils {
     }
 
     private static List<File> getAllImageFiles() {
-        return Arrays.asList(Objects.requireNonNull(new File(DIRECTORY_URL).listFiles()));
+        return Arrays.asList(Objects.requireNonNull(new File(WARDROBE_IMAGES_LOCATION).listFiles()));
     }
 
     static List<ImageContainer> toImageUrlAndPieceContainers(List<Piece> pieces) {

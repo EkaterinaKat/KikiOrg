@@ -5,7 +5,7 @@ import com.katyshevtseva.fx.dialog.StandardDialogBuilder;
 import com.katyshevtseva.general.OneArgKnob;
 import com.katyshevtseva.kikiorg.core.Core;
 import com.katyshevtseva.kikiorg.core.sections.wardrobe.entity.Piece;
-import com.katyshevtseva.kikiorg.core.sections.wardrobe.enums.ClothesType;
+import com.katyshevtseva.kikiorg.core.sections.wardrobe.enums.ClothesSubtype;
 import com.katyshevtseva.kikiorg.view.controller.wardrobe.WrdImageUtils.ImageAndFileNameContainer;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
@@ -35,7 +35,7 @@ class PieceDialogController implements FxController {
     @FXML
     private DatePicker endDatePicker;
     @FXML
-    private ComboBox<ClothesType> clothesTypeComboBox;
+    private ComboBox<ClothesSubtype> clothesTypeComboBox;
     @FXML
     private Button saveButton;
 
@@ -48,7 +48,7 @@ class PieceDialogController implements FxController {
     private void initialize() {
         associateButtonWithControls(saveButton, clothesTypeComboBox, descTextArea);
         saveButton.setOnAction(event -> save());
-        setComboBoxItems(clothesTypeComboBox, ClothesType.getSortedByTitleValues());
+        setComboBoxItems(clothesTypeComboBox, ClothesSubtype.getSortedByTitleValues());
         showImage(new Image("images/piece_creation_plus.png"));
         setExistingPieceInfo();
     }

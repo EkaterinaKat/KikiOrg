@@ -9,10 +9,10 @@ import com.katyshevtseva.fx.component.controller.GalleryController;
 import com.katyshevtseva.fx.dialog.StandardDialogBuilder;
 import com.katyshevtseva.general.Page;
 import com.katyshevtseva.kikiorg.core.Core;
+import com.katyshevtseva.kikiorg.core.sections.wardrobe.ClothesType;
 import com.katyshevtseva.kikiorg.core.sections.wardrobe.WardrobeService;
 import com.katyshevtseva.kikiorg.core.sections.wardrobe.WardrobeService.PieceFilter;
 import com.katyshevtseva.kikiorg.core.sections.wardrobe.entity.Piece;
-import com.katyshevtseva.kikiorg.core.sections.wardrobe.enums.ClothesType;
 import com.katyshevtseva.kikiorg.view.controller.pagination.PaginationPaneController;
 import com.katyshevtseva.kikiorg.view.controller.wardrobe.WrdImageUtils.ImageAndPieceContainer;
 import com.katyshevtseva.kikiorg.view.utils.OrganizerWindowCreator;
@@ -33,6 +33,7 @@ class PieceController implements FxController {
     private final WardrobeService service = Core.getInstance().wardrobeService();
     private GalleryController galleryController;
     private PaginationPaneController<Piece> paginationPaneController;
+    private ClothesType clothesType;
     @FXML
     private Button pieceCreateButton;
     @FXML
@@ -46,7 +47,7 @@ class PieceController implements FxController {
     @FXML
     private Pane paginationPane;
     @FXML
-    private ComboBox<ClothesType> typeComboBox;
+    private Label typeLabel;
     @FXML
     private Button showAllButton;
     @FXML
@@ -67,12 +68,21 @@ class PieceController implements FxController {
                             showPieceFullInfo(piece);
                         })));
         tunePagination();
-        FxUtils.setComboBoxItems(typeComboBox, ClothesType.getSortedByTitleValues());
-        typeComboBox.setOnAction(event -> paginationPaneController.loadPage());
+        adjustTypeLabel();
         showAllButton.setOnAction(event -> {
-            typeComboBox.setValue(null);
+            typeLabel.setText("Select clothes type");
+            clothesType = null;
             paginationPaneController.loadPage();
         });
+    }
+
+    private void adjustTypeLabel() {
+        typeLabel.setOnMouseClicked(event -> OrganizerWindowCreator.getInstance().openTypeSelectDialog(
+                new TypeSelectDialogController(type -> {
+                    clothesType = type;
+                    typeLabel.setText(type.getTitle());
+                    paginationPaneController.loadPage();
+                })));
     }
 
     private void tunePagination() {
@@ -81,7 +91,7 @@ class PieceController implements FxController {
     }
 
     private Page<Piece> getPiecePage(int pageNum) {
-        return service.getPiecePage(pageNum, typeComboBox.getValue(), filterComboBox.getValue());
+        return service.getPiecePage(pageNum, clothesType, filterComboBox.getValue());
     }
 
     private void showPieceFullInfo(Piece piece) {

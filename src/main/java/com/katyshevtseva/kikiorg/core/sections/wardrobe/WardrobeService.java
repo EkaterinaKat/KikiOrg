@@ -10,13 +10,14 @@ import com.katyshevtseva.kikiorg.core.sections.wardrobe.entity.CollageEntity;
 import com.katyshevtseva.kikiorg.core.sections.wardrobe.entity.ComponentEntity;
 import com.katyshevtseva.kikiorg.core.sections.wardrobe.entity.Outfit;
 import com.katyshevtseva.kikiorg.core.sections.wardrobe.entity.Piece;
-import com.katyshevtseva.kikiorg.core.sections.wardrobe.enums.ClothesType;
+import com.katyshevtseva.kikiorg.core.sections.wardrobe.enums.ClothesSubtype;
 import com.katyshevtseva.kikiorg.core.sections.wardrobe.enums.Purpose;
 import com.katyshevtseva.kikiorg.core.sections.wardrobe.enums.Season;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -53,20 +54,8 @@ public class WardrobeService {
 
     public Page<Piece> getPiecePage(int pageNum, ClothesType clothesType, PieceFilter pieceFilter) {
         Pageable pageable = PageRequest.of(pageNum, 9, Sort.by("id").descending());
-        org.springframework.data.domain.Page<Piece> piecePage = null;
-
-        switch (pieceFilter) {
-            case ACTIVE:
-                piecePage = clothesType == null ? pieceRepo.findByEndDateIsNull(pageable) : pieceRepo.findByTypeAndEndDateIsNull(clothesType, pageable);
-                break;
-            case ARCHIVE:
-                piecePage = clothesType == null ? pieceRepo.findByEndDateIsNotNull(pageable) : pieceRepo.findByTypeAndEndDateIsNotNull(clothesType, pageable);
-                break;
-            case UNUSED:
-                List<ClothesType> types = clothesType == null ? Arrays.asList(ClothesType.values()) : Collections.singletonList(clothesType);
-                piecePage = pieceRepo.findUnusedPieces(types, pageable);
-        }
-
+        Specification<Piece> pieceSpec = new PieceSpec(clothesType, pieceFilter);
+        org.springframework.data.domain.Page<Piece> piecePage = pieceRepo.findAll(pieceSpec, pageable);
         return new Page<>(piecePage.getContent(), pageNum, piecePage.getTotalPages());
     }
 
@@ -89,7 +78,7 @@ public class WardrobeService {
     public Piece savePiece(Piece existing,
                            String description,
                            String imageFileName,
-                           ClothesType type,
+                           ClothesSubtype type,
                            Date start,
                            Date end) {
 

@@ -122,6 +122,14 @@ public class OrganizerWindowCreator {
                 setController(controller).setHeight(1000).setWidth(1200).setTitle(CoreConstants.APP_NAME).showWindow();
     }
 
+    public void openTypeSelectDialog(FxController controller) {
+        new WindowBuilder(FXML_LOCATION + "container.fxml")
+                .setController(controller)
+                .setSize(new Size(550, 470))
+                .setTitle("Select type")
+                .showWindow();
+    }
+
     /* ----------------------------------  Привычки ---------------------------------------------- */
 
     public Node getMainHabitsNode(FxController controller) {

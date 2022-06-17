@@ -3,7 +3,7 @@ package com.katyshevtseva.kikiorg.core.sections.wardrobe;
 import com.katyshevtseva.kikiorg.core.repo.OutfitRepo;
 import com.katyshevtseva.kikiorg.core.repo.PieceRepo;
 import com.katyshevtseva.kikiorg.core.report.ReportCell;
-import com.katyshevtseva.kikiorg.core.sections.wardrobe.enums.ClothesType;
+import com.katyshevtseva.kikiorg.core.sections.wardrobe.enums.ClothesSubtype;
 import com.katyshevtseva.kikiorg.core.sections.wardrobe.enums.Purpose;
 import com.katyshevtseva.kikiorg.core.sections.wardrobe.enums.Season;
 import lombok.RequiredArgsConstructor;
@@ -67,13 +67,13 @@ public class WardrobeStatisticsService {
 
     private String getClothesTypesStatistics() {
         StringBuilder stringBuilder = new StringBuilder("Категории вещей:\n");
-        for (ClothesType clothesType : ClothesType.getSortedByTitleValues()) {
-            stringBuilder.append(" * ").append(clothesType.getTitle()).append(": ").append(getCount(clothesType)).append("\n");
+        for (ClothesSubtype clothesSubtype : ClothesSubtype.getSortedByTitleValues()) {
+            stringBuilder.append(" * ").append(clothesSubtype.getTitle()).append(": ").append(getCount(clothesSubtype)).append("\n");
         }
         return stringBuilder.toString();
     }
 
-    private int getCount(ClothesType type) {
+    private int getCount(ClothesSubtype type) {
         return pieceRepo.countByType(type).intValue();
     }
 
@@ -94,6 +94,6 @@ public class WardrobeStatisticsService {
     }
 
     private int getUnusedCount() {
-        return (int) pieceRepo.findUnusedPieces(Arrays.asList(ClothesType.values()), PageRequest.of(0, 1)).getTotalElements();
+        return (int) pieceRepo.findUnusedPieces(Arrays.asList(ClothesSubtype.values()), PageRequest.of(0, 1)).getTotalElements();
     }
 }
