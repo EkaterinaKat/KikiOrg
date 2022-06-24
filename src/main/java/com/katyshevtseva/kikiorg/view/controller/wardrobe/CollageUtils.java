@@ -4,6 +4,7 @@ import com.katyshevtceva.collage.logic.*;
 import com.katyshevtseva.fx.ImageContainer;
 import com.katyshevtseva.fx.Point;
 import com.katyshevtseva.fx.Size;
+import com.katyshevtseva.general.OneArgOneAnswerKnob;
 import com.katyshevtseva.kikiorg.core.Core;
 import com.katyshevtseva.kikiorg.core.sections.wardrobe.entity.CollageEntity;
 import com.katyshevtseva.kikiorg.core.sections.wardrobe.entity.ComponentEntity;
@@ -16,6 +17,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import static com.katyshevtseva.kikiorg.view.controller.wardrobe.WrdImageUtils.toCollageImages;
 import static com.katyshevtseva.kikiorg.view.controller.wardrobe.WrdImageUtils.toImageUrlAndPieceContainers;
 
 class CollageUtils {
@@ -67,9 +69,10 @@ class CollageUtils {
             return createEmptyCollage();
 
         Collage collage = new CollageBuilder()
-                .allExistingImages(toImageUrlAndPieceContainers(Core.getInstance().wardrobeService().getActivePieces()))
+                .allExistingImages(toCollageImages(Core.getInstance().wardrobeService().getActivePieces()))
                 .height(COLLAGE_SIZE)
                 .width(COLLAGE_SIZE)
+                .availableToAddToComponentImagesSupplier(getAvailableToAddToComponentImagesSupplier())
                 .build();
 
         for (ComponentEntity componentEntity : collageEntity.getComponents()) {
@@ -95,7 +98,13 @@ class CollageUtils {
         return new CollageBuilder()
                 .height(COLLAGE_SIZE)
                 .width(COLLAGE_SIZE)
-                .allExistingImages(toImageUrlAndPieceContainers(Core.getInstance().wardrobeService().getActivePieces()))
+                .allExistingImages(toCollageImages(Core.getInstance().wardrobeService().getActivePieces()))
+                .availableToAddToComponentImagesSupplier(getAvailableToAddToComponentImagesSupplier())
                 .build();
+    }
+
+    static OneArgOneAnswerKnob<ImageContainer, List<Image>> getAvailableToAddToComponentImagesSupplier() {
+        return imageContainer -> toCollageImages(Core.getInstance().wardrobeService()
+                .getPiecesAvailableToAddToExistingComponent(((ImageAndPieceContainer) imageContainer).getPiece()));
     }
 }

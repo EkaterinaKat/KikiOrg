@@ -24,6 +24,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.*;
 import java.util.stream.Collectors;
 
+import static com.katyshevtseva.kikiorg.core.sections.wardrobe.enums.ClothesSupertype.getSupertypesBySubtype;
 import static java.util.Comparator.naturalOrder;
 import static java.util.Comparator.nullsFirst;
 
@@ -57,6 +58,19 @@ public class WardrobeService {
         Specification<Piece> pieceSpec = new PieceSpec(clothesType, pieceFilter);
         org.springframework.data.domain.Page<Piece> piecePage = pieceRepo.findAll(pieceSpec, pageable);
         return new Page<>(piecePage.getContent(), pageNum, piecePage.getTotalPages());
+    }
+
+    public List<Piece> getPiecesToAddToOutfit(ClothesType clothesType) {
+        Specification<Piece> pieceSpec = new PieceSpec(clothesType, PieceFilter.ACTIVE);
+        return pieceRepo.findAll(pieceSpec, Sort.by("id").descending());
+    }
+
+    public List<Piece> getPiecesAvailableToAddToExistingComponent(Piece piece) {
+        Set<ClothesSubtype> subtypes = getSupertypesBySubtype(piece.getType()).stream()
+                .flatMap(clothesSupertype -> clothesSupertype.getTypes().stream())
+                .collect(Collectors.toSet());
+        subtypes.add(piece.getType());
+        return subtypes.stream().flatMap(subtype -> getPiecesToAddToOutfit(subtype).stream()).collect(Collectors.toList());
     }
 
     public Page<Outfit> getOutfitPage(int pageNum, Purpose purpose, Season season) {

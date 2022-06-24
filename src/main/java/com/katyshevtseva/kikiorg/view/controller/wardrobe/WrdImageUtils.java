@@ -59,6 +59,13 @@ class WrdImageUtils {
         return pieces.stream().map(WrdImageUtils::toImageUrlAndPieceContainer).collect(Collectors.toList());
     }
 
+    static List<com.katyshevtceva.collage.logic.Image> toCollageImages(List<Piece> pieces) {
+        return pieces.stream()
+                .map(WrdImageUtils::toImageUrlAndPieceContainer)
+                .map(com.katyshevtceva.collage.logic.Image::new)
+                .collect(Collectors.toList());
+    }
+
     static ImageContainer toImageUrlAndPieceContainer(Piece piece) {
         ImageContainer imageContainer = ImageCreator.getInstance().getImageContainer(piece);
 

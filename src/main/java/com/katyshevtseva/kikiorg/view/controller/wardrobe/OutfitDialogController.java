@@ -4,9 +4,11 @@ import com.katyshevtceva.collage.logic.Collage;
 import com.katyshevtseva.fx.WindowBuilder.FxController;
 import com.katyshevtseva.general.OneArgKnob;
 import com.katyshevtseva.kikiorg.core.Core;
+import com.katyshevtseva.kikiorg.core.sections.wardrobe.WardrobeService;
 import com.katyshevtseva.kikiorg.core.sections.wardrobe.entity.Outfit;
 import com.katyshevtseva.kikiorg.core.sections.wardrobe.enums.Purpose;
 import com.katyshevtseva.kikiorg.core.sections.wardrobe.enums.Season;
+import com.katyshevtseva.kikiorg.view.utils.OrganizerWindowCreator;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
@@ -22,8 +24,10 @@ import java.util.stream.Collectors;
 import static com.katyshevtseva.fx.FxUtils.closeWindowThatContains;
 import static com.katyshevtseva.fx.FxUtils.getPaneWithHeight;
 import static com.katyshevtseva.kikiorg.view.controller.wardrobe.CollageUtils.*;
+import static com.katyshevtseva.kikiorg.view.controller.wardrobe.WrdImageUtils.toCollageImages;
 
 class OutfitDialogController implements FxController {
+    private final WardrobeService service = Core.getInstance().wardrobeService();
     private final Outfit existing;
     private final OneArgKnob<Outfit> onSaveListener;
     private final List<CheckBox> seasonsCheckBoxes = new ArrayList<>();
@@ -81,7 +85,13 @@ class OutfitDialogController implements FxController {
     private void tuneCollage() {
         collage = existing == null ? createEmptyCollage() : reproduceCollage(existing.getCollageEntity());
         collagePane.getChildren().add(collage.getPane());
-        componentAddButton.setOnAction(event -> collage.createComponent());
+        componentAddButton.setOnAction(event -> openPieceTypeSelectDialog());
+    }
+
+    private void openPieceTypeSelectDialog() {
+        OrganizerWindowCreator.getInstance().openTypeSelectDialog(
+                new TypeSelectDialogController(type ->
+                        collage.openImageToAddSelectionDialog(toCollageImages(service.getPiecesToAddToOutfit(type)))));
     }
 
     private void setCollagePaneSize() {
@@ -92,7 +102,7 @@ class OutfitDialogController implements FxController {
     }
 
     private void save() {
-        Outfit saved = Core.getInstance().wardrobeService().saveOutfit(
+        Outfit saved = service.saveOutfit(
                 existing,
                 commentTextArea.getText(),
                 getSelectedSeasons(),

@@ -5,6 +5,7 @@ import com.katyshevtseva.kikiorg.core.sections.wardrobe.ClothesType;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static com.katyshevtseva.kikiorg.core.sections.wardrobe.enums.ClothesSubtype.*;
 
@@ -44,5 +45,11 @@ public enum ClothesSupertype implements StaticHierarchySchemaLine, ClothesType {
     @Override
     public List<ClothesSubtype> getSubtypes() {
         return getTypes();
+    }
+
+    public static List<ClothesSupertype> getSupertypesBySubtype(ClothesSubtype subtype) {
+        return Arrays.stream(ClothesSupertype.values())
+                .filter(supertype -> supertype.getTypes().contains(subtype))
+                .collect(Collectors.toList());
     }
 }
