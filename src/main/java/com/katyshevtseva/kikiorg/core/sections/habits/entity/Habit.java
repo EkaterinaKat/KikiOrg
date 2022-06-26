@@ -1,28 +1,34 @@
 package com.katyshevtseva.kikiorg.core.sections.habits.entity;
 
+import com.katyshevtseva.history.HasHistory;
 import com.katyshevtseva.kikiorg.core.sections.habits.StabilityStatus;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.util.Comparator;
+import java.util.List;
 import java.util.Objects;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Data
 @Entity
-public class Habit {
+public class Habit implements HasHistory<HabitChangeAction> {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
     private String title;
 
-    private boolean active;
+    private String description;
 
-    @OneToOne
-    @JoinColumn(name = "current_desc_id")
-    private Description currentDescription;
+    private boolean active;
 
     @Enumerated(EnumType.STRING)
     private StabilityStatus stabilityStatus;
+
+    @OneToMany(mappedBy = "habit", fetch = FetchType.EAGER)
+    private Set<HabitChangeAction> history;
 
     public String getTitleWithActiveInfo() {
         return String.format("%s (%s)", title, active ? "active" : "inactive");
@@ -44,5 +50,17 @@ public class Habit {
     @Override
     public String toString() {
         return title;
+    }
+
+    @Override
+    public List<HabitChangeAction> getHistory() {
+        return history.stream()
+                .sorted(Comparator.comparing(habitChangeAction -> habitChangeAction.getDateEntity().getValue()))
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public String getConditionDescForHistory() {
+        return "{title='" + title + "', description='" + description + "'}";
     }
 }

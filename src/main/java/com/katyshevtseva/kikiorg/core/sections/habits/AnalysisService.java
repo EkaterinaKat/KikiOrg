@@ -1,10 +1,10 @@
 package com.katyshevtseva.kikiorg.core.sections.habits;
 
 import com.katyshevtseva.date.Period;
-import com.katyshevtseva.date.DateUtils;
+import com.katyshevtseva.kikiorg.core.repo.HabitRepo;
 import com.katyshevtseva.kikiorg.core.sections.habits.entity.Habit;
 import com.katyshevtseva.kikiorg.core.sections.habits.entity.StabilityCriterion;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
@@ -17,15 +17,14 @@ import static com.katyshevtseva.date.DateUtils.shiftDate;
 import static com.katyshevtseva.kikiorg.core.sections.habits.StabilityStatus.*;
 
 @Service
+@RequiredArgsConstructor
 public class AnalysisService {
     private final Date yesterday = shiftDate(new Date(), DAY, -1);
     private final Date threeMonthAgo = shiftDate(yesterday, MONTH, -3);
-    @Autowired
-    private HabitMarkService markService;
-    @Autowired
-    private StabilityCriterionService criterionService;
-    @Autowired
-    private HabitsService habitsService;
+    private final HabitRepo habitRepo;
+    private final HabitMarkService markService;
+    private final StabilityCriterionService criterionService;
+    private final HabitsService habitsService;
 
     public String simpleAnalyze(Habit habit, Period period) {
         List<Date> dates = getDateRange(period);
@@ -68,7 +67,7 @@ public class AnalysisService {
             if (habit.getStabilityStatus() == STABLE)
                 habit.setStabilityStatus(STABILITY_LOST);
         }
-        habitsService.saveHabit(habit);
+        habitRepo.save(habit);
     }
 
     private int getDaysHabitDone(List<Date> dates, Habit habit) {

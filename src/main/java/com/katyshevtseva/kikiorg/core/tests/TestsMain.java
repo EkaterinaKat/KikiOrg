@@ -16,6 +16,6 @@ public class TestsMain {
     public void test() {
         financeTest.test();
         financeSearchTest.test();
-        habitDescTest.test();
+//        habitDescTest.test();
     }
 }

@@ -24,8 +24,6 @@
                 <Button fx:id="analysisButton" text="Analysis"/>
                 <Pane minWidth="30" maxWidth="30"/>
                 <Button fx:id="criterionButton" text="Criterion"/>
-                <Pane minWidth="30" maxWidth="30"/>
-                <Button fx:id="historyButton" text="History"/>
             </HBox>
             <Pane minHeight="10" maxHeight="10"/>
         </VBox>

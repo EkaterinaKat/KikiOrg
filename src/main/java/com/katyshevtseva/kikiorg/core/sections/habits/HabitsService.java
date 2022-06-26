@@ -1,10 +1,7 @@
 package com.katyshevtseva.kikiorg.core.sections.habits;
 
 import com.katyshevtseva.date.DateUtils;
-import com.katyshevtseva.kikiorg.core.date.DateService;
-import com.katyshevtseva.kikiorg.core.repo.DescriptionRepo;
 import com.katyshevtseva.kikiorg.core.repo.HabitRepo;
-import com.katyshevtseva.kikiorg.core.sections.habits.entity.Description;
 import com.katyshevtseva.kikiorg.core.sections.habits.entity.Habit;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -20,12 +17,28 @@ import static java.util.Comparator.*;
 @Service
 public class HabitsService {
     private final HabitRepo habitRepo;
-    private final DescriptionRepo descriptionRepo;
-    private final DateService dateService;
     private final HabitMarkService habitMarkService;
+    private final HabitHistoryService habitHistoryService;
 
-    public void saveHabit(Habit habit) {
-        habitRepo.save(habit);
+    public Habit saveHabit(Habit habit, String title, String desc, boolean active, boolean needToCreateDescChangeAction) {
+        boolean itIsCreation = false;
+        String oldDesc = null;
+        if (habit == null) {
+            habit = new Habit();
+            itIsCreation = true;
+        } else {
+            oldDesc = habit.getDescription();
+        }
+        habit.setTitle(title);
+        habit.setDescription(desc);
+        habit.setActive(active);
+        habit = habitRepo.save(habit);
+
+        if (itIsCreation || (!desc.equals(oldDesc) && needToCreateDescChangeAction)) {
+            habitHistoryService.commitAction(habit, desc, shiftDate(new Date(), DateUtils.TimeUnit.DAY, 1));
+        }
+
+        return habit;
     }
 
     public List<Habit> getAllHabits() {
@@ -43,35 +56,5 @@ public class HabitsService {
 
     public Habit getHabitById(Long id) {
         return habitRepo.findById(id).get();
-    }
-
-    public List<Description> getAllHabitDescriptions(Habit habit) {
-        return descriptionRepo.findByHabit(habit).stream().sorted(
-                comparing(o -> ((Description) o).getBeginningDate().getValue()).reversed()).collect(Collectors.toList());
-    }
-
-    public void newHabitDesc(Habit habit, String newDescText, boolean createNewDesc) {
-        if (habit.getCurrentDescription() != null && !createNewDesc) {
-            Description existingDescription = habit.getCurrentDescription();
-            existingDescription.setText(newDescText);
-            descriptionRepo.save(existingDescription);
-            return;
-        }
-
-        Description newDescription = new Description();
-        newDescription.setBeginningDate(dateService.createIfNotExistAndGetDateEntity(
-                shiftDate(new Date(), DateUtils.TimeUnit.DAY, 1)));
-        newDescription.setText(newDescText);
-        newDescription.setHabit(habit);
-        descriptionRepo.save(newDescription);
-
-        if (habit.getCurrentDescription() != null) {
-            Description oldDescription = habit.getCurrentDescription();
-            oldDescription.setEndDate(dateService.createIfNotExistAndGetDateEntity(new Date()));
-            descriptionRepo.save(oldDescription);
-        }
-
-        habit.setCurrentDescription(newDescription);
-        habitRepo.save(habit);
     }
 }

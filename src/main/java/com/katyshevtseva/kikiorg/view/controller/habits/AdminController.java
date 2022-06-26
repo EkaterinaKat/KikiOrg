@@ -2,6 +2,7 @@ package com.katyshevtseva.kikiorg.view.controller.habits;
 
 import com.katyshevtseva.fx.Styler;
 import com.katyshevtseva.fx.WindowBuilder.FxController;
+import com.katyshevtseva.fx.dialog.StandardDialogBuilder;
 import com.katyshevtseva.kikiorg.core.Core;
 import com.katyshevtseva.kikiorg.core.sections.habits.entity.Habit;
 import com.katyshevtseva.kikiorg.view.utils.OrganizerWindowCreator;
@@ -30,6 +31,8 @@ class AdminController implements FxController {
     private Label descLabel;
     @FXML
     private Button editButton;
+    @FXML
+    private Button historyButton;
     private Map<Long, Label> habitIdPointLabelMap;
 
     @FXML
@@ -64,7 +67,7 @@ class AdminController implements FxController {
 
     private void showHabit(Habit habit) {
         titleLabel.setText(habit.getTitleWithActiveInfo());
-        descLabel.setText(habit.getCurrentDescription() == null ? "описания нет патчимута" : habit.getCurrentDescription().getText());
+        descLabel.setText(habit.getDescription());
 
         habitIdPointLabelMap.values().forEach(label -> label.setText(""));
         habitIdPointLabelMap.get(habit.getId()).setText("* ");
@@ -73,6 +76,7 @@ class AdminController implements FxController {
                     fillHabitTable();
                     showHabit(savedHabit);
                 })));
+        historyButton.setOnAction(event -> new StandardDialogBuilder().openHistoryDialog(habit));
     }
 
     private void createHabit() {

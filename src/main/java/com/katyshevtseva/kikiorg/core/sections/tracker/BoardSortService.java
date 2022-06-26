@@ -24,7 +24,7 @@ public class BoardSortService {
                 sort = "project.title";
                 break;
             case CREATION_DATE:
-                sort = "creationDate.value";
+                sort = "id";
                 break;
             case COMPLETION_DATE:
                 sort = "completionDate.value";

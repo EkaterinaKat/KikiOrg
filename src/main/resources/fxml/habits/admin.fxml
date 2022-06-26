@@ -16,6 +16,8 @@
             <Button fx:id="newHabitButton" text="New"/>
             <Pane minWidth="20" maxWidth="20"/>
             <Button fx:id="editButton" text="Edit"/>
+            <Pane minWidth="20" maxWidth="20"/>
+            <Button fx:id="historyButton" text="History"/>
         </HBox>
         <Pane maxWidth="700" minWidth="700" maxHeight="700" minHeight="700">
             <HBox>

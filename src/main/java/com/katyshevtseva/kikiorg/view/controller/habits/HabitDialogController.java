@@ -15,6 +15,7 @@ import static com.katyshevtseva.fx.FxUtils.associateButtonWithControls;
 import static com.katyshevtseva.fx.FxUtils.closeWindowThatContains;
 
 class HabitDialogController implements FxController {
+    private final String DESC_CHANGE_ACTION_QUESTION = "Is it necessary to create description change action?";
     @FXML
     private TextField titleTextField;
     @FXML
@@ -37,7 +38,7 @@ class HabitDialogController implements FxController {
         setExistingPieceInfo();
         saveButton.setOnAction(event -> {
             if (needToAskAboutDesc())
-                new StandardDialogBuilder().openQuestionDialog("Create new habit description?", this::saveAndCloseDialog);
+                new StandardDialogBuilder().openQuestionDialog(DESC_CHANGE_ACTION_QUESTION, this::saveAndCloseDialog);
             else
                 saveAndCloseDialog(false);
         });
@@ -47,26 +48,25 @@ class HabitDialogController implements FxController {
         boolean itIsHabitCreation = habit == null;
         if (itIsHabitCreation)
             return false;
-        boolean descWasEdited = !habit.getCurrentDescription().getText().equals(descTextArea.getText());
+        boolean descWasEdited = !habit.getDescription().equals(descTextArea.getText());
         return descWasEdited;
     }
 
     private void setExistingPieceInfo() {
         if (habit != null) {
             titleTextField.setText(habit.getTitle());
-            descTextArea.setText(habit.getCurrentDescription() == null ? "описания нет патчимута" : habit.getCurrentDescription().getText());
+            descTextArea.setText(habit.getDescription());
             activeCheckBox.setSelected(habit.isActive());
         }
     }
 
-    private void saveAndCloseDialog(boolean createNewDeck) {
-        if (habit == null) {
-            habit = new Habit();
-        }
-        habit.setTitle(titleTextField.getText());
-        habit.setActive(activeCheckBox.isSelected());
-        Core.getInstance().habitsService().saveHabit(habit);
-        Core.getInstance().habitsService().newHabitDesc(habit, descTextArea.getText(), createNewDeck);
+    private void saveAndCloseDialog(boolean needToCreateDescChangeAction) {
+        habit = Core.getInstance().habitsService().saveHabit(
+                habit,
+                titleTextField.getText(),
+                descTextArea.getText(),
+                activeCheckBox.isSelected(),
+                needToCreateDescChangeAction);
 
         habitSaveHandler.execute(Core.getInstance().habitsService().getHabitById(habit.getId()));
         closeWindowThatContains(saveButton);
