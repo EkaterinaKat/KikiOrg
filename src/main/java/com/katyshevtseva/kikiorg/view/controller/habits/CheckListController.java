@@ -1,6 +1,5 @@
 package com.katyshevtseva.kikiorg.view.controller.habits;
 
-import com.katyshevtseva.date.DateCorrector;
 import com.katyshevtseva.fx.WindowBuilder.FxController;
 import com.katyshevtseva.kikiorg.core.Core;
 import com.katyshevtseva.kikiorg.core.sections.habits.HabitMarkService;
@@ -16,6 +15,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 
+import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -43,7 +43,7 @@ class CheckListController implements FxController {
         tableController.showReport(Core.getInstance().habitsReportService().getQuickReport());
         saveButton.setOnAction(event -> save());
         associateButtonWithControls(saveButton, datePicker);
-        datePicker.setValue(new java.sql.Date(DateCorrector.getProperDate().getTime()).toLocalDate());
+        datePicker.setValue(LocalDate.now());
         datePicker.setOnAction(event -> saveButton.setDisable(false));
         fillHabitsTable();
     }

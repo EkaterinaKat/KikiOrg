@@ -1,6 +1,5 @@
 package com.katyshevtseva.kikiorg.view.controller.finance;
 
-import com.katyshevtseva.date.DateCorrector;
 import com.katyshevtseva.fx.WindowBuilder.FxController;
 import com.katyshevtseva.general.NoArgsKnob;
 import com.katyshevtseva.kikiorg.core.Core;
@@ -14,6 +13,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
+
+import java.time.LocalDate;
 
 import static com.katyshevtseva.fx.FxUtils.*;
 
@@ -43,7 +44,7 @@ class ExpenseController implements FxController {
         associateButtonWithControls(doneButton, amountTextField, accountComboBox, itemComboBox, datePicker);
         setItemComboBoxItems();
         setComboBoxItemsAndSetSelectedFirstItem(accountComboBox, Core.getInstance().financeService().getActiveAccounts());
-        datePicker.setValue(new java.sql.Date(DateCorrector.getProperDate().getTime()).toLocalDate());
+        datePicker.setValue(LocalDate.now());
     }
 
     private void setItemComboBoxItems() {

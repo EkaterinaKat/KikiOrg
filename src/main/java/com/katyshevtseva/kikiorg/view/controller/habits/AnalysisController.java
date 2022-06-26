@@ -1,6 +1,5 @@
 package com.katyshevtseva.kikiorg.view.controller.habits;
 
-import com.katyshevtseva.date.DateCorrector;
 import com.katyshevtseva.date.DateUtils.TimeUnit;
 import com.katyshevtseva.fx.WindowBuilder.FxController;
 import com.katyshevtseva.kikiorg.core.Core;
@@ -13,6 +12,7 @@ import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 import static com.katyshevtseva.date.DateUtils.TimeUnit.DAY;
@@ -46,7 +46,7 @@ class AnalysisController implements FxController {
 
     private void setInitialDates() {
         startDatePicker.setValue(new java.sql.Date(shiftDate(new Date(), TimeUnit.MONTH, -1).getTime()).toLocalDate());
-        endDatePicker.setValue(new java.sql.Date(DateCorrector.getProperDate().getTime()).toLocalDate());
+        endDatePicker.setValue(LocalDate.now());
     }
 
     private void showButtonListener() {
