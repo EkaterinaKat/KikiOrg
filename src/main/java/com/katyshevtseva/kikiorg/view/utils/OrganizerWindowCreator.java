@@ -27,10 +27,6 @@ public class OrganizerWindowCreator {
                 setOnWindowCloseEventHandler(event -> System.exit(0)).showWindow();
     }
 
-    public Node getPaginationPaneNode(FxController controller) {
-        return new WindowBuilder(FXML_LOCATION + "pagination/pagination_pane.fxml").setController(controller).getNode();
-    }
-
     /* ----------------------------------  Структура ---------------------------------------------- */
 
     public Node getMainStructureNode(FxController controller) {

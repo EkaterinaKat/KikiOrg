@@ -3,11 +3,13 @@ package com.katyshevtseva.kikiorg.view.controller.structure;
 import com.katyshevtseva.fx.FxUtils;
 import com.katyshevtseva.fx.Styler;
 import com.katyshevtseva.fx.WindowBuilder.FxController;
+import com.katyshevtseva.fx.component.ComponentBuilder;
+import com.katyshevtseva.fx.component.ComponentBuilder.Component;
+import com.katyshevtseva.fx.component.controller.PaginationPaneController;
 import com.katyshevtseva.general.Page;
 import com.katyshevtseva.kikiorg.core.Core;
 import com.katyshevtseva.kikiorg.core.sections.structure.entity.CourseOfAction;
 import com.katyshevtseva.kikiorg.core.sections.structure.enums.CourseOfActionStatus;
-import com.katyshevtseva.kikiorg.view.controller.pagination.PaginationPaneController;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
@@ -40,8 +42,10 @@ public class CoursesController implements FxController {
     }
 
     private void tunePagination() {
-        paginationPaneController = new PaginationPaneController<>(this::getCourseOfActionPage, this::setContent);
-        paginationPane.getChildren().add(getInstance().getPaginationPaneNode(paginationPaneController));
+        Component<PaginationPaneController<CourseOfAction>> component =
+                new ComponentBuilder().getPaginationComponent(this::getCourseOfActionPage, this::setContent);
+        paginationPaneController = component.getController();
+        paginationPane.getChildren().add(component.getNode());
     }
 
     private Page<CourseOfAction> getCourseOfActionPage(int pageNum) {

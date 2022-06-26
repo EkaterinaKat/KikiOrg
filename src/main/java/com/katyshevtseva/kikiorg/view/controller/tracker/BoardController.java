@@ -2,12 +2,14 @@ package com.katyshevtseva.kikiorg.view.controller.tracker;
 
 import com.katyshevtseva.fx.FxUtils;
 import com.katyshevtseva.fx.WindowBuilder.FxController;
+import com.katyshevtseva.fx.component.ComponentBuilder;
+import com.katyshevtseva.fx.component.ComponentBuilder.Component;
+import com.katyshevtseva.fx.component.controller.PaginationPaneController;
 import com.katyshevtseva.general.Page;
 import com.katyshevtseva.kikiorg.core.Core;
 import com.katyshevtseva.kikiorg.core.sections.tracker.BoardSortService.SortType;
 import com.katyshevtseva.kikiorg.core.sections.tracker.Task;
 import com.katyshevtseva.kikiorg.core.sections.tracker.TaskStatus;
-import com.katyshevtseva.kikiorg.view.controller.pagination.PaginationPaneController;
 import com.katyshevtseva.kikiorg.view.utils.OrganizerWindowCreator;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -47,8 +49,10 @@ class BoardController implements FxController {
     }
 
     private void tunePagination() {
-        paginationPaneController = new PaginationPaneController<>(this::getTaskPage, this::setContent);
-        paginationPane.getChildren().add(OrganizerWindowCreator.getInstance().getPaginationPaneNode(paginationPaneController));
+        Component<PaginationPaneController<Task>> component =
+                new ComponentBuilder().getPaginationComponent(this::getTaskPage, this::setContent);
+        paginationPaneController = component.getController();
+        paginationPane.getChildren().add(component.getNode());
     }
 
     private Page<Task> getTaskPage(int pageNum) {

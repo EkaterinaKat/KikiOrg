@@ -2,6 +2,9 @@ package com.katyshevtseva.kikiorg.view.controller.wardrobe;
 
 import com.katyshevtseva.fx.FxUtils;
 import com.katyshevtseva.fx.WindowBuilder.FxController;
+import com.katyshevtseva.fx.component.ComponentBuilder;
+import com.katyshevtseva.fx.component.ComponentBuilder.Component;
+import com.katyshevtseva.fx.component.controller.PaginationPaneController;
 import com.katyshevtseva.fx.dialog.StandardDialogBuilder;
 import com.katyshevtseva.general.GeneralUtils;
 import com.katyshevtseva.general.Page;
@@ -10,7 +13,6 @@ import com.katyshevtseva.kikiorg.core.sections.wardrobe.WardrobeService;
 import com.katyshevtseva.kikiorg.core.sections.wardrobe.entity.Outfit;
 import com.katyshevtseva.kikiorg.core.sections.wardrobe.enums.Purpose;
 import com.katyshevtseva.kikiorg.core.sections.wardrobe.enums.Season;
-import com.katyshevtseva.kikiorg.view.controller.pagination.PaginationPaneController;
 import com.katyshevtseva.kikiorg.view.utils.OrganizerWindowCreator;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -56,8 +58,10 @@ class OutfitController implements FxController {
     }
 
     private void tunePagination() {
-        paginationPaneController = new PaginationPaneController<>(this::getOutfitPage, this::setContent);
-        paginationPane.getChildren().add(OrganizerWindowCreator.getInstance().getPaginationPaneNode(paginationPaneController));
+        Component<PaginationPaneController<Outfit>> component =
+                new ComponentBuilder().getPaginationComponent(this::getOutfitPage, this::setContent);
+        paginationPaneController = component.getController();
+        paginationPane.getChildren().add(component.getNode());
     }
 
     Page<Outfit> getOutfitPage(int pageNum) {
