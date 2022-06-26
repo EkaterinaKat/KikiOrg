@@ -1,4 +1,4 @@
-package com.katyshevtseva.kikiorg.core.sections.tracker;
+package com.katyshevtseva.kikiorg.core.sections.tracker.entity;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;

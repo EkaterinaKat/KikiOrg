@@ -14,20 +14,26 @@
         <Label text="Sort: "/>
         <ComboBox fx:id="sortComboBox"/>
         <Pane maxWidth="20" minWidth="20"/>
-        <Label fx:id="statisticsLabel"/>
+        <ComboBox fx:id="projectComboBox"/>
+        <Pane maxWidth="20" minWidth="20"/>
+        <Button fx:id="showAllButton" text="Show all"/>
     </HBox>
     <Pane minHeight="25" maxHeight="25"/>
 
-    <GridPane vgap="10">
-        <ScrollPane minHeight="750" maxHeight="750" minWidth="900" maxWidth="900" GridPane.columnIndex="0"
-                    GridPane.rowIndex="0">
-            <HBox>
-                <Pane maxWidth="20" minWidth="20"/>
-                <VBox fx:id="taskPane"/>
-            </HBox>
-        </ScrollPane>
-        <VBox fx:id="paginationPane" GridPane.columnIndex="0" GridPane.rowIndex="1"/>
-    </GridPane>
+    <HBox>
+        <GridPane vgap="10">
+            <ScrollPane minHeight="750" maxHeight="750" minWidth="900" maxWidth="900" GridPane.columnIndex="0"
+                        GridPane.rowIndex="0">
+                <HBox>
+                    <Pane maxWidth="20" minWidth="20"/>
+                    <VBox fx:id="taskPane"/>
+                </HBox>
+            </ScrollPane>
+            <VBox fx:id="paginationPane" GridPane.columnIndex="0" GridPane.rowIndex="1"/>
+        </GridPane>
+        <Pane maxWidth="20" minWidth="20"/>
+        <Label fx:id="statisticsLabel" wrapText="true"/>
+    </HBox>
 
 
 </VBox>

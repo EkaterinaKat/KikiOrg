@@ -8,8 +8,9 @@ import com.katyshevtseva.fx.component.controller.PaginationPaneController;
 import com.katyshevtseva.general.Page;
 import com.katyshevtseva.kikiorg.core.Core;
 import com.katyshevtseva.kikiorg.core.sections.tracker.BoardSortService.SortType;
-import com.katyshevtseva.kikiorg.core.sections.tracker.Task;
 import com.katyshevtseva.kikiorg.core.sections.tracker.TaskStatus;
+import com.katyshevtseva.kikiorg.core.sections.tracker.entity.Project;
+import com.katyshevtseva.kikiorg.core.sections.tracker.entity.Task;
 import com.katyshevtseva.kikiorg.view.utils.OrganizerWindowCreator;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -36,16 +37,35 @@ class BoardController implements FxController {
     private Label statisticsLabel;
     @FXML
     private ComboBox<SortType> sortComboBox;
+    @FXML
+    private Button showAllButton;
+    @FXML
+    private ComboBox<Project> projectComboBox;
 
     @FXML
     private void initialize() {
         setComboBoxItems(statusComboBox, TaskStatus.values(), TaskStatus.TODO);
         setComboBoxItems(sortComboBox, SortType.values(), SortType.CREATION_DATE);
+        tuneProjectComboBox();
         tunePagination();
         addTaskButton.setOnAction(event ->
                 OrganizerWindowCreator.getInstance().openTaskDialog(new TaskDialogController(null, () -> paginationPaneController.loadPage())));
-        statusComboBox.setOnAction(event -> paginationPaneController.loadPage());
+        statusComboBox.setOnAction(event -> {
+            tuneProjectComboBox();
+            paginationPaneController.loadPage();
+        });
         sortComboBox.setOnAction(event -> paginationPaneController.loadPage());
+        projectComboBox.setOnAction(event -> paginationPaneController.loadPage());
+        showAllButton.setOnAction(event -> {
+            projectComboBox.setValue(null);
+            paginationPaneController.loadPage();
+        });
+    }
+
+    private void tuneProjectComboBox() {
+        projectComboBox.setValue(null);
+        setComboBoxItems(projectComboBox,
+                Core.getInstance().trackerService().getProjectsWithTasksInStatus(statusComboBox.getValue()));
     }
 
     private void tunePagination() {
@@ -56,7 +76,8 @@ class BoardController implements FxController {
     }
 
     private Page<Task> getTaskPage(int pageNum) {
-        return Core.getInstance().boardSortService().getTaskPage(statusComboBox.getValue(), sortComboBox.getValue(), pageNum);
+        return Core.getInstance().boardSortService().getTaskPage(
+                projectComboBox.getValue(), statusComboBox.getValue(), sortComboBox.getValue(), pageNum);
     }
 
     private void setContent(List<Task> tasks) {

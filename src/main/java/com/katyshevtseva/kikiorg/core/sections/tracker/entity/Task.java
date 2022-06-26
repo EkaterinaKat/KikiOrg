@@ -1,6 +1,7 @@
-package com.katyshevtseva.kikiorg.core.sections.tracker;
+package com.katyshevtseva.kikiorg.core.sections.tracker.entity;
 
 import com.katyshevtseva.kikiorg.core.date.DateEntity;
+import com.katyshevtseva.kikiorg.core.sections.tracker.TaskStatus;
 import lombok.Data;
 
 import javax.persistence.*;

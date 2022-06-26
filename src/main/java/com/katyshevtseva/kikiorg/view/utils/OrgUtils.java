@@ -2,7 +2,7 @@ package com.katyshevtseva.kikiorg.view.utils;
 
 import com.katyshevtseva.date.Period;
 import com.katyshevtseva.kikiorg.core.date.DateEntity;
-import com.katyshevtseva.kikiorg.core.sections.tracker.ColorEntity;
+import com.katyshevtseva.kikiorg.core.sections.tracker.entity.ColorEntity;
 import javafx.scene.control.DatePicker;
 import javafx.scene.paint.Color;
 

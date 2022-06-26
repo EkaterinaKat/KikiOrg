@@ -3,12 +3,15 @@ package com.katyshevtseva.kikiorg.core.sections.tracker;
 import com.katyshevtseva.kikiorg.core.date.DateService;
 import com.katyshevtseva.kikiorg.core.repo.ProjectRepo;
 import com.katyshevtseva.kikiorg.core.repo.TaskRepo;
+import com.katyshevtseva.kikiorg.core.sections.tracker.entity.Project;
+import com.katyshevtseva.kikiorg.core.sections.tracker.entity.Task;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 
 @Service
@@ -43,6 +46,12 @@ public class TrackerService {
         return projectRepo.findAll();
     }
 
+    public List<Project> getProjectsWithTasksInStatus(TaskStatus taskStatus) {
+        return projectRepo.findAll().stream()
+                .filter(project -> taskRepo.countByProjectAndTaskStatus(project, taskStatus) > 0)
+                .collect(Collectors.toList());
+    }
+
     public void completeTask(Task task) {
         task.setCompletionDate(dateService.createIfNotExistAndGetDateEntity(new Date()));
         task.setTaskStatus(TaskStatus.DONE);
@@ -67,7 +76,7 @@ public class TrackerService {
     }
 
     public String getStatistics() {
-        return String.format("To Do: %d. Shelved: %d. Done: %d. Rejected: %d.",
+        return String.format("To Do: %d. \nShelved: %d. \nDone: %d. \nRejected: %d.",
                 taskRepo.countByTaskStatus(TaskStatus.TODO),
                 taskRepo.countByTaskStatus(TaskStatus.SHELVED),
                 taskRepo.countByTaskStatus(TaskStatus.DONE),

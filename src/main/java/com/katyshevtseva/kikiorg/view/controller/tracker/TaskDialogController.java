@@ -4,17 +4,19 @@ import com.katyshevtseva.fx.FxUtils;
 import com.katyshevtseva.fx.WindowBuilder.FxController;
 import com.katyshevtseva.general.NoArgsKnob;
 import com.katyshevtseva.kikiorg.core.Core;
-import com.katyshevtseva.kikiorg.core.sections.tracker.Project;
-import com.katyshevtseva.kikiorg.core.sections.tracker.Task;
+import com.katyshevtseva.kikiorg.core.sections.tracker.entity.Project;
+import com.katyshevtseva.kikiorg.core.sections.tracker.entity.Task;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import lombok.RequiredArgsConstructor;
 
+@RequiredArgsConstructor
 class TaskDialogController implements FxController {
-    private Task task;
-    private NoArgsKnob boardUpdateKnob;
+    private final Task task;
+    private final NoArgsKnob boardUpdateKnob;
     @FXML
     private TextField titleTextField;
     @FXML
@@ -23,11 +25,6 @@ class TaskDialogController implements FxController {
     private TextArea descTextArea;
     @FXML
     private Button saveButton;
-
-    TaskDialogController(Task task, NoArgsKnob boardUpdateKnob) {
-        this.task = task;
-        this.boardUpdateKnob = boardUpdateKnob;
-    }
 
     @FXML
     private void initialize() {
