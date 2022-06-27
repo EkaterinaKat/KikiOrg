@@ -1,6 +1,7 @@
 package com.katyshevtseva.kikiorg.view.controller.habits;
 
 import com.katyshevtseva.fx.WindowBuilder.FxController;
+import com.katyshevtseva.fx.dialog.StandardDialogBuilder;
 import com.katyshevtseva.kikiorg.core.Core;
 import com.katyshevtseva.kikiorg.core.sections.habits.HabitMarkService;
 import com.katyshevtseva.kikiorg.core.sections.habits.HabitsService;
@@ -23,8 +24,8 @@ import java.util.Map;
 import static com.katyshevtseva.fx.FxUtils.*;
 
 class CheckListController implements FxController {
-    private HabitsService habitsService = Core.getInstance().habitsService();
-    private HabitMarkService habitMarkService = Core.getInstance().habitMarkService();
+    private final HabitsService habitsService = Core.getInstance().habitsService();
+    private final HabitMarkService habitMarkService = Core.getInstance().habitMarkService();
     @FXML
     private DatePicker datePicker;
     @FXML
@@ -66,8 +67,12 @@ class CheckListController implements FxController {
 
     private void save() {
         for (Map.Entry<Habit, CheckBox> entry : habitCheckBoxMap.entrySet()) {
-            habitMarkService.saveMarkOrRewriteIfExists(
-                    entry.getKey(), java.sql.Date.valueOf(datePicker.getValue()), entry.getValue().isSelected());
+            try {
+                habitMarkService.saveMarkOrRewriteIfExists(
+                        entry.getKey(), java.sql.Date.valueOf(datePicker.getValue()), entry.getValue().isSelected());
+            } catch (Exception e) {
+                new StandardDialogBuilder().setSize(200, 400).openInfoDialog(e.getMessage());
+            }
         }
         saveButton.setDisable(true);
         tableController.showReport(Core.getInstance().habitsReportService().getQuickReport());

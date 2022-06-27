@@ -17,7 +17,7 @@
                 <Pane minWidth="30" maxWidth="30"/>
                 <Button fx:id="checkListButton" text="Check list"/>
                 <Pane minWidth="30" maxWidth="30"/>
-                <Button fx:id="adminButton" text="Administration"/>
+                <Button fx:id="adminButton" text="Admin"/>
                 <Pane minWidth="30" maxWidth="30"/>
                 <Button fx:id="reportButton" text="Report"/>
                 <Pane minWidth="30" maxWidth="30"/>

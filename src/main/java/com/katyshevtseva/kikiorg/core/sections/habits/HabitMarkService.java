@@ -2,6 +2,7 @@ package com.katyshevtseva.kikiorg.core.sections.habits;
 
 import com.katyshevtseva.kikiorg.core.date.DateEntity;
 import com.katyshevtseva.kikiorg.core.date.DateService;
+import com.katyshevtseva.kikiorg.core.repo.HabitChangeActionRepo;
 import com.katyshevtseva.kikiorg.core.repo.MarkRepo;
 import com.katyshevtseva.kikiorg.core.sections.habits.entity.Habit;
 import com.katyshevtseva.kikiorg.core.sections.habits.entity.Mark;
@@ -13,6 +14,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
 
+import static com.katyshevtseva.date.DateUtils.READABLE_DATE_FORMAT;
+import static com.katyshevtseva.date.DateUtils.removeTimeFromDate;
+
 
 @Service
 @Transactional
@@ -20,9 +24,17 @@ import java.util.Date;
 public class HabitMarkService {
     private final DateService dateService;
     private final MarkRepo markRepo;
+    private final HabitChangeActionRepo habitChangeActionRepo;
 
-    public void saveMarkOrRewriteIfExists(Habit habit, Date date, boolean markValue) {
+    public void saveMarkOrRewriteIfExists(Habit habit, Date date, boolean markValue) throws Exception {
         DateEntity dateEntity = dateService.createIfNotExistAndGetDateEntity(date);
+
+        Date dateOfFirstDesc = getDateOfFirstDesc(habit);
+        if (removeTimeFromDate(date).before(dateOfFirstDesc)) {
+            throw new Exception(String.format(
+                    "Невозможно установить отметку на %s так как начало первого описания приходится на %s",
+                    habit.getTitle(), READABLE_DATE_FORMAT.format(dateOfFirstDesc)));
+        }
 
         markRepo.deleteByHabitAndDateEntity(habit, dateEntity);
         if (markValue) {
@@ -31,6 +43,10 @@ public class HabitMarkService {
             mark.setDateEntity(dateEntity);
             markRepo.save(mark);
         }
+    }
+
+    public Date getDateOfFirstDesc(Habit habit) {
+        return habitChangeActionRepo.findFirstByHabitOrderByDateEntityValueAsc(habit).get().getDateEntity().getValue();
     }
 
     // Без модификатора public екзешник не работает

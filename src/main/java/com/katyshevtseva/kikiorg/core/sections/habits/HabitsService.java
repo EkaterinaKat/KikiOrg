@@ -1,10 +1,13 @@
 package com.katyshevtseva.kikiorg.core.sections.habits;
 
 import com.katyshevtseva.date.DateUtils;
+import com.katyshevtseva.kikiorg.core.repo.HabitChangeActionRepo;
 import com.katyshevtseva.kikiorg.core.repo.HabitRepo;
 import com.katyshevtseva.kikiorg.core.sections.habits.entity.Habit;
+import com.katyshevtseva.kikiorg.core.sections.habits.entity.HabitChangeAction;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
 import java.util.List;
@@ -19,7 +22,9 @@ public class HabitsService {
     private final HabitRepo habitRepo;
     private final HabitMarkService habitMarkService;
     private final HabitHistoryService habitHistoryService;
+    private final HabitChangeActionRepo habitChangeActionRepo;
 
+    @Transactional
     public Habit saveHabit(Habit habit, String title, String desc, boolean active, boolean needToCreateDescChangeAction) {
         boolean itIsCreation = false;
         String oldDesc = null;
@@ -34,8 +39,18 @@ public class HabitsService {
         habit.setActive(active);
         habit = habitRepo.save(habit);
 
-        if (itIsCreation || (!desc.equals(oldDesc) && needToCreateDescChangeAction)) {
-            habitHistoryService.commitAction(habit, desc, shiftDate(new Date(), DateUtils.TimeUnit.DAY, 1));
+        Date date = shiftDate(new Date(), DateUtils.TimeUnit.DAY, 1);
+        if (itIsCreation) {
+            habitHistoryService.commitAction(habit, desc, date);
+        } else if (!desc.equals(oldDesc)) {
+            if (needToCreateDescChangeAction) {
+                habitChangeActionRepo.removeByHabitAndDateEntityValue(habit, date);
+                habitHistoryService.commitAction(habit, desc, date);
+            } else {
+                HabitChangeAction changeAction = habitChangeActionRepo.findFirstByHabitOrderByDateEntityValueDesc(habit).get();
+                changeAction.setDescription(desc);
+                habitChangeActionRepo.save(changeAction);
+            }
         }
 
         return habit;

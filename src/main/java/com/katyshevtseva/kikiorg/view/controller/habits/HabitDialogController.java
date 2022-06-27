@@ -38,7 +38,9 @@ class HabitDialogController implements FxController {
         setExistingPieceInfo();
         saveButton.setOnAction(event -> {
             if (needToAskAboutDesc())
-                new StandardDialogBuilder().openQuestionDialog(DESC_CHANGE_ACTION_QUESTION, this::saveAndCloseDialog);
+                new StandardDialogBuilder()
+                        .setSize(200, 500)
+                        .openQuestionDialog(DESC_CHANGE_ACTION_QUESTION, this::saveAndCloseDialog);
             else
                 saveAndCloseDialog(false);
         });

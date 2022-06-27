@@ -11,7 +11,6 @@ import javafx.scene.control.TextField;
 
 import java.util.Date;
 
-import static com.katyshevtseva.date.DateCorrector.getProperDate;
 import static com.katyshevtseva.date.DateUtils.*;
 import static com.katyshevtseva.fx.FxUtils.*;
 
@@ -35,7 +34,7 @@ public class AutoCountController {
     @FXML
     private void initialize() {
         disableNonNumericChars(minutesSubtractionTextField);
-        dateLabel.setText("Current date: " + READABLE_DATE_FORMAT.format(getProperDate()));
+        dateLabel.setText("Current date: " + READABLE_DATE_FORMAT.format(new Date()));
         autoCountButton.setOnAction(event -> autoCountButtonListener());
         associateButtonWithControls(autoCountButton, areaComboBox);
         setComboBoxItems(areaComboBox, WorkArea.values());
@@ -78,7 +77,7 @@ public class AutoCountController {
                 break;
             case FINISHED:
                 autoCountStage = AutoCountStage.NOT_STARTED;
-                Core.getInstance().workService().saveOrSumWithExistingWorkLog(areaComboBox.getValue(), finalMinutesNum, getProperDate());
+                Core.getInstance().workService().saveOrSumWithExistingWorkLog(areaComboBox.getValue(), finalMinutesNum, new Date());
                 tableUpdateKnob.execute();
                 autoCountInfoLabel.setText("");
                 autoCountButton.setText("Start");
