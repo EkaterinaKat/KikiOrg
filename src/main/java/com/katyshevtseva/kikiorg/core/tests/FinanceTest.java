@@ -13,6 +13,8 @@ import org.springframework.stereotype.Service;
 import java.util.Collections;
 import java.util.Date;
 
+import static com.katyshevtseva.general.GeneralUtils.getFailedBanner;
+import static com.katyshevtseva.general.GeneralUtils.getSuccessBanner;
 import static com.katyshevtseva.kikiorg.core.CoreConstants.FINANCIAL_ACCOUNTING_START_DATE;
 
 @Service
@@ -51,9 +53,9 @@ public class FinanceTest {
 
         //result
         if (success) {
-            System.out.println("\n" + String.format(TestConstants.BIG_SUCCESS_BANNER, "FINANCE"));
+            System.out.println("\n" + getSuccessBanner("FINANCE"));
         } else {
-            System.out.println("\n" + TestConstants.FAILED_STRING);
+            System.out.println("\n" + getFailedBanner("FINANCE"));
         }
     }
 }
