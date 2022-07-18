@@ -24,4 +24,6 @@ public interface MarkRepo extends JpaRepository<Mark, Long> {
     @Query("SELECT m FROM Mark m JOIN m.dateEntity d " +
             "WHERE m.habit = :habit ORDER BY d.value ASC ")
     List<Mark> getMarksOrderedByDate(@Param("habit") Habit habit);
+
+    long countByHabit(Habit habit);
 }

@@ -2,18 +2,20 @@ package com.katyshevtseva.kikiorg.core.sections.habits;
 
 import com.katyshevtseva.date.Period;
 import com.katyshevtseva.kikiorg.core.repo.HabitRepo;
+import com.katyshevtseva.kikiorg.core.repo.MarkRepo;
 import com.katyshevtseva.kikiorg.core.sections.habits.entity.Habit;
 import com.katyshevtseva.kikiorg.core.sections.habits.entity.StabilityCriterion;
+import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static com.katyshevtseva.date.DateUtils.TimeUnit.DAY;
 import static com.katyshevtseva.date.DateUtils.TimeUnit.MONTH;
-import static com.katyshevtseva.date.DateUtils.getDateRange;
-import static com.katyshevtseva.date.DateUtils.shiftDate;
+import static com.katyshevtseva.date.DateUtils.*;
 import static com.katyshevtseva.kikiorg.core.sections.habits.StabilityStatus.*;
 
 @Service
@@ -23,17 +25,46 @@ public class AnalysisService {
     private final Date threeMonthAgo = shiftDate(yesterday, MONTH, -3);
     private final HabitRepo habitRepo;
     private final HabitMarkService markService;
+    private final MarkRepo markRepo;
     private final StabilityCriterionService criterionService;
+    private final UninterruptedPeriodService upService;
 
-    public AnalysisResult analyzeStabilityAndAssignNewStatusIfNeeded(Habit habit) {
+    public List<AnalysisResult> analyzeStabilityAndAssignNewStatusIfNeeded(List<Habit> habits) {
+        habits = upService.orderByLengthOfCurrentUp(habits);
+        return habits.stream()
+                .map(habit -> {
+                    StabilityCriterion stabilityCriterion = criterionService.getCriterionByHabitOrNull(habit);
+                    AnalysisResult analysisResult = new AnalysisResult(habit, stabilityCriterion);
+                    analysisResult.setStabilityCalculations(getStabilityCalculationsAndAssignNewStatusIfNeeded(habit));
+                    analysisResult.setDoDoNotRelation(getDoDoNotRelation(habit));
+                    analysisResult.setUpInfo(getUpInfo(habit));
+                    return analysisResult;
+                })
+                .collect(Collectors.toList());
+    }
+
+    private String getUpInfo(Habit habit) {
+        Period mostLongUP = upService.getMostLongUpOrNull(habit);
+        return String.format("Current UP: %s\nMost long UP: %s",
+                upService.getLengthOfCurrentUp(habit),
+                mostLongUP != null ? getPeriodStringWithLengthIncludingBorders(mostLongUP) : "-");
+    }
+
+    private String getDoDoNotRelation(Habit habit) {
+        int allNum = getNumberOfDays(markService.getDateOfFirstDesc(habit), new Date());
+        int doNum = (int) markRepo.countByHabit(habit);
+        int doNotNum = allNum - doNum;
+        return String.format("Do/Don't = %d/%d = %.3f", doNum, doNotNum, (doNum * 1.0 / doNotNum));
+    }
+
+    private String getStabilityCalculationsAndAssignNewStatusIfNeeded(Habit habit) {
         List<Date> dates = getDateRange(new Period(threeMonthAgo, yesterday));
         StabilityCriterion criterion = criterionService.getCriterionByHabitOrNull(habit);
         int daysTotal = dates.size();
         int daysHabitDone = getDaysHabitDone(dates, habit);
 
         if (criterion == null) {
-            return new AnalysisResult(habit,
-                    String.format("%d/%d. Критерии не заданы", daysHabitDone, daysTotal));
+            return String.format("%d/%d. Критерии не заданы", daysHabitDone, daysTotal);
         }
 
         double actualRatio = (daysHabitDone * 1.0) / daysTotal;
@@ -42,9 +73,13 @@ public class AnalysisService {
 
         assignNewStatusIfNeeded(habit, isStable);
 
-        return new AnalysisResult(habit, String.format("НО: %d/%d = %.3f.\nМО: %d/%d = %.3f = %d/%d.",
-                daysHabitDone, daysTotal, actualRatio, criterion.getDaysHabitDone(), criterion.getDaysTotal(),
-                minimalRatio, (int) Math.ceil(minimalRatio * daysTotal), daysTotal));
+        return String.format("Наст: %d/%d = %.3f.\nМин: %d/%d = %.3f",
+                daysHabitDone,
+                daysTotal,
+                actualRatio,
+                (int) Math.ceil(minimalRatio * daysTotal),
+                daysTotal,
+                minimalRatio);
     }
 
     private void assignNewStatusIfNeeded(Habit habit, boolean isStable) {
@@ -68,25 +103,23 @@ public class AnalysisService {
         return daysHabitDone;
     }
 
-    public class AnalysisResult {
-        private Habit habit;
-        private String calculations;
+    @Data
+    @RequiredArgsConstructor
+    public static class AnalysisResult {
+        private final Habit habit;
+        private final StabilityCriterion criterion;
+        private String stabilityCalculations;
+        private String upInfo;
+        private String doDoNotRelation;
 
-        AnalysisResult(Habit habit, String calculations) {
-            this.habit = habit;
-            this.calculations = calculations;
-        }
-
-        public String getHabitTitle() {
-            return habit.getTitle();
-        }
-
-        public String getStatus() {
-            return habit.getStabilityStatus().toString();
-        }
-
-        public String getCalculations() {
-            return calculations;
+        public String getFullText() {
+            return habit.getTitle()
+                    + " " + habit.getStabilityStatus()
+                    + (criterion != null ? " " + criterion : "")
+                    + "\n" + stabilityCalculations
+                    + "\n" + upInfo
+                    + "\n" + doDoNotRelation
+                    + "\n\n";
         }
     }
 }

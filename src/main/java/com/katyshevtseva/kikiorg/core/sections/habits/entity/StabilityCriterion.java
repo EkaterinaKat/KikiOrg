@@ -18,4 +18,9 @@ public class StabilityCriterion {
     private int daysTotal;
 
     private int daysHabitDone;
+
+    @Override
+    public String toString() {
+        return String.format("%d/%d", daysHabitDone, daysTotal);
+    }
 }

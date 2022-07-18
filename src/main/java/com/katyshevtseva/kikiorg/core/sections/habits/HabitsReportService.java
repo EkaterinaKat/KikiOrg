@@ -24,7 +24,7 @@ public class HabitsReportService {
 
     public List<List<ReportCell>> getQuickReport() {
         return getReport(habitsService.getActiveHabits(),
-                new Period(shiftDate(new Date(), TimeUnit.DAY, -15), new Date()));
+                new Period(shiftDate(new Date(), TimeUnit.DAY, -19), new Date()));
     }
 
     public List<List<ReportCell>> getReport(List<Habit> habits, Period period) {

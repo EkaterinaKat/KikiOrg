@@ -3,6 +3,8 @@ package com.katyshevtseva.kikiorg.view.controller.habits;
 import com.katyshevtseva.fx.WindowBuilder.FxController;
 import com.katyshevtseva.fx.dialog.StandardDialogBuilder;
 import com.katyshevtseva.kikiorg.core.Core;
+import com.katyshevtseva.kikiorg.core.sections.habits.AnalysisService;
+import com.katyshevtseva.kikiorg.core.sections.habits.AnalysisService.AnalysisResult;
 import com.katyshevtseva.kikiorg.core.sections.habits.HabitMarkService;
 import com.katyshevtseva.kikiorg.core.sections.habits.HabitsService;
 import com.katyshevtseva.kikiorg.core.sections.habits.entity.Habit;
@@ -22,10 +24,13 @@ import java.util.List;
 import java.util.Map;
 
 import static com.katyshevtseva.fx.FxUtils.*;
+import static com.katyshevtseva.fx.Styler.ThingToColor.TEXT;
+import static com.katyshevtseva.fx.Styler.getColorfullStyle;
 
 class CheckListController implements FxController {
     private final HabitsService habitsService = Core.getInstance().habitsService();
     private final HabitMarkService habitMarkService = Core.getInstance().habitMarkService();
+    private final AnalysisService analysisService = Core.getInstance().analysisService();
     @FXML
     private DatePicker datePicker;
     @FXML
@@ -35,7 +40,7 @@ class CheckListController implements FxController {
     @FXML
     private Pane tablePane;
     @FXML
-    private Label statisticsLabel;
+    private VBox statisticsBox;
     private ReportTableController tableController;
     private Map<Habit, CheckBox> habitCheckBoxMap;
 
@@ -43,13 +48,12 @@ class CheckListController implements FxController {
     private void initialize() {
         tableController = new ReportTableController();
         tablePane.getChildren().add(OrganizerWindowCreator.getInstance().getHabitsReportTableNode(tableController));
-        tableController.showReport(Core.getInstance().habitsReportService().getQuickReport());
+        updateSectionContent();
         saveButton.setOnAction(event -> save());
         associateButtonWithControls(saveButton, datePicker);
         datePicker.setValue(LocalDate.now());
         datePicker.setOnAction(event -> saveButton.setDisable(false));
         fillHabitsTable();
-        statisticsLabel.setText("statisticsLabel");
     }
 
     private void fillHabitsTable() {
@@ -78,6 +82,17 @@ class CheckListController implements FxController {
             }
         }
         saveButton.setDisable(true);
+        updateSectionContent();
+    }
+
+    private void updateSectionContent() {
         tableController.showReport(Core.getInstance().habitsReportService().getQuickReport());
+
+        statisticsBox.getChildren().clear();
+        for (AnalysisResult analysisResult : analysisService.analyzeStabilityAndAssignNewStatusIfNeeded(habitsService.getActiveHabits())) {
+            Label label = new Label(analysisResult.getFullText());
+            label.setStyle(getColorfullStyle(TEXT, analysisResult.getHabit().getStabilityStatus().getColor()));
+            statisticsBox.getChildren().add(label);
+        }
     }
 }
