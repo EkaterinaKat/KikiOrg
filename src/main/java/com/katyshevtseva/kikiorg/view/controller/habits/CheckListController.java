@@ -34,6 +34,8 @@ class CheckListController implements FxController {
     private Button saveButton;
     @FXML
     private Pane tablePane;
+    @FXML
+    private Label statisticsLabel;
     private ReportTableController tableController;
     private Map<Habit, CheckBox> habitCheckBoxMap;
 
@@ -47,6 +49,7 @@ class CheckListController implements FxController {
         datePicker.setValue(LocalDate.now());
         datePicker.setOnAction(event -> saveButton.setDisable(false));
         fillHabitsTable();
+        statisticsLabel.setText("statisticsLabel");
     }
 
     private void fillHabitsTable() {

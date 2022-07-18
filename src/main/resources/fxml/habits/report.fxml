@@ -22,5 +22,7 @@
 
     <Pane minWidth="25" maxWidth="25"/>
 
-    <Pane fx:id="tablePane"/>
+    <ScrollPane maxWidth="800" minWidth="800" maxHeight="820" minHeight="820">
+        <Pane fx:id="tablePane"/>
+    </ScrollPane>
 </HBox>

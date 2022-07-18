@@ -18,8 +18,6 @@ public class MainHabitsController extends AbstractSwitchController implements Fx
     @FXML
     private Button reportButton;
     @FXML
-    private Button analysisButton;
-    @FXML
     private Button criterionButton;
     @FXML
     private Pane mainPane;
@@ -27,23 +25,20 @@ public class MainHabitsController extends AbstractSwitchController implements Fx
     private Node adminNode;
     private Node checkListNode;
     private Node reportNode;
-    private Node analysisNode;
     private Node criterionNode;
 
     private final AdminController adminController = new AdminController();
     private final CheckListController checkListController = new CheckListController();
     private final ReportController reportController = new ReportController();
-    private final AnalysisController analysisController = new AnalysisController();
     private final CriterionController criterionController = new CriterionController();
 
     @FXML
     private void initialize() {
         pane = mainPane;
-        buttons.addAll(Arrays.asList(checkListButton, adminButton, reportButton, analysisButton, criterionButton));
+        buttons.addAll(Arrays.asList(checkListButton, adminButton, reportButton, criterionButton));
         checkListButton.setOnAction(event -> checkListButtonListener());
         adminButton.setOnAction(event -> adminButtonListener());
         reportButton.setOnAction(event -> reportButtonListener());
-        analysisButton.setOnAction(event -> analysisButtonListener());
         criterionButton.setOnAction(event -> criterionButtonListener());
         checkListButtonListener();
     }
@@ -58,10 +53,6 @@ public class MainHabitsController extends AbstractSwitchController implements Fx
 
     private void reportButtonListener() {
         activateMode(reportButton, reportNode, OrganizerWindowCreator.getInstance()::getHabitsReportNode, reportController);
-    }
-
-    private void analysisButtonListener() {
-        activateMode(analysisButton, analysisNode, OrganizerWindowCreator.getInstance()::getHabitsAnalysisNode, analysisController);
     }
 
     private void criterionButtonListener() {

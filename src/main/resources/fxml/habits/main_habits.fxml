@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.*?>
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.layout.*?>
 <?import java.net.URL?>
 <BorderPane xmlns="http://javafx.com/javafx"
@@ -20,8 +20,6 @@
                 <Button fx:id="adminButton" text="Admin"/>
                 <Pane minWidth="30" maxWidth="30"/>
                 <Button fx:id="reportButton" text="Report"/>
-                <Pane minWidth="30" maxWidth="30"/>
-                <Button fx:id="analysisButton" text="Analysis"/>
                 <Pane minWidth="30" maxWidth="30"/>
                 <Button fx:id="criterionButton" text="Criterion"/>
             </HBox>

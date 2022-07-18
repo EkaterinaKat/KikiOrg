@@ -24,17 +24,6 @@ public class AnalysisService {
     private final HabitRepo habitRepo;
     private final HabitMarkService markService;
     private final StabilityCriterionService criterionService;
-    private final HabitsService habitsService;
-
-    public String simpleAnalyze(Habit habit, Period period) {
-        List<Date> dates = getDateRange(period);
-        int daysHabitDone = 0;
-        for (Date date : dates) {
-            if (markService.getMarkOrNull(habit, date) != null)
-                daysHabitDone++;
-        }
-        return String.format("%s: %d/%d", habit.getTitle(), daysHabitDone, dates.size());
-    }
 
     public AnalysisResult analyzeStabilityAndAssignNewStatusIfNeeded(Habit habit) {
         List<Date> dates = getDateRange(new Period(threeMonthAgo, yesterday));

@@ -1,13 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
 <HBox xmlns="http://javafx.com/javafx"
       xmlns:fx="http://javafx.com/fxml">
 
-    <ScrollPane maxWidth="800" minWidth="800" maxHeight="820" minHeight="820">
-        <GridPane fx:id="reportTable" alignment="CENTER" hgap="1" vgap="1" gridLinesVisible="true"/>
-    </ScrollPane>
+    <GridPane fx:id="reportTable" alignment="CENTER" hgap="1" vgap="1" gridLinesVisible="true"/>
 
 </HBox>

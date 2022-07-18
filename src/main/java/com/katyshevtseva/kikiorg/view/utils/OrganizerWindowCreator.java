@@ -148,10 +148,6 @@ public class OrganizerWindowCreator {
         return new WindowBuilder(HABITS_FXML_LOCATION + "report_table.fxml").setController(controller).getNode();
     }
 
-    public Node getHabitsAnalysisNode(FxController controller) {
-        return new WindowBuilder(HABITS_FXML_LOCATION + "analysis.fxml").setController(controller).getNode();
-    }
-
     public Node getHabitsCriterionNode(FxController controller) {
         return new WindowBuilder(HABITS_FXML_LOCATION + "criterion.fxml").setController(controller).getNode();
     }
