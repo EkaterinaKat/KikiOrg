@@ -61,7 +61,7 @@ public class HabitMarkService {
 
     // Без модификатора public екзешник не работает
     public Date getFirstHabitMarkDateOrNull(Habit habit) {
-        Page<Mark> page = markRepo.getOrderedByDateMarks(habit, PageRequest.of(0, 1));
+        Page<Mark> page = markRepo.getMarksOrderedByDate(habit, PageRequest.of(0, 1));
         if (page.getTotalElements() == 0)
             return null;
         return page.getContent().get(0).getDateEntity().getValue();

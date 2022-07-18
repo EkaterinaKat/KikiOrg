@@ -59,13 +59,13 @@ public class HabitsService {
     public List<Habit> getAllHabits() {
         return habitRepo.findAll().stream()
                 .sorted(nullsLast(comparing(Habit::isActive).reversed()
-                        .thenComparing(habitMarkService::getFirstHabitMarkDateOrNull, nullsLast(naturalOrder()))))
+                        .thenComparing(Habit::getTitle)))
                 .collect(Collectors.toList());
     }
 
     public List<Habit> getActiveHabits() {
         return habitRepo.findByActiveTrue().stream()
-                .sorted(nullsLast(comparing(habitMarkService::getFirstHabitMarkDateOrNull, nullsLast(naturalOrder()))))
+                .sorted(comparing(Habit::getTitle))
                 .collect(Collectors.toList());
     }
 

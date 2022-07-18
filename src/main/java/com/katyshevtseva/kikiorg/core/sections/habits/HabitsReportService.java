@@ -2,11 +2,10 @@ package com.katyshevtseva.kikiorg.core.sections.habits;
 
 
 import com.katyshevtseva.date.Period;
-import com.katyshevtseva.kikiorg.core.date.DateService;
 import com.katyshevtseva.kikiorg.core.report.ReportCell;
 import com.katyshevtseva.kikiorg.core.sections.habits.entity.Habit;
 import com.katyshevtseva.kikiorg.core.sections.habits.entity.Mark;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -17,13 +16,11 @@ import java.util.List;
 import static com.katyshevtseva.date.DateUtils.*;
 
 @Service
+@RequiredArgsConstructor
 public class HabitsReportService {
-    @Autowired
-    private HabitsService habitsService;
-    @Autowired
-    private HabitMarkService habitMarkService;
-    @Autowired
-    private DateService dateService;
+    private final HabitsService habitsService;
+    private final HabitMarkService habitMarkService;
+    private final UninterruptedPeriodService upService;
 
     public List<List<ReportCell>> getQuickReport() {
         return getReport(habitsService.getActiveHabits(),
@@ -31,6 +28,7 @@ public class HabitsReportService {
     }
 
     public List<List<ReportCell>> getReport(List<Habit> habits, Period period) {
+        habits = upService.orderByLengthOfCurrentUp(habits);
         List<List<ReportCell>> result = new ArrayList<>();
         result.add(getReportHead(habits));
         List<Date> dates = getDateRange(period);

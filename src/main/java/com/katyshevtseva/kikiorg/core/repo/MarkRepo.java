@@ -9,6 +9,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface MarkRepo extends JpaRepository<Mark, Long> {
@@ -18,5 +19,9 @@ public interface MarkRepo extends JpaRepository<Mark, Long> {
 
     @Query("SELECT m FROM Mark m JOIN m.dateEntity d " +
             "WHERE m.habit = :habit ORDER BY d.value ASC ")
-    Page<Mark> getOrderedByDateMarks(@Param("habit") Habit habit, Pageable pageable);
+    Page<Mark> getMarksOrderedByDate(@Param("habit") Habit habit, Pageable pageable);
+
+    @Query("SELECT m FROM Mark m JOIN m.dateEntity d " +
+            "WHERE m.habit = :habit ORDER BY d.value ASC ")
+    List<Mark> getMarksOrderedByDate(@Param("habit") Habit habit);
 }

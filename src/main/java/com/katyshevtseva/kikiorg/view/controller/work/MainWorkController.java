@@ -14,9 +14,9 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 
+import java.time.LocalDate;
 import java.util.List;
 
-import static com.katyshevtseva.date.DateCorrector.getProperDate;
 import static com.katyshevtseva.fx.FxUtils.*;
 
 public class MainWorkController implements FxController {
@@ -44,7 +44,7 @@ public class MainWorkController implements FxController {
         disableNonNumericChars(minutesTextField);
         rewriteButton.setOnAction(event -> rewriteButtonListener());
         sumUpButton.setOnAction(event -> sumUpButtonListener());
-        datePicker.setValue(new java.sql.Date(getProperDate().getTime()).toLocalDate());
+        datePicker.setValue(LocalDate.now());
         setComboBoxItems(areaComboBox, WorkArea.values());
         updateTable();
         autoCountController.setTableUpdateKnob(this::updateTable);
