@@ -60,7 +60,7 @@ public class HabitMarkService {
     }
 
     // Без модификатора public екзешник не работает
-    public Date getFirstHabitMarkDateOrNull(Habit habit) {
+    public Date getFirstMarkDateOrNull(Habit habit) {
         Page<Mark> page = markRepo.getMarksOrderedByDate(habit, PageRequest.of(0, 1));
         if (page.getTotalElements() == 0)
             return null;

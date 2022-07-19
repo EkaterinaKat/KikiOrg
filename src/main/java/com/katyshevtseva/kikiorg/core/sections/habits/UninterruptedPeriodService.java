@@ -2,6 +2,7 @@ package com.katyshevtseva.kikiorg.core.sections.habits;
 
 import com.katyshevtseva.date.DateUtils;
 import com.katyshevtseva.date.Period;
+import com.katyshevtseva.general.Cache;
 import com.katyshevtseva.kikiorg.core.repo.MarkRepo;
 import com.katyshevtseva.kikiorg.core.sections.habits.entity.Habit;
 import com.katyshevtseva.kikiorg.core.sections.habits.entity.Mark;
@@ -24,6 +25,7 @@ import static java.util.Comparator.comparing;
 @RequiredArgsConstructor
 public class UninterruptedPeriodService {
     private final MarkRepo markRepo;
+    private final Cache<Habit, List<Period>> upCache = new Cache<>(this::getAllUps);
 
     public List<Habit> orderByLengthOfCurrentUp(List<Habit> habits) {
         return habits.stream()
@@ -42,13 +44,13 @@ public class UninterruptedPeriodService {
     }
 
     public Period getMostLongUpOrNull(Habit habit) {
-        return getAllUps(habit).stream()
+        return upCache.getCachedValue(habit).stream()
                 .max(Comparator.comparing(DateUtils::getNumberOfDays))
                 .orElse(null);
     }
 
     private Period getPeriodEndedTodayOrYesterdayOrNull(Habit habit) {
-        List<Period> periodsEndedTodayOrYesterday = getAllUps(habit).stream()
+        List<Period> periodsEndedTodayOrYesterday = upCache.getCachedValue(habit).stream()
                 .filter(period -> (equalsIgnoreTime(period.end(), new Date())
                         || equalsIgnoreTime(period.end(), shiftDate(new Date(), DateUtils.TimeUnit.DAY, -1))))
                 .collect(Collectors.toList());

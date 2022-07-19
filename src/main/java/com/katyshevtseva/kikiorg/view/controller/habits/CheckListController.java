@@ -19,6 +19,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 
 import java.time.LocalDate;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -26,6 +27,7 @@ import java.util.Map;
 import static com.katyshevtseva.fx.FxUtils.*;
 import static com.katyshevtseva.fx.Styler.ThingToColor.TEXT;
 import static com.katyshevtseva.fx.Styler.getColorfullStyle;
+import static com.katyshevtseva.fx.Styler.getTextSizeStyle;
 
 class CheckListController implements FxController {
     private final HabitsService habitsService = Core.getInstance().habitsService();
@@ -91,7 +93,10 @@ class CheckListController implements FxController {
         statisticsBox.getChildren().clear();
         for (AnalysisResult analysisResult : analysisService.analyzeStabilityAndAssignNewStatusIfNeeded(habitsService.getActiveHabits())) {
             Label label = new Label(analysisResult.getFullText());
-            label.setStyle(getColorfullStyle(TEXT, analysisResult.getHabit().getStabilityStatus().getColor()));
+            if(analysisResult.getHabit().getStabilityStatus()!=null) {
+                label.setStyle(getColorfullStyle(TEXT, analysisResult.getHabit().getStabilityStatus().getColor()));
+            }
+            label.setStyle(label.getStyle()+getTextSizeStyle(13));
             statisticsBox.getChildren().add(label);
         }
     }

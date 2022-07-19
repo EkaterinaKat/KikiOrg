@@ -51,7 +51,13 @@ public class AnalysisService {
     }
 
     private String getDoDoNotRelation(Habit habit) {
-        int allNum = getNumberOfDays(markService.getDateOfFirstDesc(habit), new Date());
+        Date firstMarkDate = markService.getFirstMarkDateOrNull(habit);
+
+        if (firstMarkDate==null) {
+            return "Do/Don't -";
+        }
+
+        int allNum = getNumberOfDays(firstMarkDate, new Date());
         int doNum = (int) markRepo.countByHabit(habit);
         int doNotNum = allNum - doNum;
         return String.format("Do/Don't = %d/%d = %.3f", doNum, doNotNum, (doNum * 1.0 / doNotNum));
