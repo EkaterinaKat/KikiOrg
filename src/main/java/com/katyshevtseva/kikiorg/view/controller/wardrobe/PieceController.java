@@ -1,6 +1,7 @@
 package com.katyshevtseva.kikiorg.view.controller.wardrobe;
 
 import com.katyshevtseva.fx.FxUtils;
+import com.katyshevtseva.fx.ImageContainer;
 import com.katyshevtseva.fx.Size;
 import com.katyshevtseva.fx.WindowBuilder.FxController;
 import com.katyshevtseva.fx.component.ComponentBuilder;
@@ -28,6 +29,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static com.katyshevtseva.fx.ImageSizeUtil.placeImageInSquare;
+import static com.katyshevtseva.kikiorg.view.utils.ViewConstants.IMAGES_LOCATION;
 
 class PieceController implements FxController {
     private final WardrobeService service = Core.getInstance().wardrobeService();
@@ -145,5 +147,22 @@ class PieceController implements FxController {
 
         galleryController = component.getController();
         galleryPane.getChildren().add(component.getNode());
+        galleryController.setIconSupplier(this::satisfactionToImageView);
+    }
+
+    private ImageView satisfactionToImageView(ImageContainer imageContainer) {
+        String fileName = null;
+        switch (((ImageAndPieceContainer) imageContainer).getPiece().getSatisfaction()) {
+            case OK:
+                fileName = "ok.png";
+                break;
+            case NOT_OK:
+                fileName = "red_cross.png";
+                break;
+            case EXCELLENT:
+                fileName = "green_tick2.png";
+        }
+
+        return new ImageView(ImageCreator.getInstance().getImageContainer(fileName, IMAGES_LOCATION).getImage());
     }
 }

@@ -27,6 +27,10 @@ public class UninterruptedPeriodService {
     private final MarkRepo markRepo;
     private final Cache<Habit, List<Period>> upCache = new Cache<>(this::getAllUps);
 
+    public void clearCache() {
+        upCache.clear();
+    }
+
     public List<Habit> orderByLengthOfCurrentUp(List<Habit> habits) {
         return habits.stream()
                 .sorted(comparing(this::getLengthOfCurrentUp).reversed())
@@ -44,13 +48,13 @@ public class UninterruptedPeriodService {
     }
 
     public Period getMostLongUpOrNull(Habit habit) {
-        return upCache.getCachedValue(habit).stream()
+        return upCache.getValue(habit).stream()
                 .max(Comparator.comparing(DateUtils::getNumberOfDays))
                 .orElse(null);
     }
 
     private Period getPeriodEndedTodayOrYesterdayOrNull(Habit habit) {
-        List<Period> periodsEndedTodayOrYesterday = upCache.getCachedValue(habit).stream()
+        List<Period> periodsEndedTodayOrYesterday = upCache.getValue(habit).stream()
                 .filter(period -> (equalsIgnoreTime(period.end(), new Date())
                         || equalsIgnoreTime(period.end(), shiftDate(new Date(), DateUtils.TimeUnit.DAY, -1))))
                 .collect(Collectors.toList());

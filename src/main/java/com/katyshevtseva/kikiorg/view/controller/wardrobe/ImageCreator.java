@@ -25,7 +25,12 @@ class ImageCreator {
     }
 
     ImageContainer getImageContainer(String fileName) {
-        ImageContainer imageContainer = cache.get(fileName);
+        return getImageContainer(fileName, WARDROBE_IMAGES_LOCATION);
+    }
+
+    ImageContainer getImageContainer(String fileName, String location) {
+        String fullPath = location + fileName;
+        ImageContainer imageContainer = cache.get(fullPath);
 
         if (imageContainer != null) {
             return imageContainer;
@@ -34,15 +39,15 @@ class ImageCreator {
         imageContainer = new ImageContainer() {
             @Override
             public Image getImage() {
-                return FxImageCreationUtil.getImageByAbsolutePath(WARDROBE_IMAGES_LOCATION + fileName, 400.0, false);
+                return FxImageCreationUtil.getImageByAbsolutePath(fullPath, 400.0, false);
             }
 
             @Override
             public String getPath() {
-                return WARDROBE_IMAGES_LOCATION + fileName;
+                return fullPath;
             }
         };
-        cache.put(fileName, imageContainer);
+        cache.put(fullPath, imageContainer);
 
         return imageContainer;
     }

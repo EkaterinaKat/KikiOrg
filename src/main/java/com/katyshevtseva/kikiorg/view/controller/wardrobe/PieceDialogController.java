@@ -6,6 +6,7 @@ import com.katyshevtseva.general.OneArgKnob;
 import com.katyshevtseva.kikiorg.core.Core;
 import com.katyshevtseva.kikiorg.core.sections.wardrobe.entity.Piece;
 import com.katyshevtseva.kikiorg.core.sections.wardrobe.enums.ClothesSubtype;
+import com.katyshevtseva.kikiorg.core.sections.wardrobe.enums.Satisfaction;
 import com.katyshevtseva.kikiorg.view.controller.wardrobe.WrdImageUtils.ImageAndFileNameContainer;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
@@ -37,6 +38,8 @@ class PieceDialogController implements FxController {
     @FXML
     private ComboBox<ClothesSubtype> clothesTypeComboBox;
     @FXML
+    private ComboBox<Satisfaction> satisfactionComboBox;
+    @FXML
     private Button saveButton;
 
     PieceDialogController(Piece existing, OneArgKnob<Piece> onSaveListener) {
@@ -49,6 +52,7 @@ class PieceDialogController implements FxController {
         associateButtonWithControls(saveButton, clothesTypeComboBox, descTextArea);
         saveButton.setOnAction(event -> save());
         setComboBoxItems(clothesTypeComboBox, ClothesSubtype.getSortedByTitleValues());
+        setComboBoxItems(satisfactionComboBox, Satisfaction.values());
         showImage(new Image("images/piece_creation_plus.png"));
         setExistingPieceInfo();
     }
@@ -60,7 +64,8 @@ class PieceDialogController implements FxController {
                 selectedImage.getFileName(),
                 clothesTypeComboBox.getValue(),
                 getDate(startDatePicker),
-                getDate(endDatePicker));
+                getDate(endDatePicker),
+                satisfactionComboBox.getValue());
         onSaveListener.execute(saved);
         closeWindowThatContains(clothesTypeComboBox);
     }
@@ -91,6 +96,7 @@ class PieceDialogController implements FxController {
             setDate(endDatePicker, existing.getEndDate());
             startDatePicker.setDisable(true);
             endDatePicker.setDisable(true);
+            satisfactionComboBox.setValue(existing.getSatisfaction());
         }
     }
 }

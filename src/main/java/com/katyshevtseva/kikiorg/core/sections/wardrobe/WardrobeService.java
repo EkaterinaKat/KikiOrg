@@ -12,6 +12,7 @@ import com.katyshevtseva.kikiorg.core.sections.wardrobe.entity.Outfit;
 import com.katyshevtseva.kikiorg.core.sections.wardrobe.entity.Piece;
 import com.katyshevtseva.kikiorg.core.sections.wardrobe.enums.ClothesSubtype;
 import com.katyshevtseva.kikiorg.core.sections.wardrobe.enums.Purpose;
+import com.katyshevtseva.kikiorg.core.sections.wardrobe.enums.Satisfaction;
 import com.katyshevtseva.kikiorg.core.sections.wardrobe.enums.Season;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
@@ -94,7 +95,8 @@ public class WardrobeService {
                            String imageFileName,
                            ClothesSubtype type,
                            Date start,
-                           Date end) {
+                           Date end,
+                           Satisfaction satisfaction) {
 
         if (existing == null)
             existing = new Piece();
@@ -103,6 +105,7 @@ public class WardrobeService {
         existing.setStartDate(dateService.createIfNotExistAndGetDateEntity(start));
         existing.setEndDate(dateService.createIfNotExistAndGetDateEntity(end));
         existing.setType(type);
+        existing.setSatisfaction(satisfaction);
 
         return pieceRepo.save(existing);
     }

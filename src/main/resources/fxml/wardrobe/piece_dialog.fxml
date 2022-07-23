@@ -25,6 +25,8 @@
             <Pane prefHeight="20"/>
             <ComboBox fx:id="clothesTypeComboBox"/>
             <Pane prefHeight="20"/>
+            <ComboBox fx:id="satisfactionComboBox"/>
+            <Pane prefHeight="20"/>
             <Button text="Save" fx:id="saveButton"/>
         </VBox>
 
