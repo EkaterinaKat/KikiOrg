@@ -29,6 +29,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static com.katyshevtseva.fx.ImageSizeUtil.placeImageInSquare;
+import static com.katyshevtseva.kikiorg.view.utils.ViewConstants.CLOTHES_TYPE_SELECT_DIALOG_SIZE;
 import static com.katyshevtseva.kikiorg.view.utils.ViewConstants.IMAGES_LOCATION;
 
 class PieceController implements FxController {
@@ -79,12 +80,15 @@ class PieceController implements FxController {
     }
 
     private void adjustTypeLabel() {
-        typeLabel.setOnMouseClicked(event -> OrganizerWindowCreator.getInstance().openTypeSelectDialog(
-                new TypeSelectDialogController(type -> {
-                    clothesType = type;
-                    typeLabel.setText(type.getTitle());
-                    paginationPaneController.loadPage();
-                })));
+        typeLabel.setOnMouseClicked(event -> new StandardDialogBuilder()
+                .setSize(CLOTHES_TYPE_SELECT_DIALOG_SIZE)
+                .setTitle("Select type")
+                .openContainerDialog(
+                        new TypeSelectDialogController(type -> {
+                            clothesType = type;
+                            typeLabel.setText(type.getTitle());
+                            paginationPaneController.loadPage();
+                        })));
     }
 
     private void tunePagination() {

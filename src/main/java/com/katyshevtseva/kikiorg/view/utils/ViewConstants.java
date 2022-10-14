@@ -1,5 +1,7 @@
 package com.katyshevtseva.kikiorg.view.utils;
 
+import com.katyshevtseva.fx.Size;
+
 public class ViewConstants {
     private ViewConstants() {
     }
@@ -11,14 +13,12 @@ public class ViewConstants {
     static final String FINANCE_FXML_LOCATION = "/fxml/finance/";
     static final String HABITS_FXML_LOCATION = "/fxml/habits/";
     static final String WARDROBE_FXML_LOCATION = "/fxml/wardrobe/";
-    static final String WORK_FXML_LOCATION = "/fxml/work/";
     static final String TRACKER_FXML_LOCATION = "/fxml/tracker/";
-    static final String STRUCTURE_FXML_LOCATION = "/fxml/structure/";
 
     static final int WINDOW_HEIGHT = 1000;
     static final int WINDOW_WIDTH = 1500;
-    static final int ITEM_SELECT_DIALOG_WIDTH = 700;
-    static final int ITEM_SELECT_DIALOG_HEIGHT = 800;
+    public static final Size ITEM_SELECT_DIALOG_SIZE = new Size(800, 700);
+    public static final Size CLOTHES_TYPE_SELECT_DIALOG_SIZE = new Size(550, 470);
     static final int BIG_DIALOG_WIDTH = 600;
     static final int BIG_DIALOG_HEIGHT = 600;
 }

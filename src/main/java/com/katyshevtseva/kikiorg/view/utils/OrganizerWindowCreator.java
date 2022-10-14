@@ -1,6 +1,5 @@
 package com.katyshevtseva.kikiorg.view.utils;
 
-import com.katyshevtseva.fx.Size;
 import com.katyshevtseva.fx.WindowBuilder;
 import com.katyshevtseva.fx.WindowBuilder.FxController;
 import com.katyshevtseva.kikiorg.core.CoreConstants;
@@ -25,41 +24,6 @@ public class OrganizerWindowCreator {
                 .setSize(WINDOW_HEIGHT, WINDOW_WIDTH)
                 .setTitle(CoreConstants.APP_NAME).
                 setOnWindowCloseEventHandler(event -> System.exit(0)).showWindow();
-    }
-
-    /* ----------------------------------  Структура ---------------------------------------------- */
-
-    public Node getMainStructureNode(FxController controller) {
-        return new WindowBuilder(STRUCTURE_FXML_LOCATION + "main_structure.fxml").setController(controller).getNode();
-    }
-
-    public Node getStructureBoardNode(FxController controller) {
-        return new WindowBuilder(STRUCTURE_FXML_LOCATION + "board.fxml").setController(controller).getNode();
-    }
-
-    public Node getCoursesNode(FxController controller) {
-        return new WindowBuilder(STRUCTURE_FXML_LOCATION + "courses.fxml").setController(controller).getNode();
-    }
-
-    public void openCourseEditDialog(FxController controller) {
-        new WindowBuilder(STRUCTURE_FXML_LOCATION + "course_dialog.fxml").setSize(new Size(560, 500))
-                .setController(controller).setTitle(CoreConstants.APP_NAME).showWindow();
-    }
-
-    public void openCourseViewDialog(FxController controller) {
-        new WindowBuilder(STRUCTURE_FXML_LOCATION + "course.fxml")
-                .setSize(WINDOW_HEIGHT, WINDOW_WIDTH)
-                .setController(controller).setTitle(CoreConstants.APP_NAME).showWindow();
-    }
-
-    public Node getTargetPaneNode(FxController controller) {
-        return new WindowBuilder(STRUCTURE_FXML_LOCATION + "target_pane.fxml").setController(controller).getNode();
-    }
-
-    /* ---------------------------------- Работа ---------------------------------------------- */
-
-    public Node getMainWorkNode(FxController controller) {
-        return new WindowBuilder(WORK_FXML_LOCATION + "main_work.fxml").setController(controller).getNode();
     }
 
     /* ---------------------------------- Трекер ---------------------------------------------- */
@@ -116,14 +80,6 @@ public class OrganizerWindowCreator {
     public void openOutfitDialog(FxController controller) {
         new WindowBuilder(WARDROBE_FXML_LOCATION + "outfit_dialog.fxml").
                 setController(controller).setHeight(1000).setWidth(1200).setTitle(CoreConstants.APP_NAME).showWindow();
-    }
-
-    public void openTypeSelectDialog(FxController controller) {
-        new WindowBuilder(FXML_LOCATION + "container.fxml")
-                .setController(controller)
-                .setSize(new Size(550, 470))
-                .setTitle("Select type")
-                .showWindow();
     }
 
     /* ----------------------------------  Привычки ---------------------------------------------- */
@@ -216,11 +172,5 @@ public class OrganizerWindowCreator {
 
     public Node getLedgerNode(FxController controller) {
         return new WindowBuilder(FINANCE_FXML_LOCATION + "ledger.fxml").setController(controller).getNode();
-    }
-
-    public void openItemSelectDialog(FxController controller) {
-        new WindowBuilder(FINANCE_FXML_LOCATION + "item_select_dialog.fxml").
-                setController(controller).setHeight(ITEM_SELECT_DIALOG_HEIGHT).
-                setWidth(ITEM_SELECT_DIALOG_WIDTH).setTitle("Select item").showWindow();
     }
 }

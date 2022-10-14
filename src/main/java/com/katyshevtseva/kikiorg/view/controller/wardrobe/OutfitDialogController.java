@@ -2,13 +2,13 @@ package com.katyshevtseva.kikiorg.view.controller.wardrobe;
 
 import com.katyshevtceva.collage.logic.Collage;
 import com.katyshevtseva.fx.WindowBuilder.FxController;
+import com.katyshevtseva.fx.dialog.StandardDialogBuilder;
 import com.katyshevtseva.general.OneArgKnob;
 import com.katyshevtseva.kikiorg.core.Core;
 import com.katyshevtseva.kikiorg.core.sections.wardrobe.WardrobeService;
 import com.katyshevtseva.kikiorg.core.sections.wardrobe.entity.Outfit;
 import com.katyshevtseva.kikiorg.core.sections.wardrobe.enums.Purpose;
 import com.katyshevtseva.kikiorg.core.sections.wardrobe.enums.Season;
-import com.katyshevtseva.kikiorg.view.utils.OrganizerWindowCreator;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
@@ -25,6 +25,7 @@ import static com.katyshevtseva.fx.FxUtils.closeWindowThatContains;
 import static com.katyshevtseva.fx.FxUtils.getPaneWithHeight;
 import static com.katyshevtseva.kikiorg.view.controller.wardrobe.CollageUtils.*;
 import static com.katyshevtseva.kikiorg.view.controller.wardrobe.WrdImageUtils.toCollageImages;
+import static com.katyshevtseva.kikiorg.view.utils.ViewConstants.CLOTHES_TYPE_SELECT_DIALOG_SIZE;
 
 class OutfitDialogController implements FxController {
     private final WardrobeService service = Core.getInstance().wardrobeService();
@@ -89,8 +90,10 @@ class OutfitDialogController implements FxController {
     }
 
     private void openPieceTypeSelectDialog() {
-        OrganizerWindowCreator.getInstance().openTypeSelectDialog(
-                new TypeSelectDialogController(type ->
+        new StandardDialogBuilder()
+                .setSize(CLOTHES_TYPE_SELECT_DIALOG_SIZE)
+                .setTitle("Select type")
+                .openContainerDialog(new TypeSelectDialogController(type ->
                         collage.openImageToAddSelectionDialog(toCollageImages(service.getPiecesToAddToOutfit(type)))));
     }
 

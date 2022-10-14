@@ -1,11 +1,11 @@
 package com.katyshevtseva.kikiorg.view.controller.finance;
 
 import com.katyshevtseva.fx.WindowBuilder.FxController;
+import com.katyshevtseva.fx.dialog.StandardDialogBuilder;
 import com.katyshevtseva.general.NoArgsKnob;
 import com.katyshevtseva.kikiorg.core.Core;
 import com.katyshevtseva.kikiorg.core.sections.finance.entity.Account;
 import com.katyshevtseva.kikiorg.core.sections.finance.entity.Item;
-import com.katyshevtseva.kikiorg.view.utils.OrganizerWindowCreator;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -17,6 +17,7 @@ import javafx.scene.control.TextField;
 import java.time.LocalDate;
 
 import static com.katyshevtseva.fx.FxUtils.*;
+import static com.katyshevtseva.kikiorg.view.utils.ViewConstants.ITEM_SELECT_DIALOG_SIZE;
 
 class ExpenseController implements FxController {
     private final NoArgsKnob operationListener;
@@ -57,7 +58,10 @@ class ExpenseController implements FxController {
 
         itemComboBox.setOnAction(event -> {
             if (itemComboBox.getValue() == more) {
-                OrganizerWindowCreator.getInstance().openItemSelectDialog(itemSelectDialogController);
+                new StandardDialogBuilder()
+                        .setSize(ITEM_SELECT_DIALOG_SIZE)
+                        .setTitle("Select item")
+                        .openContainerDialog(itemSelectDialogController);
             }
         });
     }
