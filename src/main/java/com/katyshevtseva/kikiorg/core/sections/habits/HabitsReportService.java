@@ -1,7 +1,7 @@
 package com.katyshevtseva.kikiorg.core.sections.habits;
 
-
 import com.katyshevtseva.date.Period;
+import com.katyshevtseva.fx.Styler;
 import com.katyshevtseva.kikiorg.core.report.ReportCell;
 import com.katyshevtseva.kikiorg.core.sections.habits.entity.Habit;
 import com.katyshevtseva.kikiorg.core.sections.habits.entity.Mark;
@@ -41,7 +41,7 @@ public class HabitsReportService {
 
     private List<ReportCell> getReportLine(Date date, List<Habit> habits) {
         List<ReportCell> result = new ArrayList<>();
-        result.add(ReportCell.filled(READABLE_DATE_FORMAT.format(date), ReportCell.Color.WHITE, 100));
+        result.add(ReportCell.filled(READABLE_DATE_FORMAT.format(date), Styler.StandardColor.WHITE, 100));
         for (Habit habit : habits) {
             result.add(convertToCell(habit, date));
         }
@@ -52,7 +52,7 @@ public class HabitsReportService {
         Mark mark = habitMarkService.getMarkOrNull(habit, date);
         if (mark == null)
             return ReportCell.empty();
-        return ReportCell.filled("", ReportCell.Color.GREEN);
+        return ReportCell.filled("", Styler.StandardColor.GREEN);
     }
 
     private List<ReportCell> getReportHead(List<Habit> habits) {

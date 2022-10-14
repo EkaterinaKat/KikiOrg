@@ -1,5 +1,6 @@
 package com.katyshevtseva.kikiorg.core.sections.wardrobe;
 
+import com.katyshevtseva.fx.Styler.StandardColor;
 import com.katyshevtseva.kikiorg.core.repo.OutfitRepo;
 import com.katyshevtseva.kikiorg.core.repo.PieceRepo;
 import com.katyshevtseva.kikiorg.core.report.ReportCell;
@@ -28,10 +29,10 @@ public class WardrobeStatisticsService {
         for (int i = 0; i < Purpose.values().length; i++) {
             Purpose purpose = Purpose.values()[i];
             List<ReportCell> line = new ArrayList<>();
-            line.add(ReportCell.filled(purpose.toString(), ReportCell.Color.WHITE, 200));
+            line.add(ReportCell.filled(purpose.toString(), StandardColor.WHITE, 200));
             for (Season season : Season.values()) {
                 int count = getCount(season, purpose);
-                line.add(ReportCell.filled("" + count, count == 0 ? ReportCell.Color.WHITE : ReportCell.Color.SLATE_BLUE));
+                line.add(ReportCell.filled("" + count, count == 0 ? StandardColor.WHITE : StandardColor.BLUE));
             }
             report.add(line);
         }

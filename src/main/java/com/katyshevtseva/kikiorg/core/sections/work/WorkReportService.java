@@ -1,6 +1,7 @@
 package com.katyshevtseva.kikiorg.core.sections.work;
 
 import com.katyshevtseva.date.Period;
+import com.katyshevtseva.fx.Styler.StandardColor;
 import com.katyshevtseva.kikiorg.core.report.ReportCell;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -12,7 +13,6 @@ import java.util.List;
 
 import static com.katyshevtseva.date.DateUtils.READABLE_DATE_FORMAT;
 import static com.katyshevtseva.date.DateUtils.getDateRange;
-import static com.katyshevtseva.kikiorg.core.report.ReportCell.Color.SLATE_BLUE;
 
 @Service
 public class WorkReportService {
@@ -42,7 +42,7 @@ public class WorkReportService {
 
     private List<ReportCell> getReportLine(Date date) {
         List<ReportCell> result = new ArrayList<>();
-        result.add(ReportCell.filled(READABLE_DATE_FORMAT.format(date), ReportCell.Color.WHITE, 100));
+        result.add(ReportCell.filled(READABLE_DATE_FORMAT.format(date), StandardColor.WHITE, 100));
         for (WorkArea workArea : WorkArea.values()) {
             result.add(convertToCell(workArea, date));
         }
@@ -54,7 +54,7 @@ public class WorkReportService {
         WorkLog workLog = workService.getWorkLogOrNull(workArea, date);
         if (workLog == null)
             return ReportCell.empty();
-        return ReportCell.filled("" + workLog.getMinutes(), ReportCell.Color.GREEN);
+        return ReportCell.filled("" + workLog.getMinutes(), StandardColor.GREEN);
     }
 
     private ReportCell getTotalCellByDate(Date date) {
@@ -66,7 +66,7 @@ public class WorkReportService {
         }
         if (totalMinutes > 0) {
             double totalHours = totalMinutes / 60.0;
-            return ReportCell.filled(String.format("%.2f", totalHours), SLATE_BLUE);
+            return ReportCell.filled(String.format("%.2f", totalHours), StandardColor.BLUE);
         }
         return ReportCell.empty();
     }

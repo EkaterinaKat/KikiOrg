@@ -1,5 +1,6 @@
 package com.katyshevtseva.kikiorg.core.sections.finance.report;
 
+import com.katyshevtseva.fx.Styler;
 import com.katyshevtseva.general.PieChartData;
 import com.katyshevtseva.kikiorg.core.report.ReportCell;
 import com.katyshevtseva.kikiorg.core.sections.finance.entity.ItemGroup;
@@ -67,16 +68,16 @@ public class FinanceReport {
         table = new ArrayList<>();
 
         List<ReportCell> headline = new ArrayList<>();
-        headline.add(ReportCell.filled("Total", ReportCell.Color.WHITE, 180));
-        headline.add(ReportCell.filled(getTotal() + "", ReportCell.Color.WHITE, 100));
-        headline.add(ReportCell.filled("100%", ReportCell.Color.WHITE, 100));
+        headline.add(ReportCell.filled("Total", Styler.StandardColor.WHITE, 180));
+        headline.add(ReportCell.filled(getTotal() + "", Styler.StandardColor.WHITE, 100));
+        headline.add(ReportCell.filled("100%", Styler.StandardColor.WHITE, 100));
         table.add(headline);
 
         for (PieChartData.Segment segment : pieChartData.getGetSegmentList()) {
             List<ReportCell> line = new ArrayList<>();
-            line.add(ReportCell.filled(segment.getTitle(), ReportCell.Color.WHITE, 180));
-            line.add(ReportCell.filled(segment.getAmount() + "", ReportCell.Color.WHITE, 100));
-            line.add(ReportCell.filled(segment.getPercent() + "%", ReportCell.Color.WHITE, 100));
+            line.add(ReportCell.filled(segment.getTitle(), Styler.StandardColor.WHITE, 180));
+            line.add(ReportCell.filled(segment.getAmount() + "", Styler.StandardColor.WHITE, 100));
+            line.add(ReportCell.filled(segment.getPercent() + "%", Styler.StandardColor.WHITE, 100));
             table.add(line);
         }
     }
