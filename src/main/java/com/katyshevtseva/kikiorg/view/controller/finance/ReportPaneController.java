@@ -1,9 +1,9 @@
 package com.katyshevtseva.kikiorg.view.controller.finance;
 
 import com.katyshevtseva.fx.PieChartUtil;
+import com.katyshevtseva.fx.ReportUtils;
 import com.katyshevtseva.fx.WindowBuilder;
 import com.katyshevtseva.kikiorg.core.sections.finance.report.FinanceReport;
-import com.katyshevtseva.kikiorg.view.utils.ReportUtils;
 import javafx.fxml.FXML;
 import javafx.scene.chart.PieChart;
 import javafx.scene.control.Label;

@@ -2,7 +2,7 @@ package com.katyshevtseva.kikiorg.core.sections.finance.report;
 
 import com.katyshevtseva.fx.Styler;
 import com.katyshevtseva.general.PieChartData;
-import com.katyshevtseva.kikiorg.core.report.ReportCell;
+import com.katyshevtseva.general.ReportCell;
 import com.katyshevtseva.kikiorg.core.sections.finance.entity.ItemGroup;
 
 import java.util.ArrayList;

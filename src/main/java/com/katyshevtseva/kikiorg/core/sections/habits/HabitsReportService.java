@@ -2,7 +2,7 @@ package com.katyshevtseva.kikiorg.core.sections.habits;
 
 import com.katyshevtseva.date.Period;
 import com.katyshevtseva.fx.Styler;
-import com.katyshevtseva.kikiorg.core.report.ReportCell;
+import com.katyshevtseva.general.ReportCell;
 import com.katyshevtseva.kikiorg.core.sections.habits.entity.Habit;
 import com.katyshevtseva.kikiorg.core.sections.habits.entity.Mark;
 import lombok.RequiredArgsConstructor;

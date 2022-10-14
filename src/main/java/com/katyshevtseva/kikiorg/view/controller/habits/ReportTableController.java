@@ -1,8 +1,8 @@
 package com.katyshevtseva.kikiorg.view.controller.habits;
 
+import com.katyshevtseva.fx.ReportUtils;
 import com.katyshevtseva.fx.WindowBuilder.FxController;
-import com.katyshevtseva.kikiorg.core.report.ReportCell;
-import com.katyshevtseva.kikiorg.view.utils.ReportUtils;
+import com.katyshevtseva.general.ReportCell;
 import javafx.fxml.FXML;
 import javafx.scene.layout.GridPane;
 

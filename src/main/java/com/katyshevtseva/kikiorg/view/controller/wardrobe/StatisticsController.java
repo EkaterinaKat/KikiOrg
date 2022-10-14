@@ -1,9 +1,9 @@
 package com.katyshevtseva.kikiorg.view.controller.wardrobe;
 
+import com.katyshevtseva.fx.ReportUtils;
 import com.katyshevtseva.fx.WindowBuilder.FxController;
 import com.katyshevtseva.kikiorg.core.Core;
 import com.katyshevtseva.kikiorg.core.sections.wardrobe.WardrobeStatisticsService;
-import com.katyshevtseva.kikiorg.view.utils.ReportUtils;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
