@@ -5,16 +5,10 @@ import com.katyshevtseva.kikiorg.core.sections.finance.report.FinanceReportServi
 import com.katyshevtseva.kikiorg.core.sections.finance.report.ReportPeriodService;
 import com.katyshevtseva.kikiorg.core.sections.finance.search.FinanceSearchService;
 import com.katyshevtseva.kikiorg.core.sections.habits.*;
-import com.katyshevtseva.kikiorg.core.sections.structure.*;
-import com.katyshevtseva.kikiorg.core.sections.structure.entity.CourseOfAction;
-import com.katyshevtseva.kikiorg.core.sections.structure.repo.TargetGroupRepo;
-import com.katyshevtseva.kikiorg.core.sections.structure.repo.TargetRepo;
 import com.katyshevtseva.kikiorg.core.sections.tracker.BoardSortService;
 import com.katyshevtseva.kikiorg.core.sections.tracker.TrackerService;
 import com.katyshevtseva.kikiorg.core.sections.wardrobe.WardrobeService;
 import com.katyshevtseva.kikiorg.core.sections.wardrobe.WardrobeStatisticsService;
-import com.katyshevtseva.kikiorg.core.sections.work.WorkReportService;
-import com.katyshevtseva.kikiorg.core.sections.work.WorkService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.stereotype.Service;
@@ -32,8 +26,6 @@ public class Core implements InitializingBean {
     private final WardrobeService wardrobeService;
     private final AnalysisService analysisService;
     private final StabilityCriterionService stabilityCriterionService;
-    private final WorkService workService;
-    private final WorkReportService workReportService;
     private final HuddleCheckService huddleCheckService;
     private final FinanceSearchService financeSearchService;
     private final TrackerService trackerService;
@@ -42,12 +34,6 @@ public class Core implements InitializingBean {
     private final FinanceReportService financeReportService;
     private final ReportPeriodService reportPeriodService;
     private final ItemHierarchyService itemHierarchyService;
-    private final CourseOfActionService courseOfActionService;
-    private final TargetGroupRepo targetGroupRepo;
-    private final TargetRepo targetRepo;
-    private final TargetService targetService;
-    private final TargetGroupService targetGroupService;
-    private final StructureHierarchyNodeService structureHierarchyNodeService;
     private final TransferService transferService;
 
     public static Core getInstance() {
@@ -62,32 +48,12 @@ public class Core implements InitializingBean {
     }
 
     @Override
-    public void afterPropertiesSet() throws Exception {
+    public void afterPropertiesSet() {
         INSTANCE = this;
     }
 
     public TransferService currencyService() {
         return transferService;
-    }
-
-    public StructureHierarchyNodeService structureHierarchyNodeService() {
-        return structureHierarchyNodeService;
-    }
-
-    public TargetGroupService targetGroupService() {
-        return targetGroupService;
-    }
-
-    public TargetService targetService() {
-        return targetService;
-    }
-
-    public CourseOfActionService courseOfActionService() {
-        return courseOfActionService;
-    }
-
-    public StructureHierarchyService structureHierarchyService(CourseOfAction courseOfAction) {
-        return new StructureHierarchyService(courseOfAction, targetGroupRepo, targetRepo);
     }
 
     public FinanceService financeService() {
@@ -124,14 +90,6 @@ public class Core implements InitializingBean {
 
     public StabilityCriterionService stabilityCriterionService() {
         return stabilityCriterionService;
-    }
-
-    public WorkService workService() {
-        return workService;
-    }
-
-    public WorkReportService workReportService() {
-        return workReportService;
     }
 
     public HuddleCheckService huddleCheckService() {
