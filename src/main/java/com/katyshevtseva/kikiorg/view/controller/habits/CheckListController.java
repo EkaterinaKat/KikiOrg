@@ -11,7 +11,6 @@ import com.katyshevtseva.kikiorg.core.sections.habits.entity.Habit;
 import com.katyshevtseva.kikiorg.view.utils.OrganizerWindowCreator;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
-import javafx.scene.control.CheckBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
@@ -20,9 +19,7 @@ import javafx.scene.layout.VBox;
 
 import java.time.LocalDate;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import static com.katyshevtseva.fx.FxUtils.*;
 import static com.katyshevtseva.fx.Styler.ThingToColor.TEXT;
@@ -38,53 +35,57 @@ class CheckListController implements FxController {
     @FXML
     private VBox habitsPane;
     @FXML
-    private Button saveButton;
-    @FXML
     private Pane tablePane;
     @FXML
     private VBox statisticsBox;
     private ReportTableController tableController;
-    private Map<Habit, CheckBox> habitCheckBoxMap;
 
     @FXML
     private void initialize() {
         tableController = new ReportTableController();
         tablePane.getChildren().add(OrganizerWindowCreator.getInstance().getHabitsReportTableNode(tableController));
         updateSectionContent();
-        saveButton.setOnAction(event -> save());
-        associateButtonWithControls(saveButton, datePicker);
         datePicker.setValue(LocalDate.now());
-        datePicker.setOnAction(event -> saveButton.setDisable(false));
+        datePicker.setOnAction(event -> fillHabitsTable());
         fillHabitsTable();
     }
 
     private void fillHabitsTable() {
         List<Habit> habits = habitsService.getActiveHabits();
-        habitCheckBoxMap = new HashMap<>();
+        habitsPane.getChildren().clear();
 
         for (Habit habit : habits) {
-            CheckBox checkBox = new CheckBox();
-            checkBox.setSelected(true);
-            habitCheckBoxMap.put(habit, checkBox);
+            boolean markExists = habitMarkService.getMarkOrNull(habit, getDate(datePicker)) != null;
 
-            HBox hBox = new HBox();
-            hBox.getChildren().addAll(checkBox, getPaneWithWidth(20), new Label(habit.getTitle()));
-            habitsPane.getChildren().addAll(hBox, getPaneWithHeight(20));
+            HBox buttons = new HBox();
 
+            Button doneButton = new Button("Done");
+            doneButton.setDisable(markExists);
+            doneButton.setOnAction(event -> {
+                saveAndHandleException(habit, getDate(datePicker), true);
+                fillHabitsTable();
+                updateSectionContent();
+            });
+
+            Button notDoneButton = new Button("Not done");
+            notDoneButton.setDisable(!markExists);
+            notDoneButton.setOnAction(event -> {
+                saveAndHandleException(habit, getDate(datePicker), false);
+                fillHabitsTable();
+                updateSectionContent();
+            });
+
+            buttons.getChildren().addAll(doneButton, getPaneWithWidth(7), notDoneButton);
+            habitsPane.getChildren().addAll(new Label(habit.getTitle()), buttons, getPaneWithHeight(20));
         }
     }
 
-    private void save() {
-        for (Map.Entry<Habit, CheckBox> entry : habitCheckBoxMap.entrySet()) {
-            try {
-                habitMarkService.saveMarkOrRewriteIfExists(
-                        entry.getKey(), java.sql.Date.valueOf(datePicker.getValue()), entry.getValue().isSelected());
-            } catch (Exception e) {
-                new StandardDialogBuilder().setSize(200, 400).openInfoDialog(e.getMessage());
-            }
+    private void saveAndHandleException(Habit habit, Date date, boolean markValue) {
+        try {
+            habitMarkService.saveMarkOrRewriteIfExists(habit, date, markValue);
+        } catch (Exception e) {
+            new StandardDialogBuilder().setSize(200, 400).openInfoDialog(e.getMessage());
         }
-        saveButton.setDisable(true);
-        updateSectionContent();
     }
 
     private void updateSectionContent() {
@@ -93,10 +94,10 @@ class CheckListController implements FxController {
         statisticsBox.getChildren().clear();
         for (AnalysisResult analysisResult : analysisService.analyzeStabilityAndAssignNewStatusIfNeeded(habitsService.getActiveHabits())) {
             Label label = new Label(analysisResult.getFullText());
-            if(analysisResult.getHabit().getStabilityStatus()!=null) {
+            if (analysisResult.getHabit().getStabilityStatus() != null) {
                 label.setStyle(getColorfullStyle(TEXT, analysisResult.getHabit().getStabilityStatus().getColor()));
             }
-            label.setStyle(label.getStyle()+getTextSizeStyle(13));
+            label.setStyle(label.getStyle() + getTextSizeStyle(13));
             statisticsBox.getChildren().add(label);
         }
     }
