@@ -21,7 +21,7 @@ public class OrganizerWindowCreator {
     public void openMainWindow(FxController controller) {
         new WindowBuilder(FXML_LOCATION + "main.fxml").
                 setController(controller)
-                .setSize(WINDOW_HEIGHT, WINDOW_WIDTH)
+                .setSize(WINDOW_SIZE)
                 .setTitle(CoreConstants.APP_NAME).
                 setOnWindowCloseEventHandler(event -> System.exit(0)).showWindow();
     }
@@ -42,12 +42,12 @@ public class OrganizerWindowCreator {
 
     public void openProjectDialog(FxController controller) {
         new WindowBuilder(TRACKER_FXML_LOCATION + "project_dialog.fxml").
-                setController(controller).setHeight(500).setWidth(480).setTitle(CoreConstants.APP_NAME).showWindow();
+                setController(controller).setSize(500, 480).setTitle(CoreConstants.APP_NAME).showWindow();
     }
 
     public void openTaskDialog(FxController controller) {
         new WindowBuilder(TRACKER_FXML_LOCATION + "task_dialog.fxml").
-                setController(controller).setHeight(500).setWidth(480).setTitle(CoreConstants.APP_NAME).showWindow();
+                setController(controller).setSize(500, 480).setTitle(CoreConstants.APP_NAME).showWindow();
     }
 
     public Node getTaskPaneNode(FxController controller) {
@@ -74,12 +74,12 @@ public class OrganizerWindowCreator {
 
     public void openPieceEditDialog(FxController controller) {
         new WindowBuilder(WARDROBE_FXML_LOCATION + "piece_dialog.fxml").
-                setController(controller).setHeight(700).setWidth(800).setTitle(CoreConstants.APP_NAME).showWindow();
+                setController(controller).setSize(700, 800).setTitle(CoreConstants.APP_NAME).showWindow();
     }
 
     public void openOutfitDialog(FxController controller) {
         new WindowBuilder(WARDROBE_FXML_LOCATION + "outfit_dialog.fxml").
-                setController(controller).setHeight(1000).setWidth(1200).setTitle(CoreConstants.APP_NAME).showWindow();
+                setController(controller).setSize(1000, 1200).setTitle(CoreConstants.APP_NAME).showWindow();
     }
 
     /* ----------------------------------  Привычки ---------------------------------------------- */
@@ -110,8 +110,8 @@ public class OrganizerWindowCreator {
 
     public void openHabitEditDialog(FxController controller) {
         new WindowBuilder(HABITS_FXML_LOCATION + "habit_dialog.fxml").
-                setController(controller).setHeight(BIG_DIALOG_HEIGHT).
-                setWidth(BIG_DIALOG_WIDTH).setTitle(CoreConstants.APP_NAME).showWindow();
+                setController(controller).setSize(BIG_DIALOG_SIZE)
+                .setTitle(CoreConstants.APP_NAME).showWindow();
     }
 
     /* ----------------------------------  Финансы  ---------------------------------------------- */
@@ -162,8 +162,8 @@ public class OrganizerWindowCreator {
 
     public void openFinanceReportDialog(FxController controller) {
         new WindowBuilder(FINANCE_FXML_LOCATION + "full_report.fxml")
-                .setController(controller).setHeight(WINDOW_HEIGHT).
-                setWidth(WINDOW_WIDTH).setTitle("Finance report").showWindow();
+                .setController(controller).setSize(WINDOW_SIZE)
+                .setTitle("Finance report").showWindow();
     }
 
     public Node getFinanceAdminNode(FxController controller) {
