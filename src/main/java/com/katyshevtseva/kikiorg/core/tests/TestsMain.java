@@ -17,7 +17,7 @@ public class TestsMain {
     private final HabitTest habitTest;
     private final FinanceMulticurrencyTest financeMulticurrencyTest;
 
-    @PostConstruct
+//    @PostConstruct
     public void test() {
         test(financeTest, "financeTest");
         test(financeSearchTest, "financeSearchTest");

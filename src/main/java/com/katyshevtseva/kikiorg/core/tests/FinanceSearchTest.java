@@ -46,12 +46,17 @@ public class FinanceSearchTest implements TestClass {
         long result62 = testRepo.count6();
         System.out.println(result61 + " - " + result62);
 
+        int result71 = searchService.search(getRequest7()).size();
+        long result72 = testRepo.count7(getIds(getSomeAccounts()), getIds(getSomeItems2()));
+        System.out.println(result71 + " - " + result72);
+
         return result11 == result12
                 && result21 == result22
                 && result31 == result32
                 && result41 == result42
                 && result51 == result52
-                && result61 == result62;
+                && result61 == result62
+                && result71 == result72;
     }
 
     private SearchRequest getRequest1() {
@@ -131,6 +136,22 @@ public class FinanceSearchTest implements TestClass {
         return request;
     }
 
+    private SearchRequest getRequest7() {
+        SearchRequest request = new SearchRequest();
+        request.setOperationType(EXPENSE);
+
+        request.setMinAmount("150");
+        request.setMaxAmount("16000");
+
+        request.setStart(LocalDate.of(2015, 10, 11));
+        request.setEnd(LocalDate.of(2022, 8, 25));
+
+        request.setFrom(getSomeAccounts());
+        request.setTo(getSomeItems2());
+
+        return request;
+    }
+
     private List<OperationEnd> getSomeAccounts() {
         return financeService.getAllAccounts().stream().filter(account -> account.getTitle().length() % 2 == 0).collect(Collectors.toList());
     }
@@ -141,6 +162,10 @@ public class FinanceSearchTest implements TestClass {
 
     private List<OperationEnd> getSomeItems() {
         return financeService.getAllItems().stream().filter(item -> item.getTitle().length() % 2 == 0).collect(Collectors.toList());
+    }
+
+    private List<OperationEnd> getSomeItems2() {
+        return financeService.getAllItems().stream().filter(item -> item.getTitle().contains("о")).collect(Collectors.toList());
     }
 
     private List<Long> getIds(List<OperationEnd> endList) {

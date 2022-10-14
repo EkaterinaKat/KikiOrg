@@ -57,4 +57,13 @@ public interface TestRepo extends JpaRepository<Account, Long> {
 
     @Query(value = "select count(*) from transfer r ", nativeQuery = true)
     long count6();
+
+    @Query(value = "select count(*) from expense r \n" +
+            "join date_entity d on r.date_entity_id = d.id \n" +
+            "join item s on r.item_id = s.id \n" +
+            "join account a on r.account_id = a.id \n" +
+            "where r.amount between 150 and 16000 \n" +
+            "and d.value between '2015-10-11' and '2022-08-25' \n" +
+            "and a.id in ?1 and s.id in ?2 ", nativeQuery = true)
+    long count7(List<Long> accountIds, List<Long> itemIds);
 }
