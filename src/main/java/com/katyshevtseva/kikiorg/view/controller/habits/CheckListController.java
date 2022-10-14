@@ -97,7 +97,7 @@ class CheckListController implements FxController {
             if (analysisResult.getHabit().getStabilityStatus() != null) {
                 label.setStyle(getColorfullStyle(TEXT, analysisResult.getHabit().getStabilityStatus().getColor()));
             }
-            label.setStyle(label.getStyle() + getTextSizeStyle(13));
+            label.setStyle(label.getStyle() + getTextSizeStyle(15));
             statisticsBox.getChildren().add(label);
         }
     }

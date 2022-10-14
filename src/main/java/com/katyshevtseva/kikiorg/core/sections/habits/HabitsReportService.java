@@ -20,15 +20,13 @@ import static com.katyshevtseva.date.DateUtils.*;
 public class HabitsReportService {
     private final HabitsService habitsService;
     private final HabitMarkService habitMarkService;
-    private final UninterruptedPeriodService upService;
 
     public List<List<ReportCell>> getQuickReport() {
         return getReport(habitsService.getActiveHabits(),
-                new Period(shiftDate(new Date(), TimeUnit.DAY, -19), new Date()));
+                new Period(shiftDate(new Date(), TimeUnit.DAY, -49), new Date()));
     }
 
     public List<List<ReportCell>> getReport(List<Habit> habits, Period period) {
-        habits = upService.orderByLengthOfCurrentUp(habits);
         List<List<ReportCell>> result = new ArrayList<>();
         result.add(getReportHead(habits));
         List<Date> dates = getDateRange(period);

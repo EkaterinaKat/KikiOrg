@@ -25,10 +25,8 @@ public class HabitMarkService {
     private final DateService dateService;
     private final MarkRepo markRepo;
     private final HabitChangeActionRepo habitChangeActionRepo;
-    private final UninterruptedPeriodService upService;
 
     public void saveMarkOrRewriteIfExists(Habit habit, Date date, boolean markValue) throws Exception {
-        upService.clearCache();
         DateEntity dateEntity = dateService.createIfNotExistAndGetDateEntity(date);
 
         Date dateOfFirstDesc = getDateOfFirstDesc(habit);
