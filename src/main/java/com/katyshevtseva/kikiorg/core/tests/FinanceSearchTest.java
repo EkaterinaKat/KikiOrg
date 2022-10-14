@@ -12,18 +12,16 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static com.katyshevtseva.general.GeneralUtils.getFailedBanner;
-import static com.katyshevtseva.general.GeneralUtils.getSuccessBanner;
 import static com.katyshevtseva.kikiorg.core.sections.finance.FinanceOperationService.OperationType.*;
 
 @Service
 @RequiredArgsConstructor
-public class FinanceSearchTest {
+public class FinanceSearchTest implements TestClass {
     private final TestRepo testRepo;
     private final FinanceSearchService searchService;
     private final FinanceService financeService;
 
-    public void test() {
+    public boolean test() {
         int result11 = searchService.search(getRequest1()).size();
         long result12 = testRepo.count1(getIds(getSomeAccounts()));
         System.out.println(result11 + " - " + result12);
@@ -48,16 +46,12 @@ public class FinanceSearchTest {
         long result62 = testRepo.count6();
         System.out.println(result61 + " - " + result62);
 
-        if (result11 == result12
+        return result11 == result12
                 && result21 == result22
                 && result31 == result32
                 && result41 == result42
                 && result51 == result52
-                && result61 == result62) {
-            System.out.println(getSuccessBanner("FINANCE SEARCH"));
-        } else {
-            System.out.println(getFailedBanner("FINANCE SEARCH"));
-        }
+                && result61 == result62;
     }
 
     private SearchRequest getRequest1() {

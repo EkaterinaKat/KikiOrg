@@ -5,6 +5,10 @@ import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-public class HabitDescTest {
+public class HabitTest implements TestClass {
 
+    public boolean test() {
+        boolean success = true;
+        return success;
+    }
 }

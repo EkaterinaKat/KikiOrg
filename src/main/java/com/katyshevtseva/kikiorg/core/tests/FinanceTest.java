@@ -13,18 +13,16 @@ import org.springframework.stereotype.Service;
 import java.util.Collections;
 import java.util.Date;
 
-import static com.katyshevtseva.general.GeneralUtils.getFailedBanner;
-import static com.katyshevtseva.general.GeneralUtils.getSuccessBanner;
 import static com.katyshevtseva.kikiorg.core.CoreConstants.FINANCIAL_ACCOUNTING_START_DATE;
 
 @Service
 @RequiredArgsConstructor
-public class FinanceTest {
+public class FinanceTest implements TestClass {
     private final FinanceReportService reportService;
     private final FinanceService financeService;
     private final CalculationService calculationService;
 
-    public void test() {
+    public boolean test() {
         boolean success = true;
         ReportPeriod reportPeriod = new ReportPeriod(new Period(FINANCIAL_ACCOUNTING_START_DATE, new Date()), "");
 
@@ -51,11 +49,6 @@ public class FinanceTest {
             success = false;
         }
 
-        //result
-        if (success) {
-            System.out.println("\n" + getSuccessBanner("FINANCE"));
-        } else {
-            System.out.println("\n" + getFailedBanner("FINANCE"));
-        }
+        return success;
     }
 }
