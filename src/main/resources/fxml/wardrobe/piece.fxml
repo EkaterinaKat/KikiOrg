@@ -28,6 +28,8 @@
             <Pane prefHeight="20"/>
             <Label fx:id="infoLabel" maxWidth="350" wrapText="true"/>
             <Pane prefHeight="20"/>
+            <Button fx:id="showOutfitsButton" text="Show outfits" visible="false"/>
+            <Pane prefHeight="20"/>
             <Button fx:id="editButton" text="Edit" visible="false"/>
             <Pane prefHeight="20"/>
             <Button fx:id="archiveButton" text="Archive" visible="false"/>

@@ -35,7 +35,7 @@ public class MainWardrobeController extends AbstractSwitchController implements 
         outfitsButton.setOnAction(event -> outfitsButtonListener());
         piecesButton.setOnAction(event -> piecesButtonListener());
         statisticsButton.setOnAction(event -> statisticsButtonListener());
-        piecesButtonListener();
+        statisticsButtonListener();
     }
 
     private void outfitsButtonListener() {

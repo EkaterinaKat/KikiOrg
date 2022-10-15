@@ -61,7 +61,7 @@ class ExpenseController implements FxController {
                 new StandardDialogBuilder()
                         .setSize(ITEM_SELECT_DIALOG_SIZE)
                         .setTitle("Select item")
-                        .openContainerDialog(itemSelectDialogController);
+                        .openNoFxmlContainerDialog(itemSelectDialogController);
             }
         });
     }

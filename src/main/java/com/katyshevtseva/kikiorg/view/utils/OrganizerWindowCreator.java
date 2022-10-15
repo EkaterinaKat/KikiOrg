@@ -82,6 +82,10 @@ public class OrganizerWindowCreator {
                 setController(controller).setSize(1000, 1200).setTitle(CoreConstants.APP_NAME).showWindow();
     }
 
+    public Node getOutfitGridNode(FxController controller) {
+        return new WindowBuilder(WARDROBE_FXML_LOCATION + "outfit_grid.fxml").setController(controller).getNode();
+    }
+
     /* ----------------------------------  Привычки ---------------------------------------------- */
 
     public Node getMainHabitsNode(FxController controller) {

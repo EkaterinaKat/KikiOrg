@@ -1,6 +1,7 @@
 package com.katyshevtseva.kikiorg.core.repo;
 
 import com.katyshevtseva.kikiorg.core.sections.wardrobe.entity.Outfit;
+import com.katyshevtseva.kikiorg.core.sections.wardrobe.entity.Piece;
 import com.katyshevtseva.kikiorg.core.sections.wardrobe.enums.Purpose;
 import com.katyshevtseva.kikiorg.core.sections.wardrobe.enums.Season;
 import org.springframework.data.domain.Page;
@@ -19,4 +20,9 @@ public interface OutfitRepo extends JpaRepository<Outfit, Long> {
     Page<Outfit> findByPurposesAndSeasons(@Param("purposes") List<Purpose> purposes,
                                           @Param("seasons") List<Season> seasons,
                                           Pageable pageable);
+
+    @Query(value = "SELECT  o FROM Outfit o " +
+            "JOIN o.collageEntity c JOIN c.components comp JOIN comp.pieces p " +
+            "WHERE p = :piece ")
+    Page<Outfit> findOutfitsByPiece(@Param("piece") Piece piece, Pageable pageable);
 }

@@ -93,7 +93,7 @@ class OutfitDialogController implements FxController {
         new StandardDialogBuilder()
                 .setSize(CLOTHES_TYPE_SELECT_DIALOG_SIZE)
                 .setTitle("Select type")
-                .openContainerDialog(new TypeSelectDialogController(type ->
+                .openNoFxmlContainerDialog(new TypeSelectDialogController(type ->
                         collage.openImageToAddSelectionDialog(toCollageImages(service.getPiecesToAddToOutfit(type)))));
     }
 

@@ -90,6 +90,12 @@ public class WardrobeService {
         return new Page<>(outfitPage.getContent(), pageNum, outfitPage.getTotalPages());
     }
 
+    public Page<Outfit> getOutfitsByPiece(int pageNum, Piece piece) {
+        Pageable pageable = PageRequest.of(pageNum, 10, Sort.by("id").descending());
+        org.springframework.data.domain.Page<Outfit> outfitPage = outfitRepo.findOutfitsByPiece(piece, pageable);
+        return new Page<>(outfitPage.getContent(), pageNum, outfitPage.getTotalPages());
+    }
+
     public Piece savePiece(Piece existing,
                            String description,
                            String imageFileName,

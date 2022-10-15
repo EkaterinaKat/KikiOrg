@@ -56,6 +56,8 @@ class PieceController implements FxController {
     @FXML
     private Button archiveButton;
     @FXML
+    private Button showOutfitsButton;
+    @FXML
     private ComboBox<PieceFilter> filterComboBox;
 
     @FXML
@@ -83,7 +85,7 @@ class PieceController implements FxController {
         typeLabel.setOnMouseClicked(event -> new StandardDialogBuilder()
                 .setSize(CLOTHES_TYPE_SELECT_DIALOG_SIZE)
                 .setTitle("Select type")
-                .openContainerDialog(
+                .openNoFxmlContainerDialog(
                         new TypeSelectDialogController(type -> {
                             clothesType = type;
                             typeLabel.setText(type.getTitle());
@@ -108,6 +110,12 @@ class PieceController implements FxController {
         infoLabel.setText(piece.getFullDesc());
         editButton.setVisible(true);
         archiveButton.setVisible(true);
+        showOutfitsButton.setVisible(true);
+        showOutfitsButton.setOnAction(event -> {
+            OutfitGridController outfitGridController = new OutfitGridController(pageNum -> service.getOutfitsByPiece(pageNum, piece));
+            new StandardDialogBuilder().setSize(920, 1200).openNodeContainerDialog(
+                    OrganizerWindowCreator.getInstance().getOutfitGridNode(outfitGridController));
+        });
         editButton.setOnAction(event ->
                 OrganizerWindowCreator.getInstance().openPieceEditDialog(
                         new PieceDialogController(piece, savedPiece -> {
@@ -141,6 +149,7 @@ class PieceController implements FxController {
         infoLabel.setText("");
         editButton.setVisible(false);
         archiveButton.setVisible(false);
+        showOutfitsButton.setVisible(false);
     }
 
     private void tunePiecesGallery() {
