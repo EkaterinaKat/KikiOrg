@@ -26,4 +26,6 @@ public interface MarkRepo extends JpaRepository<Mark, Long> {
     List<Mark> getMarksOrderedByDate(@Param("habit") Habit habit);
 
     long countByHabit(Habit habit);
+
+    List<Mark> findByHabit(Habit habit);
 }

@@ -51,4 +51,9 @@ public class FinanceTest implements TestClass {
 
         return success;
     }
+
+    @Override
+    public String getTitle() {
+        return "financeTest";
+    }
 }

@@ -5,6 +5,7 @@ import com.katyshevtseva.kikiorg.core.sections.habits.entity.HabitChangeAction;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Optional;
 
 public interface HabitChangeActionRepo extends JpaRepository<HabitChangeAction, Long> {
@@ -14,4 +15,6 @@ public interface HabitChangeActionRepo extends JpaRepository<HabitChangeAction, 
     Optional<HabitChangeAction> findFirstByHabitOrderByDateEntityValueDesc(Habit habit);
 
     Optional<HabitChangeAction> findFirstByHabitOrderByDateEntityValueAsc(Habit habit);
+
+    List<HabitChangeAction> findAllByHabit(Habit habit);
 }

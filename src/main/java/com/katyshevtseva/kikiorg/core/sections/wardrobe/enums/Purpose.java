@@ -2,7 +2,7 @@ package com.katyshevtseva.kikiorg.core.sections.wardrobe.enums;
 
 public enum Purpose {
 
-    HOME("Дом"), WORK("Работа"), SPORT("Спорт"), STROLL("В магазин/прогулка"), HANGING_OUT("Выход в свет");
+    HOME("Дом"), GOING_OUT("На выход");
 
     private final String title;
 

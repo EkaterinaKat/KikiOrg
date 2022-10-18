@@ -17,21 +17,21 @@ public class TestsMain {
     private final HabitTest habitTest;
     private final FinanceMulticurrencyTest financeMulticurrencyTest;
 
-//    @PostConstruct
+    //    @PostConstruct
     public void test() {
-        test(financeTest, "financeTest");
-        test(financeSearchTest, "financeSearchTest");
-        test(financeMulticurrencyTest, "financeMulticurrencyTest");
-        test(habitTest, "habitTest");
+        test(financeTest);
+        test(financeSearchTest);
+        test(financeMulticurrencyTest);
+        test(habitTest);
     }
 
-    private void test(TestClass testClass, String title) {
-        System.out.println(GeneralUtils.getHeader(title));
+    private void test(TestClass testClass) {
+        System.out.println(GeneralUtils.getHeader(testClass.getTitle()));
         boolean success = testClass.test();
         if (success) {
-            System.out.println("\n" + getSuccessBanner(title));
+            System.out.println("\n" + getSuccessBanner(testClass.getTitle()));
         } else {
-            System.out.println("\n" + getFailedBanner(title));
+            System.out.println("\n" + getFailedBanner(testClass.getTitle()));
         }
     }
 }

@@ -171,4 +171,9 @@ public class FinanceSearchTest implements TestClass {
     private List<Long> getIds(List<OperationEnd> endList) {
         return endList.stream().map(OperationEnd::getId).collect(Collectors.toList());
     }
+
+    @Override
+    public String getTitle() {
+        return "financeSearchTest";
+    }
 }

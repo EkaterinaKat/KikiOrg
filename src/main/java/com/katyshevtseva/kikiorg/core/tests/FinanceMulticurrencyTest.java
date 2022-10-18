@@ -28,4 +28,9 @@ public class FinanceMulticurrencyTest implements TestClass {
 
         return success;
     }
+
+    @Override
+    public String getTitle() {
+        return "financeMulticurrencyTest";
+    }
 }
