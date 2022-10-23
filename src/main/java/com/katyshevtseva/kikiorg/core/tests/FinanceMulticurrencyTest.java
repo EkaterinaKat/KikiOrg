@@ -1,6 +1,6 @@
 package com.katyshevtseva.kikiorg.core.tests;
 
-import com.katyshevtseva.kikiorg.core.repo.TransferRepo;
+import com.katyshevtseva.kikiorg.core.sections.finance.repo.TransferRepo;
 import com.katyshevtseva.kikiorg.core.sections.finance.entity.Transfer;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

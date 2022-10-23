@@ -1,4 +1,4 @@
-package com.katyshevtseva.kikiorg.core.repo;
+package com.katyshevtseva.kikiorg.core.sections.finance.repo;
 
 import com.katyshevtseva.kikiorg.core.date.DateEntity;
 import com.katyshevtseva.kikiorg.core.sections.finance.entity.Account;

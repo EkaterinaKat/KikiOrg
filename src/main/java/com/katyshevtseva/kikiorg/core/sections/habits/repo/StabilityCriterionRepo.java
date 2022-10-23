@@ -1,4 +1,4 @@
-package com.katyshevtseva.kikiorg.core.repo;
+package com.katyshevtseva.kikiorg.core.sections.habits.repo;
 
 import com.katyshevtseva.kikiorg.core.sections.habits.entity.Habit;
 import com.katyshevtseva.kikiorg.core.sections.habits.entity.StabilityCriterion;

@@ -1,7 +1,7 @@
 package com.katyshevtseva.kikiorg.core.sections.finance;
 
 import com.katyshevtseva.kikiorg.core.date.DateService;
-import com.katyshevtseva.kikiorg.core.repo.TransferRepo;
+import com.katyshevtseva.kikiorg.core.sections.finance.repo.TransferRepo;
 import com.katyshevtseva.kikiorg.core.sections.finance.entity.Account;
 import com.katyshevtseva.kikiorg.core.sections.finance.entity.Transfer;
 import lombok.RequiredArgsConstructor;

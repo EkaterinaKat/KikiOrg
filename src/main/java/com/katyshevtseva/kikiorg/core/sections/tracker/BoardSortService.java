@@ -1,7 +1,7 @@
 package com.katyshevtseva.kikiorg.core.sections.tracker;
 
 import com.katyshevtseva.general.Page;
-import com.katyshevtseva.kikiorg.core.repo.TaskRepo;
+import com.katyshevtseva.kikiorg.core.sections.tracker.repo.TaskRepo;
 import com.katyshevtseva.kikiorg.core.sections.tracker.entity.Project;
 import com.katyshevtseva.kikiorg.core.sections.tracker.entity.Task;
 import lombok.RequiredArgsConstructor;

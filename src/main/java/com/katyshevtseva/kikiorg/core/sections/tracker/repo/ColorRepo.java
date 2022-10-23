@@ -1,4 +1,4 @@
-package com.katyshevtseva.kikiorg.core.repo;
+package com.katyshevtseva.kikiorg.core.sections.tracker.repo;
 
 import com.katyshevtseva.kikiorg.core.sections.tracker.entity.ColorEntity;
 import org.springframework.data.jpa.repository.JpaRepository;

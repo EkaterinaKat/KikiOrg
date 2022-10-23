@@ -1,6 +1,6 @@
 package com.katyshevtseva.kikiorg.core.sections.finance;
 
-import com.katyshevtseva.kikiorg.core.repo.HuddleRepo;
+import com.katyshevtseva.kikiorg.core.sections.finance.repo.HuddleRepo;
 import com.katyshevtseva.kikiorg.core.sections.finance.entity.Account;
 import com.katyshevtseva.kikiorg.core.sections.finance.entity.Huddle;
 import lombok.RequiredArgsConstructor;

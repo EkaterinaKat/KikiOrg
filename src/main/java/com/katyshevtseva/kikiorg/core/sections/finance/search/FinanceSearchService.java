@@ -1,8 +1,8 @@
 package com.katyshevtseva.kikiorg.core.sections.finance.search;
 
-import com.katyshevtseva.kikiorg.core.repo.ExpenseRepo;
-import com.katyshevtseva.kikiorg.core.repo.ReplenishmentRepo;
-import com.katyshevtseva.kikiorg.core.repo.TransferRepo;
+import com.katyshevtseva.kikiorg.core.sections.finance.repo.ExpenseRepo;
+import com.katyshevtseva.kikiorg.core.sections.finance.repo.ReplenishmentRepo;
+import com.katyshevtseva.kikiorg.core.sections.finance.repo.TransferRepo;
 import com.katyshevtseva.kikiorg.core.sections.finance.FinanceOperationService.Operation;
 import com.katyshevtseva.kikiorg.core.sections.finance.FinanceOperationService.OperationType;
 import com.katyshevtseva.kikiorg.core.sections.finance.FinanceService;

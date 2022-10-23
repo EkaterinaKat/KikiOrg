@@ -2,8 +2,8 @@ package com.katyshevtseva.kikiorg.core.sections.wardrobe;
 
 import com.katyshevtseva.fx.Styler.StandardColor;
 import com.katyshevtseva.general.ReportCell;
-import com.katyshevtseva.kikiorg.core.repo.OutfitRepo;
-import com.katyshevtseva.kikiorg.core.repo.PieceRepo;
+import com.katyshevtseva.kikiorg.core.sections.wardrobe.repo.OutfitRepo;
+import com.katyshevtseva.kikiorg.core.sections.wardrobe.repo.PieceRepo;
 import com.katyshevtseva.kikiorg.core.sections.wardrobe.enums.ClothesSubtype;
 import com.katyshevtseva.kikiorg.core.sections.wardrobe.enums.Purpose;
 import com.katyshevtseva.kikiorg.core.sections.wardrobe.enums.Season;

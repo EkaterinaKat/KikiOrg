@@ -1,6 +1,6 @@
 package com.katyshevtseva.kikiorg.core.sections.habits;
 
-import com.katyshevtseva.kikiorg.core.repo.StabilityCriterionRepo;
+import com.katyshevtseva.kikiorg.core.sections.habits.repo.StabilityCriterionRepo;
 import com.katyshevtseva.kikiorg.core.sections.habits.entity.Habit;
 import com.katyshevtseva.kikiorg.core.sections.habits.entity.StabilityCriterion;
 import org.springframework.beans.factory.annotation.Autowired;

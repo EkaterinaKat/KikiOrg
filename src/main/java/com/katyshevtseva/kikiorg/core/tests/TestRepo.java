@@ -1,4 +1,4 @@
-package com.katyshevtseva.kikiorg.core.repo;
+package com.katyshevtseva.kikiorg.core.tests;
 
 import com.katyshevtseva.kikiorg.core.sections.finance.entity.Account;
 import org.springframework.data.jpa.repository.JpaRepository;

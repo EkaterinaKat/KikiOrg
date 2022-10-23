@@ -1,8 +1,8 @@
 package com.katyshevtseva.kikiorg.core.sections.tracker;
 
 import com.katyshevtseva.kikiorg.core.date.DateService;
-import com.katyshevtseva.kikiorg.core.repo.ProjectRepo;
-import com.katyshevtseva.kikiorg.core.repo.TaskRepo;
+import com.katyshevtseva.kikiorg.core.sections.tracker.repo.ProjectRepo;
+import com.katyshevtseva.kikiorg.core.sections.tracker.repo.TaskRepo;
 import com.katyshevtseva.kikiorg.core.sections.tracker.entity.Project;
 import com.katyshevtseva.kikiorg.core.sections.tracker.entity.Task;
 import lombok.RequiredArgsConstructor;

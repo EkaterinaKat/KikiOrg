@@ -2,7 +2,7 @@ package com.katyshevtseva.kikiorg.core.sections.habits;
 
 import com.katyshevtseva.history.HistoryService;
 import com.katyshevtseva.kikiorg.core.date.DateService;
-import com.katyshevtseva.kikiorg.core.repo.HabitChangeActionRepo;
+import com.katyshevtseva.kikiorg.core.sections.habits.repo.HabitChangeActionRepo;
 import com.katyshevtseva.kikiorg.core.sections.habits.entity.Habit;
 import com.katyshevtseva.kikiorg.core.sections.habits.entity.HabitChangeAction;
 import lombok.RequiredArgsConstructor;

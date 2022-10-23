@@ -1,6 +1,5 @@
 package com.katyshevtseva.kikiorg.core.tests;
 
-import com.katyshevtseva.kikiorg.core.repo.TestRepo;
 import com.katyshevtseva.kikiorg.core.sections.finance.FinanceService;
 import com.katyshevtseva.kikiorg.core.sections.finance.OperationEnd;
 import com.katyshevtseva.kikiorg.core.sections.finance.search.FinanceSearchService;

@@ -1,8 +1,8 @@
 package com.katyshevtseva.kikiorg.core.sections.finance;
 
 import com.katyshevtseva.hierarchy.HierarchyService;
-import com.katyshevtseva.kikiorg.core.repo.ItemGroupRepo;
-import com.katyshevtseva.kikiorg.core.repo.ItemRepo;
+import com.katyshevtseva.kikiorg.core.sections.finance.repo.ItemGroupRepo;
+import com.katyshevtseva.kikiorg.core.sections.finance.repo.ItemRepo;
 import com.katyshevtseva.kikiorg.core.sections.finance.entity.Item;
 import com.katyshevtseva.kikiorg.core.sections.finance.entity.ItemGroup;
 import lombok.RequiredArgsConstructor;

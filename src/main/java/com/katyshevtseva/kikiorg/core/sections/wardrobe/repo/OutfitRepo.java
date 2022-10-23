@@ -1,4 +1,4 @@
-package com.katyshevtseva.kikiorg.core.repo;
+package com.katyshevtseva.kikiorg.core.sections.wardrobe.repo;
 
 import com.katyshevtseva.kikiorg.core.sections.wardrobe.entity.Outfit;
 import com.katyshevtseva.kikiorg.core.sections.wardrobe.entity.Piece;

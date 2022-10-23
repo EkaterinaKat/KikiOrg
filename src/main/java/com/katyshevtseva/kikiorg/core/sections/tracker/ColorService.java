@@ -1,6 +1,6 @@
 package com.katyshevtseva.kikiorg.core.sections.tracker;
 
-import com.katyshevtseva.kikiorg.core.repo.ColorRepo;
+import com.katyshevtseva.kikiorg.core.sections.tracker.repo.ColorRepo;
 import com.katyshevtseva.kikiorg.core.sections.tracker.entity.ColorEntity;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

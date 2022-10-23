@@ -1,9 +1,9 @@
 package com.katyshevtseva.kikiorg.core.tests;
 
 import com.katyshevtseva.date.DateUtils;
-import com.katyshevtseva.kikiorg.core.repo.HabitChangeActionRepo;
-import com.katyshevtseva.kikiorg.core.repo.HabitRepo;
-import com.katyshevtseva.kikiorg.core.repo.MarkRepo;
+import com.katyshevtseva.kikiorg.core.sections.habits.repo.HabitChangeActionRepo;
+import com.katyshevtseva.kikiorg.core.sections.habits.repo.HabitRepo;
+import com.katyshevtseva.kikiorg.core.sections.habits.repo.MarkRepo;
 import com.katyshevtseva.kikiorg.core.sections.habits.entity.Habit;
 import com.katyshevtseva.kikiorg.core.sections.habits.entity.HabitChangeAction;
 import com.katyshevtseva.kikiorg.core.sections.habits.entity.Mark;

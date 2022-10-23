@@ -1,8 +1,8 @@
 package com.katyshevtseva.kikiorg.core.sections.habits;
 
 import com.katyshevtseva.date.DateUtils;
-import com.katyshevtseva.kikiorg.core.repo.HabitChangeActionRepo;
-import com.katyshevtseva.kikiorg.core.repo.HabitRepo;
+import com.katyshevtseva.kikiorg.core.sections.habits.repo.HabitChangeActionRepo;
+import com.katyshevtseva.kikiorg.core.sections.habits.repo.HabitRepo;
 import com.katyshevtseva.kikiorg.core.sections.habits.entity.Habit;
 import com.katyshevtseva.kikiorg.core.sections.habits.entity.HabitChangeAction;
 import lombok.RequiredArgsConstructor;

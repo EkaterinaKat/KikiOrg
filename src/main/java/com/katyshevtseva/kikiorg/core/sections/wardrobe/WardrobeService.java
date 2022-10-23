@@ -2,10 +2,10 @@ package com.katyshevtseva.kikiorg.core.sections.wardrobe;
 
 import com.katyshevtseva.general.Page;
 import com.katyshevtseva.kikiorg.core.date.DateService;
-import com.katyshevtseva.kikiorg.core.repo.CollageEntityRepo;
-import com.katyshevtseva.kikiorg.core.repo.ComponentEntityRepo;
-import com.katyshevtseva.kikiorg.core.repo.OutfitRepo;
-import com.katyshevtseva.kikiorg.core.repo.PieceRepo;
+import com.katyshevtseva.kikiorg.core.sections.wardrobe.repo.CollageEntityRepo;
+import com.katyshevtseva.kikiorg.core.sections.wardrobe.repo.ComponentEntityRepo;
+import com.katyshevtseva.kikiorg.core.sections.wardrobe.repo.OutfitRepo;
+import com.katyshevtseva.kikiorg.core.sections.wardrobe.repo.PieceRepo;
 import com.katyshevtseva.kikiorg.core.sections.wardrobe.entity.CollageEntity;
 import com.katyshevtseva.kikiorg.core.sections.wardrobe.entity.ComponentEntity;
 import com.katyshevtseva.kikiorg.core.sections.wardrobe.entity.Outfit;

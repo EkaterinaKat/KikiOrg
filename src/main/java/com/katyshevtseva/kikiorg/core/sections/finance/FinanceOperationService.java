@@ -2,10 +2,10 @@ package com.katyshevtseva.kikiorg.core.sections.finance;
 
 import com.katyshevtseva.date.DateUtils;
 import com.katyshevtseva.date.Period;
-import com.katyshevtseva.kikiorg.core.repo.AccountRepo;
-import com.katyshevtseva.kikiorg.core.repo.ExpenseRepo;
-import com.katyshevtseva.kikiorg.core.repo.ReplenishmentRepo;
-import com.katyshevtseva.kikiorg.core.repo.TransferRepo;
+import com.katyshevtseva.kikiorg.core.sections.finance.repo.AccountRepo;
+import com.katyshevtseva.kikiorg.core.sections.finance.repo.ExpenseRepo;
+import com.katyshevtseva.kikiorg.core.sections.finance.repo.ReplenishmentRepo;
+import com.katyshevtseva.kikiorg.core.sections.finance.repo.TransferRepo;
 import com.katyshevtseva.kikiorg.core.sections.finance.entity.Account;
 import com.katyshevtseva.kikiorg.core.sections.finance.entity.Expense;
 import com.katyshevtseva.kikiorg.core.sections.finance.entity.Replenishment;
