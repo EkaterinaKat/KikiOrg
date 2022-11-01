@@ -9,6 +9,7 @@ import com.katyshevtseva.kikiorg.core.sections.wardrobe.WardrobeService;
 import com.katyshevtseva.kikiorg.core.sections.wardrobe.entity.Outfit;
 import com.katyshevtseva.kikiorg.core.sections.wardrobe.enums.Purpose;
 import com.katyshevtseva.kikiorg.core.sections.wardrobe.enums.Season;
+import com.katyshevtseva.kikiorg.view.controller.wardrobe.utils.CollageUtils;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
@@ -23,8 +24,8 @@ import java.util.stream.Collectors;
 
 import static com.katyshevtseva.fx.FxUtils.closeWindowThatContains;
 import static com.katyshevtseva.fx.FxUtils.getPaneWithHeight;
-import static com.katyshevtseva.kikiorg.view.controller.wardrobe.CollageUtils.*;
-import static com.katyshevtseva.kikiorg.view.controller.wardrobe.WrdImageUtils.toCollageImages;
+import static com.katyshevtseva.kikiorg.view.controller.wardrobe.utils.CollageUtils.*;
+import static com.katyshevtseva.kikiorg.view.controller.wardrobe.utils.WrdImageUtils.toCollageImages;
 import static com.katyshevtseva.kikiorg.view.utils.ViewConstants.CLOTHES_TYPE_SELECT_DIALOG_SIZE;
 
 class OutfitDialogController implements FxController {

@@ -7,7 +7,9 @@ import com.katyshevtseva.kikiorg.core.Core;
 import com.katyshevtseva.kikiorg.core.sections.wardrobe.entity.Piece;
 import com.katyshevtseva.kikiorg.core.sections.wardrobe.enums.ClothesSubtype;
 import com.katyshevtseva.kikiorg.core.sections.wardrobe.enums.Satisfaction;
-import com.katyshevtseva.kikiorg.view.controller.wardrobe.WrdImageUtils.ImageAndFileNameContainer;
+import com.katyshevtseva.kikiorg.view.controller.wardrobe.utils.ImageCreator;
+import com.katyshevtseva.kikiorg.view.controller.wardrobe.utils.WrdImageUtils;
+import com.katyshevtseva.kikiorg.view.controller.wardrobe.utils.WrdImageUtils.ImageAndFileNameContainer;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
@@ -20,7 +22,7 @@ import javafx.scene.layout.Pane;
 
 import static com.katyshevtseva.fx.FxUtils.*;
 import static com.katyshevtseva.fx.ImageSizeUtil.placeImageInSquare;
-import static com.katyshevtseva.kikiorg.view.controller.wardrobe.WrdImageUtils.toImageUrlAndFileNameContainer;
+import static com.katyshevtseva.kikiorg.view.controller.wardrobe.utils.WrdImageUtils.toImageUrlAndFileNameContainer;
 import static com.katyshevtseva.kikiorg.view.utils.OrgUtils.setDate;
 
 class PieceDialogController implements FxController {

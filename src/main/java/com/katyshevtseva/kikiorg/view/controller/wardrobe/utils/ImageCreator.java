@@ -1,4 +1,4 @@
-package com.katyshevtseva.kikiorg.view.controller.wardrobe;
+package com.katyshevtseva.kikiorg.view.controller.wardrobe.utils;
 
 import com.katyshevtseva.fx.FxImageCreationUtil;
 import com.katyshevtseva.fx.ImageContainer;
@@ -10,17 +10,17 @@ import java.util.Map;
 
 import static com.katyshevtseva.kikiorg.view.utils.ViewConstants.WARDROBE_IMAGES_LOCATION;
 
-class ImageCreator {
+public class ImageCreator {
     private static ImageCreator instance;
     private final Map<String, ImageContainer> cache = new HashMap<>();
 
-    static ImageCreator getInstance() {
+    public static ImageCreator getInstance() {
         if (instance == null)
             instance = new ImageCreator();
         return instance;
     }
 
-    ImageContainer getImageContainer(Piece piece) {
+    public ImageContainer getImageContainer(Piece piece) {
         return getImageContainer(piece.getImageFileName());
     }
 
@@ -28,7 +28,7 @@ class ImageCreator {
         return getImageContainer(fileName, WARDROBE_IMAGES_LOCATION);
     }
 
-    ImageContainer getImageContainer(String fileName, String location) {
+    public ImageContainer getImageContainer(String fileName, String location) {
         String fullPath = location + fileName;
         ImageContainer imageContainer = cache.get(fullPath);
 

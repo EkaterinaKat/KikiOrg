@@ -1,4 +1,4 @@
-package com.katyshevtseva.kikiorg.view.controller.wardrobe;
+package com.katyshevtseva.kikiorg.view.controller.wardrobe.utils;
 
 import com.katyshevtceva.collage.logic.*;
 import com.katyshevtseva.fx.ImageContainer;
@@ -9,7 +9,7 @@ import com.katyshevtseva.kikiorg.core.Core;
 import com.katyshevtseva.kikiorg.core.sections.wardrobe.entity.CollageEntity;
 import com.katyshevtseva.kikiorg.core.sections.wardrobe.entity.ComponentEntity;
 import com.katyshevtseva.kikiorg.core.sections.wardrobe.entity.Piece;
-import com.katyshevtseva.kikiorg.view.controller.wardrobe.WrdImageUtils.ImageAndPieceContainer;
+import com.katyshevtseva.kikiorg.view.controller.wardrobe.utils.WrdImageUtils.ImageAndPieceContainer;
 import javafx.scene.layout.Pane;
 
 import java.util.ArrayList;
@@ -17,13 +17,13 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import static com.katyshevtseva.kikiorg.view.controller.wardrobe.WrdImageUtils.toCollageImages;
-import static com.katyshevtseva.kikiorg.view.controller.wardrobe.WrdImageUtils.toImageUrlAndPieceContainers;
+import static com.katyshevtseva.kikiorg.view.controller.wardrobe.utils.WrdImageUtils.toCollageImages;
+import static com.katyshevtseva.kikiorg.view.controller.wardrobe.utils.WrdImageUtils.toImageUrlAndPieceContainers;
 
-class CollageUtils {
-    static final int COLLAGE_SIZE = 850;
+public class CollageUtils {
+    public static final int COLLAGE_SIZE = 850;
 
-    static CollageEntity saveCollage(CollageEntity existing, Collage collage) {
+    public static CollageEntity saveCollage(CollageEntity existing, Collage collage) {
         CollageEntity savedCollageEntity = Core.getInstance().wardrobeService().saveCollage(existing);
 
         List<ComponentEntity> componentEntities = collage.getComponents().stream()
@@ -51,7 +51,7 @@ class CollageUtils {
         return entity;
     }
 
-    static Pane getCollagePreview(CollageEntity collageEntity) {
+    public static Pane getCollagePreview(CollageEntity collageEntity) {
         List<StaticComponent> staticComponents = collageEntity.getComponents().stream()
                 .map(componentEntity -> new StaticComponent(
                         ImageCreator.getInstance().getImageContainer(componentEntity.getFrontPiece()),
@@ -64,7 +64,7 @@ class CollageUtils {
         return CollagePreviewBuilder.buildPreview(new Size(370, 370), staticComponents);
     }
 
-    static Collage reproduceCollage(CollageEntity collageEntity) {
+    public static Collage reproduceCollage(CollageEntity collageEntity) {
         if (collageEntity == null)
             return createEmptyCollage();
 
@@ -94,7 +94,7 @@ class CollageUtils {
                 .build();
     }
 
-    static Collage createEmptyCollage() {
+    public static Collage createEmptyCollage() {
         return new CollageBuilder()
                 .height(COLLAGE_SIZE)
                 .width(COLLAGE_SIZE)

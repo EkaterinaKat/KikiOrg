@@ -1,4 +1,4 @@
-package com.katyshevtseva.kikiorg.view.controller.wardrobe;
+package com.katyshevtseva.kikiorg.view.controller.wardrobe.utils;
 
 import com.katyshevtseva.fx.ImageContainer;
 import com.katyshevtseva.kikiorg.core.Core;
@@ -14,9 +14,9 @@ import java.util.stream.Collectors;
 
 import static com.katyshevtseva.kikiorg.view.utils.ViewConstants.WARDROBE_IMAGES_LOCATION;
 
-class WrdImageUtils {
+public class WrdImageUtils {
 
-    static List<ImageContainer> getFreeImagesForPieceCreation() {
+    public static List<ImageContainer> getFreeImagesForPieceCreation() {
         List<ImageContainer> freeImages = new ArrayList<>();
         List<Piece> existingPieces = Core.getInstance().wardrobeService().getAllPieces();
 
@@ -55,11 +55,11 @@ class WrdImageUtils {
         return Arrays.asList(Objects.requireNonNull(new File(WARDROBE_IMAGES_LOCATION).listFiles()));
     }
 
-    static List<ImageContainer> toImageUrlAndPieceContainers(List<Piece> pieces) {
+    public static List<ImageContainer> toImageUrlAndPieceContainers(List<Piece> pieces) {
         return pieces.stream().map(WrdImageUtils::toImageUrlAndPieceContainer).collect(Collectors.toList());
     }
 
-    static List<com.katyshevtceva.collage.logic.Image> toCollageImages(List<Piece> pieces) {
+    public static List<com.katyshevtceva.collage.logic.Image> toCollageImages(List<Piece> pieces) {
         return pieces.stream()
                 .map(WrdImageUtils::toImageUrlAndPieceContainer)
                 .map(com.katyshevtceva.collage.logic.Image::new)
@@ -87,7 +87,7 @@ class WrdImageUtils {
         };
     }
 
-    static ImageAndFileNameContainer toImageUrlAndFileNameContainer(Piece piece) {
+    public static ImageAndFileNameContainer toImageUrlAndFileNameContainer(Piece piece) {
         ImageContainer imageContainer = ImageCreator.getInstance().getImageContainer(piece);
 
         return new ImageAndFileNameContainer() {
@@ -108,11 +108,11 @@ class WrdImageUtils {
         };
     }
 
-    interface ImageAndPieceContainer extends ImageContainer {
+    public interface ImageAndPieceContainer extends ImageContainer {
         Piece getPiece();
     }
 
-    interface ImageAndFileNameContainer extends ImageContainer {
+    public interface ImageAndFileNameContainer extends ImageContainer {
         String getFileName();
     }
 }
