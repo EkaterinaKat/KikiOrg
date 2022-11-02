@@ -2,7 +2,6 @@ package com.katyshevtseva.kikiorg.view.controller.finance;
 
 import com.katyshevtseva.fx.FxUtils;
 import com.katyshevtseva.fx.WindowBuilder.FxController;
-import com.katyshevtseva.fx.dialog.StandardDialogBuilder;
 import com.katyshevtseva.fx.dialogconstructor.DcTextArea;
 import com.katyshevtseva.fx.dialogconstructor.DcTextField;
 import com.katyshevtseva.fx.dialogconstructor.DialogConstructor;
@@ -63,8 +62,8 @@ class AdminController implements FxController {
 
     private void newButtonListener() {
         DcTextField titleField = new DcTextField(true, "");
-        DcTextArea descField = new DcTextArea(true, "");
-        DialogConstructor.constructDialog(()->{
+        DcTextArea descField = new DcTextArea(false, "");
+        DialogConstructor.constructDialog(() -> {
             switch (typeComboBox.getValue()) {
                 case ITEM:
                     Core.getInstance().financeService().addItem(titleField.getValue(), descField.getValue());
@@ -91,21 +90,28 @@ class AdminController implements FxController {
             text.textProperty().bind(cell.itemProperty());
             return cell;
         });
-        FxUtils.adjustButtonColumn(editColumn, "Edit", operationEnd ->
-                new StandardDialogBuilder().openTextFieldAndTextAreaDialog(operationEnd.getTitle(), operationEnd.getDescription(),
-                        (title, desc) -> {
-                            switch (operationEnd.getType()) {
-                                case ITEM:
-                                    Core.getInstance().financeService().alterItem((Item) operationEnd, title, desc);
-                                    break;
-                                case SOURCE:
-                                    Core.getInstance().financeService().alterSource((Source) operationEnd, title, desc);
-                                    break;
-                                case ACCOUNT:
-                                    Core.getInstance().financeService().alterAccount((Account) operationEnd, title, desc);
-                            }
-                            updateTable();
-                        }));
+
+        FxUtils.adjustButtonColumn(editColumn, "Edit", operationEnd -> {
+            DcTextField titleField = new DcTextField(true, operationEnd.getTitle());
+            DcTextArea descField = new DcTextArea(false, operationEnd.getDescription());
+            DialogConstructor.constructDialog(() -> {
+                switch (operationEnd.getType()) {
+                    case ITEM:
+                        Core.getInstance().financeService()
+                                .alterItem((Item) operationEnd, titleField.getValue(), descField.getValue());
+                        break;
+                    case SOURCE:
+                        Core.getInstance().financeService()
+                                .alterSource((Source) operationEnd, titleField.getValue(), descField.getValue());
+                        break;
+                    case ACCOUNT:
+                        Core.getInstance().financeService()
+                                .alterAccount((Account) operationEnd, titleField.getValue(), descField.getValue());
+                }
+                updateTable();
+            }, titleField, descField);
+        });
+
         FxUtils.adjustButtonColumn(archiveColumn, "-", operationEnd -> {
             if (operationEnd.getType() == OperationEndType.ACCOUNT) {
                 Core.getInstance().financeService().archive((Account) operationEnd);

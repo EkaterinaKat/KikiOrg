@@ -1,11 +1,15 @@
 package com.katyshevtseva.kikiorg.view.controller.tracker;
 
 import com.katyshevtseva.fx.WindowBuilder.FxController;
+import com.katyshevtseva.fx.dialogconstructor.DcComboBox;
+import com.katyshevtseva.fx.dialogconstructor.DcTextArea;
+import com.katyshevtseva.fx.dialogconstructor.DcTextField;
+import com.katyshevtseva.fx.dialogconstructor.DialogConstructor;
 import com.katyshevtseva.general.NoArgsKnob;
 import com.katyshevtseva.kikiorg.core.Core;
 import com.katyshevtseva.kikiorg.core.sections.tracker.TaskStatus;
+import com.katyshevtseva.kikiorg.core.sections.tracker.entity.Project;
 import com.katyshevtseva.kikiorg.core.sections.tracker.entity.Task;
-import com.katyshevtseva.kikiorg.view.utils.OrganizerWindowCreator;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -88,7 +92,17 @@ class TaskPaneController implements FxController {
 
     private Button getEditButton() {
         Button button = new Button("Edit");
-        button.setOnAction(event -> OrganizerWindowCreator.getInstance().openTaskDialog(new TaskDialogController(task, boardUpdateKnob)));
+        DcTextField titleField = new DcTextField(true, task.getTitle());
+        DcComboBox<Project> projectDcComboBox =
+                new DcComboBox<>(true, task.getProject(), Core.getInstance().trackerService().getAllProjects());
+        projectDcComboBox.setDisabled(true);
+        DcTextArea descField = new DcTextArea(true, task.getDescription());
+        button.setOnAction(event -> DialogConstructor.constructDialog(() -> {
+            task.setTitle(titleField.getValue());
+            task.setDescription(descField.getValue());
+            Core.getInstance().trackerService().saveEditedTask(task);
+            boardUpdateKnob.execute();
+        }, titleField, projectDcComboBox, descField));
         return button;
     }
 

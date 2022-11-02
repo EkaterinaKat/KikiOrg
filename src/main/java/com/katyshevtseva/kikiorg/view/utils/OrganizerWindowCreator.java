@@ -45,11 +45,6 @@ public class OrganizerWindowCreator {
                 setController(controller).setSize(500, 480).setTitle(CoreConstants.APP_NAME).showWindow();
     }
 
-    public void openTaskDialog(FxController controller) {
-        new WindowBuilder(TRACKER_FXML_LOCATION + "task_dialog.fxml").
-                setController(controller).setSize(500, 480).setTitle(CoreConstants.APP_NAME).showWindow();
-    }
-
     public Node getTaskPaneNode(FxController controller) {
         return new WindowBuilder(TRACKER_FXML_LOCATION + "task_pane.fxml").setController(controller).getNode();
     }

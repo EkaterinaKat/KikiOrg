@@ -5,6 +5,10 @@ import com.katyshevtseva.fx.WindowBuilder.FxController;
 import com.katyshevtseva.fx.component.ComponentBuilder;
 import com.katyshevtseva.fx.component.ComponentBuilder.Component;
 import com.katyshevtseva.fx.component.controller.PaginationPaneController;
+import com.katyshevtseva.fx.dialogconstructor.DcComboBox;
+import com.katyshevtseva.fx.dialogconstructor.DcTextArea;
+import com.katyshevtseva.fx.dialogconstructor.DcTextField;
+import com.katyshevtseva.fx.dialogconstructor.DialogConstructor;
 import com.katyshevtseva.general.Page;
 import com.katyshevtseva.kikiorg.core.Core;
 import com.katyshevtseva.kikiorg.core.sections.tracker.BoardSortService.SortType;
@@ -48,8 +52,18 @@ class BoardController implements FxController {
         setComboBoxItems(sortComboBox, SortType.values(), SortType.CREATION_DATE);
         tuneProjectComboBox();
         tunePagination();
+
+        DcTextField titleField = new DcTextField(true, "");
+        DcComboBox<Project> projectDcComboBox =
+                new DcComboBox<>(true, null, Core.getInstance().trackerService().getAllProjects());
+        DcTextArea descField = new DcTextArea(true, "");
         addTaskButton.setOnAction(event ->
-                OrganizerWindowCreator.getInstance().openTaskDialog(new TaskDialogController(null, () -> paginationPaneController.loadPage())));
+                DialogConstructor.constructDialog(() -> {
+                    Core.getInstance().trackerService()
+                            .createTask(titleField.getValue(), descField.getValue(), projectDcComboBox.getValue());
+                    paginationPaneController.loadPage();
+                }, titleField, projectDcComboBox, descField));
+
         statusComboBox.setOnAction(event -> {
             tuneProjectComboBox();
             paginationPaneController.loadPage();
