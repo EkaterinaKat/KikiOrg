@@ -152,19 +152,19 @@ public class FinanceSearchTest implements TestClass {
     }
 
     private List<OperationEnd> getSomeAccounts() {
-        return financeService.getAllAccounts().stream().filter(account -> account.getTitle().length() % 2 == 0).collect(Collectors.toList());
+        return financeService.getAllAccounts().stream().filter(account -> account.getTitleWithAdditionalInfo().length() % 2 == 0).collect(Collectors.toList());
     }
 
     private List<OperationEnd> getSomeSources() {
-        return financeService.getAllSources().stream().filter(source -> source.getTitle().length() % 2 == 0).collect(Collectors.toList());
+        return financeService.getAllSources().stream().filter(source -> source.getTitleWithAdditionalInfo().length() % 2 == 0).collect(Collectors.toList());
     }
 
     private List<OperationEnd> getSomeItems() {
-        return financeService.getAllItems().stream().filter(item -> item.getTitle().length() % 2 == 0).collect(Collectors.toList());
+        return financeService.getAllItems().stream().filter(item -> item.getTitleWithAdditionalInfo().length() % 2 == 0).collect(Collectors.toList());
     }
 
     private List<OperationEnd> getSomeItems2() {
-        return financeService.getAllItems().stream().filter(item -> item.getTitle().contains("о")).collect(Collectors.toList());
+        return financeService.getAllItems().stream().filter(item -> item.getTitleWithAdditionalInfo().contains("о")).collect(Collectors.toList());
     }
 
     private List<Long> getIds(List<OperationEnd> endList) {

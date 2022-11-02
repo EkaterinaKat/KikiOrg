@@ -39,12 +39,12 @@ public class Expense implements Operation {
 
     @Override
     public String getFromTitle() {
-        return account.getTitle();
+        return account.getTitleWithAdditionalInfo();
     }
 
     @Override
     public String getToTitle() {
-        return item.getTitle();
+        return item.getTitleWithAdditionalInfo();
     }
 
     @Override

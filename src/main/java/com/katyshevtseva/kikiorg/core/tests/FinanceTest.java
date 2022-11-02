@@ -31,7 +31,7 @@ public class FinanceTest implements TestClass {
         for (Account account : financeService.getAllAccounts()) {
             FullFinanceReport report = reportService.getReport(Collections.singletonList(account), reportPeriod);
             long calculationResult = calculationService.calculateAccountAmountByOperations(account);
-            System.out.println(account.getAmount() + " : " + calculationResult + " : " + report.getTotal() + " " + account.getTitle());
+            System.out.println(account.getAmount() + " : " + calculationResult + " : " + report.getTotal() + " " + account.getTitleWithAdditionalInfo());
             if (!report.getTotal().equals(calculationResult) || !report.getTotal().equals(account.getAmount())) {
                 success = false;
             }

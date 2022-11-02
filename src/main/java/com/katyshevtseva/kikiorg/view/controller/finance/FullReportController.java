@@ -74,7 +74,7 @@ class FullReportController implements FxController {
         accountPane.getChildren().add(FxUtils.getPaneWithHeight(15));
         for (Account account : financeService.getAllAccounts().stream()
                 .sorted(Comparator.comparing(Account::getMy).reversed()).collect(Collectors.toList())) {
-            CheckBox checkBox = new CheckBox(account.getTitle());
+            CheckBox checkBox = new CheckBox(account.getTitleWithAdditionalInfo());
             checkBoxAccountMap.put(checkBox, account);
             checkBox.setSelected(account.getMy());
             accountPane.getChildren().add(checkBox);

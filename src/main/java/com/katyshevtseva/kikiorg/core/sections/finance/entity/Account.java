@@ -26,7 +26,7 @@ public class Account implements OperationEnd {
     @Enumerated(EnumType.STRING)
     private Currency currency;
 
-    public String getTitle() {
+    public String getTitleWithAdditionalInfo() {
         String result = title + " " + ((char) currency.getCode());
         if (archived)
             return result + " (archived)";

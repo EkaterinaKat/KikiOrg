@@ -2,10 +2,12 @@ package com.katyshevtseva.kikiorg.view.controller.finance;
 
 import com.katyshevtseva.fx.FxUtils;
 import com.katyshevtseva.fx.WindowBuilder.FxController;
+import com.katyshevtseva.fx.dialogconstructor.DcComboBox;
 import com.katyshevtseva.fx.dialogconstructor.DcTextArea;
 import com.katyshevtseva.fx.dialogconstructor.DcTextField;
 import com.katyshevtseva.fx.dialogconstructor.DialogConstructor;
 import com.katyshevtseva.kikiorg.core.Core;
+import com.katyshevtseva.kikiorg.core.sections.finance.Currency;
 import com.katyshevtseva.kikiorg.core.sections.finance.OperationEnd;
 import com.katyshevtseva.kikiorg.core.sections.finance.OperationEnd.OperationEndType;
 import com.katyshevtseva.kikiorg.core.sections.finance.entity.Account;
@@ -40,7 +42,6 @@ class AdminController implements FxController {
     private void initialize() {
         FxUtils.setComboBoxItemsAndSetSelectedFirstItem(typeComboBox, Arrays.asList(OperationEndType.values()));
         typeComboBox.setOnAction(event -> updateTable());
-        newButton.setOnAction(event -> newButtonListener());
         updateTable();
     }
 
@@ -58,28 +59,36 @@ class AdminController implements FxController {
         }
         adjustColumns();
         table.setItems(items);
+        newButton.setOnAction(event -> newButtonListener());
     }
 
     private void newButtonListener() {
         DcTextField titleField = new DcTextField(true, "");
         DcTextArea descField = new DcTextArea(false, "");
-        DialogConstructor.constructDialog(() -> {
-            switch (typeComboBox.getValue()) {
-                case ITEM:
-                    Core.getInstance().financeService().addItem(titleField.getValue(), descField.getValue());
-                    break;
-                case SOURCE:
-                    Core.getInstance().financeService().addSource(titleField.getValue(), descField.getValue());
-                    break;
-                case ACCOUNT:
-                    Core.getInstance().financeService().addAccount(titleField.getValue(), descField.getValue());
-            }
-            updateTable();
-        }, titleField, descField);
+        DcComboBox<Currency> currencyComboBox = new DcComboBox<>(true, Currency.RUB, Arrays.asList(Currency.values()));
+
+        if (typeComboBox.getValue() == OperationEndType.ACCOUNT) {
+            DialogConstructor.constructDialog(() -> {
+                Core.getInstance().financeService()
+                        .addAccount(titleField.getValue(), descField.getValue(), currencyComboBox.getValue());
+                updateTable();
+            }, titleField, currencyComboBox, descField);
+        } else {
+            DialogConstructor.constructDialog(() -> {
+                switch (typeComboBox.getValue()) {
+                    case ITEM:
+                        Core.getInstance().financeService().addItem(titleField.getValue(), descField.getValue());
+                        break;
+                    case SOURCE:
+                        Core.getInstance().financeService().addSource(titleField.getValue(), descField.getValue());
+                }
+                updateTable();
+            }, titleField, descField);
+        }
     }
 
     private void adjustColumns() {
-        titleColumn.setCellValueFactory(new PropertyValueFactory<>("title"));
+        titleColumn.setCellValueFactory(new PropertyValueFactory<>("titleWithAdditionalInfo"));
         descColumn.setCellValueFactory(new PropertyValueFactory<>("description"));
         descColumn.setCellFactory(tc -> {
             TableCell<OperationEnd, String> cell = new TableCell<>();

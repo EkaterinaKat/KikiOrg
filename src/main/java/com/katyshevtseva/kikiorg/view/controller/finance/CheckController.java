@@ -46,7 +46,7 @@ class CheckController implements FxController {
     }
 
     private void adjustTable() {
-        titleColumn.setCellValueFactory(new PropertyValueFactory<>("title"));
+        titleColumn.setCellValueFactory(new PropertyValueFactory<>("titleWithAdditionalInfo"));
         amountColumn.setCellValueFactory(new PropertyValueFactory<>("amount"));
         table.setEditable(true);
         checkBoxColumn.setCellValueFactory(param -> new SimpleBooleanProperty(false));
@@ -59,7 +59,7 @@ class CheckController implements FxController {
 
     void updateTable() {
         List<Account> accounts = Core.getInstance().financeService().getActiveAccounts().stream()
-                .sorted(Comparator.comparing(Account::getTitle)).collect(Collectors.toList());
+                .sorted(Comparator.comparing(Account::getTitleWithAdditionalInfo)).collect(Collectors.toList());
         ObservableList<Account> observableList = FXCollections.observableArrayList();
         observableList.addAll(accounts);
         table.setItems(observableList);

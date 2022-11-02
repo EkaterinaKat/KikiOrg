@@ -56,4 +56,9 @@ public class Item implements OperationEnd, Leaf {
     public void setParentGroup(Group group) {
         this.parentGroup = (ItemGroup) group;
     }
+
+    @Override
+    public String getTitleWithAdditionalInfo() {
+        return title;
+    }
 }

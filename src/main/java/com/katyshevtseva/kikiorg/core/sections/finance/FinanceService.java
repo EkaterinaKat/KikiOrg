@@ -6,7 +6,6 @@ import com.katyshevtseva.kikiorg.core.date.DateService;
 import com.katyshevtseva.kikiorg.core.sections.finance.entity.*;
 import com.katyshevtseva.kikiorg.core.sections.finance.repo.*;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -53,12 +52,13 @@ public class FinanceService {
         return new ArrayList<>(items);
     }
 
-    public void addAccount(String title, String desc) {
+    public void addAccount(String title, String desc, Currency currency) {
         Account account = new Account();
         account.setTitle(title);
         account.setDescription(desc);
         account.setAmount(0);
         account.setArchived(false);
+        account.setCurrency(currency);
         accountRepo.saveAndFlush(account);
     }
 
@@ -75,7 +75,7 @@ public class FinanceService {
     }
 
     public List<Item> getAllItems() {
-        return itemRepo.findAll().stream().sorted(Comparator.comparing(Item::getTitle)).collect(Collectors.toList());
+        return itemRepo.findAll().stream().sorted(Comparator.comparing(Item::getTitleWithAdditionalInfo)).collect(Collectors.toList());
     }
 
     public void addExpense(Account account, long amount, Item item, Date date) {

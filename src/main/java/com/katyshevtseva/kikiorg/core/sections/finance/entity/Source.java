@@ -25,6 +25,11 @@ public class Source implements OperationEnd {
     }
 
     @Override
+    public String getTitleWithAdditionalInfo() {
+        return title;
+    }
+
+    @Override
     public OperationEndType getType() {
         return OperationEndType.SOURCE;
     }

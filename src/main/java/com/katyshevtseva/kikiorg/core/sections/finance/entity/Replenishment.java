@@ -39,12 +39,12 @@ public class Replenishment implements Operation {
 
     @Override
     public String getFromTitle() {
-        return source.getTitle();
+        return source.getTitleWithAdditionalInfo();
     }
 
     @Override
     public String getToTitle() {
-        return account.getTitle();
+        return account.getTitleWithAdditionalInfo();
     }
 
     @Override
