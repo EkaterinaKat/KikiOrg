@@ -7,19 +7,18 @@ import com.katyshevtseva.kikiorg.core.sections.finance.entity.Account;
 import com.katyshevtseva.kikiorg.core.sections.finance.entity.Expense;
 import com.katyshevtseva.kikiorg.core.sections.finance.entity.Replenishment;
 import com.katyshevtseva.kikiorg.core.sections.finance.entity.Transfer;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class CalculationService {
-    @Autowired
-    private ExpenseRepo expenseRepo;
-    @Autowired
-    private TransferRepo transferRepo;
-    @Autowired
-    private ReplenishmentRepo replenishmentRepo;
+    private final ExpenseRepo expenseRepo;
+    private final TransferRepo transferRepo;
+    private final ReplenishmentRepo replenishmentRepo;
 
     public long calculateAccountAmountByOperations(Account account) {
         List<Expense> expenses = expenseRepo.findByAccount(account);

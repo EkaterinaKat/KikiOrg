@@ -3,6 +3,9 @@ package com.katyshevtseva.kikiorg.view.controller.finance;
 import com.katyshevtseva.fx.FxUtils;
 import com.katyshevtseva.fx.WindowBuilder.FxController;
 import com.katyshevtseva.fx.dialog.StandardDialogBuilder;
+import com.katyshevtseva.fx.dialogconstructor.DcTextArea;
+import com.katyshevtseva.fx.dialogconstructor.DcTextField;
+import com.katyshevtseva.fx.dialogconstructor.DialogConstructor;
 import com.katyshevtseva.kikiorg.core.Core;
 import com.katyshevtseva.kikiorg.core.sections.finance.OperationEnd;
 import com.katyshevtseva.kikiorg.core.sections.finance.OperationEnd.OperationEndType;
@@ -59,19 +62,21 @@ class AdminController implements FxController {
     }
 
     private void newButtonListener() {
-        new StandardDialogBuilder().openTextFieldAndTextAreaDialog((title, desc) -> {
+        DcTextField titleField = new DcTextField(true, "");
+        DcTextArea descField = new DcTextArea(true, "");
+        DialogConstructor.constructDialog(()->{
             switch (typeComboBox.getValue()) {
                 case ITEM:
-                    Core.getInstance().financeService().addItem(title, desc);
+                    Core.getInstance().financeService().addItem(titleField.getValue(), descField.getValue());
                     break;
                 case SOURCE:
-                    Core.getInstance().financeService().addSource(title, desc);
+                    Core.getInstance().financeService().addSource(titleField.getValue(), descField.getValue());
                     break;
                 case ACCOUNT:
-                    Core.getInstance().financeService().addAccount(title, desc);
+                    Core.getInstance().financeService().addAccount(titleField.getValue(), descField.getValue());
             }
             updateTable();
-        });
+        }, titleField, descField);
     }
 
     private void adjustColumns() {

@@ -10,6 +10,7 @@ import com.katyshevtseva.kikiorg.core.sections.finance.entity.Account;
 import com.katyshevtseva.kikiorg.core.sections.finance.entity.Expense;
 import com.katyshevtseva.kikiorg.core.sections.finance.entity.Replenishment;
 import com.katyshevtseva.kikiorg.core.sections.finance.entity.Transfer;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,19 +23,14 @@ import static com.katyshevtseva.date.DateUtils.getLastMonthPeriod;
 import static com.katyshevtseva.date.DateUtils.shiftDate;
 
 @Service
+@RequiredArgsConstructor
 public class FinanceOperationService {
-    @Autowired
-    private FinanceService financeService;
-    @Autowired
-    private ExpenseRepo expenseRepo;
-    @Autowired
-    private ReplenishmentRepo replenishmentRepo;
-    @Autowired
-    private TransferRepo transferRepo;
-    @Autowired
-    private CalculationService calculationService;
-    @Autowired
-    private AccountRepo accountRepo;
+    private final FinanceService financeService;
+    private final ExpenseRepo expenseRepo;
+    private final ReplenishmentRepo replenishmentRepo;
+    private final TransferRepo transferRepo;
+    private final CalculationService calculationService;
+    private final AccountRepo accountRepo;
 
     public List<Operation> getOperationsForLastMonth() {
         return getOperationsForPeriod(getLastMonthPeriod());

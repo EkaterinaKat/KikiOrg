@@ -4,26 +4,24 @@ import com.katyshevtseva.kikiorg.core.sections.finance.repo.AccountRepo;
 import com.katyshevtseva.kikiorg.core.sections.finance.repo.CheckLineRepo;
 import com.katyshevtseva.kikiorg.core.sections.finance.entity.Account;
 import com.katyshevtseva.kikiorg.core.sections.finance.entity.CheckLine;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class ScuttleCheckService {
-    @Autowired
-    private CheckLineRepo checkLineRepo;
-    @Autowired
-    private FinanceService financeService;
-    @Autowired
-    private AccountRepo accountRepo;
+    private final CheckLineRepo checkLineRepo;
+    private final AccountRepo accountRepo;
 
     public List<CheckLine> getCheckLines(Account account) {
         return checkLineRepo.findAllByAccount(account);
     }
 
     public void rewriteCheckLines(List<CheckLine> checkLines, Account account) {
-        checkLineRepo.findAllByAccount(account).forEach(cL -> checkLineRepo.delete(cL));
+        checkLineRepo.findAllByAccount(account).forEach(checkLineRepo::delete);
         checkLineRepo.saveAll(checkLines);
     }
 

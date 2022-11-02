@@ -5,6 +5,7 @@ import com.katyshevtseva.kikiorg.core.date.DateEntity;
 import com.katyshevtseva.kikiorg.core.date.DateService;
 import com.katyshevtseva.kikiorg.core.sections.finance.entity.*;
 import com.katyshevtseva.kikiorg.core.sections.finance.repo.*;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -15,21 +16,15 @@ import java.util.stream.Collectors;
 import static com.katyshevtseva.date.DateUtils.getLastMonthPeriod;
 
 @Service
+@RequiredArgsConstructor
 public class FinanceService {
-    @Autowired
-    private AccountRepo accountRepo;
-    @Autowired
-    private SourceRepo sourceRepo;
-    @Autowired
-    private ItemRepo itemRepo;
-    @Autowired
-    private ExpenseRepo expenseRepo;
-    @Autowired
-    private ReplenishmentRepo replenishmentRepo;
-    @Autowired
-    private DateService dateService;
-    @Autowired
-    private TransferRepo transferRepo;
+    private final AccountRepo accountRepo;
+    private final SourceRepo sourceRepo;
+    private final ItemRepo itemRepo;
+    private final ExpenseRepo expenseRepo;
+    private final ReplenishmentRepo replenishmentRepo;
+    private final DateService dateService;
+    private final TransferRepo transferRepo;
 
     public void addSource(String title, String desc) {
         Source source = new Source();

@@ -3,13 +3,14 @@ package com.katyshevtseva.kikiorg.core.sections.habits;
 import com.katyshevtseva.kikiorg.core.sections.habits.repo.StabilityCriterionRepo;
 import com.katyshevtseva.kikiorg.core.sections.habits.entity.Habit;
 import com.katyshevtseva.kikiorg.core.sections.habits.entity.StabilityCriterion;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
+@RequiredArgsConstructor
 public class StabilityCriterionService {
-    @Autowired
-    private StabilityCriterionRepo stabilityCriterionRepo;
+    private final StabilityCriterionRepo stabilityCriterionRepo;
 
     public void saveOrRewriteCriterion(Habit habit, int daysTotal, int daysHabitDone) {
         stabilityCriterionRepo.deleteByHabit(habit);
