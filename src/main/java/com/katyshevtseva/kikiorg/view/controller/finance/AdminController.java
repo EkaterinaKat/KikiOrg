@@ -1,6 +1,7 @@
 package com.katyshevtseva.kikiorg.view.controller.finance;
 
 import com.katyshevtseva.fx.FxUtils;
+import com.katyshevtseva.fx.TableUtils;
 import com.katyshevtseva.fx.WindowBuilder.FxController;
 import com.katyshevtseva.fx.dialogconstructor.DcComboBox;
 import com.katyshevtseva.fx.dialogconstructor.DcTextArea;
@@ -50,12 +51,15 @@ class AdminController implements FxController {
         switch (typeComboBox.getValue()) {
             case ITEM:
                 items.addAll(Core.getInstance().financeService().getAllItems());
+                archiveColumn.setVisible(false);
                 break;
             case SOURCE:
                 items.addAll(Core.getInstance().financeService().getAllSources());
+                archiveColumn.setVisible(false);
                 break;
             case ACCOUNT:
                 items.addAll(Core.getInstance().financeService().getAllAccounts());
+                archiveColumn.setVisible(true);
         }
         adjustColumns();
         table.setItems(items);
@@ -100,7 +104,7 @@ class AdminController implements FxController {
             return cell;
         });
 
-        FxUtils.adjustButtonColumn(editColumn, "Edit", operationEnd -> {
+        TableUtils.adjustButtonColumn(editColumn, "Edit", operationEnd -> {
             DcTextField titleField = new DcTextField(true, operationEnd.getTitle());
             DcTextArea descField = new DcTextArea(false, operationEnd.getDescription());
             DialogConstructor.constructDialog(() -> {
@@ -121,17 +125,11 @@ class AdminController implements FxController {
             }, titleField, descField);
         });
 
-        FxUtils.adjustButtonColumn(archiveColumn, "-", operationEnd -> {
+        TableUtils.adjustButtonColumn(archiveColumn, "-", operationEnd -> {
             if (operationEnd.getType() == OperationEndType.ACCOUNT) {
                 Core.getInstance().financeService().archive((Account) operationEnd);
                 updateTable();
             }
-        }, button -> {
-            if (typeComboBox.getValue() == OperationEndType.ACCOUNT) {
-                button.setText("Archive");
-            } else {
-                button.setDisable(true);
-            }
-        });
+        }, button -> button.setText("Archive"));
     }
 }

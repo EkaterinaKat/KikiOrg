@@ -1,7 +1,7 @@
 package com.katyshevtseva.kikiorg.view.controller.finance;
 
-import com.katyshevtseva.fx.FxUtils;
 import com.katyshevtseva.fx.Styler;
+import com.katyshevtseva.fx.TableUtils;
 import com.katyshevtseva.fx.WindowBuilder.FxController;
 import com.katyshevtseva.fx.dialog.StandardDialogBuilder;
 import com.katyshevtseva.general.NoArgsKnob;
@@ -60,7 +60,7 @@ class HistoryTableController implements FxController {
         fromColumn.setCellValueFactory(new PropertyValueFactory<>("fromTitle"));
         toColumn.setCellValueFactory(new PropertyValueFactory<>("toTitle"));
         amountColumn.setCellValueFactory(new PropertyValueFactory<>("amountString"));
-        FxUtils.adjustButtonColumn(deleteColumn, "",
+        TableUtils.adjustButtonColumn(deleteColumn, "",
                 operation ->
                         new StandardDialogBuilder().openQuestionDialog("Delete?", b -> {
                             if (b) {
