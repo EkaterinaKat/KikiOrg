@@ -20,7 +20,8 @@ import static com.katyshevtseva.kikiorg.core.sections.habits.StabilityStatus.*;
 @Service
 @RequiredArgsConstructor
 public class AnalysisService {
-    private final Date someDaysAgo = shiftDate(new Date(), DAY, -49);
+    public final static int NUM_OF_STABILITY_DAYS = 30;
+    private final Date someDaysAgo = shiftDate(new Date(), DAY, -(NUM_OF_STABILITY_DAYS-1));
     private final HabitRepo habitRepo;
     private final HabitMarkService markService;
     private final StabilityCriterionService criterionService;

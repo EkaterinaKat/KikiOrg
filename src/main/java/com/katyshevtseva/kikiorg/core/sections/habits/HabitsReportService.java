@@ -14,6 +14,7 @@ import java.util.Date;
 import java.util.List;
 
 import static com.katyshevtseva.date.DateUtils.*;
+import static com.katyshevtseva.kikiorg.core.sections.habits.AnalysisService.NUM_OF_STABILITY_DAYS;
 
 @Service
 @RequiredArgsConstructor
@@ -23,7 +24,7 @@ public class HabitsReportService {
 
     public List<List<ReportCell>> getQuickReport() {
         return getReport(habitsService.getActiveHabits(),
-                new Period(shiftDate(new Date(), TimeUnit.DAY, -49), new Date()));
+                new Period(shiftDate(new Date(), TimeUnit.DAY, -(NUM_OF_STABILITY_DAYS - 1)), new Date()));
     }
 
     public List<List<ReportCell>> getReport(List<Habit> habits, Period period) {
