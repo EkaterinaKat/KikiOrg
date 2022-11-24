@@ -2,10 +2,6 @@ package com.katyshevtseva.kikiorg.core.sections.wardrobe;
 
 import com.katyshevtseva.general.Page;
 import com.katyshevtseva.kikiorg.core.date.DateService;
-import com.katyshevtseva.kikiorg.core.sections.wardrobe.repo.CollageEntityRepo;
-import com.katyshevtseva.kikiorg.core.sections.wardrobe.repo.ComponentEntityRepo;
-import com.katyshevtseva.kikiorg.core.sections.wardrobe.repo.OutfitRepo;
-import com.katyshevtseva.kikiorg.core.sections.wardrobe.repo.PieceRepo;
 import com.katyshevtseva.kikiorg.core.sections.wardrobe.entity.CollageEntity;
 import com.katyshevtseva.kikiorg.core.sections.wardrobe.entity.ComponentEntity;
 import com.katyshevtseva.kikiorg.core.sections.wardrobe.entity.Outfit;
@@ -14,6 +10,10 @@ import com.katyshevtseva.kikiorg.core.sections.wardrobe.enums.ClothesSubtype;
 import com.katyshevtseva.kikiorg.core.sections.wardrobe.enums.Purpose;
 import com.katyshevtseva.kikiorg.core.sections.wardrobe.enums.Satisfaction;
 import com.katyshevtseva.kikiorg.core.sections.wardrobe.enums.Season;
+import com.katyshevtseva.kikiorg.core.sections.wardrobe.repo.CollageEntityRepo;
+import com.katyshevtseva.kikiorg.core.sections.wardrobe.repo.ComponentEntityRepo;
+import com.katyshevtseva.kikiorg.core.sections.wardrobe.repo.OutfitRepo;
+import com.katyshevtseva.kikiorg.core.sections.wardrobe.repo.PieceRepo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -76,17 +76,8 @@ public class WardrobeService {
 
     public Page<Outfit> getOutfitPage(int pageNum, Purpose purpose, Season season) {
         Pageable pageable = PageRequest.of(pageNum, 4, Sort.by("id").descending());
-        org.springframework.data.domain.Page<Outfit> outfitPage;
-
-        if (purpose == null && season == null) {
-            outfitPage = outfitRepo.findAll(pageable);
-        } else {
-            List<Purpose> purposes = purpose == null ? Arrays.asList(Purpose.values()) : Collections.singletonList(purpose);
-            List<Season> seasons = season == null ? Arrays.asList(Season.values()) : Collections.singletonList(season);
-
-            outfitPage = outfitRepo.findByPurposesAndSeasons(purposes, seasons, pageable);
-        }
-
+        org.springframework.data.domain.Page<Outfit> outfitPage =
+                outfitRepo.findAll(new OutfitSpec(season, purpose), pageable);
         return new Page<>(outfitPage.getContent(), pageNum, outfitPage.getTotalPages());
     }
 
@@ -132,16 +123,16 @@ public class WardrobeService {
         }
     }
 
-    public Outfit saveOutfit(Outfit existing, String comment, Set<Season> seasons, Set<Purpose> purposes, CollageEntity collageEntity) {
-        if (seasons.isEmpty() || purposes.isEmpty()) {
-            throw new RuntimeException("Цели или сезоны не заполнены");
+    public Outfit saveOutfit(Outfit existing, String comment, Season season, Purpose purpose, CollageEntity collageEntity) {
+        if (season == null || purpose == null) {
+            throw new RuntimeException("Цель или сезон не заполнены");
         }
 
         if (existing == null)
             existing = new Outfit();
         existing.setComment(comment != null ? comment.trim() : null);
-        existing.setPurposes(purposes);
-        existing.setSeasons(seasons);
+        existing.setPurpose(purpose);
+        existing.setSeason(season);
         existing.setCollageEntity(collageEntity);
 
         return outfitRepo.save(existing);

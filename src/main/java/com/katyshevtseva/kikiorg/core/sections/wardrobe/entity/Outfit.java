@@ -5,7 +5,6 @@ import com.katyshevtseva.kikiorg.core.sections.wardrobe.enums.Season;
 import lombok.Data;
 
 import javax.persistence.*;
-import java.util.Set;
 
 @Data
 @Entity
@@ -16,30 +15,30 @@ public class Outfit {
 
     private String comment;
 
-    @ElementCollection(fetch = FetchType.EAGER)
-    @JoinTable(name = "outfits_seasons", joinColumns = @JoinColumn(name = "outfit_id"))
     @Enumerated(EnumType.STRING)
-    Set<Season> seasons;
+    Season season;
 
-    @ElementCollection(fetch = FetchType.EAGER)
-    @JoinTable(name = "outfits_purposes", joinColumns = @JoinColumn(name = "outfit_id"))
     @Enumerated(EnumType.STRING)
-    Set<Purpose> purposes;
+    Purpose purpose;
 
     @OneToOne
     @JoinColumn(name = "collage_id")
     private CollageEntity collageEntity;
 
     public String getFullDesc() {
-        StringBuilder fullDesc = new StringBuilder(comment != null ? comment : "").append("\n\nSeasons: ");
-        for (Season season : seasons)
-            fullDesc.append(season).append(", ");
-        fullDesc.delete(fullDesc.length() - 2, fullDesc.length());
-        fullDesc.append(".");
-        fullDesc.append("\n\nPurposes: ");
-        for (Purpose purpose : purposes)
-            fullDesc.append(purpose).append(", ");
-        fullDesc.delete(fullDesc.length() - 2, fullDesc.length());
+        StringBuilder fullDesc = new StringBuilder(comment != null ? comment : "");
+
+        if (season != null || purpose != null) {
+            fullDesc.append("\n\n");
+        }
+
+        if (season != null) {
+            fullDesc.append(season).append("\n");
+        }
+        if (purpose != null) {
+            fullDesc.append(purpose);
+        }
+
         return fullDesc.toString();
     }
 }

@@ -2,7 +2,9 @@ package com.katyshevtseva.kikiorg.core.sections.wardrobe.enums;
 
 public enum Purpose {
 
-    HOME("Дом"), GOING_OUT("На выход");
+    HOME("Дом"),
+    GOING_OUT_COLLECTED("На выход: собранный"),
+    GOING_OUT_RELAXED("На выход: расслабленный");
 
     private final String title;
 

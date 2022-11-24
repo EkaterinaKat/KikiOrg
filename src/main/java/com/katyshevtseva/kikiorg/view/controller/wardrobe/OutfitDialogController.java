@@ -1,6 +1,7 @@
 package com.katyshevtseva.kikiorg.view.controller.wardrobe;
 
 import com.katyshevtceva.collage.logic.Collage;
+import com.katyshevtseva.fx.FxUtils;
 import com.katyshevtseva.fx.WindowBuilder.FxController;
 import com.katyshevtseva.fx.dialog.StandardDialogBuilder;
 import com.katyshevtseva.general.OneArgKnob;
@@ -12,18 +13,11 @@ import com.katyshevtseva.kikiorg.core.sections.wardrobe.enums.Season;
 import com.katyshevtseva.kikiorg.view.controller.wardrobe.utils.CollageUtils;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
-import javafx.scene.control.CheckBox;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.Pane;
-import javafx.scene.layout.VBox;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
-import java.util.stream.Collectors;
 
 import static com.katyshevtseva.fx.FxUtils.closeWindowThatContains;
-import static com.katyshevtseva.fx.FxUtils.getPaneWithHeight;
 import static com.katyshevtseva.kikiorg.view.controller.wardrobe.utils.CollageUtils.*;
 import static com.katyshevtseva.kikiorg.view.controller.wardrobe.utils.WrdImageUtils.toCollageImages;
 import static com.katyshevtseva.kikiorg.view.utils.ViewConstants.CLOTHES_TYPE_SELECT_DIALOG_SIZE;
@@ -32,8 +26,6 @@ class OutfitDialogController implements FxController {
     private final WardrobeService service = Core.getInstance().wardrobeService();
     private final Outfit existing;
     private final OneArgKnob<Outfit> onSaveListener;
-    private final List<CheckBox> seasonsCheckBoxes = new ArrayList<>();
-    private final List<CheckBox> purposesCheckBoxes = new ArrayList<>();
     private Collage collage;
     @FXML
     private Pane collagePane;
@@ -42,9 +34,9 @@ class OutfitDialogController implements FxController {
     @FXML
     private TextArea commentTextArea;
     @FXML
-    private VBox seasonsPane;
+    private ComboBox<Season> seasonsComboBox;
     @FXML
-    private VBox purposesPane;
+    private ComboBox<Purpose> purposesComboBox;
     @FXML
     private Button saveButton;
 
@@ -55,33 +47,15 @@ class OutfitDialogController implements FxController {
 
     @FXML
     private void initialize() {
-        adjustCheckBoxPanes();
+        adjustComboBoxes();
         saveButton.setOnAction(event -> save());
         setCollagePaneSize();
         tuneCollage();
-        setSaveButtonAbility();
+        FxUtils.associateButtonWithControls(saveButton, seasonsComboBox, purposesComboBox);
 
         if (existing != null) {
             commentTextArea.setText(existing.getComment());
         }
-    }
-
-    private void setSaveButtonAbility() {
-        boolean purposeSelected = false;
-        for (CheckBox checkBox : purposesCheckBoxes) {
-            if (checkBox.isSelected()) {
-                purposeSelected = true;
-            }
-        }
-
-        boolean seasonSelected = false;
-        for (CheckBox checkBox : seasonsCheckBoxes) {
-            if (checkBox.isSelected()) {
-                seasonSelected = true;
-            }
-        }
-
-        saveButton.setDisable(!purposeSelected || !seasonSelected);
     }
 
     private void tuneCollage() {
@@ -109,44 +83,15 @@ class OutfitDialogController implements FxController {
         Outfit saved = service.saveOutfit(
                 existing,
                 commentTextArea.getText(),
-                getSelectedSeasons(),
-                getSelectedPurposes(),
+                seasonsComboBox.getValue(),
+                purposesComboBox.getValue(),
                 CollageUtils.saveCollage(existing != null ? existing.getCollageEntity() : null, collage));
         onSaveListener.execute(saved);
         closeWindowThatContains(saveButton);
     }
 
-    private Set<Season> getSelectedSeasons() {
-        return seasonsCheckBoxes.stream()
-                .filter(CheckBox::isSelected)
-                .map(checkBox -> Season.getByTitleOnNull(checkBox.getText()))
-                .collect(Collectors.toSet());
-    }
-
-    private Set<Purpose> getSelectedPurposes() {
-        return purposesCheckBoxes.stream()
-                .filter(CheckBox::isSelected)
-                .map(checkBox -> Purpose.getByTitleOnNull(checkBox.getText()))
-                .collect(Collectors.toSet());
-    }
-
-    private void adjustCheckBoxPanes() {
-        for (Season season : Season.values()) {
-            CheckBox checkBox = new CheckBox(season.getTitle());
-            checkBox.setOnAction(event -> setSaveButtonAbility());
-            seasonsCheckBoxes.add(checkBox);
-            seasonsPane.getChildren().addAll(checkBox, getPaneWithHeight(10));
-            if (existing != null)
-                checkBox.setSelected(existing.getSeasons().contains(season));
-        }
-
-        for (Purpose purpose : Purpose.values()) {
-            CheckBox checkBox = new CheckBox(purpose.getTitle());
-            checkBox.setOnAction(event -> setSaveButtonAbility());
-            purposesCheckBoxes.add(checkBox);
-            purposesPane.getChildren().addAll(checkBox, getPaneWithHeight(10));
-            if (existing != null)
-                checkBox.setSelected(existing.getPurposes().contains(purpose));
-        }
+    private void adjustComboBoxes() {
+        FxUtils.setComboBoxItems(seasonsComboBox, Season.values(), existing != null ? existing.getSeason() : null);
+        FxUtils.setComboBoxItems(purposesComboBox, Purpose.values(), existing != null ? existing.getPurpose() : null);
     }
 }

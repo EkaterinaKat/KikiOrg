@@ -2,18 +2,17 @@ package com.katyshevtseva.kikiorg.core.sections.wardrobe;
 
 import com.katyshevtseva.fx.Styler.StandardColor;
 import com.katyshevtseva.general.ReportCell;
-import com.katyshevtseva.kikiorg.core.sections.wardrobe.repo.OutfitRepo;
-import com.katyshevtseva.kikiorg.core.sections.wardrobe.repo.PieceRepo;
 import com.katyshevtseva.kikiorg.core.sections.wardrobe.enums.ClothesSubtype;
 import com.katyshevtseva.kikiorg.core.sections.wardrobe.enums.Purpose;
 import com.katyshevtseva.kikiorg.core.sections.wardrobe.enums.Season;
+import com.katyshevtseva.kikiorg.core.sections.wardrobe.repo.OutfitRepo;
+import com.katyshevtseva.kikiorg.core.sections.wardrobe.repo.PieceRepo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 @Service
@@ -41,10 +40,7 @@ public class WardrobeStatisticsService {
     }
 
     private int getCount(Season season, Purpose purpose) {
-        return (int) outfitRepo.findByPurposesAndSeasons(
-                Collections.singletonList(purpose),
-                Collections.singletonList(season),
-                PageRequest.of(0, 1)).getTotalElements();
+        return (int) outfitRepo.findByPurposeAndSeason(purpose, season, PageRequest.of(0, 1)).getTotalElements();
     }
 
     private List<ReportCell> getHeadLine() {

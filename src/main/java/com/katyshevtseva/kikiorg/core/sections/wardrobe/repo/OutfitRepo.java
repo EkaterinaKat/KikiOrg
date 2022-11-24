@@ -7,19 +7,13 @@ import com.katyshevtseva.kikiorg.core.sections.wardrobe.enums.Season;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
-import java.util.List;
+public interface OutfitRepo extends JpaRepository<Outfit, Long>, JpaSpecificationExecutor<Outfit> {
 
-public interface OutfitRepo extends JpaRepository<Outfit, Long> {
-
-    @Query(value = "SELECT DISTINCT o FROM Outfit o " +
-            "JOIN o.seasons s JOIN o.purposes p " +
-            "WHERE s IN :seasons AND p IN :purposes ")
-    Page<Outfit> findByPurposesAndSeasons(@Param("purposes") List<Purpose> purposes,
-                                          @Param("seasons") List<Season> seasons,
-                                          Pageable pageable);
+    Page<Outfit> findByPurposeAndSeason(Purpose purpose, Season season, Pageable pageable);
 
     @Query(value = "SELECT  o FROM Outfit o " +
             "JOIN o.collageEntity c JOIN c.components comp JOIN comp.pieces p " +
