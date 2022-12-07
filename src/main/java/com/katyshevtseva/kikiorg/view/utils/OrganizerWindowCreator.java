@@ -26,6 +26,20 @@ public class OrganizerWindowCreator {
                 setOnWindowCloseEventHandler(event -> System.exit(0)).showWindow();
     }
 
+    /* ---------------------------------- Структура ---------------------------------------------- */
+
+    public Node getMainStructureNode(FxController controller) {
+        return new WindowBuilder(STRUCTURE_FXML_LOCATION + "main_structure.fxml").setController(controller).getNode();
+    }
+
+    public Node getStructureActivitiesNode(FxController controller) {
+        return new WindowBuilder(STRUCTURE_FXML_LOCATION + "activities.fxml").setController(controller).getNode();
+    }
+
+    public Node getStructureParamstNode(FxController controller) {
+        return new WindowBuilder(STRUCTURE_FXML_LOCATION + "params.fxml").setController(controller).getNode();
+    }
+
     /* ---------------------------------- Трекер ---------------------------------------------- */
 
     public Node getMainTrackerNode(FxController controller) {

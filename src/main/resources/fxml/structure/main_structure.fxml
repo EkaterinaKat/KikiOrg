@@ -5,14 +5,15 @@
 <BorderPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml">
 
+
     <top>
         <VBox>
             <Pane minHeight="10" maxHeight="10"/>
             <HBox>
                 <Pane minWidth="30" maxWidth="30"/>
-                <Button fx:id="boardButton" text="Board"/>
+                <Button fx:id="activitiesButton" text="Activities"/>
                 <Pane minWidth="30" maxWidth="30"/>
-                <Button fx:id="projectsButton" text="Projects"/>
+                <Button fx:id="paramsButton" text="Params"/>
             </HBox>
             <Pane minHeight="10" maxHeight="10"/>
         </VBox>

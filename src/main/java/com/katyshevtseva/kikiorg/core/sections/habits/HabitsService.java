@@ -1,10 +1,10 @@
 package com.katyshevtseva.kikiorg.core.sections.habits;
 
 import com.katyshevtseva.date.DateUtils;
-import com.katyshevtseva.kikiorg.core.sections.habits.repo.HabitChangeActionRepo;
-import com.katyshevtseva.kikiorg.core.sections.habits.repo.HabitRepo;
 import com.katyshevtseva.kikiorg.core.sections.habits.entity.Habit;
 import com.katyshevtseva.kikiorg.core.sections.habits.entity.HabitChangeAction;
+import com.katyshevtseva.kikiorg.core.sections.habits.repo.HabitChangeActionRepo;
+import com.katyshevtseva.kikiorg.core.sections.habits.repo.HabitRepo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -14,13 +14,13 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import static com.katyshevtseva.date.DateUtils.shiftDate;
-import static java.util.Comparator.*;
+import static java.util.Comparator.comparing;
+import static java.util.Comparator.nullsLast;
 
 @RequiredArgsConstructor
 @Service
 public class HabitsService {
     private final HabitRepo habitRepo;
-    private final HabitMarkService habitMarkService;
     private final HabitHistoryService habitHistoryService;
     private final HabitChangeActionRepo habitChangeActionRepo;
 

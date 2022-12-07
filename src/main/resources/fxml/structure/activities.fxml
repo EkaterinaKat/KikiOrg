@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.*?>
+<VBox xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml"
+      minWidth="830" maxWidth="830"
+      fx:id="root">
+
+    <Pane minHeight="25" maxHeight="25"/>
+
+    <HBox>
+        <Pane minWidth="25" maxWidth="25"/>
+        <VBox>
+            <Label text="activities..."/>
+        </VBox>
+
+    </HBox>
+
+
+</VBox>

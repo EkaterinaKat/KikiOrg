@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.Button?>
+<VBox xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml" minWidth="830" maxWidth="830"
+      fx:id="root">
+
+    <Pane minHeight="25" maxHeight="25"/>
+
+    <HBox>
+        <Pane minWidth="25" maxWidth="25"/>
+        <Button text="New param" fx:id="paramCreationButton"/>
+        <Pane minWidth="50" maxWidth="50"/>
+        <VBox fx:id="paramPane">
+
+        </VBox>
+
+    </HBox>
+
+
+</VBox>
