@@ -19,16 +19,16 @@ public class StructureService {
     private final ParamRepo paramRepo;
     private final ParamValueRepo paramValueRepo;
 
-    public Param createParam(String title) {
-        return paramRepo.save(new Param(title));
+    public void createParam(String title, boolean required, boolean singleValue) {
+        paramRepo.save(new Param(title, required, singleValue));
     }
 
-    public ParamValue createParamValue(String title, Param param) {
-        return paramValueRepo.save(new ParamValue(title, param));
+    public void createParamValue(String title, Param param) {
+        paramValueRepo.save(new ParamValue(title, param));
     }
 
-    public Activity createActivity(String title) {
-        return activityRepo.save(new Activity(title));
+    public void createActivity(String title) {
+        activityRepo.save(new Activity(title));
     }
 
     public void addParamValues(Activity activity, Param param, List<ParamValue> values) {
@@ -48,8 +48,10 @@ public class StructureService {
         return paramRepo.findAll();
     }
 
-    public void edit(Param param, String title) {
+    public void edit(Param param, String title, boolean required, boolean singleValue) {
         param.setTitle(title);
+        param.setRequired(required);
+        param.setSingleValue(singleValue);
         paramRepo.save(param);
     }
 

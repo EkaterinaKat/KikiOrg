@@ -60,7 +60,7 @@ public class ActivitiesController implements FxController {
                 } else {
                     Activity activity = indexActivityMap.get(k);
                     Param param = indexParamMap.get(l);
-                    Node node = getRegularNode(getValuesString(activity, param));
+                    Node node = getRegularNode(getValuesString(activity, param), valuesAreCorrect(activity, param));
                     node.setOnMouseClicked(event -> OrganizerWindowCreator.getInstance().openValuesSelectDialog(
                             new ValuesSelectController(param, activity, this::fillPane)
                     ));
@@ -78,8 +78,8 @@ public class ActivitiesController implements FxController {
         return getTableCell(s, 15, BLACK, PASTEL_PINK, GRAY);
     }
 
-    private Node getRegularNode(String s) {
-        return getTableCell(s, 15, BLACK, WHITE, GRAY);
+    private Node getRegularNode(String s, boolean dataIsCorrect) {
+        return getTableCell(s, 15, BLACK, dataIsCorrect ? WHITE : RED, GRAY);
     }
 
     private Node getTableCell(String text, int textSize, StandardColor textColor, StandardColor backgroundColor,
@@ -107,6 +107,19 @@ public class ActivitiesController implements FxController {
             stringBuilder.append("* ").append(value.getTitle()).append("\n");
         }
         return stringBuilder.toString();
+    }
+
+    private boolean valuesAreCorrect(Activity activity, Param param) {
+        List<ParamValue> values = activity.getParamValues().stream()
+                .filter(paramValue -> paramValue.getParam().equals(param)).collect(Collectors.toList());
+
+        if (param.isRequired() && values.size() == 0) {
+            return false;
+        }
+        if (param.isSingleValue() && values.size() > 1) {
+            return false;
+        }
+        return true;
     }
 
     private Map<Integer, Activity> getIndexActivityMap() {

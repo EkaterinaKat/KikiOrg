@@ -3,6 +3,7 @@ package com.katyshevtseva.kikiorg.view.controller.structure;
 import com.katyshevtseva.fx.Styler;
 import com.katyshevtseva.fx.WindowBuilder.FxController;
 import com.katyshevtseva.fx.dialog.StandardDialogBuilder;
+import com.katyshevtseva.fx.dialogconstructor.DcCheckBox;
 import com.katyshevtseva.fx.dialogconstructor.DcTextField;
 import com.katyshevtseva.fx.dialogconstructor.DialogConstructor;
 import com.katyshevtseva.kikiorg.core.Core;
@@ -16,6 +17,7 @@ import javafx.scene.control.MenuItem;
 import javafx.scene.layout.VBox;
 
 import static com.katyshevtseva.fx.FxUtils.getPaneWithHeight;
+import static com.katyshevtseva.fx.Styler.StandardColor.BROWN;
 
 
 public class ParamsController implements FxController {
@@ -25,31 +27,36 @@ public class ParamsController implements FxController {
     private Button paramCreationButton;
 
     @FXML
-    private void initialize(){
+    private void initialize() {
         fillPane();
         paramCreationButton.setOnAction(event -> {
             DcTextField titleField = new DcTextField(true, "");
+            DcCheckBox requiredCheckBox = new DcCheckBox(false, "Required");
+            DcCheckBox singleValueCheckBox = new DcCheckBox(false, "Single value");
             DialogConstructor.constructDialog(() -> {
-                Core.getInstance().structureService().createParam(titleField.getValue());
+                Core.getInstance().structureService().createParam(
+                        titleField.getValue(), requiredCheckBox.getValue(), singleValueCheckBox.getValue());
                 fillPane();
-            }, titleField);
+            }, titleField, requiredCheckBox, singleValueCheckBox);
         });
     }
 
     private void fillPane() {
         paramPane.getChildren().clear();
 
-        for(Param param: Core.getInstance().structureService().getParams()) {
+        for (Param param : Core.getInstance().structureService().getParams()) {
             Label label = new Label(param.getTitle());
-            label.setStyle(Styler.getTextSizeStyle(25));
+            label.setStyle(Styler.getTextSizeStyle(25) + Styler.getColorfullStyle(Styler.ThingToColor.TEXT, BROWN));
             label.setContextMenu(getContextMenu(param));
-            paramPane.getChildren().add(label);
+            Label label1 = new Label(param.getAdditionalInfo());
+            label1.setStyle(Styler.getTextSizeStyle(20) + Styler.getColorfullStyle(Styler.ThingToColor.TEXT, BROWN));
+            paramPane.getChildren().addAll(label, label1);
 
-            for (ParamValue paramValue: param.getValues()) {
-                Label label1 = new Label(paramValue.getTitle());
-                label1.setStyle(Styler.getTextSizeStyle(15));
-                label1.setContextMenu(getContextMenu(paramValue));
-                paramPane.getChildren().add(label1);
+            for (ParamValue paramValue : param.getValues()) {
+                Label label2 = new Label("   * " + paramValue.getTitle());
+                label2.setStyle(Styler.getTextSizeStyle(15));
+                label2.setContextMenu(getContextMenu(paramValue));
+                paramPane.getChildren().add(label2);
             }
 
             paramPane.getChildren().add(getPaneWithHeight(25));
@@ -71,10 +78,13 @@ public class ParamsController implements FxController {
         MenuItem editItem = new MenuItem("Edit");
         editItem.setOnAction(event -> {
             DcTextField titleField = new DcTextField(true, param.getTitle());
+            DcCheckBox requiredCheckBox = new DcCheckBox(param.isRequired(), "Required");
+            DcCheckBox singleValueCheckBox = new DcCheckBox(param.isSingleValue(), "Single value");
             DialogConstructor.constructDialog(() -> {
-                Core.getInstance().structureService().edit(param, titleField.getValue());
+                Core.getInstance().structureService().edit(
+                        param, titleField.getValue(), requiredCheckBox.getValue(), singleValueCheckBox.getValue());
                 fillPane();
-            }, titleField);
+            }, titleField, requiredCheckBox, singleValueCheckBox);
         });
 
         MenuItem deleteItem = new MenuItem("Delete");

@@ -39,6 +39,7 @@ public class ValuesSelectController implements FxController {
             infoUpdateKnob.execute();
             closeWindowThatContains(okButton);
         });
+        setOkButtonAvailability();
     }
 
     private List<ParamValue> getSelectedValues() {
@@ -54,8 +55,22 @@ public class ValuesSelectController implements FxController {
         for (ParamValue paramValue : param.getValues()) {
             CheckBox checkBox = new CheckBox(paramValue.getTitle());
             checkBox.setSelected(activity.getParamValues().contains(paramValue));
+            checkBox.setOnAction(event -> setOkButtonAvailability());
             checkBoxParamValueMap.put(checkBox, paramValue);
             valuesPane.getChildren().addAll(checkBox, getPaneWithHeight(20));
         }
+    }
+
+    private void setOkButtonAvailability() {
+        boolean okButtonAvailable = true;
+
+        if (param.isRequired() && getSelectedValues().size() == 0) {
+            okButtonAvailable = false;
+        }
+        if (param.isSingleValue() && getSelectedValues().size() > 1) {
+            okButtonAvailable = false;
+        }
+
+        okButton.setDisable(!okButtonAvailable);
     }
 }

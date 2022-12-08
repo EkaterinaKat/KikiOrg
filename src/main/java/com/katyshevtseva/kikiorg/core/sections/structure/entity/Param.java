@@ -19,8 +19,18 @@ public class Param {
     @OneToMany(mappedBy = "param", fetch = FetchType.EAGER)
     private Set<ParamValue> values;
 
-    public Param(String title) {
+    private boolean required;
+
+    private boolean singleValue;
+
+    public Param(String title, boolean required, boolean singleValue) {
         this.title = title;
+        this.required = required;
+        this.singleValue = singleValue;
+    }
+
+    public String getAdditionalInfo() {
+        return "(" + (required ? "required" : "optional") + ", " + (singleValue ? "single value" : "multiple values") + ")";
     }
 
     @Override
