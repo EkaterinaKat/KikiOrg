@@ -15,7 +15,7 @@ public class ParamValue {
 
     private String title;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "param_id", nullable = false)
     private Param param;
 
@@ -37,5 +37,13 @@ public class ParamValue {
     @Override
     public int hashCode() {
         return (int) (id ^ (id >>> 32));
+    }
+
+    @Override
+    public String toString() {
+        return "ParamValue{" +
+                "id=" + id +
+                ", title='" + title + '\'' +
+                '}';
     }
 }

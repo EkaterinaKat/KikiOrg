@@ -38,6 +38,6 @@ public class MainStructureController extends AbstractSwitchController implements
     }
 
     private void paramsButtonListener() {
-        activateMode(paramsButton, paramsNode, OrganizerWindowCreator.getInstance()::getStructureParamstNode, paramsController);
+        activateMode(paramsButton, paramsNode, OrganizerWindowCreator.getInstance()::getStructureParamsNode, paramsController);
     }
 }

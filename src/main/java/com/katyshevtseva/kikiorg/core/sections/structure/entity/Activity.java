@@ -4,7 +4,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.util.List;
+import java.util.Set;
 
 @Data
 @Entity
@@ -20,9 +20,17 @@ public class Activity {
     @JoinTable(name = "activities_param_values",
             joinColumns = @JoinColumn(name = "activity_id"),
             inverseJoinColumns = @JoinColumn(name = "param_value_id"))
-    private List<ParamValue> paramValues;
+    private Set<ParamValue> paramValues;
 
     public Activity(String title) {
         this.title = title;
+    }
+
+    @Override
+    public String toString() {
+        return "Activity{" +
+                "id=" + id +
+                ", title='" + title + '\'' +
+                '}';
     }
 }

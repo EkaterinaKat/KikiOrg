@@ -31,8 +31,12 @@ public class StructureService {
         return activityRepo.save(new Activity(title));
     }
 
-    public void addParamValue(Activity activity, ParamValue paramValue) {
-        activity.getParamValues().add(paramValue);
+    public void addParamValues(Activity activity, Param param, List<ParamValue> values) {
+        if (values.stream().anyMatch(paramValue -> !paramValue.getParam().equals(param))) {
+            throw new RuntimeException();
+        }
+        activity.getParamValues().removeAll(param.getValues());
+        activity.getParamValues().addAll(values);
         activityRepo.save(activity);
     }
 
@@ -61,8 +65,7 @@ public class StructureService {
     }
 
     public void delete(ParamValue paramValue) {
-        //todo убедиться что метод findByParamValues работает
-        for (Activity activity: activityRepo.findByParamValues(paramValue)) {
+        for (Activity activity : activityRepo.findByParamValues(paramValue)) {
             activity.getParamValues().remove(paramValue);
             activityRepo.save(activity);
         }

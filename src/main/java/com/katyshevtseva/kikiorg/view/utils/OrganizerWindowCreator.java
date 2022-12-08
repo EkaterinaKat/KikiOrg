@@ -36,8 +36,13 @@ public class OrganizerWindowCreator {
         return new WindowBuilder(STRUCTURE_FXML_LOCATION + "activities.fxml").setController(controller).getNode();
     }
 
-    public Node getStructureParamstNode(FxController controller) {
+    public Node getStructureParamsNode(FxController controller) {
         return new WindowBuilder(STRUCTURE_FXML_LOCATION + "params.fxml").setController(controller).getNode();
+    }
+
+    public void openValuesSelectDialog(FxController controller) {
+        new WindowBuilder(STRUCTURE_FXML_LOCATION + "values_select.fxml").
+                setController(controller).setSize(500, 500).showWindow();
     }
 
     /* ---------------------------------- Трекер ---------------------------------------------- */
