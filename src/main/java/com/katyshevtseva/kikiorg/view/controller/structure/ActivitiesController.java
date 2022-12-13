@@ -4,6 +4,7 @@ import com.katyshevtseva.fx.Styler;
 import com.katyshevtseva.fx.Styler.StandardColor;
 import com.katyshevtseva.fx.Styler.ThingToColor;
 import com.katyshevtseva.fx.WindowBuilder.FxController;
+import com.katyshevtseva.fx.dialog.StandardDialogBuilder;
 import com.katyshevtseva.fx.dialogconstructor.DcTextField;
 import com.katyshevtseva.fx.dialogconstructor.DialogConstructor;
 import com.katyshevtseva.kikiorg.core.Core;
@@ -15,7 +16,10 @@ import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
+import javafx.scene.control.ContextMenu;
 import javafx.scene.control.Label;
+import javafx.scene.control.MenuItem;
+import javafx.scene.input.ContextMenuEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 
@@ -25,6 +29,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 import static com.katyshevtseva.fx.Styler.StandardColor.*;
+import static com.katyshevtseva.general.GeneralUtils.wrapText;
 
 public class ActivitiesController implements FxController {
     @FXML
@@ -56,7 +61,10 @@ public class ActivitiesController implements FxController {
                 } else if (k == 0) {
                     gridPane.add(getHeadlineNode(indexParamMap.get(l).getTitle()), l, k);
                 } else if (l == 0) {
-                    gridPane.add(getActivityNode(indexActivityMap.get(k).getTitle()), l, k);
+                    Activity activity = indexActivityMap.get(k);
+                    Node node = getActivityNode(activity.getTitle());
+                    node.setOnContextMenuRequested(event -> showActivityContextMenu(event, activity, node));
+                    gridPane.add(node, l, k);
                 } else {
                     Activity activity = indexActivityMap.get(k);
                     Param param = indexParamMap.get(l);
@@ -68,6 +76,31 @@ public class ActivitiesController implements FxController {
                 }
             }
         }
+    }
+
+    private void showActivityContextMenu(ContextMenuEvent event, Activity activity, Node node) {
+        ContextMenu contextMenu = new ContextMenu();
+
+        MenuItem editItem = new MenuItem("Edit");
+        editItem.setOnAction(event1 -> {
+            DcTextField titleField = new DcTextField(true, activity.getTitle());
+            DialogConstructor.constructDialog(() -> {
+                Core.getInstance().structureService().edit(activity, titleField.getValue());
+                fillPane();
+            }, titleField);
+        });
+
+        MenuItem deleteItem = new MenuItem("Delete");
+        deleteItem.setOnAction(event1 -> new StandardDialogBuilder().openQuestionDialog("Delete?", b -> {
+            if (b) {
+                Core.getInstance().structureService().delete(activity);
+                fillPane();
+            }
+        }));
+
+
+        contextMenu.getItems().addAll(editItem, deleteItem);
+        contextMenu.show(node, event.getScreenX(), event.getScreenY());
     }
 
     private Node getHeadlineNode(String s) {
@@ -84,7 +117,7 @@ public class ActivitiesController implements FxController {
 
     private Node getTableCell(String text, int textSize, StandardColor textColor, StandardColor backgroundColor,
                               StandardColor borderColor) {
-        Label label = new Label(text);
+        Label label = new Label(wrapText(text, 20));
         label.setStyle(Styler.getColorfullStyle(ThingToColor.TEXT, textColor) +
                 Styler.getTextSizeStyle(textSize));
         label.setPadding(new Insets(textSize));

@@ -1,7 +1,7 @@
 package com.katyshevtseva.kikiorg.view.controller.tracker;
 
-import com.katyshevtseva.fx.FxUtils;
 import com.katyshevtseva.fx.Styler;
+import com.katyshevtseva.fx.TableUtils;
 import com.katyshevtseva.fx.WindowBuilder.FxController;
 import com.katyshevtseva.kikiorg.core.Core;
 import com.katyshevtseva.kikiorg.core.sections.tracker.entity.ColorEntity;
@@ -62,7 +62,7 @@ class ProjectController implements FxController {
             text.textProperty().bind(cell.itemProperty());
             return cell;
         });
-        FxUtils.adjustButtonColumn(editColumn, "Edit", (project) ->
+        TableUtils.adjustButtonColumn(editColumn, "Edit", (project) ->
                 OrganizerWindowCreator.getInstance().openProjectDialog(new ProjectDialogController(this::fillTable, project)));
     }
 

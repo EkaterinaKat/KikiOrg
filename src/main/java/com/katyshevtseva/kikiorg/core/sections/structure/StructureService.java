@@ -60,6 +60,11 @@ public class StructureService {
         paramValueRepo.save(paramValue);
     }
 
+    public void edit(Activity activity, String title) {
+        activity.setTitle(title);
+        activityRepo.save(activity);
+    }
+
     public void delete(Param param) {
         param.getValues().forEach(this::delete);
         param.setValues(new HashSet<>());
@@ -72,5 +77,9 @@ public class StructureService {
             activityRepo.save(activity);
         }
         paramValueRepo.delete(paramValue);
+    }
+
+    public void delete(Activity activity) {
+        activityRepo.delete(activity);
     }
 }
