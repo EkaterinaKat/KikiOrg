@@ -14,7 +14,7 @@
 
     <HBox>
         <Pane minWidth="25" maxWidth="25"/>
-        <ScrollPane minWidth="700" maxWidth="700" minHeight="700" maxHeight="700">
+        <ScrollPane minWidth="1050" maxWidth="1050" minHeight="800" maxHeight="800">
             <GridPane fx:id="gridPane"/>
         </ScrollPane>
 

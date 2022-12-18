@@ -9,8 +9,10 @@ import com.katyshevtseva.kikiorg.core.sections.structure.repo.ParamValueRepo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Service
@@ -41,7 +43,7 @@ public class StructureService {
     }
 
     public List<Activity> getActivities() {
-        return activityRepo.findAll();
+        return activityRepo.findAll().stream().sorted(Comparator.comparing(Activity::getTitle)).collect(Collectors.toList());
     }
 
     public List<Param> getParams() {
