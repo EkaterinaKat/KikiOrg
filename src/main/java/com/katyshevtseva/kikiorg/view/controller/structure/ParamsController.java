@@ -25,6 +25,8 @@ public class ParamsController implements FxController {
     private VBox paramPane;
     @FXML
     private Button paramCreationButton;
+    @FXML
+    private Label warningLabel;
 
     @FXML
     private void initialize() {
@@ -39,6 +41,9 @@ public class ParamsController implements FxController {
                 fillPane();
             }, titleField, requiredCheckBox, singleValueCheckBox);
         });
+
+        String warning = Core.getInstance().structureService().getParamWarningMessageOrNull();
+        warningLabel.setText(warning == null ? "" : warning);
     }
 
     private void fillPane() {

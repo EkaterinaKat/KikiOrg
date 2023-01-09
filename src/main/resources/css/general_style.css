@@ -2,6 +2,11 @@
     -fx-border-color: #000000;
 }
 
+.warning_label {
+     -fx-font-size: 20;
+     -fx-text-fill: #FF5C18;
+}
+
 .font_25 {
      -fx-font-size: 25;
 }

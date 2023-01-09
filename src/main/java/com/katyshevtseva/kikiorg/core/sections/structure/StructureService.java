@@ -84,4 +84,13 @@ public class StructureService {
     public void delete(Activity activity) {
         activityRepo.delete(activity);
     }
+
+    public String getParamWarningMessageOrNull() {
+        for (ParamValue paramValue : paramValueRepo.findAll()) {
+            if (activityRepo.findByParamValues(paramValue).isEmpty()) {
+                return String.format("Значение %s нигде не используется", paramValue.getTitle());
+            }
+        }
+        return null;
+    }
 }
