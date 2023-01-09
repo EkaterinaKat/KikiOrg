@@ -26,7 +26,7 @@ public class Outfit {
     private CollageEntity collageEntity;
 
     public String getFullDesc() {
-        StringBuilder fullDesc = new StringBuilder(comment != null ? comment : "");
+        StringBuilder fullDesc = new StringBuilder("(").append(id).append(") ").append(comment != null ? comment : "");
 
         if (season != null || purpose != null) {
             fullDesc.append("\n\n");
