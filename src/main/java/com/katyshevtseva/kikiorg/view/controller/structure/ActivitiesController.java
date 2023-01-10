@@ -1,9 +1,13 @@
 package com.katyshevtseva.kikiorg.view.controller.structure;
 
+import com.katyshevtseva.fx.Size;
 import com.katyshevtseva.fx.Styler;
 import com.katyshevtseva.fx.Styler.StandardColor;
 import com.katyshevtseva.fx.Styler.ThingToColor;
 import com.katyshevtseva.fx.WindowBuilder.FxController;
+import com.katyshevtseva.fx.component.ComponentBuilder;
+import com.katyshevtseva.fx.component.ComponentBuilder.Component;
+import com.katyshevtseva.fx.component.controller.MultipleChoiceController;
 import com.katyshevtseva.fx.dialog.StandardDialogBuilder;
 import com.katyshevtseva.fx.dialogconstructor.DcTextField;
 import com.katyshevtseva.fx.dialogconstructor.DialogConstructor;
@@ -36,6 +40,12 @@ public class ActivitiesController implements FxController {
     private GridPane gridPane;
     @FXML
     private Button activityCreationButton;
+    @FXML
+    private Button searchButton;
+    @FXML
+    private Button showAllButton;
+    @FXML
+    private Pane searchValuesPane;
 
     @FXML
     private void initialize() {
@@ -47,11 +57,29 @@ public class ActivitiesController implements FxController {
                 fillPane();
             }, titleField);
         });
+        adjustSearch();
+    }
+
+    private void adjustSearch() {
+        Component<MultipleChoiceController<ParamValue>> valueChoiceComponent = new ComponentBuilder()
+                .setSize(new Size(100, 240))
+                .getMultipleChoiceComponent(Core.getInstance().structureService().getAllParamValues());
+
+        searchValuesPane.getChildren().add(valueChoiceComponent.getNode());
+        searchButton.setOnAction(event -> fillPane(valueChoiceComponent.getController().getSelectedItems()));
+        showAllButton.setOnAction(event -> {
+            valueChoiceComponent.getController().clear();
+            fillPane();
+        });
     }
 
     private void fillPane() {
+        fillPane(null);
+    }
+
+    private void fillPane(List<ParamValue> valuesToSearchBy) {
         gridPane.getChildren().clear();
-        Map<Integer, Activity> indexActivityMap = getIndexActivityMap();
+        Map<Integer, Activity> indexActivityMap = getIndexActivityMap(valuesToSearchBy);
         Map<Integer, Param> indexParamMap = getIndexParamMap();
 
         for (int k = 0; k <= indexActivityMap.size(); k++) {
@@ -155,9 +183,9 @@ public class ActivitiesController implements FxController {
         return true;
     }
 
-    private Map<Integer, Activity> getIndexActivityMap() {
+    private Map<Integer, Activity> getIndexActivityMap(List<ParamValue> valuesToSearchBy) {
         Map<Integer, Activity> map = new HashMap<>();
-        List<Activity> activities = Core.getInstance().structureService().getActivities();
+        List<Activity> activities = Core.getInstance().structureService().getActivities(valuesToSearchBy);
         for (int i = 0; i < activities.size(); i++) {
             map.put(i + 1, activities.get(i));
         }

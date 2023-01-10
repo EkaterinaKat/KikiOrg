@@ -42,8 +42,10 @@ public class StructureService {
         activityRepo.save(activity);
     }
 
-    public List<Activity> getActivities() {
-        return activityRepo.findAll().stream().sorted(Comparator.comparing(Activity::getTitle)).collect(Collectors.toList());
+    public List<Activity> getActivities(List<ParamValue> valuesToSearchBy) {
+        List<Activity> activities = valuesToSearchBy == null || valuesToSearchBy.isEmpty() ?
+                activityRepo.findAll() : activityRepo.findByParamValues(valuesToSearchBy);
+        return activities.stream().sorted(Comparator.comparing(Activity::getTitle)).collect(Collectors.toList());
     }
 
     public List<Param> getParams() {
@@ -74,7 +76,7 @@ public class StructureService {
     }
 
     public void delete(ParamValue paramValue) {
-        for (Activity activity : activityRepo.findByParamValues(paramValue)) {
+        for (Activity activity : activityRepo.findByParamValue(paramValue)) {
             activity.getParamValues().remove(paramValue);
             activityRepo.save(activity);
         }
@@ -87,10 +89,14 @@ public class StructureService {
 
     public String getParamWarningMessageOrNull() {
         for (ParamValue paramValue : paramValueRepo.findAll()) {
-            if (activityRepo.findByParamValues(paramValue).isEmpty()) {
+            if (activityRepo.findByParamValue(paramValue).isEmpty()) {
                 return String.format("Значение %s нигде не используется", paramValue.getTitle());
             }
         }
         return null;
+    }
+
+    public List<ParamValue> getAllParamValues() {
+        return paramValueRepo.findAllByOrderByTitle();
     }
 }

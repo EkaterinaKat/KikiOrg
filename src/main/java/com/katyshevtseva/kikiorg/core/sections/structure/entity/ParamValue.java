@@ -41,9 +41,6 @@ public class ParamValue {
 
     @Override
     public String toString() {
-        return "ParamValue{" +
-                "id=" + id +
-                ", title='" + title + '\'' +
-                '}';
+        return title;
     }
 }

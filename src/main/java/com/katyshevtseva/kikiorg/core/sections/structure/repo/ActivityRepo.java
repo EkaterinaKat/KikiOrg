@@ -10,7 +10,11 @@ import java.util.List;
 
 public interface ActivityRepo extends JpaRepository<Activity, Long> {
 
-    @Query("SELECT a FROM Activity a  " +
-            "WHERE  :value MEMBER OF a.paramValues ")
-    List<Activity> findByParamValues(@Param("value") ParamValue paramValue);
+    @Query("SELECT a FROM Activity a " +
+            "WHERE :value MEMBER OF a.paramValues ")
+    List<Activity> findByParamValue(@Param("value") ParamValue paramValue);
+
+    @Query("SELECT DISTINCT a FROM Activity a JOIN a.paramValues v " +
+            "WHERE v IN :values ")
+    List<Activity> findByParamValues(@Param("values") List<ParamValue> paramValues);
 }
