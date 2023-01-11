@@ -5,7 +5,7 @@
 <?import javafx.scene.layout.*?>
 <HBox xmlns="http://javafx.com/javafx"
       xmlns:fx="http://javafx.com/fxml"
-      styleClass="black_border" minWidth="830" maxWidth="830"
+      styleClass="black_border"
       fx:id="root">
 
     <Pane minWidth="25" maxWidth="25"/>

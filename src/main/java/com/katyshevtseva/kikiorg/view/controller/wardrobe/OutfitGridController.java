@@ -5,7 +5,7 @@ import com.katyshevtseva.fx.component.ComponentBuilder;
 import com.katyshevtseva.fx.component.controller.PaginationPaneController;
 import com.katyshevtseva.fx.dialog.StandardDialogBuilder;
 import com.katyshevtseva.general.GeneralUtils;
-import com.katyshevtseva.general.OneArgOneAnswerKnob;
+import com.katyshevtseva.general.OneInOneOutKnob;
 import com.katyshevtseva.general.Page;
 import com.katyshevtseva.kikiorg.core.Core;
 import com.katyshevtseva.kikiorg.core.sections.wardrobe.WardrobeService;
@@ -25,7 +25,7 @@ import java.util.List;
 public class OutfitGridController implements FxController {
     private final WardrobeService service = Core.getInstance().wardrobeService();
     private PaginationPaneController<Outfit> paginationPaneController;
-    private final OneArgOneAnswerKnob<Integer, Page<Outfit>> outfitPageSupplier;
+    private final OneInOneOutKnob<Integer, Page<Outfit>> outfitPageSupplier;
     @FXML
     private Button outfitEditButton;
     @FXML

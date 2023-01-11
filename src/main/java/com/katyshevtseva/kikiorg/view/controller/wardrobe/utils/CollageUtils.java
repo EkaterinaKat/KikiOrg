@@ -4,7 +4,7 @@ import com.katyshevtceva.collage.logic.*;
 import com.katyshevtseva.fx.ImageContainer;
 import com.katyshevtseva.fx.Point;
 import com.katyshevtseva.fx.Size;
-import com.katyshevtseva.general.OneArgOneAnswerKnob;
+import com.katyshevtseva.general.OneInOneOutKnob;
 import com.katyshevtseva.kikiorg.core.Core;
 import com.katyshevtseva.kikiorg.core.sections.wardrobe.entity.CollageEntity;
 import com.katyshevtseva.kikiorg.core.sections.wardrobe.entity.ComponentEntity;
@@ -103,7 +103,7 @@ public class CollageUtils {
                 .build();
     }
 
-    static OneArgOneAnswerKnob<ImageContainer, List<Image>> getAvailableToAddToComponentImagesSupplier() {
+    static OneInOneOutKnob<ImageContainer, List<Image>> getAvailableToAddToComponentImagesSupplier() {
         return imageContainer -> toCollageImages(Core.getInstance().wardrobeService()
                 .getPiecesAvailableToAddToExistingComponent(((ImageAndPieceContainer) imageContainer).getPiece()));
     }

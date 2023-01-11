@@ -1,10 +1,10 @@
 package com.katyshevtseva.kikiorg.view.controller.tracker;
 
-import com.katyshevtseva.fx.FxUtils;
+import com.katyshevtseva.fx.Size;
 import com.katyshevtseva.fx.WindowBuilder.FxController;
 import com.katyshevtseva.fx.component.ComponentBuilder;
 import com.katyshevtseva.fx.component.ComponentBuilder.Component;
-import com.katyshevtseva.fx.component.controller.PaginationPaneController;
+import com.katyshevtseva.fx.component.controller.BlockListController;
 import com.katyshevtseva.fx.dialogconstructor.DcComboBox;
 import com.katyshevtseva.fx.dialogconstructor.DcTextArea;
 import com.katyshevtseva.fx.dialogconstructor.DcTextField;
@@ -21,20 +21,15 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
-import javafx.scene.layout.VBox;
-
-import java.util.List;
 
 import static com.katyshevtseva.fx.FxUtils.setComboBoxItems;
 
 class BoardController implements FxController {
-    private PaginationPaneController<Task> paginationPaneController;
-    @FXML
-    private Pane paginationPane;
+    private BlockListController<Task> blockListController;
     @FXML
     private Button addTaskButton;
     @FXML
-    private VBox taskPane;
+    private Pane tasksPane;
     @FXML
     private ComboBox<TaskStatus> statusComboBox;
     @FXML
@@ -48,10 +43,15 @@ class BoardController implements FxController {
 
     @FXML
     private void initialize() {
+        Component<BlockListController<Task>> component =
+                new ComponentBuilder().setSize(new Size(750, 890)).getBlockListComponent();
+        tasksPane.getChildren().add(component.getNode());
+        blockListController = component.getController();
+
         setComboBoxItems(statusComboBox, TaskStatus.values(), TaskStatus.TODO);
         setComboBoxItems(sortComboBox, SortType.values(), SortType.CREATION_DATE);
         tuneProjectComboBox();
-        tunePagination();
+        updateContent();
 
         DcTextField titleField = new DcTextField(true, "");
         DcComboBox<Project> projectDcComboBox =
@@ -61,18 +61,18 @@ class BoardController implements FxController {
                 DialogConstructor.constructDialog(() -> {
                     Core.getInstance().trackerService()
                             .createTask(titleField.getValue(), descField.getValue(), projectDcComboBox.getValue());
-                    paginationPaneController.loadPage();
+                    updateContent();
                 }, titleField, projectDcComboBox, descField));
 
         statusComboBox.setOnAction(event -> {
             tuneProjectComboBox();
-            paginationPaneController.loadPage();
+            updateContent();
         });
-        sortComboBox.setOnAction(event -> paginationPaneController.loadPage());
-        projectComboBox.setOnAction(event -> paginationPaneController.loadPage());
+        sortComboBox.setOnAction(event -> updateContent());
+        projectComboBox.setOnAction(event -> updateContent());
         showAllButton.setOnAction(event -> {
             projectComboBox.setValue(null);
-            paginationPaneController.loadPage();
+            updateContent();
         });
     }
 
@@ -82,31 +82,16 @@ class BoardController implements FxController {
                 Core.getInstance().trackerService().getProjectsWithTasksInStatus(statusComboBox.getValue()));
     }
 
-    private void tunePagination() {
-        Component<PaginationPaneController<Task>> component =
-                new ComponentBuilder().getPaginationComponent(this::getTaskPage, this::setContent);
-        paginationPaneController = component.getController();
-        paginationPane.getChildren().add(component.getNode());
-    }
-
     private Page<Task> getTaskPage(int pageNum) {
         return Core.getInstance().boardSortService().getTaskPage(
                 projectComboBox.getValue(), statusComboBox.getValue(), sortComboBox.getValue(), pageNum);
     }
 
-    private void setContent(List<Task> tasks) {
-        updateStatistics();
-        taskPane.getChildren().clear();
-
-        for (Task task : tasks) {
-            taskPane.getChildren().add(FxUtils.getPaneWithHeight(20));
-            taskPane.getChildren().add(OrganizerWindowCreator.getInstance()
-                    .getTaskPaneNode(new TaskPaneController(task, () -> paginationPaneController.loadPage())));
-        }
-        taskPane.getChildren().add(FxUtils.getPaneWithHeight(20));
-    }
-
-    private void updateStatistics() {
+    private void updateContent() {
         statisticsLabel.setText(Core.getInstance().trackerService().getStatistics());
+        blockListController.show(this::getTaskPage, (task, blockWidth) -> {
+            TaskPaneController taskPaneController = new TaskPaneController(task, this::updateContent, blockWidth);
+            return OrganizerWindowCreator.getInstance().getTaskPaneNode(taskPaneController);
+        });
     }
 }

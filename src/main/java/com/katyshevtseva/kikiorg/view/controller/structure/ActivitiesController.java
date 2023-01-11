@@ -33,7 +33,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 import static com.katyshevtseva.fx.Styler.StandardColor.*;
-import static com.katyshevtseva.general.GeneralUtils.wrapText;
+import static com.katyshevtseva.general.GeneralUtils.wrapTextByWords;
 
 public class ActivitiesController implements FxController {
     @FXML
@@ -145,7 +145,7 @@ public class ActivitiesController implements FxController {
 
     private Node getTableCell(String text, int textSize, StandardColor textColor, StandardColor backgroundColor,
                               StandardColor borderColor) {
-        Label label = new Label(wrapText(text, 20));
+        Label label = new Label(wrapTextByWords(text, 20));
         label.setStyle(Styler.getColorfullStyle(ThingToColor.TEXT, textColor) +
                 Styler.getTextSizeStyle(textSize));
         label.setPadding(new Insets(textSize));

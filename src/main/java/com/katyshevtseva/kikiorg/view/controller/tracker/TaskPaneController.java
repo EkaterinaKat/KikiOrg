@@ -1,5 +1,6 @@
 package com.katyshevtseva.kikiorg.view.controller.tracker;
 
+import com.katyshevtseva.fx.FxUtils;
 import com.katyshevtseva.fx.WindowBuilder.FxController;
 import com.katyshevtseva.fx.dialogconstructor.DcComboBox;
 import com.katyshevtseva.fx.dialogconstructor.DcTextArea;
@@ -26,6 +27,7 @@ import static com.katyshevtseva.kikiorg.view.utils.OrgUtils.getColorString;
 class TaskPaneController implements FxController {
     private final Task task;
     private final NoArgsKnob boardUpdateKnob;
+    private final int width;
     @FXML
     private HBox root;
     @FXML
@@ -37,14 +39,16 @@ class TaskPaneController implements FxController {
     @FXML
     private HBox buttonsPane;
 
-    TaskPaneController(Task task, NoArgsKnob boardUpdateKnob) {
+    public TaskPaneController(Task task, NoArgsKnob boardUpdateKnob, int width) {
         this.task = task;
         this.boardUpdateKnob = boardUpdateKnob;
+        this.width = width;
     }
 
     @FXML
     private void initialize() {
         root.setStyle(getColorfullStyle(BACKGROUND, getColorString(task.getProject().getColor())));
+        FxUtils.setWidth(root, width);
         titleLabel.setWrapText(true);
         descLabel.setWrapText(true);
 
