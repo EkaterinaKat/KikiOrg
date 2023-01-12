@@ -1,15 +1,22 @@
 package com.katyshevtseva.kikiorg.core.sections.structure;
 
+import com.katyshevtseva.general.Page;
+import com.katyshevtseva.kikiorg.core.date.DateService;
 import com.katyshevtseva.kikiorg.core.sections.structure.entity.Activity;
+import com.katyshevtseva.kikiorg.core.sections.structure.entity.Goal;
 import com.katyshevtseva.kikiorg.core.sections.structure.entity.Param;
 import com.katyshevtseva.kikiorg.core.sections.structure.entity.ParamValue;
 import com.katyshevtseva.kikiorg.core.sections.structure.repo.ActivityRepo;
+import com.katyshevtseva.kikiorg.core.sections.structure.repo.GoalRepo;
 import com.katyshevtseva.kikiorg.core.sections.structure.repo.ParamRepo;
 import com.katyshevtseva.kikiorg.core.sections.structure.repo.ParamValueRepo;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.Comparator;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -20,6 +27,8 @@ public class StructureService {
     private final ActivityRepo activityRepo;
     private final ParamRepo paramRepo;
     private final ParamValueRepo paramValueRepo;
+    private final DateService dateService;
+    private final GoalRepo goalRepo;
 
     public void createParam(String title, boolean required, boolean singleValue) {
         paramRepo.save(new Param(title, required, singleValue));
@@ -46,6 +55,13 @@ public class StructureService {
         List<Activity> activities = valuesToSearchBy == null || valuesToSearchBy.isEmpty() ?
                 activityRepo.findAll() : activityRepo.findByParamValues(valuesToSearchBy);
         return activities.stream().sorted(Comparator.comparing(Activity::getTitle)).collect(Collectors.toList());
+    }
+
+    public List<Activity> getActivitiesForGoalsSection() {
+        //41 = StructureGoals 21=Активно
+        return activityRepo.findByParamValue(paramValueRepo.findById(41L).get()).stream()
+                .filter(activity -> activity.getParamValues().contains(paramValueRepo.findById(21L).get()))
+                .collect(Collectors.toList());
     }
 
     public List<Param> getParams() {
@@ -98,5 +114,43 @@ public class StructureService {
 
     public List<ParamValue> getAllParamValues() {
         return paramValueRepo.findAllByOrderByTitle();
+    }
+
+    public void createGoal(Activity activity, String title) {
+        Goal goal = new Goal();
+        goal.setActivity(activity);
+        goal.setTitle(title);
+        goal.setCreationDate(dateService.createIfNotExistAndGetDateEntity(new Date()));
+        goalRepo.save(goal);
+    }
+
+    public void edit(Goal goal, String title) {
+        goal.setTitle(title);
+        goalRepo.save(goal);
+    }
+
+    public void delete(Goal goal) {
+        goalRepo.delete(goal);
+    }
+
+    public void done(Goal goal) {
+        goal.setCompletionDate(dateService.createIfNotExistAndGetDateEntity(new Date()));
+        goalRepo.save(goal);
+    }
+
+    public Page<Goal> getTodoGoals(Activity activity, int pageNum) {
+        PageRequest pageRequest = PageRequest.of(pageNum, 15, Sort.by("id").ascending());
+
+        org.springframework.data.domain.Page<Goal> goalPage =
+                goalRepo.findByActivityAndCompletionDateIsNull(activity, pageRequest);
+        return new Page<>(goalPage.getContent(), pageNum, goalPage.getTotalPages());
+    }
+
+    public Page<Goal> getDoneGoals(Activity activity, int pageNum) {
+        PageRequest pageRequest = PageRequest.of(pageNum, 15, Sort.by("id").ascending());
+
+        org.springframework.data.domain.Page<Goal> goalPage =
+                goalRepo.findByActivityAndCompletionDateIsNotNull(activity, pageRequest);
+        return new Page<>(goalPage.getContent(), pageNum, goalPage.getTotalPages());
     }
 }
