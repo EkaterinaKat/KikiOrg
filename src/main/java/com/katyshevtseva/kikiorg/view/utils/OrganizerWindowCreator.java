@@ -44,6 +44,10 @@ public class OrganizerWindowCreator {
         return new WindowBuilder(STRUCTURE_FXML_LOCATION + "goal_pane.fxml").setController(controller).getNode();
     }
 
+    public Node getTopicalNode(FxController controller) {
+        return new WindowBuilder(STRUCTURE_FXML_LOCATION + "topical.fxml").setController(controller).getNode();
+    }
+
     public Node getStructureParamsNode(FxController controller) {
         return new WindowBuilder(STRUCTURE_FXML_LOCATION + "params.fxml").setController(controller).getNode();
     }

@@ -121,6 +121,7 @@ public class StructureService {
         goal.setActivity(activity);
         goal.setTitle(title);
         goal.setCreationDate(dateService.createIfNotExistAndGetDateEntity(new Date()));
+        goal.setHighlighted(false);
         goalRepo.save(goal);
     }
 
@@ -152,5 +153,14 @@ public class StructureService {
         org.springframework.data.domain.Page<Goal> goalPage =
                 goalRepo.findByActivityAndCompletionDateIsNotNull(activity, pageRequest);
         return new Page<>(goalPage.getContent(), pageNum, goalPage.getTotalPages());
+    }
+
+    public void highlight(Goal goal) {
+        goal.setHighlighted(!goal.isHighlighted());
+        goalRepo.save(goal);
+    }
+
+    public List<Goal> getHighlightedGoals() {
+        return goalRepo.findByHighlightedIsTrue();
     }
 }

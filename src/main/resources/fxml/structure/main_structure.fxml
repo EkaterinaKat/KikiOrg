@@ -10,6 +10,8 @@
             <Pane minHeight="10" maxHeight="10"/>
             <HBox>
                 <Pane minWidth="30" maxWidth="30"/>
+                <Button fx:id="topicalButton" text="Topical"/>
+                <Pane minWidth="30" maxWidth="30"/>
                 <Button fx:id="activitiesButton" text="Activities"/>
                 <Pane minWidth="30" maxWidth="30"/>
                 <Button fx:id="paramsButton" text="Params"/>

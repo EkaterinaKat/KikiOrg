@@ -18,24 +18,33 @@ public class MainStructureController extends AbstractSwitchController implements
     @FXML
     private Button goalsButton;
     @FXML
+    private Button topicalButton;
+    @FXML
     private Pane mainPane;
 
     private Node activitiesNode;
     private Node paramsNode;
     private Node goalsNode;
+    private Node topicalNode;
 
     private final ActivitiesController activitiesController = new ActivitiesController();
     private final ParamsController paramsController = new ParamsController();
     private final GoalsController goalsController = new GoalsController();
+    private final TopicalController topicalController = new TopicalController();
 
     @FXML
     private void initialize() {
         pane = mainPane;
-        buttons.addAll(Arrays.asList(activitiesButton, paramsButton, goalsButton));
+        buttons.addAll(Arrays.asList(activitiesButton, paramsButton, goalsButton, topicalButton));
         activitiesButton.setOnAction(event -> activitiesButtonListener());
         paramsButton.setOnAction(event -> paramsButtonListener());
         goalsButton.setOnAction(event -> goalsButtonListener());
-        activitiesButtonListener();
+        topicalButton.setOnAction(event -> topicalButtonListener());
+        topicalButtonListener();
+    }
+
+    private void topicalButtonListener() {
+        activateMode(topicalButton, topicalNode, OrganizerWindowCreator.getInstance()::getTopicalNode, topicalController);
     }
 
     private void goalsButtonListener() {
