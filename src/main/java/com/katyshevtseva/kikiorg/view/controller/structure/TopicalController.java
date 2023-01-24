@@ -6,6 +6,7 @@ import com.katyshevtseva.kikiorg.core.sections.structure.entity.Goal;
 import com.katyshevtseva.kikiorg.view.utils.OrganizerWindowCreator;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
+import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
@@ -20,6 +21,8 @@ public class TopicalController implements FxController {
     private static final int BLOCK_WIDTH = 300;
     @FXML
     private HBox hBox;
+    @FXML
+    private Label statisticsLabel;
 
     @FXML
     private void initialize() {
@@ -27,6 +30,7 @@ public class TopicalController implements FxController {
     }
 
     private void setContent() {
+        statisticsLabel.setText(Core.getInstance().structureService().getStatistics());
         hBox.getChildren().clear();
         List<VBox> vBoxes = new ArrayList<>();
         hBox.getChildren().add(getPaneWithWidth(10));

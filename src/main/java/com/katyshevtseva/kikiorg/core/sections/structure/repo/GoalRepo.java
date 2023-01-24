@@ -15,4 +15,10 @@ public interface GoalRepo extends JpaRepository<Goal, Long> {
     Page<Goal> findByActivityAndCompletionDateIsNotNull(Activity activity, Pageable pageable);
 
     List<Goal> findByHighlightedIsTrue();
+
+    int countByCompletionDateIsNull();
+
+    int countByCompletionDateIsNotNull();
+
+    int countByHighlightedIsTrue();
 }

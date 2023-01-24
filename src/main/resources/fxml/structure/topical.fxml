@@ -1,10 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.layout.*?>
 <VBox xmlns="http://javafx.com/javafx"
       xmlns:fx="http://javafx.com/fxml">
 
+    <Label fx:id="statisticsLabel"/>
+    <Pane minHeight="10" maxHeight="10"/>
     <ScrollPane minHeight="850" maxHeight="850" minWidth="1000" maxWidth="1000">
         <VBox>
             <Pane minHeight="10" maxHeight="10"/>
