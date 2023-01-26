@@ -3,7 +3,6 @@ package com.katyshevtseva.kikiorg.core.sections.finance.report;
 import com.katyshevtseva.fx.Styler;
 import com.katyshevtseva.general.PieChartData;
 import com.katyshevtseva.general.ReportCell;
-import com.katyshevtseva.kikiorg.core.sections.finance.entity.ItemGroup;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,12 +19,12 @@ public class FinanceReport {
     }
 
     public void addLine(String title, Long value) {
-        lines.add(new Line(title, value, null));
+        lines.add(new Line(title, value));
         resetCalculatedData();
     }
 
-    public void addLine(String title, Long value, ItemGroup itemGroup) {
-        lines.add(new Line(title, value, itemGroup));
+    public void addLines(List<Line> lines1) {
+        lines.addAll(lines1);
         resetCalculatedData();
     }
 
@@ -55,10 +54,6 @@ public class FinanceReport {
 
     public String getTitle() {
         return title;
-    }
-
-    List<Line> getLines() {
-        return lines;
     }
 
     private void initializeTable() {
@@ -92,12 +87,10 @@ public class FinanceReport {
     static class Line {
         private final String title;
         private final Long value;
-        private final ItemGroup itemGroup;
 
-        public Line(String title, Long value, ItemGroup itemGroup) {
+        public Line(String title, Long value) {
             this.title = title;
             this.value = value;
-            this.itemGroup = itemGroup;
         }
 
         public String getTitle() {

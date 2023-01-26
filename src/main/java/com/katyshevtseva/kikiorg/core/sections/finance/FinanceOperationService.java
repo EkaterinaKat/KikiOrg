@@ -2,16 +2,15 @@ package com.katyshevtseva.kikiorg.core.sections.finance;
 
 import com.katyshevtseva.date.DateUtils;
 import com.katyshevtseva.date.Period;
-import com.katyshevtseva.kikiorg.core.sections.finance.repo.AccountRepo;
-import com.katyshevtseva.kikiorg.core.sections.finance.repo.ExpenseRepo;
-import com.katyshevtseva.kikiorg.core.sections.finance.repo.ReplenishmentRepo;
-import com.katyshevtseva.kikiorg.core.sections.finance.repo.TransferRepo;
 import com.katyshevtseva.kikiorg.core.sections.finance.entity.Account;
 import com.katyshevtseva.kikiorg.core.sections.finance.entity.Expense;
 import com.katyshevtseva.kikiorg.core.sections.finance.entity.Replenishment;
 import com.katyshevtseva.kikiorg.core.sections.finance.entity.Transfer;
+import com.katyshevtseva.kikiorg.core.sections.finance.repo.AccountRepo;
+import com.katyshevtseva.kikiorg.core.sections.finance.repo.ExpenseRepo;
+import com.katyshevtseva.kikiorg.core.sections.finance.repo.ReplenishmentRepo;
+import com.katyshevtseva.kikiorg.core.sections.finance.repo.TransferRepo;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -83,17 +82,21 @@ public class FinanceOperationService {
     public interface Operation {
         Date getDate();
 
-        public long getId();
+        long getId();
 
-        public String getFromTitle();
+        long getGoneAmount();
 
-        public String getToTitle();
+        long getCameAmount();
 
-        public String getDateString();
+        String getFromTitle();
 
-        public String getAmountString();
+        String getToTitle();
 
-        public OperationType getType();
+        String getDateString();
+
+        String getAmountString();
+
+        OperationType getType();
     }
 
 }

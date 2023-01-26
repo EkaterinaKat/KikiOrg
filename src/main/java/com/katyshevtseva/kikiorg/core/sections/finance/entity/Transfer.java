@@ -26,9 +26,9 @@ public class Transfer implements Operation {
     @JoinColumn(name = "to_account_id", nullable = false)
     private Account to;
 
-    private Long goneAmount;
+    private long goneAmount;
 
-    private Long cameAmount;
+    private long cameAmount;
 
     @ManyToOne
     @JoinColumn(name = "date_entity_id")

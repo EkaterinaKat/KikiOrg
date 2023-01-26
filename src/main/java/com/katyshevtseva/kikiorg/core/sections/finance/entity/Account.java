@@ -1,5 +1,6 @@
 package com.katyshevtseva.kikiorg.core.sections.finance.entity;
 
+import com.katyshevtseva.general.HasShortInfo;
 import com.katyshevtseva.kikiorg.core.sections.finance.Currency;
 import com.katyshevtseva.kikiorg.core.sections.finance.OperationEnd;
 import lombok.Data;
@@ -8,7 +9,7 @@ import javax.persistence.*;
 
 @Data
 @Entity
-public class Account implements OperationEnd {
+public class Account implements OperationEnd, HasShortInfo {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
@@ -20,8 +21,6 @@ public class Account implements OperationEnd {
     private String description;
 
     private boolean archived;
-
-    private Boolean my;
 
     @Enumerated(EnumType.STRING)
     private Currency currency;
@@ -41,5 +40,25 @@ public class Account implements OperationEnd {
     @Override
     public OperationEndType getType() {
         return OperationEndType.ACCOUNT;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Account account = (Account) o;
+
+        return id == account.id;
+    }
+
+    @Override
+    public int hashCode() {
+        return (int) (id ^ (id >>> 32));
+    }
+
+    @Override
+    public String getShortInfo() {
+        return title + " " + ((char) currency.getCode());
     }
 }

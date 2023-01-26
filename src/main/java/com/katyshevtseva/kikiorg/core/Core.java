@@ -37,6 +37,7 @@ public class Core implements InitializingBean {
     private final ItemHierarchyService itemHierarchyService;
     private final TransferService transferService;
     private final StructureService structureService;
+    private final AccountGroupService accountGroupService;
 
     public static Core getInstance() {
         while (INSTANCE == null) {
@@ -52,6 +53,10 @@ public class Core implements InitializingBean {
     @Override
     public void afterPropertiesSet() {
         INSTANCE = this;
+    }
+
+    public AccountGroupService accountGroupService() {
+        return accountGroupService;
     }
 
     public TransferService currencyService() {

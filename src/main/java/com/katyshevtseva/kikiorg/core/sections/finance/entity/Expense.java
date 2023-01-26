@@ -38,6 +38,16 @@ public class Expense implements Operation {
     }
 
     @Override
+    public long getGoneAmount() {
+        return amount;
+    }
+
+    @Override
+    public long getCameAmount() {
+        return amount;
+    }
+
+    @Override
     public String getFromTitle() {
         return account.getTitleWithAdditionalInfo();
     }
