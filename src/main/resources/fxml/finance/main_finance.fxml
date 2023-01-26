@@ -19,6 +19,8 @@
                 <Button fx:id="itemHierarchyButton" text="Item Hierarchy"/>
                 <Pane minWidth="30" maxWidth="30"/>
                 <Button fx:id="reportButton" text="Report"/>
+                <Pane minWidth="30" maxWidth="30"/>
+                <Button fx:id="xxxButton" text="xxx"/>
             </HBox>
             <Pane minHeight="10" maxHeight="10"/>
         </VBox>

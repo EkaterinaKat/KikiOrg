@@ -203,4 +203,8 @@ public class OrganizerWindowCreator {
     public Node getLedgerNode(FxController controller) {
         return new WindowBuilder(FINANCE_FXML_LOCATION + "ledger.fxml").setController(controller).getNode();
     }
+
+    public Node getXxxNode(FxController controller) {
+        return new WindowBuilder(FINANCE_FXML_LOCATION + "xxx.fxml").setController(controller).getNode();
+    }
 }

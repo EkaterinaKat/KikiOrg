@@ -27,28 +27,38 @@ public class MainFinanceController extends AbstractSwitchController implements F
     private Button adminButton;
     @FXML
     private Button ledgerButton;
+    @FXML
+    private Button xxxButton;
 
     private final HistoryController historyController = new HistoryController();
     private final FullReportController fullReportController = new FullReportController();
     private final AdminController adminController = new AdminController();
     private final LedgerController ledgerController = new LedgerController();
+    private final XxxController xxxController = new XxxController();
 
     private Node historyNode;
     private Node adminNode;
     private Node ledgerNode;
+    private Node xxxNode;
 
     private ComponentBuilder.Component<HierarchyController> hierarchyComponent;
 
     @FXML
     private void initialize() {
         pane = mainPane;
-        buttons.addAll(Arrays.asList(ledgerButton, historyButton, itemHierarchyButton, adminButton));
+        buttons.addAll(Arrays.asList(ledgerButton, historyButton, itemHierarchyButton, adminButton, xxxButton));
         ledgerButtonListener();
         historyButton.setOnAction(event -> historyButtonListener());
         itemHierarchyButton.setOnAction(event -> itemHierarchyButtonListener());
         reportButton.setOnAction(event -> reportButtonListener());
         adminButton.setOnAction(event -> adminButtonListener());
         ledgerButton.setOnAction(event -> ledgerButtonListener());
+        xxxButton.setOnAction(event -> xxxButtonListener());
+    }
+
+    private void xxxButtonListener() {
+        activateMode(xxxButton, xxxNode,
+                OrganizerWindowCreator.getInstance()::getXxxNode, xxxController);
     }
 
     private void ledgerButtonListener() {
