@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <VBox xmlns="http://javafx.com/javafx"
       xmlns:fx="http://javafx.com/fxml">
@@ -11,9 +10,15 @@
     <HBox>
         <Pane minWidth="20" maxWidth="20"/>
         <VBox>
-            <ComboBox fx:id="accountToDeleteComboBox"/>
+            <HBox>
+                <Label text="Account to delete: "/>
+                <ComboBox fx:id="accountToDeleteComboBox"/>
+            </HBox>
             <Pane maxHeight="20" minHeight="20"/>
-            <ComboBox fx:id="substituteAccountComboBox"/>
+            <HBox>
+                <Label text="Substitute account: "/>
+                <ComboBox fx:id="substituteAccountComboBox"/>
+            </HBox>
             <Pane maxHeight="20" minHeight="20"/>
             <Button fx:id="deleteButton" text="Delete"/>
         </VBox>

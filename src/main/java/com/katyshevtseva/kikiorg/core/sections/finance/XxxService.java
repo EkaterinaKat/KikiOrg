@@ -6,6 +6,10 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Service
 @RequiredArgsConstructor
 public class XxxService {
@@ -19,6 +23,16 @@ public class XxxService {
     private final FinanceOperationService financeOperationService;
     private final TransferService transferService;
     private final AccountRepo accountRepo;
+
+
+    public List<Account> getSubstituteAccounts(Account account) {
+        if (account == null)
+            return new ArrayList<>();
+
+        return accountRepo.findAllByCurrency(account.getCurrency()).stream()
+                .filter(account1 -> !account1.equals(account))
+                .collect(Collectors.toList());
+    }
 
     @Transactional
     public void delete(Account accountToDelete, Account substituteAccount) throws Exception {
@@ -61,10 +75,10 @@ public class XxxService {
 
         //удаление возвратных переводов
         for (Transfer transfer : transferRepo.findAllByFrom(substituteAccount)) {
-            if (transfer.getCameAmount() != transfer.getGoneAmount()) {
-                throw new Exception("Полундра!");
-            }
             if (transfer.getTo().equals(substituteAccount)) {
+                if (transfer.getCameAmount() != transfer.getGoneAmount()) {
+                    throw new Exception("Полундра!");
+                }
                 transferRepo.delete(transfer);
             }
         }
