@@ -38,7 +38,8 @@ public class Core implements InitializingBean {
     private final TransferService transferService;
     private final StructureService structureService;
     private final AccountGroupService accountGroupService;
-    private final XxxService xxxService;
+    private final AccountDeleteService accountDeleteService;
+    private final ItemMergeService itemMergeService;
 
     public static Core getInstance() {
         while (INSTANCE == null) {
@@ -56,8 +57,12 @@ public class Core implements InitializingBean {
         INSTANCE = this;
     }
 
-    public XxxService xxxService() {
-        return xxxService;
+    public ItemMergeService itemMergeService() {
+        return itemMergeService;
+    }
+
+    public AccountDeleteService accountDeleteService() {
+        return accountDeleteService;
     }
 
     public AccountGroupService accountGroupService() {

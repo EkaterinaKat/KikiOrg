@@ -23,4 +23,28 @@
             <Button fx:id="deleteButton" text="Delete"/>
         </VBox>
     </HBox>
+
+    <Pane maxHeight="20" minHeight="20"/>
+
+    <Label text="+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++"/>
+
+    <Pane maxHeight="20" minHeight="20"/>
+
+    <HBox>
+        <Pane minWidth="20" maxWidth="20"/>
+        <VBox>
+            <HBox>
+                <Label text="Item to merge: "/>
+                <ComboBox fx:id="itemToMergeComboBox"/>
+            </HBox>
+            <Pane maxHeight="20" minHeight="20"/>
+            <HBox>
+                <Label text="Destination item: "/>
+                <ComboBox fx:id="destItemComboBox"/>
+            </HBox>
+            <Pane maxHeight="20" minHeight="20"/>
+            <Button fx:id="mergeButton" text="Merge"/>
+        </VBox>
+    </HBox>
+
 </VBox>

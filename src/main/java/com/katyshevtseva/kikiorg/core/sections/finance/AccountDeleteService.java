@@ -12,7 +12,7 @@ import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
-public class XxxService {
+public class AccountDeleteService {
     private final AccountGroupService accountGroupService;
     private final CheckLineRepo checkLineRepo;
     private final HuddleRepo huddleRepo;
