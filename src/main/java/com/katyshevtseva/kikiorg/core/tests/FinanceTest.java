@@ -4,9 +4,11 @@ import com.katyshevtseva.date.Period;
 import com.katyshevtseva.kikiorg.core.sections.finance.CalculationService;
 import com.katyshevtseva.kikiorg.core.sections.finance.FinanceService;
 import com.katyshevtseva.kikiorg.core.sections.finance.entity.Account;
+import com.katyshevtseva.kikiorg.core.sections.finance.entity.AccountGroup;
+import com.katyshevtseva.kikiorg.core.sections.finance.entity.Transfer;
+import com.katyshevtseva.kikiorg.core.sections.finance.repo.TransferRepo;
 import com.katyshevtseva.kikiorg.core.sections.finance.report.FinanceReportService;
 import com.katyshevtseva.kikiorg.core.sections.finance.report.FullFinanceReport;
-import com.katyshevtseva.kikiorg.core.sections.finance.report.ReportPeriodService.ReportPeriod;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -21,32 +23,34 @@ public class FinanceTest implements TestClass {
     private final FinanceReportService reportService;
     private final FinanceService financeService;
     private final CalculationService calculationService;
+    private final TransferRepo transferRepo;
 
     public boolean test() {
         boolean success = true;
-        ReportPeriod reportPeriod = new ReportPeriod(new Period(FINANCIAL_ACCOUNTING_START_DATE, new Date()), "");
+        Period period = new Period(FINANCIAL_ACCOUNTING_START_DATE, new Date());
 
         // first test
         System.out.println("\n\n first test");
         for (Account account : financeService.getAllAccounts()) {
-            FullFinanceReport report = reportService.getReport(Collections.singletonList(account), reportPeriod);
+            FullFinanceReport report = reportService.getReport(
+                    new AccountGroup("", Collections.singletonList(account)), period);
+
             long calculationResult = calculationService.calculateAccountAmountByOperations(account);
-            System.out.println(account.getAmount() + " : " + calculationResult + " : " + report.getTotal() + " " + account.getTitleWithAdditionalInfo());
+            System.out.println(account.getAmount()
+                    + " : " + calculationResult
+                    + " : " + report.getTotal()
+                    + " " + account.getTitleWithAdditionalInfo());
             if (!report.getTotal().equals(calculationResult) || !report.getTotal().equals(account.getAmount())) {
                 success = false;
             }
         }
 
-        //second test
-        System.out.println("\n\n second test");
-        Long allMoney1 = financeService.getAllAccounts().stream().map(Account::getAmount).reduce(Long::sum).orElse(0L);
-        Long allMoney2 = financeService.getAllAccounts().stream()
-                .map(calculationService::calculateAccountAmountByOperations).reduce(Long::sum).orElse(0L);
-        Long allMoney3 = allMoney2;   //todo временная мера. нужно будет исправить когда репорт сервис переделаю в соответствии с интервалютностью
-//        Long allMoney3 = reportService.getReport(financeService.getAllAccounts(), reportPeriod).getTotal();
-        System.out.println(allMoney1 + " : " + allMoney2 + " : " + allMoney3);
-        if (!allMoney1.equals(allMoney2) || !allMoney2.equals(allMoney3)) {
-            success = false;
+        System.out.println("\n\n transfer:from!=to test");
+        for (Transfer transfer : transferRepo.findAll()) {
+            if (transfer.getFrom().equals(transfer.getTo())) {
+                System.out.println("transfer.getFrom().equals(transfer.getTo())");
+                success = false;
+            }
         }
 
         return success;
