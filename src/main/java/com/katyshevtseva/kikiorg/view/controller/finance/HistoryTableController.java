@@ -19,6 +19,7 @@ import javafx.util.Callback;
 
 import java.util.List;
 
+import static com.katyshevtseva.fx.FxImageCreationUtil.IconPicture.DELTE;
 import static com.katyshevtseva.fx.FxUtils.setImageOnButton;
 import static com.katyshevtseva.fx.Styler.StandardColor.*;
 import static com.katyshevtseva.fx.Styler.ThingToColor.BACKGROUND;
@@ -71,7 +72,7 @@ class HistoryTableController implements FxController {
                                     operationDeleteListener.execute();
                             }
                         }),
-                button -> setImageOnButton("images/delete.png", button, 20));
+                button -> setImageOnButton(DELTE, button, 20));
     }
 
     void setTableContent(List<Operation> operations) {

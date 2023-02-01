@@ -14,11 +14,13 @@ import com.katyshevtseva.kikiorg.core.sections.tracker.entity.Task;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 
 import static com.katyshevtseva.date.DateUtils.READABLE_DATE_FORMAT;
+import static com.katyshevtseva.fx.FxImageCreationUtil.IconPicture.GREEN_TICK;
+import static com.katyshevtseva.fx.FxImageCreationUtil.IconPicture.GREY_CROSS;
+import static com.katyshevtseva.fx.FxImageCreationUtil.getIcon;
 import static com.katyshevtseva.fx.FxUtils.getPaneWithWidth;
 import static com.katyshevtseva.fx.Styler.ThingToColor.BACKGROUND;
 import static com.katyshevtseva.fx.Styler.getColorfullStyle;
@@ -75,7 +77,7 @@ class TaskPaneController implements FxController {
         }
 
         if (task.getTaskStatus() == TaskStatus.DONE) {
-            imageView.setImage(new Image("images/green_tick.png"));
+            imageView.setImage(getIcon(GREEN_TICK));
             descLabel.setText(task.getDescription() + "\n\nCreation date: " + READABLE_DATE_FORMAT.format(task.getCreationDate().getValue())
                     + "\nCompletion date: " + READABLE_DATE_FORMAT.format(task.getCompletionDate().getValue()));
             buttonsPane.getChildren().addAll(
@@ -85,7 +87,7 @@ class TaskPaneController implements FxController {
         }
 
         if (task.getTaskStatus() == TaskStatus.REJECTED) {
-            imageView.setImage(new Image("images/gray_cross.png"));
+            imageView.setImage(getIcon(GREY_CROSS));
             descLabel.setText(task.getDescription() + "\n\nCreation date: " + READABLE_DATE_FORMAT.format(task.getCreationDate().getValue()));
             buttonsPane.getChildren().addAll(
                     getEditButton(),

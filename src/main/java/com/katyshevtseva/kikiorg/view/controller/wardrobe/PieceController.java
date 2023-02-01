@@ -1,5 +1,7 @@
 package com.katyshevtseva.kikiorg.view.controller.wardrobe;
 
+import com.katyshevtseva.fx.FxImageCreationUtil;
+import com.katyshevtseva.fx.FxImageCreationUtil.IconPicture;
 import com.katyshevtseva.fx.FxUtils;
 import com.katyshevtseva.fx.ImageContainer;
 import com.katyshevtseva.fx.Size;
@@ -32,7 +34,6 @@ import java.util.List;
 
 import static com.katyshevtseva.fx.ImageSizeUtil.placeImageInSquare;
 import static com.katyshevtseva.kikiorg.view.utils.ViewConstants.CLOTHES_TYPE_SELECT_DIALOG_SIZE;
-import static com.katyshevtseva.kikiorg.view.utils.ViewConstants.IMAGES_LOCATION;
 
 class PieceController implements FxController {
     private final WardrobeService service = Core.getInstance().wardrobeService();
@@ -166,18 +167,18 @@ class PieceController implements FxController {
     }
 
     private ImageView satisfactionToImageView(ImageContainer imageContainer) {
-        String fileName = null;
+        IconPicture iconPicture = null;
         switch (((ImageAndPieceContainer) imageContainer).getPiece().getSatisfaction()) {
             case OK:
-                fileName = "ok.png";
+                iconPicture = IconPicture.OK;
                 break;
             case NOT_OK:
-                fileName = "red_cross.png";
+                iconPicture = IconPicture.RED_CROSS;
                 break;
             case EXCELLENT:
-                fileName = "green_tick2.png";
+                iconPicture = IconPicture.GREEN_TICK;
         }
 
-        return new ImageView(ImageCreator.getInstance().getImageContainer(fileName, IMAGES_LOCATION).getImage());
+        return new ImageView(FxImageCreationUtil.getIcon(iconPicture));
     }
 }

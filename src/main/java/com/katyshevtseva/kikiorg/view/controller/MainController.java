@@ -1,6 +1,7 @@
 package com.katyshevtseva.kikiorg.view.controller;
 
 import com.katyshevtseva.fx.AbstractSwitchController;
+import com.katyshevtseva.fx.FxImageCreationUtil;
 import com.katyshevtseva.fx.WindowBuilder.FxController;
 import com.katyshevtseva.kikiorg.view.controller.finance.MainFinanceController;
 import com.katyshevtseva.kikiorg.view.controller.habits.MainHabitsController;
@@ -11,11 +12,12 @@ import com.katyshevtseva.kikiorg.view.utils.OrganizerWindowCreator;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 
 import java.util.Arrays;
+
+import static com.katyshevtseva.fx.FxImageCreationUtil.getIcon;
 
 public class MainController extends AbstractSwitchController implements FxController {
     @FXML
@@ -45,7 +47,7 @@ public class MainController extends AbstractSwitchController implements FxContro
 
     @FXML
     private void initialize() {
-        logoImageView.setImage(new Image("images/logo.png"));
+        logoImageView.setImage(getIcon(FxImageCreationUtil.IconPicture.KIKI_ORG_LOGO));
         pane = mainPane;
         buttons.addAll(Arrays.asList(habitsButton, financeButton, wardrobeButton, trackerButton, structureButton));
         financeButton.setOnAction(event -> financeButtonListener());

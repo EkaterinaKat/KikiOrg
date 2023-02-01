@@ -1,5 +1,6 @@
 package com.katyshevtseva.kikiorg.view.controller.wardrobe;
 
+import com.katyshevtseva.fx.FxImageCreationUtil;
 import com.katyshevtseva.fx.WindowBuilder.FxController;
 import com.katyshevtseva.fx.dialog.StandardDialogBuilder;
 import com.katyshevtseva.general.OneArgKnob;
@@ -55,7 +56,7 @@ class PieceDialogController implements FxController {
         saveButton.setOnAction(event -> save());
         setComboBoxItems(clothesTypeComboBox, ClothesSubtype.getSortedByTitleValues());
         setComboBoxItems(satisfactionComboBox, Satisfaction.values());
-        showImage(new Image("images/piece_creation_plus.png"));
+        showImage(FxImageCreationUtil.getIcon(FxImageCreationUtil.IconPicture.GREY_PLUS));
         setExistingPieceInfo();
     }
 
