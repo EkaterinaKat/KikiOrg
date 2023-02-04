@@ -8,6 +8,7 @@ import com.katyshevtseva.kikiorg.core.sections.habits.*;
 import com.katyshevtseva.kikiorg.core.sections.structure.StructureService;
 import com.katyshevtseva.kikiorg.core.sections.tracker.BoardSortService;
 import com.katyshevtseva.kikiorg.core.sections.tracker.TrackerService;
+import com.katyshevtseva.kikiorg.core.sections.wardrobe.PieceSeasonService;
 import com.katyshevtseva.kikiorg.core.sections.wardrobe.WardrobeService;
 import com.katyshevtseva.kikiorg.core.sections.wardrobe.WardrobeStatisticsService;
 import lombok.RequiredArgsConstructor;
@@ -40,6 +41,7 @@ public class Core implements InitializingBean {
     private final AccountGroupService accountGroupService;
     private final AccountDeleteService accountDeleteService;
     private final ItemMergeService itemMergeService;
+    private final PieceSeasonService pieceSeasonService;
 
     public static Core getInstance() {
         while (INSTANCE == null) {
@@ -55,6 +57,10 @@ public class Core implements InitializingBean {
     @Override
     public void afterPropertiesSet() {
         INSTANCE = this;
+    }
+
+    public PieceSeasonService pieceSeasonService() {
+        return pieceSeasonService;
     }
 
     public ItemMergeService itemMergeService() {

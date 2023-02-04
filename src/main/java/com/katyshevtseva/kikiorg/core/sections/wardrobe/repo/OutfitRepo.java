@@ -11,6 +11,8 @@ import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import java.util.List;
+
 public interface OutfitRepo extends JpaRepository<Outfit, Long>, JpaSpecificationExecutor<Outfit> {
 
     Page<Outfit> findByPurposeAndSeason(Purpose purpose, Season season, Pageable pageable);
@@ -19,4 +21,9 @@ public interface OutfitRepo extends JpaRepository<Outfit, Long>, JpaSpecificatio
             "JOIN o.collageEntity c JOIN c.components comp JOIN comp.pieces p " +
             "WHERE p = :piece ")
     Page<Outfit> findOutfitsByPiece(@Param("piece") Piece piece, Pageable pageable);
+
+    @Query(value = "SELECT  o FROM Outfit o " +
+            "JOIN o.collageEntity c JOIN c.components comp JOIN comp.pieces p " +
+            "WHERE p = :piece ")
+    List<Outfit> findOutfitsByPiece(@Param("piece") Piece piece);
 }

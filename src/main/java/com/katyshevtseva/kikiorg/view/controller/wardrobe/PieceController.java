@@ -17,6 +17,7 @@ import com.katyshevtseva.kikiorg.core.sections.wardrobe.ClothesType;
 import com.katyshevtseva.kikiorg.core.sections.wardrobe.WardrobeService;
 import com.katyshevtseva.kikiorg.core.sections.wardrobe.WardrobeService.PieceFilter;
 import com.katyshevtseva.kikiorg.core.sections.wardrobe.entity.Piece;
+import com.katyshevtseva.kikiorg.core.sections.wardrobe.enums.Season;
 import com.katyshevtseva.kikiorg.view.controller.wardrobe.utils.ImageCreator;
 import com.katyshevtseva.kikiorg.view.controller.wardrobe.utils.WrdImageUtils;
 import com.katyshevtseva.kikiorg.view.controller.wardrobe.utils.WrdImageUtils.ImageAndPieceContainer;
@@ -165,20 +166,27 @@ class PieceController implements FxController {
 
         galleryController = component.getController();
         galleryPane.getChildren().add(component.getNode());
-        galleryController.setIconSupplier(this::satisfactionToImageView);
+        galleryController.setIconSupplier(this::getSeasonImageView);
     }
 
-    private ImageView satisfactionToImageView(ImageContainer imageContainer) {
+    private ImageView getSeasonImageView(ImageContainer imageContainer) {
         IconPicture iconPicture = null;
-        switch (((ImageAndPieceContainer) imageContainer).getPiece().getSatisfaction()) {
-            case OK:
-                iconPicture = IconPicture.OK;
+        Season season = Core.getInstance().pieceSeasonService()
+                .getPieceSeasonOrNull(((ImageAndPieceContainer) imageContainer).getPiece());
+
+        if (season == null) {
+            return null;
+        }
+
+        switch (season) {
+            case W:
+                iconPicture = IconPicture.WINTER;
                 break;
-            case NOT_OK:
-                iconPicture = IconPicture.RED_CROSS;
+            case S:
+                iconPicture = IconPicture.SUMMER;
                 break;
-            case EXCELLENT:
-                iconPicture = IconPicture.GREEN_TICK;
+            case DS:
+                iconPicture = IconPicture.AUTUMN;
         }
 
         return new ImageView(FxImageCreationUtil.getIcon(iconPicture));
