@@ -1,52 +1,37 @@
 package com.katyshevtseva.kikiorg.view.controller.wardrobe;
 
-import com.katyshevtseva.fx.AbstractSwitchController;
-import com.katyshevtseva.fx.WindowBuilder.FxController;
-import com.katyshevtseva.kikiorg.view.utils.OrganizerWindowCreator;
+import com.katyshevtseva.fx.FxUtils;
+import com.katyshevtseva.fx.switchcontroller.AbstractSwitchController;
+import com.katyshevtseva.fx.switchcontroller.Section;
 import javafx.fxml.FXML;
-import javafx.scene.Node;
 import javafx.scene.control.Button;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 
 import java.util.Arrays;
+import java.util.List;
 
-public class MainWardrobeController extends AbstractSwitchController implements FxController {
-    @FXML
-    private Button outfitsButton;
-    @FXML
-    private Button piecesButton;
-    @FXML
-    private Button statisticsButton;
+import static com.katyshevtseva.kikiorg.view.utils.OrganizerWindowCreator.windowCreator;
+
+public class MainWardrobeController extends AbstractSwitchController {
     @FXML
     private Pane mainPane;
-
-    private Node outfitsNode;
-    private Node piecesNode;
-    private Node statisticsNode;
-
-    private final OutfitController outfitController = new OutfitController();
-    private final PieceController pieceController = new PieceController();
-    private final StatisticsController statisticsController = new StatisticsController();
+    @FXML
+    private HBox buttonBox;
 
     @FXML
     private void initialize() {
-        pane = mainPane;
-        buttons.addAll(Arrays.asList(outfitsButton, piecesButton, statisticsButton));
-        outfitsButton.setOnAction(event -> outfitsButtonListener());
-        piecesButton.setOnAction(event -> piecesButtonListener());
-        statisticsButton.setOnAction(event -> statisticsButtonListener());
-        statisticsButtonListener();
+        init(getSections(), mainPane, this::placeButton);
     }
 
-    private void outfitsButtonListener() {
-        activateMode(outfitsButton, outfitsNode, OrganizerWindowCreator.getInstance()::getOutfitsNode, outfitController);
+    private List<Section> getSections() {
+        return Arrays.asList(
+                new Section("Statistics", new StatisticsController(), windowCreator()::getWardrobeStatisticsNode),
+                new Section("Pieces", new PieceController(), windowCreator()::getPiecesNode),
+                new Section("Outfits", new OutfitController(), windowCreator()::getOutfitsNode));
     }
 
-    private void piecesButtonListener() {
-        activateMode(piecesButton, piecesNode, OrganizerWindowCreator.getInstance()::getPiecesNode, pieceController);
-    }
-
-    private void statisticsButtonListener() {
-        activateMode(statisticsButton, statisticsNode, OrganizerWindowCreator.getInstance()::getWardrobeStatisticsNode, statisticsController);
+    private void placeButton(Button button) {
+        buttonBox.getChildren().addAll(FxUtils.getPaneWithWidth(30), button);
     }
 }

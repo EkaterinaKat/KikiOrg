@@ -3,7 +3,6 @@ package com.katyshevtseva.kikiorg.view.controller.structure;
 import com.katyshevtseva.fx.WindowBuilder.FxController;
 import com.katyshevtseva.kikiorg.core.Core;
 import com.katyshevtseva.kikiorg.core.sections.structure.entity.Goal;
-import com.katyshevtseva.kikiorg.view.utils.OrganizerWindowCreator;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
@@ -15,6 +14,7 @@ import java.util.List;
 
 import static com.katyshevtseva.fx.FxUtils.getPaneWithHeight;
 import static com.katyshevtseva.fx.FxUtils.getPaneWithWidth;
+import static com.katyshevtseva.kikiorg.view.utils.OrganizerWindowCreator.windowCreator;
 
 public class TopicalController implements FxController {
     private static final int NUM_OF_COLUMNS = 3;
@@ -50,6 +50,6 @@ public class TopicalController implements FxController {
     }
 
     private Node goalToNode(Goal goal) {
-        return OrganizerWindowCreator.getInstance().getGoalPaneNode(new GoalPaneController(goal, BLOCK_WIDTH, this::setContent));
+        return windowCreator().getGoalPaneNode(new GoalPaneController(goal, BLOCK_WIDTH, this::setContent));
     }
 }

@@ -15,7 +15,6 @@ import com.katyshevtseva.kikiorg.core.sections.tracker.BoardSortService.SortType
 import com.katyshevtseva.kikiorg.core.sections.tracker.TaskStatus;
 import com.katyshevtseva.kikiorg.core.sections.tracker.entity.Project;
 import com.katyshevtseva.kikiorg.core.sections.tracker.entity.Task;
-import com.katyshevtseva.kikiorg.view.utils.OrganizerWindowCreator;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
@@ -23,6 +22,7 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
 
 import static com.katyshevtseva.fx.FxUtils.setComboBoxItems;
+import static com.katyshevtseva.kikiorg.view.utils.OrganizerWindowCreator.windowCreator;
 
 class BoardController implements FxController {
     private BlockListController<Task> blockListController;
@@ -91,7 +91,7 @@ class BoardController implements FxController {
         statisticsLabel.setText(Core.getInstance().trackerService().getStatistics());
         blockListController.show(this::getTaskPage, (task, blockWidth) -> {
             TaskPaneController taskPaneController = new TaskPaneController(task, this::updateContent, blockWidth);
-            return OrganizerWindowCreator.getInstance().getTaskPaneNode(taskPaneController);
+            return windowCreator().getTaskPaneNode(taskPaneController);
         });
     }
 }

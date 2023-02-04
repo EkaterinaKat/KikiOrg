@@ -20,7 +20,6 @@ import com.katyshevtseva.kikiorg.core.sections.wardrobe.entity.Piece;
 import com.katyshevtseva.kikiorg.view.controller.wardrobe.utils.ImageCreator;
 import com.katyshevtseva.kikiorg.view.controller.wardrobe.utils.WrdImageUtils;
 import com.katyshevtseva.kikiorg.view.controller.wardrobe.utils.WrdImageUtils.ImageAndPieceContainer;
-import com.katyshevtseva.kikiorg.view.utils.OrganizerWindowCreator;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
@@ -33,6 +32,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static com.katyshevtseva.fx.ImageSizeUtil.placeImageInSquare;
+import static com.katyshevtseva.kikiorg.view.utils.OrganizerWindowCreator.windowCreator;
 import static com.katyshevtseva.kikiorg.view.utils.ViewConstants.CLOTHES_TYPE_SELECT_DIALOG_SIZE;
 
 class PieceController implements FxController {
@@ -70,7 +70,7 @@ class PieceController implements FxController {
         filterComboBox.setOnAction(event -> paginationPaneController.loadPage());
         tunePiecesGallery();
         pieceCreateButton.setOnAction(event ->
-                OrganizerWindowCreator.getInstance().openPieceEditDialog(
+                windowCreator().openPieceEditDialog(
                         new PieceDialogController(null, piece -> {
                             paginationPaneController.loadPage();
                             showPieceFullInfo(piece);
@@ -117,10 +117,10 @@ class PieceController implements FxController {
         showOutfitsButton.setOnAction(event -> {
             OutfitGridController outfitGridController = new OutfitGridController(pageNum -> service.getOutfitsByPiece(pageNum, piece));
             new StandardDialogBuilder().setSize(920, 1200).openNodeContainerDialog(
-                    OrganizerWindowCreator.getInstance().getOutfitGridNode(outfitGridController));
+                    windowCreator().getOutfitGridNode(outfitGridController));
         });
         editButton.setOnAction(event ->
-                OrganizerWindowCreator.getInstance().openPieceEditDialog(
+                windowCreator().openPieceEditDialog(
                         new PieceDialogController(piece, savedPiece -> {
                             paginationPaneController.loadPage();
                             showPieceFullInfo(savedPiece);

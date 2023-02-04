@@ -3,11 +3,12 @@ package com.katyshevtseva.kikiorg;
 
 import com.katyshevtseva.fx.WindowBuilder.FxController;
 import com.katyshevtseva.kikiorg.view.controller.MainController;
-import com.katyshevtseva.kikiorg.view.utils.OrganizerWindowCreator;
 import javafx.application.Application;
 import javafx.stage.Stage;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+import static com.katyshevtseva.kikiorg.view.utils.OrganizerWindowCreator.windowCreator;
 
 @SpringBootApplication
 public class Main extends Application {
@@ -21,6 +22,6 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) {
         FxController mainController = new MainController();
-        OrganizerWindowCreator.getInstance().openMainWindow(mainController);
+        windowCreator().openMainWindow(mainController);
     }
 }

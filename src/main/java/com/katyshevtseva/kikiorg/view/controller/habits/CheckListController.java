@@ -8,7 +8,6 @@ import com.katyshevtseva.kikiorg.core.sections.habits.AnalysisService.AnalysisRe
 import com.katyshevtseva.kikiorg.core.sections.habits.HabitMarkService;
 import com.katyshevtseva.kikiorg.core.sections.habits.HabitsService;
 import com.katyshevtseva.kikiorg.core.sections.habits.entity.Habit;
-import com.katyshevtseva.kikiorg.view.utils.OrganizerWindowCreator;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.DatePicker;
@@ -25,6 +24,7 @@ import static com.katyshevtseva.fx.FxUtils.*;
 import static com.katyshevtseva.fx.Styler.ThingToColor.TEXT;
 import static com.katyshevtseva.fx.Styler.getColorfullStyle;
 import static com.katyshevtseva.fx.Styler.getTextSizeStyle;
+import static com.katyshevtseva.kikiorg.view.utils.OrganizerWindowCreator.windowCreator;
 
 class CheckListController implements FxController {
     private final HabitsService habitsService = Core.getInstance().habitsService();
@@ -43,7 +43,7 @@ class CheckListController implements FxController {
     @FXML
     private void initialize() {
         tableController = new ReportTableController();
-        tablePane.getChildren().add(OrganizerWindowCreator.getInstance().getHabitsReportTableNode(tableController));
+        tablePane.getChildren().add(windowCreator().getHabitsReportTableNode(tableController));
         updateSectionContent();
         datePicker.setValue(LocalDate.now());
         datePicker.setOnAction(event -> fillHabitsTable());

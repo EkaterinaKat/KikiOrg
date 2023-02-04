@@ -3,9 +3,10 @@ package com.katyshevtseva.kikiorg.view.controller.finance;
 import com.katyshevtseva.fx.WindowBuilder.FxController;
 import com.katyshevtseva.kikiorg.core.Core;
 import com.katyshevtseva.kikiorg.core.sections.finance.FinanceOperationService;
-import com.katyshevtseva.kikiorg.view.utils.OrganizerWindowCreator;
 import javafx.fxml.FXML;
 import javafx.scene.layout.Pane;
+
+import static com.katyshevtseva.kikiorg.view.utils.OrganizerWindowCreator.windowCreator;
 
 class LedgerController implements FxController {
     private final FinanceOperationService service = Core.getInstance().financeOperationService();
@@ -23,25 +24,25 @@ class LedgerController implements FxController {
     @FXML
     private void initialize() {
         CheckController checkController = new CheckController();
-        checkPane.getChildren().add(OrganizerWindowCreator.getInstance().getCheckNode(checkController));
+        checkPane.getChildren().add(windowCreator().getCheckNode(checkController));
 
         HistoryTableController historyTableController =
                 new HistoryTableController(service.getLastWeekOperations(), checkController::updateTable);
-        historyTablePane.getChildren().add(OrganizerWindowCreator.getInstance().getHistoryTableNode(historyTableController));
+        historyTablePane.getChildren().add(windowCreator().getHistoryTableNode(historyTableController));
 
-        replenishmentPane.getChildren().add(OrganizerWindowCreator.getInstance().getReplenishmentNode(
+        replenishmentPane.getChildren().add(windowCreator().getReplenishmentNode(
                 new ReplenishmentController(() -> {
                     checkController.updateTable();
                     historyTableController.setTableContent(service.getLastWeekOperations());
                 })));
 
-        expensePane.getChildren().add(OrganizerWindowCreator.getInstance().getExpensesNode(
+        expensePane.getChildren().add(windowCreator().getExpensesNode(
                 new ExpenseController(() -> {
                     checkController.updateTable();
                     historyTableController.setTableContent(service.getLastWeekOperations());
                 })));
 
-        transferPane.getChildren().add(OrganizerWindowCreator.getInstance().getTransferNode(
+        transferPane.getChildren().add(windowCreator().getTransferNode(
                 new TransferController(() -> {
                     checkController.updateTable();
                     historyTableController.setTableContent(service.getLastWeekOperations());

@@ -12,7 +12,6 @@ import com.katyshevtseva.kikiorg.core.Core;
 import com.katyshevtseva.kikiorg.core.sections.structure.StructureService;
 import com.katyshevtseva.kikiorg.core.sections.structure.entity.Activity;
 import com.katyshevtseva.kikiorg.core.sections.structure.entity.Goal;
-import com.katyshevtseva.kikiorg.view.utils.OrganizerWindowCreator;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
@@ -24,6 +23,8 @@ import javafx.scene.layout.Pane;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import static com.katyshevtseva.kikiorg.view.utils.OrganizerWindowCreator.windowCreator;
 
 public class GoalsController implements FxController {
     private static final Size GOAL_LIST_SIZE = new Size(800, 350);
@@ -106,6 +107,6 @@ public class GoalsController implements FxController {
     }
 
     private Node goalToNode(Goal goal, int blockWidth, Activity activity) {
-        return OrganizerWindowCreator.getInstance().getGoalPaneNode(new GoalPaneController(goal, blockWidth, () -> showGoals(activity)));
+        return windowCreator().getGoalPaneNode(new GoalPaneController(goal, blockWidth, () -> showGoals(activity)));
     }
 }

@@ -3,7 +3,6 @@ package com.katyshevtseva.kikiorg.view.controller.finance;
 import com.katyshevtseva.fx.WindowBuilder.FxController;
 import com.katyshevtseva.kikiorg.core.Core;
 import com.katyshevtseva.kikiorg.core.sections.finance.entity.Account;
-import com.katyshevtseva.kikiorg.view.utils.OrganizerWindowCreator;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -19,6 +18,8 @@ import javafx.scene.layout.Pane;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
+
+import static com.katyshevtseva.kikiorg.view.utils.OrganizerWindowCreator.windowCreator;
 
 class CheckController implements FxController {
     @FXML
@@ -38,8 +39,8 @@ class CheckController implements FxController {
 
     @FXML
     private void initialize() {
-        scatterPane.getChildren().add(OrganizerWindowCreator.getInstance().getScatterCheckNode(new ScatterCheckController()));
-        huddlePane.getChildren().add(OrganizerWindowCreator.getInstance().getHuddleCheckNode(new HuddleCheckController()));
+        scatterPane.getChildren().add(windowCreator().getScatterCheckNode(new ScatterCheckController()));
+        huddlePane.getChildren().add(windowCreator().getHuddleCheckNode(new HuddleCheckController()));
         updateButton.setOnAction(event -> updateTable());
         adjustTable();
         updateTable();

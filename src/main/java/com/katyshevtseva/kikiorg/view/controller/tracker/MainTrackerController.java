@@ -1,43 +1,36 @@
 package com.katyshevtseva.kikiorg.view.controller.tracker;
 
-import com.katyshevtseva.fx.AbstractSwitchController;
-import com.katyshevtseva.fx.WindowBuilder.FxController;
-import com.katyshevtseva.kikiorg.view.utils.OrganizerWindowCreator;
+import com.katyshevtseva.fx.FxUtils;
+import com.katyshevtseva.fx.switchcontroller.AbstractSwitchController;
+import com.katyshevtseva.fx.switchcontroller.Section;
 import javafx.fxml.FXML;
-import javafx.scene.Node;
 import javafx.scene.control.Button;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 
 import java.util.Arrays;
+import java.util.List;
 
-public class MainTrackerController extends AbstractSwitchController implements FxController {
-    @FXML
-    private Button boardButton;
-    @FXML
-    private Button projectsButton;
+import static com.katyshevtseva.kikiorg.view.utils.OrganizerWindowCreator.windowCreator;
+
+public class MainTrackerController extends AbstractSwitchController {
     @FXML
     private Pane mainPane;
-
-    private Node boardNode;
-    private Node projectsNode;
-
-    private final BoardController boardController = new BoardController();
-    private final ProjectController projectController = new ProjectController();
+    @FXML
+    private HBox buttonBox;
 
     @FXML
     private void initialize() {
-        pane = mainPane;
-        buttons.addAll(Arrays.asList(boardButton, projectsButton));
-        boardButton.setOnAction(event -> boardButtonListener());
-        projectsButton.setOnAction(event -> projectsButtonListener());
-        boardButtonListener();
+        init(getSections(), mainPane, this::placeButton);
     }
 
-    private void projectsButtonListener() {
-        activateMode(projectsButton, projectsNode, OrganizerWindowCreator.getInstance()::getProjectsNode, projectController);
+    private List<Section> getSections() {
+        return Arrays.asList(
+                new Section("Board", new BoardController(), windowCreator()::getBoardNode),
+                new Section("Projects", new ProjectController(), windowCreator()::getProjectsNode));
     }
 
-    private void boardButtonListener() {
-        activateMode(boardButton, boardNode, OrganizerWindowCreator.getInstance()::getBoardNode, boardController);
+    private void placeButton(Button button) {
+        buttonBox.getChildren().addAll(FxUtils.getPaneWithWidth(30), button);
     }
 }

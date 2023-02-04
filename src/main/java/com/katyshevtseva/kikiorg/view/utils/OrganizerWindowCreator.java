@@ -14,7 +14,7 @@ public class OrganizerWindowCreator {
     private OrganizerWindowCreator() {
     }
 
-    public static OrganizerWindowCreator getInstance() {
+    public static OrganizerWindowCreator windowCreator() {
         return INSTANCE;
     }
 
@@ -180,6 +180,10 @@ public class OrganizerWindowCreator {
 
     public Node getHistoryNode(FxController controller) {
         return new WindowBuilder(FINANCE_FXML_LOCATION + "history.fxml").setController(controller).getNode();
+    }
+
+    public Node getFinanceHierarchyNode(FxController controller) {
+        return new WindowBuilder(FINANCE_FXML_LOCATION + "hierarchy.fxml").setController(controller).getNode();
     }
 
     public Node getTransferNode(FxController controller) {

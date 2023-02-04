@@ -15,7 +15,6 @@ import com.katyshevtseva.kikiorg.core.Core;
 import com.katyshevtseva.kikiorg.core.sections.structure.entity.Activity;
 import com.katyshevtseva.kikiorg.core.sections.structure.entity.Param;
 import com.katyshevtseva.kikiorg.core.sections.structure.entity.ParamValue;
-import com.katyshevtseva.kikiorg.view.utils.OrganizerWindowCreator;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
@@ -34,6 +33,7 @@ import java.util.stream.Collectors;
 
 import static com.katyshevtseva.fx.Styler.StandardColor.*;
 import static com.katyshevtseva.general.GeneralUtils.wrapTextByWords;
+import static com.katyshevtseva.kikiorg.view.utils.OrganizerWindowCreator.windowCreator;
 
 public class ActivitiesController implements FxController {
     @FXML
@@ -97,7 +97,7 @@ public class ActivitiesController implements FxController {
                     Activity activity = indexActivityMap.get(k);
                     Param param = indexParamMap.get(l);
                     Node node = getRegularNode(getValuesString(activity, param), valuesAreCorrect(activity, param));
-                    node.setOnMouseClicked(event -> OrganizerWindowCreator.getInstance().openValuesSelectDialog(
+                    node.setOnMouseClicked(event -> windowCreator().openValuesSelectDialog(
                             new ValuesSelectController(param, activity, this::fillPane)
                     ));
                     gridPane.add(node, l, k);

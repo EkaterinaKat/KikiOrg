@@ -5,7 +5,6 @@ import com.katyshevtseva.fx.WindowBuilder.FxController;
 import com.katyshevtseva.fx.dialog.StandardDialogBuilder;
 import com.katyshevtseva.kikiorg.core.Core;
 import com.katyshevtseva.kikiorg.core.sections.habits.entity.Habit;
-import com.katyshevtseva.kikiorg.view.utils.OrganizerWindowCreator;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -19,6 +18,7 @@ import java.util.Map;
 import static com.katyshevtseva.fx.Styler.StandardColor.GRAY;
 import static com.katyshevtseva.fx.Styler.StandardColor.GREEN;
 import static com.katyshevtseva.fx.Styler.ThingToColor.TEXT;
+import static com.katyshevtseva.kikiorg.view.utils.OrganizerWindowCreator.windowCreator;
 
 class AdminController implements FxController {
     @FXML
@@ -71,7 +71,7 @@ class AdminController implements FxController {
 
         habitIdPointLabelMap.values().forEach(label -> label.setText(""));
         habitIdPointLabelMap.get(habit.getId()).setText("* ");
-        editButton.setOnAction(event1 -> OrganizerWindowCreator.getInstance().openHabitEditDialog(
+        editButton.setOnAction(event1 -> windowCreator().openHabitEditDialog(
                 new HabitDialogController(habit, savedHabit -> {
                     fillHabitTable();
                     showHabit(savedHabit);
@@ -80,7 +80,7 @@ class AdminController implements FxController {
     }
 
     private void createHabit() {
-        OrganizerWindowCreator.getInstance().openHabitEditDialog(
+        windowCreator().openHabitEditDialog(
                 new HabitDialogController(null, savedHabit -> {
                     fillHabitTable();
                     showHabit(savedHabit);

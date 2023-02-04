@@ -16,7 +16,6 @@ import com.katyshevtseva.kikiorg.core.sections.finance.report.FinanceReportServi
 import com.katyshevtseva.kikiorg.core.sections.finance.report.FullFinanceReport;
 import com.katyshevtseva.kikiorg.core.sections.finance.report.ReportPeriodService;
 import com.katyshevtseva.kikiorg.core.sections.finance.report.ReportPeriodService.ReportPeriod;
-import com.katyshevtseva.kikiorg.view.utils.OrganizerWindowCreator;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
@@ -31,6 +30,7 @@ import static com.katyshevtseva.fx.FxUtils.getPaneWithHeight;
 import static com.katyshevtseva.fx.FxUtils.getPeriod;
 import static com.katyshevtseva.general.GeneralUtils.getColumnByIndexAndColumnNum;
 import static com.katyshevtseva.general.GeneralUtils.getRowByIndexAndColumnNum;
+import static com.katyshevtseva.kikiorg.view.utils.OrganizerWindowCreator.windowCreator;
 
 class FullReportController implements FxController {
     private static final int NUM_OF_COLUMNS_IN_PERIOD_GRID = 3;
@@ -66,8 +66,8 @@ class FullReportController implements FxController {
         showButton.setOnAction(event -> showReport());
         FxUtils.associateButtonWithControls(showButton, startDatePicker, endDatePicker);
 
-        incomePane.getChildren().add(OrganizerWindowCreator.getInstance().getReportPaneNode(incomePaneController));
-        outgoPane.getChildren().add(OrganizerWindowCreator.getInstance().getReportPaneNode(outgoPaneController));
+        incomePane.getChildren().add(windowCreator().getReportPaneNode(incomePaneController));
+        outgoPane.getChildren().add(windowCreator().getReportPaneNode(outgoPaneController));
     }
 
     private void showReport() {

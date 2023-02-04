@@ -2,9 +2,10 @@ package com.katyshevtseva.kikiorg.view.controller.finance;
 
 import com.katyshevtseva.fx.WindowBuilder.FxController;
 import com.katyshevtseva.kikiorg.core.Core;
-import com.katyshevtseva.kikiorg.view.utils.OrganizerWindowCreator;
 import javafx.fxml.FXML;
 import javafx.scene.layout.Pane;
+
+import static com.katyshevtseva.kikiorg.view.utils.OrganizerWindowCreator.windowCreator;
 
 
 class HistoryController implements FxController {
@@ -17,8 +18,8 @@ class HistoryController implements FxController {
     private void initialize() {
         HistoryTableController tableController = new HistoryTableController(
                 Core.getInstance().financeOperationService().getOperationsForLastMonth());
-        tablePane.getChildren().add(OrganizerWindowCreator.getInstance().getHistoryTableNode(tableController));
-        searchPane.getChildren().add(OrganizerWindowCreator.getInstance().getSearchNode(
+        tablePane.getChildren().add(windowCreator().getHistoryTableNode(tableController));
+        searchPane.getChildren().add(windowCreator().getSearchNode(
                 new SearchController(tableController::setTableContent)));
     }
 }

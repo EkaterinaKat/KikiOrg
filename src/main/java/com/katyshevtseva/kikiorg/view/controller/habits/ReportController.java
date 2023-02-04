@@ -5,7 +5,6 @@ import com.katyshevtseva.fx.WindowBuilder.FxController;
 import com.katyshevtseva.kikiorg.core.Core;
 import com.katyshevtseva.kikiorg.core.sections.habits.entity.Habit;
 import com.katyshevtseva.kikiorg.view.utils.OrgUtils;
-import com.katyshevtseva.kikiorg.view.utils.OrganizerWindowCreator;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -26,6 +25,7 @@ import java.util.List;
 
 import static com.katyshevtseva.date.DateUtils.shiftDate;
 import static com.katyshevtseva.fx.FxUtils.associateButtonWithControls;
+import static com.katyshevtseva.kikiorg.view.utils.OrganizerWindowCreator.windowCreator;
 
 class ReportController implements FxController {
     @FXML
@@ -48,7 +48,7 @@ class ReportController implements FxController {
     @FXML
     private void initialize() {
         tableController = new ReportTableController();
-        tablePane.getChildren().add(OrganizerWindowCreator.getInstance().getHabitsReportTableNode(tableController));
+        tablePane.getChildren().add(windowCreator().getHabitsReportTableNode(tableController));
 
         selectedHabits = new ArrayList<>();
         showButton.setOnAction(event -> showReport());

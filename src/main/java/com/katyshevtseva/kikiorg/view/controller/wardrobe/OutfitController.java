@@ -8,11 +8,12 @@ import com.katyshevtseva.kikiorg.core.sections.wardrobe.WardrobeService;
 import com.katyshevtseva.kikiorg.core.sections.wardrobe.entity.Outfit;
 import com.katyshevtseva.kikiorg.core.sections.wardrobe.enums.Purpose;
 import com.katyshevtseva.kikiorg.core.sections.wardrobe.enums.Season;
-import com.katyshevtseva.kikiorg.view.utils.OrganizerWindowCreator;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.layout.Pane;
+
+import static com.katyshevtseva.kikiorg.view.utils.OrganizerWindowCreator.windowCreator;
 
 class OutfitController implements FxController {
     private final WardrobeService service = Core.getInstance().wardrobeService();
@@ -30,10 +31,10 @@ class OutfitController implements FxController {
 
     @FXML
     private void initialize() {
-        outfitCreateButton.setOnAction(event -> OrganizerWindowCreator.getInstance().openOutfitDialog(
+        outfitCreateButton.setOnAction(event -> windowCreator().openOutfitDialog(
                 new OutfitDialogController(null, outfit -> gridController.loadPage())));
         tuneFilters();
-        outfitGridContainer.getChildren().add(OrganizerWindowCreator.getInstance().getOutfitGridNode(gridController));
+        outfitGridContainer.getChildren().add(windowCreator().getOutfitGridNode(gridController));
     }
 
     Page<Outfit> getOutfitPage(int pageNum) {

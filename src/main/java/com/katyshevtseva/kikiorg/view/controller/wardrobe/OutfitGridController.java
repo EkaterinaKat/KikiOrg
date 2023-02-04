@@ -11,7 +11,6 @@ import com.katyshevtseva.kikiorg.core.Core;
 import com.katyshevtseva.kikiorg.core.sections.wardrobe.WardrobeService;
 import com.katyshevtseva.kikiorg.core.sections.wardrobe.entity.Outfit;
 import com.katyshevtseva.kikiorg.view.controller.wardrobe.utils.CollageUtils;
-import com.katyshevtseva.kikiorg.view.utils.OrganizerWindowCreator;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -20,6 +19,8 @@ import javafx.scene.layout.Pane;
 import lombok.RequiredArgsConstructor;
 
 import java.util.List;
+
+import static com.katyshevtseva.kikiorg.view.utils.OrganizerWindowCreator.windowCreator;
 
 @RequiredArgsConstructor
 public class OutfitGridController implements FxController {
@@ -57,7 +58,7 @@ public class OutfitGridController implements FxController {
         infoLabel.setText(outfit.getFullDesc());
         outfitEditButton.setVisible(true);
         outfitDeleteButton.setVisible(true);
-        outfitEditButton.setOnAction(event -> OrganizerWindowCreator.getInstance().openOutfitDialog(
+        outfitEditButton.setOnAction(event -> windowCreator().openOutfitDialog(
                 new OutfitDialogController(outfit, savedOutfit -> {
                     paginationPaneController.loadPage();
                     showOutfitInfo(savedOutfit);

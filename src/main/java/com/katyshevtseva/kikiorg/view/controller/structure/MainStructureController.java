@@ -1,61 +1,38 @@
 package com.katyshevtseva.kikiorg.view.controller.structure;
 
-import com.katyshevtseva.fx.AbstractSwitchController;
-import com.katyshevtseva.fx.WindowBuilder.FxController;
-import com.katyshevtseva.kikiorg.view.utils.OrganizerWindowCreator;
+import com.katyshevtseva.fx.FxUtils;
+import com.katyshevtseva.fx.switchcontroller.AbstractSwitchController;
+import com.katyshevtseva.fx.switchcontroller.Section;
 import javafx.fxml.FXML;
-import javafx.scene.Node;
 import javafx.scene.control.Button;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 
 import java.util.Arrays;
+import java.util.List;
 
-public class MainStructureController extends AbstractSwitchController implements FxController {
-    @FXML
-    private Button activitiesButton;
-    @FXML
-    private Button paramsButton;
-    @FXML
-    private Button goalsButton;
-    @FXML
-    private Button topicalButton;
+import static com.katyshevtseva.kikiorg.view.utils.OrganizerWindowCreator.windowCreator;
+
+public class MainStructureController extends AbstractSwitchController {
     @FXML
     private Pane mainPane;
-
-    private Node activitiesNode;
-    private Node paramsNode;
-    private Node goalsNode;
-    private Node topicalNode;
-
-    private final ActivitiesController activitiesController = new ActivitiesController();
-    private final ParamsController paramsController = new ParamsController();
-    private final GoalsController goalsController = new GoalsController();
-    private final TopicalController topicalController = new TopicalController();
+    @FXML
+    private HBox buttonBox;
 
     @FXML
     private void initialize() {
-        pane = mainPane;
-        buttons.addAll(Arrays.asList(activitiesButton, paramsButton, goalsButton, topicalButton));
-        activitiesButton.setOnAction(event -> activitiesButtonListener());
-        paramsButton.setOnAction(event -> paramsButtonListener());
-        goalsButton.setOnAction(event -> goalsButtonListener());
-        topicalButton.setOnAction(event -> topicalButtonListener());
-        topicalButtonListener();
+        init(getSections(), mainPane, this::placeButton);
     }
 
-    private void topicalButtonListener() {
-        activateMode(topicalButton, topicalNode, OrganizerWindowCreator.getInstance()::getTopicalNode, topicalController);
+    private List<Section> getSections() {
+        return Arrays.asList(
+                new Section("Topical", new TopicalController(), windowCreator()::getTopicalNode),
+                new Section("Activities", new ActivitiesController(), windowCreator()::getStructureActivitiesNode),
+                new Section("Params", new ParamsController(), windowCreator()::getStructureParamsNode),
+                new Section("Goals", new GoalsController(), windowCreator()::getGoalsNode));
     }
 
-    private void goalsButtonListener() {
-        activateMode(goalsButton, goalsNode, OrganizerWindowCreator.getInstance()::getGoalsNode, goalsController);
-    }
-
-    private void activitiesButtonListener() {
-        activateMode(activitiesButton, activitiesNode, OrganizerWindowCreator.getInstance()::getStructureActivitiesNode, activitiesController);
-    }
-
-    private void paramsButtonListener() {
-        activateMode(paramsButton, paramsNode, OrganizerWindowCreator.getInstance()::getStructureParamsNode, paramsController);
+    private void placeButton(Button button) {
+        buttonBox.getChildren().addAll(FxUtils.getPaneWithWidth(30), button);
     }
 }
