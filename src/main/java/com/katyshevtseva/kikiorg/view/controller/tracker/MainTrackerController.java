@@ -11,7 +11,9 @@ import javafx.scene.layout.Pane;
 import java.util.Arrays;
 import java.util.List;
 
-import static com.katyshevtseva.kikiorg.view.utils.OrganizerWindowCreator.windowCreator;
+import static com.katyshevtseva.kikiorg.view.utils.KikiOrgWindowCreator.NodeInfo.BOARD;
+import static com.katyshevtseva.kikiorg.view.utils.KikiOrgWindowCreator.NodeInfo.PROJECT;
+import static com.katyshevtseva.kikiorg.view.utils.KikiOrgWindowCreator.windowCreator;
 
 public class MainTrackerController extends AbstractSwitchController {
     @FXML
@@ -26,8 +28,10 @@ public class MainTrackerController extends AbstractSwitchController {
 
     private List<Section> getSections() {
         return Arrays.asList(
-                new Section("Board", new BoardController(), windowCreator()::getBoardNode),
-                new Section("Projects", new ProjectController(), windowCreator()::getProjectsNode));
+                new Section("Board", new BoardController(),
+                        controller -> windowCreator().getNode(BOARD, controller)),
+                new Section("Projects", new ProjectController(),
+                        controller -> windowCreator().getNode(PROJECT, controller)));
     }
 
     private void placeButton(Button button) {

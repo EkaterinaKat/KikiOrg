@@ -18,7 +18,8 @@ import java.util.Map;
 import static com.katyshevtseva.fx.Styler.StandardColor.GRAY;
 import static com.katyshevtseva.fx.Styler.StandardColor.GREEN;
 import static com.katyshevtseva.fx.Styler.ThingToColor.TEXT;
-import static com.katyshevtseva.kikiorg.view.utils.OrganizerWindowCreator.windowCreator;
+import static com.katyshevtseva.kikiorg.view.utils.KikiOrgWindowCreator.DialogInfo.HABIT;
+import static com.katyshevtseva.kikiorg.view.utils.KikiOrgWindowCreator.windowCreator;
 
 class AdminController implements FxController {
     @FXML
@@ -71,7 +72,7 @@ class AdminController implements FxController {
 
         habitIdPointLabelMap.values().forEach(label -> label.setText(""));
         habitIdPointLabelMap.get(habit.getId()).setText("* ");
-        editButton.setOnAction(event1 -> windowCreator().openHabitEditDialog(
+        editButton.setOnAction(event1 -> windowCreator().openDialog(HABIT,
                 new HabitDialogController(habit, savedHabit -> {
                     fillHabitTable();
                     showHabit(savedHabit);
@@ -80,7 +81,7 @@ class AdminController implements FxController {
     }
 
     private void createHabit() {
-        windowCreator().openHabitEditDialog(
+        windowCreator().openDialog(HABIT,
                 new HabitDialogController(null, savedHabit -> {
                     fillHabitTable();
                     showHabit(savedHabit);

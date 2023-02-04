@@ -11,7 +11,8 @@ import javafx.scene.layout.Pane;
 import java.util.Arrays;
 import java.util.List;
 
-import static com.katyshevtseva.kikiorg.view.utils.OrganizerWindowCreator.windowCreator;
+import static com.katyshevtseva.kikiorg.view.utils.KikiOrgWindowCreator.NodeInfo.*;
+import static com.katyshevtseva.kikiorg.view.utils.KikiOrgWindowCreator.windowCreator;
 
 public class MainWardrobeController extends AbstractSwitchController {
     @FXML
@@ -26,9 +27,12 @@ public class MainWardrobeController extends AbstractSwitchController {
 
     private List<Section> getSections() {
         return Arrays.asList(
-                new Section("Statistics", new StatisticsController(), windowCreator()::getWardrobeStatisticsNode),
-                new Section("Pieces", new PieceController(), windowCreator()::getPiecesNode),
-                new Section("Outfits", new OutfitController(), windowCreator()::getOutfitsNode));
+                new Section("Statistics", new StatisticsController(),
+                        controller -> windowCreator().getNode(WARDROBE_STATISTICS, controller)),
+                new Section("Pieces", new PieceController(),
+                        controller -> windowCreator().getNode(PIECE, controller)),
+                new Section("Outfits", new OutfitController(),
+                        controller -> windowCreator().getNode(OUTFIT, controller)));
     }
 
     private void placeButton(Button button) {

@@ -11,7 +11,8 @@ import javafx.scene.layout.Pane;
 import java.util.Arrays;
 import java.util.List;
 
-import static com.katyshevtseva.kikiorg.view.utils.OrganizerWindowCreator.windowCreator;
+import static com.katyshevtseva.kikiorg.view.utils.KikiOrgWindowCreator.NodeInfo.*;
+import static com.katyshevtseva.kikiorg.view.utils.KikiOrgWindowCreator.windowCreator;
 
 public class MainStructureController extends AbstractSwitchController {
     @FXML
@@ -26,10 +27,14 @@ public class MainStructureController extends AbstractSwitchController {
 
     private List<Section> getSections() {
         return Arrays.asList(
-                new Section("Topical", new TopicalController(), windowCreator()::getTopicalNode),
-                new Section("Activities", new ActivitiesController(), windowCreator()::getStructureActivitiesNode),
-                new Section("Params", new ParamsController(), windowCreator()::getStructureParamsNode),
-                new Section("Goals", new GoalsController(), windowCreator()::getGoalsNode));
+                new Section("Topical", new TopicalController(),
+                        controller -> windowCreator().getNode(TOPICAL, controller)),
+                new Section("Activities", new ActivitiesController(),
+                        controller -> windowCreator().getNode(ACTIVITIES, controller)),
+                new Section("Params", new ParamsController(),
+                        controller -> windowCreator().getNode(STR_PARAMS, controller)),
+                new Section("Goals", new GoalsController(),
+                        controller -> windowCreator().getNode(GOALS, controller)));
     }
 
     private void placeButton(Button button) {

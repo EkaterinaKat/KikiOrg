@@ -19,7 +19,8 @@ import java.util.Arrays;
 import java.util.List;
 
 import static com.katyshevtseva.fx.FxImageCreationUtil.getIcon;
-import static com.katyshevtseva.kikiorg.view.utils.OrganizerWindowCreator.windowCreator;
+import static com.katyshevtseva.kikiorg.view.utils.KikiOrgWindowCreator.NodeInfo.*;
+import static com.katyshevtseva.kikiorg.view.utils.KikiOrgWindowCreator.windowCreator;
 
 public class MainController extends AbstractSwitchController {
     @FXML
@@ -37,11 +38,16 @@ public class MainController extends AbstractSwitchController {
 
     private List<Section> getSections() {
         return Arrays.asList(
-                new Section("Finance", new MainFinanceController(), windowCreator()::getMainFinanceNode),
-                new Section("Habits", new MainHabitsController(), windowCreator()::getMainHabitsNode),
-                new Section("Wardrobe", new MainWardrobeController(), windowCreator()::getMainWardrobeNode),
-                new Section("Tracker", new MainTrackerController(), windowCreator()::getMainTrackerNode),
-                new Section("Structure", new MainStructureController(), windowCreator()::getMainStructureNode));
+                new Section("Finance", new MainFinanceController(),
+                        controller -> windowCreator().getNode(MAIN_FIN, controller)),
+                new Section("Habits", new MainHabitsController(),
+                        controller -> windowCreator().getNode(MAIN_HABIT, controller)),
+                new Section("Wardrobe", new MainWardrobeController(),
+                        controller -> windowCreator().getNode(MAIN_WARDROBE, controller)),
+                new Section("Tracker", new MainTrackerController(),
+                        controller -> windowCreator().getNode(MAIN_TRACKER, controller)),
+                new Section("Structure", new MainStructureController(),
+                        controller -> windowCreator().getNode(MAIN_STRUCTURE, controller)));
     }
 
     private void placeButton(Button button) {

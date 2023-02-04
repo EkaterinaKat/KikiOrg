@@ -32,7 +32,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static com.katyshevtseva.fx.ImageSizeUtil.placeImageInSquare;
-import static com.katyshevtseva.kikiorg.view.utils.OrganizerWindowCreator.windowCreator;
+import static com.katyshevtseva.kikiorg.view.utils.KikiOrgWindowCreator.DialogInfo.PIECE;
+import static com.katyshevtseva.kikiorg.view.utils.KikiOrgWindowCreator.NodeInfo.OUTFIT_GRID;
+import static com.katyshevtseva.kikiorg.view.utils.KikiOrgWindowCreator.windowCreator;
 import static com.katyshevtseva.kikiorg.view.utils.ViewConstants.CLOTHES_TYPE_SELECT_DIALOG_SIZE;
 
 class PieceController implements FxController {
@@ -70,7 +72,7 @@ class PieceController implements FxController {
         filterComboBox.setOnAction(event -> paginationPaneController.loadPage());
         tunePiecesGallery();
         pieceCreateButton.setOnAction(event ->
-                windowCreator().openPieceEditDialog(
+                windowCreator().openDialog(PIECE,
                         new PieceDialogController(null, piece -> {
                             paginationPaneController.loadPage();
                             showPieceFullInfo(piece);
@@ -117,10 +119,10 @@ class PieceController implements FxController {
         showOutfitsButton.setOnAction(event -> {
             OutfitGridController outfitGridController = new OutfitGridController(pageNum -> service.getOutfitsByPiece(pageNum, piece));
             new StandardDialogBuilder().setSize(920, 1200).openNodeContainerDialog(
-                    windowCreator().getOutfitGridNode(outfitGridController));
+                    windowCreator().getNode(OUTFIT_GRID, outfitGridController));
         });
         editButton.setOnAction(event ->
-                windowCreator().openPieceEditDialog(
+                windowCreator().openDialog(PIECE,
                         new PieceDialogController(piece, savedPiece -> {
                             paginationPaneController.loadPage();
                             showPieceFullInfo(savedPiece);

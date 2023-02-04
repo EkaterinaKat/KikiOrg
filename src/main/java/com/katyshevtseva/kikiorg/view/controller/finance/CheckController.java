@@ -19,7 +19,9 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static com.katyshevtseva.kikiorg.view.utils.OrganizerWindowCreator.windowCreator;
+import static com.katyshevtseva.kikiorg.view.utils.KikiOrgWindowCreator.NodeInfo.HUDDLE_CHECK;
+import static com.katyshevtseva.kikiorg.view.utils.KikiOrgWindowCreator.NodeInfo.SCATTER_CHECK;
+import static com.katyshevtseva.kikiorg.view.utils.KikiOrgWindowCreator.windowCreator;
 
 class CheckController implements FxController {
     @FXML
@@ -39,8 +41,8 @@ class CheckController implements FxController {
 
     @FXML
     private void initialize() {
-        scatterPane.getChildren().add(windowCreator().getScatterCheckNode(new ScatterCheckController()));
-        huddlePane.getChildren().add(windowCreator().getHuddleCheckNode(new HuddleCheckController()));
+        scatterPane.getChildren().add(windowCreator().getNode(SCATTER_CHECK, new ScatterCheckController()));
+        huddlePane.getChildren().add(windowCreator().getNode(HUDDLE_CHECK, new HuddleCheckController()));
         updateButton.setOnAction(event -> updateTable());
         adjustTable();
         updateTable();

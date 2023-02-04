@@ -18,7 +18,8 @@ import javafx.util.Callback;
 import static com.katyshevtseva.fx.Styler.StandardColor.BLACK;
 import static com.katyshevtseva.fx.Styler.ThingToColor.BACKGROUND;
 import static com.katyshevtseva.fx.Styler.ThingToColor.TABLE_TEXT;
-import static com.katyshevtseva.kikiorg.view.utils.OrganizerWindowCreator.windowCreator;
+import static com.katyshevtseva.kikiorg.view.utils.KikiOrgWindowCreator.DialogInfo.PROJECT;
+import static com.katyshevtseva.kikiorg.view.utils.KikiOrgWindowCreator.windowCreator;
 
 class ProjectController implements FxController {
     @FXML
@@ -40,7 +41,7 @@ class ProjectController implements FxController {
         setRowsColors();
         fillTable();
         addProjectButton.setOnAction(event ->
-                windowCreator().openProjectDialog(new ProjectDialogController(this::fillTable, null)));
+                windowCreator().openDialog(PROJECT, new ProjectDialogController(this::fillTable, null)));
     }
 
     private void fillTable() {
@@ -63,7 +64,7 @@ class ProjectController implements FxController {
             return cell;
         });
         TableUtils.adjustButtonColumn(editColumn, "Edit", (project) ->
-                windowCreator().openProjectDialog(new ProjectDialogController(this::fillTable, project)));
+                windowCreator().openDialog(PROJECT, new ProjectDialogController(this::fillTable, project)));
     }
 
     private void setRowsColors() {

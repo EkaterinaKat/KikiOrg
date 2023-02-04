@@ -20,7 +20,8 @@ import lombok.RequiredArgsConstructor;
 
 import java.util.List;
 
-import static com.katyshevtseva.kikiorg.view.utils.OrganizerWindowCreator.windowCreator;
+import static com.katyshevtseva.kikiorg.view.utils.KikiOrgWindowCreator.DialogInfo.OUTFIT;
+import static com.katyshevtseva.kikiorg.view.utils.KikiOrgWindowCreator.windowCreator;
 
 @RequiredArgsConstructor
 public class OutfitGridController implements FxController {
@@ -58,7 +59,7 @@ public class OutfitGridController implements FxController {
         infoLabel.setText(outfit.getFullDesc());
         outfitEditButton.setVisible(true);
         outfitDeleteButton.setVisible(true);
-        outfitEditButton.setOnAction(event -> windowCreator().openOutfitDialog(
+        outfitEditButton.setOnAction(event -> windowCreator().openDialog(OUTFIT,
                 new OutfitDialogController(outfit, savedOutfit -> {
                     paginationPaneController.loadPage();
                     showOutfitInfo(savedOutfit);

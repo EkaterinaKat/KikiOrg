@@ -11,7 +11,8 @@ import javafx.scene.layout.Pane;
 import java.util.Arrays;
 import java.util.List;
 
-import static com.katyshevtseva.kikiorg.view.utils.OrganizerWindowCreator.windowCreator;
+import static com.katyshevtseva.kikiorg.view.utils.KikiOrgWindowCreator.NodeInfo.*;
+import static com.katyshevtseva.kikiorg.view.utils.KikiOrgWindowCreator.windowCreator;
 
 public class MainHabitsController extends AbstractSwitchController {
     @FXML
@@ -26,10 +27,14 @@ public class MainHabitsController extends AbstractSwitchController {
 
     private List<Section> getSections() {
         return Arrays.asList(
-                new Section("Check list", new CheckListController(), windowCreator()::getCheckListNode),
-                new Section("Admin", new AdminController(), windowCreator()::getHabitAdminNode),
-                new Section("Report", new ReportController(), windowCreator()::getHabitsReportNode),
-                new Section("Criterion", new CriterionController(), windowCreator()::getHabitsCriterionNode));
+                new Section("Check list", new CheckListController(),
+                        controller -> windowCreator().getNode(CHECK_LIST, controller)),
+                new Section("Admin", new AdminController(),
+                        controller -> windowCreator().getNode(HABIT_ADMIN, controller)),
+                new Section("Report", new ReportController(),
+                        controller -> windowCreator().getNode(HABIT_REPORT, controller)),
+                new Section("Criterion", new CriterionController(),
+                        controller -> windowCreator().getNode(CRITERION, controller)));
     }
 
     private void placeButton(Button button) {

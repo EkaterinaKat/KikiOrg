@@ -6,7 +6,8 @@ import com.katyshevtseva.kikiorg.core.sections.finance.FinanceOperationService;
 import javafx.fxml.FXML;
 import javafx.scene.layout.Pane;
 
-import static com.katyshevtseva.kikiorg.view.utils.OrganizerWindowCreator.windowCreator;
+import static com.katyshevtseva.kikiorg.view.utils.KikiOrgWindowCreator.NodeInfo.*;
+import static com.katyshevtseva.kikiorg.view.utils.KikiOrgWindowCreator.windowCreator;
 
 class LedgerController implements FxController {
     private final FinanceOperationService service = Core.getInstance().financeOperationService();
@@ -24,25 +25,25 @@ class LedgerController implements FxController {
     @FXML
     private void initialize() {
         CheckController checkController = new CheckController();
-        checkPane.getChildren().add(windowCreator().getCheckNode(checkController));
+        checkPane.getChildren().add(windowCreator().getNode(FIN_CHECK, checkController));
 
         HistoryTableController historyTableController =
                 new HistoryTableController(service.getLastWeekOperations(), checkController::updateTable);
-        historyTablePane.getChildren().add(windowCreator().getHistoryTableNode(historyTableController));
+        historyTablePane.getChildren().add(windowCreator().getNode(FIN_HISTORY_TABLE, historyTableController));
 
-        replenishmentPane.getChildren().add(windowCreator().getReplenishmentNode(
+        replenishmentPane.getChildren().add(windowCreator().getNode(REPLENISHMENT,
                 new ReplenishmentController(() -> {
                     checkController.updateTable();
                     historyTableController.setTableContent(service.getLastWeekOperations());
                 })));
 
-        expensePane.getChildren().add(windowCreator().getExpensesNode(
+        expensePane.getChildren().add(windowCreator().getNode(EXPENSE,
                 new ExpenseController(() -> {
                     checkController.updateTable();
                     historyTableController.setTableContent(service.getLastWeekOperations());
                 })));
 
-        transferPane.getChildren().add(windowCreator().getTransferNode(
+        transferPane.getChildren().add(windowCreator().getNode(TRANSFER,
                 new TransferController(() -> {
                     checkController.updateTable();
                     historyTableController.setTableContent(service.getLastWeekOperations());

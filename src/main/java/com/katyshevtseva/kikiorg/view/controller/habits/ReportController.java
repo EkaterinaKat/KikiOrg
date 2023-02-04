@@ -25,7 +25,8 @@ import java.util.List;
 
 import static com.katyshevtseva.date.DateUtils.shiftDate;
 import static com.katyshevtseva.fx.FxUtils.associateButtonWithControls;
-import static com.katyshevtseva.kikiorg.view.utils.OrganizerWindowCreator.windowCreator;
+import static com.katyshevtseva.kikiorg.view.utils.KikiOrgWindowCreator.NodeInfo.HABIT_REPORT_TABLE;
+import static com.katyshevtseva.kikiorg.view.utils.KikiOrgWindowCreator.windowCreator;
 
 class ReportController implements FxController {
     @FXML
@@ -48,7 +49,7 @@ class ReportController implements FxController {
     @FXML
     private void initialize() {
         tableController = new ReportTableController();
-        tablePane.getChildren().add(windowCreator().getHabitsReportTableNode(tableController));
+        tablePane.getChildren().add(windowCreator().getNode(HABIT_REPORT_TABLE, tableController));
 
         selectedHabits = new ArrayList<>();
         showButton.setOnAction(event -> showReport());

@@ -24,7 +24,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static com.katyshevtseva.kikiorg.view.utils.OrganizerWindowCreator.windowCreator;
+import static com.katyshevtseva.kikiorg.view.utils.KikiOrgWindowCreator.NodeInfo.GOAL_PANE;
+import static com.katyshevtseva.kikiorg.view.utils.KikiOrgWindowCreator.windowCreator;
 
 public class GoalsController implements FxController {
     private static final Size GOAL_LIST_SIZE = new Size(800, 350);
@@ -107,6 +108,6 @@ public class GoalsController implements FxController {
     }
 
     private Node goalToNode(Goal goal, int blockWidth, Activity activity) {
-        return windowCreator().getGoalPaneNode(new GoalPaneController(goal, blockWidth, () -> showGoals(activity)));
+        return windowCreator().getNode(GOAL_PANE, new GoalPaneController(goal, blockWidth, () -> showGoals(activity)));
     }
 }

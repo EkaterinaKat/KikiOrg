@@ -14,7 +14,8 @@ import java.util.List;
 
 import static com.katyshevtseva.fx.FxUtils.getPaneWithHeight;
 import static com.katyshevtseva.fx.FxUtils.getPaneWithWidth;
-import static com.katyshevtseva.kikiorg.view.utils.OrganizerWindowCreator.windowCreator;
+import static com.katyshevtseva.kikiorg.view.utils.KikiOrgWindowCreator.NodeInfo.GOAL_PANE;
+import static com.katyshevtseva.kikiorg.view.utils.KikiOrgWindowCreator.windowCreator;
 
 public class TopicalController implements FxController {
     private static final int NUM_OF_COLUMNS = 3;
@@ -50,6 +51,6 @@ public class TopicalController implements FxController {
     }
 
     private Node goalToNode(Goal goal) {
-        return windowCreator().getGoalPaneNode(new GoalPaneController(goal, BLOCK_WIDTH, this::setContent));
+        return windowCreator().getNode(GOAL_PANE, new GoalPaneController(goal, BLOCK_WIDTH, this::setContent));
     }
 }

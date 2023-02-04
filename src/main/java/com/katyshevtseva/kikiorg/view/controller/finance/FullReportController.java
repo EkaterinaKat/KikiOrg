@@ -30,7 +30,8 @@ import static com.katyshevtseva.fx.FxUtils.getPaneWithHeight;
 import static com.katyshevtseva.fx.FxUtils.getPeriod;
 import static com.katyshevtseva.general.GeneralUtils.getColumnByIndexAndColumnNum;
 import static com.katyshevtseva.general.GeneralUtils.getRowByIndexAndColumnNum;
-import static com.katyshevtseva.kikiorg.view.utils.OrganizerWindowCreator.windowCreator;
+import static com.katyshevtseva.kikiorg.view.utils.KikiOrgWindowCreator.NodeInfo.REPORT_PANE;
+import static com.katyshevtseva.kikiorg.view.utils.KikiOrgWindowCreator.windowCreator;
 
 class FullReportController implements FxController {
     private static final int NUM_OF_COLUMNS_IN_PERIOD_GRID = 3;
@@ -66,8 +67,8 @@ class FullReportController implements FxController {
         showButton.setOnAction(event -> showReport());
         FxUtils.associateButtonWithControls(showButton, startDatePicker, endDatePicker);
 
-        incomePane.getChildren().add(windowCreator().getReportPaneNode(incomePaneController));
-        outgoPane.getChildren().add(windowCreator().getReportPaneNode(outgoPaneController));
+        incomePane.getChildren().add(windowCreator().getNode(REPORT_PANE, incomePaneController));
+        outgoPane.getChildren().add(windowCreator().getNode(REPORT_PANE, outgoPaneController));
     }
 
     private void showReport() {

@@ -33,7 +33,8 @@ import java.util.stream.Collectors;
 
 import static com.katyshevtseva.fx.Styler.StandardColor.*;
 import static com.katyshevtseva.general.GeneralUtils.wrapTextByWords;
-import static com.katyshevtseva.kikiorg.view.utils.OrganizerWindowCreator.windowCreator;
+import static com.katyshevtseva.kikiorg.view.utils.KikiOrgWindowCreator.DialogInfo.STR_VALUE_SELECT;
+import static com.katyshevtseva.kikiorg.view.utils.KikiOrgWindowCreator.windowCreator;
 
 public class ActivitiesController implements FxController {
     @FXML
@@ -97,7 +98,7 @@ public class ActivitiesController implements FxController {
                     Activity activity = indexActivityMap.get(k);
                     Param param = indexParamMap.get(l);
                     Node node = getRegularNode(getValuesString(activity, param), valuesAreCorrect(activity, param));
-                    node.setOnMouseClicked(event -> windowCreator().openValuesSelectDialog(
+                    node.setOnMouseClicked(event -> windowCreator().openDialog(STR_VALUE_SELECT,
                             new ValuesSelectController(param, activity, this::fillPane)
                     ));
                     gridPane.add(node, l, k);

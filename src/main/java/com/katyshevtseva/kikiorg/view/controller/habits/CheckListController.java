@@ -24,7 +24,8 @@ import static com.katyshevtseva.fx.FxUtils.*;
 import static com.katyshevtseva.fx.Styler.ThingToColor.TEXT;
 import static com.katyshevtseva.fx.Styler.getColorfullStyle;
 import static com.katyshevtseva.fx.Styler.getTextSizeStyle;
-import static com.katyshevtseva.kikiorg.view.utils.OrganizerWindowCreator.windowCreator;
+import static com.katyshevtseva.kikiorg.view.utils.KikiOrgWindowCreator.NodeInfo.HABIT_REPORT_TABLE;
+import static com.katyshevtseva.kikiorg.view.utils.KikiOrgWindowCreator.windowCreator;
 
 class CheckListController implements FxController {
     private final HabitsService habitsService = Core.getInstance().habitsService();
@@ -43,7 +44,7 @@ class CheckListController implements FxController {
     @FXML
     private void initialize() {
         tableController = new ReportTableController();
-        tablePane.getChildren().add(windowCreator().getHabitsReportTableNode(tableController));
+        tablePane.getChildren().add(windowCreator().getNode(HABIT_REPORT_TABLE, tableController));
         updateSectionContent();
         datePicker.setValue(LocalDate.now());
         datePicker.setOnAction(event -> fillHabitsTable());
