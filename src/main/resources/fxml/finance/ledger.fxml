@@ -10,6 +10,7 @@
         <HBox>
             <Pane prefWidth="30"/>
             <VBox>
+                <Pane fx:id="checkPane"/>
                 <Pane prefHeight="40"/>
                 <Pane fx:id="replenishmentPane"/>
                 <Pane prefHeight="40"/>
@@ -17,10 +18,15 @@
                 <Pane prefHeight="40"/>
                 <Pane fx:id="transferPane"/>
                 <Pane prefHeight="40"/>
-                <Pane fx:id="checkPane"/>
-                <Pane prefHeight="40"/>
                 <Pane fx:id="historyTablePane"/>
                 <Pane prefHeight="40"/>
+                <HBox>
+                    <Pane fx:id="scatterPane" styleClass="black_border" minWidth="460" maxWidth="460" minHeight="450"
+                          maxHeight="450"/>
+                    <Pane maxWidth="100" minWidth="100"/>
+                    <Pane fx:id="huddlePane" styleClass="black_border" minWidth="460" maxWidth="460" minHeight="450"
+                          maxHeight="450"/>
+                </HBox>
             </VBox>
         </HBox>
     </ScrollPane>

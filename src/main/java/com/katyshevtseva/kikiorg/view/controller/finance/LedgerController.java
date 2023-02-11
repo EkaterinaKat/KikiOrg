@@ -21,6 +21,10 @@ class LedgerController implements FxController {
     private Pane checkPane;
     @FXML
     private Pane historyTablePane;
+    @FXML
+    private Pane scatterPane;
+    @FXML
+    private Pane huddlePane;
 
     @FXML
     private void initialize() {
@@ -48,5 +52,8 @@ class LedgerController implements FxController {
                     checkController.updateTable();
                     historyTableController.setTableContent(service.getLastWeekOperations());
                 })));
+
+        scatterPane.getChildren().add(windowCreator().getNode(SCATTER_CHECK, new ScatterCheckController()));
+        huddlePane.getChildren().add(windowCreator().getNode(HUDDLE_CHECK, new HuddleCheckController()));
     }
 }

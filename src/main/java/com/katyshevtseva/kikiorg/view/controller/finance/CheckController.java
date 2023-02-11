@@ -8,26 +8,17 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
-import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.CheckBoxTableCell;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.layout.Pane;
 
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static com.katyshevtseva.kikiorg.view.utils.KikiOrgWindowCreator.NodeInfo.HUDDLE_CHECK;
-import static com.katyshevtseva.kikiorg.view.utils.KikiOrgWindowCreator.NodeInfo.SCATTER_CHECK;
-import static com.katyshevtseva.kikiorg.view.utils.KikiOrgWindowCreator.windowCreator;
-
 class CheckController implements FxController {
-    @FXML
-    private Pane scatterPane;
-    @FXML
-    private Pane huddlePane;
+
     @FXML
     private TableView<Account> table;
     @FXML
@@ -36,14 +27,9 @@ class CheckController implements FxController {
     private TableColumn<Account, Long> amountColumn;
     @FXML
     private TableColumn<Account, Boolean> checkBoxColumn;
-    @FXML
-    private Button updateButton;
 
     @FXML
     private void initialize() {
-        scatterPane.getChildren().add(windowCreator().getNode(SCATTER_CHECK, new ScatterCheckController()));
-        huddlePane.getChildren().add(windowCreator().getNode(HUDDLE_CHECK, new HuddleCheckController()));
-        updateButton.setOnAction(event -> updateTable());
         adjustTable();
         updateTable();
     }
@@ -65,6 +51,7 @@ class CheckController implements FxController {
                 .sorted(Comparator.comparing(Account::getTitleWithAdditionalInfo)).collect(Collectors.toList());
         ObservableList<Account> observableList = FXCollections.observableArrayList();
         observableList.addAll(accounts);
+        table.getItems().clear();
         table.setItems(observableList);
     }
 }
