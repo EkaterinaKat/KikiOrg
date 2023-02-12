@@ -30,17 +30,17 @@ public class TopicalController implements FxController {
         setContent();
     }
 
-    private void setContent() {
-        statisticsLabel.setText(Core.getInstance().structureService().getStatistics());
-        hBox.getChildren().clear();
-        List<VBox> vBoxes = new ArrayList<>();
-        hBox.getChildren().add(getPaneWithWidth(10));
-        for (int i = 0; i < NUM_OF_COLUMNS; i++) {
-            VBox vBox = new VBox();
-            vBox.getChildren().add(getPaneWithHeight(10));
-            vBoxes.add(vBox);
-            hBox.getChildren().addAll(vBox, getPaneWithWidth(10));
-        }
+     void setContent() {
+         statisticsLabel.setText(Core.getInstance().structureService().getStatistics());
+         hBox.getChildren().clear();
+         List<VBox> vBoxes = new ArrayList<>();
+         hBox.getChildren().add(getPaneWithWidth(10));
+         for (int i = 0; i < NUM_OF_COLUMNS; i++) {
+             VBox vBox = new VBox();
+             vBox.getChildren().add(getPaneWithHeight(10));
+             vBoxes.add(vBox);
+             hBox.getChildren().addAll(vBox, getPaneWithWidth(10));
+         }
         hBox.getChildren().add(getPaneWithWidth(10));
 
         List<Goal> goals = Core.getInstance().structureService().getHighlightedGoals();
