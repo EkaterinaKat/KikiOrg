@@ -4,7 +4,7 @@ import com.katyshevtseva.fx.Size;
 import com.katyshevtseva.fx.WindowBuilder.FxController;
 import com.katyshevtseva.fx.component.ComponentBuilder;
 import com.katyshevtseva.fx.component.ComponentBuilder.Component;
-import com.katyshevtseva.fx.component.controller.BlockListController;
+import com.katyshevtseva.fx.component.controller.PageableBlockListController;
 import com.katyshevtseva.fx.dialogconstructor.DcComboBox;
 import com.katyshevtseva.fx.dialogconstructor.DcTextArea;
 import com.katyshevtseva.fx.dialogconstructor.DcTextField;
@@ -26,7 +26,7 @@ import static com.katyshevtseva.kikiorg.view.utils.KikiOrgWindowCreator.NodeInfo
 import static com.katyshevtseva.kikiorg.view.utils.KikiOrgWindowCreator.windowCreator;
 
 class BoardController implements FxController {
-    private BlockListController<Task> blockListController;
+    private PageableBlockListController<Task> blockListController;
     @FXML
     private Button addTaskButton;
     @FXML
@@ -44,8 +44,8 @@ class BoardController implements FxController {
 
     @FXML
     private void initialize() {
-        Component<BlockListController<Task>> component =
-                new ComponentBuilder().setSize(new Size(750, 890)).getBlockListComponent();
+        Component<PageableBlockListController<Task>> component =
+                new ComponentBuilder().setSize(new Size(750, 890)).getPageableBlockListComponent();
         tasksPane.getChildren().add(component.getNode());
         blockListController = component.getController();
 

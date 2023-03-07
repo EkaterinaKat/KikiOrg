@@ -156,6 +156,15 @@ public class WardrobeService {
         pieceRepo.save(piece);
     }
 
+    public void returnToWork(Piece piece) {
+        if (piece.getEndDate() == null) {
+            throw new RuntimeException("Вещь уже в работе");
+        }
+
+        piece.setEndDate(null);
+        pieceRepo.save(piece);
+    }
+
     public boolean pieceAvailableForArchive(Piece piece) {
         for (ComponentEntity componentEntity : componentEntityRepo.findAll()) {
             if (componentEntity.getPieces().contains(piece)) {

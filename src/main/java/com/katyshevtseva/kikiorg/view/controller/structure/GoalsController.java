@@ -5,8 +5,8 @@ import com.katyshevtseva.fx.Styler;
 import com.katyshevtseva.fx.WindowBuilder.FxController;
 import com.katyshevtseva.fx.component.ComponentBuilder;
 import com.katyshevtseva.fx.component.ComponentBuilder.Component;
-import com.katyshevtseva.fx.component.controller.BlockListController;
-import com.katyshevtseva.fx.dialogconstructor.DcTextField;
+import com.katyshevtseva.fx.component.controller.PageableBlockListController;
+import com.katyshevtseva.fx.dialogconstructor.DcTextArea;
 import com.katyshevtseva.fx.dialogconstructor.DialogConstructor;
 import com.katyshevtseva.kikiorg.core.Core;
 import com.katyshevtseva.kikiorg.core.sections.structure.StructureService;
@@ -30,8 +30,8 @@ import static com.katyshevtseva.kikiorg.view.utils.KikiOrgWindowCreator.windowCr
 public class GoalsController implements FxController {
     private static final Size GOAL_LIST_SIZE = new Size(800, 350);
     private Map<Activity, Label> activityPointLabelMap;
-    private BlockListController<Goal> todoListController;
-    private BlockListController<Goal> doneListController;
+    private PageableBlockListController<Goal> todoListController;
+    private PageableBlockListController<Goal> doneListController;
     private final StructureService service = Core.getInstance().structureService();
     @FXML
     private GridPane gridPane;
@@ -49,10 +49,10 @@ public class GoalsController implements FxController {
     }
 
     private void adjustGoalLists() {
-        Component<BlockListController<Goal>> todoComponent =
-                new ComponentBuilder().setSize(GOAL_LIST_SIZE).getBlockListComponent();
-        Component<BlockListController<Goal>> doneComponent =
-                new ComponentBuilder().setSize(GOAL_LIST_SIZE).getBlockListComponent();
+        Component<PageableBlockListController<Goal>> todoComponent =
+                new ComponentBuilder().setSize(GOAL_LIST_SIZE).getPageableBlockListComponent();
+        Component<PageableBlockListController<Goal>> doneComponent =
+                new ComponentBuilder().setSize(GOAL_LIST_SIZE).getPageableBlockListComponent();
 
         todoPane.getChildren().add(todoComponent.getNode());
         donePane.getChildren().add(doneComponent.getNode());
@@ -94,7 +94,7 @@ public class GoalsController implements FxController {
     private void adjustNewGoalButton(Activity activity) {
         newGoalButton.setVisible(true);
         newGoalButton.setOnAction(event -> {
-            DcTextField titleField = new DcTextField(true, "");
+            DcTextArea titleField = new DcTextArea(true, "");
             DialogConstructor.constructDialog(() -> {
                 Core.getInstance().structureService().createGoal(activity, titleField.getValue());
                 showGoals(activity);

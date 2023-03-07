@@ -3,7 +3,7 @@ package com.katyshevtseva.kikiorg.view.controller.structure;
 import com.katyshevtseva.fx.Styler;
 import com.katyshevtseva.fx.WindowBuilder.FxController;
 import com.katyshevtseva.fx.dialog.StandardDialogBuilder;
-import com.katyshevtseva.fx.dialogconstructor.DcTextField;
+import com.katyshevtseva.fx.dialogconstructor.DcTextArea;
 import com.katyshevtseva.fx.dialogconstructor.DialogConstructor;
 import com.katyshevtseva.general.NoArgsKnob;
 import com.katyshevtseva.kikiorg.core.Core;
@@ -69,7 +69,7 @@ public class GoalPaneController implements FxController {
 
         MenuItem editItem = new MenuItem("Edit");
         editItem.setOnAction(event1 -> {
-            DcTextField titleField = new DcTextField(true, goal.getTitle());
+            DcTextArea titleField = new DcTextArea(true, goal.getTitle());
             DialogConstructor.constructDialog(() -> {
                 Core.getInstance().structureService().edit(goal, titleField.getValue());
                 contentUpdateKnob.execute();
