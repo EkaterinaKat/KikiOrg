@@ -1,6 +1,7 @@
 package com.katyshevtseva.kikiorg.view.controller.wardrobe.utils;
 
-import com.katyshevtseva.fx.ImageContainer;
+import com.katyshevtseva.image.ImageContainer;
+import com.katyshevtseva.image.ImageContainerCache;
 import com.katyshevtseva.kikiorg.core.Core;
 import com.katyshevtseva.kikiorg.core.sections.wardrobe.entity.Piece;
 import javafx.scene.image.Image;
@@ -15,6 +16,7 @@ import java.util.stream.Collectors;
 import static com.katyshevtseva.kikiorg.view.utils.ViewConstants.WARDROBE_IMAGES_LOCATION;
 
 public class WrdImageUtils {
+    private static final ImageContainerCache icc = ImageContainerCache.getInstance();
 
     public static List<ImageContainer> getFreeImagesForPieceCreation() {
         List<ImageContainer> freeImages = new ArrayList<>();
@@ -28,7 +30,7 @@ public class WrdImageUtils {
                 }
             }
             if (imageIsFree) {
-                freeImages.add(ImageCreator.getInstance().getImageContainer(file.getName()));
+                freeImages.add(icc.getImageContainer(file.getName(), WARDROBE_IMAGES_LOCATION));
             }
         }
         return freeImages;
@@ -49,8 +51,12 @@ public class WrdImageUtils {
                 .collect(Collectors.toList());
     }
 
+    public static ImageContainer getImageContainer(Piece piece) {
+        return icc.getImageContainer(piece.getImageFileName(), WARDROBE_IMAGES_LOCATION);
+    }
+
     static ImageContainer toImageAndPieceContainer(Piece piece) {
-        ImageContainer imageContainer = ImageCreator.getInstance().getImageContainer(piece);
+        ImageContainer imageContainer = getImageContainer(piece);
 
         return new ImageAndPieceContainer() {
             @Override

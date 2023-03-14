@@ -1,14 +1,13 @@
 package com.katyshevtseva.kikiorg.view.controller.wardrobe;
 
 import com.katyshevtseva.fx.FxImageCreationUtil;
-import com.katyshevtseva.fx.ImageContainer;
 import com.katyshevtseva.fx.WindowBuilder.FxController;
 import com.katyshevtseva.fx.dialog.StandardDialogBuilder;
 import com.katyshevtseva.general.OneArgKnob;
+import com.katyshevtseva.image.ImageContainer;
 import com.katyshevtseva.kikiorg.core.Core;
 import com.katyshevtseva.kikiorg.core.sections.wardrobe.entity.Piece;
 import com.katyshevtseva.kikiorg.core.sections.wardrobe.enums.ClothesSubtype;
-import com.katyshevtseva.kikiorg.view.controller.wardrobe.utils.ImageCreator;
 import com.katyshevtseva.kikiorg.view.controller.wardrobe.utils.WrdImageUtils;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
@@ -85,10 +84,12 @@ class PieceDialogController implements FxController {
 
     private void setExistingPieceInfo() {
         if (existing != null) {
-            showImage(ImageCreator.getInstance().getImageContainer(existing).getImage());
+            ImageContainer imageContainer = WrdImageUtils.getImageContainer(existing);
+
+            showImage(imageContainer.getImage());
             descTextArea.setText(existing.getDescription());
             clothesTypeComboBox.setValue(existing.getType());
-            selectedImage = ImageCreator.getInstance().getImageContainer(existing);
+            selectedImage = imageContainer;
             setDate(startDatePicker, existing.getStartDate());
             setDate(endDatePicker, existing.getEndDate());
             startDatePicker.setDisable(true);

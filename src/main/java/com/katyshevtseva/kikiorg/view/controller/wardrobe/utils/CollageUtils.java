@@ -1,10 +1,10 @@
 package com.katyshevtseva.kikiorg.view.controller.wardrobe.utils;
 
 import com.katyshevtceva.collage.logic.*;
-import com.katyshevtseva.fx.ImageContainer;
 import com.katyshevtseva.fx.Point;
 import com.katyshevtseva.fx.Size;
 import com.katyshevtseva.general.OneInOneOutKnob;
+import com.katyshevtseva.image.ImageContainer;
 import com.katyshevtseva.kikiorg.core.Core;
 import com.katyshevtseva.kikiorg.core.sections.wardrobe.entity.CollageEntity;
 import com.katyshevtseva.kikiorg.core.sections.wardrobe.entity.ComponentEntity;
@@ -54,7 +54,7 @@ public class CollageUtils {
     public static Pane getCollagePreview(CollageEntity collageEntity) {
         List<StaticComponent> staticComponents = collageEntity.getComponents().stream()
                 .map(componentEntity -> new StaticComponent(
-                        ImageCreator.getInstance().getImageContainer(componentEntity.getFrontPiece()),
+                        WrdImageUtils.getImageContainer(componentEntity.getFrontPiece()),
                         new Point(componentEntity.getRelativeX(), componentEntity.getRelativeY()),
                         componentEntity.getRelativeWidth(),
                         componentEntity.getZ(),

@@ -3,7 +3,6 @@ package com.katyshevtseva.kikiorg.view.controller.wardrobe;
 import com.katyshevtseva.fx.FxImageCreationUtil;
 import com.katyshevtseva.fx.FxImageCreationUtil.IconPicture;
 import com.katyshevtseva.fx.FxUtils;
-import com.katyshevtseva.fx.ImageContainer;
 import com.katyshevtseva.fx.Size;
 import com.katyshevtseva.fx.WindowBuilder.FxController;
 import com.katyshevtseva.fx.component.ComponentBuilder;
@@ -12,13 +11,13 @@ import com.katyshevtseva.fx.component.controller.GalleryController;
 import com.katyshevtseva.fx.component.controller.PaginationPaneController;
 import com.katyshevtseva.fx.dialog.StandardDialogBuilder;
 import com.katyshevtseva.general.Page;
+import com.katyshevtseva.image.ImageContainer;
 import com.katyshevtseva.kikiorg.core.Core;
 import com.katyshevtseva.kikiorg.core.sections.wardrobe.ClothesType;
 import com.katyshevtseva.kikiorg.core.sections.wardrobe.WardrobeService;
 import com.katyshevtseva.kikiorg.core.sections.wardrobe.WardrobeService.PieceFilter;
 import com.katyshevtseva.kikiorg.core.sections.wardrobe.entity.Piece;
 import com.katyshevtseva.kikiorg.core.sections.wardrobe.enums.Season;
-import com.katyshevtseva.kikiorg.view.controller.wardrobe.utils.ImageCreator;
 import com.katyshevtseva.kikiorg.view.controller.wardrobe.utils.WrdImageUtils;
 import com.katyshevtseva.kikiorg.view.controller.wardrobe.utils.WrdImageUtils.ImageAndPieceContainer;
 import javafx.fxml.FXML;
@@ -111,8 +110,10 @@ class PieceController implements FxController {
     }
 
     private void showPieceFullInfo(Piece piece) {
+        ImageContainer imageContainer = WrdImageUtils.getImageContainer(piece);
+
         imagePane.getChildren().clear();
-        imagePane.getChildren().add(placeImageInSquare(new ImageView(ImageCreator.getInstance().getImageContainer(piece).getImage()), 350));
+        imagePane.getChildren().add(placeImageInSquare(new ImageView(imageContainer.getImage()), 350));
         infoLabel.setText(piece.getFullDesc());
         editButton.setVisible(true);
         archiveButton.setVisible(true);
