@@ -1,6 +1,7 @@
 package com.katyshevtseva.kikiorg.view.controller.wardrobe;
 
 import com.katyshevtseva.fx.FxImageCreationUtil;
+import com.katyshevtseva.fx.ImageContainer;
 import com.katyshevtseva.fx.WindowBuilder.FxController;
 import com.katyshevtseva.fx.dialog.StandardDialogBuilder;
 import com.katyshevtseva.general.OneArgKnob;
@@ -9,7 +10,6 @@ import com.katyshevtseva.kikiorg.core.sections.wardrobe.entity.Piece;
 import com.katyshevtseva.kikiorg.core.sections.wardrobe.enums.ClothesSubtype;
 import com.katyshevtseva.kikiorg.view.controller.wardrobe.utils.ImageCreator;
 import com.katyshevtseva.kikiorg.view.controller.wardrobe.utils.WrdImageUtils;
-import com.katyshevtseva.kikiorg.view.controller.wardrobe.utils.WrdImageUtils.ImageAndFileNameContainer;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
@@ -22,11 +22,10 @@ import javafx.scene.layout.Pane;
 
 import static com.katyshevtseva.fx.FxUtils.*;
 import static com.katyshevtseva.fx.ImageSizeUtil.placeImageInSquare;
-import static com.katyshevtseva.kikiorg.view.controller.wardrobe.utils.WrdImageUtils.toImageUrlAndFileNameContainer;
 import static com.katyshevtseva.kikiorg.view.utils.OrgUtils.setDate;
 
 class PieceDialogController implements FxController {
-    private ImageAndFileNameContainer selectedImage;
+    private ImageContainer selectedImage;
     private final Piece existing;
     private final OneArgKnob<Piece> onSaveListener;
     @FXML
@@ -72,7 +71,7 @@ class PieceDialogController implements FxController {
         new StandardDialogBuilder().openImageSelectionDialog(
                 WrdImageUtils.getFreeImagesForPieceCreation(),
                 imageContainer -> {
-                    selectedImage = (ImageAndFileNameContainer) imageContainer;
+                    selectedImage = imageContainer;
                     showImage(selectedImage.getImage());
                 });
     }
@@ -89,7 +88,7 @@ class PieceDialogController implements FxController {
             showImage(ImageCreator.getInstance().getImageContainer(existing).getImage());
             descTextArea.setText(existing.getDescription());
             clothesTypeComboBox.setValue(existing.getType());
-            selectedImage = toImageUrlAndFileNameContainer(existing);
+            selectedImage = ImageCreator.getInstance().getImageContainer(existing);
             setDate(startDatePicker, existing.getStartDate());
             setDate(endDatePicker, existing.getEndDate());
             startDatePicker.setDisable(true);

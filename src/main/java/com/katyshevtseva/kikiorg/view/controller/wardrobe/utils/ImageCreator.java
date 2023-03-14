@@ -46,6 +46,11 @@ public class ImageCreator {
             public String getPath() {
                 return fullPath;
             }
+
+            @Override
+            public String getFileName() {
+                return fileName;
+            }
         };
         cache.put(fullPath, imageContainer);
 

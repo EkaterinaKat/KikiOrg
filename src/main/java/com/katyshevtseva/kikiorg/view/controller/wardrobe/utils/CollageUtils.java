@@ -84,7 +84,7 @@ public class CollageUtils {
 
     private static Component entityToComponent(ComponentEntity componentEntity, Collage collage) {
         List<ImageContainer> imageContainers = toImageUrlAndPieceContainers(new ArrayList<>(componentEntity.getPieces()));
-        ImageContainer frontImageContainer = WrdImageUtils.toImageUrlAndPieceContainer(componentEntity.getFrontPiece());
+        ImageContainer frontImageContainer = WrdImageUtils.toImageAndPieceContainer(componentEntity.getFrontPiece());
 
         return new ComponentBuilder(collage, imageContainers)
                 .relativeWidth(componentEntity.getRelativeWidth())

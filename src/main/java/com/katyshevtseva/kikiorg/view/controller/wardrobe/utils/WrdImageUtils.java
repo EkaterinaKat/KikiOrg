@@ -28,24 +28,7 @@ public class WrdImageUtils {
                 }
             }
             if (imageIsFree) {
-                ImageContainer imageContainer = ImageCreator.getInstance().getImageContainer(file.getName());
-
-                freeImages.add(new ImageAndFileNameContainer() {
-                    @Override
-                    public Image getImage() {
-                        return imageContainer.getImage();
-                    }
-
-                    @Override
-                    public String getPath() {
-                        return imageContainer.getPath();
-                    }
-
-                    @Override
-                    public String getFileName() {
-                        return file.getName();
-                    }
-                });
+                freeImages.add(ImageCreator.getInstance().getImageContainer(file.getName()));
             }
         }
         return freeImages;
@@ -56,17 +39,17 @@ public class WrdImageUtils {
     }
 
     public static List<ImageContainer> toImageUrlAndPieceContainers(List<Piece> pieces) {
-        return pieces.stream().map(WrdImageUtils::toImageUrlAndPieceContainer).collect(Collectors.toList());
+        return pieces.stream().map(WrdImageUtils::toImageAndPieceContainer).collect(Collectors.toList());
     }
 
     public static List<com.katyshevtceva.collage.logic.Image> toCollageImages(List<Piece> pieces) {
         return pieces.stream()
-                .map(WrdImageUtils::toImageUrlAndPieceContainer)
+                .map(WrdImageUtils::toImageAndPieceContainer)
                 .map(com.katyshevtceva.collage.logic.Image::new)
                 .collect(Collectors.toList());
     }
 
-    static ImageContainer toImageUrlAndPieceContainer(Piece piece) {
+    static ImageContainer toImageAndPieceContainer(Piece piece) {
         ImageContainer imageContainer = ImageCreator.getInstance().getImageContainer(piece);
 
         return new ImageAndPieceContainer() {
@@ -84,35 +67,15 @@ public class WrdImageUtils {
             public String getPath() {
                 return imageContainer.getPath();
             }
-        };
-    }
 
-    public static ImageAndFileNameContainer toImageUrlAndFileNameContainer(Piece piece) {
-        ImageContainer imageContainer = ImageCreator.getInstance().getImageContainer(piece);
-
-        return new ImageAndFileNameContainer() {
             @Override
             public String getFileName() {
                 return piece.getImageFileName();
-            }
-
-            @Override
-            public Image getImage() {
-                return imageContainer.getImage();
-            }
-
-            @Override
-            public String getPath() {
-                return imageContainer.getPath();
             }
         };
     }
 
     public interface ImageAndPieceContainer extends ImageContainer {
         Piece getPiece();
-    }
-
-    public interface ImageAndFileNameContainer extends ImageContainer {
-        String getFileName();
     }
 }
