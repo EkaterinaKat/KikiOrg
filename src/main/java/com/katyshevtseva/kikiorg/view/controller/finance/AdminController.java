@@ -2,11 +2,11 @@ package com.katyshevtseva.kikiorg.view.controller.finance;
 
 import com.katyshevtseva.fx.FxUtils;
 import com.katyshevtseva.fx.TableUtils;
-import com.katyshevtseva.fx.WindowBuilder.FxController;
 import com.katyshevtseva.fx.dialogconstructor.DcComboBox;
 import com.katyshevtseva.fx.dialogconstructor.DcTextArea;
 import com.katyshevtseva.fx.dialogconstructor.DcTextField;
 import com.katyshevtseva.fx.dialogconstructor.DialogConstructor;
+import com.katyshevtseva.fx.switchcontroller.SectionController;
 import com.katyshevtseva.kikiorg.core.Core;
 import com.katyshevtseva.kikiorg.core.sections.finance.Currency;
 import com.katyshevtseva.kikiorg.core.sections.finance.OperationEnd;
@@ -23,7 +23,7 @@ import javafx.scene.text.Text;
 
 import java.util.Arrays;
 
-class AdminController implements FxController {
+class AdminController implements SectionController {
     @FXML
     private ComboBox<OperationEndType> typeComboBox;
     @FXML

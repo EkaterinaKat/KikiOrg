@@ -3,6 +3,7 @@ package com.katyshevtseva.kikiorg.view.controller.finance;
 import com.katyshevtseva.fx.FxUtils;
 import com.katyshevtseva.fx.switchcontroller.AbstractSwitchController;
 import com.katyshevtseva.fx.switchcontroller.Section;
+import com.katyshevtseva.fx.switchcontroller.SectionController;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.layout.HBox;
@@ -15,7 +16,7 @@ import static com.katyshevtseva.kikiorg.view.utils.KikiOrgWindowCreator.DialogIn
 import static com.katyshevtseva.kikiorg.view.utils.KikiOrgWindowCreator.NodeInfo.*;
 import static com.katyshevtseva.kikiorg.view.utils.KikiOrgWindowCreator.windowCreator;
 
-public class MainFinanceController extends AbstractSwitchController {
+public class MainFinanceController extends AbstractSwitchController implements SectionController {
     private final FullReportController fullReportController = new FullReportController();
     @FXML
     private Pane mainPane;

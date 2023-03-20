@@ -1,7 +1,7 @@
 package com.katyshevtseva.kikiorg.view.controller.wardrobe;
 
 import com.katyshevtseva.fx.FxUtils;
-import com.katyshevtseva.fx.WindowBuilder.FxController;
+import com.katyshevtseva.fx.switchcontroller.SectionController;
 import com.katyshevtseva.general.Page;
 import com.katyshevtseva.kikiorg.core.Core;
 import com.katyshevtseva.kikiorg.core.sections.wardrobe.WardrobeService;
@@ -17,7 +17,7 @@ import static com.katyshevtseva.kikiorg.view.utils.KikiOrgWindowCreator.DialogIn
 import static com.katyshevtseva.kikiorg.view.utils.KikiOrgWindowCreator.NodeInfo.OUTFIT_GRID;
 import static com.katyshevtseva.kikiorg.view.utils.KikiOrgWindowCreator.windowCreator;
 
-class OutfitController implements FxController {
+class OutfitController implements SectionController {
     private final WardrobeService service = Core.getInstance().wardrobeService();
     private final OutfitGridController gridController = new OutfitGridController(this::getOutfitPage);
     @FXML

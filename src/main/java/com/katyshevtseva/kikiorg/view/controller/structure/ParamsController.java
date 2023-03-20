@@ -1,11 +1,11 @@
 package com.katyshevtseva.kikiorg.view.controller.structure;
 
 import com.katyshevtseva.fx.Styler;
-import com.katyshevtseva.fx.WindowBuilder.FxController;
 import com.katyshevtseva.fx.dialog.StandardDialogBuilder;
 import com.katyshevtseva.fx.dialogconstructor.DcCheckBox;
 import com.katyshevtseva.fx.dialogconstructor.DcTextField;
 import com.katyshevtseva.fx.dialogconstructor.DialogConstructor;
+import com.katyshevtseva.fx.switchcontroller.SectionController;
 import com.katyshevtseva.kikiorg.core.Core;
 import com.katyshevtseva.kikiorg.core.sections.structure.entity.Param;
 import com.katyshevtseva.kikiorg.core.sections.structure.entity.ParamValue;
@@ -20,7 +20,7 @@ import static com.katyshevtseva.fx.FxUtils.getPaneWithHeight;
 import static com.katyshevtseva.fx.Styler.StandardColor.BROWN;
 
 
-public class ParamsController implements FxController {
+public class ParamsController implements SectionController {
     @FXML
     private VBox paramPane;
     @FXML

@@ -1,7 +1,6 @@
 package com.katyshevtseva.kikiorg.view.controller.finance;
 
 import com.katyshevtseva.fx.Size;
-import com.katyshevtseva.fx.WindowBuilder.FxController;
 import com.katyshevtseva.fx.component.ComponentBuilder;
 import com.katyshevtseva.fx.component.controller.HierarchyController;
 import com.katyshevtseva.fx.dialog.StandardDialogBuilder;
@@ -9,6 +8,7 @@ import com.katyshevtseva.fx.dialogconstructor.DcComboBox;
 import com.katyshevtseva.fx.dialogconstructor.DcTextArea;
 import com.katyshevtseva.fx.dialogconstructor.DcTextField;
 import com.katyshevtseva.fx.dialogconstructor.DialogConstructor;
+import com.katyshevtseva.fx.switchcontroller.SectionController;
 import com.katyshevtseva.general.TwoArgKnob;
 import com.katyshevtseva.hierarchy.HierarchyNode;
 import com.katyshevtseva.kikiorg.core.Core;
@@ -19,7 +19,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
 import javafx.scene.layout.Pane;
 
-public class FinanceHierarchyController implements FxController {
+public class FinanceHierarchyController implements SectionController {
     private ComponentBuilder.Component<HierarchyController> hierarchyComponent;
     @FXML
     private Pane pane;

@@ -1,7 +1,7 @@
 package com.katyshevtseva.kikiorg.view.controller.habits;
 
-import com.katyshevtseva.fx.WindowBuilder.FxController;
 import com.katyshevtseva.fx.dialog.StandardDialogBuilder;
+import com.katyshevtseva.fx.switchcontroller.SectionController;
 import com.katyshevtseva.kikiorg.core.Core;
 import com.katyshevtseva.kikiorg.core.sections.habits.AnalysisService;
 import com.katyshevtseva.kikiorg.core.sections.habits.AnalysisService.AnalysisResult;
@@ -27,7 +27,7 @@ import static com.katyshevtseva.fx.Styler.getTextSizeStyle;
 import static com.katyshevtseva.kikiorg.view.utils.KikiOrgWindowCreator.NodeInfo.HABIT_REPORT_TABLE;
 import static com.katyshevtseva.kikiorg.view.utils.KikiOrgWindowCreator.windowCreator;
 
-class CheckListController implements FxController {
+class CheckListController implements SectionController {
     private final HabitsService habitsService = Core.getInstance().habitsService();
     private final HabitMarkService habitMarkService = Core.getInstance().habitMarkService();
     private final AnalysisService analysisService = Core.getInstance().analysisService();

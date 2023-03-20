@@ -1,6 +1,6 @@
 package com.katyshevtseva.kikiorg.view.controller.structure;
 
-import com.katyshevtseva.fx.WindowBuilder.FxController;
+import com.katyshevtseva.fx.switchcontroller.SectionController;
 import com.katyshevtseva.kikiorg.core.Core;
 import com.katyshevtseva.kikiorg.core.sections.structure.entity.Goal;
 import javafx.fxml.FXML;
@@ -17,7 +17,7 @@ import static com.katyshevtseva.fx.FxUtils.getPaneWithWidth;
 import static com.katyshevtseva.kikiorg.view.utils.KikiOrgWindowCreator.NodeInfo.GOAL_PANE;
 import static com.katyshevtseva.kikiorg.view.utils.KikiOrgWindowCreator.windowCreator;
 
-public class TopicalController implements FxController {
+public class TopicalController implements SectionController {
     private static final int NUM_OF_COLUMNS = 3;
     private static final int BLOCK_WIDTH = 300;
     @FXML
@@ -25,22 +25,22 @@ public class TopicalController implements FxController {
     @FXML
     private Label statisticsLabel;
 
-    @FXML
-    private void initialize() {
+    @Override
+    public void update() {
         setContent();
     }
 
-     void setContent() {
-         statisticsLabel.setText(Core.getInstance().structureService().getStatistics());
-         hBox.getChildren().clear();
-         List<VBox> vBoxes = new ArrayList<>();
-         hBox.getChildren().add(getPaneWithWidth(10));
-         for (int i = 0; i < NUM_OF_COLUMNS; i++) {
-             VBox vBox = new VBox();
-             vBox.getChildren().add(getPaneWithHeight(10));
-             vBoxes.add(vBox);
-             hBox.getChildren().addAll(vBox, getPaneWithWidth(10));
-         }
+    void setContent() {
+        statisticsLabel.setText(Core.getInstance().structureService().getStatistics());
+        hBox.getChildren().clear();
+        List<VBox> vBoxes = new ArrayList<>();
+        hBox.getChildren().add(getPaneWithWidth(10));
+        for (int i = 0; i < NUM_OF_COLUMNS; i++) {
+            VBox vBox = new VBox();
+            vBox.getChildren().add(getPaneWithHeight(10));
+            vBoxes.add(vBox);
+            hBox.getChildren().addAll(vBox, getPaneWithWidth(10));
+        }
         hBox.getChildren().add(getPaneWithWidth(10));
 
         List<Goal> goals = Core.getInstance().structureService().getHighlightedGoals();

@@ -1,7 +1,7 @@
 package com.katyshevtseva.kikiorg.view.controller.habits;
 
 import com.katyshevtseva.fx.Styler;
-import com.katyshevtseva.fx.WindowBuilder.FxController;
+import com.katyshevtseva.fx.switchcontroller.SectionController;
 import com.katyshevtseva.kikiorg.core.Core;
 import com.katyshevtseva.kikiorg.core.sections.habits.entity.Habit;
 import com.katyshevtseva.kikiorg.core.sections.habits.entity.StabilityCriterion;
@@ -17,7 +17,7 @@ import java.util.List;
 
 import static com.katyshevtseva.fx.FxUtils.disableNonNumericChars;
 
-class CriterionController implements FxController {
+class CriterionController implements SectionController {
     @FXML
     private GridPane criterionPane;
     @FXML

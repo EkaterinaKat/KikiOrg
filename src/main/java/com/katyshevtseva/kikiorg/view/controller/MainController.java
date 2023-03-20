@@ -2,6 +2,7 @@ package com.katyshevtseva.kikiorg.view.controller;
 
 import com.katyshevtseva.fx.FxImageCreationUtil;
 import com.katyshevtseva.fx.FxUtils;
+import com.katyshevtseva.fx.WindowBuilder.FxController;
 import com.katyshevtseva.fx.switchcontroller.AbstractSwitchController;
 import com.katyshevtseva.fx.switchcontroller.Section;
 import com.katyshevtseva.kikiorg.view.controller.finance.MainFinanceController;
@@ -22,7 +23,7 @@ import static com.katyshevtseva.fx.FxImageCreationUtil.getIcon;
 import static com.katyshevtseva.kikiorg.view.utils.KikiOrgWindowCreator.NodeInfo.*;
 import static com.katyshevtseva.kikiorg.view.utils.KikiOrgWindowCreator.windowCreator;
 
-public class MainController extends AbstractSwitchController {
+public class MainController extends AbstractSwitchController implements FxController {
     @FXML
     private Pane mainPane;
     @FXML

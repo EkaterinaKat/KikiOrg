@@ -2,7 +2,7 @@ package com.katyshevtseva.kikiorg.view.controller.tracker;
 
 import com.katyshevtseva.fx.Styler;
 import com.katyshevtseva.fx.TableUtils;
-import com.katyshevtseva.fx.WindowBuilder.FxController;
+import com.katyshevtseva.fx.switchcontroller.SectionController;
 import com.katyshevtseva.kikiorg.core.Core;
 import com.katyshevtseva.kikiorg.core.sections.tracker.entity.ColorEntity;
 import com.katyshevtseva.kikiorg.core.sections.tracker.entity.Project;
@@ -21,7 +21,7 @@ import static com.katyshevtseva.fx.Styler.ThingToColor.TABLE_TEXT;
 import static com.katyshevtseva.kikiorg.view.utils.KikiOrgWindowCreator.DialogInfo.PROJECT;
 import static com.katyshevtseva.kikiorg.view.utils.KikiOrgWindowCreator.windowCreator;
 
-class ProjectController implements FxController {
+class ProjectController implements SectionController {
     @FXML
     private Button addProjectButton;
     @FXML

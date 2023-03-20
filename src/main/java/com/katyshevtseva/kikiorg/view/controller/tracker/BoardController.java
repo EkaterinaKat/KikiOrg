@@ -1,7 +1,6 @@
 package com.katyshevtseva.kikiorg.view.controller.tracker;
 
 import com.katyshevtseva.fx.Size;
-import com.katyshevtseva.fx.WindowBuilder.FxController;
 import com.katyshevtseva.fx.component.ComponentBuilder;
 import com.katyshevtseva.fx.component.ComponentBuilder.Component;
 import com.katyshevtseva.fx.component.controller.PageableBlockListController;
@@ -9,6 +8,7 @@ import com.katyshevtseva.fx.dialogconstructor.DcComboBox;
 import com.katyshevtseva.fx.dialogconstructor.DcTextArea;
 import com.katyshevtseva.fx.dialogconstructor.DcTextField;
 import com.katyshevtseva.fx.dialogconstructor.DialogConstructor;
+import com.katyshevtseva.fx.switchcontroller.SectionController;
 import com.katyshevtseva.general.Page;
 import com.katyshevtseva.kikiorg.core.Core;
 import com.katyshevtseva.kikiorg.core.sections.tracker.BoardSortService.SortType;
@@ -25,7 +25,7 @@ import static com.katyshevtseva.fx.FxUtils.setComboBoxItems;
 import static com.katyshevtseva.kikiorg.view.utils.KikiOrgWindowCreator.NodeInfo.TASK_PANE;
 import static com.katyshevtseva.kikiorg.view.utils.KikiOrgWindowCreator.windowCreator;
 
-class BoardController implements FxController {
+class BoardController implements SectionController {
     private PageableBlockListController<Task> blockListController;
     @FXML
     private Button addTaskButton;

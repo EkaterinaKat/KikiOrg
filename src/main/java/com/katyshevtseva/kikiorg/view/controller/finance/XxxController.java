@@ -1,8 +1,8 @@
 package com.katyshevtseva.kikiorg.view.controller.finance;
 
 import com.katyshevtseva.fx.FxUtils;
-import com.katyshevtseva.fx.WindowBuilder.FxController;
 import com.katyshevtseva.fx.dialog.StandardDialogBuilder;
+import com.katyshevtseva.fx.switchcontroller.SectionController;
 import com.katyshevtseva.kikiorg.core.Core;
 import com.katyshevtseva.kikiorg.core.sections.finance.AccountDeleteService;
 import com.katyshevtseva.kikiorg.core.sections.finance.ItemMergeService;
@@ -16,7 +16,7 @@ import java.util.ArrayList;
 
 import static com.katyshevtseva.fx.FxUtils.setComboBoxItems;
 
-public class XxxController implements FxController {
+public class XxxController implements SectionController {
     private final AccountDeleteService accountDeleteService = Core.getInstance().accountDeleteService();
     private final ItemMergeService itemMergeService = Core.getInstance().itemMergeService();
     @FXML

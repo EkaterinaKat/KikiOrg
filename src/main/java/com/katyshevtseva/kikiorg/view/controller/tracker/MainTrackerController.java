@@ -3,6 +3,7 @@ package com.katyshevtseva.kikiorg.view.controller.tracker;
 import com.katyshevtseva.fx.FxUtils;
 import com.katyshevtseva.fx.switchcontroller.AbstractSwitchController;
 import com.katyshevtseva.fx.switchcontroller.Section;
+import com.katyshevtseva.fx.switchcontroller.SectionController;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.layout.HBox;
@@ -15,7 +16,7 @@ import static com.katyshevtseva.kikiorg.view.utils.KikiOrgWindowCreator.NodeInfo
 import static com.katyshevtseva.kikiorg.view.utils.KikiOrgWindowCreator.NodeInfo.PROJECT;
 import static com.katyshevtseva.kikiorg.view.utils.KikiOrgWindowCreator.windowCreator;
 
-public class MainTrackerController extends AbstractSwitchController {
+public class MainTrackerController extends AbstractSwitchController implements SectionController {
     @FXML
     private Pane mainPane;
     @FXML

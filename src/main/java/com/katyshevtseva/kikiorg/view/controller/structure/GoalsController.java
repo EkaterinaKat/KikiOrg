@@ -2,12 +2,12 @@ package com.katyshevtseva.kikiorg.view.controller.structure;
 
 import com.katyshevtseva.fx.Size;
 import com.katyshevtseva.fx.Styler;
-import com.katyshevtseva.fx.WindowBuilder.FxController;
 import com.katyshevtseva.fx.component.ComponentBuilder;
 import com.katyshevtseva.fx.component.ComponentBuilder.Component;
 import com.katyshevtseva.fx.component.controller.PageableBlockListController;
 import com.katyshevtseva.fx.dialogconstructor.DcTextArea;
 import com.katyshevtseva.fx.dialogconstructor.DialogConstructor;
+import com.katyshevtseva.fx.switchcontroller.SectionController;
 import com.katyshevtseva.kikiorg.core.Core;
 import com.katyshevtseva.kikiorg.core.sections.structure.StructureService;
 import com.katyshevtseva.kikiorg.core.sections.structure.entity.Activity;
@@ -27,7 +27,7 @@ import java.util.Map;
 import static com.katyshevtseva.kikiorg.view.utils.KikiOrgWindowCreator.NodeInfo.GOAL_PANE;
 import static com.katyshevtseva.kikiorg.view.utils.KikiOrgWindowCreator.windowCreator;
 
-public class GoalsController implements FxController {
+public class GoalsController implements SectionController {
     private static final Size GOAL_LIST_SIZE = new Size(800, 350);
     private Map<Activity, Label> activityPointLabelMap;
     private PageableBlockListController<Goal> todoListController;

@@ -4,13 +4,13 @@ import com.katyshevtseva.fx.Size;
 import com.katyshevtseva.fx.Styler;
 import com.katyshevtseva.fx.Styler.StandardColor;
 import com.katyshevtseva.fx.Styler.ThingToColor;
-import com.katyshevtseva.fx.WindowBuilder.FxController;
 import com.katyshevtseva.fx.component.ComponentBuilder;
 import com.katyshevtseva.fx.component.ComponentBuilder.Component;
 import com.katyshevtseva.fx.component.controller.MultipleChoiceController;
 import com.katyshevtseva.fx.dialog.StandardDialogBuilder;
 import com.katyshevtseva.fx.dialogconstructor.DcTextField;
 import com.katyshevtseva.fx.dialogconstructor.DialogConstructor;
+import com.katyshevtseva.fx.switchcontroller.SectionController;
 import com.katyshevtseva.kikiorg.core.Core;
 import com.katyshevtseva.kikiorg.core.sections.structure.entity.Activity;
 import com.katyshevtseva.kikiorg.core.sections.structure.entity.Param;
@@ -36,7 +36,7 @@ import static com.katyshevtseva.general.GeneralUtils.wrapTextByWords;
 import static com.katyshevtseva.kikiorg.view.utils.KikiOrgWindowCreator.DialogInfo.STR_VALUE_SELECT;
 import static com.katyshevtseva.kikiorg.view.utils.KikiOrgWindowCreator.windowCreator;
 
-public class ActivitiesController implements FxController {
+public class ActivitiesController implements SectionController {
     @FXML
     private GridPane gridPane;
     @FXML

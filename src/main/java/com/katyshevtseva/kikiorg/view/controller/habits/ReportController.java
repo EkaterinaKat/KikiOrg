@@ -1,7 +1,7 @@
 package com.katyshevtseva.kikiorg.view.controller.habits;
 
 import com.katyshevtseva.date.DateUtils.TimeUnit;
-import com.katyshevtseva.fx.WindowBuilder.FxController;
+import com.katyshevtseva.fx.switchcontroller.SectionController;
 import com.katyshevtseva.kikiorg.core.Core;
 import com.katyshevtseva.kikiorg.core.sections.habits.entity.Habit;
 import com.katyshevtseva.kikiorg.view.utils.OrgUtils;
@@ -28,7 +28,7 @@ import static com.katyshevtseva.fx.FxUtils.associateButtonWithControls;
 import static com.katyshevtseva.kikiorg.view.utils.KikiOrgWindowCreator.NodeInfo.HABIT_REPORT_TABLE;
 import static com.katyshevtseva.kikiorg.view.utils.KikiOrgWindowCreator.windowCreator;
 
-class ReportController implements FxController {
+class ReportController implements SectionController {
     @FXML
     private TableView<Habit> habitsTable;
     @FXML

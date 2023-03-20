@@ -1,6 +1,6 @@
 package com.katyshevtseva.kikiorg.view.controller.finance;
 
-import com.katyshevtseva.fx.WindowBuilder.FxController;
+import com.katyshevtseva.fx.switchcontroller.SectionController;
 import com.katyshevtseva.kikiorg.core.Core;
 import com.katyshevtseva.kikiorg.core.sections.finance.FinanceOperationService;
 import javafx.fxml.FXML;
@@ -9,8 +9,10 @@ import javafx.scene.layout.Pane;
 import static com.katyshevtseva.kikiorg.view.utils.KikiOrgWindowCreator.NodeInfo.*;
 import static com.katyshevtseva.kikiorg.view.utils.KikiOrgWindowCreator.windowCreator;
 
-class LedgerController implements FxController {
+class LedgerController implements SectionController {
     private final FinanceOperationService service = Core.getInstance().financeOperationService();
+    private HistoryTableController historyTableController;
+    private CheckController checkController;
     @FXML
     private Pane replenishmentPane;
     @FXML
@@ -28,10 +30,10 @@ class LedgerController implements FxController {
 
     @FXML
     private void initialize() {
-        CheckController checkController = new CheckController();
+        checkController = new CheckController();
         checkPane.getChildren().add(windowCreator().getNode(FIN_CHECK, checkController));
 
-        HistoryTableController historyTableController =
+        historyTableController =
                 new HistoryTableController(service.getLastWeekOperations(), checkController::updateTable);
         historyTablePane.getChildren().add(windowCreator().getNode(FIN_HISTORY_TABLE, historyTableController));
 
@@ -55,5 +57,11 @@ class LedgerController implements FxController {
 
         scatterPane.getChildren().add(windowCreator().getNode(SCATTER_CHECK, new ScatterCheckController()));
         huddlePane.getChildren().add(windowCreator().getNode(HUDDLE_CHECK, new HuddleCheckController()));
+    }
+
+    @Override
+    public void update() {
+        historyTableController.setTableContent(service.getLastWeekOperations());
+        checkController.updateTable();
     }
 }

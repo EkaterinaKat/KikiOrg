@@ -3,6 +3,7 @@ package com.katyshevtseva.kikiorg.view.controller.structure;
 import com.katyshevtseva.fx.FxUtils;
 import com.katyshevtseva.fx.switchcontroller.AbstractSwitchController;
 import com.katyshevtseva.fx.switchcontroller.Section;
+import com.katyshevtseva.fx.switchcontroller.SectionController;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.layout.HBox;
@@ -14,7 +15,7 @@ import java.util.List;
 import static com.katyshevtseva.kikiorg.view.utils.KikiOrgWindowCreator.NodeInfo.*;
 import static com.katyshevtseva.kikiorg.view.utils.KikiOrgWindowCreator.windowCreator;
 
-public class MainStructureController extends AbstractSwitchController {
+public class MainStructureController extends AbstractSwitchController implements SectionController {
     @FXML
     private Pane mainPane;
     @FXML
@@ -26,11 +27,8 @@ public class MainStructureController extends AbstractSwitchController {
     }
 
     private List<Section> getSections() {
-        TopicalController topicalController = new TopicalController();
-        Section topicalSection = new Section("Topical", topicalController,
-                controller -> windowCreator().getNode(TOPICAL, controller), topicalController::setContent);
-
-        return Arrays.asList(topicalSection,
+        return Arrays.asList(new Section("Topical", new TopicalController(),
+                        controller -> windowCreator().getNode(TOPICAL, controller)),
                 new Section("Activities", new ActivitiesController(),
                         controller -> windowCreator().getNode(ACTIVITIES, controller)),
                 new Section("Params", new ParamsController(),

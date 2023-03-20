@@ -1,8 +1,8 @@
 package com.katyshevtseva.kikiorg.view.controller.habits;
 
 import com.katyshevtseva.fx.Styler;
-import com.katyshevtseva.fx.WindowBuilder.FxController;
 import com.katyshevtseva.fx.dialog.StandardDialogBuilder;
+import com.katyshevtseva.fx.switchcontroller.SectionController;
 import com.katyshevtseva.kikiorg.core.Core;
 import com.katyshevtseva.kikiorg.core.sections.habits.entity.Habit;
 import javafx.fxml.FXML;
@@ -21,7 +21,7 @@ import static com.katyshevtseva.fx.Styler.ThingToColor.TEXT;
 import static com.katyshevtseva.kikiorg.view.utils.KikiOrgWindowCreator.DialogInfo.HABIT;
 import static com.katyshevtseva.kikiorg.view.utils.KikiOrgWindowCreator.windowCreator;
 
-class AdminController implements FxController {
+class AdminController implements SectionController {
     @FXML
     private GridPane gridPane;
     @FXML

@@ -4,12 +4,12 @@ import com.katyshevtseva.fx.FxImageCreationUtil;
 import com.katyshevtseva.fx.FxImageCreationUtil.IconPicture;
 import com.katyshevtseva.fx.FxUtils;
 import com.katyshevtseva.fx.Size;
-import com.katyshevtseva.fx.WindowBuilder.FxController;
 import com.katyshevtseva.fx.component.ComponentBuilder;
 import com.katyshevtseva.fx.component.ComponentBuilder.Component;
 import com.katyshevtseva.fx.component.controller.GalleryController;
 import com.katyshevtseva.fx.component.controller.PaginationPaneController;
 import com.katyshevtseva.fx.dialog.StandardDialogBuilder;
+import com.katyshevtseva.fx.switchcontroller.SectionController;
 import com.katyshevtseva.general.Page;
 import com.katyshevtseva.image.ImageContainer;
 import com.katyshevtseva.kikiorg.core.Core;
@@ -37,7 +37,7 @@ import static com.katyshevtseva.kikiorg.view.utils.KikiOrgWindowCreator.NodeInfo
 import static com.katyshevtseva.kikiorg.view.utils.KikiOrgWindowCreator.windowCreator;
 import static com.katyshevtseva.kikiorg.view.utils.ViewConstants.CLOTHES_TYPE_SELECT_DIALOG_SIZE;
 
-class PieceController implements FxController {
+class PieceController implements SectionController {
     private final WardrobeService service = Core.getInstance().wardrobeService();
     private GalleryController galleryController;
     private PaginationPaneController<Piece> paginationPaneController;
