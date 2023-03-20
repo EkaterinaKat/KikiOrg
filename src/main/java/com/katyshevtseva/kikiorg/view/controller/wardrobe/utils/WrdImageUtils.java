@@ -30,7 +30,7 @@ public class WrdImageUtils {
                 }
             }
             if (imageIsFree) {
-                freeImages.add(icc.getImageContainer(file.getName(), WARDROBE_IMAGES_LOCATION));
+                freeImages.add(icc.getImageContainer(file.getName(), WARDROBE_IMAGES_LOCATION, 400));
             }
         }
         return freeImages;
@@ -52,7 +52,7 @@ public class WrdImageUtils {
     }
 
     public static ImageContainer getImageContainer(Piece piece) {
-        return icc.getImageContainer(piece.getImageFileName(), WARDROBE_IMAGES_LOCATION);
+        return icc.getImageContainer(piece.getImageFileName(), WARDROBE_IMAGES_LOCATION, 400);
     }
 
     static ImageContainer toImageAndPieceContainer(Piece piece) {
