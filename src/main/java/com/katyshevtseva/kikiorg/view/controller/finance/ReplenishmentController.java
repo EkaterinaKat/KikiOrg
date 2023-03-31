@@ -37,9 +37,13 @@ class ReplenishmentController implements FxController {
         disableNonNumericChars(amountTextField);
         doneButton.setOnAction(event -> saveReplenishment());
         associateButtonWithControls(doneButton, amountTextField, sourceComboBox, accountComboBox, datePicker);
+        adjustComboBoxes();
+        datePicker.setValue(LocalDate.now());
+    }
+
+    public void adjustComboBoxes() {
         setComboBoxItems(sourceComboBox, Core.getInstance().financeService().getAllSources());
         setComboBoxItemsAndSetSelectedFirstItem(accountComboBox, Core.getInstance().financeService().getActiveAccounts());
-        datePicker.setValue(LocalDate.now());
     }
 
     private void saveReplenishment() {

@@ -45,10 +45,14 @@ class CheckListController implements SectionController {
     private void initialize() {
         tableController = new ReportTableController();
         tablePane.getChildren().add(windowCreator().getNode(HABIT_REPORT_TABLE, tableController));
-        updateSectionContent();
         datePicker.setValue(LocalDate.now());
         datePicker.setOnAction(event -> fillHabitsTable());
         fillHabitsTable();
+    }
+
+    @Override
+    public void update() {
+        updateSectionContent();
     }
 
     private void fillHabitsTable() {

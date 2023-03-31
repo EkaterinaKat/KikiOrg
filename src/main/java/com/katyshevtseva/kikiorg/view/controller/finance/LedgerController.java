@@ -11,8 +11,13 @@ import static com.katyshevtseva.kikiorg.view.utils.KikiOrgWindowCreator.windowCr
 
 class LedgerController implements SectionController {
     private final FinanceOperationService service = Core.getInstance().financeOperationService();
+
     private HistoryTableController historyTableController;
     private CheckController checkController;
+    private ExpenseController expenseController;
+    private ReplenishmentController replenishmentController;
+    private TransferController transferController;
+
     @FXML
     private Pane replenishmentPane;
     @FXML
@@ -37,23 +42,23 @@ class LedgerController implements SectionController {
                 new HistoryTableController(service.getLastWeekOperations(), checkController::updateTable);
         historyTablePane.getChildren().add(windowCreator().getNode(FIN_HISTORY_TABLE, historyTableController));
 
-        replenishmentPane.getChildren().add(windowCreator().getNode(REPLENISHMENT,
-                new ReplenishmentController(() -> {
-                    checkController.updateTable();
-                    historyTableController.setTableContent(service.getLastWeekOperations());
-                })));
+        replenishmentController = new ReplenishmentController(() -> {
+            checkController.updateTable();
+            historyTableController.setTableContent(service.getLastWeekOperations());
+        });
+        replenishmentPane.getChildren().add(windowCreator().getNode(REPLENISHMENT, replenishmentController));
 
-        expensePane.getChildren().add(windowCreator().getNode(EXPENSE,
-                new ExpenseController(() -> {
-                    checkController.updateTable();
-                    historyTableController.setTableContent(service.getLastWeekOperations());
-                })));
+        expenseController = new ExpenseController(() -> {
+            checkController.updateTable();
+            historyTableController.setTableContent(service.getLastWeekOperations());
+        });
+        expensePane.getChildren().add(windowCreator().getNode(EXPENSE, expenseController));
 
-        transferPane.getChildren().add(windowCreator().getNode(TRANSFER,
-                new TransferController(() -> {
-                    checkController.updateTable();
-                    historyTableController.setTableContent(service.getLastWeekOperations());
-                })));
+        transferController = new TransferController(() -> {
+            checkController.updateTable();
+            historyTableController.setTableContent(service.getLastWeekOperations());
+        });
+        transferPane.getChildren().add(windowCreator().getNode(TRANSFER, transferController));
 
         scatterPane.getChildren().add(windowCreator().getNode(SCATTER_CHECK, new ScatterCheckController()));
         huddlePane.getChildren().add(windowCreator().getNode(HUDDLE_CHECK, new HuddleCheckController()));
@@ -63,5 +68,8 @@ class LedgerController implements SectionController {
     public void update() {
         historyTableController.setTableContent(service.getLastWeekOperations());
         checkController.updateTable();
+        expenseController.adjustComboBoxes();
+        replenishmentController.adjustComboBoxes();
+        transferController.adjustComboBoxes();
     }
 }

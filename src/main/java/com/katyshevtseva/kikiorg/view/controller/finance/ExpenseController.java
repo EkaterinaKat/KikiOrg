@@ -21,7 +21,6 @@ import static com.katyshevtseva.kikiorg.view.utils.ViewConstants.ITEM_SELECT_DIA
 
 class ExpenseController implements FxController {
     private final NoArgsKnob operationListener;
-    private final ItemSelectDialogController itemSelectDialogController;
     @FXML
     private ComboBox<Account> accountComboBox;
     @FXML
@@ -35,7 +34,6 @@ class ExpenseController implements FxController {
 
     ExpenseController(NoArgsKnob operationListener) {
         this.operationListener = operationListener;
-        itemSelectDialogController = new ItemSelectDialogController(item -> itemComboBox.setValue(item));
     }
 
     @FXML
@@ -43,12 +41,17 @@ class ExpenseController implements FxController {
         disableNonNumericChars(amountTextField);
         doneButton.setOnAction(event -> saveExpense());
         associateButtonWithControls(doneButton, amountTextField, accountComboBox, itemComboBox, datePicker);
-        setItemComboBoxItems();
-        setComboBoxItemsAndSetSelectedFirstItem(accountComboBox, Core.getInstance().financeService().getActiveAccounts());
+        adjustComboBoxes();
         datePicker.setValue(LocalDate.now());
     }
 
+    public void adjustComboBoxes() {
+        setItemComboBoxItems();
+        setComboBoxItemsAndSetSelectedFirstItem(accountComboBox, Core.getInstance().financeService().getActiveAccounts());
+    }
+
     private void setItemComboBoxItems() {
+        ItemSelectDialogController itemSelectController = new ItemSelectDialogController(item -> itemComboBox.setValue(item));
         ObservableList<Item> items = FXCollections.observableArrayList(Core.getInstance().financeService().getFewLastItems());
 
         Item more = new Item();
@@ -61,7 +64,7 @@ class ExpenseController implements FxController {
                 new StandardDialogBuilder()
                         .setSize(ITEM_SELECT_DIALOG_SIZE)
                         .setTitle("Select item")
-                        .openNoFxmlContainerDialog(itemSelectDialogController);
+                        .openNoFxmlContainerDialog(itemSelectController);
             }
         });
     }
