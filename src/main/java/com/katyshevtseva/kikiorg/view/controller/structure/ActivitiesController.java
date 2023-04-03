@@ -1,27 +1,22 @@
 package com.katyshevtseva.kikiorg.view.controller.structure;
 
-import com.katyshevtseva.fx.Size;
+import com.katyshevtseva.fx.FxUtils;
 import com.katyshevtseva.fx.Styler;
 import com.katyshevtseva.fx.Styler.StandardColor;
 import com.katyshevtseva.fx.Styler.ThingToColor;
-import com.katyshevtseva.fx.component.ComponentBuilder;
-import com.katyshevtseva.fx.component.ComponentBuilder.Component;
-import com.katyshevtseva.fx.component.controller.MultipleChoiceController;
 import com.katyshevtseva.fx.dialog.StandardDialogBuilder;
 import com.katyshevtseva.fx.dialogconstructor.DcTextField;
 import com.katyshevtseva.fx.dialogconstructor.DialogConstructor;
 import com.katyshevtseva.fx.switchcontroller.SectionController;
 import com.katyshevtseva.kikiorg.core.Core;
+import com.katyshevtseva.kikiorg.core.sections.structure.ActivityStatus;
 import com.katyshevtseva.kikiorg.core.sections.structure.entity.Activity;
 import com.katyshevtseva.kikiorg.core.sections.structure.entity.Param;
 import com.katyshevtseva.kikiorg.core.sections.structure.entity.ParamValue;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
-import javafx.scene.control.Button;
-import javafx.scene.control.ContextMenu;
-import javafx.scene.control.Label;
-import javafx.scene.control.MenuItem;
+import javafx.scene.control.*;
 import javafx.scene.input.ContextMenuEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
@@ -33,6 +28,7 @@ import java.util.stream.Collectors;
 
 import static com.katyshevtseva.fx.Styler.StandardColor.*;
 import static com.katyshevtseva.general.GeneralUtils.wrapTextByWords;
+import static com.katyshevtseva.kikiorg.core.sections.structure.ActivityStatus.*;
 import static com.katyshevtseva.kikiorg.view.utils.KikiOrgWindowCreator.DialogInfo.STR_VALUE_SELECT;
 import static com.katyshevtseva.kikiorg.view.utils.KikiOrgWindowCreator.windowCreator;
 
@@ -42,15 +38,12 @@ public class ActivitiesController implements SectionController {
     @FXML
     private Button activityCreationButton;
     @FXML
-    private Button searchButton;
-    @FXML
-    private Button showAllButton;
-    @FXML
-    private Pane searchValuesPane;
+    private ComboBox<ActivityStatus> statusComboBox;
 
     @FXML
     private void initialize() {
-        fillPane();
+        FxUtils.setComboBoxItems(statusComboBox, ActivityStatus.values(), ACTIVE);
+        statusComboBox.setOnAction(event -> fillPane());
         activityCreationButton.setOnAction(event -> {
             DcTextField titleField = new DcTextField(true, "");
             DialogConstructor.constructDialog(() -> {
@@ -58,29 +51,16 @@ public class ActivitiesController implements SectionController {
                 fillPane();
             }, titleField);
         });
-        adjustSearch();
     }
 
-    private void adjustSearch() {
-        Component<MultipleChoiceController<ParamValue>> valueChoiceComponent = new ComponentBuilder()
-                .setSize(new Size(100, 240))
-                .getMultipleChoiceComponent(Core.getInstance().structureService().getAllParamValues());
-
-        searchValuesPane.getChildren().add(valueChoiceComponent.getNode());
-        searchButton.setOnAction(event -> fillPane(valueChoiceComponent.getController().getSelectedItems()));
-        showAllButton.setOnAction(event -> {
-            valueChoiceComponent.getController().clear();
-            fillPane();
-        });
+    @Override
+    public void update() {
+        fillPane();
     }
 
     private void fillPane() {
-        fillPane(null);
-    }
-
-    private void fillPane(List<ParamValue> valuesToSearchBy) {
         gridPane.getChildren().clear();
-        Map<Integer, Activity> indexActivityMap = getIndexActivityMap(valuesToSearchBy);
+        Map<Integer, Activity> indexActivityMap = getIndexActivityMap();
         Map<Integer, Param> indexParamMap = getIndexParamMap();
 
         for (int k = 0; k <= indexActivityMap.size(); k++) {
@@ -126,6 +106,33 @@ public class ActivitiesController implements SectionController {
                 fillPane();
             }
         }));
+
+        if (activity.getStatus() == ACTIVE || activity.getStatus() == SUSPENDED) {
+            MenuItem finishItem = new MenuItem("Finish");
+            finishItem.setOnAction(event1 -> {
+                Core.getInstance().structureService().setStatus(activity, FINISHED);
+                fillPane();
+            });
+            contextMenu.getItems().add(finishItem);
+        }
+
+        if (activity.getStatus() == FINISHED || activity.getStatus() == SUSPENDED) {
+            MenuItem returnToWorkItem = new MenuItem("Return to work");
+            returnToWorkItem.setOnAction(event1 -> {
+                Core.getInstance().structureService().setStatus(activity, ACTIVE);
+                fillPane();
+            });
+            contextMenu.getItems().add(returnToWorkItem);
+        }
+
+        if (activity.getStatus() == FINISHED || activity.getStatus() == ACTIVE) {
+            MenuItem suspendItem = new MenuItem("Suspend");
+            suspendItem.setOnAction(event1 -> {
+                Core.getInstance().structureService().setStatus(activity, SUSPENDED);
+                fillPane();
+            });
+            contextMenu.getItems().add(suspendItem);
+        }
 
 
         contextMenu.getItems().addAll(editItem, deleteItem);
@@ -178,15 +185,12 @@ public class ActivitiesController implements SectionController {
         if (param.isRequired() && values.size() == 0) {
             return false;
         }
-        if (param.isSingleValue() && values.size() > 1) {
-            return false;
-        }
-        return true;
+        return !param.isSingleValue() || values.size() <= 1;
     }
 
-    private Map<Integer, Activity> getIndexActivityMap(List<ParamValue> valuesToSearchBy) {
+    private Map<Integer, Activity> getIndexActivityMap() {
         Map<Integer, Activity> map = new HashMap<>();
-        List<Activity> activities = Core.getInstance().structureService().getActivities(valuesToSearchBy);
+        List<Activity> activities = Core.getInstance().structureService().getActivities(statusComboBox.getValue());
         for (int i = 0; i < activities.size(); i++) {
             map.put(i + 1, activities.get(i));
         }

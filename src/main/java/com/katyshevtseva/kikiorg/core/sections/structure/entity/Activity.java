@@ -1,5 +1,6 @@
 package com.katyshevtseva.kikiorg.core.sections.structure.entity;
 
+import com.katyshevtseva.kikiorg.core.sections.structure.ActivityStatus;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -16,14 +17,18 @@ public class Activity {
 
     private String title;
 
+    @Enumerated(EnumType.STRING)
+    private ActivityStatus status;
+
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "activities_param_values",
             joinColumns = @JoinColumn(name = "activity_id"),
             inverseJoinColumns = @JoinColumn(name = "param_value_id"))
     private Set<ParamValue> paramValues;
 
-    public Activity(String title) {
+    public Activity(String title, ActivityStatus status) {
         this.title = title;
+        this.status = status;
     }
 
     @Override

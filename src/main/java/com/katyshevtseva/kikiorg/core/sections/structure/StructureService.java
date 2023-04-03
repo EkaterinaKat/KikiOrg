@@ -39,7 +39,7 @@ public class StructureService {
     }
 
     public void createActivity(String title) {
-        activityRepo.save(new Activity(title));
+        activityRepo.save(new Activity(title, ActivityStatus.ACTIVE));
     }
 
     public void addParamValues(Activity activity, Param param, List<ParamValue> values) {
@@ -51,16 +51,15 @@ public class StructureService {
         activityRepo.save(activity);
     }
 
-    public List<Activity> getActivities(List<ParamValue> valuesToSearchBy) {
-        List<Activity> activities = valuesToSearchBy == null || valuesToSearchBy.isEmpty() ?
-                activityRepo.findAll() : activityRepo.findByParamValues(valuesToSearchBy);
+    public List<Activity> getActivities(ActivityStatus status) {
+        List<Activity> activities = activityRepo.findByStatus(status);
         return activities.stream().sorted(Comparator.comparing(Activity::getTitle)).collect(Collectors.toList());
     }
 
     public List<Activity> getActivitiesForGoalsSection() {
-        //41 = StructureGoals 21=Активно
+        //41 = StructureGoals
         return activityRepo.findByParamValue(paramValueRepo.findById(41L).get()).stream()
-                .filter(activity -> activity.getParamValues().contains(paramValueRepo.findById(21L).get()))
+                .filter(activity -> activity.getStatus() == ActivityStatus.ACTIVE)
                 .collect(Collectors.toList());
     }
 
@@ -101,6 +100,11 @@ public class StructureService {
 
     public void delete(Activity activity) {
         activityRepo.delete(activity);
+    }
+
+    public void setStatus(Activity activity, ActivityStatus status) {
+        activity.setStatus(status);
+        activityRepo.save(activity);
     }
 
     public String getParamWarningMessageOrNull() {

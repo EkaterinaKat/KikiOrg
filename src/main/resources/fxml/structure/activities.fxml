@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.layout.*?>
 <VBox xmlns="http://javafx.com/javafx"
@@ -12,13 +13,7 @@
     <HBox>
         <Button fx:id="activityCreationButton" text="New activity"/>
         <Pane minWidth="25" maxWidth="25"/>
-        <Pane fx:id="searchValuesPane"/>
-        <Pane minWidth="25" maxWidth="25"/>
-        <VBox>
-            <Button fx:id="searchButton" text="Search"/>
-            <Pane minHeight="25" maxHeight="25"/>
-            <Button fx:id="showAllButton" text="Show all"/>
-        </VBox>
+        <ComboBox fx:id="statusComboBox"/>
     </HBox>
     <Pane minHeight="25" maxHeight="25"/>
 

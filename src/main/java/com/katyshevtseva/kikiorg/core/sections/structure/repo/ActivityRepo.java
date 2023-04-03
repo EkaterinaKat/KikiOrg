@@ -1,5 +1,6 @@
 package com.katyshevtseva.kikiorg.core.sections.structure.repo;
 
+import com.katyshevtseva.kikiorg.core.sections.structure.ActivityStatus;
 import com.katyshevtseva.kikiorg.core.sections.structure.entity.Activity;
 import com.katyshevtseva.kikiorg.core.sections.structure.entity.ParamValue;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -14,7 +15,5 @@ public interface ActivityRepo extends JpaRepository<Activity, Long> {
             "WHERE :value MEMBER OF a.paramValues ")
     List<Activity> findByParamValue(@Param("value") ParamValue paramValue);
 
-    @Query("SELECT DISTINCT a FROM Activity a JOIN a.paramValues v " +
-            "WHERE v IN :values ")
-    List<Activity> findByParamValues(@Param("values") List<ParamValue> paramValues);
+    List<Activity> findByStatus(ActivityStatus status);
 }
