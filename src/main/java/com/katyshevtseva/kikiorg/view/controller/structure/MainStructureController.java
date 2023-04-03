@@ -27,8 +27,7 @@ public class MainStructureController extends AbstractSwitchController implements
     }
 
     private List<Section> getSections() {
-        return Arrays.asList(new Section("Topical", new TopicalController(),
-                        controller -> windowCreator().getNode(TOPICAL, controller)),
+        return Arrays.asList(
                 new Section("Activities", new ActivitiesController(),
                         controller -> windowCreator().getNode(ACTIVITIES, controller)),
                 new Section("Params", new ParamsController(),

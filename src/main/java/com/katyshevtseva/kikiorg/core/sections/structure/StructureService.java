@@ -121,7 +121,6 @@ public class StructureService {
         goal.setActivity(activity);
         goal.setTitle(title);
         goal.setCreationDate(dateService.createIfNotExistAndGetDateEntity(new Date()));
-        goal.setHighlighted(false);
         goalRepo.save(goal);
     }
 
@@ -136,7 +135,6 @@ public class StructureService {
 
     public void done(Goal goal) {
         goal.setCompletionDate(dateService.createIfNotExistAndGetDateEntity(new Date()));
-        goal.setHighlighted(false);
         goalRepo.save(goal);
     }
 
@@ -156,19 +154,9 @@ public class StructureService {
         return new Page<>(goalPage.getContent(), pageNum, goalPage.getTotalPages());
     }
 
-    public void highlight(Goal goal) {
-        goal.setHighlighted(!goal.isHighlighted());
-        goalRepo.save(goal);
-    }
-
-    public List<Goal> getHighlightedGoals() {
-        return goalRepo.findByHighlightedIsTrue();
-    }
-
     public String getStatistics() {
-        return String.format("Todo:%d Highlighted:%d Done: %d",
+        return String.format("Todo:%d Done: %d",
                 goalRepo.countByCompletionDateIsNull(),
-                goalRepo.countByHighlightedIsTrue(),
                 goalRepo.countByCompletionDateIsNotNull());
     }
 }

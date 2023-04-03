@@ -15,8 +15,8 @@ public class StatisticsController implements SectionController {
     @FXML
     private GridPane gridPane;
 
-    @FXML
-    private void initialize() {
+    @Override
+    public void update() {
         label.setText(service.getPieceStatistics());
         ReportUtils.showReport(service.getOutfitStatistics(), gridPane);
     }

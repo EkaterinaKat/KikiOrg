@@ -30,8 +30,6 @@ public class Goal {
     @JoinColumn(name = "completion_date_id")
     private DateEntity completionDate;
 
-    private boolean highlighted;
-
     public String getDatesInfo() {
         String result = String.format("Creation: %s", READABLE_DATE_FORMAT.format(creationDate.getValue()));
         if (completionDate != null) {

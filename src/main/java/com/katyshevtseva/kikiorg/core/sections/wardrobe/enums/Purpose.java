@@ -4,7 +4,8 @@ public enum Purpose {
 
     HOME("Дом"),
     GOING_OUT_COLLECTED("На выход: собранный"),
-    GOING_OUT_RELAXED("На выход: расслабленный");
+    GOING_OUT_RELAXED("На выход: расслабленный"),
+    SPORT("Спорт");
 
     private final String title;
 

@@ -17,10 +17,6 @@ import javafx.scene.input.ContextMenuEvent;
 import javafx.scene.layout.HBox;
 import lombok.RequiredArgsConstructor;
 
-import static com.katyshevtseva.fx.Styler.StandardColor.GOLD;
-import static com.katyshevtseva.fx.Styler.ThingToColor.BACKGROUND;
-import static com.katyshevtseva.fx.Styler.*;
-
 @RequiredArgsConstructor
 public class GoalPaneController implements FxController {
     private final Goal goal;
@@ -38,12 +34,6 @@ public class GoalPaneController implements FxController {
         tuneLabel(titleLabel, 18, goal.getTitle());
         tuneLabel(datesLabel, 12, goal.getDatesInfo());
         root.setOnContextMenuRequested(event -> showContextMenu(event, root));
-
-        if (goal.isHighlighted()) {
-            root.setStyle(getColorfullStyle(BACKGROUND, GOLD)
-                    + getBorderWidth(3)
-                    + getBorderRadius(10));
-        }
     }
 
     private void showContextMenu(ContextMenuEvent event, Node node) {
@@ -59,13 +49,6 @@ public class GoalPaneController implements FxController {
             }));
             contextMenu.getItems().add(doneItem);
         }
-
-        MenuItem highlightItem = new MenuItem(goal.isHighlighted() ? "Remove highlightion" : "Highlight");
-        highlightItem.setOnAction(event1 -> {
-            Core.getInstance().structureService().highlight(goal);
-            contentUpdateKnob.execute();
-        });
-        contextMenu.getItems().add(highlightItem);
 
         MenuItem editItem = new MenuItem("Edit");
         editItem.setOnAction(event1 -> {
