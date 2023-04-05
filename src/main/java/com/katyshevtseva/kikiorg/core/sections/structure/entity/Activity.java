@@ -5,7 +5,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.util.Set;
 
 @Data
 @Entity
@@ -17,14 +16,10 @@ public class Activity {
 
     private String title;
 
+    private String description;
+
     @Enumerated(EnumType.STRING)
     private ActivityStatus status;
-
-    @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(name = "activities_param_values",
-            joinColumns = @JoinColumn(name = "activity_id"),
-            inverseJoinColumns = @JoinColumn(name = "param_value_id"))
-    private Set<ParamValue> paramValues;
 
     @ManyToOne
     @JoinColumn(name = "goal_id")

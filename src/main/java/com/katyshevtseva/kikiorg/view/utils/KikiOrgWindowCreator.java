@@ -38,7 +38,6 @@ public class KikiOrgWindowCreator {
 
     public enum NodeInfo {
         //STRUCTURE
-        STR_PARAMS(STRUCTURE_FXML_LOCATION, "params.fxml"),
         ACTION_PANE(STRUCTURE_FXML_LOCATION, "action_pane.fxml"),
         ACTIONS(STRUCTURE_FXML_LOCATION, "actions.fxml"),
         GOALS(STRUCTURE_FXML_LOCATION, "goals.fxml"),
@@ -93,7 +92,6 @@ public class KikiOrgWindowCreator {
     }
 
     public enum DialogInfo {
-        STR_VALUE_SELECT(STRUCTURE_FXML_LOCATION, "values_select.fxml", new Size(500, 500), ""),
         PROJECT(TRACKER_FXML_LOCATION, "project_dialog.fxml", new Size(500, 480), CoreConstants.APP_NAME),
         OUTFIT(WARDROBE_FXML_LOCATION, "outfit_dialog.fxml", new Size(1000, 1200), CoreConstants.APP_NAME),
         PIECE(WARDROBE_FXML_LOCATION, "piece_dialog.fxml", new Size(700, 800), CoreConstants.APP_NAME),

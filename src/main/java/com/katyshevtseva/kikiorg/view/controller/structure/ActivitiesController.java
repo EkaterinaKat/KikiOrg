@@ -1,9 +1,6 @@
 package com.katyshevtseva.kikiorg.view.controller.structure;
 
 import com.katyshevtseva.fx.FxUtils;
-import com.katyshevtseva.fx.Styler;
-import com.katyshevtseva.fx.Styler.StandardColor;
-import com.katyshevtseva.fx.Styler.ThingToColor;
 import com.katyshevtseva.fx.dialog.StandardDialogBuilder;
 import com.katyshevtseva.fx.dialogconstructor.DcTextField;
 import com.katyshevtseva.fx.dialogconstructor.DialogConstructor;
@@ -11,26 +8,17 @@ import com.katyshevtseva.fx.switchcontroller.SectionController;
 import com.katyshevtseva.kikiorg.core.Core;
 import com.katyshevtseva.kikiorg.core.sections.structure.ActivityStatus;
 import com.katyshevtseva.kikiorg.core.sections.structure.entity.Activity;
-import com.katyshevtseva.kikiorg.core.sections.structure.entity.Param;
-import com.katyshevtseva.kikiorg.core.sections.structure.entity.ParamValue;
+import com.katyshevtseva.kikiorg.core.sections.structure.entity.Goal;
 import javafx.fxml.FXML;
-import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.input.ContextMenuEvent;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.Pane;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
 
-import static com.katyshevtseva.fx.Styler.StandardColor.*;
-import static com.katyshevtseva.general.GeneralUtils.wrapTextByWords;
+import static com.katyshevtseva.fx.FxUtils.getLabel;
 import static com.katyshevtseva.kikiorg.core.sections.structure.ActivityStatus.*;
-import static com.katyshevtseva.kikiorg.view.utils.KikiOrgWindowCreator.DialogInfo.STR_VALUE_SELECT;
-import static com.katyshevtseva.kikiorg.view.utils.KikiOrgWindowCreator.windowCreator;
 
 public class ActivitiesController implements SectionController {
     @FXML
@@ -38,12 +26,15 @@ public class ActivitiesController implements SectionController {
     @FXML
     private Button activityCreationButton;
     @FXML
+    private Button clearGoalButton;
+    @FXML
     private ComboBox<ActivityStatus> statusComboBox;
+    @FXML
+    private ComboBox<Goal> goalComboBox;
 
     @FXML
     private void initialize() {
-        FxUtils.setComboBoxItems(statusComboBox, ActivityStatus.values(), ACTIVE);
-        statusComboBox.setOnAction(event -> fillPane());
+        tuneComboBoxes();
         activityCreationButton.setOnAction(event -> {
             DcTextField titleField = new DcTextField(true, "");
             DialogConstructor.constructDialog(() -> {
@@ -53,6 +44,16 @@ public class ActivitiesController implements SectionController {
         });
     }
 
+    private void tuneComboBoxes() {
+        FxUtils.setComboBoxItems(statusComboBox, ActivityStatus.values(), ACTIVE);
+        statusComboBox.setOnAction(event -> fillPane());
+
+        FxUtils.setComboBoxItems(goalComboBox, Core.getInstance().goalService().getAll());
+        goalComboBox.setOnAction(event -> fillPane());
+
+        clearGoalButton.setOnAction(event -> goalComboBox.setValue(null));
+    }
+
     @Override
     public void update() {
         fillPane();
@@ -60,30 +61,18 @@ public class ActivitiesController implements SectionController {
 
     private void fillPane() {
         gridPane.getChildren().clear();
-        Map<Integer, Activity> indexActivityMap = getIndexActivityMap();
-        Map<Integer, Param> indexParamMap = getIndexParamMap();
+        List<Activity> activities = Core.getInstance().structureService()
+                .getActivities(statusComboBox.getValue(), goalComboBox.getValue());
 
-        for (int k = 0; k <= indexActivityMap.size(); k++) {
-            for (int l = 0; l <= indexParamMap.size(); l++) {
-                if (k == 0 && l == 0) {
-                    gridPane.add(getHeadlineNode("Activities"), l, k);
-                } else if (k == 0) {
-                    gridPane.add(getHeadlineNode(indexParamMap.get(l).getTitle()), l, k);
-                } else if (l == 0) {
-                    Activity activity = indexActivityMap.get(k);
-                    Node node = getActivityNode(activity.getTitle());
-                    node.setOnContextMenuRequested(event -> showActivityContextMenu(event, activity, node));
-                    gridPane.add(node, l, k);
-                } else {
-                    Activity activity = indexActivityMap.get(k);
-                    Param param = indexParamMap.get(l);
-                    Node node = getRegularNode(getValuesString(activity, param), valuesAreCorrect(activity, param));
-                    node.setOnMouseClicked(event -> windowCreator().openDialog(STR_VALUE_SELECT,
-                            new ValuesSelectController(param, activity, this::fillPane)
-                    ));
-                    gridPane.add(node, l, k);
-                }
-            }
+        for (int i = 0; i < activities.size(); i++) {
+            Activity activity = activities.get(i);
+
+            Label titleLabel = getLabel(activity.getTitle(), 250);
+            titleLabel.setOnContextMenuRequested(event -> showActivityContextMenu(event, activity, titleLabel));
+
+            gridPane.add(titleLabel, 0, i);
+            gridPane.add(getLabel(activity.getDescription(), 250), 1, i);
+            gridPane.add(getLabel(activity.getGoal() != null ? activity.getGoal().getTitle() : "---", 250), 2, i);
         }
     }
 
@@ -137,72 +126,5 @@ public class ActivitiesController implements SectionController {
 
         contextMenu.getItems().addAll(editItem, deleteItem);
         contextMenu.show(node, event.getScreenX(), event.getScreenY());
-    }
-
-    private Node getHeadlineNode(String s) {
-        return getTableCell(s, 20, WHITE, BLACK, WHITE);
-    }
-
-    private Node getActivityNode(String s) {
-        return getTableCell(s, 15, BLACK, PASTEL_PINK, GRAY);
-    }
-
-    private Node getRegularNode(String s, boolean dataIsCorrect) {
-        return getTableCell(s, 15, BLACK, dataIsCorrect ? WHITE : RED, GRAY);
-    }
-
-    private Node getTableCell(String text, int textSize, StandardColor textColor, StandardColor backgroundColor,
-                              StandardColor borderColor) {
-        Label label = new Label(wrapTextByWords(text, 20));
-        label.setStyle(Styler.getColorfullStyle(ThingToColor.TEXT, textColor) +
-                Styler.getTextSizeStyle(textSize));
-        label.setPadding(new Insets(textSize));
-
-        Pane pane = new Pane();
-        pane.setStyle(Styler.getColorfullStyle(ThingToColor.BACKGROUND, backgroundColor) +
-                Styler.getColorfullStyle(ThingToColor.BORDER, borderColor));
-        pane.getChildren().add(label);
-        return pane;
-    }
-
-    private String getValuesString(Activity activity, Param param) {
-        List<ParamValue> values = activity.getParamValues().stream()
-                .filter(paramValue -> paramValue.getParam().equals(param)).collect(Collectors.toList());
-        if (values.isEmpty()) {
-            return "-";
-        }
-        StringBuilder stringBuilder = new StringBuilder();
-        for (ParamValue value : values) {
-            stringBuilder.append("* ").append(value.getTitle()).append("\n");
-        }
-        return stringBuilder.toString();
-    }
-
-    private boolean valuesAreCorrect(Activity activity, Param param) {
-        List<ParamValue> values = activity.getParamValues().stream()
-                .filter(paramValue -> paramValue.getParam().equals(param)).collect(Collectors.toList());
-
-        if (param.isRequired() && values.size() == 0) {
-            return false;
-        }
-        return !param.isSingleValue() || values.size() <= 1;
-    }
-
-    private Map<Integer, Activity> getIndexActivityMap() {
-        Map<Integer, Activity> map = new HashMap<>();
-        List<Activity> activities = Core.getInstance().structureService().getActivities(statusComboBox.getValue(), null);//todo
-        for (int i = 0; i < activities.size(); i++) {
-            map.put(i + 1, activities.get(i));
-        }
-        return map;
-    }
-
-    private Map<Integer, Param> getIndexParamMap() {
-        Map<Integer, Param> map = new HashMap<>();
-        List<Param> params = Core.getInstance().structureService().getParams();
-        for (int i = 0; i < params.size(); i++) {
-            map.put(i + 1, params.get(i));
-        }
-        return map;
     }
 }

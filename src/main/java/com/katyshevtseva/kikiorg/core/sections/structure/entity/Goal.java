@@ -24,4 +24,9 @@ public class Goal {
         this.title = title;
         this.description = description;
     }
+
+    @Override
+    public String toString() {
+        return title;
+    }
 }
