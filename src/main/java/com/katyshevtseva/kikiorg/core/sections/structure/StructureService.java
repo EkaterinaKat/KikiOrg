@@ -17,8 +17,15 @@ import java.util.stream.Collectors;
 public class StructureService {
     private final ActivityRepo activityRepo;
 
-    public void createActivity(String title) {
-        activityRepo.save(new Activity(title, ActivityStatus.ACTIVE));
+    public void save(Activity existing, String title, String desc, Goal goal) {
+        if (existing == null) {
+            existing = new Activity();
+            existing.setStatus(ActivityStatus.ACTIVE);
+        }
+        existing.setTitle(title);
+        existing.setDescription(desc);
+        existing.setGoal(goal);
+        activityRepo.save(existing);
     }
 
     public List<Activity> getActivities(@NotNull ActivityStatus status, @Nullable Goal goal) {
@@ -31,11 +38,6 @@ public class StructureService {
     public List<Activity> getActivitiesForActionsSection() {
         //41 = StructureActions
         return activityRepo.findAll();//todo
-    }
-
-    public void edit(Activity activity, String title) {//todo
-        activity.setTitle(title);
-        activityRepo.save(activity);
     }
 
     public void delete(Activity activity) {

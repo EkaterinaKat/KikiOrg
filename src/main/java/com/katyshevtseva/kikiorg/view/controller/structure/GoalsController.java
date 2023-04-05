@@ -90,7 +90,7 @@ public class GoalsController implements SectionController {
         HBox hBox = new HBox();
         hBox.getChildren().addAll(getPaneWithWidth(10), vBox, getPaneWithWidth(10));
         hBox.setStyle(Styler.getBlackBorderStyle());
-        setHoverStyle(hBox, getColorfullStyle(BACKGROUND, "#70FFD2"));
+        setHoverStyle(hBox, getColorfullStyle(BACKGROUND, Styler.StandardColor.GOLD));
         return hBox;
     }
 

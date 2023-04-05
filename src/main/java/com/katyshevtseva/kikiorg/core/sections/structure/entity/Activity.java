@@ -25,11 +25,6 @@ public class Activity {
     @JoinColumn(name = "goal_id")
     private Goal goal;
 
-    public Activity(String title, ActivityStatus status) {
-        this.title = title;
-        this.status = status;
-    }
-
     @Override
     public String toString() {
         return "Activity{" +

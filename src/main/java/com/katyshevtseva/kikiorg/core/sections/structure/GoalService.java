@@ -7,7 +7,9 @@ import com.katyshevtseva.kikiorg.core.sections.structure.repo.GoalRepo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Service
@@ -30,7 +32,7 @@ public class GoalService {
     }
 
     public List<Goal> getAll() {
-        return goalRepo.findAll();
+        return goalRepo.findAll().stream().sorted(Comparator.comparing(Goal::getTitle)).collect(Collectors.toList());
     }
 
     public void unattachGoal(Activity activity) {

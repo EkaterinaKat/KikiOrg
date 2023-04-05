@@ -14,7 +14,7 @@
         <ComboBox fx:id="statusComboBox"/>
         <Pane minWidth="25" maxWidth="25"/>
         <ComboBox fx:id="goalComboBox"/>
-        <Pane minWidth="25" maxWidth="25"/>
+        <Pane minWidth="8" maxWidth="8"/>
         <Button text="x" fx:id="clearGoalButton"/>
     </HBox>
     <Pane minHeight="25" maxHeight="25"/>
