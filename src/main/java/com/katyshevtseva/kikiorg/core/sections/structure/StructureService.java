@@ -36,8 +36,7 @@ public class StructureService {
     }
 
     public List<Activity> getActivitiesForActionsSection() {
-        //41 = StructureActions
-        return activityRepo.findAll();//todo
+        return activityRepo.findActivitiesThatHaveActions();
     }
 
     public void delete(Activity activity) {

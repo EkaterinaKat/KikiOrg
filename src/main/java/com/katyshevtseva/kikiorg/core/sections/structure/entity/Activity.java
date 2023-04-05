@@ -27,10 +27,7 @@ public class Activity {
 
     @Override
     public String toString() {
-        return "Activity{" +
-                "id=" + id +
-                ", title='" + title + '\'' +
-                '}';
+        return title;
     }
 
     @Override

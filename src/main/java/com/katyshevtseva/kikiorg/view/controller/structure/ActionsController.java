@@ -5,11 +5,13 @@ import com.katyshevtseva.fx.Styler;
 import com.katyshevtseva.fx.component.ComponentBuilder;
 import com.katyshevtseva.fx.component.ComponentBuilder.Component;
 import com.katyshevtseva.fx.component.controller.PageableBlockListController;
+import com.katyshevtseva.fx.dialogconstructor.DcComboBox;
 import com.katyshevtseva.fx.dialogconstructor.DcTextArea;
 import com.katyshevtseva.fx.dialogconstructor.DialogConstructor;
 import com.katyshevtseva.fx.switchcontroller.SectionController;
 import com.katyshevtseva.kikiorg.core.Core;
 import com.katyshevtseva.kikiorg.core.sections.structure.ActionService;
+import com.katyshevtseva.kikiorg.core.sections.structure.ActivityStatus;
 import com.katyshevtseva.kikiorg.core.sections.structure.entity.Action;
 import com.katyshevtseva.kikiorg.core.sections.structure.entity.Activity;
 import javafx.fxml.FXML;
@@ -33,6 +35,7 @@ public class ActionsController implements SectionController {
     private PageableBlockListController<Action> todoListController;
     private PageableBlockListController<Action> doneListController;
     private final ActionService service = Core.getInstance().actionService();
+    private Activity selectedActivity;
     @FXML
     private GridPane gridPane;
     @FXML
@@ -44,6 +47,11 @@ public class ActionsController implements SectionController {
 
     @FXML
     private void initialize() {
+        adjustNewActionButton();
+    }
+
+    @Override
+    public void update() {
         fillActivityTable();
         adjustActionLists();
     }
@@ -70,12 +78,16 @@ public class ActionsController implements SectionController {
             Label label = new Label(activity.getTitle());
             label.setWrapText(true);
             label.setStyle(Styler.getTextSizeStyle(18));
-            Label point = new Label();
-            activityPointLabelMap.put(activity, point);
-            label.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
-                showActions(activity);
-            });
-            gridPane.add(point, 1, rowIndex);
+            if (activity.getStatus() != ActivityStatus.ACTIVE) {
+                label.setStyle(Styler.getColorfullStyle(Styler.ThingToColor.TEXT, Styler.StandardColor.GRAY));
+            } else {
+                Label point = new Label();
+                activityPointLabelMap.put(activity, point);
+                label.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
+                    showActions(activity);
+                });
+                gridPane.add(point, 1, rowIndex);
+            }
             gridPane.add(label, 2, rowIndex);
             rowIndex++;
         }
@@ -83,7 +95,7 @@ public class ActionsController implements SectionController {
 
     private void showActions(Activity activity) {
         setPoint(activity);
-        adjustNewActionButton(activity);
+        selectedActivity = activity;
 
         todoListController.show(pageNum -> service.getTodoActions(activity, pageNum),
                 ((action, integer) -> actionToNode(action, integer, activity)));
@@ -91,14 +103,16 @@ public class ActionsController implements SectionController {
                 ((action, integer) -> actionToNode(action, integer, activity)));
     }
 
-    private void adjustNewActionButton(Activity activity) {
-        newActionButton.setVisible(true);
+    private void adjustNewActionButton() {
         newActionButton.setOnAction(event -> {
             DcTextArea titleField = new DcTextArea(true, "");
+            DcComboBox<Activity> activityBox = new DcComboBox<>(true, selectedActivity,
+                    Core.getInstance().structureService().getActivities(ActivityStatus.ACTIVE, null));
             DialogConstructor.constructDialog(() -> {
-                service.createAction(activity, titleField.getValue());
-                showActions(activity);
-            }, titleField);
+                service.createAction(activityBox.getValue(), titleField.getValue());
+                fillActivityTable();
+                showActions(activityBox.getValue());
+            }, titleField, activityBox);
         });
     }
 
