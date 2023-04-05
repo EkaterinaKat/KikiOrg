@@ -7,7 +7,7 @@ import com.katyshevtseva.fx.dialogconstructor.DcTextArea;
 import com.katyshevtseva.fx.dialogconstructor.DialogConstructor;
 import com.katyshevtseva.general.NoArgsKnob;
 import com.katyshevtseva.kikiorg.core.Core;
-import com.katyshevtseva.kikiorg.core.sections.structure.entity.Goal;
+import com.katyshevtseva.kikiorg.core.sections.structure.entity.Action;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.ContextMenu;
@@ -18,8 +18,8 @@ import javafx.scene.layout.HBox;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
-public class GoalPaneController implements FxController {
-    private final Goal goal;
+public class ActionPaneController implements FxController {
+    private final Action action;
     private final int blockWidth;
     private final NoArgsKnob contentUpdateKnob;
     @FXML
@@ -31,19 +31,19 @@ public class GoalPaneController implements FxController {
 
     @FXML
     private void initialize() {
-        tuneLabel(titleLabel, 18, goal.getTitle());
-        tuneLabel(datesLabel, 12, goal.getDatesInfo());
+        tuneLabel(titleLabel, 18, action.getTitle());
+        tuneLabel(datesLabel, 12, action.getDatesInfo());
         root.setOnContextMenuRequested(event -> showContextMenu(event, root));
     }
 
     private void showContextMenu(ContextMenuEvent event, Node node) {
         ContextMenu contextMenu = new ContextMenu();
 
-        if (goal.getCompletionDate() == null) {
+        if (action.getCompletionDate() == null) {
             MenuItem doneItem = new MenuItem("Done");
             doneItem.setOnAction(event1 -> new StandardDialogBuilder().openQuestionDialog("Done?", b -> {
                 if (b) {
-                    Core.getInstance().structureService().done(goal);
+                    Core.getInstance().structureService().done(action);
                     contentUpdateKnob.execute();
                 }
             }));
@@ -52,9 +52,9 @@ public class GoalPaneController implements FxController {
 
         MenuItem editItem = new MenuItem("Edit");
         editItem.setOnAction(event1 -> {
-            DcTextArea titleField = new DcTextArea(true, goal.getTitle());
+            DcTextArea titleField = new DcTextArea(true, action.getTitle());
             DialogConstructor.constructDialog(() -> {
-                Core.getInstance().structureService().edit(goal, titleField.getValue());
+                Core.getInstance().structureService().edit(action, titleField.getValue());
                 contentUpdateKnob.execute();
             }, titleField);
         });
@@ -63,7 +63,7 @@ public class GoalPaneController implements FxController {
         MenuItem deleteItem = new MenuItem("Delete");
         deleteItem.setOnAction(event1 -> new StandardDialogBuilder().openQuestionDialog("Delete?", b -> {
             if (b) {
-                Core.getInstance().structureService().delete(goal);
+                Core.getInstance().structureService().delete(action);
                 contentUpdateKnob.execute();
             }
         }));

@@ -38,8 +38,8 @@ public class KikiOrgWindowCreator {
 
     public enum NodeInfo {
         STR_PARAMS(STRUCTURE_FXML_LOCATION, "params.fxml"),
-        GOAL_PANE(STRUCTURE_FXML_LOCATION, "goal_pane.fxml"),
-        GOALS(STRUCTURE_FXML_LOCATION, "goals.fxml"),
+        ACTION_PANE(STRUCTURE_FXML_LOCATION, "action_pane.fxml"),
+        ACTIONS(STRUCTURE_FXML_LOCATION, "actions.fxml"),
         ACTIVITIES(STRUCTURE_FXML_LOCATION, "activities.fxml"),
         MAIN_STRUCTURE(STRUCTURE_FXML_LOCATION, "main_structure.fxml"),
         TASK_PANE(TRACKER_FXML_LOCATION, "task_pane.fxml"),

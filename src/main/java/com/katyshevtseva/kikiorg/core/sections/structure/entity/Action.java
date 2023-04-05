@@ -11,7 +11,7 @@ import static com.katyshevtseva.date.DateUtils.READABLE_DATE_FORMAT;
 @Data
 @Entity
 @NoArgsConstructor
-public class Goal {
+public class Action {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;

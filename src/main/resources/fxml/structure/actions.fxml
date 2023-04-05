@@ -11,7 +11,7 @@
             <GridPane fx:id="gridPane" hgap="10" vgap="10" maxWidth="270" minWidth="270"/>
         </ScrollPane>
         <Pane minHeight="20" maxHeight="20"/>
-        <Button fx:id="newGoalButton" text="New goal" visible="false"/>
+        <Button fx:id="newActionButton" text="New action" visible="false"/>
     </VBox>
 
     <Pane maxWidth="20" minWidth="20"/>

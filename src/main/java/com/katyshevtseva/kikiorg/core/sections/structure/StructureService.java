@@ -2,12 +2,12 @@ package com.katyshevtseva.kikiorg.core.sections.structure;
 
 import com.katyshevtseva.general.Page;
 import com.katyshevtseva.kikiorg.core.date.DateService;
+import com.katyshevtseva.kikiorg.core.sections.structure.entity.Action;
 import com.katyshevtseva.kikiorg.core.sections.structure.entity.Activity;
-import com.katyshevtseva.kikiorg.core.sections.structure.entity.Goal;
 import com.katyshevtseva.kikiorg.core.sections.structure.entity.Param;
 import com.katyshevtseva.kikiorg.core.sections.structure.entity.ParamValue;
+import com.katyshevtseva.kikiorg.core.sections.structure.repo.ActionRepo;
 import com.katyshevtseva.kikiorg.core.sections.structure.repo.ActivityRepo;
-import com.katyshevtseva.kikiorg.core.sections.structure.repo.GoalRepo;
 import com.katyshevtseva.kikiorg.core.sections.structure.repo.ParamRepo;
 import com.katyshevtseva.kikiorg.core.sections.structure.repo.ParamValueRepo;
 import lombok.RequiredArgsConstructor;
@@ -28,7 +28,7 @@ public class StructureService {
     private final ParamRepo paramRepo;
     private final ParamValueRepo paramValueRepo;
     private final DateService dateService;
-    private final GoalRepo goalRepo;
+    private final ActionRepo actionRepo;
 
     public void createParam(String title, boolean required, boolean singleValue) {
         paramRepo.save(new Param(title, required, singleValue));
@@ -56,8 +56,8 @@ public class StructureService {
         return activities.stream().sorted(Comparator.comparing(Activity::getTitle)).collect(Collectors.toList());
     }
 
-    public List<Activity> getActivitiesForGoalsSection() {
-        //41 = StructureGoals
+    public List<Activity> getActivitiesForActionsSection() {
+        //41 = StructureActions
         return activityRepo.findByParamValue(paramValueRepo.findById(41L).get()).stream()
                 .filter(activity -> activity.getStatus() == ActivityStatus.ACTIVE)
                 .collect(Collectors.toList());
@@ -116,51 +116,47 @@ public class StructureService {
         return null;
     }
 
-    public List<ParamValue> getAllParamValues() {
-        return paramValueRepo.findAllByOrderByTitle();
+    public void createAction(Activity activity, String title) {
+        Action action = new Action();
+        action.setActivity(activity);
+        action.setTitle(title);
+        action.setCreationDate(dateService.createIfNotExistAndGetDateEntity(new Date()));
+        actionRepo.save(action);
     }
 
-    public void createGoal(Activity activity, String title) {
-        Goal goal = new Goal();
-        goal.setActivity(activity);
-        goal.setTitle(title);
-        goal.setCreationDate(dateService.createIfNotExistAndGetDateEntity(new Date()));
-        goalRepo.save(goal);
+    public void edit(Action action, String title) {
+        action.setTitle(title);
+        actionRepo.save(action);
     }
 
-    public void edit(Goal goal, String title) {
-        goal.setTitle(title);
-        goalRepo.save(goal);
+    public void delete(Action action) {
+        actionRepo.delete(action);
     }
 
-    public void delete(Goal goal) {
-        goalRepo.delete(goal);
+    public void done(Action action) {
+        action.setCompletionDate(dateService.createIfNotExistAndGetDateEntity(new Date()));
+        actionRepo.save(action);
     }
 
-    public void done(Goal goal) {
-        goal.setCompletionDate(dateService.createIfNotExistAndGetDateEntity(new Date()));
-        goalRepo.save(goal);
-    }
-
-    public Page<Goal> getTodoGoals(Activity activity, int pageNum) {
+    public Page<Action> getTodoActions(Activity activity, int pageNum) {
         PageRequest pageRequest = PageRequest.of(pageNum, 15, Sort.by("id").ascending());
 
-        org.springframework.data.domain.Page<Goal> goalPage =
-                goalRepo.findByActivityAndCompletionDateIsNull(activity, pageRequest);
-        return new Page<>(goalPage.getContent(), pageNum, goalPage.getTotalPages());
+        org.springframework.data.domain.Page<Action> actionPage =
+                actionRepo.findByActivityAndCompletionDateIsNull(activity, pageRequest);
+        return new Page<>(actionPage.getContent(), pageNum, actionPage.getTotalPages());
     }
 
-    public Page<Goal> getDoneGoals(Activity activity, int pageNum) {
+    public Page<Action> getDoneActions(Activity activity, int pageNum) {
         PageRequest pageRequest = PageRequest.of(pageNum, 15, Sort.by("id").ascending());
 
-        org.springframework.data.domain.Page<Goal> goalPage =
-                goalRepo.findByActivityAndCompletionDateIsNotNull(activity, pageRequest);
-        return new Page<>(goalPage.getContent(), pageNum, goalPage.getTotalPages());
+        org.springframework.data.domain.Page<Action> actionPage =
+                actionRepo.findByActivityAndCompletionDateIsNotNull(activity, pageRequest);
+        return new Page<>(actionPage.getContent(), pageNum, actionPage.getTotalPages());
     }
 
     public String getStatistics() {
         return String.format("Todo:%d Done: %d",
-                goalRepo.countByCompletionDateIsNull(),
-                goalRepo.countByCompletionDateIsNotNull());
+                actionRepo.countByCompletionDateIsNull(),
+                actionRepo.countByCompletionDateIsNotNull());
     }
 }
