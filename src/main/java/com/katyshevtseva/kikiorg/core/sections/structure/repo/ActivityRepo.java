@@ -2,6 +2,7 @@ package com.katyshevtseva.kikiorg.core.sections.structure.repo;
 
 import com.katyshevtseva.kikiorg.core.sections.structure.ActivityStatus;
 import com.katyshevtseva.kikiorg.core.sections.structure.entity.Activity;
+import com.katyshevtseva.kikiorg.core.sections.structure.entity.Goal;
 import com.katyshevtseva.kikiorg.core.sections.structure.entity.ParamValue;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -16,4 +17,8 @@ public interface ActivityRepo extends JpaRepository<Activity, Long> {
     List<Activity> findByParamValue(@Param("value") ParamValue paramValue);
 
     List<Activity> findByStatus(ActivityStatus status);
+
+    List<Activity> findByStatusAndGoal(ActivityStatus status, Goal goal);
+
+    List<Activity> findByGoal(Goal goal);
 }

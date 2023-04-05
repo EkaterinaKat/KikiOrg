@@ -190,7 +190,7 @@ public class ActivitiesController implements SectionController {
 
     private Map<Integer, Activity> getIndexActivityMap() {
         Map<Integer, Activity> map = new HashMap<>();
-        List<Activity> activities = Core.getInstance().structureService().getActivities(statusComboBox.getValue());
+        List<Activity> activities = Core.getInstance().structureService().getActivities(statusComboBox.getValue(), null);//todo
         for (int i = 0; i < activities.size(); i++) {
             map.put(i + 1, activities.get(i));
         }

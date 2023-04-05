@@ -37,20 +37,25 @@ public class KikiOrgWindowCreator {
     }
 
     public enum NodeInfo {
+        //STRUCTURE
         STR_PARAMS(STRUCTURE_FXML_LOCATION, "params.fxml"),
         ACTION_PANE(STRUCTURE_FXML_LOCATION, "action_pane.fxml"),
         ACTIONS(STRUCTURE_FXML_LOCATION, "actions.fxml"),
+        GOALS(STRUCTURE_FXML_LOCATION, "goals.fxml"),
         ACTIVITIES(STRUCTURE_FXML_LOCATION, "activities.fxml"),
         MAIN_STRUCTURE(STRUCTURE_FXML_LOCATION, "main_structure.fxml"),
+        //TRACKER
         TASK_PANE(TRACKER_FXML_LOCATION, "task_pane.fxml"),
         PROJECT(TRACKER_FXML_LOCATION, "project.fxml"),
         BOARD(TRACKER_FXML_LOCATION, "board.fxml"),
         MAIN_TRACKER(TRACKER_FXML_LOCATION, "main_tracker.fxml"),
+        //WARDROBE
         OUTFIT(WARDROBE_FXML_LOCATION, "outfit.fxml"),
         OUTFIT_GRID(WARDROBE_FXML_LOCATION, "outfit_grid.fxml"),
         PIECE(WARDROBE_FXML_LOCATION, "piece.fxml"),
         MAIN_WARDROBE(WARDROBE_FXML_LOCATION, "main_wardrobe.fxml"),
         WARDROBE_STATISTICS(WARDROBE_FXML_LOCATION, "statistics.fxml"),
+        //FIN
         XXX(FIN_FXML_LOCATION, "xxx.fxml"),
         LEDGER(FIN_FXML_LOCATION, "ledger.fxml"),
         FIN_ADMIN(FIN_FXML_LOCATION, "admin.fxml"),
@@ -66,6 +71,7 @@ public class KikiOrgWindowCreator {
         REPLENISHMENT(FIN_FXML_LOCATION, "replenishment.fxml"),
         HUDDLE_CHECK(FIN_FXML_LOCATION, "check/huddle_check.fxml"),
         MAIN_FIN(FIN_FXML_LOCATION, "main_finance.fxml"),
+        //HABITS
         CRITERION(HABITS_FXML_LOCATION, "criterion.fxml"),
         HABIT_REPORT_TABLE(HABITS_FXML_LOCATION, "report_table.fxml"),
         HABIT_REPORT(HABITS_FXML_LOCATION, "report.fxml"),

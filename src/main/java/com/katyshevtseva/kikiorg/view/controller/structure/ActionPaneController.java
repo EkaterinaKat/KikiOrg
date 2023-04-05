@@ -43,7 +43,7 @@ public class ActionPaneController implements FxController {
             MenuItem doneItem = new MenuItem("Done");
             doneItem.setOnAction(event1 -> new StandardDialogBuilder().openQuestionDialog("Done?", b -> {
                 if (b) {
-                    Core.getInstance().structureService().done(action);
+                    Core.getInstance().actionService().done(action);
                     contentUpdateKnob.execute();
                 }
             }));
@@ -54,7 +54,7 @@ public class ActionPaneController implements FxController {
         editItem.setOnAction(event1 -> {
             DcTextArea titleField = new DcTextArea(true, action.getTitle());
             DialogConstructor.constructDialog(() -> {
-                Core.getInstance().structureService().edit(action, titleField.getValue());
+                Core.getInstance().actionService().edit(action, titleField.getValue());
                 contentUpdateKnob.execute();
             }, titleField);
         });
@@ -63,7 +63,7 @@ public class ActionPaneController implements FxController {
         MenuItem deleteItem = new MenuItem("Delete");
         deleteItem.setOnAction(event1 -> new StandardDialogBuilder().openQuestionDialog("Delete?", b -> {
             if (b) {
-                Core.getInstance().structureService().delete(action);
+                Core.getInstance().actionService().delete(action);
                 contentUpdateKnob.execute();
             }
         }));

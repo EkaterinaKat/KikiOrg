@@ -26,6 +26,10 @@ public class Activity {
             inverseJoinColumns = @JoinColumn(name = "param_value_id"))
     private Set<ParamValue> paramValues;
 
+    @ManyToOne
+    @JoinColumn(name = "goal_id")
+    private Goal goal;
+
     public Activity(String title, ActivityStatus status) {
         this.title = title;
         this.status = status;

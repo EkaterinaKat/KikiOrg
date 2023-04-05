@@ -30,6 +30,8 @@ public class MainStructureController extends AbstractSwitchController implements
         return Arrays.asList(
                 new Section("Activities", new ActivitiesController(),
                         controller -> windowCreator().getNode(ACTIVITIES, controller)),
+                new Section("Goals", new GoalsController(),
+                        controller -> windowCreator().getNode(GOALS, controller)),
                 new Section("Params", new ParamsController(),
                         controller -> windowCreator().getNode(STR_PARAMS, controller)),
                 new Section("Actions", new ActionsController(),

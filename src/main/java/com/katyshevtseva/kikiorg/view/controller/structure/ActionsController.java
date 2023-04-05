@@ -9,7 +9,7 @@ import com.katyshevtseva.fx.dialogconstructor.DcTextArea;
 import com.katyshevtseva.fx.dialogconstructor.DialogConstructor;
 import com.katyshevtseva.fx.switchcontroller.SectionController;
 import com.katyshevtseva.kikiorg.core.Core;
-import com.katyshevtseva.kikiorg.core.sections.structure.StructureService;
+import com.katyshevtseva.kikiorg.core.sections.structure.ActionService;
 import com.katyshevtseva.kikiorg.core.sections.structure.entity.Action;
 import com.katyshevtseva.kikiorg.core.sections.structure.entity.Activity;
 import javafx.fxml.FXML;
@@ -32,7 +32,7 @@ public class ActionsController implements SectionController {
     private Map<Activity, Label> activityPointLabelMap;
     private PageableBlockListController<Action> todoListController;
     private PageableBlockListController<Action> doneListController;
-    private final StructureService service = Core.getInstance().structureService();
+    private final ActionService service = Core.getInstance().actionService();
     @FXML
     private GridPane gridPane;
     @FXML
@@ -85,7 +85,7 @@ public class ActionsController implements SectionController {
         setPoint(activity);
         adjustNewActionButton(activity);
 
-        todoListController.show(pageNum -> service.getTodoActions(activity, pageNum),//
+        todoListController.show(pageNum -> service.getTodoActions(activity, pageNum),
                 ((action, integer) -> actionToNode(action, integer, activity)));
         doneListController.show(pageNum -> service.getDoneActions(activity, pageNum),
                 ((action, integer) -> actionToNode(action, integer, activity)));
@@ -96,7 +96,7 @@ public class ActionsController implements SectionController {
         newActionButton.setOnAction(event -> {
             DcTextArea titleField = new DcTextArea(true, "");
             DialogConstructor.constructDialog(() -> {
-                Core.getInstance().structureService().createAction(activity, titleField.getValue());
+                service.createAction(activity, titleField.getValue());
                 showActions(activity);
             }, titleField);
         });
