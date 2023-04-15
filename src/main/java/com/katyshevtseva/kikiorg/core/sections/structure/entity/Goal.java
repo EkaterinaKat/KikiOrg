@@ -1,12 +1,10 @@
 package com.katyshevtseva.kikiorg.core.sections.structure.entity;
 
+import com.katyshevtseva.kikiorg.core.sections.structure.GoalTopicality;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Data
 @Entity
@@ -20,9 +18,13 @@ public class Goal {
 
     private String description;
 
-    public void setValues(String title, String description) {
+    @Enumerated(EnumType.STRING)
+    private GoalTopicality topicality;
+
+    public void setValues(String title, String description, GoalTopicality topicality) {
         this.title = title;
         this.description = description;
+        this.topicality = topicality;
     }
 
     @Override

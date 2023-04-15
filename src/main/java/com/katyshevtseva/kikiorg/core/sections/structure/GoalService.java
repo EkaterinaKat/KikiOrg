@@ -17,10 +17,10 @@ public class GoalService {
     private final GoalRepo goalRepo;
     private final ActivityRepo activityRepo;
 
-    public void save(Goal existing, String title, String desc) {
+    public void save(Goal existing, String title, String desc, GoalTopicality topicality) {
         if (existing == null)
             existing = new Goal();
-        existing.setValues(title, desc);
+        existing.setValues(title, desc, topicality);
         goalRepo.save(existing);
     }
 
@@ -31,8 +31,14 @@ public class GoalService {
         goalRepo.delete(goal);
     }
 
-    public List<Goal> getAll() {
+    public List<Goal> getAllSortedByTitle() {
         return goalRepo.findAll().stream().sorted(Comparator.comparing(Goal::getTitle)).collect(Collectors.toList());
+    }
+
+    public List<Goal> getAllSortedByTopicality() {
+        return goalRepo.findAll().stream()
+                .sorted(Comparator.comparing(goal -> ((Goal) goal).getTopicality().getIntValue()).reversed())
+                .collect(Collectors.toList());
     }
 
     public void unattachGoal(Activity activity) {

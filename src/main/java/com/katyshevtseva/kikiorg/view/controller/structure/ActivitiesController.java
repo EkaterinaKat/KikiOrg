@@ -49,7 +49,7 @@ public class ActivitiesController implements SectionController {
         FxUtils.setComboBoxItems(statusComboBox, ActivityStatus.values(), ACTIVE);
         statusComboBox.setOnAction(event -> fillPane());
 
-        FxUtils.setComboBoxItems(goalComboBox, Core.getInstance().goalService().getAll());
+        FxUtils.setComboBoxItems(goalComboBox, Core.getInstance().goalService().getAllSortedByTitle());
         goalComboBox.setOnAction(event -> fillPane());
 
         clearGoalButton.setOnAction(event -> goalComboBox.setValue(null));
@@ -102,7 +102,7 @@ public class ActivitiesController implements SectionController {
         DcTextField titleField = new DcTextField(true, activity != null ? activity.getTitle() : "");
         DcTextArea descField = new DcTextArea(false, activity != null ? activity.getDescription() : "");
         DcComboBox<Goal> goalBox = new DcComboBox<>(true, activity != null ? activity.getGoal() : null,
-                Core.getInstance().goalService().getAll());
+                Core.getInstance().goalService().getAllSortedByTitle());
         DialogConstructor.constructDialog(() -> {
             Core.getInstance().structureService().save(activity, titleField.getValue(), descField.getValue(), goalBox.getValue());
             fillPane();
