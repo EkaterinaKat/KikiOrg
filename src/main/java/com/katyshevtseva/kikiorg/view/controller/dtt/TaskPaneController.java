@@ -1,13 +1,13 @@
-package com.katyshevtseva.kikiorg.view.controller.structure;
+package com.katyshevtseva.kikiorg.view.controller.dtt;
 
 import com.katyshevtseva.fx.Styler;
-import com.katyshevtseva.fx.WindowBuilder.FxController;
+import com.katyshevtseva.fx.WindowBuilder;
 import com.katyshevtseva.fx.dialog.StandardDialogBuilder;
 import com.katyshevtseva.fx.dialogconstructor.DcTextArea;
 import com.katyshevtseva.fx.dialogconstructor.DialogConstructor;
 import com.katyshevtseva.general.NoArgsKnob;
 import com.katyshevtseva.kikiorg.core.Core;
-import com.katyshevtseva.kikiorg.core.sections.structure.entity.Action;
+import com.katyshevtseva.kikiorg.core.sections.dtt.entity.DatelessTask;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.ContextMenu;
@@ -18,8 +18,8 @@ import javafx.scene.layout.HBox;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
-public class ActionPaneController implements FxController {
-    private final Action action;
+public class TaskPaneController implements WindowBuilder.FxController {
+    private final DatelessTask task;
     private final int blockWidth;
     private final NoArgsKnob contentUpdateKnob;
     @FXML
@@ -31,19 +31,19 @@ public class ActionPaneController implements FxController {
 
     @FXML
     private void initialize() {
-        tuneLabel(titleLabel, 18, action.getTitle());
-        tuneLabel(datesLabel, 12, action.getDatesInfo());
+        tuneLabel(titleLabel, 18, task.getTitle());
+        tuneLabel(datesLabel, 12, task.getDatesInfo());
         root.setOnContextMenuRequested(event -> showContextMenu(event, root));
     }
 
     private void showContextMenu(ContextMenuEvent event, Node node) {
         ContextMenu contextMenu = new ContextMenu();
 
-        if (action.getCompletionDate() == null) {
+        if (task.getCompletionDate() == null) {
             MenuItem doneItem = new MenuItem("Done");
             doneItem.setOnAction(event1 -> new StandardDialogBuilder().openQuestionDialog("Done?", b -> {
                 if (b) {
-                    Core.getInstance().actionService().done(action);
+                    Core.getInstance().dttTaskService().done(task);
                     contentUpdateKnob.execute();
                 }
             }));
@@ -52,9 +52,9 @@ public class ActionPaneController implements FxController {
 
         MenuItem editItem = new MenuItem("Edit");
         editItem.setOnAction(event1 -> {
-            DcTextArea titleField = new DcTextArea(true, action.getTitle());
+            DcTextArea titleField = new DcTextArea(true, task.getTitle());
             DialogConstructor.constructDialog(() -> {
-                Core.getInstance().actionService().edit(action, titleField.getValue());
+                Core.getInstance().dttTaskService().edit(task, titleField.getValue());
                 contentUpdateKnob.execute();
             }, titleField);
         });
@@ -63,7 +63,7 @@ public class ActionPaneController implements FxController {
         MenuItem deleteItem = new MenuItem("Delete");
         deleteItem.setOnAction(event1 -> new StandardDialogBuilder().openQuestionDialog("Delete?", b -> {
             if (b) {
-                Core.getInstance().actionService().delete(action);
+                Core.getInstance().dttTaskService().delete(task);
                 contentUpdateKnob.execute();
             }
         }));

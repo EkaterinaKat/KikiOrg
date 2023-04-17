@@ -14,7 +14,7 @@ import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Service
-public class StructureService {
+public class ActivityService {
     private final ActivityRepo activityRepo;
 
     public void save(Activity existing, String title, String desc, Goal goal) {
@@ -33,10 +33,6 @@ public class StructureService {
                 activityRepo.findByStatus(status) :
                 activityRepo.findByStatusAndGoal(status, goal);
         return activities.stream().sorted(Comparator.comparing(Activity::getTitle)).collect(Collectors.toList());
-    }
-
-    public List<Activity> getActivitiesForActionsSection() {
-        return activityRepo.findActivitiesThatHaveActions();
     }
 
     public void delete(Activity activity) {

@@ -11,7 +11,12 @@
             <GridPane fx:id="gridPane" hgap="10" vgap="10" maxWidth="270" minWidth="270"/>
         </ScrollPane>
         <Pane minHeight="20" maxHeight="20"/>
-        <Button fx:id="newActionButton" text="New action"/>
+        <HBox>
+            <Button fx:id="newSphereButton" text="New sphere"/>
+            <Pane maxWidth="10" minWidth="10"/>
+            <Button fx:id="newTaskButton" text="New task" visible="false"/>
+        </HBox>
+
     </VBox>
 
     <Pane maxWidth="20" minWidth="20"/>
@@ -22,4 +27,3 @@
         <Pane fx:id="donePane"/>
     </HBox>
 </HBox>
-

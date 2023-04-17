@@ -1,4 +1,4 @@
-package com.katyshevtseva.kikiorg.core.sections.structure.entity;
+package com.katyshevtseva.kikiorg.core.sections.dtt.entity;
 
 import com.katyshevtseva.kikiorg.core.date.DateEntity;
 import lombok.Data;
@@ -11,7 +11,7 @@ import static com.katyshevtseva.date.DateUtils.READABLE_DATE_FORMAT;
 @Data
 @Entity
 @NoArgsConstructor
-public class Action {
+public class DatelessTask {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
@@ -19,8 +19,8 @@ public class Action {
     private String title;
 
     @ManyToOne
-    @JoinColumn(name = "activity_id")
-    private Activity activity;
+    @JoinColumn(name = "sphere_id")
+    private Sphere sphere;
 
     @ManyToOne
     @JoinColumn(name = "creation_date_id")
@@ -29,6 +29,13 @@ public class Action {
     @ManyToOne
     @JoinColumn(name = "completion_date_id")
     private DateEntity completionDate;
+
+    public DatelessTask(String title, Sphere sphere, DateEntity creationDate, DateEntity completionDate) {
+        this.title = title;
+        this.sphere = sphere;
+        this.creationDate = creationDate;
+        this.completionDate = completionDate;
+    }
 
     public String getDatesInfo() {
         String result = String.format("Creation: %s", READABLE_DATE_FORMAT.format(creationDate.getValue()));

@@ -1,13 +1,14 @@
 package com.katyshevtseva.kikiorg.core;
 
+import com.katyshevtseva.kikiorg.core.sections.dtt.DttTaskService;
+import com.katyshevtseva.kikiorg.core.sections.dtt.SphereService;
 import com.katyshevtseva.kikiorg.core.sections.finance.*;
 import com.katyshevtseva.kikiorg.core.sections.finance.report.FinanceReportService;
 import com.katyshevtseva.kikiorg.core.sections.finance.report.ReportPeriodService;
 import com.katyshevtseva.kikiorg.core.sections.finance.search.FinanceSearchService;
 import com.katyshevtseva.kikiorg.core.sections.habits.*;
-import com.katyshevtseva.kikiorg.core.sections.structure.ActionService;
+import com.katyshevtseva.kikiorg.core.sections.structure.ActivityService;
 import com.katyshevtseva.kikiorg.core.sections.structure.GoalService;
-import com.katyshevtseva.kikiorg.core.sections.structure.StructureService;
 import com.katyshevtseva.kikiorg.core.sections.tracker.BoardSortService;
 import com.katyshevtseva.kikiorg.core.sections.tracker.TrackerService;
 import com.katyshevtseva.kikiorg.core.sections.wardrobe.PieceSeasonService;
@@ -39,13 +40,14 @@ public class Core implements InitializingBean {
     private final ReportPeriodService reportPeriodService;
     private final ItemHierarchyService itemHierarchyService;
     private final TransferService transferService;
-    private final StructureService structureService;
+    private final ActivityService activityService;
     private final AccountGroupService accountGroupService;
     private final AccountDeleteService accountDeleteService;
     private final ItemMergeService itemMergeService;
     private final PieceSeasonService pieceSeasonService;
     private final GoalService goalService;
-    private final ActionService actionService;
+    private final SphereService sphereService;
+    private final DttTaskService dttTaskService;
 
     public static Core getInstance() {
         while (INSTANCE == null) {
@@ -63,12 +65,16 @@ public class Core implements InitializingBean {
         INSTANCE = this;
     }
 
+    public DttTaskService dttTaskService() {
+        return dttTaskService;
+    }
+
     public GoalService goalService() {
         return goalService;
     }
 
-    public ActionService actionService() {
-        return actionService;
+    public SphereService sphereService() {
+        return sphereService;
     }
 
     public PieceSeasonService pieceSeasonService() {
@@ -159,7 +165,7 @@ public class Core implements InitializingBean {
         return itemHierarchyService;
     }
 
-    public StructureService structureService() {
-        return structureService;
+    public ActivityService activityService() {
+        return activityService;
     }
 }

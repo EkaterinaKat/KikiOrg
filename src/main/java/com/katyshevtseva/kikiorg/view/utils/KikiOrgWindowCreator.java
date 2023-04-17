@@ -37,22 +37,24 @@ public class KikiOrgWindowCreator {
     }
 
     public enum NodeInfo {
+        //DATELESS TASK TRACKER
+        MAIN_DTT(FXML_LOCATION, "section_main.fxml"),
+        DTT_TASKS(DTT_FXML_LOCATION, "tasks.fxml"),
+        DTT_TASK_PANE(DTT_FXML_LOCATION, "task_pane.fxml"),
         //STRUCTURE
-        ACTION_PANE(STRUCTURE_FXML_LOCATION, "action_pane.fxml"),
-        ACTIONS(STRUCTURE_FXML_LOCATION, "actions.fxml"),
         GOALS(STRUCTURE_FXML_LOCATION, "goals.fxml"),
         ACTIVITIES(STRUCTURE_FXML_LOCATION, "activities.fxml"),
-        MAIN_STRUCTURE(STRUCTURE_FXML_LOCATION, "main_structure.fxml"),
+        MAIN_STRUCTURE(FXML_LOCATION, "section_main.fxml"),
         //TRACKER
         TASK_PANE(TRACKER_FXML_LOCATION, "task_pane.fxml"),
         PROJECT(TRACKER_FXML_LOCATION, "project.fxml"),
         BOARD(TRACKER_FXML_LOCATION, "board.fxml"),
-        MAIN_TRACKER(TRACKER_FXML_LOCATION, "main_tracker.fxml"),
+        MAIN_TRACKER(FXML_LOCATION, "section_main.fxml"),
         //WARDROBE
         OUTFIT(WARDROBE_FXML_LOCATION, "outfit.fxml"),
         OUTFIT_GRID(WARDROBE_FXML_LOCATION, "outfit_grid.fxml"),
         PIECE(WARDROBE_FXML_LOCATION, "piece.fxml"),
-        MAIN_WARDROBE(WARDROBE_FXML_LOCATION, "main_wardrobe.fxml"),
+        MAIN_WARDROBE(FXML_LOCATION, "section_main.fxml"),
         WARDROBE_STATISTICS(WARDROBE_FXML_LOCATION, "statistics.fxml"),
         //FIN
         XXX(FIN_FXML_LOCATION, "xxx.fxml"),
@@ -69,14 +71,14 @@ public class KikiOrgWindowCreator {
         SCATTER_CHECK(FIN_FXML_LOCATION, "check/scatter_check.fxml"),
         REPLENISHMENT(FIN_FXML_LOCATION, "replenishment.fxml"),
         HUDDLE_CHECK(FIN_FXML_LOCATION, "check/huddle_check.fxml"),
-        MAIN_FIN(FIN_FXML_LOCATION, "main_finance.fxml"),
+        MAIN_FIN(FXML_LOCATION, "section_main.fxml"),
         //HABITS
         CRITERION(HABITS_FXML_LOCATION, "criterion.fxml"),
         HABIT_REPORT_TABLE(HABITS_FXML_LOCATION, "report_table.fxml"),
         HABIT_REPORT(HABITS_FXML_LOCATION, "report.fxml"),
         CHECK_LIST(HABITS_FXML_LOCATION, "check_list.fxml"),
         HABIT_ADMIN(HABITS_FXML_LOCATION, "admin.fxml"),
-        MAIN_HABIT(HABITS_FXML_LOCATION, "main_habits.fxml");
+        MAIN_HABIT(FXML_LOCATION, "section_main.fxml");
 
         private final String location;
         private final String fileName;

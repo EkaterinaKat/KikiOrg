@@ -1,4 +1,4 @@
-package com.katyshevtseva.kikiorg.view.controller.structure;
+package com.katyshevtseva.kikiorg.view.controller.dtt;
 
 import com.katyshevtseva.fx.FxUtils;
 import com.katyshevtseva.fx.switchcontroller.AbstractSwitchController;
@@ -12,11 +12,10 @@ import javafx.scene.layout.Pane;
 import java.util.Arrays;
 import java.util.List;
 
-import static com.katyshevtseva.kikiorg.view.utils.KikiOrgWindowCreator.NodeInfo.ACTIVITIES;
-import static com.katyshevtseva.kikiorg.view.utils.KikiOrgWindowCreator.NodeInfo.GOALS;
+import static com.katyshevtseva.kikiorg.view.utils.KikiOrgWindowCreator.NodeInfo.DTT_TASKS;
 import static com.katyshevtseva.kikiorg.view.utils.KikiOrgWindowCreator.windowCreator;
 
-public class MainStructureController extends AbstractSwitchController implements SectionController {
+public class MainDttController extends AbstractSwitchController implements SectionController {
     @FXML
     private Pane mainPane;
     @FXML
@@ -28,11 +27,8 @@ public class MainStructureController extends AbstractSwitchController implements
     }
 
     private List<Section> getSections() {
-        return Arrays.asList(
-                new Section("Activities", new ActivitiesController(),
-                        controller -> windowCreator().getNode(ACTIVITIES, controller)),
-                new Section("Goals", new GoalsController(),
-                        controller -> windowCreator().getNode(GOALS, controller)));
+        return Arrays.asList(new Section("Tasks", new DttTasksController(),
+                controller -> windowCreator().getNode(DTT_TASKS, controller)));
     }
 
     private void placeButton(Button button) {

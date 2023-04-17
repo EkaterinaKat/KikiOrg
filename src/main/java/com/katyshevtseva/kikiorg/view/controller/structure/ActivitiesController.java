@@ -63,7 +63,7 @@ public class ActivitiesController implements SectionController {
 
     private void fillPane() {
         gridPane.getChildren().clear();
-        List<Activity> activities = Core.getInstance().structureService()
+        List<Activity> activities = Core.getInstance().activityService()
                 .getActivities(statusComboBox.getValue(), goalComboBox.getValue());
 
         for (int i = 0; i < activities.size(); i++) {
@@ -104,7 +104,7 @@ public class ActivitiesController implements SectionController {
         DcComboBox<Goal> goalBox = new DcComboBox<>(true, activity != null ? activity.getGoal() : null,
                 Core.getInstance().goalService().getAllSortedByTitle());
         DialogConstructor.constructDialog(() -> {
-            Core.getInstance().structureService().save(activity, titleField.getValue(), descField.getValue(), goalBox.getValue());
+            Core.getInstance().activityService().save(activity, titleField.getValue(), descField.getValue(), goalBox.getValue());
             fillPane();
         }, titleField, descField, goalBox);
     }
@@ -118,7 +118,7 @@ public class ActivitiesController implements SectionController {
         MenuItem deleteItem = new MenuItem("Delete");
         deleteItem.setOnAction(event1 -> new StandardDialogBuilder().openQuestionDialog("Delete?", b -> {
             if (b) {
-                Core.getInstance().structureService().delete(activity);
+                Core.getInstance().activityService().delete(activity);
                 fillPane();
             }
         }));
@@ -126,7 +126,7 @@ public class ActivitiesController implements SectionController {
         if (activity.getStatus() == ACTIVE || activity.getStatus() == SUSPENDED) {
             MenuItem finishItem = new MenuItem("Finish");
             finishItem.setOnAction(event1 -> {
-                Core.getInstance().structureService().setStatus(activity, FINISHED);
+                Core.getInstance().activityService().setStatus(activity, FINISHED);
                 fillPane();
             });
             contextMenu.getItems().add(finishItem);
@@ -135,7 +135,7 @@ public class ActivitiesController implements SectionController {
         if (activity.getStatus() == FINISHED || activity.getStatus() == SUSPENDED) {
             MenuItem returnToWorkItem = new MenuItem("Return to work");
             returnToWorkItem.setOnAction(event1 -> {
-                Core.getInstance().structureService().setStatus(activity, ACTIVE);
+                Core.getInstance().activityService().setStatus(activity, ACTIVE);
                 fillPane();
             });
             contextMenu.getItems().add(returnToWorkItem);
@@ -144,7 +144,7 @@ public class ActivitiesController implements SectionController {
         if (activity.getStatus() == FINISHED || activity.getStatus() == ACTIVE) {
             MenuItem suspendItem = new MenuItem("Suspend");
             suspendItem.setOnAction(event1 -> {
-                Core.getInstance().structureService().setStatus(activity, SUSPENDED);
+                Core.getInstance().activityService().setStatus(activity, SUSPENDED);
                 fillPane();
             });
             contextMenu.getItems().add(suspendItem);
