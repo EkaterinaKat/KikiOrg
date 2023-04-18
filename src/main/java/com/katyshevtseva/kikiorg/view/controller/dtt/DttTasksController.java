@@ -123,9 +123,9 @@ public class DttTasksController implements SectionController {
 
         if (sphere != null) {
             todoListController.show(pageNum -> service.getTodoTasks(sphere, pageNum),
-                    ((task, integer) -> actionToNode(task, integer, sphere)));
+                    ((task, integer) -> taskToNode(task, integer, sphere)));
             doneListController.show(pageNum -> service.getDoneTasks(sphere, pageNum),
-                    ((task, integer) -> actionToNode(task, integer, sphere)));
+                    ((task, integer) -> taskToNode(task, integer, sphere)));
         } else {
             todoListController.clear();
             doneListController.clear();
@@ -162,7 +162,7 @@ public class DttTasksController implements SectionController {
             spherePointLabelMap.get(sphere).setText("* ");
     }
 
-    private Node actionToNode(DatelessTask task, int blockWidth, Sphere sphere) {
+    private Node taskToNode(DatelessTask task, int blockWidth, Sphere sphere) {
         return windowCreator().getNode(DTT_TASK_PANE,
                 new TaskPaneController(task, blockWidth, () -> selectSphere(sphere)));
     }

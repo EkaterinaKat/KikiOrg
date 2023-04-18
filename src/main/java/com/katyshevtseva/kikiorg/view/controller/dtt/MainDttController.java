@@ -12,7 +12,7 @@ import javafx.scene.layout.Pane;
 import java.util.Arrays;
 import java.util.List;
 
-import static com.katyshevtseva.kikiorg.view.utils.KikiOrgWindowCreator.NodeInfo.DTT_TASKS;
+import static com.katyshevtseva.kikiorg.view.utils.KikiOrgWindowCreator.NodeInfo.*;
 import static com.katyshevtseva.kikiorg.view.utils.KikiOrgWindowCreator.windowCreator;
 
 public class MainDttController extends AbstractSwitchController implements SectionController {
@@ -27,8 +27,13 @@ public class MainDttController extends AbstractSwitchController implements Secti
     }
 
     private List<Section> getSections() {
-        return Arrays.asList(new Section("Tasks", new DttTasksController(),
-                controller -> windowCreator().getNode(DTT_TASKS, controller)));
+        return Arrays.asList(
+                new Section("Tasks", new DttTasksController(),
+                        controller -> windowCreator().getNode(DTT_TASKS, controller)),
+                new Section("Oldest", new OldestController(),
+                        controller -> windowCreator().getNode(DTT_OLDEST, controller)),
+                new Section("Archive", new ArchiveController(),
+                        controller -> windowCreator().getNode(DTT_ARCHIVE, controller)));
     }
 
     private void placeButton(Button button) {

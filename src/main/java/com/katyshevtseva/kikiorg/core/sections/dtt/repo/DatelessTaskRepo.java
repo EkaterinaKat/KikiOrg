@@ -6,9 +6,13 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 
+import java.util.List;
+
 public interface DatelessTaskRepo extends JpaRepository<DatelessTask, Long> {
 
     Page<DatelessTask> findBySphereAndCompletionDateIsNull(Sphere sphere, Pageable pageable);
 
     Page<DatelessTask> findBySphereAndCompletionDateIsNotNull(Sphere sphere, Pageable pageable);
+
+    List<DatelessTask> getTop10ByCompletionDateIsNullAndSphereActiveIsTrueOrderByCreationDateAsc();
 }

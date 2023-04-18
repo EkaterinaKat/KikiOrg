@@ -44,4 +44,11 @@ public class DatelessTask {
         }
         return result;
     }
+
+    public String getLogString() {
+        return sphere.getTitle().toUpperCase() + ": " + title + "\n" +
+                " creationDate: " + READABLE_DATE_FORMAT.format(creationDate.getValue()) + "\n" +
+                " completionDate: " +
+                (completionDate != null ? READABLE_DATE_FORMAT.format(completionDate.getValue()) : "-");
+    }
 }

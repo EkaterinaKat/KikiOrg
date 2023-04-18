@@ -11,12 +11,14 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
+import java.util.List;
 
 @RequiredArgsConstructor
 @Service
 public class DttTaskService {
     private final DateService dateService;
     private final DatelessTaskRepo repo;
+    private final DttLogService logService;
 
     public void createTask(Sphere sphere, String title) {
         DatelessTask task = new DatelessTask();
@@ -32,6 +34,7 @@ public class DttTaskService {
     }
 
     public void delete(DatelessTask task) {
+        logService.saveDtDeletionLog(task);
         repo.delete(task);
     }
 
@@ -41,7 +44,7 @@ public class DttTaskService {
     }
 
     public Page<DatelessTask> getTodoTasks(Sphere sphere, int pageNum) {
-        PageRequest pageRequest = PageRequest.of(pageNum, 15, Sort.by("id").ascending());
+        PageRequest pageRequest = PageRequest.of(pageNum, 15, Sort.by("creationDate.value").ascending());
 
         org.springframework.data.domain.Page<DatelessTask> actionPage =
                 repo.findBySphereAndCompletionDateIsNull(sphere, pageRequest);
@@ -54,5 +57,9 @@ public class DttTaskService {
         org.springframework.data.domain.Page<DatelessTask> actionPage =
                 repo.findBySphereAndCompletionDateIsNotNull(sphere, pageRequest);
         return new Page<>(actionPage.getContent(), pageNum, actionPage.getTotalPages());
+    }
+
+    public List<DatelessTask> getOldestTasks() {
+        return repo.getTop10ByCompletionDateIsNullAndSphereActiveIsTrueOrderByCreationDateAsc();
     }
 }
