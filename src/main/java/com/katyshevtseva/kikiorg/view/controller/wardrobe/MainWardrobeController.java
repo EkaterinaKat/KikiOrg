@@ -1,6 +1,7 @@
 package com.katyshevtseva.kikiorg.view.controller.wardrobe;
 
 import com.katyshevtseva.fx.FxUtils;
+import com.katyshevtseva.fx.WindowBuilder;
 import com.katyshevtseva.fx.switchcontroller.AbstractSwitchController;
 import com.katyshevtseva.fx.switchcontroller.Section;
 import com.katyshevtseva.fx.switchcontroller.SectionController;
@@ -12,8 +13,7 @@ import javafx.scene.layout.Pane;
 import java.util.Arrays;
 import java.util.List;
 
-import static com.katyshevtseva.kikiorg.view.utils.KikiOrgWindowCreator.NodeInfo.*;
-import static com.katyshevtseva.kikiorg.view.utils.KikiOrgWindowCreator.windowCreator;
+import static com.katyshevtseva.kikiorg.view.utils.KikiOrgWindowUtil.OrgNodeInfo.*;
 
 public class MainWardrobeController extends AbstractSwitchController implements SectionController {
     @FXML
@@ -29,11 +29,11 @@ public class MainWardrobeController extends AbstractSwitchController implements 
     private List<Section> getSections() {
         return Arrays.asList(
                 new Section("Statistics", new StatisticsController(),
-                        controller -> windowCreator().getNode(WARDROBE_STATISTICS, controller)),
+                        controller -> WindowBuilder.getNode(WARDROBE_STATISTICS, controller)),
                 new Section("Pieces", new PieceController(),
-                        controller -> windowCreator().getNode(PIECE, controller)),
+                        controller -> WindowBuilder.getNode(PIECE, controller)),
                 new Section("Outfits", new OutfitController(),
-                        controller -> windowCreator().getNode(OUTFIT, controller)));
+                        controller -> WindowBuilder.getNode(OUTFIT, controller)));
     }
 
     private void placeButton(Button button) {

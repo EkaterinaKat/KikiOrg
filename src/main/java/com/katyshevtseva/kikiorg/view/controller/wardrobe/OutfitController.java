@@ -1,6 +1,7 @@
 package com.katyshevtseva.kikiorg.view.controller.wardrobe;
 
 import com.katyshevtseva.fx.FxUtils;
+import com.katyshevtseva.fx.WindowBuilder;
 import com.katyshevtseva.fx.switchcontroller.SectionController;
 import com.katyshevtseva.general.Page;
 import com.katyshevtseva.kikiorg.core.Core;
@@ -13,9 +14,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.layout.Pane;
 
-import static com.katyshevtseva.kikiorg.view.utils.KikiOrgWindowCreator.DialogInfo.OUTFIT;
-import static com.katyshevtseva.kikiorg.view.utils.KikiOrgWindowCreator.NodeInfo.OUTFIT_GRID;
-import static com.katyshevtseva.kikiorg.view.utils.KikiOrgWindowCreator.windowCreator;
+import static com.katyshevtseva.kikiorg.view.utils.KikiOrgWindowUtil.OrgDialogInfo.OUTFIT;
+import static com.katyshevtseva.kikiorg.view.utils.KikiOrgWindowUtil.OrgNodeInfo.OUTFIT_GRID;
 
 class OutfitController implements SectionController {
     private final WardrobeService service = Core.getInstance().wardrobeService();
@@ -33,10 +33,10 @@ class OutfitController implements SectionController {
 
     @FXML
     private void initialize() {
-        outfitCreateButton.setOnAction(event -> windowCreator().openDialog(OUTFIT,
+        outfitCreateButton.setOnAction(event -> WindowBuilder.openDialog(OUTFIT,
                 new OutfitDialogController(null, outfit -> gridController.loadPage())));
         tuneFilters();
-        outfitGridContainer.getChildren().add(windowCreator().getNode(OUTFIT_GRID, gridController));
+        outfitGridContainer.getChildren().add(WindowBuilder.getNode(OUTFIT_GRID, gridController));
     }
 
     Page<Outfit> getOutfitPage(int pageNum) {

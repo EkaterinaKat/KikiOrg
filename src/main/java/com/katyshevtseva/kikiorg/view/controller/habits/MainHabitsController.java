@@ -1,6 +1,7 @@
 package com.katyshevtseva.kikiorg.view.controller.habits;
 
 import com.katyshevtseva.fx.FxUtils;
+import com.katyshevtseva.fx.WindowBuilder;
 import com.katyshevtseva.fx.switchcontroller.AbstractSwitchController;
 import com.katyshevtseva.fx.switchcontroller.Section;
 import com.katyshevtseva.fx.switchcontroller.SectionController;
@@ -12,8 +13,7 @@ import javafx.scene.layout.Pane;
 import java.util.Arrays;
 import java.util.List;
 
-import static com.katyshevtseva.kikiorg.view.utils.KikiOrgWindowCreator.NodeInfo.*;
-import static com.katyshevtseva.kikiorg.view.utils.KikiOrgWindowCreator.windowCreator;
+import static com.katyshevtseva.kikiorg.view.utils.KikiOrgWindowUtil.OrgNodeInfo.*;
 
 public class MainHabitsController extends AbstractSwitchController implements SectionController {
     @FXML
@@ -29,13 +29,13 @@ public class MainHabitsController extends AbstractSwitchController implements Se
     private List<Section> getSections() {
         return Arrays.asList(
                 new Section("Check list", new CheckListController(),
-                        controller -> windowCreator().getNode(CHECK_LIST, controller)),
+                        controller -> WindowBuilder.getNode(CHECK_LIST, controller)),
                 new Section("Admin", new AdminController(),
-                        controller -> windowCreator().getNode(HABIT_ADMIN, controller)),
+                        controller -> WindowBuilder.getNode(HABIT_ADMIN, controller)),
                 new Section("Report", new ReportController(),
-                        controller -> windowCreator().getNode(HABIT_REPORT, controller)),
+                        controller -> WindowBuilder.getNode(HABIT_REPORT, controller)),
                 new Section("Criterion", new CriterionController(),
-                        controller -> windowCreator().getNode(CRITERION, controller)));
+                        controller -> WindowBuilder.getNode(CRITERION, controller)));
     }
 
     private void placeButton(Button button) {

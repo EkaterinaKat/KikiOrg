@@ -1,6 +1,7 @@
 package com.katyshevtseva.kikiorg.view.controller.dtt;
 
 import com.katyshevtseva.fx.FxUtils;
+import com.katyshevtseva.fx.WindowBuilder;
 import com.katyshevtseva.fx.switchcontroller.AbstractSwitchController;
 import com.katyshevtseva.fx.switchcontroller.Section;
 import com.katyshevtseva.fx.switchcontroller.SectionController;
@@ -12,8 +13,7 @@ import javafx.scene.layout.Pane;
 import java.util.Arrays;
 import java.util.List;
 
-import static com.katyshevtseva.kikiorg.view.utils.KikiOrgWindowCreator.NodeInfo.*;
-import static com.katyshevtseva.kikiorg.view.utils.KikiOrgWindowCreator.windowCreator;
+import static com.katyshevtseva.kikiorg.view.utils.KikiOrgWindowUtil.OrgNodeInfo.*;
 
 public class MainDttController extends AbstractSwitchController implements SectionController {
     @FXML
@@ -29,11 +29,11 @@ public class MainDttController extends AbstractSwitchController implements Secti
     private List<Section> getSections() {
         return Arrays.asList(
                 new Section("Tasks", new DttTasksController(),
-                        controller -> windowCreator().getNode(DTT_TASKS, controller)),
+                        controller -> WindowBuilder.getNode(DTT_TASKS, controller)),
                 new Section("Oldest", new OldestController(),
-                        controller -> windowCreator().getNode(DTT_OLDEST, controller)),
+                        controller -> WindowBuilder.getNode(DTT_OLDEST, controller)),
                 new Section("Archive", new ArchiveController(),
-                        controller -> windowCreator().getNode(DTT_ARCHIVE, controller)));
+                        controller -> WindowBuilder.getNode(DTT_ARCHIVE, controller)));
     }
 
     private void placeButton(Button button) {

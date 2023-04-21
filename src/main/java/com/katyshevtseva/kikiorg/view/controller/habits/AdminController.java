@@ -1,6 +1,7 @@
 package com.katyshevtseva.kikiorg.view.controller.habits;
 
 import com.katyshevtseva.fx.Styler;
+import com.katyshevtseva.fx.WindowBuilder;
 import com.katyshevtseva.fx.dialog.StandardDialogBuilder;
 import com.katyshevtseva.fx.switchcontroller.SectionController;
 import com.katyshevtseva.kikiorg.core.Core;
@@ -18,8 +19,7 @@ import java.util.Map;
 import static com.katyshevtseva.fx.Styler.StandardColor.GRAY;
 import static com.katyshevtseva.fx.Styler.StandardColor.GREEN;
 import static com.katyshevtseva.fx.Styler.ThingToColor.TEXT;
-import static com.katyshevtseva.kikiorg.view.utils.KikiOrgWindowCreator.DialogInfo.HABIT;
-import static com.katyshevtseva.kikiorg.view.utils.KikiOrgWindowCreator.windowCreator;
+import static com.katyshevtseva.kikiorg.view.utils.KikiOrgWindowUtil.OrgDialogInfo.HABIT;
 
 class AdminController implements SectionController {
     @FXML
@@ -72,7 +72,7 @@ class AdminController implements SectionController {
 
         habitIdPointLabelMap.values().forEach(label -> label.setText(""));
         habitIdPointLabelMap.get(habit.getId()).setText("* ");
-        editButton.setOnAction(event1 -> windowCreator().openDialog(HABIT,
+        editButton.setOnAction(event1 -> WindowBuilder.openDialog(HABIT,
                 new HabitDialogController(habit, savedHabit -> {
                     fillHabitTable();
                     showHabit(savedHabit);
@@ -81,7 +81,7 @@ class AdminController implements SectionController {
     }
 
     private void createHabit() {
-        windowCreator().openDialog(HABIT,
+        WindowBuilder.openDialog(HABIT,
                 new HabitDialogController(null, savedHabit -> {
                     fillHabitTable();
                     showHabit(savedHabit);

@@ -1,13 +1,13 @@
 package com.katyshevtseva.kikiorg.view.controller.finance;
 
+import com.katyshevtseva.fx.WindowBuilder;
 import com.katyshevtseva.fx.switchcontroller.SectionController;
 import com.katyshevtseva.kikiorg.core.Core;
 import com.katyshevtseva.kikiorg.core.sections.finance.FinanceOperationService;
 import javafx.fxml.FXML;
 import javafx.scene.layout.Pane;
 
-import static com.katyshevtseva.kikiorg.view.utils.KikiOrgWindowCreator.NodeInfo.*;
-import static com.katyshevtseva.kikiorg.view.utils.KikiOrgWindowCreator.windowCreator;
+import static com.katyshevtseva.kikiorg.view.utils.KikiOrgWindowUtil.OrgNodeInfo.*;
 
 class LedgerController implements SectionController {
     private final FinanceOperationService service = Core.getInstance().financeOperationService();
@@ -36,32 +36,32 @@ class LedgerController implements SectionController {
     @FXML
     private void initialize() {
         checkController = new CheckController();
-        checkPane.getChildren().add(windowCreator().getNode(FIN_CHECK, checkController));
+        checkPane.getChildren().add(WindowBuilder.getNode(FIN_CHECK, checkController));
 
         historyTableController =
                 new HistoryTableController(service.getLastWeekOperations(), checkController::updateTable);
-        historyTablePane.getChildren().add(windowCreator().getNode(FIN_HISTORY_TABLE, historyTableController));
+        historyTablePane.getChildren().add(WindowBuilder.getNode(FIN_HISTORY_TABLE, historyTableController));
 
         replenishmentController = new ReplenishmentController(() -> {
             checkController.updateTable();
             historyTableController.setTableContent(service.getLastWeekOperations());
         });
-        replenishmentPane.getChildren().add(windowCreator().getNode(REPLENISHMENT, replenishmentController));
+        replenishmentPane.getChildren().add(WindowBuilder.getNode(REPLENISHMENT, replenishmentController));
 
         expenseController = new ExpenseController(() -> {
             checkController.updateTable();
             historyTableController.setTableContent(service.getLastWeekOperations());
         });
-        expensePane.getChildren().add(windowCreator().getNode(EXPENSE, expenseController));
+        expensePane.getChildren().add(WindowBuilder.getNode(EXPENSE, expenseController));
 
         transferController = new TransferController(() -> {
             checkController.updateTable();
             historyTableController.setTableContent(service.getLastWeekOperations());
         });
-        transferPane.getChildren().add(windowCreator().getNode(TRANSFER, transferController));
+        transferPane.getChildren().add(WindowBuilder.getNode(TRANSFER, transferController));
 
-        scatterPane.getChildren().add(windowCreator().getNode(SCATTER_CHECK, new ScatterCheckController()));
-        huddlePane.getChildren().add(windowCreator().getNode(HUDDLE_CHECK, new HuddleCheckController()));
+        scatterPane.getChildren().add(WindowBuilder.getNode(SCATTER_CHECK, new ScatterCheckController()));
+        huddlePane.getChildren().add(WindowBuilder.getNode(HUDDLE_CHECK, new HuddleCheckController()));
     }
 
     @Override

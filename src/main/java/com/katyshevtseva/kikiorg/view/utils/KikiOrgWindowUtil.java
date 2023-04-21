@@ -4,21 +4,15 @@ import com.katyshevtseva.fx.Size;
 import com.katyshevtseva.fx.WindowBuilder;
 import com.katyshevtseva.fx.WindowBuilder.FxController;
 import com.katyshevtseva.kikiorg.core.CoreConstants;
-import javafx.scene.Node;
+import lombok.Getter;
 
 import static com.katyshevtseva.kikiorg.view.utils.ViewConstants.*;
 
-public class KikiOrgWindowCreator {
-    private static final KikiOrgWindowCreator INSTANCE = new KikiOrgWindowCreator();
+public class KikiOrgWindowUtil {
 
-    private KikiOrgWindowCreator() {
-    }
-
-    public static KikiOrgWindowCreator windowCreator() {
-        return INSTANCE;
-    }
-
-    public void openMainWindow(FxController controller) {
+    // Не можем использовать WindowBuilder.openDialog так как пока это приложение работает на SpringBoot
+    // и нам обязательно нужно прописывать setOnWindowCloseEventHandler(event -> System.exit(0))
+    public static void openMainWindow(FxController controller) {
         new WindowBuilder(FXML_LOCATION + "main.fxml").
                 setController(controller)
                 .setSize(WINDOW_SIZE)
@@ -26,17 +20,7 @@ public class KikiOrgWindowCreator {
                 setOnWindowCloseEventHandler(event -> System.exit(0)).showWindow();
     }
 
-    public Node getNode(NodeInfo nodeInfo, FxController controller) {
-        return new WindowBuilder(nodeInfo.getFullFileName()).setController(controller).getNode();
-    }
-
-    public void openDialog(DialogInfo dialogInfo, FxController controller) {
-        new WindowBuilder(dialogInfo.getFullFileName())
-                .setController(controller).setSize(dialogInfo.size)
-                .setTitle(dialogInfo.title).showWindow();
-    }
-
-    public enum NodeInfo {
+    public enum OrgNodeInfo implements WindowBuilder.NodeInfo {
         //DATELESS TASK TRACKER
         MAIN_DTT(FXML_LOCATION, "section_main.fxml"),
         DTT_TASKS(DTT_FXML_LOCATION, "tasks.fxml"),
@@ -85,7 +69,7 @@ public class KikiOrgWindowCreator {
         private final String location;
         private final String fileName;
 
-        NodeInfo(String location, String fileName) {
+        OrgNodeInfo(String location, String fileName) {
             this.location = location;
             this.fileName = fileName;
         }
@@ -95,7 +79,7 @@ public class KikiOrgWindowCreator {
         }
     }
 
-    public enum DialogInfo {
+    public enum OrgDialogInfo implements WindowBuilder.DialogInfo {
         PROJECT(TRACKER_FXML_LOCATION, "project_dialog.fxml", new Size(500, 480), CoreConstants.APP_NAME),
         OUTFIT(WARDROBE_FXML_LOCATION, "outfit_dialog.fxml", new Size(1000, 1200), CoreConstants.APP_NAME),
         PIECE(WARDROBE_FXML_LOCATION, "piece_dialog.fxml", new Size(700, 800), CoreConstants.APP_NAME),
@@ -104,10 +88,12 @@ public class KikiOrgWindowCreator {
 
         private final String location;
         private final String fileName;
+        @Getter
         private final Size size;
+        @Getter
         private final String title;
 
-        DialogInfo(String location, String fileName, Size size, String title) {
+        OrgDialogInfo(String location, String fileName, Size size, String title) {
             this.location = location;
             this.fileName = fileName;
             this.size = size;

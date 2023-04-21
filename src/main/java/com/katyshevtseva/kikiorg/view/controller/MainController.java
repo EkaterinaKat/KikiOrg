@@ -2,6 +2,7 @@ package com.katyshevtseva.kikiorg.view.controller;
 
 import com.katyshevtseva.fx.FxImageCreationUtil;
 import com.katyshevtseva.fx.FxUtils;
+import com.katyshevtseva.fx.WindowBuilder;
 import com.katyshevtseva.fx.WindowBuilder.FxController;
 import com.katyshevtseva.fx.switchcontroller.AbstractSwitchController;
 import com.katyshevtseva.fx.switchcontroller.Section;
@@ -21,8 +22,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import static com.katyshevtseva.fx.FxImageCreationUtil.getIcon;
-import static com.katyshevtseva.kikiorg.view.utils.KikiOrgWindowCreator.NodeInfo.*;
-import static com.katyshevtseva.kikiorg.view.utils.KikiOrgWindowCreator.windowCreator;
+import static com.katyshevtseva.kikiorg.view.utils.KikiOrgWindowUtil.OrgNodeInfo.*;
 
 public class MainController extends AbstractSwitchController implements FxController {
     @FXML
@@ -41,17 +41,17 @@ public class MainController extends AbstractSwitchController implements FxContro
     private List<Section> getSections() {
         return Arrays.asList(
                 new Section("Finance", new MainFinanceController(),
-                        controller -> windowCreator().getNode(MAIN_FIN, controller)),
+                        controller -> WindowBuilder.getNode(MAIN_FIN, controller)),
                 new Section("Habits", new MainHabitsController(),
-                        controller -> windowCreator().getNode(MAIN_HABIT, controller)),
+                        controller -> WindowBuilder.getNode(MAIN_HABIT, controller)),
                 new Section("Wardrobe", new MainWardrobeController(),
-                        controller -> windowCreator().getNode(MAIN_WARDROBE, controller)),
+                        controller -> WindowBuilder.getNode(MAIN_WARDROBE, controller)),
                 new Section("Tracker", new MainTrackerController(),
-                        controller -> windowCreator().getNode(MAIN_TRACKER, controller)),
+                        controller -> WindowBuilder.getNode(MAIN_TRACKER, controller)),
                 new Section("Structure", new MainStructureController(),
-                        controller -> windowCreator().getNode(MAIN_STRUCTURE, controller)),
+                        controller -> WindowBuilder.getNode(MAIN_STRUCTURE, controller)),
                 new Section("DTT", new MainDttController(),
-                        controller -> windowCreator().getNode(MAIN_DTT, controller)));
+                        controller -> WindowBuilder.getNode(MAIN_DTT, controller)));
     }
 
     private void placeButton(Button button) {

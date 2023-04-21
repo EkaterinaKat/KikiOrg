@@ -4,6 +4,7 @@ import com.katyshevtseva.fx.FxImageCreationUtil;
 import com.katyshevtseva.fx.FxImageCreationUtil.IconPicture;
 import com.katyshevtseva.fx.FxUtils;
 import com.katyshevtseva.fx.Size;
+import com.katyshevtseva.fx.WindowBuilder;
 import com.katyshevtseva.fx.component.ComponentBuilder;
 import com.katyshevtseva.fx.component.ComponentBuilder.Component;
 import com.katyshevtseva.fx.component.controller.GalleryController;
@@ -32,9 +33,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static com.katyshevtseva.fx.ImageSizeUtil.placeImageInSquare;
-import static com.katyshevtseva.kikiorg.view.utils.KikiOrgWindowCreator.DialogInfo.PIECE;
-import static com.katyshevtseva.kikiorg.view.utils.KikiOrgWindowCreator.NodeInfo.OUTFIT_GRID;
-import static com.katyshevtseva.kikiorg.view.utils.KikiOrgWindowCreator.windowCreator;
+import static com.katyshevtseva.kikiorg.view.utils.KikiOrgWindowUtil.OrgDialogInfo.PIECE;
+import static com.katyshevtseva.kikiorg.view.utils.KikiOrgWindowUtil.OrgNodeInfo.OUTFIT_GRID;
 import static com.katyshevtseva.kikiorg.view.utils.ViewConstants.CLOTHES_TYPE_SELECT_DIALOG_SIZE;
 
 class PieceController implements SectionController {
@@ -72,7 +72,7 @@ class PieceController implements SectionController {
         filterComboBox.setOnAction(event -> paginationPaneController.loadPage());
         tunePiecesGallery();
         pieceCreateButton.setOnAction(event ->
-                windowCreator().openDialog(PIECE,
+                WindowBuilder.openDialog(PIECE,
                         new PieceDialogController(null, piece -> {
                             paginationPaneController.loadPage();
                             showPieceFullInfo(piece);
@@ -121,10 +121,10 @@ class PieceController implements SectionController {
         showOutfitsButton.setOnAction(event -> {
             OutfitGridController outfitGridController = new OutfitGridController(pageNum -> service.getOutfitsByPiece(pageNum, piece));
             new StandardDialogBuilder().setSize(920, 1200).openNodeContainerDialog(
-                    windowCreator().getNode(OUTFIT_GRID, outfitGridController));
+                    WindowBuilder.getNode(OUTFIT_GRID, outfitGridController));
         });
         editButton.setOnAction(event ->
-                windowCreator().openDialog(PIECE,
+                WindowBuilder.openDialog(PIECE,
                         new PieceDialogController(piece, savedPiece -> {
                             paginationPaneController.loadPage();
                             showPieceFullInfo(savedPiece);
@@ -211,6 +211,9 @@ class PieceController implements SectionController {
                 break;
             case DS:
                 iconPicture = IconPicture.AUTUMN;
+                break;
+            case N:
+                return null;
         }
 
         return new ImageView(FxImageCreationUtil.getIcon(iconPicture));

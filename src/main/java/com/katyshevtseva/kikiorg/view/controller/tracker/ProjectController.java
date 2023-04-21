@@ -2,6 +2,7 @@ package com.katyshevtseva.kikiorg.view.controller.tracker;
 
 import com.katyshevtseva.fx.Styler;
 import com.katyshevtseva.fx.TableUtils;
+import com.katyshevtseva.fx.WindowBuilder;
 import com.katyshevtseva.fx.switchcontroller.SectionController;
 import com.katyshevtseva.kikiorg.core.Core;
 import com.katyshevtseva.kikiorg.core.sections.tracker.entity.ColorEntity;
@@ -18,8 +19,7 @@ import javafx.util.Callback;
 import static com.katyshevtseva.fx.Styler.StandardColor.BLACK;
 import static com.katyshevtseva.fx.Styler.ThingToColor.BACKGROUND;
 import static com.katyshevtseva.fx.Styler.ThingToColor.TABLE_TEXT;
-import static com.katyshevtseva.kikiorg.view.utils.KikiOrgWindowCreator.DialogInfo.PROJECT;
-import static com.katyshevtseva.kikiorg.view.utils.KikiOrgWindowCreator.windowCreator;
+import static com.katyshevtseva.kikiorg.view.utils.KikiOrgWindowUtil.OrgDialogInfo.PROJECT;
 
 class ProjectController implements SectionController {
     @FXML
@@ -41,7 +41,7 @@ class ProjectController implements SectionController {
         setRowsColors();
         fillTable();
         addProjectButton.setOnAction(event ->
-                windowCreator().openDialog(PROJECT, new ProjectDialogController(this::fillTable, null)));
+                WindowBuilder.openDialog(PROJECT, new ProjectDialogController(this::fillTable, null)));
     }
 
     private void fillTable() {
@@ -64,7 +64,7 @@ class ProjectController implements SectionController {
             return cell;
         });
         TableUtils.adjustButtonColumn(editColumn, "Edit", (project) ->
-                windowCreator().openDialog(PROJECT, new ProjectDialogController(this::fillTable, project)));
+                WindowBuilder.openDialog(PROJECT, new ProjectDialogController(this::fillTable, project)));
     }
 
     private void setRowsColors() {

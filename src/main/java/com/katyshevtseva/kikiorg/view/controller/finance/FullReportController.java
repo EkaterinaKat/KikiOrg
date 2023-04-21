@@ -2,6 +2,7 @@ package com.katyshevtseva.kikiorg.view.controller.finance;
 
 import com.katyshevtseva.fx.FxUtils;
 import com.katyshevtseva.fx.Styler;
+import com.katyshevtseva.fx.WindowBuilder;
 import com.katyshevtseva.fx.WindowBuilder.FxController;
 import com.katyshevtseva.fx.dialog.StandardDialogBuilder;
 import com.katyshevtseva.fx.dialogconstructor.DcCheckBoxGroup;
@@ -30,8 +31,7 @@ import static com.katyshevtseva.fx.FxUtils.getPaneWithHeight;
 import static com.katyshevtseva.fx.FxUtils.getPeriod;
 import static com.katyshevtseva.general.GeneralUtils.getColumnByIndexAndColumnNum;
 import static com.katyshevtseva.general.GeneralUtils.getRowByIndexAndColumnNum;
-import static com.katyshevtseva.kikiorg.view.utils.KikiOrgWindowCreator.NodeInfo.REPORT_PANE;
-import static com.katyshevtseva.kikiorg.view.utils.KikiOrgWindowCreator.windowCreator;
+import static com.katyshevtseva.kikiorg.view.utils.KikiOrgWindowUtil.OrgNodeInfo.REPORT_PANE;
 
 class FullReportController implements FxController {
     private static final int NUM_OF_COLUMNS_IN_PERIOD_GRID = 3;
@@ -67,8 +67,8 @@ class FullReportController implements FxController {
         showButton.setOnAction(event -> showReport());
         FxUtils.associateButtonWithControls(showButton, startDatePicker, endDatePicker);
 
-        incomePane.getChildren().add(windowCreator().getNode(REPORT_PANE, incomePaneController));
-        outgoPane.getChildren().add(windowCreator().getNode(REPORT_PANE, outgoPaneController));
+        incomePane.getChildren().add(WindowBuilder.getNode(REPORT_PANE, incomePaneController));
+        outgoPane.getChildren().add(WindowBuilder.getNode(REPORT_PANE, outgoPaneController));
     }
 
     private void showReport() {

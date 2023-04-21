@@ -1,5 +1,6 @@
 package com.katyshevtseva.kikiorg.view.controller.dtt;
 
+import com.katyshevtseva.fx.WindowBuilder;
 import com.katyshevtseva.fx.switchcontroller.SectionController;
 import com.katyshevtseva.kikiorg.core.Core;
 import com.katyshevtseva.kikiorg.core.sections.dtt.entity.DatelessTask;
@@ -13,8 +14,7 @@ import java.util.List;
 
 import static com.katyshevtseva.fx.FxUtils.getPaneWithHeight;
 import static com.katyshevtseva.fx.FxUtils.getPaneWithWidth;
-import static com.katyshevtseva.kikiorg.view.utils.KikiOrgWindowCreator.NodeInfo.DTT_TASK_PANE;
-import static com.katyshevtseva.kikiorg.view.utils.KikiOrgWindowCreator.windowCreator;
+import static com.katyshevtseva.kikiorg.view.utils.KikiOrgWindowUtil.OrgNodeInfo.DTT_TASK_PANE;
 
 public class OldestController implements SectionController {
     private static final int NUM_OF_COLUMNS = 3;
@@ -47,6 +47,6 @@ public class OldestController implements SectionController {
     }
 
     private Node taskToNode(DatelessTask task) {
-        return windowCreator().getNode(DTT_TASK_PANE, new TaskPaneController(task, BLOCK_WIDTH, this::setContent));
+        return WindowBuilder.getNode(DTT_TASK_PANE, new TaskPaneController(task, BLOCK_WIDTH, this::setContent));
     }
 }

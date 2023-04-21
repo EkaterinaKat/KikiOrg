@@ -1,6 +1,7 @@
 package com.katyshevtseva.kikiorg.view.controller.structure;
 
 import com.katyshevtseva.fx.FxUtils;
+import com.katyshevtseva.fx.WindowBuilder;
 import com.katyshevtseva.fx.switchcontroller.AbstractSwitchController;
 import com.katyshevtseva.fx.switchcontroller.Section;
 import com.katyshevtseva.fx.switchcontroller.SectionController;
@@ -12,9 +13,8 @@ import javafx.scene.layout.Pane;
 import java.util.Arrays;
 import java.util.List;
 
-import static com.katyshevtseva.kikiorg.view.utils.KikiOrgWindowCreator.NodeInfo.ACTIVITIES;
-import static com.katyshevtseva.kikiorg.view.utils.KikiOrgWindowCreator.NodeInfo.GOALS;
-import static com.katyshevtseva.kikiorg.view.utils.KikiOrgWindowCreator.windowCreator;
+import static com.katyshevtseva.kikiorg.view.utils.KikiOrgWindowUtil.OrgNodeInfo.ACTIVITIES;
+import static com.katyshevtseva.kikiorg.view.utils.KikiOrgWindowUtil.OrgNodeInfo.GOALS;
 
 public class MainStructureController extends AbstractSwitchController implements SectionController {
     @FXML
@@ -30,9 +30,9 @@ public class MainStructureController extends AbstractSwitchController implements
     private List<Section> getSections() {
         return Arrays.asList(
                 new Section("Activities", new ActivitiesController(),
-                        controller -> windowCreator().getNode(ACTIVITIES, controller)),
+                        controller -> WindowBuilder.getNode(ACTIVITIES, controller)),
                 new Section("Goals", new GoalsController(),
-                        controller -> windowCreator().getNode(GOALS, controller)));
+                        controller -> WindowBuilder.getNode(GOALS, controller)));
     }
 
     private void placeButton(Button button) {

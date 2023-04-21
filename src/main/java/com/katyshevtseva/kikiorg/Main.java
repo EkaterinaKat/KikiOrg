@@ -8,7 +8,7 @@ import javafx.stage.Stage;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-import static com.katyshevtseva.kikiorg.view.utils.KikiOrgWindowCreator.windowCreator;
+import static com.katyshevtseva.kikiorg.view.utils.KikiOrgWindowUtil.openMainWindow;
 
 @SpringBootApplication
 public class Main extends Application {
@@ -22,6 +22,6 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) {
         FxController mainController = new MainController();
-        windowCreator().openMainWindow(mainController);
+        openMainWindow(mainController);
     }
 }

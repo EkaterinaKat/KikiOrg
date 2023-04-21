@@ -1,6 +1,7 @@
 package com.katyshevtseva.kikiorg.view.controller.habits;
 
 import com.katyshevtseva.date.DateUtils.TimeUnit;
+import com.katyshevtseva.fx.WindowBuilder;
 import com.katyshevtseva.fx.switchcontroller.SectionController;
 import com.katyshevtseva.kikiorg.core.Core;
 import com.katyshevtseva.kikiorg.core.sections.habits.entity.Habit;
@@ -25,8 +26,7 @@ import java.util.List;
 
 import static com.katyshevtseva.date.DateUtils.shiftDate;
 import static com.katyshevtseva.fx.FxUtils.associateButtonWithControls;
-import static com.katyshevtseva.kikiorg.view.utils.KikiOrgWindowCreator.NodeInfo.HABIT_REPORT_TABLE;
-import static com.katyshevtseva.kikiorg.view.utils.KikiOrgWindowCreator.windowCreator;
+import static com.katyshevtseva.kikiorg.view.utils.KikiOrgWindowUtil.OrgNodeInfo.HABIT_REPORT_TABLE;
 
 class ReportController implements SectionController {
     @FXML
@@ -49,7 +49,7 @@ class ReportController implements SectionController {
     @FXML
     private void initialize() {
         tableController = new ReportTableController();
-        tablePane.getChildren().add(windowCreator().getNode(HABIT_REPORT_TABLE, tableController));
+        tablePane.getChildren().add(WindowBuilder.getNode(HABIT_REPORT_TABLE, tableController));
 
         selectedHabits = new ArrayList<>();
         showButton.setOnAction(event -> showReport());

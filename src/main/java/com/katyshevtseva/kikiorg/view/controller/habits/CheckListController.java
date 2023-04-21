@@ -1,5 +1,6 @@
 package com.katyshevtseva.kikiorg.view.controller.habits;
 
+import com.katyshevtseva.fx.WindowBuilder;
 import com.katyshevtseva.fx.dialog.StandardDialogBuilder;
 import com.katyshevtseva.fx.switchcontroller.SectionController;
 import com.katyshevtseva.kikiorg.core.Core;
@@ -24,8 +25,7 @@ import static com.katyshevtseva.fx.FxUtils.*;
 import static com.katyshevtseva.fx.Styler.ThingToColor.TEXT;
 import static com.katyshevtseva.fx.Styler.getColorfullStyle;
 import static com.katyshevtseva.fx.Styler.getTextSizeStyle;
-import static com.katyshevtseva.kikiorg.view.utils.KikiOrgWindowCreator.NodeInfo.HABIT_REPORT_TABLE;
-import static com.katyshevtseva.kikiorg.view.utils.KikiOrgWindowCreator.windowCreator;
+import static com.katyshevtseva.kikiorg.view.utils.KikiOrgWindowUtil.OrgNodeInfo.HABIT_REPORT_TABLE;
 
 class CheckListController implements SectionController {
     private final HabitsService habitsService = Core.getInstance().habitsService();
@@ -44,7 +44,7 @@ class CheckListController implements SectionController {
     @FXML
     private void initialize() {
         tableController = new ReportTableController();
-        tablePane.getChildren().add(windowCreator().getNode(HABIT_REPORT_TABLE, tableController));
+        tablePane.getChildren().add(WindowBuilder.getNode(HABIT_REPORT_TABLE, tableController));
         datePicker.setValue(LocalDate.now());
         datePicker.setOnAction(event -> fillHabitsTable());
         fillHabitsTable();

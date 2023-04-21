@@ -2,6 +2,7 @@ package com.katyshevtseva.kikiorg.view.controller.dtt;
 
 import com.katyshevtseva.fx.Size;
 import com.katyshevtseva.fx.Styler;
+import com.katyshevtseva.fx.WindowBuilder;
 import com.katyshevtseva.fx.component.ComponentBuilder;
 import com.katyshevtseva.fx.component.controller.PageableBlockListController;
 import com.katyshevtseva.fx.dialog.StandardDialogBuilder;
@@ -28,8 +29,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static com.katyshevtseva.kikiorg.view.utils.KikiOrgWindowCreator.NodeInfo.DTT_TASK_PANE;
-import static com.katyshevtseva.kikiorg.view.utils.KikiOrgWindowCreator.windowCreator;
+import static com.katyshevtseva.kikiorg.view.utils.KikiOrgWindowUtil.OrgNodeInfo.DTT_TASK_PANE;
 
 public class DttTasksController implements SectionController {
     private static final Size TASK_LIST_SIZE = new Size(800, 350);
@@ -163,7 +163,7 @@ public class DttTasksController implements SectionController {
     }
 
     private Node taskToNode(DatelessTask task, int blockWidth, Sphere sphere) {
-        return windowCreator().getNode(DTT_TASK_PANE,
+        return WindowBuilder.getNode(DTT_TASK_PANE,
                 new TaskPaneController(task, blockWidth, () -> selectSphere(sphere)));
     }
 }

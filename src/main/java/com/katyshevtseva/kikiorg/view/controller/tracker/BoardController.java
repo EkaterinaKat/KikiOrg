@@ -1,6 +1,7 @@
 package com.katyshevtseva.kikiorg.view.controller.tracker;
 
 import com.katyshevtseva.fx.Size;
+import com.katyshevtseva.fx.WindowBuilder;
 import com.katyshevtseva.fx.component.ComponentBuilder;
 import com.katyshevtseva.fx.component.ComponentBuilder.Component;
 import com.katyshevtseva.fx.component.controller.PageableBlockListController;
@@ -22,8 +23,7 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
 
 import static com.katyshevtseva.fx.FxUtils.setComboBoxItems;
-import static com.katyshevtseva.kikiorg.view.utils.KikiOrgWindowCreator.NodeInfo.TASK_PANE;
-import static com.katyshevtseva.kikiorg.view.utils.KikiOrgWindowCreator.windowCreator;
+import static com.katyshevtseva.kikiorg.view.utils.KikiOrgWindowUtil.OrgNodeInfo.TASK_PANE;
 
 class BoardController implements SectionController {
     private PageableBlockListController<Task> blockListController;
@@ -92,7 +92,7 @@ class BoardController implements SectionController {
         statisticsLabel.setText(Core.getInstance().trackerService().getStatistics());
         blockListController.show(this::getTaskPage, (task, blockWidth) -> {
             TaskPaneController taskPaneController = new TaskPaneController(task, this::updateContent, blockWidth);
-            return windowCreator().getNode(TASK_PANE, taskPaneController);
+            return WindowBuilder.getNode(TASK_PANE, taskPaneController);
         });
     }
 }
