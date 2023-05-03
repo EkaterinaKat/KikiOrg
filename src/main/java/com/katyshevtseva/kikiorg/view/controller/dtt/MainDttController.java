@@ -13,7 +13,8 @@ import javafx.scene.layout.Pane;
 import java.util.Arrays;
 import java.util.List;
 
-import static com.katyshevtseva.kikiorg.view.utils.KikiOrgWindowUtil.OrgNodeInfo.*;
+import static com.katyshevtseva.kikiorg.view.utils.KikiOrgWindowUtil.OrgNodeInfo.DTT_OLDEST;
+import static com.katyshevtseva.kikiorg.view.utils.KikiOrgWindowUtil.OrgNodeInfo.DTT_TASKS;
 
 public class MainDttController extends AbstractSwitchController implements SectionController {
     @FXML
@@ -31,9 +32,7 @@ public class MainDttController extends AbstractSwitchController implements Secti
                 new Section("Tasks", new DttTasksController(),
                         controller -> WindowBuilder.getNode(DTT_TASKS, controller)),
                 new Section("Oldest", new OldestController(),
-                        controller -> WindowBuilder.getNode(DTT_OLDEST, controller)),
-                new Section("Archive", new ArchiveController(),
-                        controller -> WindowBuilder.getNode(DTT_ARCHIVE, controller)));
+                        controller -> WindowBuilder.getNode(DTT_OLDEST, controller)));
     }
 
     private void placeButton(Button button) {

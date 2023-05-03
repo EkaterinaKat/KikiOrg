@@ -25,7 +25,6 @@ public class KikiOrgWindowUtil {
         MAIN_DTT(FXML_LOCATION, "section_main.fxml"),
         DTT_TASKS(DTT_FXML_LOCATION, "tasks.fxml"),
         DTT_TASK_PANE(DTT_FXML_LOCATION, "task_pane.fxml"),
-        DTT_ARCHIVE(DTT_FXML_LOCATION, "archive.fxml"),
         DTT_OLDEST(DTT_FXML_LOCATION, "oldest.fxml"),
         //STRUCTURE
         GOALS(STRUCTURE_FXML_LOCATION, "goals.fxml"),

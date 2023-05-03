@@ -18,7 +18,6 @@ import java.util.List;
 public class DttTaskService {
     private final DateService dateService;
     private final DatelessTaskRepo repo;
-    private final DttLogService logService;
 
     public void createTask(Sphere sphere, String title) {
         DatelessTask task = new DatelessTask();
@@ -34,7 +33,6 @@ public class DttTaskService {
     }
 
     public void delete(DatelessTask task) {
-        logService.saveDtDeletionLog(task);
         repo.delete(task);
     }
 

@@ -1,6 +1,5 @@
 package com.katyshevtseva.kikiorg.core;
 
-import com.katyshevtseva.kikiorg.core.sections.dtt.DttLogService;
 import com.katyshevtseva.kikiorg.core.sections.dtt.DttTaskService;
 import com.katyshevtseva.kikiorg.core.sections.dtt.SphereService;
 import com.katyshevtseva.kikiorg.core.sections.finance.*;
@@ -49,7 +48,6 @@ public class Core implements InitializingBean {
     private final GoalService goalService;
     private final SphereService sphereService;
     private final DttTaskService dttTaskService;
-    private final DttLogService dttLogService;
 
     public static Core getInstance() {
         while (INSTANCE == null) {
@@ -65,10 +63,6 @@ public class Core implements InitializingBean {
     @Override
     public void afterPropertiesSet() {
         INSTANCE = this;
-    }
-
-    public DttLogService dttLogService() {
-        return dttLogService;
     }
 
     public DttTaskService dttTaskService() {
