@@ -46,8 +46,6 @@ public class DttTasksController implements SectionController {
     private Pane donePane;
     @FXML
     private Button newTaskButton;
-    @FXML
-    private Button newSphereButton;
 
     @FXML
     private void initialize() {
@@ -94,6 +92,10 @@ public class DttTasksController implements SectionController {
             gridPane.add(label, 2, rowIndex);
             rowIndex++;
         }
+        Label label = new Label("<+>");
+        label.setStyle(Styler.getTextSizeStyle(18));
+        label.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> showSphereEditDialog(null));
+        gridPane.add(label, 2, rowIndex);
     }
 
     private ContextMenu getMenu(Sphere sphere) {
@@ -141,8 +143,6 @@ public class DttTasksController implements SectionController {
                 selectSphere(selectedSphere);
             }, titleField);
         });
-
-        newSphereButton.setOnAction(event -> showSphereEditDialog(null));
     }
 
     private void showSphereEditDialog(Sphere sphere) {
