@@ -1,24 +1,17 @@
 package com.katyshevtseva.kikiorg.view.controller.tracker;
 
-import com.katyshevtseva.fx.Styler;
 import com.katyshevtseva.fx.TableUtils;
 import com.katyshevtseva.fx.WindowBuilder;
 import com.katyshevtseva.fx.switchcontroller.SectionController;
 import com.katyshevtseva.kikiorg.core.Core;
-import com.katyshevtseva.kikiorg.core.sections.tracker.entity.ColorEntity;
 import com.katyshevtseva.kikiorg.core.sections.tracker.entity.Project;
-import com.katyshevtseva.kikiorg.view.utils.OrgUtils;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.text.Text;
-import javafx.util.Callback;
 
-import static com.katyshevtseva.fx.Styler.StandardColor.BLACK;
-import static com.katyshevtseva.fx.Styler.ThingToColor.BACKGROUND;
-import static com.katyshevtseva.fx.Styler.ThingToColor.TABLE_TEXT;
 import static com.katyshevtseva.kikiorg.view.utils.KikiOrgWindowUtil.OrgDialogInfo.PROJECT;
 
 class ProjectController implements SectionController {
@@ -38,7 +31,6 @@ class ProjectController implements SectionController {
     @FXML
     private void initialize() {
         adjustColumns();
-        setRowsColors();
         fillTable();
         addProjectButton.setOnAction(event ->
                 WindowBuilder.openDialog(PROJECT, new ProjectDialogController(this::fillTable, null)));
@@ -65,25 +57,5 @@ class ProjectController implements SectionController {
         });
         TableUtils.adjustButtonColumn(editColumn, "Edit", (project) ->
                 WindowBuilder.openDialog(PROJECT, new ProjectDialogController(this::fillTable, project)));
-    }
-
-    private void setRowsColors() {
-        table.setRowFactory(new Callback<TableView<Project>, TableRow<Project>>() {
-            @Override
-            public TableRow<Project> call(TableView<Project> tableView) {
-
-                return new TableRow<Project>() {
-                    @Override
-                    protected void updateItem(Project project, boolean empty) {
-                        super.updateItem(project, empty);
-                        if (project != null) {
-                            ColorEntity color = project.getColor();
-                            setStyle(Styler.getColorfullStyle(BACKGROUND, OrgUtils.getColorString(color))
-                                    + Styler.getColorfullStyle(TABLE_TEXT, BLACK));
-                        }
-                    }
-                };
-            }
-        });
     }
 }

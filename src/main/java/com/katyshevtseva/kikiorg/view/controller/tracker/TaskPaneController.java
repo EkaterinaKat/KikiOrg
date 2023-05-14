@@ -1,6 +1,7 @@
 package com.katyshevtseva.kikiorg.view.controller.tracker;
 
 import com.katyshevtseva.fx.FxUtils;
+import com.katyshevtseva.fx.Styler;
 import com.katyshevtseva.fx.WindowBuilder.FxController;
 import com.katyshevtseva.fx.dialogconstructor.DcComboBox;
 import com.katyshevtseva.fx.dialogconstructor.DcTextArea;
@@ -24,7 +25,6 @@ import static com.katyshevtseva.fx.FxImageCreationUtil.getIcon;
 import static com.katyshevtseva.fx.FxUtils.getPaneWithWidth;
 import static com.katyshevtseva.fx.Styler.ThingToColor.BACKGROUND;
 import static com.katyshevtseva.fx.Styler.getColorfullStyle;
-import static com.katyshevtseva.kikiorg.view.utils.OrgUtils.getColorString;
 
 class TaskPaneController implements FxController {
     private final Task task;
@@ -49,7 +49,7 @@ class TaskPaneController implements FxController {
 
     @FXML
     private void initialize() {
-        root.setStyle(getColorfullStyle(BACKGROUND, getColorString(task.getProject().getColor())));
+        root.setStyle(getColorfullStyle(BACKGROUND, Styler.StandardColor.PASTEL_PINK));
         FxUtils.setWidth(root, width);
         titleLabel.setWrapText(true);
         descLabel.setWrapText(true);

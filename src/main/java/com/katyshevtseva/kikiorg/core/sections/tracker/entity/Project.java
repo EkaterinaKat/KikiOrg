@@ -2,7 +2,10 @@ package com.katyshevtseva.kikiorg.core.sections.tracker.entity;
 
 import lombok.Data;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 
 @Data
 @Entity
@@ -16,10 +19,6 @@ public class Project implements Comparable<Project> {
     private String description;
 
     private String code;
-
-    @ManyToOne
-    @JoinColumn(name = "color_entity_id")
-    private ColorEntity color;
 
     @Override
     public String toString() {

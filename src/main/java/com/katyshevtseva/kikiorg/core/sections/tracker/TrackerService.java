@@ -21,11 +21,9 @@ public class TrackerService {
     private final ProjectRepo projectRepo;
     private final TaskRepo taskRepo;
     private final DateService dateService;
-    private final ColorService colorService;
     private final TrackerDttIntegrationService integrationService;
 
     public void saveProject(Project project) {
-        project.setColor(colorService.getSavedColorEntity(project.getColor()));
         projectRepo.save(project);
     }
 

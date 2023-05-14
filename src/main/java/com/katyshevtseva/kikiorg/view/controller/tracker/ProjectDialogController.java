@@ -5,13 +5,10 @@ import com.katyshevtseva.fx.WindowBuilder.FxController;
 import com.katyshevtseva.general.NoArgsKnob;
 import com.katyshevtseva.kikiorg.core.Core;
 import com.katyshevtseva.kikiorg.core.sections.tracker.entity.Project;
-import com.katyshevtseva.kikiorg.view.utils.OrgUtils;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
-import javafx.scene.control.ColorPicker;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
-import javafx.scene.paint.Color;
 
 class ProjectDialogController implements FxController {
     private NoArgsKnob tableUpdateKnob;
@@ -20,8 +17,6 @@ class ProjectDialogController implements FxController {
     private TextField titleTextField;
     @FXML
     private TextField codeTextField;
-    @FXML
-    private ColorPicker colorPicker;
     @FXML
     private TextArea descTextArea;
     @FXML
@@ -39,7 +34,6 @@ class ProjectDialogController implements FxController {
             titleTextField.setText(project.getTitle());
             codeTextField.setText(project.getCode());
             descTextArea.setText(project.getDescription());
-            colorPicker.setValue(Color.color(project.getColor().getRed(), project.getColor().getGreen(), project.getColor().getBlue()));
         }
         saveButton.setOnAction(event -> {
             if (project == null)
@@ -47,7 +41,6 @@ class ProjectDialogController implements FxController {
             project.setTitle(titleTextField.getText());
             project.setCode(codeTextField.getText());
             project.setDescription(descTextArea.getText());
-            project.setColor(OrgUtils.getColorEntity(Color.hsb(colorPicker.getValue().getHue(), 0.5, 1)));
             Core.getInstance().trackerService().saveProject(project);
 
             tableUpdateKnob.execute();
