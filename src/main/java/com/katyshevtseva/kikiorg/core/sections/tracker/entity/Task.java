@@ -33,4 +33,8 @@ public class Task {
 
     @Enumerated(EnumType.STRING)
     private TaskStatus taskStatus;
+
+    public String getNumberAndTitleInfo() {
+        return String.format("%s-%d: %s", project.getCode(), number, title);
+    }
 }

@@ -1,10 +1,11 @@
 package com.katyshevtseva.kikiorg.core.sections.tracker;
 
 import com.katyshevtseva.kikiorg.core.date.DateService;
-import com.katyshevtseva.kikiorg.core.sections.tracker.repo.ProjectRepo;
-import com.katyshevtseva.kikiorg.core.sections.tracker.repo.TaskRepo;
+import com.katyshevtseva.kikiorg.core.integration.TrackerDttIntegrationService;
 import com.katyshevtseva.kikiorg.core.sections.tracker.entity.Project;
 import com.katyshevtseva.kikiorg.core.sections.tracker.entity.Task;
+import com.katyshevtseva.kikiorg.core.sections.tracker.repo.ProjectRepo;
+import com.katyshevtseva.kikiorg.core.sections.tracker.repo.TaskRepo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -21,6 +22,7 @@ public class TrackerService {
     private final TaskRepo taskRepo;
     private final DateService dateService;
     private final ColorService colorService;
+    private final TrackerDttIntegrationService integrationService;
 
     public void saveProject(Project project) {
         project.setColor(colorService.getSavedColorEntity(project.getColor()));
@@ -39,7 +41,7 @@ public class TrackerService {
         task.setNumber(getProjectNextNumber(project));
         task.setCreationDate(dateService.createIfNotExistAndGetDateEntity(new Date()));
         task.setTaskStatus(TaskStatus.TODO);
-        saveEditedTask(task);
+        integrationService.reportTrackerTaskCreation(taskRepo.save(task));
     }
 
     public List<Project> getAllProjects() {

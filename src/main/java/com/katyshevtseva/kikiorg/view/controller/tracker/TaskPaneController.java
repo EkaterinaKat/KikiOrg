@@ -54,7 +54,7 @@ class TaskPaneController implements FxController {
         titleLabel.setWrapText(true);
         descLabel.setWrapText(true);
 
-        titleLabel.setText(String.format("%s-%d: %s", task.getProject().getCode(), task.getNumber(), task.getTitle()));
+        titleLabel.setText(task.getNumberAndTitleInfo());
 
         if (task.getTaskStatus() == TaskStatus.TODO) {
             descLabel.setText(task.getDescription() + "\n\nCreation date: " + READABLE_DATE_FORMAT.format(task.getCreationDate().getValue()));

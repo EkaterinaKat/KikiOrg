@@ -48,10 +48,10 @@ public class MainController extends AbstractSwitchController implements FxContro
                         controller -> WindowBuilder.getNode(MAIN_WARDROBE, controller)),
                 new Section("Tracker", new MainTrackerController(),
                         controller -> WindowBuilder.getNode(MAIN_TRACKER, controller)),
-                new Section("Structure", new MainStructureController(),
-                        controller -> WindowBuilder.getNode(MAIN_STRUCTURE, controller)),
                 new Section("DTT", new MainDttController(),
-                        controller -> WindowBuilder.getNode(MAIN_DTT, controller)));
+                        controller -> WindowBuilder.getNode(MAIN_DTT, controller)),
+                new Section("Structure", new MainStructureController(),
+                        controller -> WindowBuilder.getNode(MAIN_STRUCTURE, controller)));
     }
 
     private void placeButton(Button button) {
