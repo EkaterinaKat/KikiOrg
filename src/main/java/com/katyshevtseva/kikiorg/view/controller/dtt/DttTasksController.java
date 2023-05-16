@@ -122,6 +122,7 @@ public class DttTasksController implements SectionController {
         setPoint(sphere);
         selectedSphere = sphere;
         newTaskButton.setVisible(sphere != null);
+        newTaskButton.setDisable(!service.isSphereAvailableForTaskCreation(sphere));
 
         if (sphere != null) {
             todoListController.show(pageNum -> service.getTodoTasks(sphere, pageNum),

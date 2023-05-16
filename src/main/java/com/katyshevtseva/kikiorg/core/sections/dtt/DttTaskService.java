@@ -41,6 +41,10 @@ public class DttTaskService {
         repo.save(task);
     }
 
+    public boolean isSphereAvailableForTaskCreation(Sphere sphere) {
+        return repo.countBySphereAndCompletionDateIsNull(sphere) < 15;
+    }
+
     public Page<DatelessTask> getTodoTasks(Sphere sphere, int pageNum) {
         PageRequest pageRequest = PageRequest.of(pageNum, 15, Sort.by("creationDate.value").ascending());
 
