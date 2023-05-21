@@ -17,11 +17,12 @@ import java.util.stream.Collectors;
 public class ActivityService {
     private final ActivityRepo activityRepo;
 
-    public void save(Activity existing, String title, String desc, Goal goal) {
+    public void save(Activity existing, String title, String desc, Goal goal, PkdType pkdType) {
         if (existing == null) {
             existing = new Activity();
             existing.setStatus(ActivityStatus.ACTIVE);
         }
+        existing.setPkdType(pkdType);
         existing.setTitle(title);
         existing.setDescription(desc);
         existing.setGoal(goal);

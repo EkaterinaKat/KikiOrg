@@ -11,6 +11,7 @@ import com.katyshevtseva.fx.dialogconstructor.DialogConstructor;
 import com.katyshevtseva.fx.switchcontroller.SectionController;
 import com.katyshevtseva.kikiorg.core.Core;
 import com.katyshevtseva.kikiorg.core.sections.structure.ActivityStatus;
+import com.katyshevtseva.kikiorg.core.sections.structure.PkdType;
 import com.katyshevtseva.kikiorg.core.sections.structure.entity.Activity;
 import com.katyshevtseva.kikiorg.core.sections.structure.entity.Goal;
 import javafx.fxml.FXML;
@@ -20,6 +21,7 @@ import javafx.scene.control.*;
 import javafx.scene.input.ContextMenuEvent;
 import javafx.scene.layout.GridPane;
 
+import java.util.Arrays;
 import java.util.List;
 
 import static com.katyshevtseva.fx.FxUtils.frame;
@@ -75,6 +77,7 @@ public class ActivitiesController implements SectionController {
             gridPane.add(titleNode, 0, i);
             gridPane.add(getTableCell(activity.getDescription()), 1, i);
             gridPane.add(getTableCell(activity.getGoal() != null ? activity.getGoal().getTitle() : "---"), 2, i);
+            gridPane.add(getTableCell(activity.getPkdType() != null ? activity.getPkdType().toString() : "---"), 3, i);
         }
     }
 
@@ -103,10 +106,13 @@ public class ActivitiesController implements SectionController {
         DcTextArea descField = new DcTextArea(false, activity != null ? activity.getDescription() : "");
         DcComboBox<Goal> goalBox = new DcComboBox<>(true, activity != null ? activity.getGoal() : null,
                 Core.getInstance().goalService().getAllSortedByTitle());
+        DcComboBox<PkdType> pkdBox = new DcComboBox<>(true, activity != null ? activity.getPkdType() : null,
+                Arrays.asList(PkdType.values()));
         DialogConstructor.constructDialog(() -> {
-            Core.getInstance().activityService().save(activity, titleField.getValue(), descField.getValue(), goalBox.getValue());
+            Core.getInstance().activityService().save(activity, titleField.getValue(), descField.getValue(),
+                    goalBox.getValue(), pkdBox.getValue());
             fillPane();
-        }, titleField, descField, goalBox);
+        }, titleField, descField, goalBox, pkdBox);
     }
 
     private void showActivityContextMenu(ContextMenuEvent event, Activity activity, Node node) {

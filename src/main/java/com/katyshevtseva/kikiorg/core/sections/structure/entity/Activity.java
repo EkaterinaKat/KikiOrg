@@ -1,6 +1,7 @@
 package com.katyshevtseva.kikiorg.core.sections.structure.entity;
 
 import com.katyshevtseva.kikiorg.core.sections.structure.ActivityStatus;
+import com.katyshevtseva.kikiorg.core.sections.structure.PkdType;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -20,6 +21,9 @@ public class Activity {
 
     @Enumerated(EnumType.STRING)
     private ActivityStatus status;
+
+    @Enumerated(EnumType.STRING)
+    private PkdType pkdType;
 
     @ManyToOne
     @JoinColumn(name = "goal_id")
