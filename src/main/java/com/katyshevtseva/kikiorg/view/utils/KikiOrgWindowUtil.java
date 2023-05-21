@@ -58,7 +58,6 @@ public class KikiOrgWindowUtil {
         HUDDLE_CHECK(FIN_FXML_LOCATION, "check/huddle_check.fxml"),
         MAIN_FIN(FXML_LOCATION, "section_main.fxml"),
         //HABITS
-        CRITERION(HABITS_FXML_LOCATION, "criterion.fxml"),
         HABIT_REPORT_TABLE(HABITS_FXML_LOCATION, "report_table.fxml"),
         HABIT_REPORT(HABITS_FXML_LOCATION, "report.fxml"),
         CHECK_LIST(HABITS_FXML_LOCATION, "check_list.fxml"),
@@ -82,7 +81,7 @@ public class KikiOrgWindowUtil {
         PROJECT(TRACKER_FXML_LOCATION, "project_dialog.fxml", new Size(500, 480), CoreConstants.APP_NAME),
         OUTFIT(WARDROBE_FXML_LOCATION, "outfit_dialog.fxml", new Size(1000, 1200), CoreConstants.APP_NAME),
         PIECE(WARDROBE_FXML_LOCATION, "piece_dialog.fxml", new Size(700, 800), CoreConstants.APP_NAME),
-        HABIT(HABITS_FXML_LOCATION, "habit_dialog.fxml", BIG_DIALOG_SIZE, CoreConstants.APP_NAME),
+        HABIT(HABITS_FXML_LOCATION, "habit_dialog.fxml", new Size(650, 600), CoreConstants.APP_NAME),
         FIN_REPORT(FIN_FXML_LOCATION, "full_report.fxml", WINDOW_SIZE, "Finance report");
 
         private final String location;

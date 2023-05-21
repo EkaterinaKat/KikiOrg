@@ -30,6 +30,18 @@ public class Habit implements HasHistory<HabitChangeAction> {
     @OneToMany(mappedBy = "habit", fetch = FetchType.EAGER)
     private Set<HabitChangeAction> history;
 
+    private Integer criterionDaysTotal;
+
+    private Integer criterionDaysDone;
+
+    public String getCriterionString() {
+        return String.format("%d/%d", criterionDaysDone, criterionDaysTotal);
+    }
+
+    public boolean hasCriterion() {
+        return criterionDaysDone != null && criterionDaysTotal != null;
+    }
+
     public String getTitleWithActiveInfo() {
         return String.format("%s (%s)", title, active ? "active" : "inactive");
     }

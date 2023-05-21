@@ -1,5 +1,6 @@
 package com.katyshevtseva.kikiorg.view.controller.habits;
 
+import com.katyshevtseva.fx.FxUtils;
 import com.katyshevtseva.fx.WindowBuilder.FxController;
 import com.katyshevtseva.fx.dialog.StandardDialogBuilder;
 import com.katyshevtseva.general.OneArgKnob;
@@ -23,9 +24,13 @@ class HabitDialogController implements FxController {
     @FXML
     private TextArea descTextArea;
     @FXML
+    private TextField doneDaysTextField;
+    @FXML
+    private TextField totalDaysTextField;
+    @FXML
     private Button saveButton;
     private Habit habit;
-    private OneArgKnob<Habit> habitSaveHandler;
+    private final OneArgKnob<Habit> habitSaveHandler;
 
     HabitDialogController(Habit habitToEdit, OneArgKnob<Habit> habitSaveHandler) {
         this.habit = habitToEdit;
@@ -34,7 +39,9 @@ class HabitDialogController implements FxController {
 
     @FXML
     private void initialize() {
-        associateButtonWithControls(saveButton, titleTextField, descTextArea);
+        associateButtonWithControls(saveButton, titleTextField, descTextArea, doneDaysTextField, totalDaysTextField);
+        FxUtils.disableNonNumericChars(doneDaysTextField);
+        FxUtils.disableNonNumericChars(totalDaysTextField);
         setExistingPieceInfo();
         saveButton.setOnAction(event -> {
             if (needToAskAboutDesc())
@@ -50,8 +57,7 @@ class HabitDialogController implements FxController {
         boolean itIsHabitCreation = habit == null;
         if (itIsHabitCreation)
             return false;
-        boolean descWasEdited = !habit.getDescription().equals(descTextArea.getText());
-        return descWasEdited;
+        return !habit.getDescription().equals(descTextArea.getText());
     }
 
     private void setExistingPieceInfo() {
@@ -67,6 +73,8 @@ class HabitDialogController implements FxController {
                 habit,
                 titleTextField.getText(),
                 descTextArea.getText(),
+                Integer.parseInt(doneDaysTextField.getText()),
+                Integer.parseInt(totalDaysTextField.getText()),
                 activeCheckBox.isSelected(),
                 needToCreateDescChangeAction);
 

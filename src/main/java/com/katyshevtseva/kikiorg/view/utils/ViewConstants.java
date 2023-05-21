@@ -19,5 +19,4 @@ public class ViewConstants {
     public static final Size WINDOW_SIZE = new Size(1000, 1500);
     public static final Size ITEM_SELECT_DIALOG_SIZE = new Size(800, 700);
     public static final Size CLOTHES_TYPE_SELECT_DIALOG_SIZE = new Size(550, 470);
-    public static final Size BIG_DIALOG_SIZE = new Size(600, 600);
 }

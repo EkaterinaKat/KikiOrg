@@ -6,7 +6,10 @@ import com.katyshevtseva.kikiorg.core.sections.finance.*;
 import com.katyshevtseva.kikiorg.core.sections.finance.report.FinanceReportService;
 import com.katyshevtseva.kikiorg.core.sections.finance.report.ReportPeriodService;
 import com.katyshevtseva.kikiorg.core.sections.finance.search.FinanceSearchService;
-import com.katyshevtseva.kikiorg.core.sections.habits.*;
+import com.katyshevtseva.kikiorg.core.sections.habits.AnalysisService;
+import com.katyshevtseva.kikiorg.core.sections.habits.HabitMarkService;
+import com.katyshevtseva.kikiorg.core.sections.habits.HabitsReportService;
+import com.katyshevtseva.kikiorg.core.sections.habits.HabitsService;
 import com.katyshevtseva.kikiorg.core.sections.structure.ActivityService;
 import com.katyshevtseva.kikiorg.core.sections.structure.GoalService;
 import com.katyshevtseva.kikiorg.core.sections.tracker.BoardSortService;
@@ -30,7 +33,6 @@ public class Core implements InitializingBean {
     private final HabitMarkService habitMarkService;
     private final WardrobeService wardrobeService;
     private final AnalysisService analysisService;
-    private final StabilityCriterionService stabilityCriterionService;
     private final HuddleCheckService huddleCheckService;
     private final FinanceSearchService financeSearchService;
     private final TrackerService trackerService;
@@ -127,10 +129,6 @@ public class Core implements InitializingBean {
 
     public AnalysisService analysisService() {
         return analysisService;
-    }
-
-    public StabilityCriterionService stabilityCriterionService() {
-        return stabilityCriterionService;
     }
 
     public HuddleCheckService huddleCheckService() {

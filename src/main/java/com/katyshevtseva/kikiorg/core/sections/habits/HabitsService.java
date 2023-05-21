@@ -25,7 +25,8 @@ public class HabitsService {
     private final HabitChangeActionRepo habitChangeActionRepo;
 
     @Transactional
-    public Habit saveHabit(Habit habit, String title, String desc, boolean active, boolean needToCreateDescChangeAction) {
+    public Habit saveHabit(Habit habit, String title, String desc, int criterionDaysDone, int criterionDaysTotal,
+                           boolean active, boolean needToCreateDescChangeAction) {
         boolean itIsCreation = false;
         String oldDesc = null;
         if (habit == null) {
@@ -37,6 +38,8 @@ public class HabitsService {
         habit.setTitle(title);
         habit.setDescription(desc);
         habit.setActive(active);
+        habit.setCriterionDaysTotal(criterionDaysTotal);
+        habit.setCriterionDaysDone(criterionDaysDone);
         habit = habitRepo.save(habit);
 
         Date date = shiftDate(new Date(), DateUtils.TimeUnit.DAY, 1);

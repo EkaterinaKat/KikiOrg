@@ -1,9 +1,8 @@
 package com.katyshevtseva.kikiorg.core.sections.habits;
 
 import com.katyshevtseva.date.Period;
-import com.katyshevtseva.kikiorg.core.sections.habits.repo.HabitRepo;
 import com.katyshevtseva.kikiorg.core.sections.habits.entity.Habit;
-import com.katyshevtseva.kikiorg.core.sections.habits.entity.StabilityCriterion;
+import com.katyshevtseva.kikiorg.core.sections.habits.repo.HabitRepo;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -24,13 +23,11 @@ public class AnalysisService {
     private final Date someDaysAgo = shiftDate(new Date(), DAY, -(NUM_OF_STABILITY_DAYS-1));
     private final HabitRepo habitRepo;
     private final HabitMarkService markService;
-    private final StabilityCriterionService criterionService;
 
     public List<AnalysisResult> analyzeStabilityAndAssignNewStatusIfNeeded(List<Habit> habits) {
         return habits.stream()
                 .map(habit -> {
-                    StabilityCriterion stabilityCriterion = criterionService.getCriterionByHabitOrNull(habit);
-                    AnalysisResult analysisResult = new AnalysisResult(habit, stabilityCriterion);
+                    AnalysisResult analysisResult = new AnalysisResult(habit);
                     analysisResult.setStabilityCalculations(getStabilityCalculationsAndAssignNewStatusIfNeeded(habit));
                     return analysisResult;
                 })
@@ -39,16 +36,15 @@ public class AnalysisService {
 
     private String getStabilityCalculationsAndAssignNewStatusIfNeeded(Habit habit) {
         List<Date> dates = getDateRange(new Period(someDaysAgo, new Date()));
-        StabilityCriterion criterion = criterionService.getCriterionByHabitOrNull(habit);
         int daysTotal = dates.size();
         int daysHabitDone = getDaysHabitDone(dates, habit);
 
-        if (criterion == null) {
+        if (!habit.hasCriterion()) {
             return String.format("%d/%d. Критерии не заданы", daysHabitDone, daysTotal);
         }
 
         double actualRatio = (daysHabitDone * 1.0) / daysTotal;
-        double minimalRatio = (criterion.getDaysHabitDone() * 1.0) / criterion.getDaysTotal();
+        double minimalRatio = (habit.getCriterionDaysDone() * 1.0) / habit.getCriterionDaysTotal();
         boolean isStable = Double.compare(actualRatio, minimalRatio) >= 0;
 
         assignNewStatusIfNeeded(habit, isStable);
@@ -85,14 +81,13 @@ public class AnalysisService {
     @RequiredArgsConstructor
     public static class AnalysisResult {
         private final Habit habit;
-        private final StabilityCriterion criterion;
         private String stabilityCalculations;
 
         public String getFullText() {
             return habit.getTitle()
                     + "\n" + stabilityCalculations
                     + "\n" + habit.getStabilityStatus()
-                    + (criterion != null ? " " + criterion : "")
+                    + (habit.hasCriterion() ? " " + habit.getCriterionString() : "")
                     + "\n\n";
         }
     }

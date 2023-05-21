@@ -33,9 +33,7 @@ public class MainHabitsController extends AbstractSwitchController implements Se
                 new Section("Admin", new AdminController(),
                         controller -> WindowBuilder.getNode(HABIT_ADMIN, controller)),
                 new Section("Report", new ReportController(),
-                        controller -> WindowBuilder.getNode(HABIT_REPORT, controller)),
-                new Section("Criterion", new CriterionController(),
-                        controller -> WindowBuilder.getNode(CRITERION, controller)));
+                        controller -> WindowBuilder.getNode(HABIT_REPORT, controller)));
     }
 
     private void placeButton(Button button) {
