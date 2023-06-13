@@ -5,11 +5,13 @@ import com.katyshevtseva.kikiorg.core.date.DateService;
 import com.katyshevtseva.kikiorg.core.sections.dtt.entity.DatelessTask;
 import com.katyshevtseva.kikiorg.core.sections.dtt.entity.Sphere;
 import com.katyshevtseva.kikiorg.core.sections.dtt.repo.DatelessTaskRepo;
+import com.katyshevtseva.kikiorg.core.sections.dtt.repo.SphereRepo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -18,6 +20,7 @@ import java.util.List;
 public class DttTaskService {
     private final DateService dateService;
     private final DatelessTaskRepo repo;
+    private final SphereRepo sphereRepo;
 
     public void createTask(Sphere sphere, String title) {
         DatelessTask task = new DatelessTask();
@@ -62,6 +65,10 @@ public class DttTaskService {
     }
 
     public List<DatelessTask> getOldestTasks() {
-        return repo.getTop10ByCompletionDateIsNullAndSphereActiveIsTrueOrderByCreationDateAsc();
+        List<DatelessTask> result = new ArrayList<>();
+        for (Sphere sphere : sphereRepo.findByActiveIsTrue()) {
+            result.addAll(repo.getTop2ByCompletionDateIsNullAndSphereOrderByCreationDateAsc(sphere));
+        }
+        return result;
     }
 }

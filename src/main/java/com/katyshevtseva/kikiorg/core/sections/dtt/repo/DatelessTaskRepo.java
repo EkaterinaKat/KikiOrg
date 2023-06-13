@@ -16,5 +16,5 @@ public interface DatelessTaskRepo extends JpaRepository<DatelessTask, Long> {
 
     Page<DatelessTask> findBySphereAndCompletionDateIsNotNull(Sphere sphere, Pageable pageable);
 
-    List<DatelessTask> getTop10ByCompletionDateIsNullAndSphereActiveIsTrueOrderByCreationDateAsc();
+    List<DatelessTask> getTop2ByCompletionDateIsNullAndSphereOrderByCreationDateAsc(Sphere sphere);
 }
