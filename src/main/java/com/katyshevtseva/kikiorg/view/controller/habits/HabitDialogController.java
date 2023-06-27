@@ -65,6 +65,8 @@ class HabitDialogController implements FxController {
             titleTextField.setText(habit.getTitle());
             descTextArea.setText(habit.getDescription());
             activeCheckBox.setSelected(habit.isActive());
+            doneDaysTextField.setText(habit.getCriterionDaysDone() + "");
+            totalDaysTextField.setText(habit.getCriterionDaysTotal() + "");
         }
     }
 

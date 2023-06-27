@@ -14,6 +14,12 @@ public interface DatelessTaskRepo extends JpaRepository<DatelessTask, Long> {
 
     Long countBySphereAndCompletionDateIsNull(Sphere sphere);
 
+    Long countBySphereAndCompletionDateIsNotNull(Sphere sphere);
+
+    Long countByCompletionDateIsNull();
+
+    Long countByCompletionDateIsNotNull();
+
     Page<DatelessTask> findBySphereAndCompletionDateIsNotNull(Sphere sphere, Pageable pageable);
 
     List<DatelessTask> getTop2ByCompletionDateIsNullAndSphereOrderByCreationDateAsc(Sphere sphere);

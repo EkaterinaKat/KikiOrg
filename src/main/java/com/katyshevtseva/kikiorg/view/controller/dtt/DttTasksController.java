@@ -46,6 +46,8 @@ public class DttTasksController implements SectionController {
     private Pane donePane;
     @FXML
     private Button newTaskButton;
+    @FXML
+    private Label statisticsLabel;
 
     @FXML
     private void initialize() {
@@ -56,6 +58,7 @@ public class DttTasksController implements SectionController {
     public void update() {
         fillSphereTable();
         adjustTasksLists();
+        statisticsLabel.setText(service.getStatistics());
     }
 
     private void adjustTasksLists() {
@@ -77,7 +80,7 @@ public class DttTasksController implements SectionController {
         spherePointLabelMap = new HashMap<>();
         int rowIndex = 0;
         for (Sphere sphere : spheres) {
-            Label label = new Label(sphere.getTitle());
+            Label label = new Label(sphere.getTitle() + service.getStatistics(sphere));
             label.setWrapText(true);
             label.setStyle(Styler.getTextSizeStyle(18));
             label.setContextMenu(getMenu(sphere));

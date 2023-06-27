@@ -71,4 +71,16 @@ public class DttTaskService {
         }
         return result;
     }
+
+    public String getStatistics() {
+        long todoCount = repo.countByCompletionDateIsNull();
+        long done = repo.countByCompletionDateIsNotNull();
+        return String.format("Todo: %d\nDone: %d", todoCount, done);
+    }
+
+    public String getStatistics(Sphere sphere) {
+        long todoCount = repo.countBySphereAndCompletionDateIsNull(sphere);
+        long done = repo.countBySphereAndCompletionDateIsNotNull(sphere);
+        return String.format(" (%d/%d)", todoCount, done);
+    }
 }
