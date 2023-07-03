@@ -58,7 +58,6 @@ public class DttTasksController implements SectionController {
     public void update() {
         fillSphereTable();
         adjustTasksLists();
-        statisticsLabel.setText(service.getStatistics());
     }
 
     private void adjustTasksLists() {
@@ -99,6 +98,8 @@ public class DttTasksController implements SectionController {
         label.setStyle(Styler.getTextSizeStyle(18));
         label.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> showSphereEditDialog(null));
         gridPane.add(label, 2, rowIndex);
+
+        statisticsLabel.setText(service.getStatistics());
     }
 
     private ContextMenu getMenu(Sphere sphere) {
@@ -168,6 +169,9 @@ public class DttTasksController implements SectionController {
 
     private Node taskToNode(DatelessTask task, int blockWidth, Sphere sphere) {
         return WindowBuilder.getNode(DTT_TASK_PANE,
-                new TaskPaneController(task, blockWidth, () -> selectSphere(sphere)));
+                new TaskPaneController(task, blockWidth, () -> {
+                    fillSphereTable();
+                    selectSphere(sphere);
+                }));
     }
 }
