@@ -33,7 +33,10 @@ public class TaskPaneController implements WindowBuilder.FxController {
     private void initialize() {
         tuneLabel(titleLabel, 18, task.getTitle());
         tuneLabel(datesLabel, 12, task.getDatesInfo());
-        root.setOnContextMenuRequested(event -> showContextMenu(event, root));
+
+        if (!task.getFake()) {
+            root.setOnContextMenuRequested(event -> showContextMenu(event, root));
+        }
     }
 
     private void showContextMenu(ContextMenuEvent event, Node node) {

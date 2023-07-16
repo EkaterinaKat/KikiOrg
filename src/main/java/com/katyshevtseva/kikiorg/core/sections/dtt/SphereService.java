@@ -5,12 +5,14 @@ import com.katyshevtseva.kikiorg.core.sections.dtt.repo.SphereRepo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RequiredArgsConstructor
 @Service
 public class SphereService {
     private final SphereRepo repo;
+    private final FakeService fakeService;
 
     public Sphere save(Sphere existing, String title, boolean active) {
         if (existing == null) {
@@ -22,7 +24,10 @@ public class SphereService {
     }
 
     public List<Sphere> getAll() {
-        return repo.findAll();
+        List<Sphere> spheres = new ArrayList<>();
+        spheres.add(fakeService.getProgTrackerFakeSphere());
+        spheres.addAll(repo.findAll());
+        return spheres;
     }
 
     public void delete(Sphere sphere) {

@@ -18,6 +18,8 @@ public class DatelessTask {
 
     private String title;
 
+    private Boolean fake;
+
     @ManyToOne
     @JoinColumn(name = "sphere_id")
     private Sphere sphere;
@@ -30,11 +32,8 @@ public class DatelessTask {
     @JoinColumn(name = "completion_date_id")
     private DateEntity completionDate;
 
-    public DatelessTask(String title, Sphere sphere, DateEntity creationDate, DateEntity completionDate) {
-        this.title = title;
-        this.sphere = sphere;
-        this.creationDate = creationDate;
-        this.completionDate = completionDate;
+    public Boolean getFake() {
+        return fake != null && fake;
     }
 
     public String getDatesInfo() {
@@ -43,12 +42,5 @@ public class DatelessTask {
             result += String.format("\nCompletion: %s", READABLE_DATE_FORMAT.format(completionDate.getValue()));
         }
         return result;
-    }
-
-    public String getLogString() {
-        return sphere.getTitle().toUpperCase() + ": " + title + "\n" +
-                " creationDate: " + READABLE_DATE_FORMAT.format(creationDate.getValue()) + "\n" +
-                " completionDate: " +
-                (completionDate != null ? READABLE_DATE_FORMAT.format(completionDate.getValue()) : "-");
     }
 }
