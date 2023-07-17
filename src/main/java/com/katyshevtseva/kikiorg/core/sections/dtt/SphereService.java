@@ -1,6 +1,8 @@
 package com.katyshevtseva.kikiorg.core.sections.dtt;
 
+import com.katyshevtseva.kikiorg.core.sections.dtt.entity.DatelessTask;
 import com.katyshevtseva.kikiorg.core.sections.dtt.entity.Sphere;
+import com.katyshevtseva.kikiorg.core.sections.dtt.repo.DatelessTaskRepo;
 import com.katyshevtseva.kikiorg.core.sections.dtt.repo.SphereRepo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -13,6 +15,7 @@ import java.util.List;
 public class SphereService {
     private final SphereRepo repo;
     private final FakeService fakeService;
+    private final DatelessTaskRepo taskRepo;
 
     public Sphere save(Sphere existing, String title, boolean active) {
         if (existing == null) {
@@ -31,6 +34,9 @@ public class SphereService {
     }
 
     public void delete(Sphere sphere) {
+        for (DatelessTask task : taskRepo.findBySphere(sphere)) {
+            taskRepo.delete(task);
+        }
         repo.delete(sphere);
     }
 }
