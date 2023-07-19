@@ -10,8 +10,6 @@ import com.katyshevtseva.kikiorg.core.sections.habits.AnalysisService;
 import com.katyshevtseva.kikiorg.core.sections.habits.HabitMarkService;
 import com.katyshevtseva.kikiorg.core.sections.habits.HabitsReportService;
 import com.katyshevtseva.kikiorg.core.sections.habits.HabitsService;
-import com.katyshevtseva.kikiorg.core.sections.structure.ActivityService;
-import com.katyshevtseva.kikiorg.core.sections.structure.GoalService;
 import com.katyshevtseva.kikiorg.core.sections.tracker.BoardSortService;
 import com.katyshevtseva.kikiorg.core.sections.tracker.TrackerService;
 import com.katyshevtseva.kikiorg.core.sections.wardrobe.PieceSeasonService;
@@ -42,12 +40,10 @@ public class Core implements InitializingBean {
     private final ReportPeriodService reportPeriodService;
     private final ItemHierarchyService itemHierarchyService;
     private final TransferService transferService;
-    private final ActivityService activityService;
     private final AccountGroupService accountGroupService;
     private final AccountDeleteService accountDeleteService;
     private final ItemMergeService itemMergeService;
     private final PieceSeasonService pieceSeasonService;
-    private final GoalService goalService;
     private final SphereService sphereService;
     private final DttTaskService dttTaskService;
 
@@ -69,10 +65,6 @@ public class Core implements InitializingBean {
 
     public DttTaskService dttTaskService() {
         return dttTaskService;
-    }
-
-    public GoalService goalService() {
-        return goalService;
     }
 
     public SphereService sphereService() {
@@ -161,9 +153,5 @@ public class Core implements InitializingBean {
 
     public ItemHierarchyService itemHierarchyService() {
         return itemHierarchyService;
-    }
-
-    public ActivityService activityService() {
-        return activityService;
     }
 }

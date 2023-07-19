@@ -26,10 +26,6 @@ public class KikiOrgWindowUtil {
         DTT_TASKS(DTT_FXML_LOCATION, "tasks.fxml"),
         DTT_TASK_PANE(DTT_FXML_LOCATION, "task_pane.fxml"),
         DTT_OLDEST(DTT_FXML_LOCATION, "oldest.fxml"),
-        //STRUCTURE
-        GOALS(STRUCTURE_FXML_LOCATION, "goals.fxml"),
-        ACTIVITIES(STRUCTURE_FXML_LOCATION, "activities.fxml"),
-        MAIN_STRUCTURE(FXML_LOCATION, "section_main.fxml"),
         //TRACKER
         TASK_PANE(TRACKER_FXML_LOCATION, "task_pane.fxml"),
         PROJECT(TRACKER_FXML_LOCATION, "project.fxml"),
