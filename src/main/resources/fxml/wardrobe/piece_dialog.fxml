@@ -23,7 +23,9 @@
                 <DatePicker fx:id="endDatePicker"/>
             </HBox>
             <Pane prefHeight="20"/>
-            <ComboBox fx:id="clothesTypeComboBox"/>
+            <ComboBox fx:id="categoryComboBox"/>
+            <Pane prefHeight="20"/>
+            <ComboBox fx:id="typeComboBox"/>
             <Pane prefHeight="20"/>
             <Button text="Save" fx:id="saveButton"/>
         </VBox>

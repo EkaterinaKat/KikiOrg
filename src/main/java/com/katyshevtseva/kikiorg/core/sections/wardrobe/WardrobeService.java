@@ -6,9 +6,7 @@ import com.katyshevtseva.kikiorg.core.sections.wardrobe.entity.CollageEntity;
 import com.katyshevtseva.kikiorg.core.sections.wardrobe.entity.ComponentEntity;
 import com.katyshevtseva.kikiorg.core.sections.wardrobe.entity.Outfit;
 import com.katyshevtseva.kikiorg.core.sections.wardrobe.entity.Piece;
-import com.katyshevtseva.kikiorg.core.sections.wardrobe.enums.ClothesSubtype;
-import com.katyshevtseva.kikiorg.core.sections.wardrobe.enums.Purpose;
-import com.katyshevtseva.kikiorg.core.sections.wardrobe.enums.Season;
+import com.katyshevtseva.kikiorg.core.sections.wardrobe.enums.*;
 import com.katyshevtseva.kikiorg.core.sections.wardrobe.repo.CollageEntityRepo;
 import com.katyshevtseva.kikiorg.core.sections.wardrobe.repo.ComponentEntityRepo;
 import com.katyshevtseva.kikiorg.core.sections.wardrobe.repo.OutfitRepo;
@@ -24,7 +22,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.*;
 import java.util.stream.Collectors;
 
-import static com.katyshevtseva.kikiorg.core.sections.wardrobe.enums.ClothesSupertype.getSupertypesBySubtype;
+import static com.katyshevtseva.kikiorg.core.sections.wardrobe.enums.PieceSupertype.getSupertypesBySubtype;
 import static java.util.Comparator.naturalOrder;
 import static java.util.Comparator.nullsFirst;
 
@@ -36,10 +34,6 @@ public class WardrobeService {
     private final CollageEntityRepo collageEntityRepo;
     private final ComponentEntityRepo componentEntityRepo;
     private final DateService dateService;
-
-    public enum PieceFilter {
-        ARCHIVE, ACTIVE, UNUSED
-    }
 
     public List<Piece> getAllPieces() {
         return pieceRepo.findAll().stream()
@@ -53,27 +47,30 @@ public class WardrobeService {
                 .collect(Collectors.toList());
     }
 
-    public Page<Piece> getPiecePage(int pageNum, ClothesType clothesType, PieceFilter pieceFilter) {
+    public Page<Piece> getPiecePage(int pageNum, PieceType pieceType, PieceState pieceState, PieceCategory pieceCategory) {
         Pageable pageable = PageRequest.of(pageNum, 9, Sort.by("id").descending());
-        Specification<Piece> pieceSpec = new PieceSpec(clothesType, pieceFilter);
+        Specification<Piece> pieceSpec = new PieceSpec(pieceType, pieceState, pieceCategory);
         org.springframework.data.domain.Page<Piece> piecePage = pieceRepo.findAll(pieceSpec, pageable);
         return new Page<>(piecePage.getContent(), pageNum, piecePage.getTotalPages());
     }
 
-    public List<Piece> getPiecesToAddToOutfit(ClothesType clothesType) {
-        Specification<Piece> pieceSpec = new PieceSpec(clothesType, PieceFilter.ACTIVE);
+    public List<Piece> getPiecesToAddToOutfit(PieceType pieceType) {
+        // пока здесь в параметрах захардкожено PieceCategory.GOING_OUT, так как пока оставим возможность составлять
+        // аутфиты только для одежды на выход, в будущем может быть сделаем разные виду аутфитов: аутфит для дома,
+        // аутфит для спорта. Так как мы решили никак не смешивать предметы разных категорий
+        Specification<Piece> pieceSpec = new PieceSpec(pieceType, PieceState.ACTIVE, PieceCategory.GOING_OUT);
         return pieceRepo.findAll(pieceSpec, Sort.by("id").descending());
     }
 
     public List<Piece> getPiecesAvailableToAddToExistingComponent(Piece piece) {
-        Set<ClothesSubtype> subtypes = getSupertypesBySubtype(piece.getType()).stream()
-                .flatMap(clothesSupertype -> clothesSupertype.getTypes().stream())
+        Set<PieceSubtype> subtypes = getSupertypesBySubtype(piece.getType()).stream()
+                .flatMap(pieceSupertype -> pieceSupertype.getTypes().stream())
                 .collect(Collectors.toSet());
         subtypes.add(piece.getType());
         return subtypes.stream().flatMap(subtype -> getPiecesToAddToOutfit(subtype).stream()).collect(Collectors.toList());
     }
 
-    public Page<Outfit> getOutfitPage(int pageNum, Purpose purpose, Season season) {
+    public Page<Outfit> getOutfitPage(int pageNum, OutfitPurpose purpose, OutfitSeason season) {
         Pageable pageable = PageRequest.of(pageNum, 4, Sort.by("id").descending());
         org.springframework.data.domain.Page<Outfit> outfitPage =
                 outfitRepo.findAll(new OutfitSpec(season, purpose), pageable);
@@ -89,7 +86,8 @@ public class WardrobeService {
     public Piece savePiece(Piece existing,
                            String description,
                            String imageFileName,
-                           ClothesSubtype type,
+                           PieceSubtype type,
+                           PieceCategory category,
                            Date start,
                            Date end) {
 
@@ -100,6 +98,7 @@ public class WardrobeService {
         existing.setStartDate(dateService.createIfNotExistAndGetDateEntity(start));
         existing.setEndDate(dateService.createIfNotExistAndGetDateEntity(end));
         existing.setType(type);
+        existing.setCategory(category);
 
         return pieceRepo.save(existing);
     }
@@ -120,7 +119,7 @@ public class WardrobeService {
         }
     }
 
-    public Outfit saveOutfit(Outfit existing, String comment, Season season, Purpose purpose, CollageEntity collageEntity) {
+    public Outfit saveOutfit(Outfit existing, String comment, OutfitSeason season, OutfitPurpose purpose, CollageEntity collageEntity) {
         if (season == null || purpose == null) {
             throw new RuntimeException("Цель или сезон не заполнены");
         }

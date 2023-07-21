@@ -1,7 +1,7 @@
 package com.katyshevtseva.kikiorg.core.sections.wardrobe.repo;
 
 import com.katyshevtseva.kikiorg.core.sections.wardrobe.entity.Piece;
-import com.katyshevtseva.kikiorg.core.sections.wardrobe.enums.ClothesSubtype;
+import com.katyshevtseva.kikiorg.core.sections.wardrobe.enums.PieceSubtype;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -18,11 +18,11 @@ public interface PieceRepo extends JpaRepository<Piece, Long>, JpaSpecificationE
 
     List<Piece> findByEndDateIsNull();
 
-    Long countByType(ClothesSubtype type);
+    Long countByType(PieceSubtype type);
 
     @Query("SELECT p FROM Piece p " +
             "WHERE p.id NOT IN (SELECT cp.id FROM ComponentEntity c JOIN c.pieces cp) " +
             "AND p.endDate IS NULL " +
             "AND p.type IN :types ")
-    Page<Piece> findUnusedPieces(@Param("types") List<ClothesSubtype> types, Pageable pageable);
+    Page<Piece> findUnusedPieces(@Param("types") List<PieceSubtype> types, Pageable pageable);
 }

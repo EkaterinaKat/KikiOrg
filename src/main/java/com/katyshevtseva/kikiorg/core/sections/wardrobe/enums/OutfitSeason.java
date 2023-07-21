@@ -1,11 +1,11 @@
 package com.katyshevtseva.kikiorg.core.sections.wardrobe.enums;
 
-public enum Season {
-    W("Зима"), S("Лето"), DS("Демисезон"), N("Вне сезонов");
+public enum OutfitSeason {
+    W("Зима"), S("Лето"), DS("Демисезон");
 
     private String title;
 
-    Season(String title) {
+    OutfitSeason(String title) {
         this.title = title;
     }
 
@@ -13,8 +13,8 @@ public enum Season {
         return title;
     }
 
-    public static Season getByTitleOnNull(String title) {
-        for (Season season : Season.values()) {
+    public static OutfitSeason getByTitleOnNull(String title) {
+        for (OutfitSeason season : OutfitSeason.values()) {
             if (season.title.equals(title))
                 return season;
         }

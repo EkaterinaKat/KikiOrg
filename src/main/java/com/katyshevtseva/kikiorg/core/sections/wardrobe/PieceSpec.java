@@ -1,7 +1,8 @@
 package com.katyshevtseva.kikiorg.core.sections.wardrobe;
 
-import com.katyshevtseva.kikiorg.core.sections.wardrobe.WardrobeService.PieceFilter;
 import com.katyshevtseva.kikiorg.core.sections.wardrobe.entity.Piece;
+import com.katyshevtseva.kikiorg.core.sections.wardrobe.enums.PieceCategory;
+import com.katyshevtseva.kikiorg.core.sections.wardrobe.enums.PieceState;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.jpa.domain.Specification;
 
@@ -14,19 +15,24 @@ import java.util.List;
 
 @RequiredArgsConstructor
 public class PieceSpec implements Specification<Piece> {
-    private final ClothesType clothesType;
-    private final PieceFilter pieceFilter;
+    private final PieceType type;
+    private final PieceState state;
+    private final PieceCategory category;
 
     @Override
     public Predicate toPredicate(Root<Piece> root, CriteriaQuery<?> cq, CriteriaBuilder cb) {
         List<Predicate> objCriteria = new ArrayList<>();
 
-        if (clothesType != null) {
-            objCriteria.add(root.get("type").in(clothesType.getSubtypes()));
+        if (type != null) {
+            objCriteria.add(root.get("type").in(type.getSubtypes()));
         }
 
-        if (pieceFilter != null) {
-            switch (pieceFilter) {
+        if (category != null) {
+            objCriteria.add(cb.equal(root.get("category"), category));
+        }
+
+        if (state != null) {
+            switch (state) {
                 case ACTIVE:
                     objCriteria.add(cb.isNull(root.get("endDate")));
                     break;

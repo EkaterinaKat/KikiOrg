@@ -14,11 +14,12 @@ import com.katyshevtseva.fx.switchcontroller.SectionController;
 import com.katyshevtseva.general.Page;
 import com.katyshevtseva.image.ImageContainer;
 import com.katyshevtseva.kikiorg.core.Core;
-import com.katyshevtseva.kikiorg.core.sections.wardrobe.ClothesType;
+import com.katyshevtseva.kikiorg.core.sections.wardrobe.PieceType;
 import com.katyshevtseva.kikiorg.core.sections.wardrobe.WardrobeService;
-import com.katyshevtseva.kikiorg.core.sections.wardrobe.WardrobeService.PieceFilter;
 import com.katyshevtseva.kikiorg.core.sections.wardrobe.entity.Piece;
-import com.katyshevtseva.kikiorg.core.sections.wardrobe.enums.Season;
+import com.katyshevtseva.kikiorg.core.sections.wardrobe.enums.OutfitSeason;
+import com.katyshevtseva.kikiorg.core.sections.wardrobe.enums.PieceCategory;
+import com.katyshevtseva.kikiorg.core.sections.wardrobe.enums.PieceState;
 import com.katyshevtseva.kikiorg.view.controller.wardrobe.utils.WrdImageUtils;
 import com.katyshevtseva.kikiorg.view.controller.wardrobe.utils.WrdImageUtils.ImageAndPieceContainer;
 import javafx.fxml.FXML;
@@ -41,7 +42,7 @@ class PieceController implements SectionController {
     private final WardrobeService service = Core.getInstance().wardrobeService();
     private GalleryController galleryController;
     private PaginationPaneController<Piece> paginationPaneController;
-    private ClothesType clothesType;
+    private PieceType pieceType;
     @FXML
     private Button pieceCreateButton;
     @FXML
@@ -63,13 +64,20 @@ class PieceController implements SectionController {
     @FXML
     private Button showOutfitsButton;
     @FXML
-    private ComboBox<PieceFilter> filterComboBox;
+    private ComboBox<PieceState> filterComboBox;
+    @FXML
+    private ComboBox<PieceCategory> categoryComboBox;
 
     @FXML
     private void initialize() {
-        FxUtils.setComboBoxItems(filterComboBox, PieceFilter.values());
-        filterComboBox.setValue(PieceFilter.ACTIVE);
+        // filterComboBox
+        FxUtils.setComboBoxItems(filterComboBox, PieceState.values(), PieceState.ACTIVE);
         filterComboBox.setOnAction(event -> paginationPaneController.loadPage());
+
+        // categoryComboBox
+        FxUtils.setComboBoxItems(categoryComboBox, PieceCategory.values(), PieceCategory.GOING_OUT);
+        categoryComboBox.setOnAction(event -> paginationPaneController.loadPage());
+
         tunePiecesGallery();
         pieceCreateButton.setOnAction(event ->
                 WindowBuilder.openDialog(PIECE,
@@ -81,7 +89,7 @@ class PieceController implements SectionController {
         adjustTypeLabel();
         showAllButton.setOnAction(event -> {
             typeLabel.setText("Select clothes type");
-            clothesType = null;
+            pieceType = null;
             paginationPaneController.loadPage();
         });
     }
@@ -92,7 +100,7 @@ class PieceController implements SectionController {
                 .setTitle("Select type")
                 .openNoFxmlContainerDialog(
                         new TypeSelectDialogController(type -> {
-                            clothesType = type;
+                            pieceType = type;
                             typeLabel.setText(type.getTitle());
                             paginationPaneController.loadPage();
                         })));
@@ -106,7 +114,7 @@ class PieceController implements SectionController {
     }
 
     private Page<Piece> getPiecePage(int pageNum) {
-        return service.getPiecePage(pageNum, clothesType, filterComboBox.getValue());
+        return service.getPiecePage(pageNum, pieceType, filterComboBox.getValue(), categoryComboBox.getValue());
     }
 
     private void showPieceFullInfo(Piece piece) {
@@ -195,7 +203,7 @@ class PieceController implements SectionController {
 
     private ImageView getSeasonImageView(ImageContainer imageContainer) {
         IconPicture iconPicture = null;
-        Season season = Core.getInstance().pieceSeasonService()
+        OutfitSeason season = Core.getInstance().pieceSeasonService()
                 .getPieceSeasonOrNull(((ImageAndPieceContainer) imageContainer).getPiece());
 
         if (season == null) {
@@ -211,9 +219,6 @@ class PieceController implements SectionController {
                 break;
             case DS:
                 iconPicture = IconPicture.AUTUMN;
-                break;
-            case N:
-                return null;
         }
 
         return new ImageView(FxImageCreationUtil.getIcon(iconPicture));

@@ -1,24 +1,24 @@
 package com.katyshevtseva.kikiorg.core.sections.wardrobe.enums;
 
 import com.katyshevtseva.hierarchy.StaticHierarchySchemaLine;
-import com.katyshevtseva.kikiorg.core.sections.wardrobe.ClothesType;
+import com.katyshevtseva.kikiorg.core.sections.wardrobe.PieceType;
 
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static com.katyshevtseva.kikiorg.core.sections.wardrobe.enums.ClothesSubtype.*;
+import static com.katyshevtseva.kikiorg.core.sections.wardrobe.enums.PieceSubtype.*;
 
-public enum ClothesSupertype implements StaticHierarchySchemaLine, ClothesType {
-    UP("Верх", Arrays.asList(OTHER_UP, TOP, ROLL_NECK, HOODIE, JUMPER, T_SHORT, SHIRT, SWEATSHIRT, SWEATER, CARDIGAN)),
-    DOWN("Низ", Arrays.asList(OTHER_TROUSERS, SKIRT, PANTS, JEANS, LEGGINGS, SPORTS_TROUSERS)),
+public enum PieceSupertype implements StaticHierarchySchemaLine, PieceType {
+    UP("Верх", Arrays.asList(OTHER_UP, TOP, HOODIE, JUMPER, T_SHORT, SHIRT, SWEATSHIRT, SWEATER, CARDIGAN)),
+    DOWN("Низ", Arrays.asList(OTHER_TROUSERS, SKIRT, PANTS, JEANS, LEGGINGS, SPORTS_TROUSERS, SHORTS)),
     FOOTWEAR("Обувь", Arrays.asList(OTHER_FOOTWEAR, SHOES, LOW_BOOTS, SNEAKERS, BOOTS)),
     ACCESSORIES("Аксессуары", Arrays.asList(HEADDRESS, SCARF, GLOVES, BACKPACK, BAG));
 
     private final String title;
-    private final List<ClothesSubtype> types;
+    private final List<PieceSubtype> types;
 
-    ClothesSupertype(String title, List<ClothesSubtype> types) {
+    PieceSupertype(String title, List<PieceSubtype> types) {
         this.title = title;
         this.types = types;
     }
@@ -38,17 +38,17 @@ public enum ClothesSupertype implements StaticHierarchySchemaLine, ClothesType {
         return title;
     }
 
-    public List<ClothesSubtype> getTypes() {
+    public List<PieceSubtype> getTypes() {
         return types;
     }
 
     @Override
-    public List<ClothesSubtype> getSubtypes() {
+    public List<PieceSubtype> getSubtypes() {
         return getTypes();
     }
 
-    public static List<ClothesSupertype> getSupertypesBySubtype(ClothesSubtype subtype) {
-        return Arrays.stream(ClothesSupertype.values())
+    public static List<PieceSupertype> getSupertypesBySubtype(PieceSubtype subtype) {
+        return Arrays.stream(PieceSupertype.values())
                 .filter(supertype -> supertype.getTypes().contains(subtype))
                 .collect(Collectors.toList());
     }

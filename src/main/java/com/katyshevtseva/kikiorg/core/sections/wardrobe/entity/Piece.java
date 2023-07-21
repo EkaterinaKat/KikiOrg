@@ -1,7 +1,8 @@
 package com.katyshevtseva.kikiorg.core.sections.wardrobe.entity;
 
 import com.katyshevtseva.kikiorg.core.date.DateEntity;
-import com.katyshevtseva.kikiorg.core.sections.wardrobe.enums.ClothesSubtype;
+import com.katyshevtseva.kikiorg.core.sections.wardrobe.enums.PieceCategory;
+import com.katyshevtseva.kikiorg.core.sections.wardrobe.enums.PieceSubtype;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -23,7 +24,10 @@ public class Piece {
     private String imageFileName;
 
     @Enumerated(EnumType.STRING)
-    private ClothesSubtype type;
+    private PieceSubtype type;
+
+    @Enumerated(EnumType.STRING)
+    private PieceCategory category;
 
     @ManyToOne
     @JoinColumn(name = "start_date_entity_id")

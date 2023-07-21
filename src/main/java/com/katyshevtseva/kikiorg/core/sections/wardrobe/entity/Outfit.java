@@ -1,7 +1,7 @@
 package com.katyshevtseva.kikiorg.core.sections.wardrobe.entity;
 
-import com.katyshevtseva.kikiorg.core.sections.wardrobe.enums.Purpose;
-import com.katyshevtseva.kikiorg.core.sections.wardrobe.enums.Season;
+import com.katyshevtseva.kikiorg.core.sections.wardrobe.enums.OutfitPurpose;
+import com.katyshevtseva.kikiorg.core.sections.wardrobe.enums.OutfitSeason;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -16,10 +16,10 @@ public class Outfit {
     private String comment;
 
     @Enumerated(EnumType.STRING)
-    Season season;
+    OutfitSeason season;
 
     @Enumerated(EnumType.STRING)
-    Purpose purpose;
+    OutfitPurpose purpose;
 
     @OneToOne
     @JoinColumn(name = "collage_id")

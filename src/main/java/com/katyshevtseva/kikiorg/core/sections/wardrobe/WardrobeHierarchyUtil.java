@@ -1,8 +1,8 @@
 package com.katyshevtseva.kikiorg.core.sections.wardrobe;
 
 import com.katyshevtseva.hierarchy.StaticHierarchySchemaLine;
-import com.katyshevtseva.kikiorg.core.sections.wardrobe.enums.ClothesSubtype;
-import com.katyshevtseva.kikiorg.core.sections.wardrobe.enums.ClothesSupertype;
+import com.katyshevtseva.kikiorg.core.sections.wardrobe.enums.PieceSubtype;
+import com.katyshevtseva.kikiorg.core.sections.wardrobe.enums.PieceSupertype;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -13,16 +13,16 @@ public class WardrobeHierarchyUtil {
 
     public static List<StaticHierarchySchemaLine> getSchema() {
         List<StaticHierarchySchemaLine> lines = new ArrayList<>(getUnclassifiedTypes());
-        for (ClothesSupertype supertype : ClothesSupertype.values()) {
+        for (PieceSupertype supertype : PieceSupertype.values()) {
             lines.add(supertype);
             lines.addAll(supertype.getTypes());
         }
         return lines;
     }
 
-    private static List<ClothesSubtype> getUnclassifiedTypes() {
-        List<ClothesSubtype> types = new LinkedList<>(Arrays.asList(ClothesSubtype.values()));
-        for (ClothesSupertype supertype : ClothesSupertype.values()) {
+    private static List<PieceSubtype> getUnclassifiedTypes() {
+        List<PieceSubtype> types = new LinkedList<>(Arrays.asList(PieceSubtype.values()));
+        for (PieceSupertype supertype : PieceSupertype.values()) {
             types.removeAll(supertype.getTypes());
         }
         return types;

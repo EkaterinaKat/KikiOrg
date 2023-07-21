@@ -7,7 +7,8 @@ import com.katyshevtseva.general.OneArgKnob;
 import com.katyshevtseva.image.ImageContainer;
 import com.katyshevtseva.kikiorg.core.Core;
 import com.katyshevtseva.kikiorg.core.sections.wardrobe.entity.Piece;
-import com.katyshevtseva.kikiorg.core.sections.wardrobe.enums.ClothesSubtype;
+import com.katyshevtseva.kikiorg.core.sections.wardrobe.enums.PieceCategory;
+import com.katyshevtseva.kikiorg.core.sections.wardrobe.enums.PieceSubtype;
 import com.katyshevtseva.kikiorg.view.controller.wardrobe.utils.WrdImageUtils;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
@@ -36,7 +37,9 @@ class PieceDialogController implements FxController {
     @FXML
     private DatePicker endDatePicker;
     @FXML
-    private ComboBox<ClothesSubtype> clothesTypeComboBox;
+    private ComboBox<PieceSubtype> typeComboBox;
+    @FXML
+    private ComboBox<PieceCategory> categoryComboBox;
     @FXML
     private Button saveButton;
 
@@ -47,9 +50,10 @@ class PieceDialogController implements FxController {
 
     @FXML
     private void initialize() {
-        associateButtonWithControls(saveButton, clothesTypeComboBox, descTextArea);
+        associateButtonWithControls(saveButton, typeComboBox, descTextArea, categoryComboBox);
         saveButton.setOnAction(event -> save());
-        setComboBoxItems(clothesTypeComboBox, ClothesSubtype.getSortedByTitleValues());
+        setComboBoxItems(typeComboBox, PieceSubtype.getSortedByTitleValues());
+        setComboBoxItems(categoryComboBox, PieceCategory.values());
         showImage(FxImageCreationUtil.getIcon(FxImageCreationUtil.IconPicture.GREY_PLUS));
         setExistingPieceInfo();
     }
@@ -59,11 +63,12 @@ class PieceDialogController implements FxController {
                 existing,
                 descTextArea.getText().trim(),
                 selectedImage.getFileName(),
-                clothesTypeComboBox.getValue(),
+                typeComboBox.getValue(),
+                categoryComboBox.getValue(),
                 getDate(startDatePicker),
                 getDate(endDatePicker));
         onSaveListener.execute(saved);
-        closeWindowThatContains(clothesTypeComboBox);
+        closeWindowThatContains(typeComboBox);
     }
 
     private void openImageSelectionDialog() {
@@ -88,7 +93,8 @@ class PieceDialogController implements FxController {
 
             showImage(imageContainer.getImage());
             descTextArea.setText(existing.getDescription());
-            clothesTypeComboBox.setValue(existing.getType());
+            typeComboBox.setValue(existing.getType());
+            categoryComboBox.setValue(existing.getCategory());
             selectedImage = imageContainer;
             setDate(startDatePicker, existing.getStartDate());
             setDate(endDatePicker, existing.getEndDate());

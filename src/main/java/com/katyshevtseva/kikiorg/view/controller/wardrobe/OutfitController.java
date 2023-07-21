@@ -7,8 +7,8 @@ import com.katyshevtseva.general.Page;
 import com.katyshevtseva.kikiorg.core.Core;
 import com.katyshevtseva.kikiorg.core.sections.wardrobe.WardrobeService;
 import com.katyshevtseva.kikiorg.core.sections.wardrobe.entity.Outfit;
-import com.katyshevtseva.kikiorg.core.sections.wardrobe.enums.Purpose;
-import com.katyshevtseva.kikiorg.core.sections.wardrobe.enums.Season;
+import com.katyshevtseva.kikiorg.core.sections.wardrobe.enums.OutfitPurpose;
+import com.katyshevtseva.kikiorg.core.sections.wardrobe.enums.OutfitSeason;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
@@ -23,9 +23,9 @@ class OutfitController implements SectionController {
     @FXML
     private Button outfitCreateButton;
     @FXML
-    private ComboBox<Purpose> purposeComboBox;
+    private ComboBox<OutfitPurpose> purposeComboBox;
     @FXML
-    private ComboBox<Season> seasonComboBox;
+    private ComboBox<OutfitSeason> seasonComboBox;
     @FXML
     private Button showAllButton;
     @FXML
@@ -44,8 +44,8 @@ class OutfitController implements SectionController {
     }
 
     private void tuneFilters() {
-        FxUtils.setComboBoxItems(purposeComboBox, Purpose.values());
-        FxUtils.setComboBoxItems(seasonComboBox, Season.values());
+        FxUtils.setComboBoxItems(purposeComboBox, OutfitPurpose.values());
+        FxUtils.setComboBoxItems(seasonComboBox, OutfitSeason.values());
         purposeComboBox.setOnAction(event -> gridController.loadPage());
         seasonComboBox.setOnAction(event -> gridController.loadPage());
         showAllButton.setOnAction(event -> {

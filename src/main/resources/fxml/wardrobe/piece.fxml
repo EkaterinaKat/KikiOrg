@@ -12,6 +12,8 @@
         <Pane prefWidth="10"/>
         <Button fx:id="showAllButton" text="Show all"/>
         <Pane prefWidth="20"/>
+        <ComboBox fx:id="categoryComboBox"/>
+        <Pane prefWidth="20"/>
         <ComboBox fx:id="filterComboBox"/>
     </HBox>
 

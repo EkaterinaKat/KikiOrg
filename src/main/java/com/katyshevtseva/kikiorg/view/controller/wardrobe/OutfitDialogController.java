@@ -8,8 +8,8 @@ import com.katyshevtseva.general.OneArgKnob;
 import com.katyshevtseva.kikiorg.core.Core;
 import com.katyshevtseva.kikiorg.core.sections.wardrobe.WardrobeService;
 import com.katyshevtseva.kikiorg.core.sections.wardrobe.entity.Outfit;
-import com.katyshevtseva.kikiorg.core.sections.wardrobe.enums.Purpose;
-import com.katyshevtseva.kikiorg.core.sections.wardrobe.enums.Season;
+import com.katyshevtseva.kikiorg.core.sections.wardrobe.enums.OutfitPurpose;
+import com.katyshevtseva.kikiorg.core.sections.wardrobe.enums.OutfitSeason;
 import com.katyshevtseva.kikiorg.view.controller.wardrobe.utils.CollageUtils;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -34,9 +34,9 @@ class OutfitDialogController implements FxController {
     @FXML
     private TextArea commentTextArea;
     @FXML
-    private ComboBox<Season> seasonsComboBox;
+    private ComboBox<OutfitSeason> seasonsComboBox;
     @FXML
-    private ComboBox<Purpose> purposesComboBox;
+    private ComboBox<OutfitPurpose> purposesComboBox;
     @FXML
     private Button saveButton;
 
@@ -91,7 +91,7 @@ class OutfitDialogController implements FxController {
     }
 
     private void adjustComboBoxes() {
-        FxUtils.setComboBoxItems(seasonsComboBox, Season.values(), existing != null ? existing.getSeason() : null);
-        FxUtils.setComboBoxItems(purposesComboBox, Purpose.values(), existing != null ? existing.getPurpose() : null);
+        FxUtils.setComboBoxItems(seasonsComboBox, OutfitSeason.values(), existing != null ? existing.getSeason() : null);
+        FxUtils.setComboBoxItems(purposesComboBox, OutfitPurpose.values(), existing != null ? existing.getPurpose() : null);
     }
 }

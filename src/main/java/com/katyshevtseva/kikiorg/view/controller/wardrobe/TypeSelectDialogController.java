@@ -7,18 +7,18 @@ import com.katyshevtseva.fx.component.ComponentBuilder;
 import com.katyshevtseva.fx.component.ComponentBuilder.Component;
 import com.katyshevtseva.fx.component.controller.StaticHierarchyController;
 import com.katyshevtseva.general.OneArgKnob;
-import com.katyshevtseva.kikiorg.core.sections.wardrobe.ClothesType;
+import com.katyshevtseva.kikiorg.core.sections.wardrobe.PieceType;
 import com.katyshevtseva.kikiorg.core.sections.wardrobe.WardrobeHierarchyUtil;
 import javafx.fxml.FXML;
 import javafx.scene.layout.VBox;
 
 public class TypeSelectDialogController implements WindowBuilder.FxController {
     private Component<StaticHierarchyController> hierarchyComponent;
-    private OneArgKnob<ClothesType> typeSelectionHandler;
+    private OneArgKnob<PieceType> typeSelectionHandler;
     @FXML
     private VBox container;
 
-    TypeSelectDialogController(OneArgKnob<ClothesType> typeSelectionHandler) {
+    TypeSelectDialogController(OneArgKnob<PieceType> typeSelectionHandler) {
         this.typeSelectionHandler = typeSelectionHandler;
     }
 
@@ -30,7 +30,7 @@ public class TypeSelectDialogController implements WindowBuilder.FxController {
                     .getStaticHierarchyComponent(
                             WardrobeHierarchyUtil.getSchema(), null,
                             line -> {
-                                typeSelectionHandler.execute((ClothesType) line);
+                                typeSelectionHandler.execute((PieceType) line);
                                 FxUtils.closeWindowThatContains(container);
                             });
         }

@@ -2,9 +2,9 @@ package com.katyshevtseva.kikiorg.core.sections.wardrobe;
 
 import com.katyshevtseva.fx.Styler.StandardColor;
 import com.katyshevtseva.general.ReportCell;
-import com.katyshevtseva.kikiorg.core.sections.wardrobe.enums.ClothesSubtype;
-import com.katyshevtseva.kikiorg.core.sections.wardrobe.enums.Purpose;
-import com.katyshevtseva.kikiorg.core.sections.wardrobe.enums.Season;
+import com.katyshevtseva.kikiorg.core.sections.wardrobe.enums.OutfitPurpose;
+import com.katyshevtseva.kikiorg.core.sections.wardrobe.enums.OutfitSeason;
+import com.katyshevtseva.kikiorg.core.sections.wardrobe.enums.PieceSubtype;
 import com.katyshevtseva.kikiorg.core.sections.wardrobe.repo.OutfitRepo;
 import com.katyshevtseva.kikiorg.core.sections.wardrobe.repo.PieceRepo;
 import lombok.RequiredArgsConstructor;
@@ -25,11 +25,11 @@ public class WardrobeStatisticsService {
         List<List<ReportCell>> report = new ArrayList<>();
 
         report.add(getHeadLine());
-        for (int i = 0; i < Purpose.values().length; i++) {
-            Purpose purpose = Purpose.values()[i];
+        for (int i = 0; i < OutfitPurpose.values().length; i++) {
+            OutfitPurpose purpose = OutfitPurpose.values()[i];
             List<ReportCell> line = new ArrayList<>();
             line.add(ReportCell.filled(purpose.toString(), StandardColor.WHITE, 200));
-            for (Season season : Season.values()) {
+            for (OutfitSeason season : OutfitSeason.values()) {
                 int count = getCount(season, purpose);
                 line.add(ReportCell.filled("" + count, count == 0 ? StandardColor.WHITE : StandardColor.BLUE));
             }
@@ -39,14 +39,14 @@ public class WardrobeStatisticsService {
         return report;
     }
 
-    private int getCount(Season season, Purpose purpose) {
+    private int getCount(OutfitSeason season, OutfitPurpose purpose) {
         return (int) outfitRepo.findByPurposeAndSeason(purpose, season, PageRequest.of(0, 1)).getTotalElements();
     }
 
     private List<ReportCell> getHeadLine() {
         List<ReportCell> headLine = new ArrayList<>();
         headLine.add(ReportCell.empty());
-        for (Season season : Season.values()) {
+        for (OutfitSeason season : OutfitSeason.values()) {
             headLine.add(ReportCell.columnHead(season.toString()));
         }
         return headLine;
@@ -64,13 +64,13 @@ public class WardrobeStatisticsService {
 
     private String getClothesTypesStatistics() {
         StringBuilder stringBuilder = new StringBuilder("Категории вещей:\n");
-        for (ClothesSubtype clothesSubtype : ClothesSubtype.getSortedByTitleValues()) {
-            stringBuilder.append(" * ").append(clothesSubtype.getTitle()).append(": ").append(getCount(clothesSubtype)).append("\n");
+        for (PieceSubtype pieceSubtype : PieceSubtype.getSortedByTitleValues()) {
+            stringBuilder.append(" * ").append(pieceSubtype.getTitle()).append(": ").append(getCount(pieceSubtype)).append("\n");
         }
         return stringBuilder.toString();
     }
 
-    private int getCount(ClothesSubtype type) {
+    private int getCount(PieceSubtype type) {
         return pieceRepo.countByType(type).intValue();
     }
 
@@ -91,6 +91,6 @@ public class WardrobeStatisticsService {
     }
 
     private int getUnusedCount() {
-        return (int) pieceRepo.findUnusedPieces(Arrays.asList(ClothesSubtype.values()), PageRequest.of(0, 1)).getTotalElements();
+        return (int) pieceRepo.findUnusedPieces(Arrays.asList(PieceSubtype.values()), PageRequest.of(0, 1)).getTotalElements();
     }
 }
