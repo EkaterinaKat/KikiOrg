@@ -8,7 +8,7 @@ import com.katyshevtseva.general.OneArgKnob;
 import com.katyshevtseva.kikiorg.core.Core;
 import com.katyshevtseva.kikiorg.core.sections.wardrobe.WardrobeService;
 import com.katyshevtseva.kikiorg.core.sections.wardrobe.entity.Outfit;
-import com.katyshevtseva.kikiorg.core.sections.wardrobe.enums.OutfitPurpose;
+import com.katyshevtseva.kikiorg.core.sections.wardrobe.enums.Category;
 import com.katyshevtseva.kikiorg.core.sections.wardrobe.enums.OutfitSeason;
 import com.katyshevtseva.kikiorg.view.controller.wardrobe.utils.CollageUtils;
 import javafx.fxml.FXML;
@@ -26,6 +26,7 @@ class OutfitDialogController implements FxController {
     private final WardrobeService service = Core.getInstance().wardrobeService();
     private final Outfit existing;
     private final OneArgKnob<Outfit> onSaveListener;
+    private final Category category;
     private Collage collage;
     @FXML
     private Pane collagePane;
@@ -36,12 +37,17 @@ class OutfitDialogController implements FxController {
     @FXML
     private ComboBox<OutfitSeason> seasonsComboBox;
     @FXML
-    private ComboBox<OutfitPurpose> purposesComboBox;
-    @FXML
     private Button saveButton;
 
     OutfitDialogController(Outfit existing, OneArgKnob<Outfit> onSaveListener) {
         this.existing = existing;
+        category = existing.getCategory();
+        this.onSaveListener = onSaveListener;
+    }
+
+    OutfitDialogController(Category category, OneArgKnob<Outfit> onSaveListener) {
+        this.existing = null;
+        this.category = category;
         this.onSaveListener = onSaveListener;
     }
 
@@ -51,7 +57,7 @@ class OutfitDialogController implements FxController {
         saveButton.setOnAction(event -> save());
         setCollagePaneSize();
         tuneCollage();
-        FxUtils.associateButtonWithControls(saveButton, seasonsComboBox, purposesComboBox);
+        FxUtils.associateButtonWithControls(saveButton, seasonsComboBox);
 
         if (existing != null) {
             commentTextArea.setText(existing.getComment());
@@ -69,7 +75,7 @@ class OutfitDialogController implements FxController {
                 .setSize(CLOTHES_TYPE_SELECT_DIALOG_SIZE)
                 .setTitle("Select type")
                 .openNoFxmlContainerDialog(new TypeSelectDialogController(type ->
-                        collage.openImageToAddSelectionDialog(toCollageImages(service.getPiecesToAddToOutfit(type)))));
+                        collage.openImageToAddSelectionDialog(toCollageImages(service.getPiecesToAddToOutfit(type, category)))));
     }
 
     private void setCollagePaneSize() {
@@ -84,14 +90,13 @@ class OutfitDialogController implements FxController {
                 existing,
                 commentTextArea.getText(),
                 seasonsComboBox.getValue(),
-                purposesComboBox.getValue(),
-                CollageUtils.saveCollage(existing != null ? existing.getCollageEntity() : null, collage));
+                CollageUtils.saveCollage(existing != null ? existing.getCollageEntity() : null, collage),
+                category);
         onSaveListener.execute(saved);
         closeWindowThatContains(saveButton);
     }
 
     private void adjustComboBoxes() {
         FxUtils.setComboBoxItems(seasonsComboBox, OutfitSeason.values(), existing != null ? existing.getSeason() : null);
-        FxUtils.setComboBoxItems(purposesComboBox, OutfitPurpose.values(), existing != null ? existing.getPurpose() : null);
     }
 }

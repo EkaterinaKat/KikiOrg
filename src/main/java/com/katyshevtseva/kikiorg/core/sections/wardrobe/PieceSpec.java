@@ -1,7 +1,7 @@
 package com.katyshevtseva.kikiorg.core.sections.wardrobe;
 
 import com.katyshevtseva.kikiorg.core.sections.wardrobe.entity.Piece;
-import com.katyshevtseva.kikiorg.core.sections.wardrobe.enums.PieceCategory;
+import com.katyshevtseva.kikiorg.core.sections.wardrobe.enums.Category;
 import com.katyshevtseva.kikiorg.core.sections.wardrobe.enums.PieceState;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.jpa.domain.Specification;
@@ -17,7 +17,7 @@ import java.util.List;
 public class PieceSpec implements Specification<Piece> {
     private final PieceType type;
     private final PieceState state;
-    private final PieceCategory category;
+    private final Category category;
 
     @Override
     public Predicate toPredicate(Root<Piece> root, CriteriaQuery<?> cq, CriteriaBuilder cb) {

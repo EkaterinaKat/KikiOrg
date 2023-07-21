@@ -9,12 +9,12 @@
 
     <HBox>
         <Button fx:id="outfitCreateButton" text="New Outfit"/>
-        <Pane prefWidth="20"/>
-        <ComboBox fx:id="purposeComboBox"/>
-        <Pane prefWidth="10"/>
+        <Pane prefWidth="40"/>
         <ComboBox fx:id="seasonComboBox"/>
         <Pane prefWidth="10"/>
-        <Button fx:id="showAllButton" text="Show all"/>
+        <Button fx:id="clearSeasonButton" text="X"/>
+        <Pane prefWidth="10"/>
+        <ComboBox fx:id="categoryComboBox"/>
     </HBox>
 
     <Pane prefHeight="20"/>

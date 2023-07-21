@@ -7,14 +7,14 @@
 
     <HBox>
         <Button fx:id="pieceCreateButton" text="New Piece"/>
-        <Pane prefWidth="20"/>
+        <Pane prefWidth="40"/>
         <Label fx:id="typeLabel" text="Select clothes type"/>
         <Pane prefWidth="10"/>
-        <Button fx:id="showAllButton" text="Show all"/>
+        <Button fx:id="clearTypeButton" text="X"/>
         <Pane prefWidth="20"/>
         <ComboBox fx:id="categoryComboBox"/>
         <Pane prefWidth="20"/>
-        <ComboBox fx:id="filterComboBox"/>
+        <ComboBox fx:id="stateComboBox"/>
     </HBox>
 
     <Pane prefHeight="20"/>

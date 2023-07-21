@@ -1,6 +1,6 @@
 package com.katyshevtseva.kikiorg.core.sections.wardrobe.entity;
 
-import com.katyshevtseva.kikiorg.core.sections.wardrobe.enums.OutfitPurpose;
+import com.katyshevtseva.kikiorg.core.sections.wardrobe.enums.Category;
 import com.katyshevtseva.kikiorg.core.sections.wardrobe.enums.OutfitSeason;
 import lombok.Data;
 
@@ -19,7 +19,7 @@ public class Outfit {
     OutfitSeason season;
 
     @Enumerated(EnumType.STRING)
-    OutfitPurpose purpose;
+    Category category;
 
     @OneToOne
     @JoinColumn(name = "collage_id")
@@ -28,15 +28,9 @@ public class Outfit {
     public String getFullDesc() {
         StringBuilder fullDesc = new StringBuilder("(").append(id).append(") ").append(comment != null ? comment : "");
 
-        if (season != null || purpose != null) {
-            fullDesc.append("\n\n");
-        }
-
         if (season != null) {
             fullDesc.append(season).append("\n");
-        }
-        if (purpose != null) {
-            fullDesc.append(purpose);
+            fullDesc.append("\n\n");
         }
 
         return fullDesc.toString();

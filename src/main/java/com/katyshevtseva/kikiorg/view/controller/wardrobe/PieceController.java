@@ -17,8 +17,8 @@ import com.katyshevtseva.kikiorg.core.Core;
 import com.katyshevtseva.kikiorg.core.sections.wardrobe.PieceType;
 import com.katyshevtseva.kikiorg.core.sections.wardrobe.WardrobeService;
 import com.katyshevtseva.kikiorg.core.sections.wardrobe.entity.Piece;
+import com.katyshevtseva.kikiorg.core.sections.wardrobe.enums.Category;
 import com.katyshevtseva.kikiorg.core.sections.wardrobe.enums.OutfitSeason;
-import com.katyshevtseva.kikiorg.core.sections.wardrobe.enums.PieceCategory;
 import com.katyshevtseva.kikiorg.core.sections.wardrobe.enums.PieceState;
 import com.katyshevtseva.kikiorg.view.controller.wardrobe.utils.WrdImageUtils;
 import com.katyshevtseva.kikiorg.view.controller.wardrobe.utils.WrdImageUtils.ImageAndPieceContainer;
@@ -58,24 +58,24 @@ class PieceController implements SectionController {
     @FXML
     private Label typeLabel;
     @FXML
-    private Button showAllButton;
+    private Button clearTypeButton;
     @FXML
     private Button archiveButton;
     @FXML
     private Button showOutfitsButton;
     @FXML
-    private ComboBox<PieceState> filterComboBox;
+    private ComboBox<PieceState> stateComboBox;
     @FXML
-    private ComboBox<PieceCategory> categoryComboBox;
+    private ComboBox<Category> categoryComboBox;
 
     @FXML
     private void initialize() {
-        // filterComboBox
-        FxUtils.setComboBoxItems(filterComboBox, PieceState.values(), PieceState.ACTIVE);
-        filterComboBox.setOnAction(event -> paginationPaneController.loadPage());
+        // stateComboBox
+        FxUtils.setComboBoxItems(stateComboBox, PieceState.values(), PieceState.ACTIVE);
+        stateComboBox.setOnAction(event -> paginationPaneController.loadPage());
 
         // categoryComboBox
-        FxUtils.setComboBoxItems(categoryComboBox, PieceCategory.values(), PieceCategory.GOING_OUT);
+        FxUtils.setComboBoxItems(categoryComboBox, Category.values(), Category.GOING_OUT);
         categoryComboBox.setOnAction(event -> paginationPaneController.loadPage());
 
         tunePiecesGallery();
@@ -87,7 +87,7 @@ class PieceController implements SectionController {
                         })));
         tunePagination();
         adjustTypeLabel();
-        showAllButton.setOnAction(event -> {
+        clearTypeButton.setOnAction(event -> {
             typeLabel.setText("Select clothes type");
             pieceType = null;
             paginationPaneController.loadPage();
@@ -114,7 +114,7 @@ class PieceController implements SectionController {
     }
 
     private Page<Piece> getPiecePage(int pageNum) {
-        return service.getPiecePage(pageNum, pieceType, filterComboBox.getValue(), categoryComboBox.getValue());
+        return service.getPiecePage(pageNum, pieceType, stateComboBox.getValue(), categoryComboBox.getValue());
     }
 
     private void showPieceFullInfo(Piece piece) {

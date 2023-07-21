@@ -1,7 +1,7 @@
 package com.katyshevtseva.kikiorg.core.sections.wardrobe.entity;
 
 import com.katyshevtseva.kikiorg.core.date.DateEntity;
-import com.katyshevtseva.kikiorg.core.sections.wardrobe.enums.PieceCategory;
+import com.katyshevtseva.kikiorg.core.sections.wardrobe.enums.Category;
 import com.katyshevtseva.kikiorg.core.sections.wardrobe.enums.PieceSubtype;
 import lombok.Data;
 
@@ -27,7 +27,7 @@ public class Piece {
     private PieceSubtype type;
 
     @Enumerated(EnumType.STRING)
-    private PieceCategory category;
+    private Category category;
 
     @ManyToOne
     @JoinColumn(name = "start_date_entity_id")

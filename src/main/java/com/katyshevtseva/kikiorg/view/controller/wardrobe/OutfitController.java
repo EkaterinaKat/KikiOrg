@@ -7,7 +7,7 @@ import com.katyshevtseva.general.Page;
 import com.katyshevtseva.kikiorg.core.Core;
 import com.katyshevtseva.kikiorg.core.sections.wardrobe.WardrobeService;
 import com.katyshevtseva.kikiorg.core.sections.wardrobe.entity.Outfit;
-import com.katyshevtseva.kikiorg.core.sections.wardrobe.enums.OutfitPurpose;
+import com.katyshevtseva.kikiorg.core.sections.wardrobe.enums.Category;
 import com.katyshevtseva.kikiorg.core.sections.wardrobe.enums.OutfitSeason;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -23,35 +23,35 @@ class OutfitController implements SectionController {
     @FXML
     private Button outfitCreateButton;
     @FXML
-    private ComboBox<OutfitPurpose> purposeComboBox;
-    @FXML
     private ComboBox<OutfitSeason> seasonComboBox;
     @FXML
-    private Button showAllButton;
+    private Button clearSeasonButton;
     @FXML
     private Pane outfitGridContainer;
+    @FXML
+    private ComboBox<Category> categoryComboBox;
 
     @FXML
     private void initialize() {
         outfitCreateButton.setOnAction(event -> WindowBuilder.openDialog(OUTFIT,
-                new OutfitDialogController(null, outfit -> gridController.loadPage())));
+                new OutfitDialogController(categoryComboBox.getValue(), outfit -> gridController.loadPage())));
         tuneFilters();
         outfitGridContainer.getChildren().add(WindowBuilder.getNode(OUTFIT_GRID, gridController));
     }
 
     Page<Outfit> getOutfitPage(int pageNum) {
-        return service.getOutfitPage(pageNum, purposeComboBox.getValue(), seasonComboBox.getValue());
+        return service.getOutfitPage(pageNum, seasonComboBox.getValue(), categoryComboBox.getValue());
     }
 
     private void tuneFilters() {
-        FxUtils.setComboBoxItems(purposeComboBox, OutfitPurpose.values());
         FxUtils.setComboBoxItems(seasonComboBox, OutfitSeason.values());
-        purposeComboBox.setOnAction(event -> gridController.loadPage());
         seasonComboBox.setOnAction(event -> gridController.loadPage());
-        showAllButton.setOnAction(event -> {
-            purposeComboBox.setValue(null);
+        clearSeasonButton.setOnAction(event -> {
             seasonComboBox.setValue(null);
             gridController.loadPage();
         });
+
+        FxUtils.setComboBoxItems(categoryComboBox, Category.values(), Category.GOING_OUT);
+        categoryComboBox.setOnAction(event -> gridController.loadPage());
     }
 }

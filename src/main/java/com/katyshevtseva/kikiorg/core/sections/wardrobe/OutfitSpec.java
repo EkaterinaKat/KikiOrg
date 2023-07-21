@@ -1,7 +1,7 @@
 package com.katyshevtseva.kikiorg.core.sections.wardrobe;
 
 import com.katyshevtseva.kikiorg.core.sections.wardrobe.entity.Outfit;
-import com.katyshevtseva.kikiorg.core.sections.wardrobe.enums.OutfitPurpose;
+import com.katyshevtseva.kikiorg.core.sections.wardrobe.enums.Category;
 import com.katyshevtseva.kikiorg.core.sections.wardrobe.enums.OutfitSeason;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.jpa.domain.Specification;
@@ -16,7 +16,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class OutfitSpec implements Specification<Outfit> {
     private final OutfitSeason season;
-    private final OutfitPurpose purpose;
+    private final Category category;
 
     @Override
     public Predicate toPredicate(Root<Outfit> root, CriteriaQuery<?> cq, CriteriaBuilder cb) {
@@ -26,8 +26,8 @@ public class OutfitSpec implements Specification<Outfit> {
             objCriteria.add(cb.equal(root.get("season"), season));
         }
 
-        if (purpose != null) {
-            objCriteria.add(cb.equal(root.get("purpose"), purpose));
+        if (category != null) {
+            objCriteria.add(cb.equal(root.get("category"), category));
         }
 
         return cb.and(objCriteria.toArray(new Predicate[]{}));

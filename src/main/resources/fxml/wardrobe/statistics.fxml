@@ -7,7 +7,7 @@
       xmlns:fx="http://javafx.com/fxml">
     <Pane prefHeight="20"/>
 
-    <ScrollPane maxWidth="800" minWidth="800" maxHeight="400" minHeight="400">
+    <ScrollPane maxWidth="800" minWidth="800" maxHeight="700" minHeight="700">
         <VBox>
             <Pane prefHeight="20"/>
             <HBox>
@@ -16,13 +16,6 @@
             </HBox>
         </VBox>
         <Label fx:id="label" maxWidth="700" wrapText="true"/>
-    </ScrollPane>
-
-
-    <Pane prefHeight="20"/>
-
-    <ScrollPane maxWidth="800" minWidth="800" maxHeight="400" minHeight="400">
-        <GridPane fx:id="gridPane" alignment="CENTER" hgap="1" vgap="1" gridLinesVisible="true"/>
     </ScrollPane>
 
 </VBox>

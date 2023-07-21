@@ -6,7 +6,10 @@ import com.katyshevtseva.kikiorg.core.sections.wardrobe.entity.CollageEntity;
 import com.katyshevtseva.kikiorg.core.sections.wardrobe.entity.ComponentEntity;
 import com.katyshevtseva.kikiorg.core.sections.wardrobe.entity.Outfit;
 import com.katyshevtseva.kikiorg.core.sections.wardrobe.entity.Piece;
-import com.katyshevtseva.kikiorg.core.sections.wardrobe.enums.*;
+import com.katyshevtseva.kikiorg.core.sections.wardrobe.enums.Category;
+import com.katyshevtseva.kikiorg.core.sections.wardrobe.enums.OutfitSeason;
+import com.katyshevtseva.kikiorg.core.sections.wardrobe.enums.PieceState;
+import com.katyshevtseva.kikiorg.core.sections.wardrobe.enums.PieceSubtype;
 import com.katyshevtseva.kikiorg.core.sections.wardrobe.repo.CollageEntityRepo;
 import com.katyshevtseva.kikiorg.core.sections.wardrobe.repo.ComponentEntityRepo;
 import com.katyshevtseva.kikiorg.core.sections.wardrobe.repo.OutfitRepo;
@@ -47,18 +50,15 @@ public class WardrobeService {
                 .collect(Collectors.toList());
     }
 
-    public Page<Piece> getPiecePage(int pageNum, PieceType pieceType, PieceState pieceState, PieceCategory pieceCategory) {
+    public Page<Piece> getPiecePage(int pageNum, PieceType pieceType, PieceState pieceState, Category category) {
         Pageable pageable = PageRequest.of(pageNum, 9, Sort.by("id").descending());
-        Specification<Piece> pieceSpec = new PieceSpec(pieceType, pieceState, pieceCategory);
+        Specification<Piece> pieceSpec = new PieceSpec(pieceType, pieceState, category);
         org.springframework.data.domain.Page<Piece> piecePage = pieceRepo.findAll(pieceSpec, pageable);
         return new Page<>(piecePage.getContent(), pageNum, piecePage.getTotalPages());
     }
 
-    public List<Piece> getPiecesToAddToOutfit(PieceType pieceType) {
-        // пока здесь в параметрах захардкожено PieceCategory.GOING_OUT, так как пока оставим возможность составлять
-        // аутфиты только для одежды на выход, в будущем может быть сделаем разные виду аутфитов: аутфит для дома,
-        // аутфит для спорта. Так как мы решили никак не смешивать предметы разных категорий
-        Specification<Piece> pieceSpec = new PieceSpec(pieceType, PieceState.ACTIVE, PieceCategory.GOING_OUT);
+    public List<Piece> getPiecesToAddToOutfit(PieceType pieceType, Category category) {
+        Specification<Piece> pieceSpec = new PieceSpec(pieceType, PieceState.ACTIVE, category);
         return pieceRepo.findAll(pieceSpec, Sort.by("id").descending());
     }
 
@@ -67,13 +67,13 @@ public class WardrobeService {
                 .flatMap(pieceSupertype -> pieceSupertype.getTypes().stream())
                 .collect(Collectors.toSet());
         subtypes.add(piece.getType());
-        return subtypes.stream().flatMap(subtype -> getPiecesToAddToOutfit(subtype).stream()).collect(Collectors.toList());
+        return subtypes.stream().flatMap(subtype -> getPiecesToAddToOutfit(subtype, piece.getCategory()).stream()).collect(Collectors.toList());
     }
 
-    public Page<Outfit> getOutfitPage(int pageNum, OutfitPurpose purpose, OutfitSeason season) {
+    public Page<Outfit> getOutfitPage(int pageNum, OutfitSeason season, Category category) {
         Pageable pageable = PageRequest.of(pageNum, 4, Sort.by("id").descending());
         org.springframework.data.domain.Page<Outfit> outfitPage =
-                outfitRepo.findAll(new OutfitSpec(season, purpose), pageable);
+                outfitRepo.findAll(new OutfitSpec(season, category), pageable);
         return new Page<>(outfitPage.getContent(), pageNum, outfitPage.getTotalPages());
     }
 
@@ -87,7 +87,7 @@ public class WardrobeService {
                            String description,
                            String imageFileName,
                            PieceSubtype type,
-                           PieceCategory category,
+                           Category category,
                            Date start,
                            Date end) {
 
@@ -119,17 +119,21 @@ public class WardrobeService {
         }
     }
 
-    public Outfit saveOutfit(Outfit existing, String comment, OutfitSeason season, OutfitPurpose purpose, CollageEntity collageEntity) {
-        if (season == null || purpose == null) {
-            throw new RuntimeException("Цель или сезон не заполнены");
+    public Outfit saveOutfit(Outfit existing, String comment,
+                             OutfitSeason season,
+                             CollageEntity collageEntity, Category category) {
+        if (season == null) {
+            throw new RuntimeException("Сезон не заполнены");
         }
 
-        if (existing == null)
+        if (existing == null) {
             existing = new Outfit();
+            existing.setCategory(category);
+        }
         existing.setComment(comment != null ? comment.trim() : null);
-        existing.setPurpose(purpose);
         existing.setSeason(season);
         existing.setCollageEntity(collageEntity);
+        existing.setCategory(category);
 
         return outfitRepo.save(existing);
     }

@@ -7,7 +7,7 @@ import com.katyshevtseva.general.OneArgKnob;
 import com.katyshevtseva.image.ImageContainer;
 import com.katyshevtseva.kikiorg.core.Core;
 import com.katyshevtseva.kikiorg.core.sections.wardrobe.entity.Piece;
-import com.katyshevtseva.kikiorg.core.sections.wardrobe.enums.PieceCategory;
+import com.katyshevtseva.kikiorg.core.sections.wardrobe.enums.Category;
 import com.katyshevtseva.kikiorg.core.sections.wardrobe.enums.PieceSubtype;
 import com.katyshevtseva.kikiorg.view.controller.wardrobe.utils.WrdImageUtils;
 import javafx.fxml.FXML;
@@ -39,7 +39,7 @@ class PieceDialogController implements FxController {
     @FXML
     private ComboBox<PieceSubtype> typeComboBox;
     @FXML
-    private ComboBox<PieceCategory> categoryComboBox;
+    private ComboBox<Category> categoryComboBox;
     @FXML
     private Button saveButton;
 
@@ -53,7 +53,7 @@ class PieceDialogController implements FxController {
         associateButtonWithControls(saveButton, typeComboBox, descTextArea, categoryComboBox);
         saveButton.setOnAction(event -> save());
         setComboBoxItems(typeComboBox, PieceSubtype.getSortedByTitleValues());
-        setComboBoxItems(categoryComboBox, PieceCategory.values());
+        setComboBoxItems(categoryComboBox, Category.values());
         showImage(FxImageCreationUtil.getIcon(FxImageCreationUtil.IconPicture.GREY_PLUS));
         setExistingPieceInfo();
     }

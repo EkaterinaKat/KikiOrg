@@ -1,5 +1,5 @@
 package com.katyshevtseva.kikiorg.core.sections.wardrobe.enums;
 
-public enum PieceCategory {
+public enum Category {
     GOING_OUT, HOME, SPORT
 }
