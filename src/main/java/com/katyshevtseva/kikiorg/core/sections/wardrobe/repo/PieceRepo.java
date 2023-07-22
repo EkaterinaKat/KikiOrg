@@ -21,7 +21,7 @@ public interface PieceRepo extends JpaRepository<Piece, Long>, JpaSpecificationE
     Long countByType(PieceSubtype type);
 
     @Query("SELECT p FROM Piece p " +
-            "WHERE p.id NOT IN (SELECT cp.id FROM ComponentEntity c JOIN c.pieces cp) " +
+            "WHERE p.id NOT IN (SELECT c.piece.id FROM ComponentEntity c) " +
             "AND p.endDate IS NULL " +
             "AND p.type IN :types ")
     Page<Piece> findUnusedPieces(@Param("types") List<PieceSubtype> types, Pageable pageable);

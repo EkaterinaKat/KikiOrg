@@ -22,10 +22,12 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.*;
+import java.util.Comparator;
+import java.util.Date;
+import java.util.HashSet;
+import java.util.List;
 import java.util.stream.Collectors;
 
-import static com.katyshevtseva.kikiorg.core.sections.wardrobe.enums.PieceSupertype.getSupertypesBySubtype;
 import static java.util.Comparator.naturalOrder;
 import static java.util.Comparator.nullsFirst;
 
@@ -60,14 +62,6 @@ public class WardrobeService {
     public List<Piece> getPiecesToAddToOutfit(PieceType pieceType, Category category) {
         Specification<Piece> pieceSpec = new PieceSpec(pieceType, PieceState.ACTIVE, category);
         return pieceRepo.findAll(pieceSpec, Sort.by("id").descending());
-    }
-
-    public List<Piece> getPiecesAvailableToAddToExistingComponent(Piece piece) {
-        Set<PieceSubtype> subtypes = getSupertypesBySubtype(piece.getType()).stream()
-                .flatMap(pieceSupertype -> pieceSupertype.getTypes().stream())
-                .collect(Collectors.toSet());
-        subtypes.add(piece.getType());
-        return subtypes.stream().flatMap(subtype -> getPiecesToAddToOutfit(subtype, piece.getCategory()).stream()).collect(Collectors.toList());
     }
 
     public Page<Outfit> getOutfitPage(int pageNum, OutfitSeason season, Category category) {
@@ -170,7 +164,7 @@ public class WardrobeService {
 
     public boolean pieceAvailableForArchive(Piece piece) {
         for (ComponentEntity componentEntity : componentEntityRepo.findAll()) {
-            if (componentEntity.getPieces().contains(piece)) {
+            if (componentEntity.getPiece().equals(piece)) {
                 return false;
             }
         }

@@ -37,7 +37,7 @@ public class Piece {
     @JoinColumn(name = "end_date_entity_id")
     private DateEntity endDate;
 
-    @ManyToMany(mappedBy = "pieces")
+    @OneToMany(mappedBy = "piece")
     private Collection<ComponentEntity> components;
 
     public String getFullDesc() {

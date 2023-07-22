@@ -14,12 +14,12 @@ import java.util.List;
 public interface OutfitRepo extends JpaRepository<Outfit, Long>, JpaSpecificationExecutor<Outfit> {
 
     @Query(value = "SELECT  o FROM Outfit o " +
-            "JOIN o.collageEntity c JOIN c.components comp JOIN comp.pieces p " +
-            "WHERE p = :piece ")
+            "JOIN o.collageEntity c JOIN c.components comp " +
+            "WHERE comp.piece = :piece ")
     Page<Outfit> findOutfitsByPiece(@Param("piece") Piece piece, Pageable pageable);
 
     @Query(value = "SELECT  o FROM Outfit o " +
-            "JOIN o.collageEntity c JOIN c.components comp JOIN comp.pieces p " +
-            "WHERE p = :piece ")
+            "JOIN o.collageEntity c JOIN c.components comp " +
+            "WHERE comp.piece = :piece ")
     List<Outfit> findOutfitsByPiece(@Param("piece") Piece piece);
 }

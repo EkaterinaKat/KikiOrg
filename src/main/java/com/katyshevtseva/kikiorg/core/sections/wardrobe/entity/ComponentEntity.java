@@ -4,7 +4,6 @@ import lombok.Data;
 
 import javax.persistence.*;
 import java.util.Objects;
-import java.util.Set;
 
 @Data
 @Entity
@@ -21,15 +20,9 @@ public class ComponentEntity {
 
     private Double relativeWidth;
 
-    @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(name = "component_pieces",
-            joinColumns = @JoinColumn(name = "component_id"),
-            inverseJoinColumns = @JoinColumn(name = "piece_id"))
-    private Set<Piece> pieces;
-
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "front_piece_id", nullable = false)
-    private Piece frontPiece;
+    private Piece piece;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "collage_id", nullable = false)
