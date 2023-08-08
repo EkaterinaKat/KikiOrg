@@ -52,6 +52,11 @@ public class WardrobeService {
                 .collect(Collectors.toList());
     }
 
+    public List<Piece> getPieces(PieceState pieceState, Category category) {
+        Specification<Piece> pieceSpec = new PieceSpec(null, pieceState, category);
+        return pieceRepo.findAll(pieceSpec);
+    }
+
     public Page<Piece> getPiecePage(int pageNum, PieceType pieceType, PieceState pieceState, Category category) {
         Pageable pageable = PageRequest.of(pageNum, 9, Sort.by("id").descending());
         Specification<Piece> pieceSpec = new PieceSpec(pieceType, pieceState, category);

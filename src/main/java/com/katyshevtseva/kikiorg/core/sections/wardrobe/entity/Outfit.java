@@ -29,8 +29,7 @@ public class Outfit {
         StringBuilder fullDesc = new StringBuilder("(").append(id).append(") ").append(comment != null ? comment : "");
 
         if (season != null) {
-            fullDesc.append(season).append("\n");
-            fullDesc.append("\n\n");
+            fullDesc.append("\n\n").append(season).append("\n");
         }
 
         return fullDesc.toString();

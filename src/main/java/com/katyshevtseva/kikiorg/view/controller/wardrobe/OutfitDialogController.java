@@ -10,6 +10,7 @@ import com.katyshevtseva.kikiorg.core.sections.wardrobe.WardrobeService;
 import com.katyshevtseva.kikiorg.core.sections.wardrobe.entity.Outfit;
 import com.katyshevtseva.kikiorg.core.sections.wardrobe.enums.Category;
 import com.katyshevtseva.kikiorg.core.sections.wardrobe.enums.OutfitSeason;
+import com.katyshevtseva.kikiorg.core.sections.wardrobe.enums.PieceState;
 import com.katyshevtseva.kikiorg.view.controller.wardrobe.utils.CollageUtils;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -74,8 +75,9 @@ class OutfitDialogController implements FxController {
         new StandardDialogBuilder()
                 .setSize(CLOTHES_TYPE_SELECT_DIALOG_SIZE)
                 .setTitle("Select type")
-                .openNoFxmlContainerDialog(new TypeSelectDialogController(type ->
-                        collage.openImageToAddSelectionDialog(toCollageImages(service.getPiecesToAddToOutfit(type, category)))));
+                .openNoFxmlContainerDialog(new TypeSelectDialogController(service.getPieces(PieceState.ACTIVE, category),
+                        type ->
+                                collage.openImageToAddSelectionDialog(toCollageImages(service.getPiecesToAddToOutfit(type, category)))));
     }
 
     private void setCollagePaneSize() {

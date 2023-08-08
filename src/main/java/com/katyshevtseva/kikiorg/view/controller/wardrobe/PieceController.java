@@ -99,11 +99,12 @@ class PieceController implements SectionController {
                 .setSize(CLOTHES_TYPE_SELECT_DIALOG_SIZE)
                 .setTitle("Select type")
                 .openNoFxmlContainerDialog(
-                        new TypeSelectDialogController(type -> {
-                            pieceType = type;
-                            typeLabel.setText(type.getTitle());
-                            paginationPaneController.loadPage();
-                        })));
+                        new TypeSelectDialogController(service.getPieces(stateComboBox.getValue(), categoryComboBox.getValue()),
+                                type -> {
+                                    pieceType = type;
+                                    typeLabel.setText(type.getTitle());
+                                    paginationPaneController.loadPage();
+                                })));
     }
 
     private void tunePagination() {
