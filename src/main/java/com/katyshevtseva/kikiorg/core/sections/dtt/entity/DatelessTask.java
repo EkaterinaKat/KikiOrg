@@ -18,8 +18,6 @@ public class DatelessTask {
 
     private String title;
 
-    private Boolean fake;
-
     @ManyToOne
     @JoinColumn(name = "sphere_id")
     private Sphere sphere;
@@ -31,10 +29,6 @@ public class DatelessTask {
     @ManyToOne
     @JoinColumn(name = "completion_date_id")
     private DateEntity completionDate;
-
-    public Boolean getFake() {
-        return fake != null && fake;
-    }
 
     public String getDatesInfo() {
         String result = String.format("Creation: %s", READABLE_DATE_FORMAT.format(creationDate.getValue()));

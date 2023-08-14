@@ -82,9 +82,6 @@ public class DttTasksController implements SectionController {
             Label label = new Label(sphere.getTitle() + service.getStatistics(sphere));
             label.setWrapText(true);
             label.setStyle(Styler.getTextSizeStyle(18));
-            if (!sphere.getFake()) {
-                label.setContextMenu(getMenu(sphere));
-            }
             if (!sphere.isActive()) {
                 label.setStyle(Styler.getColorfullStyle(Styler.ThingToColor.TEXT, Styler.StandardColor.GRAY));
             } else {

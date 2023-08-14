@@ -20,15 +20,9 @@ public class Sphere {
 
     private boolean active;
 
-    private Boolean fake;
-
     @Override
     public String toString() {
         return title;
-    }
-
-    public Boolean getFake() {
-        return fake != null && fake;
     }
 
     @Override

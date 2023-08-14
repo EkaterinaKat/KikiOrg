@@ -22,10 +22,8 @@ public class DttTaskService {
     private final DateService dateService;
     private final DatelessTaskRepo repo;
     private final SphereRepo sphereRepo;
-    private final FakeService fakeService;
 
     public void createTask(Sphere sphere, String title) {
-        fakeService.antiFakeCheck(sphere);
         DatelessTask task = new DatelessTask();
         task.setSphere(sphere);
         task.setTitle(title);
@@ -34,26 +32,20 @@ public class DttTaskService {
     }
 
     public void edit(DatelessTask task, String title) {
-        fakeService.antiFakeCheck(task);
         task.setTitle(title);
         repo.save(task);
     }
 
     public void delete(DatelessTask task) {
-        fakeService.antiFakeCheck(task);
         repo.delete(task);
     }
 
     public void done(DatelessTask task) {
-        fakeService.antiFakeCheck(task);
         task.setCompletionDate(dateService.createIfNotExistAndGetDateEntity(new Date()));
         repo.save(task);
     }
 
     public Page<DatelessTask> getTodoTasks(Sphere sphere, int pageNum) {
-        if (sphere.getFake()) {
-            return fakeService.getFakeTodoTasks(sphere, pageNum, TASK_PAGE_SIZE);
-        }
         PageRequest pageRequest = PageRequest.of(pageNum, TASK_PAGE_SIZE, Sort.by("creationDate.value").ascending());
 
         org.springframework.data.domain.Page<DatelessTask> actionPage =
@@ -62,9 +54,6 @@ public class DttTaskService {
     }
 
     public Page<DatelessTask> getDoneTasks(Sphere sphere, int pageNum) {
-        if (sphere.getFake()) {
-            return fakeService.getFakeDoneTasks(sphere);
-        }
         PageRequest pageRequest = PageRequest.of(pageNum, TASK_PAGE_SIZE, Sort.by("id").ascending());
 
         org.springframework.data.domain.Page<DatelessTask> actionPage =
@@ -77,7 +66,6 @@ public class DttTaskService {
         for (Sphere sphere : sphereRepo.findByActiveIsTrue()) {
             result.addAll(repo.getTop2ByCompletionDateIsNullAndSphereOrderByCreationDateAsc(sphere));
         }
-        result.addAll(fakeService.getOldestTasks());
         return result;
     }
 
@@ -88,9 +76,6 @@ public class DttTaskService {
     }
 
     public String getStatistics(Sphere sphere) {
-        if (sphere.getFake()) {
-            return "";
-        }
         long todoCount = repo.countBySphereAndCompletionDateIsNull(sphere);
         long done = repo.countBySphereAndCompletionDateIsNotNull(sphere);
         return String.format(" (%d/%d)", todoCount, done);
