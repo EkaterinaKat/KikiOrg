@@ -50,10 +50,6 @@ public class DttTaskService {
         repo.save(task);
     }
 
-    public boolean isSphereAvailableForTaskCreation(Sphere sphere) {
-        return !sphere.getFake() && repo.countBySphereAndCompletionDateIsNull(sphere) < 15;
-    }
-
     public Page<DatelessTask> getTodoTasks(Sphere sphere, int pageNum) {
         if (sphere.getFake()) {
             return fakeService.getFakeTodoTasks(sphere, pageNum, TASK_PAGE_SIZE);
