@@ -1,6 +1,6 @@
-package com.katyshevtseva.kikiorg.core.sections.dtt.repo;
+package com.katyshevtseva.kikiorg.core.sections.tracker.repo;
 
-import com.katyshevtseva.kikiorg.core.sections.dtt.entity.Sphere;
+import com.katyshevtseva.kikiorg.core.sections.tracker.entity.Sphere;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;

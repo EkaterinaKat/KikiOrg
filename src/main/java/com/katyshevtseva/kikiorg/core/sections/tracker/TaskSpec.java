@@ -1,8 +1,8 @@
-package com.katyshevtseva.kikiorg.core.sections.dtt;
+package com.katyshevtseva.kikiorg.core.sections.tracker;
 
 import com.katyshevtseva.general.GeneralUtils;
-import com.katyshevtseva.kikiorg.core.sections.dtt.entity.DatelessTask;
-import com.katyshevtseva.kikiorg.core.sections.dtt.entity.Sphere;
+import com.katyshevtseva.kikiorg.core.sections.tracker.entity.Sphere;
+import com.katyshevtseva.kikiorg.core.sections.tracker.entity.Task;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.jpa.domain.Specification;
 
@@ -14,13 +14,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RequiredArgsConstructor
-public class TaskSpec implements Specification<DatelessTask> {
+public class TaskSpec implements Specification<Task> {
     private final Sphere sphere;
     private final TaskStatus status;
     private final String searchString;
 
     @Override
-    public Predicate toPredicate(Root<DatelessTask> root, CriteriaQuery<?> cq, CriteriaBuilder cb) {
+    public Predicate toPredicate(Root<Task> root, CriteriaQuery<?> cq, CriteriaBuilder cb) {
         List<Predicate> objCriteria = new ArrayList<>();
 
 

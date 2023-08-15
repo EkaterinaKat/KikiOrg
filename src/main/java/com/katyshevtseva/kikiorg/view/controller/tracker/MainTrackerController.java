@@ -1,4 +1,4 @@
-package com.katyshevtseva.kikiorg.view.controller.dtt;
+package com.katyshevtseva.kikiorg.view.controller.tracker;
 
 import com.katyshevtseva.fx.FxUtils;
 import com.katyshevtseva.fx.WindowBuilder;
@@ -13,10 +13,10 @@ import javafx.scene.layout.Pane;
 import java.util.Arrays;
 import java.util.List;
 
-import static com.katyshevtseva.kikiorg.view.utils.KikiOrgWindowUtil.OrgNodeInfo.DTT_OLDEST;
-import static com.katyshevtseva.kikiorg.view.utils.KikiOrgWindowUtil.OrgNodeInfo.DTT_TASKS;
+import static com.katyshevtseva.kikiorg.view.utils.KikiOrgWindowUtil.OrgNodeInfo.TASKS;
+import static com.katyshevtseva.kikiorg.view.utils.KikiOrgWindowUtil.OrgNodeInfo.TRACKER_OLDEST;
 
-public class MainDttController extends AbstractSwitchController implements SectionController {
+public class MainTrackerController extends AbstractSwitchController implements SectionController {
     @FXML
     private Pane mainPane;
     @FXML
@@ -29,10 +29,10 @@ public class MainDttController extends AbstractSwitchController implements Secti
 
     private List<Section> getSections() {
         return Arrays.asList(
-                new Section("Tasks", new DttTasksController(),
-                        controller -> WindowBuilder.getNode(DTT_TASKS, controller)),
+                new Section("Tasks", new TasksController(),
+                        controller -> WindowBuilder.getNode(TASKS, controller)),
                 new Section("Oldest", new OldestController(),
-                        controller -> WindowBuilder.getNode(DTT_OLDEST, controller)));
+                        controller -> WindowBuilder.getNode(TRACKER_OLDEST, controller)));
     }
 
     private void placeButton(Button button) {

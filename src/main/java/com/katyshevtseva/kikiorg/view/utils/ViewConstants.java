@@ -12,7 +12,7 @@ public class ViewConstants {
     static final String FIN_FXML_LOCATION = "/fxml/finance/";
     static final String HABITS_FXML_LOCATION = "/fxml/habits/";
     static final String WARDROBE_FXML_LOCATION = "/fxml/wardrobe/";
-    static final String DTT_FXML_LOCATION = "/fxml/dtt/";
+    static final String TRACKER_FXML_LOCATION = "/fxml/tracker/";
 
     public static final Size WINDOW_SIZE = new Size(1000, 1500);
     public static final Size ITEM_SELECT_DIALOG_SIZE = new Size(800, 700);

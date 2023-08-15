@@ -1,13 +1,13 @@
-package com.katyshevtseva.kikiorg.core.sections.dtt;
+package com.katyshevtseva.kikiorg.core.sections.tracker;
 
 import com.katyshevtseva.general.Page;
 import com.katyshevtseva.kikiorg.core.date.DateService;
-import com.katyshevtseva.kikiorg.core.sections.dtt.entity.DatelessTask;
-import com.katyshevtseva.kikiorg.core.sections.dtt.entity.Sphere;
-import com.katyshevtseva.kikiorg.core.sections.dtt.entity.TaskStatusChangeAction;
-import com.katyshevtseva.kikiorg.core.sections.dtt.repo.DatelessTaskRepo;
-import com.katyshevtseva.kikiorg.core.sections.dtt.repo.SphereRepo;
-import com.katyshevtseva.kikiorg.core.sections.dtt.repo.TaskStatusChangeActionRepo;
+import com.katyshevtseva.kikiorg.core.sections.tracker.entity.Sphere;
+import com.katyshevtseva.kikiorg.core.sections.tracker.entity.Task;
+import com.katyshevtseva.kikiorg.core.sections.tracker.entity.TaskStatusChangeAction;
+import com.katyshevtseva.kikiorg.core.sections.tracker.repo.SphereRepo;
+import com.katyshevtseva.kikiorg.core.sections.tracker.repo.TaskRepo;
+import com.katyshevtseva.kikiorg.core.sections.tracker.repo.TaskStatusChangeActionRepo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -20,15 +20,15 @@ import static com.katyshevtseva.date.DateUtils.READABLE_DATE_FORMAT;
 
 @RequiredArgsConstructor
 @Service
-public class DttTaskService {
+public class TaskService {
     private static final int TASK_PAGE_SIZE = 15;
     private final DateService dateService;
-    private final DatelessTaskRepo repo;
+    private final TaskRepo repo;
     private final SphereRepo sphereRepo;
     private final TaskStatusChangeActionRepo actionRepo;
 
     public void createTask(Sphere sphere, String title, String desc) {
-        DatelessTask task = new DatelessTask();
+        Task task = new Task();
         task.setSphere(sphere);
         task.setTitle(title);
         task.setDescription(desc);
@@ -37,20 +37,20 @@ public class DttTaskService {
         repo.save(task);
     }
 
-    public void edit(DatelessTask task, String title, String desc) {
+    public void edit(Task task, String title, String desc) {
         task.setTitle(title);
         task.setDescription(desc);
         repo.save(task);
     }
 
-    public void delete(DatelessTask task) {
+    public void delete(Task task) {
         for (TaskStatusChangeAction action : actionRepo.findAllByTask(task)) {
             actionRepo.delete(action);
         }
         repo.delete(repo.findById(task.getId()).get());
     }
 
-    public void changeStatus(DatelessTask task, TaskStatus status) {
+    public void changeStatus(Task task, TaskStatus status) {
         if (!getStatusesProperToChangeTo(task.getStatus()).contains(status)) {
             throw new RuntimeException();
         }
@@ -74,15 +74,15 @@ public class DttTaskService {
         throw new RuntimeException();
     }
 
-    public Page<DatelessTask> getTasks(Sphere sphere, TaskStatus status, int pageNum, String searchString) {
+    public Page<Task> getTasks(Sphere sphere, TaskStatus status, int pageNum, String searchString) {
         Pageable pageable = PageRequest.of(pageNum, TASK_PAGE_SIZE, Sort.by("id").ascending());
         TaskSpec spec = new TaskSpec(sphere, status, searchString);
-        org.springframework.data.domain.Page<DatelessTask> taskPage = repo.findAll(spec, pageable);
+        org.springframework.data.domain.Page<Task> taskPage = repo.findAll(spec, pageable);
         return new Page<>(taskPage.getContent(), pageNum, taskPage.getTotalPages());
     }
 
-    public List<DatelessTask> getOldestTasks() {
-        List<DatelessTask> result = new ArrayList<>();
+    public List<Task> getOldestTasks() {
+        List<Task> result = new ArrayList<>();
         for (Sphere sphere : sphereRepo.findByActiveIsTrue()) {
             result.addAll(repo.getTop2ByStatusAndSphereOrderByCreationDateAsc(TaskStatus.TODO, sphere));
         }
@@ -97,7 +97,7 @@ public class DttTaskService {
         return stringBuilder.toString();
     }
 
-    public String getHistory(DatelessTask task) {
+    public String getHistory(Task task) {
         StringBuilder stringBuilder = new StringBuilder("CREATED: ")
                 .append(READABLE_DATE_FORMAT.format(task.getCreationDate().getValue()));
         for (TaskStatusChangeAction action : actionRepo.findAllByTask(task)) {

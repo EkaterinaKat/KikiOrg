@@ -21,11 +21,11 @@ public class KikiOrgWindowUtil {
     }
 
     public enum OrgNodeInfo implements WindowBuilder.NodeInfo {
-        //DATELESS TASK TRACKER
-        MAIN_DTT(FXML_LOCATION, "section_main.fxml"),
-        DTT_TASKS(DTT_FXML_LOCATION, "tasks.fxml"),
-        DTT_TASK_PANE(DTT_FXML_LOCATION, "task_pane.fxml"),
-        DTT_OLDEST(DTT_FXML_LOCATION, "oldest.fxml"),
+        //TRACKER
+        MAIN_TRACKER(FXML_LOCATION, "section_main.fxml"),
+        TASKS(TRACKER_FXML_LOCATION, "tasks.fxml"),
+        TASK_PANE(TRACKER_FXML_LOCATION, "task_pane.fxml"),
+        TRACKER_OLDEST(TRACKER_FXML_LOCATION, "oldest.fxml"),
         //WARDROBE
         OUTFIT(WARDROBE_FXML_LOCATION, "outfit.fxml"),
         OUTFIT_GRID(WARDROBE_FXML_LOCATION, "outfit_grid.fxml"),

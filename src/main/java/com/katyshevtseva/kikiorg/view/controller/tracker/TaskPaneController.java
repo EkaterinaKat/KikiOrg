@@ -1,4 +1,4 @@
-package com.katyshevtseva.kikiorg.view.controller.dtt;
+package com.katyshevtseva.kikiorg.view.controller.tracker;
 
 import com.katyshevtseva.fx.FxUtils;
 import com.katyshevtseva.fx.WindowBuilder;
@@ -8,9 +8,9 @@ import com.katyshevtseva.fx.dialogconstructor.DcTextField;
 import com.katyshevtseva.fx.dialogconstructor.DialogConstructor;
 import com.katyshevtseva.general.NoArgsKnob;
 import com.katyshevtseva.kikiorg.core.Core;
-import com.katyshevtseva.kikiorg.core.sections.dtt.DttTaskService;
-import com.katyshevtseva.kikiorg.core.sections.dtt.TaskStatus;
-import com.katyshevtseva.kikiorg.core.sections.dtt.entity.DatelessTask;
+import com.katyshevtseva.kikiorg.core.sections.tracker.TaskService;
+import com.katyshevtseva.kikiorg.core.sections.tracker.TaskStatus;
+import com.katyshevtseva.kikiorg.core.sections.tracker.entity.Task;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.ContextMenu;
@@ -22,8 +22,8 @@ import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
 public class TaskPaneController implements WindowBuilder.FxController {
-    private final DttTaskService service = Core.getInstance().dttTaskService();
-    private final DatelessTask task;
+    private final TaskService service = Core.getInstance().taskService();
+    private final Task task;
     private final int blockWidth;
     private final NoArgsKnob contentUpdateKnob;
     @FXML

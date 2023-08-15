@@ -1,9 +1,9 @@
-package com.katyshevtseva.kikiorg.view.controller.dtt;
+package com.katyshevtseva.kikiorg.view.controller.tracker;
 
 import com.katyshevtseva.fx.WindowBuilder;
 import com.katyshevtseva.fx.switchcontroller.SectionController;
 import com.katyshevtseva.kikiorg.core.Core;
-import com.katyshevtseva.kikiorg.core.sections.dtt.entity.DatelessTask;
+import com.katyshevtseva.kikiorg.core.sections.tracker.entity.Task;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.layout.HBox;
@@ -14,7 +14,7 @@ import java.util.List;
 
 import static com.katyshevtseva.fx.FxUtils.getPaneWithHeight;
 import static com.katyshevtseva.fx.FxUtils.getPaneWithWidth;
-import static com.katyshevtseva.kikiorg.view.utils.KikiOrgWindowUtil.OrgNodeInfo.DTT_TASK_PANE;
+import static com.katyshevtseva.kikiorg.view.utils.KikiOrgWindowUtil.OrgNodeInfo.TASK_PANE;
 
 public class OldestController implements SectionController {
     private static final int NUM_OF_COLUMNS = 3;
@@ -39,14 +39,14 @@ public class OldestController implements SectionController {
         }
         hBox.getChildren().add(getPaneWithWidth(10));
 
-        List<DatelessTask> tasks = Core.getInstance().dttTaskService().getOldestTasks();
+        List<Task> tasks = Core.getInstance().taskService().getOldestTasks();
         for (int i = 0; i < tasks.size(); i++) {
             int numOfBox = i % NUM_OF_COLUMNS;
             vBoxes.get(numOfBox).getChildren().addAll(taskToNode(tasks.get(i)), getPaneWithHeight(10));
         }
     }
 
-    private Node taskToNode(DatelessTask task) {
-        return WindowBuilder.getNode(DTT_TASK_PANE, new TaskPaneController(task, BLOCK_WIDTH, this::setContent));
+    private Node taskToNode(Task task) {
+        return WindowBuilder.getNode(TASK_PANE, new TaskPaneController(task, BLOCK_WIDTH, this::setContent));
     }
 }

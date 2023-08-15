@@ -1,7 +1,7 @@
-package com.katyshevtseva.kikiorg.core.sections.dtt.entity;
+package com.katyshevtseva.kikiorg.core.sections.tracker.entity;
 
 import com.katyshevtseva.kikiorg.core.date.DateEntity;
-import com.katyshevtseva.kikiorg.core.sections.dtt.TaskStatus;
+import com.katyshevtseva.kikiorg.core.sections.tracker.TaskStatus;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -17,7 +17,7 @@ public class TaskStatusChangeAction {
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "task_id", nullable = false)
-    private DatelessTask task;
+    private Task task;
 
     @ManyToOne
     @JoinColumn(name = "date_entity_id")
@@ -29,7 +29,7 @@ public class TaskStatusChangeAction {
     public TaskStatusChangeAction() {
     }
 
-    public TaskStatusChangeAction(DatelessTask task, DateEntity dateEntity, TaskStatus status) {
+    public TaskStatusChangeAction(Task task, DateEntity dateEntity, TaskStatus status) {
         this.task = task;
         this.dateEntity = dateEntity;
         this.status = status;

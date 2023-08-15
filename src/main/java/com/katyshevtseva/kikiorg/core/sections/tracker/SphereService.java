@@ -1,9 +1,9 @@
-package com.katyshevtseva.kikiorg.core.sections.dtt;
+package com.katyshevtseva.kikiorg.core.sections.tracker;
 
-import com.katyshevtseva.kikiorg.core.sections.dtt.entity.DatelessTask;
-import com.katyshevtseva.kikiorg.core.sections.dtt.entity.Sphere;
-import com.katyshevtseva.kikiorg.core.sections.dtt.repo.DatelessTaskRepo;
-import com.katyshevtseva.kikiorg.core.sections.dtt.repo.SphereRepo;
+import com.katyshevtseva.kikiorg.core.sections.tracker.entity.Sphere;
+import com.katyshevtseva.kikiorg.core.sections.tracker.entity.Task;
+import com.katyshevtseva.kikiorg.core.sections.tracker.repo.SphereRepo;
+import com.katyshevtseva.kikiorg.core.sections.tracker.repo.TaskRepo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -13,8 +13,8 @@ import java.util.List;
 @Service
 public class SphereService {
     private final SphereRepo repo;
-    private final DatelessTaskRepo taskRepo;
-    private final DttTaskService taskService;
+    private final TaskRepo taskRepo;
+    private final TaskService taskService;
 
     public Sphere save(Sphere existing, String title, boolean active) {
         if (existing == null) {
@@ -30,7 +30,7 @@ public class SphereService {
     }
 
     public void delete(Sphere sphere) {
-        for (DatelessTask task : taskRepo.findBySphere(sphere)) {
+        for (Task task : taskRepo.findBySphere(sphere)) {
             taskService.delete(task);
         }
         repo.delete(sphere);

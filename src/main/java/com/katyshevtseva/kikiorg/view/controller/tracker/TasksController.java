@@ -1,4 +1,4 @@
-package com.katyshevtseva.kikiorg.view.controller.dtt;
+package com.katyshevtseva.kikiorg.view.controller.tracker;
 
 import com.katyshevtseva.fx.FxUtils;
 import com.katyshevtseva.fx.Size;
@@ -13,10 +13,10 @@ import com.katyshevtseva.fx.dialogconstructor.DcTextField;
 import com.katyshevtseva.fx.dialogconstructor.DialogConstructor;
 import com.katyshevtseva.fx.switchcontroller.SectionController;
 import com.katyshevtseva.kikiorg.core.Core;
-import com.katyshevtseva.kikiorg.core.sections.dtt.DttTaskService;
-import com.katyshevtseva.kikiorg.core.sections.dtt.TaskStatus;
-import com.katyshevtseva.kikiorg.core.sections.dtt.entity.DatelessTask;
-import com.katyshevtseva.kikiorg.core.sections.dtt.entity.Sphere;
+import com.katyshevtseva.kikiorg.core.sections.tracker.TaskService;
+import com.katyshevtseva.kikiorg.core.sections.tracker.TaskStatus;
+import com.katyshevtseva.kikiorg.core.sections.tracker.entity.Sphere;
+import com.katyshevtseva.kikiorg.core.sections.tracker.entity.Task;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.*;
@@ -28,13 +28,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static com.katyshevtseva.kikiorg.view.utils.KikiOrgWindowUtil.OrgNodeInfo.DTT_TASK_PANE;
+import static com.katyshevtseva.kikiorg.view.utils.KikiOrgWindowUtil.OrgNodeInfo.TASK_PANE;
 
-public class DttTasksController implements SectionController {
+public class TasksController implements SectionController {
     private static final Size TASK_LIST_SIZE = new Size(800, 800);
     private Map<Sphere, Label> spherePointLabelMap;
-    private PageableBlockListController<DatelessTask> taskListController;
-    private final DttTaskService service = Core.getInstance().dttTaskService();
+    private PageableBlockListController<Task> taskListController;
+    private final TaskService service = Core.getInstance().taskService();
     private Sphere selectedSphere;
     @FXML
     private GridPane spherePane;
@@ -64,7 +64,7 @@ public class DttTasksController implements SectionController {
     }
 
     private void adjustTasksLists() {
-        ComponentBuilder.Component<PageableBlockListController<DatelessTask>> taskListComponent =
+        ComponentBuilder.Component<PageableBlockListController<Task>> taskListComponent =
                 new ComponentBuilder().setSize(TASK_LIST_SIZE).getPageableBlockListComponent();
         tasksPane.getChildren().add(taskListComponent.getNode());
         taskListController = taskListComponent.getController();
@@ -163,8 +163,8 @@ public class DttTasksController implements SectionController {
             spherePointLabelMap.get(sphere).setText("* ");
     }
 
-    private Node taskToNode(DatelessTask task, int blockWidth, Sphere sphere) {
-        return WindowBuilder.getNode(DTT_TASK_PANE,
+    private Node taskToNode(Task task, int blockWidth, Sphere sphere) {
+        return WindowBuilder.getNode(TASK_PANE,
                 new TaskPaneController(task, blockWidth, () -> {
                     fillSphereTable();
                     selectSphere(sphere);

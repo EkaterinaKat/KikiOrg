@@ -1,7 +1,7 @@
-package com.katyshevtseva.kikiorg.core.sections.dtt.entity;
+package com.katyshevtseva.kikiorg.core.sections.tracker.entity;
 
 import com.katyshevtseva.kikiorg.core.date.DateEntity;
-import com.katyshevtseva.kikiorg.core.sections.dtt.TaskStatus;
+import com.katyshevtseva.kikiorg.core.sections.tracker.TaskStatus;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -11,7 +11,7 @@ import java.util.Set;
 @Data
 @Entity
 @NoArgsConstructor
-public class DatelessTask {
+public class Task {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
@@ -39,7 +39,7 @@ public class DatelessTask {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        DatelessTask task = (DatelessTask) o;
+        Task task = (Task) o;
 
         return id == task.id;
     }
