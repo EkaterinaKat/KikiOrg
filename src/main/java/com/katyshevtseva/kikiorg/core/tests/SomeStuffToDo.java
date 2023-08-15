@@ -7,7 +7,7 @@ import javax.annotation.PostConstruct;
 
 @Service
 @RequiredArgsConstructor
-public class Job {
+public class SomeStuffToDo {
 
 //    @PostConstruct
     public void execute() {

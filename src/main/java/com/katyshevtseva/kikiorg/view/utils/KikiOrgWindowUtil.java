@@ -26,11 +26,6 @@ public class KikiOrgWindowUtil {
         DTT_TASKS(DTT_FXML_LOCATION, "tasks.fxml"),
         DTT_TASK_PANE(DTT_FXML_LOCATION, "task_pane.fxml"),
         DTT_OLDEST(DTT_FXML_LOCATION, "oldest.fxml"),
-        //TRACKER
-        TASK_PANE(TRACKER_FXML_LOCATION, "task_pane.fxml"),
-        PROJECT(TRACKER_FXML_LOCATION, "project.fxml"),
-        BOARD(TRACKER_FXML_LOCATION, "board.fxml"),
-        MAIN_TRACKER(FXML_LOCATION, "section_main.fxml"),
         //WARDROBE
         OUTFIT(WARDROBE_FXML_LOCATION, "outfit.fxml"),
         OUTFIT_GRID(WARDROBE_FXML_LOCATION, "outfit_grid.fxml"),
@@ -74,7 +69,6 @@ public class KikiOrgWindowUtil {
     }
 
     public enum OrgDialogInfo implements WindowBuilder.DialogInfo {
-        PROJECT(TRACKER_FXML_LOCATION, "project_dialog.fxml", new Size(500, 480), CoreConstants.APP_NAME),
         OUTFIT(WARDROBE_FXML_LOCATION, "outfit_dialog.fxml", new Size(1000, 1200), CoreConstants.APP_NAME),
         PIECE(WARDROBE_FXML_LOCATION, "piece_dialog.fxml", new Size(700, 800), CoreConstants.APP_NAME),
         HABIT(HABITS_FXML_LOCATION, "habit_dialog.fxml", new Size(650, 600), CoreConstants.APP_NAME),

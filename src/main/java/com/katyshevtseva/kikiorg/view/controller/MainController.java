@@ -9,7 +9,6 @@ import com.katyshevtseva.fx.switchcontroller.Section;
 import com.katyshevtseva.kikiorg.view.controller.dtt.MainDttController;
 import com.katyshevtseva.kikiorg.view.controller.finance.MainFinanceController;
 import com.katyshevtseva.kikiorg.view.controller.habits.MainHabitsController;
-import com.katyshevtseva.kikiorg.view.controller.tracker.MainTrackerController;
 import com.katyshevtseva.kikiorg.view.controller.wardrobe.MainWardrobeController;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -45,8 +44,6 @@ public class MainController extends AbstractSwitchController implements FxContro
                         controller -> WindowBuilder.getNode(MAIN_HABIT, controller)),
                 new Section("Wardrobe", new MainWardrobeController(),
                         controller -> WindowBuilder.getNode(MAIN_WARDROBE, controller)),
-                new Section("Tracker", new MainTrackerController(),
-                        controller -> WindowBuilder.getNode(MAIN_TRACKER, controller)),
                 new Section("DTT", new MainDttController(),
                         controller -> WindowBuilder.getNode(MAIN_DTT, controller)));
     }

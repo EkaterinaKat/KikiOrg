@@ -10,8 +10,6 @@ import com.katyshevtseva.kikiorg.core.sections.habits.AnalysisService;
 import com.katyshevtseva.kikiorg.core.sections.habits.HabitMarkService;
 import com.katyshevtseva.kikiorg.core.sections.habits.HabitsReportService;
 import com.katyshevtseva.kikiorg.core.sections.habits.HabitsService;
-import com.katyshevtseva.kikiorg.core.sections.tracker.BoardSortService;
-import com.katyshevtseva.kikiorg.core.sections.tracker.TrackerService;
 import com.katyshevtseva.kikiorg.core.sections.wardrobe.PieceSeasonService;
 import com.katyshevtseva.kikiorg.core.sections.wardrobe.WardrobeService;
 import com.katyshevtseva.kikiorg.core.sections.wardrobe.WardrobeStatisticsService;
@@ -33,8 +31,6 @@ public class Core implements InitializingBean {
     private final AnalysisService analysisService;
     private final HuddleCheckService huddleCheckService;
     private final FinanceSearchService financeSearchService;
-    private final TrackerService trackerService;
-    private final BoardSortService boardSortService;
     private final WardrobeStatisticsService wardrobeStatisticsService;
     private final FinanceReportService financeReportService;
     private final ReportPeriodService reportPeriodService;
@@ -129,14 +125,6 @@ public class Core implements InitializingBean {
 
     public FinanceSearchService financeSearchService() {
         return financeSearchService;
-    }
-
-    public TrackerService trackerService() {
-        return trackerService;
-    }
-
-    public BoardSortService boardSortService() {
-        return boardSortService;
     }
 
     public WardrobeStatisticsService wardrobeStatisticsService() {
