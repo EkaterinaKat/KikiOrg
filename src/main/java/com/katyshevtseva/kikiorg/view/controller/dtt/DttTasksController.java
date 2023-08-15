@@ -1,5 +1,6 @@
 package com.katyshevtseva.kikiorg.view.controller.dtt;
 
+import com.katyshevtseva.fx.FxUtils;
 import com.katyshevtseva.fx.Size;
 import com.katyshevtseva.fx.Styler;
 import com.katyshevtseva.fx.WindowBuilder;
@@ -13,14 +14,12 @@ import com.katyshevtseva.fx.dialogconstructor.DialogConstructor;
 import com.katyshevtseva.fx.switchcontroller.SectionController;
 import com.katyshevtseva.kikiorg.core.Core;
 import com.katyshevtseva.kikiorg.core.sections.dtt.DttTaskService;
+import com.katyshevtseva.kikiorg.core.sections.dtt.TaskStatus;
 import com.katyshevtseva.kikiorg.core.sections.dtt.entity.DatelessTask;
 import com.katyshevtseva.kikiorg.core.sections.dtt.entity.Sphere;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
-import javafx.scene.control.Button;
-import javafx.scene.control.ContextMenu;
-import javafx.scene.control.Label;
-import javafx.scene.control.MenuItem;
+import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
@@ -32,25 +31,26 @@ import java.util.Map;
 import static com.katyshevtseva.kikiorg.view.utils.KikiOrgWindowUtil.OrgNodeInfo.DTT_TASK_PANE;
 
 public class DttTasksController implements SectionController {
-    private static final Size TASK_LIST_SIZE = new Size(800, 350);
+    private static final Size TASK_LIST_SIZE = new Size(800, 700);
     private Map<Sphere, Label> spherePointLabelMap;
-    private PageableBlockListController<DatelessTask> todoListController;
-    private PageableBlockListController<DatelessTask> doneListController;
+    private PageableBlockListController<DatelessTask> taskListController;
     private final DttTaskService service = Core.getInstance().dttTaskService();
     private Sphere selectedSphere;
     @FXML
     private GridPane gridPane;
     @FXML
-    private Pane todoPane;
-    @FXML
-    private Pane donePane;
+    private Pane tasksPane;
     @FXML
     private Button newTaskButton;
     @FXML
     private Label statisticsLabel;
+    @FXML
+    private ComboBox<TaskStatus> statusBox;
 
     @FXML
     private void initialize() {
+        statusBox.setOnAction(event -> selectSphere(selectedSphere));
+        FxUtils.setComboBoxItems(statusBox, TaskStatus.values(), TaskStatus.TODO);
         adjustCreationButtons();
     }
 
@@ -61,16 +61,10 @@ public class DttTasksController implements SectionController {
     }
 
     private void adjustTasksLists() {
-        ComponentBuilder.Component<PageableBlockListController<DatelessTask>> todoComponent =
+        ComponentBuilder.Component<PageableBlockListController<DatelessTask>> taskListComponent =
                 new ComponentBuilder().setSize(TASK_LIST_SIZE).getPageableBlockListComponent();
-        ComponentBuilder.Component<PageableBlockListController<DatelessTask>> doneComponent =
-                new ComponentBuilder().setSize(TASK_LIST_SIZE).getPageableBlockListComponent();
-
-        todoPane.getChildren().add(todoComponent.getNode());
-        donePane.getChildren().add(doneComponent.getNode());
-
-        todoListController = todoComponent.getController();
-        doneListController = doneComponent.getController();
+        tasksPane.getChildren().add(taskListComponent.getNode());
+        taskListController = taskListComponent.getController();
     }
 
     private void fillSphereTable() {
@@ -79,9 +73,8 @@ public class DttTasksController implements SectionController {
         spherePointLabelMap = new HashMap<>();
         int rowIndex = 0;
         for (Sphere sphere : spheres) {
-            Label label = new Label(sphere.getTitle() + service.getStatistics(sphere));
-            label.setWrapText(true);
-            label.setStyle(Styler.getTextSizeStyle(18));
+            Label label = FxUtils.getLabel(sphere.getTitle(), 18, null);
+            label.setContextMenu(getMenu(sphere));
             if (!sphere.isActive()) {
                 label.setStyle(Styler.getColorfullStyle(Styler.ThingToColor.TEXT, Styler.StandardColor.GRAY));
             } else {
@@ -93,8 +86,7 @@ public class DttTasksController implements SectionController {
             gridPane.add(label, 2, rowIndex);
             rowIndex++;
         }
-        Label label = new Label("<+>");
-        label.setStyle(Styler.getTextSizeStyle(18));
+        Label label = FxUtils.getLabel("<+>", 18, null);
         label.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> showSphereEditDialog(null));
         gridPane.add(label, 2, rowIndex);
 
@@ -126,15 +118,12 @@ public class DttTasksController implements SectionController {
         selectedSphere = sphere;
 
         if (sphere != null) {
-            todoListController.show(pageNum -> service.getTodoTasks(sphere, pageNum),
-                    ((task, integer) -> taskToNode(task, integer, sphere)));
-            doneListController.show(pageNum -> service.getDoneTasks(sphere, pageNum),
+            taskListController.show(pageNum -> service.getTasks(sphere, statusBox.getValue(), pageNum),
                     ((task, integer) -> taskToNode(task, integer, sphere)));
             newTaskButton.setVisible(true);
         } else {
             newTaskButton.setVisible(false);
-            todoListController.clear();
-            doneListController.clear();
+            taskListController.clear();
         }
     }
 

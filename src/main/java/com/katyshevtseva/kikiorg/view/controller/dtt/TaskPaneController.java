@@ -1,12 +1,14 @@
 package com.katyshevtseva.kikiorg.view.controller.dtt;
 
-import com.katyshevtseva.fx.Styler;
+import com.katyshevtseva.fx.FxUtils;
 import com.katyshevtseva.fx.WindowBuilder;
 import com.katyshevtseva.fx.dialog.StandardDialogBuilder;
 import com.katyshevtseva.fx.dialogconstructor.DcTextArea;
 import com.katyshevtseva.fx.dialogconstructor.DialogConstructor;
 import com.katyshevtseva.general.NoArgsKnob;
 import com.katyshevtseva.kikiorg.core.Core;
+import com.katyshevtseva.kikiorg.core.sections.dtt.DttTaskService;
+import com.katyshevtseva.kikiorg.core.sections.dtt.TaskStatus;
 import com.katyshevtseva.kikiorg.core.sections.dtt.entity.DatelessTask;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
@@ -19,6 +21,7 @@ import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
 public class TaskPaneController implements WindowBuilder.FxController {
+    private final DttTaskService service = Core.getInstance().dttTaskService();
     private final DatelessTask task;
     private final int blockWidth;
     private final NoArgsKnob contentUpdateKnob;
@@ -31,29 +34,32 @@ public class TaskPaneController implements WindowBuilder.FxController {
 
     @FXML
     private void initialize() {
-        tuneLabel(titleLabel, 18, task.getTitle());
-        tuneLabel(datesLabel, 12, task.getDatesInfo());
+        FxUtils.tuneLabel(titleLabel, task.getTitle(), 18, blockWidth - 40);
+        FxUtils.tuneLabel(datesLabel, service.getHistory(task), 12, blockWidth - 40);
+        FxUtils.setWidth(root, blockWidth);
+        root.setOnContextMenuRequested(event -> showContextMenu(event, root));
     }
 
     private void showContextMenu(ContextMenuEvent event, Node node) {
         ContextMenu contextMenu = new ContextMenu();
 
-        if (task.getCompletionDate() == null) {
-            MenuItem doneItem = new MenuItem("Done");
-            doneItem.setOnAction(event1 -> new StandardDialogBuilder().openQuestionDialog("Done?", b -> {
-                if (b) {
-                    Core.getInstance().dttTaskService().done(task);
-                    contentUpdateKnob.execute();
-                }
-            }));
-            contextMenu.getItems().add(doneItem);
+        for (TaskStatus status : service.getStatusesProperToChangeTo(task.getStatus())) {
+            MenuItem item = new MenuItem(status.toString());
+            item.setOnAction(event1 -> new StandardDialogBuilder().openQuestionDialog("Change status to " + status + "?",
+                    b -> {
+                        if (b) {
+                            service.changeStatus(task, status);
+                            contentUpdateKnob.execute();
+                        }
+                    }));
+            contextMenu.getItems().add(item);
         }
 
         MenuItem editItem = new MenuItem("Edit");
         editItem.setOnAction(event1 -> {
             DcTextArea titleField = new DcTextArea(true, task.getTitle());
             DialogConstructor.constructDialog(() -> {
-                Core.getInstance().dttTaskService().edit(task, titleField.getValue());
+                service.edit(task, titleField.getValue());
                 contentUpdateKnob.execute();
             }, titleField);
         });
@@ -62,19 +68,12 @@ public class TaskPaneController implements WindowBuilder.FxController {
         MenuItem deleteItem = new MenuItem("Delete");
         deleteItem.setOnAction(event1 -> new StandardDialogBuilder().openQuestionDialog("Delete?", b -> {
             if (b) {
-                Core.getInstance().dttTaskService().delete(task);
+                service.delete(task);
                 contentUpdateKnob.execute();
             }
         }));
         contextMenu.getItems().add(deleteItem);
 
         contextMenu.show(node, event.getScreenX(), event.getScreenY());
-    }
-
-    private void tuneLabel(Label label, int textSize, String text) {
-        label.setMaxWidth(blockWidth - 40);
-        label.setWrapText(true);
-        label.setText(text);
-        label.setStyle(Styler.getTextSizeStyle(textSize));
     }
 }

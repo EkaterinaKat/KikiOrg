@@ -14,6 +14,7 @@ import java.util.List;
 public class SphereService {
     private final SphereRepo repo;
     private final DatelessTaskRepo taskRepo;
+    private final DttTaskService taskService;
 
     public Sphere save(Sphere existing, String title, boolean active) {
         if (existing == null) {
@@ -30,7 +31,7 @@ public class SphereService {
 
     public void delete(Sphere sphere) {
         for (DatelessTask task : taskRepo.findBySphere(sphere)) {
-            taskRepo.delete(task);
+            taskService.delete(task);
         }
         repo.delete(sphere);
     }

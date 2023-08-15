@@ -4,16 +4,18 @@ import com.katyshevtseva.general.Page;
 import com.katyshevtseva.kikiorg.core.date.DateService;
 import com.katyshevtseva.kikiorg.core.sections.dtt.entity.DatelessTask;
 import com.katyshevtseva.kikiorg.core.sections.dtt.entity.Sphere;
+import com.katyshevtseva.kikiorg.core.sections.dtt.entity.TaskStatusChangeAction;
 import com.katyshevtseva.kikiorg.core.sections.dtt.repo.DatelessTaskRepo;
 import com.katyshevtseva.kikiorg.core.sections.dtt.repo.SphereRepo;
+import com.katyshevtseva.kikiorg.core.sections.dtt.repo.TaskStatusChangeActionRepo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
+
+import static com.katyshevtseva.date.DateUtils.READABLE_DATE_FORMAT;
 
 @RequiredArgsConstructor
 @Service
@@ -22,12 +24,14 @@ public class DttTaskService {
     private final DateService dateService;
     private final DatelessTaskRepo repo;
     private final SphereRepo sphereRepo;
+    private final TaskStatusChangeActionRepo actionRepo;
 
     public void createTask(Sphere sphere, String title) {
         DatelessTask task = new DatelessTask();
         task.setSphere(sphere);
         task.setTitle(title);
         task.setCreationDate(dateService.createIfNotExistAndGetDateEntity(new Date()));
+        task.setStatus(TaskStatus.TODO);
         repo.save(task);
     }
 
@@ -37,47 +41,67 @@ public class DttTaskService {
     }
 
     public void delete(DatelessTask task) {
-        repo.delete(task);
+        for (TaskStatusChangeAction action : actionRepo.findAllByTask(task)) {
+            actionRepo.delete(action);
+        }
+        repo.delete(repo.findById(task.getId()).get());
     }
 
-    public void done(DatelessTask task) {
-        task.setCompletionDate(dateService.createIfNotExistAndGetDateEntity(new Date()));
+    public void changeStatus(DatelessTask task, TaskStatus status) {
+        if (!getStatusesProperToChangeTo(task.getStatus()).contains(status)) {
+            throw new RuntimeException();
+        }
+
+        actionRepo.save(new TaskStatusChangeAction(
+                task, dateService.createIfNotExistAndGetDateEntity(new Date()), status));
+        task.setStatus(status);
         repo.save(task);
     }
 
-    public Page<DatelessTask> getTodoTasks(Sphere sphere, int pageNum) {
-        PageRequest pageRequest = PageRequest.of(pageNum, TASK_PAGE_SIZE, Sort.by("creationDate.value").ascending());
-
-        org.springframework.data.domain.Page<DatelessTask> actionPage =
-                repo.findBySphereAndCompletionDateIsNull(sphere, pageRequest);
-        return new Page<>(actionPage.getContent(), pageNum, actionPage.getTotalPages());
+    public List<TaskStatus> getStatusesProperToChangeTo(TaskStatus initStatus) {
+        switch (initStatus) {
+            case TODO:
+                return Arrays.asList(TaskStatus.SHELVED, TaskStatus.DONE, TaskStatus.REJECTED);
+            case SHELVED:
+                return Arrays.asList(TaskStatus.TODO, TaskStatus.DONE, TaskStatus.REJECTED);
+            case DONE:
+            case REJECTED:
+                return Collections.singletonList(TaskStatus.TODO);
+        }
+        throw new RuntimeException();
     }
 
-    public Page<DatelessTask> getDoneTasks(Sphere sphere, int pageNum) {
+    public Page<DatelessTask> getTasks(Sphere sphere, TaskStatus status, int pageNum) {
         PageRequest pageRequest = PageRequest.of(pageNum, TASK_PAGE_SIZE, Sort.by("id").ascending());
 
-        org.springframework.data.domain.Page<DatelessTask> actionPage =
-                repo.findBySphereAndCompletionDateIsNotNull(sphere, pageRequest);
-        return new Page<>(actionPage.getContent(), pageNum, actionPage.getTotalPages());
+        org.springframework.data.domain.Page<DatelessTask> taskPage =
+                repo.findBySphereAndStatus(sphere, status, pageRequest);
+        return new Page<>(taskPage.getContent(), pageNum, taskPage.getTotalPages());
     }
 
     public List<DatelessTask> getOldestTasks() {
         List<DatelessTask> result = new ArrayList<>();
         for (Sphere sphere : sphereRepo.findByActiveIsTrue()) {
-            result.addAll(repo.getTop2ByCompletionDateIsNullAndSphereOrderByCreationDateAsc(sphere));
+            result.addAll(repo.getTop2ByStatusAndSphereOrderByCreationDateAsc(TaskStatus.TODO, sphere));
         }
         return result;
     }
 
     public String getStatistics() {
-        long todoCount = repo.countByCompletionDateIsNull();
-        long done = repo.countByCompletionDateIsNotNull();
-        return String.format("Todo: %d\nDone: %d", todoCount, done);
+        StringBuilder stringBuilder = new StringBuilder();
+        for (TaskStatus status : TaskStatus.values()) {
+            stringBuilder.append(status.toString()).append(": ").append(repo.countByStatus(status)).append("\n");
+        }
+        return stringBuilder.toString();
     }
 
-    public String getStatistics(Sphere sphere) {
-        long todoCount = repo.countBySphereAndCompletionDateIsNull(sphere);
-        long done = repo.countBySphereAndCompletionDateIsNotNull(sphere);
-        return String.format(" (%d/%d)", todoCount, done);
+    public String getHistory(DatelessTask task) {
+        StringBuilder stringBuilder = new StringBuilder("CREATED: ")
+                .append(READABLE_DATE_FORMAT.format(task.getCreationDate().getValue()));
+        for (TaskStatusChangeAction action : actionRepo.findAllByTask(task)) {
+            stringBuilder.append("\n").append(action.toString());
+        }
+        return stringBuilder.toString();
     }
+
 }

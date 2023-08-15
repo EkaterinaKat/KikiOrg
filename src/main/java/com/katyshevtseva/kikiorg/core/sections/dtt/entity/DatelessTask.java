@@ -1,12 +1,12 @@
 package com.katyshevtseva.kikiorg.core.sections.dtt.entity;
 
 import com.katyshevtseva.kikiorg.core.date.DateEntity;
+import com.katyshevtseva.kikiorg.core.sections.dtt.TaskStatus;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-
-import static com.katyshevtseva.date.DateUtils.READABLE_DATE_FORMAT;
+import java.util.Set;
 
 @Data
 @Entity
@@ -26,15 +26,24 @@ public class DatelessTask {
     @JoinColumn(name = "creation_date_id")
     private DateEntity creationDate;
 
-    @ManyToOne
-    @JoinColumn(name = "completion_date_id")
-    private DateEntity completionDate;
+    @Enumerated(EnumType.STRING)
+    private TaskStatus status;
 
-    public String getDatesInfo() {
-        String result = String.format("Creation: %s", READABLE_DATE_FORMAT.format(creationDate.getValue()));
-        if (completionDate != null) {
-            result += String.format("\nCompletion: %s", READABLE_DATE_FORMAT.format(completionDate.getValue()));
-        }
-        return result;
+    @OneToMany(mappedBy = "task", fetch = FetchType.EAGER)
+    private Set<TaskStatusChangeAction> history;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        DatelessTask task = (DatelessTask) o;
+
+        return id == task.id;
+    }
+
+    @Override
+    public int hashCode() {
+        return (int) (id ^ (id >>> 32));
     }
 }
