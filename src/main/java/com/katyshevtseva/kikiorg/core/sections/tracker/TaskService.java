@@ -75,7 +75,7 @@ public class TaskService {
     }
 
     public Page<Task> getTasks(Sphere sphere, TaskStatus status, int pageNum, String searchString) {
-        Pageable pageable = PageRequest.of(pageNum, TASK_PAGE_SIZE, Sort.by("id").ascending());
+        Pageable pageable = PageRequest.of(pageNum, TASK_PAGE_SIZE, Sort.by("id").descending());
         TaskSpec spec = new TaskSpec(sphere, status, searchString);
         org.springframework.data.domain.Page<Task> taskPage = repo.findAll(spec, pageable);
         return new Page<>(taskPage.getContent(), pageNum, taskPage.getTotalPages());

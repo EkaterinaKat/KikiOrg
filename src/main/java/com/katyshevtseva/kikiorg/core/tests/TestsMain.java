@@ -16,13 +16,15 @@ public class TestsMain {
     private final FinanceSearchTest financeSearchTest;
     private final HabitTest habitTest;
     private final FinanceMulticurrencyTest financeMulticurrencyTest;
+    private final TrackerTest trackerTest;
 
-    //    @PostConstruct
+//    @PostConstruct
     public void test() {
         test(financeTest);
         test(financeSearchTest);
         test(financeMulticurrencyTest);
         test(habitTest);
+        test(trackerTest);
     }
 
     private void test(TestClass testClass) {

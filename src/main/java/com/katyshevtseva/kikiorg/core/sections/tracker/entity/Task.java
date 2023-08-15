@@ -6,7 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.util.Set;
+import java.util.List;
 
 @Data
 @Entity
@@ -32,7 +32,7 @@ public class Task {
     private TaskStatus status;
 
     @OneToMany(mappedBy = "task", fetch = FetchType.EAGER)
-    private Set<TaskStatusChangeAction> history;
+    private List<TaskStatusChangeAction> history;
 
     @Override
     public boolean equals(Object o) {
