@@ -10,6 +10,7 @@ import com.katyshevtseva.kikiorg.core.sections.dtt.repo.SphereRepo;
 import com.katyshevtseva.kikiorg.core.sections.dtt.repo.TaskStatusChangeActionRepo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
@@ -26,17 +27,19 @@ public class DttTaskService {
     private final SphereRepo sphereRepo;
     private final TaskStatusChangeActionRepo actionRepo;
 
-    public void createTask(Sphere sphere, String title) {
+    public void createTask(Sphere sphere, String title, String desc) {
         DatelessTask task = new DatelessTask();
         task.setSphere(sphere);
         task.setTitle(title);
+        task.setDescription(desc);
         task.setCreationDate(dateService.createIfNotExistAndGetDateEntity(new Date()));
         task.setStatus(TaskStatus.TODO);
         repo.save(task);
     }
 
-    public void edit(DatelessTask task, String title) {
+    public void edit(DatelessTask task, String title, String desc) {
         task.setTitle(title);
+        task.setDescription(desc);
         repo.save(task);
     }
 
@@ -71,11 +74,10 @@ public class DttTaskService {
         throw new RuntimeException();
     }
 
-    public Page<DatelessTask> getTasks(Sphere sphere, TaskStatus status, int pageNum) {
-        PageRequest pageRequest = PageRequest.of(pageNum, TASK_PAGE_SIZE, Sort.by("id").ascending());
-
-        org.springframework.data.domain.Page<DatelessTask> taskPage =
-                repo.findBySphereAndStatus(sphere, status, pageRequest);
+    public Page<DatelessTask> getTasks(Sphere sphere, TaskStatus status, int pageNum, String searchString) {
+        Pageable pageable = PageRequest.of(pageNum, TASK_PAGE_SIZE, Sort.by("id").ascending());
+        TaskSpec spec = new TaskSpec(sphere, status, searchString);
+        org.springframework.data.domain.Page<DatelessTask> taskPage = repo.findAll(spec, pageable);
         return new Page<>(taskPage.getContent(), pageNum, taskPage.getTotalPages());
     }
 

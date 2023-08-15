@@ -31,13 +31,13 @@ import java.util.Map;
 import static com.katyshevtseva.kikiorg.view.utils.KikiOrgWindowUtil.OrgNodeInfo.DTT_TASK_PANE;
 
 public class DttTasksController implements SectionController {
-    private static final Size TASK_LIST_SIZE = new Size(800, 700);
+    private static final Size TASK_LIST_SIZE = new Size(800, 800);
     private Map<Sphere, Label> spherePointLabelMap;
     private PageableBlockListController<DatelessTask> taskListController;
     private final DttTaskService service = Core.getInstance().dttTaskService();
     private Sphere selectedSphere;
     @FXML
-    private GridPane gridPane;
+    private GridPane spherePane;
     @FXML
     private Pane tasksPane;
     @FXML
@@ -46,10 +46,13 @@ public class DttTasksController implements SectionController {
     private Label statisticsLabel;
     @FXML
     private ComboBox<TaskStatus> statusBox;
+    @FXML
+    private TextField searchField;
 
     @FXML
     private void initialize() {
-        statusBox.setOnAction(event -> selectSphere(selectedSphere));
+        statusBox.setOnAction(event -> updateTaskList());
+        searchField.textProperty().addListener((observable, oldValue, newValue) -> updateTaskList());
         FxUtils.setComboBoxItems(statusBox, TaskStatus.values(), TaskStatus.TODO);
         adjustCreationButtons();
     }
@@ -68,7 +71,7 @@ public class DttTasksController implements SectionController {
     }
 
     private void fillSphereTable() {
-        gridPane.getChildren().clear();
+        spherePane.getChildren().clear();
         List<Sphere> spheres = Core.getInstance().sphereService().getAll();
         spherePointLabelMap = new HashMap<>();
         int rowIndex = 0;
@@ -81,14 +84,14 @@ public class DttTasksController implements SectionController {
                 Label point = new Label();
                 spherePointLabelMap.put(sphere, point);
                 label.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> selectSphere(sphere));
-                gridPane.add(point, 1, rowIndex);
+                spherePane.add(point, 1, rowIndex);
             }
-            gridPane.add(label, 2, rowIndex);
+            spherePane.add(label, 2, rowIndex);
             rowIndex++;
         }
         Label label = FxUtils.getLabel("<+>", 18, null);
         label.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> showSphereEditDialog(null));
-        gridPane.add(label, 2, rowIndex);
+        spherePane.add(label, 2, rowIndex);
 
         statisticsLabel.setText(service.getStatistics());
     }
@@ -118,8 +121,7 @@ public class DttTasksController implements SectionController {
         selectedSphere = sphere;
 
         if (sphere != null) {
-            taskListController.show(pageNum -> service.getTasks(sphere, statusBox.getValue(), pageNum),
-                    ((task, integer) -> taskToNode(task, integer, sphere)));
+            updateTaskList();
             newTaskButton.setVisible(true);
         } else {
             newTaskButton.setVisible(false);
@@ -127,14 +129,20 @@ public class DttTasksController implements SectionController {
         }
     }
 
+    private void updateTaskList() {
+        taskListController.show(pageNum -> service.getTasks(selectedSphere, statusBox.getValue(), pageNum, searchField.getText()),
+                ((task, integer) -> taskToNode(task, integer, selectedSphere)));
+    }
+
     private void adjustCreationButtons() {
         newTaskButton.setOnAction(event -> {
-            DcTextArea titleField = new DcTextArea(true, "");
+            DcTextField titleField = new DcTextField(true, "");
+            DcTextArea descField = new DcTextArea(false, "");
             DialogConstructor.constructDialog(() -> {
-                service.createTask(selectedSphere, titleField.getValue());
+                service.createTask(selectedSphere, titleField.getValue(), descField.getValue());
                 fillSphereTable();
                 selectSphere(selectedSphere);
-            }, titleField);
+            }, titleField, descField);
         });
     }
 

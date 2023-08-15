@@ -4,6 +4,7 @@ import com.katyshevtseva.fx.FxUtils;
 import com.katyshevtseva.fx.WindowBuilder;
 import com.katyshevtseva.fx.dialog.StandardDialogBuilder;
 import com.katyshevtseva.fx.dialogconstructor.DcTextArea;
+import com.katyshevtseva.fx.dialogconstructor.DcTextField;
 import com.katyshevtseva.fx.dialogconstructor.DialogConstructor;
 import com.katyshevtseva.general.NoArgsKnob;
 import com.katyshevtseva.kikiorg.core.Core;
@@ -28,14 +29,18 @@ public class TaskPaneController implements WindowBuilder.FxController {
     @FXML
     private Label titleLabel;
     @FXML
+    private Label descLabel;
+    @FXML
     private Label datesLabel;
     @FXML
     private HBox root;
 
     @FXML
     private void initialize() {
-        FxUtils.tuneLabel(titleLabel, task.getTitle(), 18, blockWidth - 40);
-        FxUtils.tuneLabel(datesLabel, service.getHistory(task), 12, blockWidth - 40);
+        int labelWidth = blockWidth - 40;
+        FxUtils.tuneLabel(titleLabel, task.getTitle(), 18, labelWidth);
+        FxUtils.tuneLabel(datesLabel, service.getHistory(task), 12, labelWidth);
+        FxUtils.tuneLabel(descLabel, task.getDescription(), 15, labelWidth);
         FxUtils.setWidth(root, blockWidth);
         root.setOnContextMenuRequested(event -> showContextMenu(event, root));
     }
@@ -57,11 +62,12 @@ public class TaskPaneController implements WindowBuilder.FxController {
 
         MenuItem editItem = new MenuItem("Edit");
         editItem.setOnAction(event1 -> {
-            DcTextArea titleField = new DcTextArea(true, task.getTitle());
+            DcTextField titleField = new DcTextField(true, task.getTitle());
+            DcTextArea descField = new DcTextArea(false, task.getDescription());
             DialogConstructor.constructDialog(() -> {
-                service.edit(task, titleField.getValue());
+                service.edit(task, titleField.getValue(), descField.getValue());
                 contentUpdateKnob.execute();
-            }, titleField);
+            }, titleField, descField);
         });
         contextMenu.getItems().add(editItem);
 

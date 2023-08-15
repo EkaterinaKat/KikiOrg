@@ -11,6 +11,8 @@
         <Pane minHeight="20" maxHeight="20"/>
         <Label fx:id="titleLabel"/>
         <Pane minHeight="20" maxHeight="20"/>
+        <Label fx:id="descLabel"/>
+        <Pane minHeight="20" maxHeight="20"/>
         <Label fx:id="datesLabel"/>
         <Pane minHeight="20" maxHeight="20"/>
     </VBox>

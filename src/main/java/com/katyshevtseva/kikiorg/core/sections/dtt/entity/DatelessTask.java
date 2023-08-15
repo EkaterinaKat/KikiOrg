@@ -18,6 +18,8 @@ public class DatelessTask {
 
     private String title;
 
+    private String description;
+
     @ManyToOne
     @JoinColumn(name = "sphere_id")
     private Sphere sphere;
