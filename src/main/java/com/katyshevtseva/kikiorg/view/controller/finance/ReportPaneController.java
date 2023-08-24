@@ -4,7 +4,7 @@ import com.katyshevtseva.fx.PieChartUtil;
 import com.katyshevtseva.fx.ReportUtils;
 import com.katyshevtseva.fx.Styler;
 import com.katyshevtseva.fx.WindowBuilder;
-import com.katyshevtseva.kikiorg.core.sections.finance.report.FinanceReport;
+import com.katyshevtseva.kikiorg.core.sections.finance.report.SpodReport;
 import javafx.fxml.FXML;
 import javafx.scene.chart.PieChart;
 import javafx.scene.control.Label;
@@ -24,9 +24,9 @@ public class ReportPaneController implements WindowBuilder.FxController {
         pieChart.setStyle(Styler.getTextSizeStyle(10));
     }
 
-    void showReport(FinanceReport financeReport) {
-        label.setText(financeReport.getTitle());
-        PieChartUtil.tunePieChart(pieChart, financeReport.getPieChartData());
-        ReportUtils.showReport(financeReport.getTable(), table);
+    void showReport(SpodReport spodReport) {
+        label.setText(spodReport.getTitle());
+        PieChartUtil.tunePieChart(pieChart, spodReport.getPieChartData());
+        ReportUtils.showReport(spodReport.getTable(), table);
     }
 }

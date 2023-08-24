@@ -8,7 +8,7 @@ import com.katyshevtseva.kikiorg.core.sections.finance.entity.AccountGroup;
 import com.katyshevtseva.kikiorg.core.sections.finance.entity.Transfer;
 import com.katyshevtseva.kikiorg.core.sections.finance.repo.TransferRepo;
 import com.katyshevtseva.kikiorg.core.sections.finance.report.FinanceReportService;
-import com.katyshevtseva.kikiorg.core.sections.finance.report.FullFinanceReport;
+import com.katyshevtseva.kikiorg.core.sections.finance.report.SinglePeriodReport;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -32,7 +32,7 @@ public class FinanceTest implements TestClass {
         // first test
         System.out.println("\n\n first test");
         for (Account account : financeService.getAllAccounts()) {
-            FullFinanceReport report = reportService.getReport(
+            SinglePeriodReport report = reportService.getReport(
                     new AccountGroup("", Collections.singletonList(account)), period);
 
             long calculationResult = calculationService.calculateAccountAmountByOperations(account);

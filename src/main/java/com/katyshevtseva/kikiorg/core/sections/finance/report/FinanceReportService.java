@@ -13,7 +13,7 @@ import com.katyshevtseva.kikiorg.core.sections.finance.entity.Account;
 import com.katyshevtseva.kikiorg.core.sections.finance.entity.AccountGroup;
 import com.katyshevtseva.kikiorg.core.sections.finance.entity.Expense;
 import com.katyshevtseva.kikiorg.core.sections.finance.entity.Transfer;
-import com.katyshevtseva.kikiorg.core.sections.finance.report.FinanceReport.Line;
+import com.katyshevtseva.kikiorg.core.sections.finance.report.SpodReport.Line;
 import com.katyshevtseva.kikiorg.core.sections.finance.search.FinanceSearchService;
 import com.katyshevtseva.kikiorg.core.sections.finance.search.SearchRequest;
 import lombok.RequiredArgsConstructor;
@@ -33,38 +33,38 @@ public class FinanceReportService {
     private final FinanceService financeService;
     private final ItemHierarchyService itemHierarchyService;
 
-    public FullFinanceReport getReport(AccountGroup accountGroup, Period period) {
+    public SinglePeriodReport getReport(AccountGroup accountGroup, Period period) {
         try {
             AccountGroupService.validateAccountGroup(accountGroup.getAccounts());
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
 
-        return new FullFinanceReport(
+        return new SinglePeriodReport(
                 getIncomeReport(accountGroup.getAccounts(), period),
                 getOutgoReport(accountGroup.getAccounts(), period));
     }
 
-    private FinanceReport getIncomeReport(List<Account> accounts, Period period) {
-        FinanceReport incomeReport = new FinanceReport("Доход");
+    public SpodReport getIncomeReport(List<Account> accounts, Period period) {
+        SpodReport incomeReport = new SpodReport("Доход");
         addReplenishmentLinesToIncomeReport(incomeReport, accounts, period);
         addTransferLinesToIncomeReport(incomeReport, accounts, period);
         return incomeReport;
     }
 
-    private FinanceReport getOutgoReport(List<Account> accounts, Period period) {
-        FinanceReport outgoReport = new FinanceReport("Расход");
+    public SpodReport getOutgoReport(List<Account> accounts, Period period) {
+        SpodReport outgoReport = new SpodReport("Расход");
         addExpenseLinesToOutgoReport(outgoReport, accounts, period, itemHierarchyService.getTopLevelNodes());
         addTransferLinesToOutgoReport(outgoReport, accounts, period);
         return outgoReport;
     }
 
-    private void addReplenishmentLinesToIncomeReport(FinanceReport report, List<Account> accounts, Period period) {
+    private void addReplenishmentLinesToIncomeReport(SpodReport report, List<Account> accounts, Period period) {
         SearchRequest request = formRequest(REPLENISHMENT, period, financeService.getAllSources(), accounts);
         report.addLines(getReportLinesByOperations(searchService.search(request), ReportType.INCOME));
     }
 
-    private void addTransferLinesToIncomeReport(FinanceReport report, List<Account> accounts, Period period) {
+    private void addTransferLinesToIncomeReport(SpodReport report, List<Account> accounts, Period period) {
         SearchRequest request = formRequest(TRANSFER, period, financeService.getAllAccounts(), accounts);
 
         List<Transfer> transfers = searchService.search(request).stream()
@@ -75,7 +75,7 @@ public class FinanceReportService {
         report.addLines(getReportLinesByOperations(transfers, ReportType.INCOME));
     }
 
-    private void addExpenseLinesToOutgoReport(FinanceReport report, List<Account> accounts, Period period, List<HierarchyNode> hierarchyNodes) {
+    private void addExpenseLinesToOutgoReport(SpodReport report, List<Account> accounts, Period period, List<HierarchyNode> hierarchyNodes) {
         for (HierarchyNode node : hierarchyNodes) {
             SearchRequest request = formRequest(EXPENSE, period, accounts,
                     itemHierarchyService.getAllDescendantLeavesByHierarchyNode(node));
@@ -88,7 +88,7 @@ public class FinanceReportService {
         }
     }
 
-    private void addTransferLinesToOutgoReport(FinanceReport report, List<Account> accounts, Period period) {
+    private void addTransferLinesToOutgoReport(SpodReport report, List<Account> accounts, Period period) {
         SearchRequest request = formRequest(TRANSFER, period, accounts, financeService.getAllAccounts());
 
         List<Transfer> transfers = searchService.search(request).stream()

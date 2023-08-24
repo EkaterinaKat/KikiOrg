@@ -14,7 +14,7 @@ import com.katyshevtseva.kikiorg.core.sections.finance.FinanceService;
 import com.katyshevtseva.kikiorg.core.sections.finance.entity.Account;
 import com.katyshevtseva.kikiorg.core.sections.finance.entity.AccountGroup;
 import com.katyshevtseva.kikiorg.core.sections.finance.report.FinanceReportService;
-import com.katyshevtseva.kikiorg.core.sections.finance.report.FullFinanceReport;
+import com.katyshevtseva.kikiorg.core.sections.finance.report.SinglePeriodReport;
 import com.katyshevtseva.kikiorg.core.sections.finance.report.ReportPeriodService;
 import com.katyshevtseva.kikiorg.core.sections.finance.report.ReportPeriodService.ReportPeriod;
 import javafx.fxml.FXML;
@@ -33,7 +33,7 @@ import static com.katyshevtseva.general.GeneralUtils.getColumnByIndexAndColumnNu
 import static com.katyshevtseva.general.GeneralUtils.getRowByIndexAndColumnNum;
 import static com.katyshevtseva.kikiorg.view.utils.KikiOrgWindowUtil.OrgNodeInfo.REPORT_PANE;
 
-class FullReportController implements FxController {
+class SinglePeriodReportController implements FxController {
     private static final int NUM_OF_COLUMNS_IN_PERIOD_GRID = 3;
     private final AccountGroupService accountGroupService = Core.getInstance().accountGroupService();
     private final FinanceReportService reportService = Core.getInstance().financeReportService();
@@ -77,7 +77,7 @@ class FullReportController implements FxController {
             return;
         }
 
-        FullFinanceReport report = reportService.getReport(group, getPeriod(startDatePicker, endDatePicker));
+        SinglePeriodReport report = reportService.getReport(group, getPeriod(startDatePicker, endDatePicker));
         resultLabel.setText("Total: " + report.getTotal());
         incomePaneController.showReport(report.getIncomeReport());
         outgoPaneController.showReport(report.getOutgoReport());
@@ -130,8 +130,10 @@ class FullReportController implements FxController {
     }
 
     private void tunePeriodPane() {
+        List<ReportPeriod> periods = periodService.getSeveralPastMonthsPeriods(6);
+        periods.add(periodService.getAllTimePeriod());
+
         periodPane.getChildren().clear();
-        List<ReportPeriod> periods = periodService.getReportPeriods();
         for (int i = 0; i < periods.size(); i++) {
             ReportPeriod period = periods.get(i);
             Button button = new Button(period.getTitle());

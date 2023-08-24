@@ -7,14 +7,15 @@ import com.katyshevtseva.general.ReportCell;
 import java.util.ArrayList;
 import java.util.List;
 
-public class FinanceReport {
+// Single period one direction (income or outgo) report
+public class SpodReport {
     private final String title;
     private final List<Line> lines = new ArrayList<>();
     private Long total;
     private List<List<ReportCell>> table;
     private PieChartData pieChartData;
 
-    public FinanceReport(String title) {
+    public SpodReport(String title) {
         this.title = title;
     }
 

@@ -16,20 +16,16 @@ import static com.katyshevtseva.kikiorg.core.CoreConstants.FINANCIAL_ACCOUNTING_
 @Service
 @RequiredArgsConstructor
 public class ReportPeriodService {
-    private static final int NUM_OF_LATEST_MONTHS_OFFERED = 6;
 
-    public List<ReportPeriod> getReportPeriods() {
-        List<ReportPeriod> periods = new ArrayList<>();
-        periods.add(new ReportPeriod(new Period(FINANCIAL_ACCOUNTING_START_DATE, new Date()), "All time"));
-        periods.addAll(getSeveralPastMonthsPeriods());
-        return periods;
+    public ReportPeriod getAllTimePeriod() {
+        return new ReportPeriod(new Period(FINANCIAL_ACCOUNTING_START_DATE, new Date()), "All time");
     }
 
-    List<ReportPeriod> getSeveralPastMonthsPeriods() {
+    public List<ReportPeriod> getSeveralPastMonthsPeriods(int numOfLatestMonth) {
         List<ReportPeriod> periods = new ArrayList<>();
 
-        Date date = DateUtils.shiftDate(new Date(), DateUtils.TimeUnit.MONTH, -1 * (NUM_OF_LATEST_MONTHS_OFFERED - 1));
-        for (int i = 0; i < NUM_OF_LATEST_MONTHS_OFFERED; i++) {
+        Date date = DateUtils.shiftDate(new Date(), DateUtils.TimeUnit.MONTH, -1 * (numOfLatestMonth - 1));
+        for (int i = 0; i < numOfLatestMonth; i++) {
             periods.add(new ReportPeriod(getPeriodOfMonthDateBelongsTo(date), getMonthYearString(date)));
             date = shiftDate(date, TimeUnit.MONTH, 1);
         }
