@@ -1,6 +1,7 @@
 package com.katyshevtseva.kikiorg.core;
 
 import com.katyshevtseva.kikiorg.core.sections.finance.*;
+import com.katyshevtseva.kikiorg.core.sections.finance.report.DynamicsReportService;
 import com.katyshevtseva.kikiorg.core.sections.finance.report.FinanceReportService;
 import com.katyshevtseva.kikiorg.core.sections.finance.report.ReportPeriodService;
 import com.katyshevtseva.kikiorg.core.sections.finance.search.FinanceSearchService;
@@ -42,6 +43,7 @@ public class Core implements InitializingBean {
     private final PieceSeasonService pieceSeasonService;
     private final SphereService sphereService;
     private final TaskService taskService;
+    private final DynamicsReportService dynamicsReportService;
 
     public static Core getInstance() {
         while (INSTANCE == null) {
@@ -57,6 +59,10 @@ public class Core implements InitializingBean {
     @Override
     public void afterPropertiesSet() {
         INSTANCE = this;
+    }
+
+    public DynamicsReportService dynamicsReportService() {
+        return dynamicsReportService;
     }
 
     public TaskService taskService() {

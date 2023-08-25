@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.layout.*?>
+<VBox xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml">
+
+    <Pane minHeight="20" maxHeight="20"/>
+
+    <HBox>
+        <Pane minWidth="20" maxWidth="20"/>
+
+        <VBox>
+            <ScrollPane maxWidth="300" minWidth="300" maxHeight="400" minHeight="400">
+                <HBox>
+                    <Pane minWidth="15" maxWidth="15"/>
+                    <VBox fx:id="accountPane"/>
+                </HBox>
+            </ScrollPane>
+            <Pane minHeight="20" maxHeight="20"/>
+            <Button fx:id="showButton" text="Show" maxWidth="300" minWidth="300"/>
+        </VBox>
+
+        <Pane minWidth="20" maxWidth="20"/>
+
+        <VBox>
+            <VBox fx:id="lineChartPane"/>
+            <Pane minWidth="10" maxWidth="10"/>
+            <VBox fx:id="pieChartPane"/>
+        </VBox>
+
+    </HBox>
+
+</VBox>

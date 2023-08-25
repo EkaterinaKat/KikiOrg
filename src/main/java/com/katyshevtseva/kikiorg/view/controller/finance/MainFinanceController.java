@@ -13,11 +13,13 @@ import javafx.scene.layout.Pane;
 import java.util.Arrays;
 import java.util.List;
 
+import static com.katyshevtseva.kikiorg.view.utils.KikiOrgWindowUtil.OrgDialogInfo.DYNAMIC_FIN_REPORT;
 import static com.katyshevtseva.kikiorg.view.utils.KikiOrgWindowUtil.OrgDialogInfo.SP_FIN_REPORT;
 import static com.katyshevtseva.kikiorg.view.utils.KikiOrgWindowUtil.OrgNodeInfo.*;
 
 public class MainFinanceController extends AbstractSwitchController implements SectionController {
     private final SinglePeriodReportController singlePeriodReportController = new SinglePeriodReportController();
+    private final DynamicReportController dynamicReportController = new DynamicReportController();
     @FXML
     private Pane mainPane;
     @FXML
@@ -27,9 +29,13 @@ public class MainFinanceController extends AbstractSwitchController implements S
     private void initialize() {
         init(getSections(), mainPane, this::placeButton);
 
-        Button reportButton = new Button("Sp Report");
-        reportButton.setOnAction(event -> WindowBuilder.openDialog(SP_FIN_REPORT, singlePeriodReportController));
-        buttonBox.getChildren().addAll(FxUtils.getPaneWithWidth(30), reportButton);
+        Button spReportButton = new Button("Sp Report");
+        spReportButton.setOnAction(event -> WindowBuilder.openDialog(SP_FIN_REPORT, singlePeriodReportController));
+        buttonBox.getChildren().addAll(FxUtils.getPaneWithWidth(30), spReportButton);
+
+        Button dynamicReportButton = new Button("Dynamic Report");
+        dynamicReportButton.setOnAction(event -> WindowBuilder.openDialog(DYNAMIC_FIN_REPORT, dynamicReportController));
+        buttonBox.getChildren().addAll(FxUtils.getPaneWithWidth(30), dynamicReportButton);
     }
 
     private List<Section> getSections() {
