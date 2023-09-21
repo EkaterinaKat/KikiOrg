@@ -6,6 +6,7 @@ import com.katyshevtseva.fx.Styler;
 import com.katyshevtseva.fx.WindowBuilder;
 import com.katyshevtseva.fx.component.ComponentBuilder;
 import com.katyshevtseva.fx.component.controller.PageableBlockListController;
+import com.katyshevtseva.fx.component.controller.RadioButtonController;
 import com.katyshevtseva.fx.dialog.StandardDialogBuilder;
 import com.katyshevtseva.fx.dialogconstructor.DcCheckBox;
 import com.katyshevtseva.fx.dialogconstructor.DcTextArea;
@@ -23,7 +24,9 @@ import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -45,16 +48,24 @@ public class TasksController implements SectionController {
     @FXML
     private Label statisticsLabel;
     @FXML
-    private ComboBox<TaskStatus> statusBox;
+    private VBox statusBox;
+    private RadioButtonController<TaskStatus> radioButtonController;
     @FXML
     private TextField searchField;
 
     @FXML
     private void initialize() {
-        statusBox.setOnAction(event -> updateTaskList());
+        adjustStatusBox();
         searchField.textProperty().addListener((observable, oldValue, newValue) -> updateTaskList());
-        FxUtils.setComboBoxItems(statusBox, TaskStatus.values(), TaskStatus.TODO);
         adjustCreationButtons();
+    }
+
+    private void adjustStatusBox() {
+        ComponentBuilder.Component<RadioButtonController<TaskStatus>> component = new ComponentBuilder()
+                .getRadioButtonComponent(Arrays.asList(TaskStatus.values()), TaskStatus.TODO, this::updateTaskList);
+
+        statusBox.getChildren().add(component.getNode());
+        radioButtonController = component.getController();
     }
 
     @Override
@@ -130,8 +141,15 @@ public class TasksController implements SectionController {
     }
 
     private void updateTaskList() {
-        taskListController.show(pageNum -> service.getTasks(selectedSphere, statusBox.getValue(), pageNum, searchField.getText()),
-                ((task, integer) -> taskToNode(task, integer, selectedSphere)));
+        updateTaskList(radioButtonController.getSelectedItem());
+    }
+
+    private void updateTaskList(TaskStatus status) {
+        if (taskListController != null) {
+            taskListController.show(pageNum -> service.getTasks(selectedSphere, status,
+                            pageNum, searchField.getText()),
+                    ((task, integer) -> taskToNode(task, integer, selectedSphere)));
+        }
     }
 
     private void adjustCreationButtons() {
