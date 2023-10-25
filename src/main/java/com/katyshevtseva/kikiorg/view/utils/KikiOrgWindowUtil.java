@@ -21,6 +21,10 @@ public class KikiOrgWindowUtil {
     }
 
     public enum OrgNodeInfo implements WindowBuilder.NodeInfo {
+        //DIARY
+        MAIN_DIARY(FXML_LOCATION, "section_main.fxml"),
+        DIARY_ADMIN(DIARY_FXML_LOCATION, "admin.fxml"),
+        DIARY_FRONT_PAGE(DIARY_FXML_LOCATION, "front_page.fxml"),
         //TRACKER
         MAIN_TRACKER(FXML_LOCATION, "section_main.fxml"),
         TASKS(TRACKER_FXML_LOCATION, "tasks.fxml"),

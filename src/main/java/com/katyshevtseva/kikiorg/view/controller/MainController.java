@@ -6,6 +6,7 @@ import com.katyshevtseva.fx.WindowBuilder;
 import com.katyshevtseva.fx.WindowBuilder.FxController;
 import com.katyshevtseva.fx.switchcontroller.AbstractSwitchController;
 import com.katyshevtseva.fx.switchcontroller.Section;
+import com.katyshevtseva.kikiorg.view.controller.diary.MainDiaryController;
 import com.katyshevtseva.kikiorg.view.controller.finance.MainFinanceController;
 import com.katyshevtseva.kikiorg.view.controller.habits.MainHabitsController;
 import com.katyshevtseva.kikiorg.view.controller.tracker.MainTrackerController;
@@ -45,7 +46,9 @@ public class MainController extends AbstractSwitchController implements FxContro
                 new Section("Wardrobe", new MainWardrobeController(),
                         controller -> WindowBuilder.getNode(MAIN_WARDROBE, controller)),
                 new Section("Tracker", new MainTrackerController(),
-                        controller -> WindowBuilder.getNode(MAIN_TRACKER, controller)));
+                        controller -> WindowBuilder.getNode(MAIN_TRACKER, controller)),
+                new Section("Diary", new MainDiaryController(),
+                        controller -> WindowBuilder.getNode(MAIN_DIARY, controller)));
     }
 
     private void placeButton(Button button) {

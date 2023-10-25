@@ -5,7 +5,6 @@ import com.katyshevtseva.kikiorg.core.sections.wardrobe.repo.PieceRepo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import javax.annotation.PostConstruct;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
@@ -19,7 +18,7 @@ public class Special {
     private static final String DESTINATION_DIR_URL = "D:\\onedrive\\central_image_storage\\wardrobe_active\\";
     private final PieceRepo pieceRepo;
 
-    @PostConstruct
+//    @PostConstruct
     private void copyActivePieceImages() {
         File destination = getDestination();
         if (destination == null)
