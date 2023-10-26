@@ -37,4 +37,9 @@ public class IndValue {
     public int hashCode() {
         return (int) (id ^ (id >>> 32));
     }
+
+    @Override
+    public String toString() {
+        return title + "\n" + description;
+    }
 }

@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 @RequiredArgsConstructor
 @Service
@@ -44,17 +45,24 @@ public class DiaryService {
         return indicatiorRepo.findAll();
     }
 
-    public void save(Indicator indicator, Date date, IndValue value, String comment) {
-        validateIndicatorAndValue(indicator, value);
+    public void saveMark(Indicator indicator, Date date, IndValue value, String comment) {
+        if (value != null) {
+            validateIndicatorAndValue(indicator, value);
+        }
+        DateEntity dateEntity = dateService.createIfNotExistAndGetDateEntity(date);
+        IndMark mark = getMarkOrNull(indicator, date).orElse(new IndMark(indicator, dateEntity));
+        mark.setValue(value);
+        mark.setComment(comment);
+        markRepo.save(mark);
+    }
+
+    public Optional<IndMark> getMarkOrNull(Indicator indicator, Date date) {
         DateEntity dateEntity = dateService.createIfNotExistAndGetDateEntity(date);
         List<IndMark> marks = markRepo.findByIndicatorAndDateEntity(indicator, dateEntity);
         if (marks.size() > 1) {
             throw new RuntimeException();
         }
-        IndMark mark = marks.isEmpty() ? new IndMark() : marks.get(0);
-        mark.setValue(value);
-        mark.setComment(comment);
-        markRepo.save(mark);
+        return marks.isEmpty() ? Optional.empty() : Optional.ofNullable(marks.get(0));
     }
 
     private void validateIndicatorAndValue(Indicator indicator, IndValue value) {
