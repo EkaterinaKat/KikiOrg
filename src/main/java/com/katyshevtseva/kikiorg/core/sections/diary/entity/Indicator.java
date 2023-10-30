@@ -18,6 +18,8 @@ public class Indicator {
 
     private String description;
 
+    private Integer indOrder;
+
     @OneToMany(mappedBy = "indicator", fetch = FetchType.EAGER)
     private List<IndValue> values;
 

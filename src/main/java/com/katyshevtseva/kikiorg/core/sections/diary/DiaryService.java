@@ -8,7 +8,7 @@ import com.katyshevtseva.kikiorg.core.sections.diary.entity.IndValue;
 import com.katyshevtseva.kikiorg.core.sections.diary.entity.Indicator;
 import com.katyshevtseva.kikiorg.core.sections.diary.repo.IndMarkRepo;
 import com.katyshevtseva.kikiorg.core.sections.diary.repo.IndValueRepo;
-import com.katyshevtseva.kikiorg.core.sections.diary.repo.IndicatiorRepo;
+import com.katyshevtseva.kikiorg.core.sections.diary.repo.IndicatorRepo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -21,7 +21,7 @@ import java.util.Optional;
 public class DiaryService {
     private final IndMarkRepo markRepo;
     private final DateService dateService;
-    private final IndicatiorRepo indicatiorRepo;
+    private final IndicatorRepo indicatorRepo;
     private final IndValueRepo valueRepo;
 
     public void save(Indicator existing, String title, String desc) {
@@ -30,7 +30,7 @@ public class DiaryService {
         }
         existing.setTitle(title.trim());
         existing.setDescription(GeneralUtils.trim(desc));
-        indicatiorRepo.save(existing);
+        indicatorRepo.save(existing);
     }
 
     public void save(Indicator indicator, IndValue existing, String title, String desc, String color) {
@@ -45,7 +45,7 @@ public class DiaryService {
     }
 
     public List<Indicator> getIndicators() {
-        return indicatiorRepo.findAll();
+        return indicatorRepo.findAllByOrderByIndOrder();
     }
 
     public void saveMark(Indicator indicator, Date date, IndValue value, String comment) {
