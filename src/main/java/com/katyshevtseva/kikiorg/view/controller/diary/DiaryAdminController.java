@@ -6,6 +6,7 @@ import com.katyshevtseva.fx.dialogconstructor.DcTextArea;
 import com.katyshevtseva.fx.dialogconstructor.DcTextField;
 import com.katyshevtseva.fx.dialogconstructor.DialogConstructor;
 import com.katyshevtseva.fx.switchcontroller.SectionController;
+import com.katyshevtseva.general.GeneralUtils;
 import com.katyshevtseva.kikiorg.core.Core;
 import com.katyshevtseva.kikiorg.core.sections.diary.entity.IndValue;
 import com.katyshevtseva.kikiorg.core.sections.diary.entity.Indicator;
@@ -34,6 +35,8 @@ public class DiaryAdminController implements SectionController {
     private Button newIndicatorButton;
     @FXML
     private Label titleLabel;
+    @FXML
+    private Label descLabel;
     @FXML
     private Button editButton;
     @FXML
@@ -76,45 +79,53 @@ public class DiaryAdminController implements SectionController {
 
     private void showIndicator(Indicator indicator) {
         titleLabel.setText(indicator.getTitle());
+        descLabel.setText(indicator.getDescription());
 
         indicatorIdPointLabelMap.values().forEach(label -> label.setText(""));
         indicatorIdPointLabelMap.get(indicator.getId()).setText("* ");
         editButton.setOnAction(event1 -> openIndicatorEditWindow(indicator));
         newValueButton.setOnAction(event -> openValueEditDialog(indicator, null));
         fillValuesPane(indicator);
-
     }
 
     private void fillValuesPane(Indicator indicator) {
         valuesPane.getChildren().clear();
-        for (IndValue value : indicator.getValues()) {
+        for (IndValue value : indicator.getSortedValues()) {
             Label label = new Label(value.getTitleAndDesc());
-            FxUtils.setWidth(label, 150);
+            label.setStyle(Styler.getColorfullStyle(Styler.ThingToColor.TEXT, Styler.StandardColor.BLACK));
+            FxUtils.setWidth(label, 400);
             label.setWrapText(true);
 
-            Node node = frame(label, 15);
+            Node node = frame(label, 10);
 
-            valuesPane.getChildren().addAll(node, getPaneWithHeight(15));
-            node.setStyle(Styler.getBlackBorderStyle());
+            valuesPane.getChildren().addAll(node, getPaneWithHeight(10));
+            if (!GeneralUtils.isEmpty(value.getColor())) {
+                Styler.setBackgroundColorAndCorrectTextColor(node, label, value.getColor());
+            } else {
+                node.setStyle(Styler.getBlackBorderStyle());
+            }
             node.setOnContextMenuRequested(event -> showValueContextMenu(event, node, value, indicator));
         }
     }
 
     private void openIndicatorEditWindow(Indicator indicator) {
         DcTextField titleField = new DcTextField(true, indicator == null ? "" : indicator.getTitle());
+        DcTextArea descField = new DcTextArea(false, indicator == null ? "" : indicator.getDescription());
         DialogConstructor.constructDialog(() -> {
-            Core.getInstance().diaryService().save(indicator, titleField.getValue());
+            Core.getInstance().diaryService().save(indicator, titleField.getValue(), descField.getValue());
             fillIndicatorTable();
-        }, titleField);
+        }, titleField, descField);
     }
 
     private void openValueEditDialog(Indicator indicator, IndValue value) {
         DcTextField titleField = new DcTextField(true, value == null ? "" : value.getTitle());
+        DcTextField colorField = new DcTextField(false, value == null ? "" : value.getColor());
         DcTextArea descField = new DcTextArea(false, value == null ? "" : value.getDescription());
         DialogConstructor.constructDialog(() -> {
-            Core.getInstance().diaryService().save(indicator, value, titleField.getValue(), descField.getValue());
+            Core.getInstance().diaryService().save(indicator, value, titleField.getValue(),
+                    descField.getValue(), colorField.getValue());
             fillIndicatorTable(indicator);
-        }, titleField, descField);
+        }, titleField, colorField, descField);
     }
 
     private void showValueContextMenu(ContextMenuEvent event, Node node, IndValue value, Indicator indicator) {

@@ -32,6 +32,6 @@ public class DiaryFrontPageController implements SectionController {
 
     private void updateSectionContent() {
         List<List<ReportCell>> report = Core.getInstance().dairyReportService().getQuickReport();
-        ReportUtils.showReport(report, tablePane);
+        ReportUtils.showReport(report, tablePane, false);
     }
 }

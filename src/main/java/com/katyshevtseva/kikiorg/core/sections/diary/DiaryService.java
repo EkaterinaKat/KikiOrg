@@ -1,5 +1,6 @@
 package com.katyshevtseva.kikiorg.core.sections.diary;
 
+import com.katyshevtseva.general.GeneralUtils;
 import com.katyshevtseva.kikiorg.core.date.DateEntity;
 import com.katyshevtseva.kikiorg.core.date.DateService;
 import com.katyshevtseva.kikiorg.core.sections.diary.entity.IndMark;
@@ -23,21 +24,23 @@ public class DiaryService {
     private final IndicatiorRepo indicatiorRepo;
     private final IndValueRepo valueRepo;
 
-    public void save(Indicator existing, String title) {
+    public void save(Indicator existing, String title, String desc) {
         if (existing == null) {
             existing = new Indicator();
         }
-        existing.setTitle(title);
+        existing.setTitle(title.trim());
+        existing.setDescription(GeneralUtils.trim(desc));
         indicatiorRepo.save(existing);
     }
 
-    public void save(Indicator indicator, IndValue existing, String title, String desc) {
+    public void save(Indicator indicator, IndValue existing, String title, String desc, String color) {
         if (existing == null) {
             existing = new IndValue();
         }
         existing.setIndicator(indicator);
-        existing.setTitle(title);
-        existing.setDescription(desc);
+        existing.setTitle(title.trim());
+        existing.setDescription(GeneralUtils.trim(desc));
+        existing.setColor(GeneralUtils.trim(color));
         valueRepo.save(existing);
     }
 
@@ -50,13 +53,13 @@ public class DiaryService {
             validateIndicatorAndValue(indicator, value);
         }
         DateEntity dateEntity = dateService.createIfNotExistAndGetDateEntity(date);
-        IndMark mark = getMarkOrNull(indicator, date).orElse(new IndMark(indicator, dateEntity));
+        IndMark mark = getMark(indicator, date).orElse(new IndMark(indicator, dateEntity));
         mark.setValue(value);
-        mark.setComment(comment);
+        mark.setComment(GeneralUtils.trim(comment));
         markRepo.save(mark);
     }
 
-    public Optional<IndMark> getMarkOrNull(Indicator indicator, Date date) {
+    public Optional<IndMark> getMark(Indicator indicator, Date date) {
         DateEntity dateEntity = dateService.createIfNotExistAndGetDateEntity(date);
         List<IndMark> marks = markRepo.findByIndicatorAndDateEntity(indicator, dateEntity);
         if (marks.size() > 1) {

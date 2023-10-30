@@ -15,12 +15,23 @@ public class IndValue {
 
     private String description;
 
+    private String color;
+
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "indicator_id", nullable = false)
     private Indicator indicator;
 
+    public int getComparingInt() {
+        try {
+            int i = Integer.parseInt(title);
+            return i;
+        } catch (NumberFormatException nfe) {
+            return 0;
+        }
+    }
+
     public String getTitleAndDesc() {
-        return title + "\n" + description;
+        return title + (description != null ? "\n" + description : "");
     }
 
     @Override
@@ -40,6 +51,6 @@ public class IndValue {
 
     @Override
     public String toString() {
-        return title + "\n" + description;
+        return getTitleAndDesc();
     }
 }

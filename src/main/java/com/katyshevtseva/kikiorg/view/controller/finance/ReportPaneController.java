@@ -27,6 +27,8 @@ public class ReportPaneController implements WindowBuilder.FxController {
     void showReport(SpodReport spodReport) {
         label.setText(spodReport.getTitle());
         PieChartUtil.tunePieChart(pieChart, spodReport.getPieChartData());
-        ReportUtils.showReport(spodReport.getTable(), table);
+        //тут в showReport в параметро rotateHeadlines вообще без разницы что передавать true или false
+        //так как при формировании отчета вообще не добавляется строк помеченых как заголовок
+        ReportUtils.showReport(spodReport.getTable(), table, false);
     }
 }

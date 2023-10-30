@@ -13,6 +13,6 @@ class ReportTableController implements FxController {
     private GridPane reportTable;
 
     void showReport(List<List<ReportCell>> report) {
-        ReportUtils.showReport(report, reportTable);
+        ReportUtils.showReport(report, reportTable, true);
     }
 }

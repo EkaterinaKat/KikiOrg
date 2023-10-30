@@ -3,7 +3,9 @@ package com.katyshevtseva.kikiorg.core.sections.diary.entity;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Data
 @Entity
@@ -14,8 +16,14 @@ public class Indicator {
 
     private String title;
 
+    private String description;
+
     @OneToMany(mappedBy = "indicator", fetch = FetchType.EAGER)
     private List<IndValue> values;
+
+    public List<IndValue> getSortedValues() {
+        return values.stream().sorted(Comparator.comparing(IndValue::getComparingInt)).collect(Collectors.toList());
+    }
 
     @Override
     public boolean equals(Object o) {

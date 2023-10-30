@@ -25,7 +25,9 @@
                 <Pane minHeight="25" maxHeight="25"/>
                 <Label fx:id="titleLabel" styleClass="font_25" wrapText="true" minWidth="650" maxWidth="650"/>
                 <Pane minHeight="25" maxHeight="25"/>
-                <ScrollPane maxWidth="700" minWidth="700" maxHeight="700" minHeight="700">
+                <Label fx:id="descLabel" wrapText="true" minWidth="650" maxWidth="650"/>
+                <Pane minHeight="25" maxHeight="25"/>
+                <ScrollPane maxWidth="700" minWidth="700" maxHeight="650" minHeight="650">
                     <HBox>
                         <Pane minWidth="20" maxWidth="20"/>
                         <VBox>
