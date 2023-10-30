@@ -71,6 +71,11 @@ public class Transfer implements Operation {
     }
 
     @Override
+    public String getAdditionalInfo() {
+        return null;
+    }
+
+    @Override
     public String getAmountString() {
         if (isIntercurrency()) {
             return goneAmount + "->" + cameAmount;

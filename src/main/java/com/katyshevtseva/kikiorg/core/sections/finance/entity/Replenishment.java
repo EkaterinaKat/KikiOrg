@@ -68,6 +68,11 @@ public class Replenishment implements Operation {
     }
 
     @Override
+    public String getAdditionalInfo() {
+        return null;
+    }
+
+    @Override
     public String getAmountString() {
         return "" + amount;
     }

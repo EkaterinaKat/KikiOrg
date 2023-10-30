@@ -3,6 +3,7 @@ package com.katyshevtseva.kikiorg.core.sections.finance.entity;
 import com.katyshevtseva.kikiorg.core.date.DateEntity;
 import com.katyshevtseva.kikiorg.core.sections.finance.FinanceOperationService;
 import com.katyshevtseva.kikiorg.core.sections.finance.FinanceOperationService.Operation;
+import com.katyshevtseva.kikiorg.core.sections.finance.Necessity;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -31,6 +32,11 @@ public class Expense implements Operation {
     @ManyToOne
     @JoinColumn(name = "date_entity_id")
     private DateEntity dateEntity;
+
+    private String comment;
+
+    @Enumerated(EnumType.STRING)
+    private Necessity necessity;
 
     @Override
     public Date getDate() {
@@ -65,6 +71,12 @@ public class Expense implements Operation {
     @Override
     public FinanceOperationService.OperationType getType() {
         return EXPENSE;
+    }
+
+    @Override
+    public String getAdditionalInfo() {
+
+        return (necessity != null ? necessity.toString() : "") + (comment != null ? (" " + comment) : "");
     }
 
     @Override

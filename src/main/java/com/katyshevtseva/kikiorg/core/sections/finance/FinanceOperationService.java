@@ -97,6 +97,8 @@ public class FinanceOperationService {
         String getAmountString();
 
         OperationType getType();
+
+        String getAdditionalInfo();
     }
 
 }

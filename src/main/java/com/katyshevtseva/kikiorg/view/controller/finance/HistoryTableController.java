@@ -14,6 +14,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
+import javafx.scene.control.Tooltip;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.util.Callback;
 
@@ -39,6 +40,8 @@ class HistoryTableController implements FxController {
     private TableColumn<Operation, String> amountColumn;
     @FXML
     private TableColumn<Operation, Void> deleteColumn;
+    @FXML
+    private TableColumn<Operation, String> additionalInfoColumn;
 
     HistoryTableController(List<Operation> initOperationList) {
         operations = initOperationList;
@@ -61,6 +64,7 @@ class HistoryTableController implements FxController {
         fromColumn.setCellValueFactory(new PropertyValueFactory<>("fromTitle"));
         toColumn.setCellValueFactory(new PropertyValueFactory<>("toTitle"));
         amountColumn.setCellValueFactory(new PropertyValueFactory<>("amountString"));
+        additionalInfoColumn.setCellValueFactory(new PropertyValueFactory<>("additionalInfo"));
         TableUtils.adjustButtonColumn(deleteColumn, "",
                 operation ->
                         new StandardDialogBuilder().openQuestionDialog("Delete?", b -> {
@@ -101,6 +105,7 @@ class HistoryTableController implements FxController {
                             } else if (operation.getType() == FinanceOperationService.OperationType.TRANSFER) {
                                 setStyle(Styler.getColorfullStyle(BACKGROUND, BLUE));
                             }
+                            setTooltip(new Tooltip(operation.getAdditionalInfo()));
                         }
                     }
                 };

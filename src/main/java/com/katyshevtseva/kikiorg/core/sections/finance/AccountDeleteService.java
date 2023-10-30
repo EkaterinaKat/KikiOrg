@@ -56,7 +56,7 @@ public class AccountDeleteService {
         for (Expense expense : expenseRepo.findByAccount(accountToDelete)) {
             financeOperationService.deleteOperation(expense);
             financeService.addExpense(substituteAccount, expense.getAmount(),
-                    expense.getItem(), expense.getDate());
+                    expense.getItem(), expense.getDate(), expense.getNecessity(), expense.getComment());
         }
 
         //переводы на счет

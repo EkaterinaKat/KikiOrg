@@ -16,6 +16,10 @@
         <Label text="Date: " GridPane.halignment="LEFT"
                GridPane.columnIndex="0" GridPane.rowIndex="1"/>
 
+        <Label text="Necessity: " GridPane.halignment="LEFT"
+               GridPane.columnIndex="0" GridPane.rowIndex="2"
+               minWidth="150" maxWidth="150"/>
+
         <Label text="Item: " GridPane.halignment="LEFT"
                GridPane.columnIndex="2" GridPane.rowIndex="0"
                minWidth="150" maxWidth="150"/>
@@ -23,11 +27,17 @@
         <Label text="Account: " GridPane.halignment="LEFT"
                GridPane.columnIndex="2" GridPane.rowIndex="1"/>
 
+        <Label text="Comment: " GridPane.halignment="LEFT"
+               GridPane.columnIndex="2" GridPane.rowIndex="2"/>
+
         <TextField fx:id="amountTextField" minWidth="250" maxWidth="250"
                    GridPane.columnIndex="1" GridPane.rowIndex="0"/>
 
         <DatePicker fx:id="datePicker" minWidth="250" maxWidth="250"
                     GridPane.columnIndex="1" GridPane.rowIndex="1"/>
+
+        <ComboBox fx:id="necessityComboBox" minWidth="250" maxWidth="250"
+                  GridPane.columnIndex="1" GridPane.rowIndex="2"/>
 
         <ComboBox fx:id="itemComboBox" minWidth="250" maxWidth="250"
                   GridPane.columnIndex="3" GridPane.rowIndex="0"/>
@@ -35,8 +45,11 @@
         <ComboBox fx:id="accountComboBox" minWidth="250" maxWidth="250"
                   GridPane.columnIndex="3" GridPane.rowIndex="1"/>
 
+        <TextField fx:id="commentTextField" minWidth="250" maxWidth="250"
+                   GridPane.columnIndex="3" GridPane.rowIndex="2"/>
+
         <Button fx:id="doneButton" text="Ok" GridPane.halignment="RIGHT"
-                GridPane.columnIndex="3" GridPane.rowIndex="2"/>
+                GridPane.columnIndex="3" GridPane.rowIndex="3"/>
     </GridPane>
 
 </VBox>

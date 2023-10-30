@@ -4,6 +4,7 @@ import com.katyshevtseva.fx.WindowBuilder.FxController;
 import com.katyshevtseva.fx.dialog.StandardDialogBuilder;
 import com.katyshevtseva.general.NoArgsKnob;
 import com.katyshevtseva.kikiorg.core.Core;
+import com.katyshevtseva.kikiorg.core.sections.finance.Necessity;
 import com.katyshevtseva.kikiorg.core.sections.finance.entity.Account;
 import com.katyshevtseva.kikiorg.core.sections.finance.entity.Item;
 import javafx.collections.FXCollections;
@@ -31,6 +32,10 @@ class ExpenseController implements FxController {
     private DatePicker datePicker;
     @FXML
     private Button doneButton;
+    @FXML
+    private TextField commentTextField;
+    @FXML
+    private ComboBox<Necessity> necessityComboBox;
 
     ExpenseController(NoArgsKnob operationListener) {
         this.operationListener = operationListener;
@@ -40,7 +45,7 @@ class ExpenseController implements FxController {
     private void initialize() {
         disableNonNumericChars(amountTextField);
         doneButton.setOnAction(event -> saveExpense());
-        associateButtonWithControls(doneButton, amountTextField, accountComboBox, itemComboBox, datePicker);
+        associateButtonWithControls(doneButton, amountTextField, accountComboBox, itemComboBox, datePicker, necessityComboBox);
         adjustComboBoxes();
         datePicker.setValue(LocalDate.now());
     }
@@ -48,6 +53,7 @@ class ExpenseController implements FxController {
     public void adjustComboBoxes() {
         setItemComboBoxItems();
         setComboBoxItemsAndSetSelectedFirstItem(accountComboBox, Core.getInstance().financeService().getActiveAccounts());
+        setComboBoxItems(necessityComboBox, Necessity.values());
     }
 
     private void setItemComboBoxItems() {
@@ -70,9 +76,15 @@ class ExpenseController implements FxController {
     }
 
     private void saveExpense() {
-        Core.getInstance().financeService().addExpense(accountComboBox.getValue(), Long.parseLong(amountTextField.getText()),
-                itemComboBox.getValue(), java.sql.Date.valueOf(datePicker.getValue()));
+        Core.getInstance().financeService().addExpense(
+                accountComboBox.getValue(),
+                Long.parseLong(amountTextField.getText()),
+                itemComboBox.getValue(),
+                java.sql.Date.valueOf(datePicker.getValue()),
+                necessityComboBox.getValue(),
+                commentTextField.getText());
         amountTextField.clear();
         operationListener.execute();
+        necessityComboBox.setValue(null);
     }
 }

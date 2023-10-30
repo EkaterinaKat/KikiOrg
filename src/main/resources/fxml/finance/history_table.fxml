@@ -7,11 +7,12 @@
 
     <TableView fx:id="table" prefWidth="1000" prefHeight="630">
         <columns>
-            <TableColumn prefWidth="120" text="Date" fx:id="dateColumn"/>
-            <TableColumn prefWidth="340" text="From" fx:id="fromColumn"/>
-            <TableColumn prefWidth="340" text="To" fx:id="toColumn"/>
-            <TableColumn prefWidth="100" text="amount" fx:id="amountColumn"/>
-            <TableColumn prefWidth="75" fx:id="deleteColumn"/>
+            <TableColumn prefWidth="100" text="Date" fx:id="dateColumn"/>
+            <TableColumn prefWidth="300" text="From" fx:id="fromColumn"/>
+            <TableColumn prefWidth="300" text="To" fx:id="toColumn"/>
+            <TableColumn prefWidth="80" text="amount" fx:id="amountColumn"/>
+            <TableColumn prefWidth="125" fx:id="additionalInfoColumn"/>
+            <TableColumn prefWidth="70" fx:id="deleteColumn"/>
         </columns>
     </TableView>
 

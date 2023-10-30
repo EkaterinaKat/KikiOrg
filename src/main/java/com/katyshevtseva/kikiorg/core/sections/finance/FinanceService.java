@@ -78,12 +78,14 @@ public class FinanceService {
         return itemRepo.findAll().stream().sorted(Comparator.comparing(Item::getTitleWithAdditionalInfo)).collect(Collectors.toList());
     }
 
-    public void addExpense(Account account, long amount, Item item, Date date) {
+    public void addExpense(Account account, long amount, Item item, Date date, Necessity necessity, String comment) {
         Expense expense = new Expense();
         expense.setAccount(account);
         expense.setAmount(amount);
         expense.setDateEntity(dateService.createIfNotExistAndGetDateEntity(date));
         expense.setItem(item);
+        expense.setComment(comment);
+        expense.setNecessity(necessity);
         expenseRepo.saveAndFlush(expense);
 
         addToAccountAmount(account, (-1) * amount);
