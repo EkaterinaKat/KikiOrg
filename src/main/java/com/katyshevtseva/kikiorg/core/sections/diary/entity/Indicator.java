@@ -5,6 +5,7 @@ import lombok.Data;
 import javax.persistence.*;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Data
@@ -25,6 +26,10 @@ public class Indicator {
 
     public List<IndValue> getSortedValues() {
         return values.stream().sorted(Comparator.comparing(IndValue::getComparingInt)).collect(Collectors.toList());
+    }
+
+    public Optional<IndValue> getDefaultValue() {
+        return values.stream().filter(IndValue::isDefaultValue).findFirst();
     }
 
     @Override

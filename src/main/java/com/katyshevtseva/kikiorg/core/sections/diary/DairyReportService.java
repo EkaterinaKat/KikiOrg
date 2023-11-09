@@ -2,6 +2,7 @@ package com.katyshevtseva.kikiorg.core.sections.diary;
 
 import com.katyshevtseva.date.DateUtils;
 import com.katyshevtseva.date.Period;
+import com.katyshevtseva.general.GeneralUtils;
 import com.katyshevtseva.general.ReportCell;
 import com.katyshevtseva.kikiorg.core.sections.diary.entity.IndMark;
 import com.katyshevtseva.kikiorg.core.sections.diary.entity.Indicator;
@@ -53,7 +54,7 @@ public class DairyReportService {
             return ReportCell.empty();
         }
         String color = mark.getValue() != null ?
-                (mark.getValue().getColor() != null ? mark.getValue().getColor() : WHITE.getCode())
+                (!GeneralUtils.isEmpty(mark.getValue().getColor()) ? mark.getValue().getColor() : WHITE.getCode())
                 : WHITE.getCode();
         return ReportCell.filled(mark.getValueAndComment(), color, columnWidth);
     }

@@ -36,12 +36,26 @@ public class DiaryService {
     public void save(Indicator indicator, IndValue existing, String title, String desc, String color) {
         if (existing == null) {
             existing = new IndValue();
+            existing.setDefaultValue(false);
         }
         existing.setIndicator(indicator);
         existing.setTitle(title.trim());
         existing.setDescription(GeneralUtils.trim(desc));
         existing.setColor(GeneralUtils.trim(color));
         valueRepo.save(existing);
+    }
+
+    public void makeDefault(IndValue value) {
+        List<IndValue> values = valueRepo.findAllByIndicator(value.getIndicator());
+        values.forEach(val -> {
+            val.setDefaultValue(false);
+            valueRepo.save(val);
+        });
+
+        if (!value.isDefaultValue()) { //чтобы можно было отменять выбор уже выбранного без выбора нового
+            value.setDefaultValue(true);
+            valueRepo.save(value);
+        }
     }
 
     public List<Indicator> getIndicators() {
@@ -52,11 +66,15 @@ public class DiaryService {
         if (value != null) {
             validateIndicatorAndValue(indicator, value);
         }
-        DateEntity dateEntity = dateService.createIfNotExistAndGetDateEntity(date);
-        IndMark mark = getMark(indicator, date).orElse(new IndMark(indicator, dateEntity));
-        mark.setValue(value);
-        mark.setComment(GeneralUtils.trim(comment));
-        markRepo.save(mark);
+
+        getMark(indicator, date).ifPresent(markRepo::delete);
+
+        if (value != null || !GeneralUtils.isEmpty(comment)) {
+            IndMark mark = new IndMark(indicator, dateService.createIfNotExistAndGetDateEntity(date));
+            mark.setValue(value);
+            mark.setComment(GeneralUtils.trim(comment));
+            markRepo.save(mark);
+        }
     }
 
     public Optional<IndMark> getMark(Indicator indicator, Date date) {

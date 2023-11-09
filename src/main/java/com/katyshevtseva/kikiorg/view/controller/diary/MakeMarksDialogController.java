@@ -55,6 +55,7 @@ public class MakeMarksDialogController implements FxController {
             ComboBox<IndValue> valueComboBox = new ComboBox<>();
             FxUtils.setWidth(valueComboBox, 150);
             FxUtils.setComboBoxItems(valueComboBox, indicator.getSortedValues());
+            indicator.getDefaultValue().ifPresent(valueComboBox::setValue);
             indicatorPane.add(valueComboBox, 2, i + 1);
 
             TextArea commentArea = new TextArea();

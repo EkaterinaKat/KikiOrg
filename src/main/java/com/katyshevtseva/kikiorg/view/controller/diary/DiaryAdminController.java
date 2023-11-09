@@ -104,6 +104,11 @@ public class DiaryAdminController implements SectionController {
             } else {
                 node.setStyle(Styler.getBlackBorderStyle());
             }
+
+            if (value.isDefaultValue()) {
+                node.setStyle(node.getStyle() + Styler.getBlackBorderStyle() + Styler.getBorderWidth(5));
+            }
+
             node.setOnContextMenuRequested(event -> showValueContextMenu(event, node, value, indicator));
         }
     }
@@ -134,6 +139,13 @@ public class DiaryAdminController implements SectionController {
         MenuItem editItem = new MenuItem("Edit");
         editItem.setOnAction(event1 -> openValueEditDialog(indicator, value));
         contextMenu.getItems().add(editItem);
+
+        MenuItem makeDefaultItem = new MenuItem("Make default");
+        makeDefaultItem.setOnAction(event1 -> {
+            Core.getInstance().diaryService().makeDefault(value);
+            fillIndicatorTable(indicator);
+        });
+        contextMenu.getItems().add(makeDefaultItem);
 
         contextMenu.show(node, event.getScreenX(), event.getScreenY());
     }

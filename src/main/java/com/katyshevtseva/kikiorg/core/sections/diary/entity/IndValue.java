@@ -17,6 +17,8 @@ public class IndValue {
 
     private String color;
 
+    private boolean defaultValue;
+
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "indicator_id", nullable = false)
     private Indicator indicator;
@@ -26,7 +28,7 @@ public class IndValue {
             int i = Integer.parseInt(title);
             return i;
         } catch (NumberFormatException nfe) {
-            return 0;
+            return (int) id;
         }
     }
 
