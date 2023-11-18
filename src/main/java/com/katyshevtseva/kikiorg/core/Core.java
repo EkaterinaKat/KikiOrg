@@ -16,6 +16,7 @@ import com.katyshevtseva.kikiorg.core.sections.tracker.TaskService;
 import com.katyshevtseva.kikiorg.core.sections.wardrobe.PieceSeasonService;
 import com.katyshevtseva.kikiorg.core.sections.wardrobe.WardrobeService;
 import com.katyshevtseva.kikiorg.core.sections.wardrobe.WardrobeStatisticsService;
+import com.katyshevtseva.kikiorg.core.setting.SettingService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.stereotype.Service;
@@ -48,6 +49,8 @@ public class Core implements InitializingBean {
     private final DynamicsReportService dynamicsReportService;
     private final DiaryService diaryService;
     private final DairyReportService dairyReportService;
+    private final PlanningService planningService;
+    private final SettingService settingService;
 
     public static Core getInstance() {
         while (INSTANCE == null) {
@@ -63,6 +66,14 @@ public class Core implements InitializingBean {
     @Override
     public void afterPropertiesSet() {
         INSTANCE = this;
+    }
+
+    public SettingService settingService() {
+        return settingService;
+    }
+
+    public PlanningService planningService() {
+        return planningService;
     }
 
     public DiaryService diaryService() {

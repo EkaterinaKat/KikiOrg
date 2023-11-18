@@ -31,4 +31,9 @@ public class AccountGroup {
     public String getFullInfo() {
         return title + " " + accounts.toString();
     }
+
+    @Override
+    public String toString() {
+        return getFullInfo();
+    }
 }

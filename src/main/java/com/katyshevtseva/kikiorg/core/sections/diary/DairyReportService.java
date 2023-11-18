@@ -25,7 +25,7 @@ public class DairyReportService {
 
     public List<List<ReportCell>> getQuickReport() {
         return getReport(diaryService.getIndicators(),
-                new Period(shiftDate(new Date(), DateUtils.TimeUnit.DAY, -70), new Date()));
+                new Period(shiftDate(new Date(), DateUtils.TimeUnit.DAY, -30), new Date()));
     }
 
     public List<List<ReportCell>> getReport(List<Indicator> indicators, Period period) {

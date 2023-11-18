@@ -48,6 +48,7 @@ public class KikiOrgWindowUtil {
         FIN_CHECK(FIN_FXML_LOCATION, "check/check.fxml"),
         FIN_SEARCH(FIN_FXML_LOCATION, "search.fxml"),
         EXPENSE(FIN_FXML_LOCATION, "expense.fxml"),
+        POTENTIAL_EXPENSE(FIN_FXML_LOCATION, "potential_expense.fxml"),
         SCATTER_CHECK(FIN_FXML_LOCATION, "check/scatter_check.fxml"),
         REPLENISHMENT(FIN_FXML_LOCATION, "replenishment.fxml"),
         HUDDLE_CHECK(FIN_FXML_LOCATION, "check/huddle_check.fxml"),
@@ -78,6 +79,7 @@ public class KikiOrgWindowUtil {
         HABIT(HABITS_FXML_LOCATION, "habit_dialog.fxml", new Size(650, 600), CoreConstants.APP_NAME),
         DYNAMIC_FIN_REPORT(FIN_FXML_LOCATION, "dynamic_report.fxml", WINDOW_SIZE, "Finance report"),
         SP_FIN_REPORT(FIN_FXML_LOCATION, "single_period_report.fxml", WINDOW_SIZE, "Finance report"),
+        FIN_PLANING(FIN_FXML_LOCATION, "planing.fxml", WINDOW_SIZE, "Finance report"),
         MAKE_MARKS_DIALOG(DIARY_FXML_LOCATION, "make_marks_dialog.fxml", new Size(1000, 800), "Make marks");
 
         private final String location;

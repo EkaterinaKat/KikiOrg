@@ -21,6 +21,11 @@ public class ReportPeriodService {
         return new ReportPeriod(new Period(FINANCIAL_ACCOUNTING_START_DATE, new Date()), "All time");
     }
 
+    public static ReportPeriod getCurrentMonthPeriod() {
+        Date date = new Date();
+        return new ReportPeriod(getPeriodOfMonthDateBelongsTo(date), getMonthYearString(date));
+    }
+
     public List<ReportPeriod> getSeveralPastMonthsPeriods(int numOfLatestMonth) {
         List<ReportPeriod> periods = new ArrayList<>();
 

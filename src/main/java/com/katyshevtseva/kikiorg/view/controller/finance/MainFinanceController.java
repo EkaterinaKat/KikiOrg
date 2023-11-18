@@ -5,6 +5,7 @@ import com.katyshevtseva.fx.WindowBuilder;
 import com.katyshevtseva.fx.switchcontroller.AbstractSwitchController;
 import com.katyshevtseva.fx.switchcontroller.Section;
 import com.katyshevtseva.fx.switchcontroller.SectionController;
+import com.katyshevtseva.kikiorg.view.controller.finance.planning.PlaningController;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.layout.HBox;
@@ -13,13 +14,13 @@ import javafx.scene.layout.Pane;
 import java.util.Arrays;
 import java.util.List;
 
-import static com.katyshevtseva.kikiorg.view.utils.KikiOrgWindowUtil.OrgDialogInfo.DYNAMIC_FIN_REPORT;
-import static com.katyshevtseva.kikiorg.view.utils.KikiOrgWindowUtil.OrgDialogInfo.SP_FIN_REPORT;
+import static com.katyshevtseva.kikiorg.view.utils.KikiOrgWindowUtil.OrgDialogInfo.*;
 import static com.katyshevtseva.kikiorg.view.utils.KikiOrgWindowUtil.OrgNodeInfo.*;
 
 public class MainFinanceController extends AbstractSwitchController implements SectionController {
     private final SinglePeriodReportController singlePeriodReportController = new SinglePeriodReportController();
     private final DynamicReportController dynamicReportController = new DynamicReportController();
+    private final PlaningController planingController = new PlaningController();
     @FXML
     private Pane mainPane;
     @FXML
@@ -36,6 +37,10 @@ public class MainFinanceController extends AbstractSwitchController implements S
         Button dynamicReportButton = new Button("Dynamic Report");
         dynamicReportButton.setOnAction(event -> WindowBuilder.openDialog(DYNAMIC_FIN_REPORT, dynamicReportController));
         buttonBox.getChildren().addAll(FxUtils.getPaneWithWidth(30), dynamicReportButton);
+
+        Button planingReportButton = new Button("Planing");
+        planingReportButton.setOnAction(event -> WindowBuilder.openDialog(FIN_PLANING, planingController));
+        buttonBox.getChildren().addAll(FxUtils.getPaneWithWidth(30), planingReportButton);
     }
 
     private List<Section> getSections() {

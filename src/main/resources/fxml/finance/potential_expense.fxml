@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<HBox xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml"
+      alignment="CENTER">
+
+    <VBox>
+
+        <Pane maxHeight="15" minHeight="15"/>
+        <VBox>
+            <Label text="Amount: " minWidth="150" maxWidth="150"/>
+            <Pane maxWidth="15" minWidth="15"/>
+            <TextField fx:id="amountTextField" minWidth="250" maxWidth="250"/>
+        </VBox>
+
+        <Pane maxHeight="15" minHeight="15"/>
+        <VBox>
+            <Label text="Necessity: " minWidth="150" maxWidth="150"/>
+            <Pane maxWidth="15" minWidth="15"/>
+            <ComboBox fx:id="necessityComboBox" minWidth="250" maxWidth="250"/>
+        </VBox>
+
+        <Pane maxHeight="15" minHeight="15"/>
+        <VBox>
+            <Label text="Item: " minWidth="150" maxWidth="150"/>
+            <Pane maxWidth="15" minWidth="15"/>
+            <ComboBox fx:id="itemComboBox" minWidth="250" maxWidth="250"/>
+        </VBox>
+
+        <Pane maxHeight="15" minHeight="15"/>
+        <VBox>
+            <Label text="Comment: "/>
+            <Pane maxWidth="15" minWidth="15"/>
+            <TextField fx:id="commentTextField" minWidth="250" maxWidth="250"/>
+        </VBox>
+
+        <Pane maxHeight="15" minHeight="15"/>
+        <Button fx:id="doneButton" text="Ok" GridPane.halignment="RIGHT"/>
+    </VBox>
+
+</HBox>
+
+

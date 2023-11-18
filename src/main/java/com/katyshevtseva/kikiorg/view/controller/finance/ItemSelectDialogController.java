@@ -14,13 +14,13 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 
-class ItemSelectDialogController implements FxController {
+public class ItemSelectDialogController implements FxController {
     private ComponentBuilder.Component<HierarchyController> hierarchyComponent;
     private OneArgKnob<Item> itemSelectionHandler;
     @FXML
     private VBox container;
 
-    ItemSelectDialogController(OneArgKnob<Item> itemSelectionHandler) {
+    public ItemSelectDialogController(OneArgKnob<Item> itemSelectionHandler) {
         this.itemSelectionHandler = itemSelectionHandler;
     }
 
