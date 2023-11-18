@@ -9,6 +9,7 @@ import com.katyshevtseva.kikiorg.core.Core;
 import com.katyshevtseva.kikiorg.core.sections.finance.ExpenseGroupingType;
 import com.katyshevtseva.kikiorg.core.sections.finance.PlanningService;
 import com.katyshevtseva.kikiorg.core.sections.finance.entity.AccountGroup;
+import com.katyshevtseva.kikiorg.core.sections.finance.entity.PotentialExpense;
 import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.ContextMenu;
@@ -59,7 +60,13 @@ public class PlaningController implements WindowBuilder.FxController {
 
     public void update() {
         infoLabel.setText(planningService.getPlanningInfo());
-        ReportUtils.showReport(PlanningUtil.getReport(groupingTypeComboBox.getValue()), tablePane, true);
+        ReportUtils.showReport(PlanningUtil.getReport(groupingTypeComboBox.getValue(), this::deletePotentialExpense),
+                tablePane, true);
+    }
+
+    private void deletePotentialExpense(PotentialExpense expense) {
+        planningService.delete(expense);
+        update();
     }
 
     private ContextMenu getLimitContextMenu() {

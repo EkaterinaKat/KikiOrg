@@ -34,6 +34,10 @@ public class PlanningService {
         potentialExpenseRepo.saveAndFlush(expense);
     }
 
+    public void delete(PotentialExpense potentialExpense) {
+        potentialExpenseRepo.delete(potentialExpense);
+    }
+
     public void setSelectedAccountGroup(AccountGroup group) {
         settingService.save(FIN_PLAN_ACC_GR_ID, "" + group.getId());
     }
