@@ -36,11 +36,11 @@ public class PlanningUtil {
         for (Operation operation : operations) {
             List<ReportCell> reportLine = new ArrayList<>();
 
-            reportLine.add(ReportCell.filled(operation.getDateString(), 120));
-            reportLine.add(ReportCell.filled(operation.getGoneAmount() + "", 80));
+            reportLine.add(ReportCell.builder().text(operation.getDateString()).width(120).build());
+            reportLine.add(ReportCell.builder().text(operation.getGoneAmount() + "").width(80).build());
             reportLine.add(ReportCell.builder().text(operation.getToTitle()).width(160)
                     .contextMenu(getContextMenu(operation, peDeleteKnob)).build());
-            reportLine.add(ReportCell.filled(operation.getAdditionalInfo(), 300));
+            reportLine.add(ReportCell.builder().text(operation.getAdditionalInfo()).width(300).build());
 
             report.add(reportLine);
         }
@@ -67,8 +67,8 @@ public class PlanningUtil {
         for (Map.Entry<String, Integer> entry : map.entrySet()) {
             List<ReportCell> reportLine = new ArrayList<>();
 
-            reportLine.add(ReportCell.filled(entry.getValue() + "", 120));
-            reportLine.add(ReportCell.filled(entry.getKey(), 300));
+            reportLine.add(ReportCell.builder().text(entry.getValue() + "").width(120).build());
+            reportLine.add(ReportCell.builder().text(entry.getKey()).width(300).build());
 
             report.add(reportLine);
         }

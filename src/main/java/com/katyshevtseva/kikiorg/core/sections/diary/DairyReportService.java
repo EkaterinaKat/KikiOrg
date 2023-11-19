@@ -16,6 +16,7 @@ import java.util.List;
 
 import static com.katyshevtseva.date.DateUtils.*;
 import static com.katyshevtseva.fx.Styler.StandardColor.WHITE;
+import static com.katyshevtseva.general.ReportCell.Type.HEAD_COLUMN;
 
 @RequiredArgsConstructor
 @Service
@@ -41,7 +42,7 @@ public class DairyReportService {
 
     private List<ReportCell> getReportLine(Date date, List<Indicator> indicators) {
         List<ReportCell> result = new ArrayList<>();
-        result.add(ReportCell.filled(READABLE_DATE_FORMAT.format(date), WHITE, 100));
+        result.add(ReportCell.builder().text(READABLE_DATE_FORMAT.format(date)).width(100).build());
         for (Indicator indicator : indicators) {
             result.add(convertToCell(indicator, date));
         }
@@ -51,19 +52,19 @@ public class DairyReportService {
     private ReportCell convertToCell(Indicator indicator, Date date) {
         IndMark mark = diaryService.getMark(indicator, date).orElse(null);
         if (mark == null) {
-            return ReportCell.empty();
+            return ReportCell.builder().build();
         }
         String color = mark.getValue() != null ?
                 (!GeneralUtils.isEmpty(mark.getValue().getColor()) ? mark.getValue().getColor() : WHITE.getCode())
                 : WHITE.getCode();
-        return ReportCell.filled(mark.getValueAndComment(), color, columnWidth);
+        return ReportCell.builder().text(mark.getValueAndComment()).color(color).width(columnWidth).build();
     }
 
     private List<ReportCell> getReportHead(List<Indicator> indicators) {
         List<ReportCell> result = new ArrayList<>();
-        result.add(ReportCell.empty());
+        result.add(ReportCell.builder().build());
         for (Indicator indicator : indicators) {
-            result.add(ReportCell.columnHead(indicator.getTitle(), columnWidth));
+            result.add(ReportCell.builder().type(HEAD_COLUMN).text(indicator.getTitle()).width(columnWidth).build());
         }
         return result;
     }

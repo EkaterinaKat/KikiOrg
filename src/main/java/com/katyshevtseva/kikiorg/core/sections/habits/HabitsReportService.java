@@ -1,7 +1,6 @@
 package com.katyshevtseva.kikiorg.core.sections.habits;
 
 import com.katyshevtseva.date.Period;
-import com.katyshevtseva.fx.Styler;
 import com.katyshevtseva.general.ReportCell;
 import com.katyshevtseva.kikiorg.core.sections.habits.entity.Habit;
 import com.katyshevtseva.kikiorg.core.sections.habits.entity.Mark;
@@ -14,6 +13,8 @@ import java.util.Date;
 import java.util.List;
 
 import static com.katyshevtseva.date.DateUtils.*;
+import static com.katyshevtseva.fx.Styler.StandardColor.GREEN;
+import static com.katyshevtseva.general.ReportCell.Type.HEAD_COLUMN;
 import static com.katyshevtseva.kikiorg.core.sections.habits.AnalysisService.NUM_OF_STABILITY_DAYS;
 
 @Service
@@ -40,7 +41,7 @@ public class HabitsReportService {
 
     private List<ReportCell> getReportLine(Date date, List<Habit> habits) {
         List<ReportCell> result = new ArrayList<>();
-        result.add(ReportCell.filled(READABLE_DATE_FORMAT.format(date), Styler.StandardColor.WHITE, 100));
+        result.add(ReportCell.builder().text(READABLE_DATE_FORMAT.format(date)).width(100).build());
         for (Habit habit : habits) {
             result.add(convertToCell(habit, date));
         }
@@ -50,15 +51,15 @@ public class HabitsReportService {
     private ReportCell convertToCell(Habit habit, Date date) {
         Mark mark = habitMarkService.getMarkOrNull(habit, date);
         if (mark == null)
-            return ReportCell.empty();
-        return ReportCell.filled("", Styler.StandardColor.GREEN);
+            return ReportCell.builder().build();
+        return ReportCell.builder().color(GREEN.getCode()).build();
     }
 
     private List<ReportCell> getReportHead(List<Habit> habits) {
         List<ReportCell> result = new ArrayList<>();
-        result.add(ReportCell.empty());
+        result.add(ReportCell.builder().build());
         for (Habit habit : habits) {
-            result.add(ReportCell.columnHead(habit.getTitle()));
+            result.add(ReportCell.builder().type(HEAD_COLUMN).text(habit.getTitle()).build());
         }
         return result;
     }

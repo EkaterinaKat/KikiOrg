@@ -1,6 +1,5 @@
 package com.katyshevtseva.kikiorg.core.sections.finance.report;
 
-import com.katyshevtseva.fx.Styler;
 import com.katyshevtseva.general.PieChartData;
 import com.katyshevtseva.general.ReportCell;
 
@@ -64,16 +63,18 @@ public class SpodReport {
         table = new ArrayList<>();
 
         List<ReportCell> headline = new ArrayList<>();
-        headline.add(ReportCell.filled("Total", Styler.StandardColor.WHITE, 180));
-        headline.add(ReportCell.filled(getTotal() + "", Styler.StandardColor.WHITE, 100));
-        headline.add(ReportCell.filled("100%", Styler.StandardColor.WHITE, 100));
+
+        headline.add(ReportCell.builder().text("Total").width(180).build());
+        headline.add(ReportCell.builder().text(getTotal() + "").width(100).build());
+        headline.add(ReportCell.builder().text("100%").width(100).build());
         table.add(headline);
 
         for (PieChartData.Segment segment : pieChartData.getGetSegmentList()) {
             List<ReportCell> line = new ArrayList<>();
-            line.add(ReportCell.filled(segment.getTitle(), Styler.StandardColor.WHITE, 180));
-            line.add(ReportCell.filled(segment.getAmount() + "", Styler.StandardColor.WHITE, 100));
-            line.add(ReportCell.filled(segment.getPercent() + "%", Styler.StandardColor.WHITE, 100));
+
+            line.add(ReportCell.builder().text(segment.getTitle()).width(180).build());
+            line.add(ReportCell.builder().text(segment.getAmount() + "").width(100).build());
+            line.add(ReportCell.builder().text(segment.getPercent() + "%").width(100).build());
             table.add(line);
         }
     }
