@@ -45,7 +45,7 @@ public class MakeMarksDialogController implements FxController {
 
     private void fillPane() {
         indicatorPane.getChildren().clear();
-        List<Indicator> indicators = Core.getInstance().diaryService().getIndicators();
+        List<Indicator> indicators = Core.getInstance().diaryService().getNotArchivedIndicators();
         for (int i = 0; i < indicators.size(); i++) {
             Indicator indicator = indicators.get(i);
             Label label = new Label(indicator.getTitle());

@@ -7,5 +7,7 @@ import java.util.List;
 
 public interface IndicatorRepo extends JpaRepository<Indicator, Long> {
 
-    List<Indicator> findAllByOrderByIndOrder();
+    List<Indicator> findAllByOrderByTitle();
+
+    List<Indicator> findAllByArchivedFalseOrderByTitle();
 }

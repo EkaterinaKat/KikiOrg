@@ -19,10 +19,14 @@ public class Indicator {
 
     private String description;
 
-    private Integer indOrder;
+    private Boolean archived;
 
     @OneToMany(mappedBy = "indicator", fetch = FetchType.EAGER)
     private List<IndValue> values;
+
+    public String getTitleAndArchivedInfo() {
+        return title + (archived ? " (archived)" : "");
+    }
 
     public List<IndValue> getSortedValues() {
         return values.stream().sorted(Comparator.comparing(IndValue::getComparingInt)).collect(Collectors.toList());

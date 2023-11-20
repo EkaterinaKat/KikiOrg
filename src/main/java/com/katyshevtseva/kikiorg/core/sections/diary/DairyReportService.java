@@ -25,7 +25,7 @@ public class DairyReportService {
     private final DiaryService diaryService;
 
     public List<List<ReportCell>> getQuickReport() {
-        return getReport(diaryService.getIndicators(),
+        return getReport(diaryService.getNotArchivedIndicators(),
                 new Period(shiftDate(new Date(), DateUtils.TimeUnit.DAY, -30), new Date()));
     }
 

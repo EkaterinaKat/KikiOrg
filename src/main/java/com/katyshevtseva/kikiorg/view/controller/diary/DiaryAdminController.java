@@ -20,6 +20,7 @@ import javafx.scene.input.ContextMenuEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
+import org.springframework.lang.Nullable;
 
 import java.util.HashMap;
 import java.util.List;
@@ -38,11 +39,7 @@ public class DiaryAdminController implements SectionController {
     @FXML
     private Label descLabel;
     @FXML
-    private Button editButton;
-    @FXML
     private VBox valuesPane;
-    @FXML
-    private Button newValueButton;
     private Map<Long, Label> indicatorIdPointLabelMap;
 
     @FXML
@@ -56,12 +53,14 @@ public class DiaryAdminController implements SectionController {
     }
 
     private void fillIndicatorTable(Indicator indicatorToShow) {
+        boolean indToShowWasShowed = false;
         gridPane.getChildren().clear();
         List<Indicator> habits = Core.getInstance().diaryService().getIndicators();
         indicatorIdPointLabelMap = new HashMap<>();
         int rowIndex = 0;
         for (Indicator indicator : habits) {
-            Label label = new Label(indicator.getTitle());
+            Label label = new Label(indicator.getTitleAndArchivedInfo());
+            label.setContextMenu(getContextMenu(indicator));
             Label point = new Label();
             indicatorIdPointLabelMap.put(indicator.getId(), point);
             label.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
@@ -73,23 +72,53 @@ public class DiaryAdminController implements SectionController {
 
             if (indicator.equals(indicatorToShow)) {
                 showIndicator(indicator);
+                indToShowWasShowed = true;
             }
+        }
+        if (!indToShowWasShowed) {
+            showIndicator(null);
         }
     }
 
-    private void showIndicator(Indicator indicator) {
-        titleLabel.setText(indicator.getTitle());
-        descLabel.setText(indicator.getDescription());
+    private ContextMenu getContextMenu(Indicator indicator) {
+        ContextMenu contextMenu = new ContextMenu();
+
+        MenuItem editItem = new MenuItem("Edit");
+        editItem.setOnAction(event1 -> openIndicatorEditWindow(indicator));
+        contextMenu.getItems().add(editItem);
+
+        MenuItem newValueItem = new MenuItem("New value");
+        newValueItem.setOnAction(event -> openValueEditDialog(indicator, null));
+        contextMenu.getItems().add(newValueItem);
+
+        MenuItem archiveItem = new MenuItem("Archive");
+        archiveItem.setOnAction(event1 -> {
+            Core.getInstance().diaryService().archive(indicator);
+            fillIndicatorTable(indicator);
+        });
+        contextMenu.getItems().add(archiveItem);
+
+        return contextMenu;
+    }
+
+    private void showIndicator(@Nullable Indicator indicator) {
+        titleLabel.setText(indicator != null ? indicator.getTitleAndArchivedInfo() : "");
+        descLabel.setText(indicator != null ? indicator.getDescription() : "");
 
         indicatorIdPointLabelMap.values().forEach(label -> label.setText(""));
-        indicatorIdPointLabelMap.get(indicator.getId()).setText("* ");
-        editButton.setOnAction(event1 -> openIndicatorEditWindow(indicator));
-        newValueButton.setOnAction(event -> openValueEditDialog(indicator, null));
+        if (indicator != null) {
+            indicatorIdPointLabelMap.get(indicator.getId()).setText("* ");
+        }
         fillValuesPane(indicator);
     }
 
-    private void fillValuesPane(Indicator indicator) {
+    private void fillValuesPane(@Nullable Indicator indicator) {
         valuesPane.getChildren().clear();
+
+        if (indicator == null) {
+            return;
+        }
+
         for (IndValue value : indicator.getSortedValues()) {
             Label label = new Label(value.getTitleAndDesc());
             label.setStyle(Styler.getColorfullStyle(Styler.ThingToColor.TEXT, Styler.StandardColor.BLACK));
@@ -100,7 +129,10 @@ public class DiaryAdminController implements SectionController {
 
             valuesPane.getChildren().addAll(node, getPaneWithHeight(10));
             if (!GeneralUtils.isEmpty(value.getColor())) {
-                Styler.setBackgroundColorAndCorrectTextColor(node, label, value.getColor());
+                try {
+                    Styler.setBackgroundColorAndCorrectTextColor(node, label, value.getColor());
+                } catch (Exception e) {
+                }
             } else {
                 node.setStyle(Styler.getBlackBorderStyle());
             }
@@ -118,7 +150,7 @@ public class DiaryAdminController implements SectionController {
         DcTextArea descField = new DcTextArea(false, indicator == null ? "" : indicator.getDescription());
         DialogConstructor.constructDialog(() -> {
             Core.getInstance().diaryService().save(indicator, titleField.getValue(), descField.getValue());
-            fillIndicatorTable();
+            fillIndicatorTable(indicator);
         }, titleField, descField);
     }
 

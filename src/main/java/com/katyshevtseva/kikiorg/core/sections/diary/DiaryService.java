@@ -27,6 +27,7 @@ public class DiaryService {
     public void save(Indicator existing, String title, String desc) {
         if (existing == null) {
             existing = new Indicator();
+            existing.setArchived(false);
         }
         existing.setTitle(title.trim());
         existing.setDescription(GeneralUtils.trim(desc));
@@ -59,7 +60,11 @@ public class DiaryService {
     }
 
     public List<Indicator> getIndicators() {
-        return indicatorRepo.findAllByOrderByIndOrder();
+        return indicatorRepo.findAllByOrderByTitle();
+    }
+
+    public List<Indicator> getNotArchivedIndicators() {
+        return indicatorRepo.findAllByArchivedFalseOrderByTitle();
     }
 
     public void saveMark(Indicator indicator, Date date, IndValue value, String comment) {
@@ -90,5 +95,10 @@ public class DiaryService {
         if (!indicator.getValues().contains(value)) {
             throw new RuntimeException();
         }
+    }
+
+    public void archive(Indicator indicator) {
+        indicator.setArchived(!indicator.getArchived());
+        indicatorRepo.save(indicator);
     }
 }

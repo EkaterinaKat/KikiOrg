@@ -13,11 +13,7 @@
 
     <VBox>
         <HBox>
-            <Button fx:id="newIndicatorButton" text="New"/>
-            <Pane minWidth="20" maxWidth="20"/>
-            <Button fx:id="editButton" text="Edit"/>
-            <Pane minWidth="20" maxWidth="20"/>
-            <Button fx:id="newValueButton" text="Add value"/>
+            <Button fx:id="newIndicatorButton" text="New Indicator"/>
         </HBox>
         <HBox>
             <Pane minWidth="25" maxWidth="25"/>
