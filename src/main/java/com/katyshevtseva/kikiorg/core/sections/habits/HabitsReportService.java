@@ -12,10 +12,11 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
-import static com.katyshevtseva.date.DateUtils.*;
+import static com.katyshevtseva.date.DateUtils.READABLE_DATE_FORMAT;
+import static com.katyshevtseva.date.DateUtils.getDateRange;
 import static com.katyshevtseva.fx.Styler.StandardColor.GREEN;
 import static com.katyshevtseva.general.ReportCell.Type.HEAD_COLUMN;
-import static com.katyshevtseva.kikiorg.core.sections.habits.AnalysisService.NUM_OF_STABILITY_DAYS;
+import static com.katyshevtseva.kikiorg.core.sections.habits.AnalysisService.someDaysAgo;
 
 @Service
 @RequiredArgsConstructor
@@ -25,7 +26,7 @@ public class HabitsReportService {
 
     public List<List<ReportCell>> getQuickReport() {
         return getReport(habitsService.getActiveHabits(),
-                new Period(shiftDate(new Date(), TimeUnit.DAY, -(NUM_OF_STABILITY_DAYS - 1)), new Date()));
+                new Period(someDaysAgo, new Date()));
     }
 
     public List<List<ReportCell>> getReport(List<Habit> habits, Period period) {

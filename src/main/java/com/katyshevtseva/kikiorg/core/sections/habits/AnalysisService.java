@@ -20,7 +20,8 @@ import static com.katyshevtseva.kikiorg.core.sections.habits.StabilityStatus.*;
 @RequiredArgsConstructor
 public class AnalysisService {
     public final static int NUM_OF_STABILITY_DAYS = 30;
-    private final Date someDaysAgo = shiftDate(new Date(), DAY, -(NUM_OF_STABILITY_DAYS-1));
+    public static final Date someDaysAgo = shiftDate(new Date(), DAY, -NUM_OF_STABILITY_DAYS);
+    private final Date yesterday = shiftDate(new Date(), DAY, -1);
     private final HabitRepo habitRepo;
     private final HabitMarkService markService;
 
@@ -35,9 +36,12 @@ public class AnalysisService {
     }
 
     private String getStabilityCalculationsAndAssignNewStatusIfNeeded(Habit habit) {
-        List<Date> dates = getDateRange(new Period(someDaysAgo, new Date()));
+        List<Date> dates = getDateRange(new Period(someDaysAgo, yesterday));
         int daysTotal = dates.size();
         int daysHabitDone = getDaysHabitDone(dates, habit);
+
+        System.out.println(new Period(someDaysAgo, yesterday));
+        System.out.println(daysTotal);
 
         if (!habit.hasCriterion()) {
             return String.format("%d/%d. Критерии не заданы", daysHabitDone, daysTotal);
