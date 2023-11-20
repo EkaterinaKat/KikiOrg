@@ -51,6 +51,7 @@ public class Core implements InitializingBean {
     private final DairyReportService dairyReportService;
     private final PlanningService planningService;
     private final SettingService settingService;
+    private final OperationDeletionService operationDeletionService;
 
     public static Core getInstance() {
         while (INSTANCE == null) {
@@ -66,6 +67,10 @@ public class Core implements InitializingBean {
     @Override
     public void afterPropertiesSet() {
         INSTANCE = this;
+    }
+
+    public OperationDeletionService operationDeletionService() {
+        return operationDeletionService;
     }
 
     public SettingService settingService() {

@@ -1,33 +1,31 @@
 package com.katyshevtseva.kikiorg.view.controller.finance;
 
 import com.katyshevtseva.fx.Styler;
-import com.katyshevtseva.fx.TableUtils;
+import com.katyshevtseva.fx.WindowBuilder;
 import com.katyshevtseva.fx.WindowBuilder.FxController;
 import com.katyshevtseva.fx.dialog.StandardDialogBuilder;
 import com.katyshevtseva.general.NoArgsKnob;
+import com.katyshevtseva.general.OneOutKnob;
 import com.katyshevtseva.kikiorg.core.Core;
 import com.katyshevtseva.kikiorg.core.sections.finance.FinanceOperationService;
 import com.katyshevtseva.kikiorg.core.sections.finance.FinanceOperationService.Operation;
+import com.katyshevtseva.kikiorg.core.sections.finance.entity.Expense;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableRow;
-import javafx.scene.control.TableView;
-import javafx.scene.control.Tooltip;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.util.Callback;
 
 import java.util.List;
 
-import static com.katyshevtseva.fx.FxImageCreationUtil.IconPicture.DELTE;
-import static com.katyshevtseva.fx.FxUtils.setImageOnButton;
 import static com.katyshevtseva.fx.Styler.StandardColor.*;
 import static com.katyshevtseva.fx.Styler.ThingToColor.BACKGROUND;
+import static com.katyshevtseva.kikiorg.view.utils.KikiOrgWindowUtil.OrgDialogInfo.EXPENSE_EDIT;
 
 class HistoryTableController implements FxController {
-    private List<Operation> operations;
-    private NoArgsKnob operationDeleteListener;
+    private final OneOutKnob<List<Operation>> operationSupplier;
+    private NoArgsKnob operationUpdateListener;
     @FXML
     private TableView<Operation> table;
     @FXML
@@ -39,24 +37,22 @@ class HistoryTableController implements FxController {
     @FXML
     private TableColumn<Operation, String> amountColumn;
     @FXML
-    private TableColumn<Operation, Void> deleteColumn;
-    @FXML
     private TableColumn<Operation, String> additionalInfoColumn;
 
-    HistoryTableController(List<Operation> initOperationList) {
-        operations = initOperationList;
+    HistoryTableController(OneOutKnob<List<Operation>> operationSupplier) {
+        this.operationSupplier = operationSupplier;
     }
 
-    HistoryTableController(List<Operation> operations, NoArgsKnob operationDeleteListener) {
-        this.operations = operations;
-        this.operationDeleteListener = operationDeleteListener;
+    HistoryTableController(OneOutKnob<List<Operation>> operationSupplier, NoArgsKnob operationUpdateListener) {
+        this.operationSupplier = operationSupplier;
+        this.operationUpdateListener = operationUpdateListener;
     }
 
     @FXML
     private void initialize() {
         adjustColumns();
-        setRowsColors();
-        setTableContent(operations);
+        tuneRows();
+        updateTableContent();
     }
 
     private void adjustColumns() {
@@ -65,30 +61,20 @@ class HistoryTableController implements FxController {
         toColumn.setCellValueFactory(new PropertyValueFactory<>("toTitle"));
         amountColumn.setCellValueFactory(new PropertyValueFactory<>("amountString"));
         additionalInfoColumn.setCellValueFactory(new PropertyValueFactory<>("additionalInfo"));
-        TableUtils.adjustButtonColumn(deleteColumn, "",
-                operation ->
-                        new StandardDialogBuilder().openQuestionDialog("Delete?", b -> {
-                            if (b) {
-                                Core.getInstance().financeOperationService().deleteOperation(operation);
-                                operations.remove(operation);
-                                setTableContent(operations);
-                                if (operationDeleteListener != null)
-                                    operationDeleteListener.execute();
-                            }
-                        }),
-                button -> setImageOnButton(DELTE, button, 20));
+    }
+
+    void updateTableContent() {
+        setTableContent(operationSupplier.execute());
     }
 
     void setTableContent(List<Operation> operations) {
-        this.operations = operations;
-
         table.getItems().clear();
         ObservableList<Operation> operationObservableList = FXCollections.observableArrayList();
         operationObservableList.addAll(operations);
         table.setItems(operationObservableList);
     }
 
-    private void setRowsColors() {
+    private void tuneRows() {
         table.setRowFactory(new Callback<TableView<Operation>, TableRow<Operation>>() {
             @Override
             public TableRow<Operation> call(TableView<Operation> tableView) {
@@ -106,10 +92,39 @@ class HistoryTableController implements FxController {
                                 setStyle(Styler.getColorfullStyle(BACKGROUND, BLUE));
                             }
                             setTooltip(new Tooltip(operation.getAdditionalInfo()));
+                            setContextMenu(getOperationContextMenu(operation));
                         }
                     }
                 };
             }
         });
+    }
+
+    private ContextMenu getOperationContextMenu(Operation operation) {
+        ContextMenu contextMenu = new ContextMenu();
+
+        if (operation instanceof Expense) {
+            MenuItem editItem = new MenuItem("Edit");
+            editItem.setOnAction(event1 -> WindowBuilder.openDialog(EXPENSE_EDIT,
+                    new ExpenseController((Expense) operation, () -> {
+                        updateTableContent();
+                        if (operationUpdateListener != null)
+                            operationUpdateListener.execute();
+                    })));
+            contextMenu.getItems().add(editItem);
+        }
+
+        MenuItem deleteItem = new MenuItem("Delete");
+        deleteItem.setOnAction(event1 -> new StandardDialogBuilder().openQuestionDialog("Delete?", b -> {
+            if (b) {
+                Core.getInstance().operationDeletionService().deleteOperation(operation);
+                updateTableContent();
+                if (operationUpdateListener != null)
+                    operationUpdateListener.execute();
+            }
+        }));
+        contextMenu.getItems().add(deleteItem);
+
+        return contextMenu;
     }
 }

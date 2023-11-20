@@ -39,24 +39,24 @@ class LedgerController implements SectionController {
         checkPane.getChildren().add(WindowBuilder.getNode(FIN_CHECK, checkController));
 
         historyTableController =
-                new HistoryTableController(service.getLastWeekOperations(), checkController::updateTable);
+                new HistoryTableController(service::getLastWeekOperations, checkController::updateTable);
         historyTablePane.getChildren().add(WindowBuilder.getNode(FIN_HISTORY_TABLE, historyTableController));
 
         replenishmentController = new ReplenishmentController(() -> {
             checkController.updateTable();
-            historyTableController.setTableContent(service.getLastWeekOperations());
+            historyTableController.updateTableContent();
         });
         replenishmentPane.getChildren().add(WindowBuilder.getNode(REPLENISHMENT, replenishmentController));
 
-        expenseController = new ExpenseController(() -> {
+        expenseController = new ExpenseController(null, () -> {
             checkController.updateTable();
-            historyTableController.setTableContent(service.getLastWeekOperations());
+            historyTableController.updateTableContent();
         });
         expensePane.getChildren().add(WindowBuilder.getNode(EXPENSE, expenseController));
 
         transferController = new TransferController(() -> {
             checkController.updateTable();
-            historyTableController.setTableContent(service.getLastWeekOperations());
+            historyTableController.updateTableContent();
         });
         transferPane.getChildren().add(WindowBuilder.getNode(TRANSFER, transferController));
 
@@ -66,7 +66,7 @@ class LedgerController implements SectionController {
 
     @Override
     public void update() {
-        historyTableController.setTableContent(service.getLastWeekOperations());
+        historyTableController.updateTableContent();
         checkController.updateTable();
         expenseController.adjustComboBoxes();
         replenishmentController.adjustComboBoxes();

@@ -11,8 +11,7 @@
             <TableColumn prefWidth="300" text="From" fx:id="fromColumn"/>
             <TableColumn prefWidth="300" text="To" fx:id="toColumn"/>
             <TableColumn prefWidth="80" text="amount" fx:id="amountColumn"/>
-            <TableColumn prefWidth="125" fx:id="additionalInfoColumn"/>
-            <TableColumn prefWidth="70" fx:id="deleteColumn"/>
+            <TableColumn prefWidth="195" fx:id="additionalInfoColumn"/>
         </columns>
     </TableView>
 

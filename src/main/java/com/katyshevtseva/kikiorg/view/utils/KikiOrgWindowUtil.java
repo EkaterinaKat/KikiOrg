@@ -74,6 +74,7 @@ public class KikiOrgWindowUtil {
     }
 
     public enum OrgDialogInfo implements WindowBuilder.DialogInfo {
+        EXPENSE_EDIT(FIN_FXML_LOCATION, "expense.fxml", new Size(400, 1000), "Edit Expense"),
         OUTFIT(WARDROBE_FXML_LOCATION, "outfit_dialog.fxml", new Size(1000, 1200), CoreConstants.APP_NAME),
         PIECE(WARDROBE_FXML_LOCATION, "piece_dialog.fxml", new Size(700, 800), CoreConstants.APP_NAME),
         HABIT(HABITS_FXML_LOCATION, "habit_dialog.fxml", new Size(650, 600), CoreConstants.APP_NAME),

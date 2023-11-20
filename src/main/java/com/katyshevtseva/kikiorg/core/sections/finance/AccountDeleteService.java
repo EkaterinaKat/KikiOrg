@@ -20,7 +20,7 @@ public class AccountDeleteService {
     private final ReplenishmentRepo replenishmentRepo;
     private final TransferRepo transferRepo;
     private final FinanceService financeService;
-    private final FinanceOperationService financeOperationService;
+    private final OperationDeletionService operationDeletionService;
     private final TransferService transferService;
     private final AccountRepo accountRepo;
 
@@ -47,28 +47,28 @@ public class AccountDeleteService {
 
         //пополнения
         for (Replenishment replenishment : replenishmentRepo.findByAccount(accountToDelete)) {
-            financeOperationService.deleteOperation(replenishment);
+            operationDeletionService.deleteOperation(replenishment);
             financeService.addReplenishment(substituteAccount, replenishment.getAmount(),
                     replenishment.getSource(), replenishment.getDate());
         }
 
         //расходы
         for (Expense expense : expenseRepo.findByAccount(accountToDelete)) {
-            financeOperationService.deleteOperation(expense);
+            operationDeletionService.deleteOperation(expense);
             financeService.addExpense(substituteAccount, expense.getAmount(),
                     expense.getItem(), expense.getDate(), expense.getNecessity(), expense.getComment());
         }
 
         //переводы на счет
         for (Transfer transfer : transferRepo.findAllByTo(accountToDelete)) {
-            financeOperationService.deleteOperation(transfer);
+            operationDeletionService.deleteOperation(transfer);
             transferService.addTransfer(transfer.getFrom(), substituteAccount,
                     transfer.getGoneAmount(), transfer.getCameAmount(), transfer.getDate());
         }
 
         //переводы со счета
         for (Transfer transfer : transferRepo.findAllByFrom(accountToDelete)) {
-            financeOperationService.deleteOperation(transfer);
+            operationDeletionService.deleteOperation(transfer);
             transferService.addTransfer(substituteAccount, transfer.getTo(),
                     transfer.getGoneAmount(), transfer.getCameAmount(), transfer.getDate());
         }

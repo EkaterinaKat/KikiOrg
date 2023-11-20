@@ -20,7 +20,7 @@ class HistoryController implements SectionController {
     @FXML
     private void initialize() {
         tableController = new HistoryTableController(
-                Core.getInstance().financeOperationService().getOperationsForLastMonth());
+                Core.getInstance().financeOperationService()::getOperationsForLastMonth);
         tablePane.getChildren().add(WindowBuilder.getNode(FIN_HISTORY_TABLE, tableController));
         searchPane.getChildren().add(WindowBuilder.getNode(FIN_SEARCH,
                 new SearchController(tableController::setTableContent)));
@@ -28,6 +28,6 @@ class HistoryController implements SectionController {
 
     @Override
     public void update() {
-        tableController.setTableContent(Core.getInstance().financeOperationService().getOperationsForLastMonth());
+        tableController.updateTableContent();
     }
 }

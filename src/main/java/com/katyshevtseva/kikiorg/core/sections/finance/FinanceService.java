@@ -24,6 +24,7 @@ public class FinanceService {
     private final ReplenishmentRepo replenishmentRepo;
     private final DateService dateService;
     private final TransferRepo transferRepo;
+    private final OperationDeletionService operationDeletionService;
 
     public void addSource(String title, String desc) {
         Source source = new Source();
@@ -175,5 +176,11 @@ public class FinanceService {
     public void archive(Account account) {
         account.setArchived(!account.isArchived());
         accountRepo.save(account);
+    }
+
+    public void editExpense(Expense expense, Account account, long amount,
+                            Item item, Date date, Necessity necessity, String comment) {
+        operationDeletionService.deleteOperation(expense);
+        addExpense(account, amount, item, date, necessity, comment);
     }
 }
