@@ -10,6 +10,8 @@ import com.katyshevtseva.kikiorg.core.Core;
 import com.katyshevtseva.kikiorg.core.sections.finance.FinanceOperationService;
 import com.katyshevtseva.kikiorg.core.sections.finance.FinanceOperationService.Operation;
 import com.katyshevtseva.kikiorg.core.sections.finance.entity.Expense;
+import com.katyshevtseva.kikiorg.core.sections.finance.entity.Replenishment;
+import com.katyshevtseva.kikiorg.core.sections.finance.entity.Transfer;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -21,7 +23,7 @@ import java.util.List;
 
 import static com.katyshevtseva.fx.Styler.StandardColor.*;
 import static com.katyshevtseva.fx.Styler.ThingToColor.BACKGROUND;
-import static com.katyshevtseva.kikiorg.view.utils.KikiOrgWindowUtil.OrgDialogInfo.EXPENSE_EDIT;
+import static com.katyshevtseva.kikiorg.view.utils.KikiOrgWindowUtil.OrgDialogInfo.*;
 
 class HistoryTableController implements FxController {
     private final OneOutKnob<List<Operation>> operationSupplier;
@@ -103,16 +105,9 @@ class HistoryTableController implements FxController {
     private ContextMenu getOperationContextMenu(Operation operation) {
         ContextMenu contextMenu = new ContextMenu();
 
-        if (operation instanceof Expense) {
-            MenuItem editItem = new MenuItem("Edit");
-            editItem.setOnAction(event1 -> WindowBuilder.openDialog(EXPENSE_EDIT,
-                    new ExpenseController((Expense) operation, () -> {
-                        updateTableContent();
-                        if (operationUpdateListener != null)
-                            operationUpdateListener.execute();
-                    })));
-            contextMenu.getItems().add(editItem);
-        }
+        MenuItem editItem = new MenuItem("Edit");
+        setEditMenuItemListener(editItem, operation);
+        contextMenu.getItems().add(editItem);
 
         MenuItem deleteItem = new MenuItem("Delete");
         deleteItem.setOnAction(event1 -> new StandardDialogBuilder().openQuestionDialog("Delete?", b -> {
@@ -126,5 +121,32 @@ class HistoryTableController implements FxController {
         contextMenu.getItems().add(deleteItem);
 
         return contextMenu;
+    }
+
+    private void setEditMenuItemListener(MenuItem item, Operation operation) {
+        if (operation instanceof Expense) {
+            item.setOnAction(event1 -> WindowBuilder.openDialog(EXPENSE_EDIT,
+                    new ExpenseController((Expense) operation, () -> {
+                        updateTableContent();
+                        if (operationUpdateListener != null)
+                            operationUpdateListener.execute();
+                    })));
+        }
+        if (operation instanceof Replenishment) {
+            item.setOnAction(event1 -> WindowBuilder.openDialog(REPLENISHMENT_EDIT,
+                    new ReplenishmentController((Replenishment) operation, () -> {
+                        updateTableContent();
+                        if (operationUpdateListener != null)
+                            operationUpdateListener.execute();
+                    })));
+        }
+        if (operation instanceof Transfer) {
+            item.setOnAction(event1 -> WindowBuilder.openDialog(TRANSFER_EDIT,
+                    new TransferController((Transfer) operation, () -> {
+                        updateTableContent();
+                        if (operationUpdateListener != null)
+                            operationUpdateListener.execute();
+                    })));
+        }
     }
 }

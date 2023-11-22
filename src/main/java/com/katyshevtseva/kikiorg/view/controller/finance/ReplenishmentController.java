@@ -1,9 +1,11 @@
 package com.katyshevtseva.kikiorg.view.controller.finance;
 
+import com.katyshevtseva.fx.FxUtils;
 import com.katyshevtseva.fx.WindowBuilder.FxController;
 import com.katyshevtseva.general.NoArgsKnob;
 import com.katyshevtseva.kikiorg.core.Core;
 import com.katyshevtseva.kikiorg.core.sections.finance.entity.Account;
+import com.katyshevtseva.kikiorg.core.sections.finance.entity.Replenishment;
 import com.katyshevtseva.kikiorg.core.sections.finance.entity.Source;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -16,7 +18,8 @@ import java.time.LocalDate;
 import static com.katyshevtseva.fx.FxUtils.*;
 
 class ReplenishmentController implements FxController {
-    private NoArgsKnob operationListener;
+    private final Replenishment replenishment;
+    private final NoArgsKnob operationListener;
     @FXML
     private TextField amountTextField;
     @FXML
@@ -28,7 +31,8 @@ class ReplenishmentController implements FxController {
     @FXML
     private Button doneButton;
 
-    ReplenishmentController(NoArgsKnob operationListener) {
+    public ReplenishmentController(Replenishment replenishment, NoArgsKnob operationListener) {
+        this.replenishment = replenishment;
         this.operationListener = operationListener;
     }
 
@@ -39,6 +43,13 @@ class ReplenishmentController implements FxController {
         associateButtonWithControls(doneButton, amountTextField, sourceComboBox, accountComboBox, datePicker);
         adjustComboBoxes();
         datePicker.setValue(LocalDate.now());
+
+        if (replenishment != null) {
+            amountTextField.setText(replenishment.getAmount() + "");
+            sourceComboBox.setValue(replenishment.getSource());
+            accountComboBox.setValue(replenishment.getAccount());
+            FxUtils.setDate(datePicker, replenishment.getDate());
+        }
     }
 
     public void adjustComboBoxes() {
@@ -47,9 +58,22 @@ class ReplenishmentController implements FxController {
     }
 
     private void saveReplenishment() {
-        Core.getInstance().financeService().addReplenishment(accountComboBox.getValue(), Long.parseLong(amountTextField.getText()),
-                sourceComboBox.getValue(), java.sql.Date.valueOf(datePicker.getValue()));
-        amountTextField.clear();
+        if (replenishment == null) {
+            Core.getInstance().financeService().addReplenishment(
+                    accountComboBox.getValue(),
+                    Long.parseLong(amountTextField.getText()),
+                    sourceComboBox.getValue(),
+                    java.sql.Date.valueOf(datePicker.getValue()));
+            amountTextField.clear();
+        } else {
+            Core.getInstance().financeService().editReplenishment(
+                    replenishment,
+                    accountComboBox.getValue(),
+                    Long.parseLong(amountTextField.getText()),
+                    sourceComboBox.getValue(),
+                    java.sql.Date.valueOf(datePicker.getValue()));
+            FxUtils.closeWindowThatContains(accountComboBox);
+        }
         operationListener.execute();
     }
 }

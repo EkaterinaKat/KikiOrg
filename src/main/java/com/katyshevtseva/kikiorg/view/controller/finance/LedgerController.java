@@ -42,7 +42,7 @@ class LedgerController implements SectionController {
                 new HistoryTableController(service::getLastWeekOperations, checkController::updateTable);
         historyTablePane.getChildren().add(WindowBuilder.getNode(FIN_HISTORY_TABLE, historyTableController));
 
-        replenishmentController = new ReplenishmentController(() -> {
+        replenishmentController = new ReplenishmentController(null, () -> {
             checkController.updateTable();
             historyTableController.updateTableContent();
         });
@@ -54,7 +54,7 @@ class LedgerController implements SectionController {
         });
         expensePane.getChildren().add(WindowBuilder.getNode(EXPENSE, expenseController));
 
-        transferController = new TransferController(() -> {
+        transferController = new TransferController(null, () -> {
             checkController.updateTable();
             historyTableController.updateTableContent();
         });

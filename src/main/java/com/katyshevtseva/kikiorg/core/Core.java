@@ -39,7 +39,6 @@ public class Core implements InitializingBean {
     private final FinanceReportService financeReportService;
     private final ReportPeriodService reportPeriodService;
     private final ItemHierarchyService itemHierarchyService;
-    private final TransferService transferService;
     private final AccountGroupService accountGroupService;
     private final AccountDeleteService accountDeleteService;
     private final ItemMergeService itemMergeService;
@@ -115,10 +114,6 @@ public class Core implements InitializingBean {
 
     public AccountGroupService accountGroupService() {
         return accountGroupService;
-    }
-
-    public TransferService currencyService() {
-        return transferService;
     }
 
     public FinanceService financeService() {

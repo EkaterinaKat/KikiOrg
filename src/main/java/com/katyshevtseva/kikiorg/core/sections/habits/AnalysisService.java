@@ -40,9 +40,6 @@ public class AnalysisService {
         int daysTotal = dates.size();
         int daysHabitDone = getDaysHabitDone(dates, habit);
 
-        System.out.println(new Period(someDaysAgo, yesterday));
-        System.out.println(daysTotal);
-
         if (!habit.hasCriterion()) {
             return String.format("%d/%d. Критерии не заданы", daysHabitDone, daysTotal);
         }

@@ -21,7 +21,6 @@ public class AccountDeleteService {
     private final TransferRepo transferRepo;
     private final FinanceService financeService;
     private final OperationDeletionService operationDeletionService;
-    private final TransferService transferService;
     private final AccountRepo accountRepo;
 
 
@@ -62,14 +61,14 @@ public class AccountDeleteService {
         //переводы на счет
         for (Transfer transfer : transferRepo.findAllByTo(accountToDelete)) {
             operationDeletionService.deleteOperation(transfer);
-            transferService.addTransfer(transfer.getFrom(), substituteAccount,
+            financeService.addTransfer(transfer.getFrom(), substituteAccount,
                     transfer.getGoneAmount(), transfer.getCameAmount(), transfer.getDate());
         }
 
         //переводы со счета
         for (Transfer transfer : transferRepo.findAllByFrom(accountToDelete)) {
             operationDeletionService.deleteOperation(transfer);
-            transferService.addTransfer(substituteAccount, transfer.getTo(),
+            financeService.addTransfer(substituteAccount, transfer.getTo(),
                     transfer.getGoneAmount(), transfer.getCameAmount(), transfer.getDate());
         }
 

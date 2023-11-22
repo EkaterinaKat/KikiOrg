@@ -115,6 +115,25 @@ public class FinanceService {
         addToAccountAmount(account, amount);
     }
 
+    public boolean isIntercurrencyTransfer(Account account1, Account account2) {
+        if (account1 == null || account2 == null) {
+            return false;
+        }
+        return account1.getCurrency() != account2.getCurrency();
+    }
+
+    public void addTransfer(Account from, Account to, Long amountGone, Long amountCame, Date date) {
+        if (!isIntercurrencyTransfer(from, to) && !amountCame.equals(amountGone)) {
+            throw new RuntimeException();
+        }
+
+        Transfer transfer = new Transfer(from, to, amountGone, amountCame, dateService.createIfNotExistAndGetDateEntity(date));
+        transferRepo.saveAndFlush(transfer);
+
+        addToAccountAmount(from, (-1) * amountGone);
+        addToAccountAmount(to, amountCame);
+    }
+
     // Если нет мд public то FinanceService не может получить доступ к этому методу в собраном в exe приложении
     public List<Replenishment> getReplenishmentsByPeriod(Period period) {
         List<Replenishment> replenishments = new ArrayList<>();
@@ -163,10 +182,6 @@ public class FinanceService {
         return transferList;
     }
 
-    public enum TransferType {
-        TO_USER_ACCOUNTS, FROM_USER_ACCOUNTS, ALL
-    }
-
     public void addToAccountAmount(Account account, long amount) {
         Account actualAccount = accountRepo.findById(account.getId()).orElse(null);
         actualAccount.setAmount(actualAccount.getAmount() + amount);
@@ -182,5 +197,15 @@ public class FinanceService {
                             Item item, Date date, Necessity necessity, String comment) {
         operationDeletionService.deleteOperation(expense);
         addExpense(account, amount, item, date, necessity, comment);
+    }
+
+    public void editReplenishment(Replenishment replenishment, Account account, long amount, Source source, Date date) {
+        operationDeletionService.deleteOperation(replenishment);
+        addReplenishment(account, amount, source, date);
+    }
+
+    public void editTransfer(Transfer transfer, Account from, Account to, Long amountGone, Long amountCame, Date date) {
+        operationDeletionService.deleteOperation(transfer);
+        addTransfer(from, to, amountGone, amountCame, date);
     }
 }

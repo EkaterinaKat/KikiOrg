@@ -98,7 +98,6 @@ class ExpenseController implements FxController {
                     necessityComboBox.getValue(),
                     commentTextField.getText());
             amountTextField.clear();
-            operationListener.execute();
             necessityComboBox.setValue(null);
             commentTextField.clear();
         } else {
@@ -111,8 +110,7 @@ class ExpenseController implements FxController {
                     necessityComboBox.getValue(),
                     commentTextField.getText());
             FxUtils.closeWindowThatContains(accountComboBox);
-            operationListener.execute();
         }
-
+        operationListener.execute();
     }
 }

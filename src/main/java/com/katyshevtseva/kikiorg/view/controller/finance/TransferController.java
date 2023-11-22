@@ -4,8 +4,9 @@ import com.katyshevtseva.fx.FxUtils;
 import com.katyshevtseva.fx.WindowBuilder.FxController;
 import com.katyshevtseva.general.NoArgsKnob;
 import com.katyshevtseva.kikiorg.core.Core;
-import com.katyshevtseva.kikiorg.core.sections.finance.TransferService;
+import com.katyshevtseva.kikiorg.core.sections.finance.FinanceService;
 import com.katyshevtseva.kikiorg.core.sections.finance.entity.Account;
+import com.katyshevtseva.kikiorg.core.sections.finance.entity.Transfer;
 import javafx.beans.value.ChangeListener;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -19,7 +20,8 @@ import static com.katyshevtseva.fx.FxUtils.associateButtonWithControls;
 import static com.katyshevtseva.fx.FxUtils.disableNonNumericChars;
 
 class TransferController implements FxController {
-    private final TransferService transferService = Core.getInstance().currencyService();
+    private final FinanceService service = Core.getInstance().financeService();
+    private final Transfer transfer;
     private final NoArgsKnob operationListener;
     private ChangeListener<String> changeAmountGoneTextFieldListener;
     @FXML
@@ -35,7 +37,8 @@ class TransferController implements FxController {
     @FXML
     private DatePicker datePicker;
 
-    TransferController(NoArgsKnob operationListener) {
+    public TransferController(Transfer transfer, NoArgsKnob operationListener) {
+        this.transfer = transfer;
         this.operationListener = operationListener;
     }
 
@@ -48,6 +51,14 @@ class TransferController implements FxController {
         transferButton.setOnAction(event -> transfer());
         datePicker.setValue(LocalDate.now());
         adjustIntercurrencyTransferMechanism();
+
+        if (transfer != null) {
+            fromComboBox.setValue(transfer.getFrom());
+            toComboBox.setValue(transfer.getTo());
+            amountGoneTextField.setText(transfer.getGoneAmount() + "");
+            amountCameTextField.setText(transfer.getCameAmount() + "");
+            FxUtils.setDate(datePicker, transfer.getDate());
+        }
     }
 
     public void adjustComboBoxes() {
@@ -56,14 +67,25 @@ class TransferController implements FxController {
     }
 
     private void transfer() {
-        transferService.addTransfer(
-                fromComboBox.getValue(),
-                toComboBox.getValue(),
-                Long.parseLong(amountGoneTextField.getText()),
-                Long.parseLong(amountCameTextField.getText()),
-                java.sql.Date.valueOf(datePicker.getValue()));
-        amountGoneTextField.clear();
-        amountCameTextField.clear();
+        if (transfer == null) {
+            service.addTransfer(
+                    fromComboBox.getValue(),
+                    toComboBox.getValue(),
+                    Long.parseLong(amountGoneTextField.getText()),
+                    Long.parseLong(amountCameTextField.getText()),
+                    java.sql.Date.valueOf(datePicker.getValue()));
+            amountGoneTextField.clear();
+            amountCameTextField.clear();
+        } else {
+            service.editTransfer(
+                    transfer,
+                    fromComboBox.getValue(),
+                    toComboBox.getValue(),
+                    Long.parseLong(amountGoneTextField.getText()),
+                    Long.parseLong(amountCameTextField.getText()),
+                    java.sql.Date.valueOf(datePicker.getValue()));
+            FxUtils.closeWindowThatContains(amountCameTextField);
+        }
         operationListener.execute();
     }
 
@@ -75,7 +97,7 @@ class TransferController implements FxController {
     }
 
     private void switchBetweenTypesOfTransfer() {
-        if (transferService.isIntercurrencyTransfer(fromComboBox.getValue(), toComboBox.getValue())) {
+        if (service.isIntercurrencyTransfer(fromComboBox.getValue(), toComboBox.getValue())) {
             amountCameTextField.setDisable(false);
             amountCameTextField.clear();
             amountGoneTextField.textProperty().removeListener(changeAmountGoneTextFieldListener);
