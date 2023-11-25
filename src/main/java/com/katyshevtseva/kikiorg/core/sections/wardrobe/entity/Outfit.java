@@ -5,6 +5,7 @@ import com.katyshevtseva.kikiorg.core.sections.wardrobe.enums.OutfitSeason;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.util.stream.Collectors;
 
 @Data
 @Entity
@@ -33,5 +34,14 @@ public class Outfit {
         }
 
         return fullDesc.toString();
+    }
+
+    public boolean containsArchivedPieces() {
+        for (Piece piece : collageEntity.getComponents().stream().map(ComponentEntity::getPiece).collect(Collectors.toList())) {
+            if (piece.getEndDate() != null) {
+                return true;
+            }
+        }
+        return false;
     }
 }

@@ -1,5 +1,6 @@
 package com.katyshevtseva.kikiorg.view.controller.wardrobe;
 
+import com.katyshevtseva.fx.Styler;
 import com.katyshevtseva.fx.WindowBuilder;
 import com.katyshevtseva.fx.WindowBuilder.FxController;
 import com.katyshevtseva.fx.component.ComponentBuilder;
@@ -21,6 +22,8 @@ import lombok.RequiredArgsConstructor;
 
 import java.util.List;
 
+import static com.katyshevtseva.fx.Styler.StandardColor.RED;
+import static com.katyshevtseva.fx.Styler.ThingToColor.BORDER;
 import static com.katyshevtseva.kikiorg.view.utils.KikiOrgWindowUtil.OrgDialogInfo.OUTFIT;
 
 @RequiredArgsConstructor
@@ -86,7 +89,11 @@ public class OutfitGridController implements FxController {
 
         for (Outfit outfit : outfits) {
             Pane pane = CollageUtils.getCollagePreview(outfit.getCollageEntity());
-            pane.setStyle("-fx-border-color: #000000;");
+            if (outfit.containsArchivedPieces()) {
+                pane.setStyle(Styler.getColorfullStyle(BORDER, RED) + Styler.getBorderWidth(7));
+            } else {
+                pane.setStyle(Styler.getBlackBorderStyle());
+            }
             pane.setOnMouseClicked(event -> showOutfitInfo(outfit));
             gridPane.add(pane, GeneralUtils.getColumnByIndexAndColumnNum(index, 2),
                     GeneralUtils.getRowByIndexAndColumnNum(index, 2));

@@ -150,9 +150,6 @@ public class WardrobeService {
         if (piece.getEndDate() != null) {
             throw new RuntimeException("Вещь уже архивирована");
         }
-        if (!pieceAvailableForArchive(piece)) {
-            throw new RuntimeException("Невозможно архивировать используемую вещь");
-        }
 
         piece.setEndDate(dateService.createIfNotExistAndGetDateEntity(new Date()));
         pieceRepo.save(piece);
@@ -165,14 +162,5 @@ public class WardrobeService {
 
         piece.setEndDate(null);
         pieceRepo.save(piece);
-    }
-
-    public boolean pieceAvailableForArchive(Piece piece) {
-        for (ComponentEntity componentEntity : componentEntityRepo.findAll()) {
-            if (componentEntity.getPiece().equals(piece)) {
-                return false;
-            }
-        }
-        return true;
     }
 }

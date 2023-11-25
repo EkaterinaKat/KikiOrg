@@ -138,35 +138,15 @@ class PieceController implements SectionController {
                             paginationPaneController.loadPage();
                             showPieceFullInfo(savedPiece);
                         })));
-        archiveButton.setOnAction(event -> {
-                    boolean availableForArchive = service.pieceAvailableForArchive(piece);
-                    if (availableForArchive) {
-                        new StandardDialogBuilder().openQuestionDialog("Archive?", b -> {
-                            if (b) {
-                                service.archivePiece(piece);
-                                paginationPaneController.loadPage();
-                            }
-                        });
-                    } else {
-                        new StandardDialogBuilder().openInfoDialog("Невозможно архивировать используемую вещь");
-                    }
-                }
-        );
         if (piece.getEndDate() == null) {
             archiveButton.setText("Archive");
-            archiveButton.setOnAction(event -> {
-                        boolean availableForArchive = service.pieceAvailableForArchive(piece);
-                        if (availableForArchive) {
-                            new StandardDialogBuilder().openQuestionDialog("Archive?", b -> {
-                                if (b) {
-                                    service.archivePiece(piece);
-                                    paginationPaneController.loadPage();
-                                }
-                            });
-                        } else {
-                            new StandardDialogBuilder().openInfoDialog("Невозможно архивировать используемую вещь");
+            archiveButton.setOnAction(event ->
+                    new StandardDialogBuilder().openQuestionDialog("Archive?", b -> {
+                        if (b) {
+                            service.archivePiece(piece);
+                            paginationPaneController.loadPage();
                         }
-                    }
+                    })
             );
         } else {
             archiveButton.setText("Return to work");
