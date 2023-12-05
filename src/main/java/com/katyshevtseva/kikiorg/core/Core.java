@@ -1,6 +1,7 @@
 package com.katyshevtseva.kikiorg.core;
 
-import com.katyshevtseva.kikiorg.core.sections.diary.DairyReportService;
+import com.katyshevtseva.kikiorg.core.sections.diary.DairyTableService;
+import com.katyshevtseva.kikiorg.core.sections.diary.DiaryChartService;
 import com.katyshevtseva.kikiorg.core.sections.diary.DiaryService;
 import com.katyshevtseva.kikiorg.core.sections.finance.*;
 import com.katyshevtseva.kikiorg.core.sections.finance.report.DynamicsReportService;
@@ -47,10 +48,11 @@ public class Core implements InitializingBean {
     private final TaskService taskService;
     private final DynamicsReportService dynamicsReportService;
     private final DiaryService diaryService;
-    private final DairyReportService dairyReportService;
+    private final DairyTableService dairyTableService;
     private final PlanningService planningService;
     private final SettingService settingService;
     private final OperationDeletionService operationDeletionService;
+    private final DiaryChartService diaryChartService;
 
     public static Core getInstance() {
         while (INSTANCE == null) {
@@ -66,6 +68,10 @@ public class Core implements InitializingBean {
     @Override
     public void afterPropertiesSet() {
         INSTANCE = this;
+    }
+
+    public DiaryChartService diaryChartService() {
+        return diaryChartService;
     }
 
     public OperationDeletionService operationDeletionService() {
@@ -84,8 +90,8 @@ public class Core implements InitializingBean {
         return diaryService;
     }
 
-    public DairyReportService dairyReportService() {
-        return dairyReportService;
+    public DairyTableService dairyReportService() {
+        return dairyTableService;
     }
 
     public DynamicsReportService dynamicsReportService() {

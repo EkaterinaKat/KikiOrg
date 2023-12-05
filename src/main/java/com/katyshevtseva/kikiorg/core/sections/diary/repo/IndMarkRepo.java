@@ -10,4 +10,6 @@ import java.util.List;
 public interface IndMarkRepo extends JpaRepository<IndMark, Long> {
 
     List<IndMark> findByIndicatorAndDateEntity(Indicator indicator, DateEntity dateEntity);
+
+    List<IndMark> findByIndicator(Indicator indicator);
 }

@@ -20,7 +20,7 @@ import static com.katyshevtseva.general.ReportCell.Type.HEAD_COLUMN;
 
 @RequiredArgsConstructor
 @Service
-public class DairyReportService {
+public class DairyTableService {
     private static final int columnWidth = 130;
     private final DiaryService diaryService;
 

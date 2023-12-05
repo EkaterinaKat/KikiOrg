@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Service
@@ -65,6 +66,19 @@ public class DiaryService {
 
     public List<Indicator> getNotArchivedIndicators() {
         return indicatorRepo.findAllByArchivedFalseOrderByTitle();
+    }
+
+    public List<Indicator> getIndicatorsSuitableForLineChartReport() {
+        return getNotArchivedIndicators().stream().filter(indicator -> {
+            try {
+                for (IndValue value : indicator.getValues()) {
+                    Integer.parseInt(value.getTitle());
+                }
+                return true;
+            } catch (Exception e) {
+                return false;
+            }
+        }).collect(Collectors.toList());
     }
 
     public void saveMark(Indicator indicator, Date date, IndValue value, String comment) {

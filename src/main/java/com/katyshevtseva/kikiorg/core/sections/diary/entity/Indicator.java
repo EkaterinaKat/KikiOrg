@@ -53,9 +53,6 @@ public class Indicator {
 
     @Override
     public String toString() {
-        return "Indicator{" +
-                "id=" + id +
-                ", title='" + title + '\'' +
-                '}';
+        return title;
     }
 }

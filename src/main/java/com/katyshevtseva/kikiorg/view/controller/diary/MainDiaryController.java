@@ -13,8 +13,7 @@ import javafx.scene.layout.Pane;
 import java.util.Arrays;
 import java.util.List;
 
-import static com.katyshevtseva.kikiorg.view.utils.KikiOrgWindowUtil.OrgNodeInfo.DIARY_ADMIN;
-import static com.katyshevtseva.kikiorg.view.utils.KikiOrgWindowUtil.OrgNodeInfo.DIARY_FRONT_PAGE;
+import static com.katyshevtseva.kikiorg.view.utils.KikiOrgWindowUtil.OrgNodeInfo.*;
 
 public class MainDiaryController extends AbstractSwitchController implements SectionController {
     @FXML
@@ -32,7 +31,9 @@ public class MainDiaryController extends AbstractSwitchController implements Sec
                 new Section("Front page", new DiaryFrontPageController(),
                         controller -> WindowBuilder.getNode(DIARY_FRONT_PAGE, controller)),
                 new Section("Admin", new DiaryAdminController(),
-                        controller -> WindowBuilder.getNode(DIARY_ADMIN, controller)));
+                        controller -> WindowBuilder.getNode(DIARY_ADMIN, controller)),
+                new Section("Report", new DiaryReportController(),
+                        controller -> WindowBuilder.getNode(DIARY_REPORT, controller)));
     }
 
     private void placeButton(Button button) {
