@@ -28,7 +28,7 @@ public class PieceSpec implements Specification<Piece> {
         }
 
         if (category != null) {
-            objCriteria.add(cb.equal(root.get("category"), category));
+            objCriteria.add(root.join("categories").in(category));
         }
 
         if (state != null) {

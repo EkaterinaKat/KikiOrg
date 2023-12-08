@@ -28,6 +28,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static com.katyshevtseva.general.GeneralUtils.isEmpty;
 import static java.util.Comparator.naturalOrder;
 import static java.util.Comparator.nullsFirst;
 
@@ -86,9 +87,13 @@ public class WardrobeService {
                            String description,
                            String imageFileName,
                            PieceSubtype type,
-                           Category category,
+                           List<Category> categories,
                            Date start,
                            Date end) {
+
+        if (isEmpty(categories)) {
+            throw new RuntimeException();
+        }
 
         if (existing == null)
             existing = new Piece();
@@ -97,7 +102,7 @@ public class WardrobeService {
         existing.setStartDate(dateService.createIfNotExistAndGetDateEntity(start));
         existing.setEndDate(dateService.createIfNotExistAndGetDateEntity(end));
         existing.setType(type);
-        existing.setCategory(category);
+        existing.setCategories(new HashSet<>(categories));
 
         return pieceRepo.save(existing);
     }

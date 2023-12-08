@@ -8,6 +8,7 @@ import lombok.Data;
 import javax.persistence.*;
 import java.util.Collection;
 import java.util.Objects;
+import java.util.Set;
 
 import static com.katyshevtseva.date.DateUtils.READABLE_DATE_FORMAT;
 
@@ -29,6 +30,11 @@ public class Piece {
     @Enumerated(EnumType.STRING)
     private Category category;
 
+    @ElementCollection(fetch = FetchType.EAGER)
+    @JoinTable(name = "pieces_categories", joinColumns = @JoinColumn(name = "piece_id"))
+    @Enumerated(EnumType.STRING)
+    Set<Category> categories;
+
     @ManyToOne
     @JoinColumn(name = "start_date_entity_id")
     private DateEntity startDate;
@@ -41,7 +47,7 @@ public class Piece {
     private Collection<ComponentEntity> components;
 
     public String getFullDesc() {
-        return description + "\n\n" + "Type: " + type + "\n\n" +
+        return description + "\n\n" + "Type: " + type + "\n" + categories + "\n\n" +
                 (startDate != null ? READABLE_DATE_FORMAT.format(startDate.getValue()) : "*") +
                 "-" +
                 (endDate != null ? READABLE_DATE_FORMAT.format(endDate.getValue()) : "*");

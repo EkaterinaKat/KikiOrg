@@ -1,7 +1,11 @@
 package com.katyshevtseva.kikiorg.view.controller.wardrobe;
 
 import com.katyshevtseva.fx.FxImageCreationUtil;
+import com.katyshevtseva.fx.Size;
 import com.katyshevtseva.fx.WindowBuilder.FxController;
+import com.katyshevtseva.fx.component.ComponentBuilder;
+import com.katyshevtseva.fx.component.ComponentBuilder.Component;
+import com.katyshevtseva.fx.component.controller.MultipleChoiceController;
 import com.katyshevtseva.fx.dialog.StandardDialogBuilder;
 import com.katyshevtseva.general.OneArgKnob;
 import com.katyshevtseva.image.ImageContainer;
@@ -20,6 +24,11 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+
 import static com.katyshevtseva.fx.FxUtils.*;
 import static com.katyshevtseva.fx.ImageSizeUtil.placeImageInSquare;
 import static com.katyshevtseva.kikiorg.view.utils.OrgUtils.setDate;
@@ -28,6 +37,7 @@ class PieceDialogController implements FxController {
     private ImageContainer selectedImage;
     private final Piece existing;
     private final OneArgKnob<Piece> onSaveListener;
+    MultipleChoiceController<Category> categoryController;
     @FXML
     private Pane imagePane;
     @FXML
@@ -39,7 +49,7 @@ class PieceDialogController implements FxController {
     @FXML
     private ComboBox<PieceSubtype> typeComboBox;
     @FXML
-    private ComboBox<Category> categoryComboBox;
+    private Pane categoryPane;
     @FXML
     private Button saveButton;
 
@@ -50,12 +60,26 @@ class PieceDialogController implements FxController {
 
     @FXML
     private void initialize() {
-        associateButtonWithControls(saveButton, typeComboBox, descTextArea, categoryComboBox);
+        associateButtonWithControls(saveButton, typeComboBox, descTextArea);
         saveButton.setOnAction(event -> save());
         setComboBoxItems(typeComboBox, PieceSubtype.getSortedByTitleValues());
-        setComboBoxItems(categoryComboBox, Category.values());
+        tuneCategoryPane();
         showImage(FxImageCreationUtil.getIcon(FxImageCreationUtil.IconPicture.GREY_PLUS));
         setExistingPieceInfo();
+    }
+
+    private void tuneCategoryPane() {
+        categoryPane.getChildren().clear();
+
+        List<Category> initCategoryList = existing == null ? new ArrayList<>(Collections.singletonList(Category.GOING_OUT)) :
+                new ArrayList<>(existing.getCategories());
+
+        Component<MultipleChoiceController<Category>> categoryComponent = new ComponentBuilder()
+                .setSize(new Size(150, 300))
+                .getMultipleChoiceComponent(Arrays.asList(Category.values()), initCategoryList, true);
+
+        categoryController = categoryComponent.getController();
+        categoryPane.getChildren().add(categoryComponent.getNode());
     }
 
     private void save() {
@@ -64,7 +88,7 @@ class PieceDialogController implements FxController {
                 descTextArea.getText().trim(),
                 selectedImage.getFileName(),
                 typeComboBox.getValue(),
-                categoryComboBox.getValue(),
+                categoryController.getSelectedItems(),
                 getDate(startDatePicker),
                 getDate(endDatePicker));
         onSaveListener.execute(saved);
@@ -94,7 +118,6 @@ class PieceDialogController implements FxController {
             showImage(imageContainer.getImage());
             descTextArea.setText(existing.getDescription());
             typeComboBox.setValue(existing.getType());
-            categoryComboBox.setValue(existing.getCategory());
             selectedImage = imageContainer;
             setDate(startDatePicker, existing.getStartDate());
             setDate(endDatePicker, existing.getEndDate());

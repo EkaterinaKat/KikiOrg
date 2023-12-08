@@ -85,9 +85,9 @@ class SearchController implements FxController {
         toPane.getChildren().clear();
 
         Component<MultipleChoiceController<OperationEnd>> fromComponent = new ComponentBuilder().setSize(fromAndToComponentSize)
-                .getMultipleChoiceComponent(searchService.getFrom(typeComboBox.getValue()));
+                .getMultipleChoiceComponent(searchService.getFrom(typeComboBox.getValue()), null, false);
         Component<MultipleChoiceController<OperationEnd>> toComponent = new ComponentBuilder().setSize(fromAndToComponentSize)
-                .getMultipleChoiceComponent(searchService.getTo(typeComboBox.getValue()));
+                .getMultipleChoiceComponent(searchService.getTo(typeComboBox.getValue()), null, false);
 
         fromController = fromComponent.getController();
         toController = toComponent.getController();

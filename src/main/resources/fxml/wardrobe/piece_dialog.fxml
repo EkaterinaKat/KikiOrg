@@ -23,7 +23,7 @@
                 <DatePicker fx:id="endDatePicker"/>
             </HBox>
             <Pane prefHeight="20"/>
-            <ComboBox fx:id="categoryComboBox"/>
+            <Pane fx:id="categoryPane"/>
             <Pane prefHeight="20"/>
             <ComboBox fx:id="typeComboBox"/>
             <Pane prefHeight="20"/>
