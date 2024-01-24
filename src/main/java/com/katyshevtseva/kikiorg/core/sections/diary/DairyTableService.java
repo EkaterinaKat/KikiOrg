@@ -57,7 +57,11 @@ public class DairyTableService {
         String color = mark.getValue() != null ?
                 (!GeneralUtils.isEmpty(mark.getValue().getColor()) ? mark.getValue().getColor() : WHITE.getCode())
                 : WHITE.getCode();
-        return ReportCell.builder().text(mark.getValueAndComment()).color(color).width(columnWidth).build();
+        return ReportCell.builder()
+                .text(mark.getValueAndComment())
+                .color(color).width(columnWidth)
+                .item(mark)
+                .build();
     }
 
     private List<ReportCell> getReportHead(List<Indicator> indicators) {

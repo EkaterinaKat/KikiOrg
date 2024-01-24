@@ -8,6 +8,7 @@ import com.katyshevtseva.kikiorg.core.Core;
 import com.katyshevtseva.kikiorg.core.sections.diary.entity.IndMark;
 import com.katyshevtseva.kikiorg.core.sections.diary.entity.IndValue;
 import com.katyshevtseva.kikiorg.core.sections.diary.entity.Indicator;
+import com.sun.istack.NotNull;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
@@ -19,6 +20,7 @@ import java.util.List;
 
 public class MakeMarksDialogController implements FxController {
     private final NoArgsKnob onSaveKnob;
+    private final IndMark mark;
     private final List<Line> lines = new ArrayList<>();
     @FXML
     private GridPane indicatorPane;
@@ -30,11 +32,24 @@ public class MakeMarksDialogController implements FxController {
 
     public MakeMarksDialogController(NoArgsKnob onSaveKnob) {
         this.onSaveKnob = onSaveKnob;
+        mark = null;
+    }
+
+    public MakeMarksDialogController(NoArgsKnob onSaveKnob, @NotNull IndMark mark) {
+        this.onSaveKnob = onSaveKnob;
+        this.mark = mark;
     }
 
     @FXML
     private void initialize() {
-        datePicker.setOnAction(event -> fillPane());
+        if (mark == null) {
+            datePicker.setOnAction(event -> fillPaneWithAllIndicators());
+        } else {
+            FxUtils.setDate(datePicker, mark.getDateEntity().getValue());
+            datePicker.setDisable(true);
+            addIndicatorToPane(mark.getIndicator(), 0);
+        }
+
 
         saveButton.setOnAction(event -> {
             save();
@@ -43,34 +58,37 @@ public class MakeMarksDialogController implements FxController {
         });
     }
 
-    private void fillPane() {
+    private void fillPaneWithAllIndicators() {
         indicatorPane.getChildren().clear();
         List<Indicator> indicators = Core.getInstance().diaryService().getNotArchivedIndicators();
         for (int i = 0; i < indicators.size(); i++) {
-            Indicator indicator = indicators.get(i);
-            Label label = new Label(indicator.getTitle());
-            label.setTooltip(new Tooltip(indicator.getDescription()));
-            indicatorPane.add(label, 1, i + 1);
-
-            ComboBox<IndValue> valueComboBox = new ComboBox<>();
-            FxUtils.setWidth(valueComboBox, 150);
-            FxUtils.setComboBoxItems(valueComboBox, indicator.getSortedValues());
-            indicator.getDefaultValue().ifPresent(valueComboBox::setValue);
-            indicatorPane.add(valueComboBox, 2, i + 1);
-
-            TextArea commentArea = new TextArea();
-            FxUtils.setSize(commentArea, new Size(100, 300));
-            commentArea.setWrapText(true);
-            indicatorPane.add(commentArea, 3, i + 1);
-
-            IndMark mark = Core.getInstance().diaryService().getMark(indicator, FxUtils.getDate(datePicker)).orElse(null);
-            if (mark != null) {
-                valueComboBox.setValue(mark.getValue());
-                commentArea.setText(mark.getComment());
-            }
-
-            lines.add(new Line(indicator, valueComboBox, commentArea));
+            addIndicatorToPane(indicators.get(i), i);
         }
+    }
+
+    private void addIndicatorToPane(Indicator indicator, int row) {
+        Label label = new Label(indicator.getTitle());
+        label.setTooltip(new Tooltip(indicator.getDescription()));
+        indicatorPane.add(label, 1, row + 1);
+
+        ComboBox<IndValue> valueComboBox = new ComboBox<>();
+        FxUtils.setWidth(valueComboBox, 150);
+        FxUtils.setComboBoxItems(valueComboBox, indicator.getSortedValues());
+        indicator.getDefaultValue().ifPresent(valueComboBox::setValue);
+        indicatorPane.add(valueComboBox, 2, row + 1);
+
+        TextArea commentArea = new TextArea();
+        FxUtils.setSize(commentArea, new Size(100, 300));
+        commentArea.setWrapText(true);
+        indicatorPane.add(commentArea, 3, row + 1);
+
+        IndMark mark = Core.getInstance().diaryService().getMark(indicator, FxUtils.getDate(datePicker)).orElse(null);
+        if (mark != null) {
+            valueComboBox.setValue(mark.getValue());
+            commentArea.setText(mark.getComment());
+        }
+
+        lines.add(new Line(indicator, valueComboBox, commentArea));
     }
 
     private void save() {

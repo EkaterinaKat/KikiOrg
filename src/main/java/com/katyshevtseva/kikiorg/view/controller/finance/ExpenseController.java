@@ -66,7 +66,7 @@ class ExpenseController implements FxController {
     public void adjustComboBoxes() {
         setItemComboBoxItems();
         setComboBoxItemsAndSetSelectedFirstItem(accountComboBox, Core.getInstance().financeService().getActiveAccounts());
-        setComboBoxItems(necessityComboBox, Necessity.values());
+        setComboBoxItems(necessityComboBox, Necessity.values(), Necessity.BTW);
     }
 
     private void setItemComboBoxItems() {
@@ -98,7 +98,7 @@ class ExpenseController implements FxController {
                     necessityComboBox.getValue(),
                     commentTextField.getText());
             amountTextField.clear();
-            necessityComboBox.setValue(null);
+            necessityComboBox.setValue(Necessity.BTW);
             commentTextField.clear();
         } else {
             Core.getInstance().financeService().editExpense(
