@@ -5,8 +5,8 @@
 <HBox xmlns="http://javafx.com/javafx"
       xmlns:fx="http://javafx.com/fxml">
 
-    <ScrollPane maxWidth="250" minWidth="250">
-        <GridPane fx:id="gridPane" alignment="CENTER" maxWidth="240" minWidth="240"/>
+    <ScrollPane maxWidth="200" minWidth="200">
+        <GridPane fx:id="gridPane" alignment="CENTER" maxWidth="190" minWidth="190"/>
     </ScrollPane>
 
     <Pane maxWidth="20" minWidth="20"/>

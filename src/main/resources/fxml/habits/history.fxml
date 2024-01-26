@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<HBox xmlns:fx="http://javafx.com/fxml"
+      xmlns="http://javafx.com/javafx">
+
+    <ScrollPane maxWidth="200" minWidth="200">
+        <GridPane fx:id="habitListPane" alignment="CENTER" maxWidth="190" minWidth="190"/>
+    </ScrollPane>
+
+    <Pane minWidth="25" maxWidth="25"/>
+
+    <ScrollPane maxWidth="800" minWidth="800" maxHeight="820" minHeight="820">
+        <VBox fx:id="historyPane"/>
+    </ScrollPane>
+</HBox>

@@ -2,10 +2,10 @@ package com.katyshevtseva.kikiorg.core.sections.habits;
 
 import com.katyshevtseva.kikiorg.core.date.DateEntity;
 import com.katyshevtseva.kikiorg.core.date.DateService;
-import com.katyshevtseva.kikiorg.core.sections.habits.repo.HabitChangeActionRepo;
-import com.katyshevtseva.kikiorg.core.sections.habits.repo.MarkRepo;
 import com.katyshevtseva.kikiorg.core.sections.habits.entity.Habit;
 import com.katyshevtseva.kikiorg.core.sections.habits.entity.Mark;
+import com.katyshevtseva.kikiorg.core.sections.habits.repo.HabitChangeActionRepo;
+import com.katyshevtseva.kikiorg.core.sections.habits.repo.MarkRepo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
+import java.util.List;
 
 import static com.katyshevtseva.date.DateUtils.READABLE_DATE_FORMAT;
 import static com.katyshevtseva.date.DateUtils.removeTimeFromDate;
@@ -25,6 +26,10 @@ public class HabitMarkService {
     private final DateService dateService;
     private final MarkRepo markRepo;
     private final HabitChangeActionRepo habitChangeActionRepo;
+
+    public List<Mark> getMarks(Habit habit) {
+        return markRepo.findByHabit(habit);
+    }
 
     public void saveMarkOrRewriteIfExists(Habit habit, Date date, boolean markValue) throws Exception {
         DateEntity dateEntity = dateService.createIfNotExistAndGetDateEntity(date);

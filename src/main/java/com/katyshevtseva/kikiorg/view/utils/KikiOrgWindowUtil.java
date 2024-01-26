@@ -59,6 +59,7 @@ public class KikiOrgWindowUtil {
         HABIT_REPORT(HABITS_FXML_LOCATION, "report.fxml"),
         CHECK_LIST(HABITS_FXML_LOCATION, "check_list.fxml"),
         HABIT_ADMIN(HABITS_FXML_LOCATION, "admin.fxml"),
+        HABIT_HISTORY(HABITS_FXML_LOCATION, "history.fxml"),
         MAIN_HABIT(FXML_LOCATION, "section_main.fxml");
 
         private final String location;
