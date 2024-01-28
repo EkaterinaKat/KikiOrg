@@ -24,6 +24,10 @@ public class DairyTableService {
     private static final int columnWidth = 130;
     private final DiaryService diaryService;
 
+    public List<List<ReportCell>> getReport(Period period) {
+        return getReport(diaryService.getNotArchivedIndicators(), period);
+    }
+
     public List<List<ReportCell>> getQuickReport() {
         return getReport(diaryService.getNotArchivedIndicators(),
                 new Period(shiftDate(new Date(), DateUtils.TimeUnit.DAY, -30), new Date()));
