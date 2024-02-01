@@ -5,6 +5,7 @@ import com.katyshevtseva.fx.Size;
 import com.katyshevtseva.fx.WindowBuilder.FxController;
 import com.katyshevtseva.general.NoArgsKnob;
 import com.katyshevtseva.kikiorg.core.Core;
+import com.katyshevtseva.kikiorg.core.sections.diary.DairyTableService.MarkToEdit;
 import com.katyshevtseva.kikiorg.core.sections.diary.entity.IndMark;
 import com.katyshevtseva.kikiorg.core.sections.diary.entity.IndValue;
 import com.katyshevtseva.kikiorg.core.sections.diary.entity.Indicator;
@@ -20,7 +21,7 @@ import java.util.List;
 
 public class MakeMarksDialogController implements FxController {
     private final NoArgsKnob onSaveKnob;
-    private final IndMark mark;
+    private final MarkToEdit mark;
     private final List<Line> lines = new ArrayList<>();
     @FXML
     private GridPane indicatorPane;
@@ -35,7 +36,7 @@ public class MakeMarksDialogController implements FxController {
         mark = null;
     }
 
-    public MakeMarksDialogController(NoArgsKnob onSaveKnob, @NotNull IndMark mark) {
+    public MakeMarksDialogController(NoArgsKnob onSaveKnob, @NotNull MarkToEdit mark) {
         this.onSaveKnob = onSaveKnob;
         this.mark = mark;
     }
@@ -45,7 +46,7 @@ public class MakeMarksDialogController implements FxController {
         if (mark == null) {
             datePicker.setOnAction(event -> fillPaneWithAllIndicators());
         } else {
-            FxUtils.setDate(datePicker, mark.getDateEntity().getValue());
+            FxUtils.setDate(datePicker, mark.getDate());
             datePicker.setDisable(true);
             addIndicatorToPane(mark.getIndicator(), 0);
         }

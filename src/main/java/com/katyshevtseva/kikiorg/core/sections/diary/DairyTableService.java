@@ -56,7 +56,7 @@ public class DairyTableService {
     private ReportCell convertToCell(Indicator indicator, Date date) {
         IndMark mark = diaryService.getMark(indicator, date).orElse(null);
         if (mark == null) {
-            return ReportCell.builder().build();
+            return ReportCell.builder().item(getMarkToEdit(indicator, date)).build();
         }
         String color = mark.getValue() != null ?
                 (!GeneralUtils.isEmpty(mark.getValue().getColor()) ? mark.getValue().getColor() : WHITE.getCode())
@@ -75,5 +75,32 @@ public class DairyTableService {
             result.add(ReportCell.builder().type(HEAD_COLUMN).text(indicator.getTitle()).width(columnWidth).build());
         }
         return result;
+    }
+
+    private MarkToEdit getMarkToEdit(Indicator indicator, Date date) {
+        return new MarkToEdit() {
+            @Override
+            public Indicator getIndicator() {
+                return indicator;
+            }
+
+            @Override
+            public Date getDate() {
+                return date;
+            }
+
+            @Override
+            public IndMark getMark() {
+                return null;
+            }
+        };
+    }
+
+    public interface MarkToEdit {
+        Indicator getIndicator();
+
+        Date getDate();
+
+        IndMark getMark();
     }
 }
