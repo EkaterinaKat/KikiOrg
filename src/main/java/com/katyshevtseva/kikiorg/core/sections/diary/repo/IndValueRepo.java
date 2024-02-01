@@ -9,4 +9,6 @@ import java.util.List;
 public interface IndValueRepo extends JpaRepository<IndValue, Long> {
 
     List<IndValue> findAllByIndicator(Indicator indicator);
+
+    void deleteByIndicator(Indicator indicator);
 }

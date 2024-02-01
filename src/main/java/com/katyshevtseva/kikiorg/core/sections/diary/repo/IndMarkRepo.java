@@ -12,4 +12,6 @@ public interface IndMarkRepo extends JpaRepository<IndMark, Long> {
     List<IndMark> findByIndicatorAndDateEntity(Indicator indicator, DateEntity dateEntity);
 
     List<IndMark> findByIndicator(Indicator indicator);
+
+    void deleteByIndicator(Indicator indicator);
 }

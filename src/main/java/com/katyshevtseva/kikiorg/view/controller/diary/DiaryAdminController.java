@@ -2,6 +2,7 @@ package com.katyshevtseva.kikiorg.view.controller.diary;
 
 import com.katyshevtseva.fx.FxUtils;
 import com.katyshevtseva.fx.Styler;
+import com.katyshevtseva.fx.dialog.StandardDialogBuilder;
 import com.katyshevtseva.fx.dialogconstructor.DcTextArea;
 import com.katyshevtseva.fx.dialogconstructor.DcTextField;
 import com.katyshevtseva.fx.dialogconstructor.DialogConstructor;
@@ -74,6 +75,10 @@ public class DiaryAdminController implements SectionController {
                 showIndicator(indicator);
                 indToShowWasShowed = true;
             }
+
+            if (indicator.getArchived()) {
+                label.setStyle(Styler.getColorfullStyle(Styler.ThingToColor.TEXT, Styler.StandardColor.GRAY));
+            }
         }
         if (!indToShowWasShowed) {
             showIndicator(null);
@@ -97,6 +102,18 @@ public class DiaryAdminController implements SectionController {
             fillIndicatorTable(indicator);
         });
         contextMenu.getItems().add(archiveItem);
+
+        MenuItem deleteItem = new MenuItem("Delete");
+        deleteItem.setOnAction(event1 -> {
+            String question = String.format("Delete %s?", indicator.getTitle());
+            new StandardDialogBuilder().openQuestionDialog(question, b -> {
+                if (b) {
+                    Core.getInstance().diaryService().delete(indicator);
+                    fillIndicatorTable(indicator);
+                }
+            });
+        });
+        contextMenu.getItems().add(deleteItem);
 
         return contextMenu;
     }

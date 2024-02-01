@@ -12,6 +12,8 @@ import com.katyshevtseva.kikiorg.core.sections.diary.repo.IndicatorRepo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -61,7 +63,9 @@ public class DiaryService {
     }
 
     public List<Indicator> getIndicators() {
-        return indicatorRepo.findAllByOrderByTitle();
+        return indicatorRepo.findAllByOrderByTitle().stream()
+                .sorted(Comparator.comparing(Indicator::getArchived))
+                .collect(Collectors.toList());
     }
 
     public List<Indicator> getNotArchivedIndicators() {
@@ -114,5 +118,12 @@ public class DiaryService {
     public void archive(Indicator indicator) {
         indicator.setArchived(!indicator.getArchived());
         indicatorRepo.save(indicator);
+    }
+
+    @Transactional
+    public void delete(Indicator indicator) {
+        markRepo.deleteByIndicator(indicator);
+        valueRepo.deleteByIndicator(indicator);
+        indicatorRepo.delete(indicator);
     }
 }
