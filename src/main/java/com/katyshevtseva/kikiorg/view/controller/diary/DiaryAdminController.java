@@ -56,7 +56,7 @@ public class DiaryAdminController implements SectionController {
     private void fillIndicatorTable(Indicator indicatorToShow) {
         boolean indToShowWasShowed = false;
         gridPane.getChildren().clear();
-        List<Indicator> habits = Core.getInstance().diaryService().getIndicators();
+        List<Indicator> habits = Core.getInstance().diaryService().getAllIndicators();
         indicatorIdPointLabelMap = new HashMap<>();
         int rowIndex = 0;
         for (Indicator indicator : habits) {
@@ -102,6 +102,13 @@ public class DiaryAdminController implements SectionController {
             fillIndicatorTable(indicator);
         });
         contextMenu.getItems().add(archiveItem);
+
+        MenuItem hideItem = new MenuItem("Hide");
+        hideItem.setOnAction(event1 -> {
+            Core.getInstance().diaryService().hide(indicator);
+            fillIndicatorTable(indicator);
+        });
+        contextMenu.getItems().add(hideItem);
 
         MenuItem deleteItem = new MenuItem("Delete");
         deleteItem.setOnAction(event1 -> {

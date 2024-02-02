@@ -24,8 +24,10 @@ public class Indicator {
     @OneToMany(mappedBy = "indicator", fetch = FetchType.EAGER)
     private List<IndValue> values;
 
+    private Boolean hidden;
+
     public String getTitleAndArchivedInfo() {
-        return title + (archived ? " (archived)" : "");
+        return title + (archived ? " (archived)" : hidden ? "(H)" : "");
     }
 
     public List<IndValue> getSortedValues() {

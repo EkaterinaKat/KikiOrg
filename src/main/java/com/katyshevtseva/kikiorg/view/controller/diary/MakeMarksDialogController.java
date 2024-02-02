@@ -18,17 +18,25 @@ import lombok.Data;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class MakeMarksDialogController implements FxController {
+    private final List<Line> hiddenLines = new ArrayList<>();
     private final NoArgsKnob onSaveKnob;
     private final MarkToEdit mark;
     private final List<Line> lines = new ArrayList<>();
+    private boolean hiddenShown = false;
     @FXML
     private GridPane indicatorPane;
     @FXML
     private Button saveButton;
     @FXML
     private DatePicker datePicker;
+    @FXML
+    private GridPane hiddenIndicatorPane;
+    @FXML
+    private Button showHiddenButton;
 
 
     public MakeMarksDialogController(NoArgsKnob onSaveKnob) {
@@ -45,12 +53,12 @@ public class MakeMarksDialogController implements FxController {
     private void initialize() {
         if (mark == null) {
             datePicker.setOnAction(event -> fillPaneWithAllIndicators());
+            showHiddenButton.setOnAction(event -> hiddenButtonListener());
         } else {
             FxUtils.setDate(datePicker, mark.getDate());
             datePicker.setDisable(true);
-            addIndicatorToPane(mark.getIndicator(), 0);
+            addIndicatorToPane(mark.getIndicator(), 0, indicatorPane, lines);
         }
-
 
         saveButton.setOnAction(event -> {
             save();
@@ -59,29 +67,45 @@ public class MakeMarksDialogController implements FxController {
         });
     }
 
-    private void fillPaneWithAllIndicators() {
-        indicatorPane.getChildren().clear();
-        List<Indicator> indicators = Core.getInstance().diaryService().getNotArchivedIndicators();
-        for (int i = 0; i < indicators.size(); i++) {
-            addIndicatorToPane(indicators.get(i), i);
+    private void hiddenButtonListener() {
+        hiddenShown = !hiddenShown;
+        if (hiddenShown) {
+            showHiddenButton.setText("Hide");
+
+            List<Indicator> indicators = Core.getInstance().diaryService().getActiveHiddenIndicators();
+            for (int i = 0; i < indicators.size(); i++) {
+                addIndicatorToPane(indicators.get(i), i, hiddenIndicatorPane, hiddenLines);
+            }
+        } else {
+            showHiddenButton.setText("Show hidden");
+            hiddenIndicatorPane.getChildren().clear();
+            hiddenLines.clear();
         }
     }
 
-    private void addIndicatorToPane(Indicator indicator, int row) {
+    private void fillPaneWithAllIndicators() {
+        showHiddenButton.setVisible(true);
+        List<Indicator> indicators = Core.getInstance().diaryService().getActiveNotHiddenIndicators();
+        for (int i = 0; i < indicators.size(); i++) {
+            addIndicatorToPane(indicators.get(i), i, indicatorPane, lines);
+        }
+    }
+
+    private void addIndicatorToPane(Indicator indicator, int row, GridPane pane, List<Line> lineList) {
         Label label = new Label(indicator.getTitle());
         label.setTooltip(new Tooltip(indicator.getDescription()));
-        indicatorPane.add(label, 1, row + 1);
+        pane.add(label, 1, row + 1);
 
         ComboBox<IndValue> valueComboBox = new ComboBox<>();
         FxUtils.setWidth(valueComboBox, 150);
         FxUtils.setComboBoxItems(valueComboBox, indicator.getSortedValues());
         indicator.getDefaultValue().ifPresent(valueComboBox::setValue);
-        indicatorPane.add(valueComboBox, 2, row + 1);
+        pane.add(valueComboBox, 2, row + 1);
 
         TextArea commentArea = new TextArea();
         FxUtils.setSize(commentArea, new Size(100, 300));
         commentArea.setWrapText(true);
-        indicatorPane.add(commentArea, 3, row + 1);
+        pane.add(commentArea, 3, row + 1);
 
         IndMark mark = Core.getInstance().diaryService().getMark(indicator, FxUtils.getDate(datePicker)).orElse(null);
         if (mark != null) {
@@ -89,11 +113,11 @@ public class MakeMarksDialogController implements FxController {
             commentArea.setText(mark.getComment());
         }
 
-        lines.add(new Line(indicator, valueComboBox, commentArea));
+        lineList.add(new Line(indicator, valueComboBox, commentArea));
     }
 
     private void save() {
-        for (Line line : lines) {
+        for (Line line : Stream.concat(lines.stream(), hiddenLines.stream()).collect(Collectors.toList())) {
             Core.getInstance().diaryService().saveMark(
                     line.getIndicator(),
                     FxUtils.getDate(datePicker),

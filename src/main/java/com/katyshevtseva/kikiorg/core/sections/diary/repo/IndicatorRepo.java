@@ -10,4 +10,8 @@ public interface IndicatorRepo extends JpaRepository<Indicator, Long> {
     List<Indicator> findAllByOrderByTitle();
 
     List<Indicator> findAllByArchivedFalseOrderByTitle();
+
+    List<Indicator> findAllByArchivedFalseAndHiddenFalseOrderByTitle();
+
+    List<Indicator> findAllByArchivedFalseAndHiddenTrueOrderByTitle();
 }

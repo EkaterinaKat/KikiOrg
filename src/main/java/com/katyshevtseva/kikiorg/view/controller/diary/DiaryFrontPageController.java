@@ -7,6 +7,7 @@ import com.katyshevtseva.fx.WindowBuilder;
 import com.katyshevtseva.fx.switchcontroller.SectionController;
 import com.katyshevtseva.general.ReportCell;
 import com.katyshevtseva.kikiorg.core.Core;
+import com.katyshevtseva.kikiorg.core.sections.diary.DairyTableService;
 import com.katyshevtseva.kikiorg.core.sections.diary.DairyTableService.MarkToEdit;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -23,6 +24,7 @@ import static com.katyshevtseva.fx.FxUtils.getPeriod;
 import static com.katyshevtseva.kikiorg.view.utils.KikiOrgWindowUtil.OrgDialogInfo.MAKE_MARKS_DIALOG;
 
 public class DiaryFrontPageController implements SectionController {
+    private final DairyTableService tableService = Core.getInstance().dairyTableService();
     @FXML
     private GridPane tablePane;
     @FXML
@@ -49,7 +51,7 @@ public class DiaryFrontPageController implements SectionController {
     }
 
     private void updateSectionContent() {
-        List<List<ReportCell>> report = Core.getInstance().dairyReportService().getReport(getPeriod(startDatePicker, endDatePicker));
+        List<List<ReportCell>> report = tableService.getReport(getPeriod(startDatePicker, endDatePicker));
         addContextMenu(report);
         ReportUtils.showReport(report, tablePane, false);
     }
@@ -69,8 +71,14 @@ public class DiaryFrontPageController implements SectionController {
         editItem.setOnAction(event -> WindowBuilder.openDialog(MAKE_MARKS_DIALOG,
                 new MakeMarksDialogController(this::updateSectionContent, (MarkToEdit) cell.getItem())));
 
+        MenuItem deleteItem = new MenuItem("Delete");
+        deleteItem.setOnAction(event -> {
+            Core.getInstance().diaryService().delete((MarkToEdit) cell.getItem());
+            updateSectionContent();
+        });
+
         ContextMenu contextMenu = new ContextMenu();
-        contextMenu.getItems().add(editItem);
+        contextMenu.getItems().addAll(editItem, deleteItem);
         return contextMenu;
     }
 }

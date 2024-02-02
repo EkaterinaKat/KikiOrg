@@ -31,6 +31,7 @@ public class DiaryService {
         if (existing == null) {
             existing = new Indicator();
             existing.setArchived(false);
+            existing.setHidden(false);
         }
         existing.setTitle(title.trim());
         existing.setDescription(GeneralUtils.trim(desc));
@@ -62,18 +63,30 @@ public class DiaryService {
         }
     }
 
-    public List<Indicator> getIndicators() {
+    public List<Indicator> getAllIndicators() {
         return indicatorRepo.findAllByOrderByTitle().stream()
+                .sorted(Comparator.comparing(Indicator::getHidden))
                 .sorted(Comparator.comparing(Indicator::getArchived))
                 .collect(Collectors.toList());
     }
 
-    public List<Indicator> getNotArchivedIndicators() {
-        return indicatorRepo.findAllByArchivedFalseOrderByTitle();
+    public List<Indicator> getActiveIndicators() {
+        return indicatorRepo.findAllByArchivedFalseOrderByTitle().stream()
+                .sorted(Comparator.comparing(Indicator::getHidden))
+                .collect(Collectors.toList());
     }
 
+    public List<Indicator> getActiveNotHiddenIndicators() {
+        return indicatorRepo.findAllByArchivedFalseAndHiddenFalseOrderByTitle();
+    }
+
+    public List<Indicator> getActiveHiddenIndicators() {
+        return indicatorRepo.findAllByArchivedFalseAndHiddenTrueOrderByTitle();
+    }
+
+
     public List<Indicator> getIndicatorsSuitableForLineChartReport() {
-        return getNotArchivedIndicators().stream().filter(indicator -> {
+        return getActiveIndicators().stream().filter(indicator -> {
             try {
                 for (IndValue value : indicator.getValues()) {
                     Integer.parseInt(value.getTitle());
@@ -120,10 +133,20 @@ public class DiaryService {
         indicatorRepo.save(indicator);
     }
 
+    public void hide(Indicator indicator) {
+        indicator.setHidden(!indicator.getHidden());
+        indicatorRepo.save(indicator);
+    }
+
     @Transactional
     public void delete(Indicator indicator) {
         markRepo.deleteByIndicator(indicator);
         valueRepo.deleteByIndicator(indicator);
         indicatorRepo.delete(indicator);
+    }
+
+    public void delete(DairyTableService.MarkToEdit mark) {
+        if (mark.getMark() != null)
+            markRepo.delete(mark.getMark());
     }
 }

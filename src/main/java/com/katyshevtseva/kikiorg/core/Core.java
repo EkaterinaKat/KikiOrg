@@ -90,7 +90,7 @@ public class Core implements InitializingBean {
         return diaryService;
     }
 
-    public DairyTableService dairyReportService() {
+    public DairyTableService dairyTableService() {
         return dairyTableService;
     }
 

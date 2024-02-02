@@ -1,6 +1,5 @@
 package com.katyshevtseva.kikiorg.core.sections.diary;
 
-import com.katyshevtseva.date.DateUtils;
 import com.katyshevtseva.date.Period;
 import com.katyshevtseva.general.GeneralUtils;
 import com.katyshevtseva.general.ReportCell;
@@ -14,7 +13,8 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
-import static com.katyshevtseva.date.DateUtils.*;
+import static com.katyshevtseva.date.DateUtils.READABLE_DATE_FORMAT;
+import static com.katyshevtseva.date.DateUtils.getDateRange;
 import static com.katyshevtseva.fx.Styler.StandardColor.WHITE;
 import static com.katyshevtseva.general.ReportCell.Type.HEAD_COLUMN;
 
@@ -25,12 +25,7 @@ public class DairyTableService {
     private final DiaryService diaryService;
 
     public List<List<ReportCell>> getReport(Period period) {
-        return getReport(diaryService.getNotArchivedIndicators(), period);
-    }
-
-    public List<List<ReportCell>> getQuickReport() {
-        return getReport(diaryService.getNotArchivedIndicators(),
-                new Period(shiftDate(new Date(), DateUtils.TimeUnit.DAY, -30), new Date()));
+        return getReport(diaryService.getActiveIndicators(), period);
     }
 
     public List<List<ReportCell>> getReport(List<Indicator> indicators, Period period) {
