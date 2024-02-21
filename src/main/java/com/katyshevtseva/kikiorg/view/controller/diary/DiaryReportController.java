@@ -11,6 +11,7 @@ import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
@@ -31,6 +32,8 @@ public class DiaryReportController implements SectionController {
     private VBox chartPane;
     @FXML
     private Label detailLabel;
+    @FXML
+    private CheckBox adjustYCheckBox;
 
     @FXML
     private void initialize() {
@@ -41,13 +44,15 @@ public class DiaryReportController implements SectionController {
     }
 
     private void showChart() {
-        NumberAxis numberAxis = new NumberAxis(0, 10, 1);
+        List<Dot> dots = Core.getInstance().diaryChartService()
+                .getChart(indicatorComboBox.getValue(), spanComboBox.getValue());
+        int yUpperBound = adjustYCheckBox.isSelected() ? getMaxY(dots) : 10;
+
+        NumberAxis numberAxis = new NumberAxis(0, yUpperBound, 1);
         LineChart<String, Number> lineChart = new LineChart<>(new CategoryAxis(), numberAxis);
         XYChart.Series<String, Number> series = new XYChart.Series<>();
         lineChart.getData().add(series);
-
-        List<Dot> dots = Core.getInstance().diaryChartService()
-                .getChart(indicatorComboBox.getValue(), spanComboBox.getValue());
+        lineChart.setMinWidth(dots.size() * 40);
 
         for (Dot dot : dots) {
             XYChart.Data<String, Number> data = new XYChart.Data<>(dot.getX(), dot.getY());
@@ -57,6 +62,17 @@ public class DiaryReportController implements SectionController {
 
         chartPane.getChildren().clear();
         chartPane.getChildren().add(lineChart);
+    }
+
+    private int getMaxY(List<Dot> dots) {
+        int max = 0;
+        for (Dot dot : dots) {
+            int value = (int) Math.ceil(dot.getY());
+            if (value > max) {
+                max = value;
+            }
+        }
+        return max;
     }
 
     private void dotClickListener(Dot dot) {

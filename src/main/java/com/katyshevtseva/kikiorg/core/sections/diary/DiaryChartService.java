@@ -37,21 +37,20 @@ public class DiaryChartService {
     }
 
     private List<Dot> getChart(List<IndMark> marks,
-                               Cache<Date, Period> datePeriodCache,
+                               Cache<Date, Period> periodCache,
                                OneInOneOutKnob<Period, String> periodTitleSupplier) {
-        Map<Period, List<IndMark>> periodMarkListMap = new HashMap<>();
 
-        for (IndMark mark : marks) {
-            Period period = datePeriodCache.getValue(mark.getDateEntity().getValue());
-            List<IndMark> markList = periodMarkListMap.getOrDefault(period, new ArrayList<>());
-            markList.add(mark);
-            periodMarkListMap.put(period, markList);
-        }
+        Map<Period, List<IndMark>> periodMarkListMap = getPeriodMarkListMapByMarks(marks, periodCache);
+        List<Map.Entry<Period, List<IndMark>>> entryList = periodMarkListMap.entrySet().stream()
+                .sorted(Comparator.comparing(entry -> entry.getKey().start()))
+                //чтобы не показывать ещё не оконченный период
+                .filter(entry -> !dateBelongsToPeriod(entry.getKey(), new Date()))
+                .collect(Collectors.toList());
 
         List<Dot> dots = new ArrayList<>();
 
-        for (Map.Entry<Period, List<IndMark>> entry : periodMarkListMap.entrySet().stream()
-                .sorted(Comparator.comparing(entry -> entry.getKey().start())).collect(Collectors.toList())) {
+        for (Map.Entry<Period, List<IndMark>> entry : entryList) {
+
             Float average = (float) entry.getValue().stream()
                     .mapToInt(mark -> Integer.parseInt(mark.getValue().getTitle())).average()
                     .orElse(0);
@@ -67,6 +66,20 @@ public class DiaryChartService {
         }
 
         return dots;
+    }
+
+    private Map<Period, List<IndMark>> getPeriodMarkListMapByMarks(
+            List<IndMark> marks,
+            Cache<Date, Period> periodCache) {
+
+        Map<Period, List<IndMark>> periodMarkListMap = new HashMap<>();
+        for (IndMark mark : marks) {
+            Period period = periodCache.getValue(mark.getDateEntity().getValue());
+            List<IndMark> markList = periodMarkListMap.getOrDefault(period, new ArrayList<>());
+            markList.add(mark);
+            periodMarkListMap.put(period, markList);
+        }
+        return periodMarkListMap;
     }
 
     @Data
