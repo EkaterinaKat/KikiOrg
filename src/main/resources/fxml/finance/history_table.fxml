@@ -8,10 +8,11 @@
     <TableView fx:id="table" prefWidth="1000" prefHeight="630">
         <columns>
             <TableColumn prefWidth="100" text="Date" fx:id="dateColumn"/>
-            <TableColumn prefWidth="300" text="From" fx:id="fromColumn"/>
-            <TableColumn prefWidth="300" text="To" fx:id="toColumn"/>
+            <TableColumn prefWidth="250" text="From" fx:id="fromColumn"/>
+            <TableColumn prefWidth="250" text="To" fx:id="toColumn"/>
             <TableColumn prefWidth="80" text="amount" fx:id="amountColumn"/>
-            <TableColumn prefWidth="195" fx:id="additionalInfoColumn"/>
+            <TableColumn prefWidth="95" fx:id="additionalInfoColumn"/>
+            <TableColumn prefWidth="200" fx:id="commentColumn"/>
         </columns>
     </TableView>
 

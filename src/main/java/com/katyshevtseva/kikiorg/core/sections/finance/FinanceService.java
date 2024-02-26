@@ -79,7 +79,8 @@ public class FinanceService {
         return itemRepo.findAll().stream().sorted(Comparator.comparing(Item::getTitleWithAdditionalInfo)).collect(Collectors.toList());
     }
 
-    public void addExpense(Account account, long amount, Item item, Date date, Necessity necessity, String comment) {
+    public void addExpense(Account account, long amount, Item item, Date date, Necessity necessity, String comment,
+                           boolean moveToNextMonth) {
         Expense expense = new Expense();
         expense.setAccount(account);
         expense.setAmount(amount);
@@ -87,6 +88,7 @@ public class FinanceService {
         expense.setItem(item);
         expense.setComment(comment);
         expense.setNecessity(necessity);
+        expense.setMoveToNextMonth(moveToNextMonth);
         expenseRepo.saveAndFlush(expense);
 
         addToAccountAmount(account, (-1) * amount);
@@ -193,10 +195,10 @@ public class FinanceService {
         accountRepo.save(account);
     }
 
-    public void editExpense(Expense expense, Account account, long amount,
-                            Item item, Date date, Necessity necessity, String comment) {
+    public void editExpense(Expense expense, Account account, long amount, Item item, Date date,
+                            Necessity necessity, String comment, boolean moveToNextMonth) {
         operationDeletionService.deleteOperation(expense);
-        addExpense(account, amount, item, date, necessity, comment);
+        addExpense(account, amount, item, date, necessity, comment, moveToNextMonth);
     }
 
     public void editReplenishment(Replenishment replenishment, Account account, long amount, Source source, Date date) {

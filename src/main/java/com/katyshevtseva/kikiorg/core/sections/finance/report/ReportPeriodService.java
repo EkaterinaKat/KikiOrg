@@ -22,8 +22,11 @@ public class ReportPeriodService {
     }
 
     public static ReportPeriod getCurrentMonthPeriod() {
-        Date date = new Date();
-        return new ReportPeriod(getPeriodOfMonthDateBelongsTo(date), MONTH_YEAR_DATE_FORMAT.format(date));
+        return new ReportPeriod(DateUtils.getCurrentMonthPeriod());
+    }
+
+    public static ReportPeriod getPrevMonthPeriod() {
+        return new ReportPeriod(DateUtils.getPrevMonthPeriod());
     }
 
     public List<ReportPeriod> getSeveralPastMonthsPeriods(int numOfLatestMonth) {
@@ -31,7 +34,7 @@ public class ReportPeriodService {
 
         Date date = DateUtils.shiftDate(new Date(), DateUtils.TimeUnit.MONTH, -1 * (numOfLatestMonth - 1));
         for (int i = 0; i < numOfLatestMonth; i++) {
-            periods.add(new ReportPeriod(getPeriodOfMonthDateBelongsTo(date), MONTH_YEAR_DATE_FORMAT.format(date)));
+            periods.add(new ReportPeriod(getPeriodOfMonthDateBelongsTo(date)));
             date = shiftDate(date, TimeUnit.MONTH, 1);
         }
         return periods;
@@ -41,6 +44,11 @@ public class ReportPeriodService {
     public static class ReportPeriod {
         private Period period;
         private final String title;
+
+        public ReportPeriod(Period period) {
+            this.period = period;
+            this.title = MONTH_YEAR_DATE_FORMAT.format(period.start());
+        }
 
         public ReportPeriod(Period period, String title) {
             this.period = period;

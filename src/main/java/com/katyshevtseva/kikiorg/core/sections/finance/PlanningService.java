@@ -6,14 +6,15 @@ import com.katyshevtseva.kikiorg.core.sections.finance.entity.*;
 import com.katyshevtseva.kikiorg.core.sections.finance.repo.AccountGroupRepo;
 import com.katyshevtseva.kikiorg.core.sections.finance.repo.PotentialExpenseRepo;
 import com.katyshevtseva.kikiorg.core.sections.finance.report.BaseReportService;
-import com.katyshevtseva.kikiorg.core.sections.finance.report.ReportPeriodService;
 import com.katyshevtseva.kikiorg.core.setting.SettingService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 import static com.katyshevtseva.kikiorg.core.sections.finance.report.ReportPeriodService.getCurrentMonthPeriod;
+import static com.katyshevtseva.kikiorg.core.sections.finance.report.ReportPeriodService.getPrevMonthPeriod;
 import static com.katyshevtseva.kikiorg.core.setting.SettingService.FIN_PLAN_ACC_GR_ID;
 import static com.katyshevtseva.kikiorg.core.setting.SettingService.FIN_PLAN_UPPER_LIMIT;
 
@@ -88,12 +89,36 @@ public class PlanningService {
             return new ArrayList<>();
         }
 
-        ReportPeriodService.ReportPeriod period = getCurrentMonthPeriod();
         List<Operation> operations = new ArrayList<>();
         operations.addAll(potentialExpenseRepo.findAll());
-        operations.addAll(baseReportService.getExpenses(period.getPeriod(), group.getAccounts(), null));
-        operations.addAll(baseReportService.getTransfersFromAccounts(period.getPeriod(), group.getAccounts()));
+        operations.addAll(getMonthExpenses(group));
+        operations.addAll(
+                baseReportService.getTransfersFromAccounts(getCurrentMonthPeriod().getPeriod(), group.getAccounts()));
         return operations;
+    }
+
+    private List<Operation> getMonthExpenses(AccountGroup group) {
+        List<Operation> currentMonthExpenses =
+                baseReportService.getExpenses(getCurrentMonthPeriod().getPeriod(), group.getAccounts(), null)
+                        .stream()
+                        .filter(operation -> !movedToNextMonth(operation))
+                        .collect(Collectors.toList());
+
+        List<Operation> movedPrevMonthExpenses =
+                baseReportService.getExpenses(getPrevMonthPeriod().getPeriod(), group.getAccounts(), null)
+                        .stream()
+                        .filter(this::movedToNextMonth)
+                        .collect(Collectors.toList());
+
+        List<Operation> operations = new ArrayList<>();
+        operations.addAll(currentMonthExpenses);
+        operations.addAll(movedPrevMonthExpenses);
+        return operations;
+    }
+
+    private boolean movedToNextMonth(Operation operation) {
+        Boolean movedToNextMonth = ((Expense) operation).getMoveToNextMonth();
+        return movedToNextMonth != null && movedToNextMonth;
     }
 
     public Map<String, Integer> getCurrentMonthItemAmountMap() {

@@ -27,7 +27,7 @@ public class PlanningUtil {
             case WITHOUT_GROUPING:
                 return getWithoutGroupingReport(planningService.getCurrentMonthOperationsWithoutGrouping(), peDeleteKnob);
         }
-        return null;
+        throw new RuntimeException();
     }
 
     private static List<List<ReportCell>> getWithoutGroupingReport(

@@ -40,6 +40,8 @@ class HistoryTableController implements FxController {
     private TableColumn<Operation, String> amountColumn;
     @FXML
     private TableColumn<Operation, String> additionalInfoColumn;
+    @FXML
+    private TableColumn<Operation, String> commentColumn;
 
     HistoryTableController(OneOutKnob<List<Operation>> operationSupplier) {
         this.operationSupplier = operationSupplier;
@@ -63,6 +65,7 @@ class HistoryTableController implements FxController {
         toColumn.setCellValueFactory(new PropertyValueFactory<>("toTitle"));
         amountColumn.setCellValueFactory(new PropertyValueFactory<>("amountString"));
         additionalInfoColumn.setCellValueFactory(new PropertyValueFactory<>("additionalInfo"));
+        commentColumn.setCellValueFactory(new PropertyValueFactory<>("comment"));
     }
 
     void updateTableContent() {

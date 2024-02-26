@@ -12,10 +12,7 @@ import com.katyshevtseva.kikiorg.core.sections.finance.entity.Item;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.DatePicker;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 
 import java.time.LocalDate;
 
@@ -39,6 +36,8 @@ class ExpenseController implements FxController {
     private TextField commentTextField;
     @FXML
     private ComboBox<Necessity> necessityComboBox;
+    @FXML
+    private CheckBox mtnmCheckBox;
 
     public ExpenseController(Expense expense, NoArgsKnob operationListener) {
         this.expense = expense;
@@ -60,6 +59,7 @@ class ExpenseController implements FxController {
             FxUtils.setDate(datePicker, expense.getDate());
             commentTextField.setText(expense.getComment());
             necessityComboBox.setValue(expense.getNecessity());
+            mtnmCheckBox.setSelected(expense.getMoveToNextMonth() != null && expense.getMoveToNextMonth());
         }
     }
 
@@ -96,10 +96,12 @@ class ExpenseController implements FxController {
                     itemComboBox.getValue(),
                     java.sql.Date.valueOf(datePicker.getValue()),
                     necessityComboBox.getValue(),
-                    commentTextField.getText());
+                    commentTextField.getText(),
+                    mtnmCheckBox.isSelected());
             amountTextField.clear();
             necessityComboBox.setValue(Necessity.BTW);
             commentTextField.clear();
+            mtnmCheckBox.setSelected(false);
         } else {
             Core.getInstance().financeService().editExpense(
                     expense,
@@ -108,7 +110,8 @@ class ExpenseController implements FxController {
                     itemComboBox.getValue(),
                     java.sql.Date.valueOf(datePicker.getValue()),
                     necessityComboBox.getValue(),
-                    commentTextField.getText());
+                    commentTextField.getText(),
+                    mtnmCheckBox.isSelected());
             FxUtils.closeWindowThatContains(accountComboBox);
         }
         operationListener.execute();

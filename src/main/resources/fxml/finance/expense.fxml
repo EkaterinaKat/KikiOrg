@@ -30,6 +30,9 @@
         <Label text="Comment: " GridPane.halignment="LEFT"
                GridPane.columnIndex="2" GridPane.rowIndex="2"/>
 
+        <Label text="Move to next month: " GridPane.halignment="LEFT"
+               GridPane.columnIndex="0" GridPane.rowIndex="3"/>
+
         <TextField fx:id="amountTextField" minWidth="250" maxWidth="250"
                    GridPane.columnIndex="1" GridPane.rowIndex="0"/>
 
@@ -48,8 +51,11 @@
         <TextField fx:id="commentTextField" minWidth="250" maxWidth="250"
                    GridPane.columnIndex="3" GridPane.rowIndex="2"/>
 
+        <CheckBox fx:id="mtnmCheckBox"
+                  GridPane.columnIndex="1" GridPane.rowIndex="3"/>
+
         <Button fx:id="doneButton" text="Ok" GridPane.halignment="RIGHT"
-                GridPane.columnIndex="3" GridPane.rowIndex="3"/>
+                GridPane.columnIndex="3" GridPane.rowIndex="4"/>
     </GridPane>
 
 </VBox>

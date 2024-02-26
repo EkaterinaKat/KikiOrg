@@ -38,6 +38,8 @@ public class Expense implements Operation {
     @Enumerated(EnumType.STRING)
     private Necessity necessity;
 
+    private Boolean moveToNextMonth;
+
     @Override
     public Date getDate() {
         return dateEntity.getValue();
@@ -75,7 +77,8 @@ public class Expense implements Operation {
 
     @Override
     public String getAdditionalInfo() {
-        return (necessity != null ? necessity.toString() : "") + (comment != null ? (" " + comment) : "");
+        return (necessity != null ? necessity.toString() : "")
+                + (moveToNextMonth != null && moveToNextMonth ? " MOVED" : "");
     }
 
     @Override
