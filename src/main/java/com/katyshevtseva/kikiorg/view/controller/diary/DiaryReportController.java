@@ -2,6 +2,7 @@ package com.katyshevtseva.kikiorg.view.controller.diary;
 
 import com.katyshevtseva.fx.switchcontroller.SectionController;
 import com.katyshevtseva.kikiorg.core.Core;
+import com.katyshevtseva.kikiorg.core.sections.diary.ChartYValueType;
 import com.katyshevtseva.kikiorg.core.sections.diary.DiaryChartService.Dot;
 import com.katyshevtseva.kikiorg.core.sections.diary.Span;
 import com.katyshevtseva.kikiorg.core.sections.diary.entity.Indicator;
@@ -34,18 +35,21 @@ public class DiaryReportController implements SectionController {
     private Label detailLabel;
     @FXML
     private CheckBox adjustYCheckBox;
+    @FXML
+    private ComboBox<ChartYValueType> yValueTypeComboBox;
 
     @FXML
     private void initialize() {
         setComboBoxItems(indicatorComboBox, Core.getInstance().diaryService().getIndicatorsSuitableForLineChartReport());
         setComboBoxItems(spanComboBox, Span.values());
-        associateButtonWithControls(showButton, indicatorComboBox, spanComboBox);
+        setComboBoxItems(yValueTypeComboBox, ChartYValueType.values(), ChartYValueType.AVERAGE);
+        associateButtonWithControls(showButton, indicatorComboBox, spanComboBox, yValueTypeComboBox);
         showButton.setOnAction(event -> showChart());
     }
 
     private void showChart() {
         List<Dot> dots = Core.getInstance().diaryChartService()
-                .getChart(indicatorComboBox.getValue(), spanComboBox.getValue());
+                .getChart(indicatorComboBox.getValue(), spanComboBox.getValue(), yValueTypeComboBox.getValue());
         int yUpperBound = adjustYCheckBox.isSelected() ? getMaxY(dots) : 10;
 
         NumberAxis numberAxis = new NumberAxis(0, yUpperBound, 1);
