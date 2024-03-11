@@ -30,14 +30,17 @@ public class IndMark implements DairyTableService.MarkToEdit {
 
     private String comment;
 
-    public IndMark(Indicator indicator, DateEntity dateEntity) {
+    public IndMark(Indicator indicator, DateEntity dateEntity, IndValue value, String comment) {
         this.indicator = indicator;
         this.dateEntity = dateEntity;
+        this.value = value;
+        this.comment = comment;
     }
 
     public String getValueAndComment() {
         String valuePart = value != null ? value.getTitle() + "\n" : "";
-        return valuePart + comment;
+        String commentPart = comment != null ? comment : "";
+        return valuePart + commentPart;
     }
 
     @Override

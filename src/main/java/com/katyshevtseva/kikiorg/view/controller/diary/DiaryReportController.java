@@ -40,7 +40,7 @@ public class DiaryReportController implements SectionController {
 
     @FXML
     private void initialize() {
-        setComboBoxItems(indicatorComboBox, Core.getInstance().diaryService().getIndicatorsSuitableForLineChartReport());
+        setComboBoxItems(indicatorComboBox, Core.getInstance().diaryService().getIndicatorsWithNumericValues());
         setComboBoxItems(spanComboBox, Span.values());
         setComboBoxItems(yValueTypeComboBox, ChartYValueType.values(), ChartYValueType.AVERAGE);
         associateButtonWithControls(showButton, indicatorComboBox, spanComboBox, yValueTypeComboBox);

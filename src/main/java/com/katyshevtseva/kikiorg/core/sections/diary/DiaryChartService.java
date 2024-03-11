@@ -19,11 +19,13 @@ import static com.katyshevtseva.date.DateUtils.*;
 @RequiredArgsConstructor
 @Service
 public class DiaryChartService {
+    private final ZeroMarkCreationService zeroService;
     private final IndMarkRepo markRepo;
     private final Cache<Date, Period> monthPeriodCache = new Cache<>(DateUtils::getPeriodOfMonthDateBelongsTo);
     private final Cache<Date, Period> weekPeriodCache = new Cache<>(DateUtils::getPeriodOfWeekDateBelongsTo);
 
     public List<Dot> getChart(Indicator indicator, Span span, ChartYValueType yValueType) {
+        zeroService.createZeroMarks(indicator);
         List<IndMark> marks = markRepo.findByIndicator(indicator);
 
         Map<Period, List<IndMark>> periodMarkListMap = getPeriodMarkListMapByMarks(marks, getPeriodCache(span));

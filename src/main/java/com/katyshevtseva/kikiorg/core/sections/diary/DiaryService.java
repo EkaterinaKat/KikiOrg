@@ -85,17 +85,8 @@ public class DiaryService {
     }
 
 
-    public List<Indicator> getIndicatorsSuitableForLineChartReport() {
-        return getActiveIndicators().stream().filter(indicator -> {
-            try {
-                for (IndValue value : indicator.getValues()) {
-                    Integer.parseInt(value.getTitle());
-                }
-                return true;
-            } catch (Exception e) {
-                return false;
-            }
-        }).collect(Collectors.toList());
+    public List<Indicator> getIndicatorsWithNumericValues() {
+        return getActiveIndicators().stream().filter(DiaryUtils::hasNumericValues).collect(Collectors.toList());
     }
 
     public void saveMark(Indicator indicator, Date date, IndValue value, String comment) {
@@ -106,9 +97,11 @@ public class DiaryService {
         getMark(indicator, date).ifPresent(markRepo::delete);
 
         if (value != null || !GeneralUtils.isEmpty(comment)) {
-            IndMark mark = new IndMark(indicator, dateService.createIfNotExistAndGetDateEntity(date));
-            mark.setValue(value);
-            mark.setComment(GeneralUtils.trim(comment));
+            IndMark mark = new IndMark(
+                    indicator,
+                    dateService.createIfNotExistAndGetDateEntity(date),
+                    value,
+                    GeneralUtils.trim(comment));
             markRepo.save(mark);
         }
     }
