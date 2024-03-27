@@ -9,6 +9,7 @@ import com.katyshevtseva.fx.switchcontroller.Section;
 import com.katyshevtseva.kikiorg.view.controller.diary.MainDiaryController;
 import com.katyshevtseva.kikiorg.view.controller.finance.MainFinanceController;
 import com.katyshevtseva.kikiorg.view.controller.habits.MainHabitsController;
+import com.katyshevtseva.kikiorg.view.controller.study.MainStudyController;
 import com.katyshevtseva.kikiorg.view.controller.tracker.MainTrackerController;
 import com.katyshevtseva.kikiorg.view.controller.wardrobe.MainWardrobeController;
 import javafx.fxml.FXML;
@@ -39,6 +40,8 @@ public class MainController extends AbstractSwitchController implements FxContro
 
     private List<Section> getSections() {
         return Arrays.asList(
+                new Section("Study", new MainStudyController(),
+                        controller -> WindowBuilder.getNode(MAIN_STUDY, controller)),
                 new Section("Finance", new MainFinanceController(),
                         controller -> WindowBuilder.getNode(MAIN_FIN, controller)),
                 new Section("Habits", new MainHabitsController(),

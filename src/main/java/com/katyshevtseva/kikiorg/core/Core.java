@@ -12,6 +12,9 @@ import com.katyshevtseva.kikiorg.core.sections.habits.AnalysisService;
 import com.katyshevtseva.kikiorg.core.sections.habits.HabitMarkService;
 import com.katyshevtseva.kikiorg.core.sections.habits.HabitsReportService;
 import com.katyshevtseva.kikiorg.core.sections.habits.HabitsService;
+import com.katyshevtseva.kikiorg.core.sections.study.StudyChartService;
+import com.katyshevtseva.kikiorg.core.sections.study.StudyService;
+import com.katyshevtseva.kikiorg.core.sections.study.StudyTableService;
 import com.katyshevtseva.kikiorg.core.sections.tracker.SphereService;
 import com.katyshevtseva.kikiorg.core.sections.tracker.TaskService;
 import com.katyshevtseva.kikiorg.core.sections.wardrobe.PieceSeasonService;
@@ -53,6 +56,9 @@ public class Core implements InitializingBean {
     private final SettingService settingService;
     private final OperationDeletionService operationDeletionService;
     private final DiaryChartService diaryChartService;
+    private final StudyChartService studyChartService;
+    private final StudyService studyService;
+    private final StudyTableService studyTableService;
 
     public static Core getInstance() {
         while (INSTANCE == null) {
@@ -68,6 +74,18 @@ public class Core implements InitializingBean {
     @Override
     public void afterPropertiesSet() {
         INSTANCE = this;
+    }
+
+    public StudyChartService studyChartService() {
+        return studyChartService;
+    }
+
+    public StudyService studyService() {
+        return studyService;
+    }
+
+    public StudyTableService studyTableService() {
+        return studyTableService;
     }
 
     public DiaryChartService diaryChartService() {

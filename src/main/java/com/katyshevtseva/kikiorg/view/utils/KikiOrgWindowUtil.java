@@ -21,6 +21,11 @@ public class KikiOrgWindowUtil {
     }
 
     public enum OrgNodeInfo implements WindowBuilder.NodeInfo {
+        //STUDY
+        MAIN_STUDY(FXML_LOCATION, "section_main.fxml"),
+        STUDY_ADMIN(STUDY_FXML_LOCATION, "admin.fxml"),
+        STUDY_FRONT_PAGE(STUDY_FXML_LOCATION, "front_page.fxml"),
+        STUDY_REPORT(STUDY_FXML_LOCATION, "report.fxml"),
         //DIARY
         MAIN_DIARY(FXML_LOCATION, "section_main.fxml"),
         DIARY_ADMIN(DIARY_FXML_LOCATION, "admin.fxml"),
@@ -85,7 +90,8 @@ public class KikiOrgWindowUtil {
         DYNAMIC_FIN_REPORT(FIN_FXML_LOCATION, "dynamic_report.fxml", WINDOW_SIZE, "Finance report"),
         SP_FIN_REPORT(FIN_FXML_LOCATION, "single_period_report.fxml", WINDOW_SIZE, "Finance report"),
         FIN_PLANING(FIN_FXML_LOCATION, "planing.fxml", WINDOW_SIZE, "Finance report"),
-        MAKE_MARKS_DIALOG(DIARY_FXML_LOCATION, "make_marks_dialog.fxml", new Size(1000, 800), "Make marks");
+        MAKE_MARKS_DIALOG(DIARY_FXML_LOCATION, "make_marks_dialog.fxml", new Size(1000, 800), "Make marks"),
+        MAKE_SUBJ_MARKS_DIALOG(STUDY_FXML_LOCATION, "make_marks_dialog.fxml", new Size(1000, 800), "Make marks");
 
         private final String location;
         private final String fileName;

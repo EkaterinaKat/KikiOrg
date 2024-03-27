@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<HBox xmlns:fx="http://javafx.com/fxml"
+      xmlns="http://javafx.com/javafx">
+
+    <Pane minWidth="20" maxWidth="20"/>
+
+    <VBox>
+        <Pane minHeight="20" maxHeight="20"/>
+
+        <HBox>
+            <ComboBox fx:id="subjectComboBox" maxWidth="200" minWidth="200"/>
+            <Pane minWidth="10" maxWidth="10"/>
+            <ComboBox fx:id="spanComboBox" maxWidth="200" minWidth="200"/>
+            <Pane minWidth="10" maxWidth="10"/>
+            <ComboBox fx:id="yValueTypeComboBox"/>
+            <Pane minWidth="10" maxWidth="10"/>
+            <CheckBox text="adjust y" fx:id="adjustYCheckBox"/>
+            <Pane minWidth="10" maxWidth="10"/>
+            <Button fx:id="showButton" text="Show" maxWidth="100" minWidth="100"/>
+        </HBox>
+
+        <Pane minHeight="20" maxHeight="20"/>
+
+        <ScrollPane maxWidth="1060" minWidth="1060" minHeight="400" maxHeight="400">
+            <VBox fx:id="chartPane"/>
+        </ScrollPane>
+
+        <Pane minHeight="20" maxHeight="20"/>
+
+        <ScrollPane maxWidth="1060" minWidth="1060" minHeight="400" maxHeight="400">
+            <Label fx:id="detailLabel" maxWidth="600" minWidth="600" wrapText="true"/>
+        </ScrollPane>
+
+    </VBox>
+</HBox>
