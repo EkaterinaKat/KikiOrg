@@ -5,6 +5,8 @@ import com.katyshevtseva.date.Period;
 import com.katyshevtseva.general.Cache;
 import com.katyshevtseva.kikiorg.core.sections.study.entity.SubjMark;
 import com.katyshevtseva.kikiorg.core.sections.study.entity.Subject;
+import com.katyshevtseva.kikiorg.core.sections.study.enums.ChartYValueType;
+import com.katyshevtseva.kikiorg.core.sections.study.enums.Span;
 import com.katyshevtseva.kikiorg.core.sections.study.repo.SubjMarkRepo;
 import lombok.AllArgsConstructor;
 import lombok.Data;

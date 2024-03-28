@@ -2,10 +2,10 @@ package com.katyshevtseva.kikiorg.view.controller.study;
 
 import com.katyshevtseva.fx.switchcontroller.SectionController;
 import com.katyshevtseva.kikiorg.core.Core;
-import com.katyshevtseva.kikiorg.core.sections.study.ChartYValueType;
-import com.katyshevtseva.kikiorg.core.sections.study.Span;
 import com.katyshevtseva.kikiorg.core.sections.study.StudyChartService.Dot;
 import com.katyshevtseva.kikiorg.core.sections.study.entity.Subject;
+import com.katyshevtseva.kikiorg.core.sections.study.enums.ChartYValueType;
+import com.katyshevtseva.kikiorg.core.sections.study.enums.Span;
 import javafx.fxml.FXML;
 import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.LineChart;

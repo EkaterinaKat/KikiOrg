@@ -1,6 +1,7 @@
 package com.katyshevtseva.kikiorg.core.sections.study.entity;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -9,6 +10,7 @@ import javax.persistence.Id;
 
 @Data
 @Entity
+@NoArgsConstructor
 public class Subject {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -19,6 +21,12 @@ public class Subject {
     private String description;
 
     private Boolean archived;
+
+    public Subject(String title, String description, Boolean archived) {
+        this.title = title;
+        this.description = description;
+        this.archived = archived;
+    }
 
     public String getTitleAndArchivedInfo() {
         return title + (archived ? " (archived)" : "");
