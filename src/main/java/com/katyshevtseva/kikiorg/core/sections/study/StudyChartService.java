@@ -45,7 +45,7 @@ public class StudyChartService {
                     .sorted(Comparator.comparing(mark -> mark.getDateEntity().getValue()))
                     .map(mark -> String.format("%s = %s",
                             READABLE_DATE_FORMAT.format(mark.getDateEntity().getValue()),
-                            mark.getValue().getTitle()))
+                            mark.getMinutes()))
                     .reduce((s, s2) -> s + "\n" + s2).orElse("-");
 
             dots.add(new Dot(getPeriodTitle(span, entry.getKey()), yValue, details));
@@ -58,12 +58,12 @@ public class StudyChartService {
         switch (yValueType) {
             case AVERAGE:
                 return (float) entry.getValue().stream()
-                        .mapToInt(mark -> Integer.parseInt(mark.getValue().getTitle()))
+                        .mapToInt(SubjMark::getMinutes)
                         .average()
                         .orElse(0);
             case SUM:
                 return (float) entry.getValue().stream()
-                        .mapToInt(mark -> Integer.parseInt(mark.getValue().getTitle()))
+                        .mapToInt(SubjMark::getMinutes)
                         .sum();
         }
         throw new RuntimeException();

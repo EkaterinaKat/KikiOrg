@@ -10,8 +10,4 @@ public interface SubjectRepo extends JpaRepository<Subject, Long> {
     List<Subject> findAllByOrderByTitle();
 
     List<Subject> findAllByArchivedFalseOrderByTitle();
-
-    List<Subject> findAllByArchivedFalseAndHiddenFalseOrderByTitle();
-
-    List<Subject> findAllByArchivedFalseAndHiddenTrueOrderByTitle();
 }

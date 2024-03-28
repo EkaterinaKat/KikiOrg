@@ -40,7 +40,7 @@ public class StudyReportController implements SectionController {
 
     @FXML
     private void initialize() {
-        setComboBoxItems(subjectComboBox, Core.getInstance().studyService().getSubjectsWithNumericValues());
+        setComboBoxItems(subjectComboBox, Core.getInstance().studyService().getActiveSubjects());
         setComboBoxItems(spanComboBox, Span.values());
         setComboBoxItems(yValueTypeComboBox, ChartYValueType.values(), ChartYValueType.AVERAGE);
         associateButtonWithControls(showButton, subjectComboBox, spanComboBox, yValueTypeComboBox);

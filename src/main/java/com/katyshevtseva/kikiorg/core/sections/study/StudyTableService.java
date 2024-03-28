@@ -1,7 +1,6 @@
 package com.katyshevtseva.kikiorg.core.sections.study;
 
 import com.katyshevtseva.date.Period;
-import com.katyshevtseva.general.GeneralUtils;
 import com.katyshevtseva.general.ReportCell;
 import com.katyshevtseva.kikiorg.core.sections.study.entity.SubjMark;
 import com.katyshevtseva.kikiorg.core.sections.study.entity.Subject;
@@ -15,7 +14,6 @@ import java.util.List;
 
 import static com.katyshevtseva.date.DateUtils.READABLE_DATE_FORMAT;
 import static com.katyshevtseva.date.DateUtils.getDateRange;
-import static com.katyshevtseva.fx.Styler.StandardColor.WHITE;
 import static com.katyshevtseva.general.ReportCell.Type.HEAD_COLUMN;
 
 @RequiredArgsConstructor
@@ -53,12 +51,9 @@ public class StudyTableService {
         if (mark == null) {
             return ReportCell.builder().item(getMarkToEdit(subject, date)).build();
         }
-        String color = mark.getValue() != null ?
-                (!GeneralUtils.isEmpty(mark.getValue().getColor()) ? mark.getValue().getColor() : WHITE.getCode())
-                : WHITE.getCode();
         return ReportCell.builder()
                 .text(mark.getValueAndComment())
-                .color(color).width(columnWidth)
+                .width(columnWidth)
                 .item(mark)
                 .build();
     }

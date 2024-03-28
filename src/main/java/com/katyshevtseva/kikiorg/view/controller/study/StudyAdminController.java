@@ -1,23 +1,18 @@
 package com.katyshevtseva.kikiorg.view.controller.study;
 
-import com.katyshevtseva.fx.FxUtils;
 import com.katyshevtseva.fx.Styler;
 import com.katyshevtseva.fx.dialog.StandardDialogBuilder;
 import com.katyshevtseva.fx.dialogconstructor.DcTextArea;
 import com.katyshevtseva.fx.dialogconstructor.DcTextField;
 import com.katyshevtseva.fx.dialogconstructor.DialogConstructor;
 import com.katyshevtseva.fx.switchcontroller.SectionController;
-import com.katyshevtseva.general.GeneralUtils;
 import com.katyshevtseva.kikiorg.core.Core;
-import com.katyshevtseva.kikiorg.core.sections.study.entity.SubjValue;
 import com.katyshevtseva.kikiorg.core.sections.study.entity.Subject;
 import javafx.fxml.FXML;
-import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
-import javafx.scene.input.ContextMenuEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
@@ -26,9 +21,6 @@ import org.springframework.lang.Nullable;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import static com.katyshevtseva.fx.FxUtils.frame;
-import static com.katyshevtseva.fx.FxUtils.getPaneWithHeight;
 
 public class StudyAdminController implements SectionController {
     @FXML
@@ -92,23 +84,12 @@ public class StudyAdminController implements SectionController {
         editItem.setOnAction(event1 -> openSubjectEditWindow(subject));
         contextMenu.getItems().add(editItem);
 
-        MenuItem newValueItem = new MenuItem("New value");
-        newValueItem.setOnAction(event -> openValueEditDialog(subject, null));
-        contextMenu.getItems().add(newValueItem);
-
         MenuItem archiveItem = new MenuItem("Archive");
         archiveItem.setOnAction(event1 -> {
             Core.getInstance().studyService().archive(subject);
             fillSubjectTable(subject);
         });
         contextMenu.getItems().add(archiveItem);
-
-        MenuItem hideItem = new MenuItem("Hide");
-        hideItem.setOnAction(event1 -> {
-            Core.getInstance().studyService().hide(subject);
-            fillSubjectTable(subject);
-        });
-        contextMenu.getItems().add(hideItem);
 
         MenuItem deleteItem = new MenuItem("Delete");
         deleteItem.setOnAction(event1 -> {
@@ -133,40 +114,6 @@ public class StudyAdminController implements SectionController {
         if (subject != null) {
             subjectIdPointLabelMap.get(subject.getId()).setText("* ");
         }
-        fillValuesPane(subject);
-    }
-
-    private void fillValuesPane(@Nullable Subject subject) {
-        valuesPane.getChildren().clear();
-
-        if (subject == null) {
-            return;
-        }
-
-        for (SubjValue value : subject.getSortedValues()) {
-            Label label = new Label(value.getTitleAndDesc());
-            label.setStyle(Styler.getColorfullStyle(Styler.ThingToColor.TEXT, Styler.StandardColor.BLACK));
-            FxUtils.setWidth(label, 400);
-            label.setWrapText(true);
-
-            Node node = frame(label, 10);
-
-            valuesPane.getChildren().addAll(node, getPaneWithHeight(10));
-            if (!GeneralUtils.isEmpty(value.getColor())) {
-                try {
-                    Styler.setBackgroundColorAndCorrectTextColor(node, label, value.getColor());
-                } catch (Exception e) {
-                }
-            } else {
-                node.setStyle(Styler.getBlackBorderStyle());
-            }
-
-            if (value.isDefaultValue()) {
-                node.setStyle(node.getStyle() + Styler.getBlackBorderStyle() + Styler.getBorderWidth(5));
-            }
-
-            node.setOnContextMenuRequested(event -> showValueContextMenu(event, node, value, subject));
-        }
     }
 
     private void openSubjectEditWindow(Subject subject) {
@@ -176,33 +123,5 @@ public class StudyAdminController implements SectionController {
             Core.getInstance().studyService().save(subject, titleField.getValue(), descField.getValue());
             fillSubjectTable(subject);
         }, titleField, descField);
-    }
-
-    private void openValueEditDialog(Subject subject, SubjValue value) {
-        DcTextField titleField = new DcTextField(true, value == null ? "" : value.getTitle());
-        DcTextField colorField = new DcTextField(false, value == null ? "" : value.getColor());
-        DcTextArea descField = new DcTextArea(false, value == null ? "" : value.getDescription());
-        DialogConstructor.constructDialog(() -> {
-            Core.getInstance().studyService().save(subject, value, titleField.getValue(),
-                    descField.getValue(), colorField.getValue());
-            fillSubjectTable(subject);
-        }, titleField, colorField, descField);
-    }
-
-    private void showValueContextMenu(ContextMenuEvent event, Node node, SubjValue value, Subject subject) {
-        ContextMenu contextMenu = new ContextMenu();
-
-        MenuItem editItem = new MenuItem("Edit");
-        editItem.setOnAction(event1 -> openValueEditDialog(subject, value));
-        contextMenu.getItems().add(editItem);
-
-        MenuItem makeDefaultItem = new MenuItem("Make default");
-        makeDefaultItem.setOnAction(event1 -> {
-            Core.getInstance().studyService().makeDefault(value);
-            fillSubjectTable(subject);
-        });
-        contextMenu.getItems().add(makeDefaultItem);
-
-        contextMenu.show(node, event.getScreenX(), event.getScreenY());
     }
 }

@@ -7,7 +7,6 @@ import com.katyshevtseva.general.NoArgsKnob;
 import com.katyshevtseva.kikiorg.core.Core;
 import com.katyshevtseva.kikiorg.core.sections.study.StudyTableService.MarkToEdit;
 import com.katyshevtseva.kikiorg.core.sections.study.entity.SubjMark;
-import com.katyshevtseva.kikiorg.core.sections.study.entity.SubjValue;
 import com.katyshevtseva.kikiorg.core.sections.study.entity.Subject;
 import com.sun.istack.NotNull;
 import javafx.fxml.FXML;
@@ -18,26 +17,17 @@ import lombok.Data;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 public class MakeMarksDialogController implements FxController {
-    private final List<Line> hiddenLines = new ArrayList<>();
     private final NoArgsKnob onSaveKnob;
     private final MarkToEdit mark;
     private final List<Line> lines = new ArrayList<>();
-    private boolean hiddenShown = false;
     @FXML
     private GridPane subjectPane;
     @FXML
     private Button saveButton;
     @FXML
     private DatePicker datePicker;
-    @FXML
-    private GridPane hiddenSubjectPane;
-    @FXML
-    private Button showHiddenButton;
-
 
     public MakeMarksDialogController(NoArgsKnob onSaveKnob) {
         this.onSaveKnob = onSaveKnob;
@@ -53,7 +43,6 @@ public class MakeMarksDialogController implements FxController {
     private void initialize() {
         if (mark == null) {
             datePicker.setOnAction(event -> fillPaneWithAllSubjects());
-            showHiddenButton.setOnAction(event -> hiddenButtonListener());
         } else {
             FxUtils.setDate(datePicker, mark.getDate());
             datePicker.setDisable(true);
@@ -67,25 +56,8 @@ public class MakeMarksDialogController implements FxController {
         });
     }
 
-    private void hiddenButtonListener() {
-        hiddenShown = !hiddenShown;
-        if (hiddenShown) {
-            showHiddenButton.setText("Hide");
-
-            List<Subject> subjects = Core.getInstance().studyService().getActiveHiddenSubjects();
-            for (int i = 0; i < subjects.size(); i++) {
-                addSubjectToPane(subjects.get(i), i, hiddenSubjectPane, hiddenLines);
-            }
-        } else {
-            showHiddenButton.setText("Show hidden");
-            hiddenSubjectPane.getChildren().clear();
-            hiddenLines.clear();
-        }
-    }
-
     private void fillPaneWithAllSubjects() {
-        showHiddenButton.setVisible(true);
-        List<Subject> subjects = Core.getInstance().studyService().getActiveNotHiddenSubjects();
+        List<Subject> subjects = Core.getInstance().studyService().getActiveSubjects();
         for (int i = 0; i < subjects.size(); i++) {
             addSubjectToPane(subjects.get(i), i, subjectPane, lines);
         }
@@ -96,11 +68,11 @@ public class MakeMarksDialogController implements FxController {
         label.setTooltip(new Tooltip(subject.getDescription()));
         pane.add(label, 1, row + 1);
 
-        ComboBox<SubjValue> valueComboBox = new ComboBox<>();
-        FxUtils.setWidth(valueComboBox, 150);
-        FxUtils.setComboBoxItems(valueComboBox, subject.getSortedValues());
-        subject.getDefaultValue().ifPresent(valueComboBox::setValue);
-        pane.add(valueComboBox, 2, row + 1);
+        TextField minTV = new TextField();
+        FxUtils.disableNonNumericChars(minTV);
+        FxUtils.setWidth(minTV, 150);
+        minTV.setText("0");
+        pane.add(minTV, 2, row + 1);
 
         TextArea commentArea = new TextArea();
         FxUtils.setSize(commentArea, new Size(100, 300));
@@ -109,19 +81,19 @@ public class MakeMarksDialogController implements FxController {
 
         SubjMark mark = Core.getInstance().studyService().getMark(subject, FxUtils.getDate(datePicker)).orElse(null);
         if (mark != null) {
-            valueComboBox.setValue(mark.getValue());
+            minTV.setText(mark.getMinutes() + "");
             commentArea.setText(mark.getComment());
         }
 
-        lineList.add(new Line(subject, valueComboBox, commentArea));
+        lineList.add(new Line(subject, minTV, commentArea));
     }
 
     private void save() {
-        for (Line line : Stream.concat(lines.stream(), hiddenLines.stream()).collect(Collectors.toList())) {
+        for (Line line : lines) {
             Core.getInstance().studyService().saveMark(
                     line.getSubject(),
                     FxUtils.getDate(datePicker),
-                    line.getValueComboBox().getValue(),
+                    line.getMinTV().getText(),
                     line.textArea.getText());
         }
     }
@@ -130,7 +102,7 @@ public class MakeMarksDialogController implements FxController {
     @Data
     private static class Line {
         Subject subject;
-        ComboBox<SubjValue> valueComboBox;
+        TextField minTV;
         TextArea textArea;
     }
 }

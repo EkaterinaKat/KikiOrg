@@ -1,5 +1,6 @@
 package com.katyshevtseva.kikiorg.core.sections.study.entity;
 
+import com.katyshevtseva.general.GeneralUtils;
 import com.katyshevtseva.kikiorg.core.date.DateEntity;
 import com.katyshevtseva.kikiorg.core.sections.study.StudyTableService;
 import lombok.Data;
@@ -24,23 +25,20 @@ public class SubjMark implements StudyTableService.MarkToEdit {
     @JoinColumn(name = "date_entity_id")
     private DateEntity dateEntity;
 
-    @ManyToOne
-    @JoinColumn(name = "value_id")
-    private SubjValue value;
+    private Integer minutes;
 
     private String comment;
 
-    public SubjMark(Subject subject, DateEntity dateEntity, SubjValue value, String comment) {
+    public SubjMark(Subject subject, DateEntity dateEntity, int minutes, String comment) {
         this.subject = subject;
         this.dateEntity = dateEntity;
-        this.value = value;
         this.comment = comment;
+        this.minutes = minutes;
     }
 
     public String getValueAndComment() {
-        String valuePart = value != null ? value.getTitle() + "\n" : "";
-        String commentPart = comment != null ? comment : "";
-        return valuePart + commentPart;
+        String commentPart = GeneralUtils.isEmpty(comment) ? "" : "\n" + comment;
+        return minutes + commentPart;
     }
 
     @Override

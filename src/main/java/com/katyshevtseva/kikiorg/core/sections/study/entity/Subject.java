@@ -2,11 +2,10 @@ package com.katyshevtseva.kikiorg.core.sections.study.entity;
 
 import lombok.Data;
 
-import javax.persistence.*;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 
 @Data
 @Entity
@@ -21,21 +20,8 @@ public class Subject {
 
     private Boolean archived;
 
-    @OneToMany(mappedBy = "subject", fetch = FetchType.EAGER)
-    private List<SubjValue> values;
-
-    private Boolean hidden;
-
     public String getTitleAndArchivedInfo() {
-        return title + (archived ? " (archived)" : hidden ? "(H)" : "");
-    }
-
-    public List<SubjValue> getSortedValues() {
-        return values.stream().sorted(Comparator.comparing(SubjValue::getComparingInt)).collect(Collectors.toList());
-    }
-
-    public Optional<SubjValue> getDefaultValue() {
-        return values.stream().filter(SubjValue::isDefaultValue).findFirst();
+        return title + (archived ? " (archived)" : "");
     }
 
     @Override

@@ -15,10 +15,6 @@
         <ScrollPane minWidth="700" maxWidth="700" minHeight="780" maxHeight="780">
             <VBox alignment="CENTER">
                 <GridPane fx:id="subjectPane" hgap="20" vgap="20"/>
-                <Pane minHeight="20" maxHeight="20"/>
-                <Button visible="false" fx:id="showHiddenButton" text="Show hidden"/>
-                <Pane minHeight="20" maxHeight="20"/>
-                <GridPane fx:id="hiddenSubjectPane" hgap="20" vgap="20"/>
             </VBox>
         </ScrollPane>
         <Pane minHeight="25" maxHeight="25"/>
