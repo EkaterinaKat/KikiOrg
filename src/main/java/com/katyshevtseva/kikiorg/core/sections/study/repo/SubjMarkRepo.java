@@ -12,6 +12,8 @@ public interface SubjMarkRepo extends JpaRepository<SubjMark, Long> {
 
     List<SubjMark> findBySubjectAndDateEntity(Subject subject, DateEntity dateEntity);
 
+    List<SubjMark> findByDateEntityValue(Date date);
+
     List<SubjMark> findBySubject(Subject subject);
 
     List<SubjMark> findBySubjectOrderByDateEntityValue(Subject subject);

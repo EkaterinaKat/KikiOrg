@@ -1,10 +1,13 @@
 package com.katyshevtseva.kikiorg.core.sections.study;
 
 import com.katyshevtseva.date.Period;
+import com.katyshevtseva.fx.Styler;
 import com.katyshevtseva.general.ReportCell;
+import com.katyshevtseva.general.ReportCell.ReportCellBuilder;
 import com.katyshevtseva.kikiorg.core.sections.study.entity.Circs;
 import com.katyshevtseva.kikiorg.core.sections.study.entity.SubjMark;
 import com.katyshevtseva.kikiorg.core.sections.study.entity.Subject;
+import com.katyshevtseva.kikiorg.core.sections.study.repo.SubjMarkRepo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -13,11 +16,11 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
-import static com.katyshevtseva.date.DateUtils.READABLE_DATE_FORMAT;
-import static com.katyshevtseva.date.DateUtils.getDateRange;
+import static com.katyshevtseva.date.DateUtils.*;
 import static com.katyshevtseva.fx.Styler.StandardColor.BLACK;
 import static com.katyshevtseva.fx.Styler.StandardColor.LIGHT_GREY;
 import static com.katyshevtseva.general.ReportCell.Type.HEAD_COLUMN;
+import static com.katyshevtseva.kikiorg.core.CoreConstants.STUDY_START_DATE;
 
 @RequiredArgsConstructor
 @Service
@@ -25,6 +28,7 @@ public class StudyTableService {
     private static final int columnWidth = 130;
     private final StudyService studyService;
     private final CircsService circsService;
+    private final SubjMarkRepo markRepo;
 
     public List<List<ReportCell>> getReport(Period period) {
         return getReport(studyService.getActiveSubjects(), period);
@@ -53,10 +57,21 @@ public class StudyTableService {
 
     private ReportCell getCircsCell(Date date) {
         Circs circs = circsService.getCircsOrNull(date);
-        if (circs == null)
-            return ReportCell.builder().item(getNonexistentCircsToEdit(date)).build();
-        else
+        if (circs == null) {
+            ReportCellBuilder builder = ReportCell.builder().item(getNonexistentCircsToEdit(date));
+            Date today = new Date();
+            if (circsCellShouldBeFilled(date, today))
+                builder.color(Styler.StandardColor.RED.getCode());
+            return builder.build();
+        } else
             return (ReportCell.builder().item(circs).text(circs.getInfo()).width(150).build());
+    }
+
+    private boolean circsCellShouldBeFilled(Date date, Date today) {
+        if (before(date, STUDY_START_DATE) || !before(date, today)) {
+            return false;
+        }
+        return markRepo.findByDateEntityValue(date).stream().mapToInt(SubjMark::getMinutes).sum() == 0;
     }
 
     private ReportCell getSubjMarkCell(Subject subject, Date date) {
