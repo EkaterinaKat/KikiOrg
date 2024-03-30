@@ -24,7 +24,7 @@ import static com.katyshevtseva.fx.FxUtils.getPeriod;
 import static com.katyshevtseva.kikiorg.view.utils.KikiOrgWindowUtil.OrgDialogInfo.MAKE_MARKS_DIALOG;
 
 public class DiaryFrontPageController implements SectionController {
-    private final DairyTableService tableService = Core.getInstance().dairyTableService();
+    private final DairyTableService tableService = Core.getInstance().dairyTableService;
     @FXML
     private GridPane tablePane;
     @FXML
@@ -73,7 +73,7 @@ public class DiaryFrontPageController implements SectionController {
 
         MenuItem deleteItem = new MenuItem("Delete");
         deleteItem.setOnAction(event -> {
-            Core.getInstance().diaryService().delete((MarkToEdit) cell.getItem());
+            Core.getInstance().diaryService.delete((MarkToEdit) cell.getItem());
             updateSectionContent();
         });
 

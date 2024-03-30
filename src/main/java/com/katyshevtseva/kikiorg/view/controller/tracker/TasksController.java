@@ -37,7 +37,7 @@ public class TasksController implements SectionController {
     private static final Size TASK_LIST_SIZE = new Size(800, 800);
     private Map<Sphere, Label> spherePointLabelMap;
     private PageableBlockListController<Task> taskListController;
-    private final TaskService service = Core.getInstance().taskService();
+    private final TaskService service = Core.getInstance().taskService;
     private Sphere selectedSphere;
     @FXML
     private GridPane spherePane;
@@ -83,7 +83,7 @@ public class TasksController implements SectionController {
 
     private void fillSphereTable() {
         spherePane.getChildren().clear();
-        List<Sphere> spheres = Core.getInstance().sphereService().getAll();
+        List<Sphere> spheres = Core.getInstance().sphereService.getAll();
         spherePointLabelMap = new HashMap<>();
         int rowIndex = 0;
         for (Sphere sphere : spheres) {
@@ -117,7 +117,7 @@ public class TasksController implements SectionController {
         MenuItem deleteItem = new MenuItem("Delete");
         deleteItem.setOnAction(event1 -> new StandardDialogBuilder().openQuestionDialog("Delete?", b -> {
             if (b) {
-                Core.getInstance().sphereService().delete(sphere);
+                Core.getInstance().sphereService.delete(sphere);
                 fillSphereTable();
                 selectSphere(null);
             }
@@ -168,7 +168,7 @@ public class TasksController implements SectionController {
         DcTextField titleField = new DcTextField(true, sphere == null ? "" : sphere.getTitle());
         DcCheckBox checkBox = new DcCheckBox(sphere == null || sphere.isActive(), "active");
         DialogConstructor.constructDialog(() -> {
-            Sphere savedSphere = Core.getInstance().sphereService()
+            Sphere savedSphere = Core.getInstance().sphereService
                     .save(sphere, titleField.getValue(), checkBox.getValue());
             fillSphereTable();
             selectSphere(savedSphere.isActive() ? sphere : null);

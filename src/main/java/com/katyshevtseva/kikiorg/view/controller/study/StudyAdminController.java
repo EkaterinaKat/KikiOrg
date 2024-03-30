@@ -48,7 +48,7 @@ public class StudyAdminController implements SectionController {
     private void fillSubjectTable(Subject subjectToShow) {
         boolean indToShowWasShowed = false;
         gridPane.getChildren().clear();
-        List<Subject> habits = Core.getInstance().studyService().getAllSubjects();
+        List<Subject> habits = Core.getInstance().studyService.getAllSubjects();
         subjectIdPointLabelMap = new HashMap<>();
         int rowIndex = 0;
         for (Subject subject : habits) {
@@ -86,7 +86,7 @@ public class StudyAdminController implements SectionController {
 
         MenuItem archiveItem = new MenuItem("Archive");
         archiveItem.setOnAction(event1 -> {
-            Core.getInstance().studyService().archive(subject);
+            Core.getInstance().studyService.archive(subject);
             fillSubjectTable(subject);
         });
         contextMenu.getItems().add(archiveItem);
@@ -96,7 +96,7 @@ public class StudyAdminController implements SectionController {
             String question = String.format("Delete %s?", subject.getTitle());
             new StandardDialogBuilder().openQuestionDialog(question, b -> {
                 if (b) {
-                    Core.getInstance().studyService().delete(subject);
+                    Core.getInstance().studyService.delete(subject);
                     fillSubjectTable(subject);
                 }
             });
@@ -120,7 +120,7 @@ public class StudyAdminController implements SectionController {
         DcTextField titleField = new DcTextField(true, subject == null ? "" : subject.getTitle());
         DcTextArea descField = new DcTextArea(false, subject == null ? "" : subject.getDescription());
         DialogConstructor.constructDialog(() -> {
-            Core.getInstance().studyService().save(subject, titleField.getValue(), descField.getValue());
+            Core.getInstance().studyService.save(subject, titleField.getValue(), descField.getValue());
             fillSubjectTable(subject);
         }, titleField, descField);
     }

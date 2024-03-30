@@ -10,7 +10,7 @@ import javafx.scene.layout.Pane;
 import static com.katyshevtseva.kikiorg.view.utils.KikiOrgWindowUtil.OrgNodeInfo.*;
 
 class LedgerController implements SectionController {
-    private final FinanceOperationService service = Core.getInstance().financeOperationService();
+    private final FinanceOperationService service = Core.getInstance().financeOperationService;
 
     private HistoryTableController historyTableController;
     private CheckController checkController;

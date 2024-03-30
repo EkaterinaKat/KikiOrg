@@ -27,7 +27,7 @@ public class FinanceHierarchyController implements SectionController {
     @FXML
     private void initialize() {
         hierarchyComponent = new ComponentBuilder().setSize(new Size(800, 1090))
-                .getHierarchyComponent(Core.getInstance().itemHierarchyService(), true, true, itemLabelAdjuster);
+                .getHierarchyComponent(Core.getInstance().itemHierarchyService, true, true, itemLabelAdjuster);
 
         pane.getChildren().add(hierarchyComponent.getNode());
     }
@@ -46,14 +46,14 @@ public class FinanceHierarchyController implements SectionController {
             DcTextField titleField = new DcTextField(true, item.getTitle());
             DcTextArea descField = new DcTextArea(false, item.getDescription());
             DialogConstructor.constructDialog(() -> {
-                Core.getInstance().financeService().alterItem(item, titleField.getValue(), descField.getValue());
+                Core.getInstance().financeService.alterItem(item, titleField.getValue(), descField.getValue());
                 hierarchyComponent.getController().fillSchema();
             }, titleField, descField);
         });
 
         MenuItem mergeItem = new MenuItem("Merge");
         mergeItem.setOnAction(event -> {
-            DcComboBox<Item> itemComboBox = new DcComboBox<>(true, null, Core.getInstance().financeService().getAllItems());
+            DcComboBox<Item> itemComboBox = new DcComboBox<>(true, null, Core.getInstance().financeService.getAllItems());
             DialogConstructor.constructDialog(() -> {
                 merge(item, itemComboBox.getValue());
                 hierarchyComponent.getController().fillSchema();
@@ -67,7 +67,7 @@ public class FinanceHierarchyController implements SectionController {
 
     private void merge(Item itemToMerge, Item destItem) {
         try {
-            Core.getInstance().itemMergeService().merge(itemToMerge, destItem);
+            Core.getInstance().itemMergeService.merge(itemToMerge, destItem);
             new StandardDialogBuilder().openInfoDialog("Success");
         } catch (Exception e) {
             new StandardDialogBuilder().setSize(1000, 1000).openInfoDialog(e.getMessage());

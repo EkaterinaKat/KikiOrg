@@ -115,7 +115,7 @@ class HistoryTableController implements FxController {
         MenuItem deleteItem = new MenuItem("Delete");
         deleteItem.setOnAction(event1 -> new StandardDialogBuilder().openQuestionDialog("Delete?", b -> {
             if (b) {
-                Core.getInstance().operationDeletionService().deleteOperation(operation);
+                Core.getInstance().operationDeletionService.deleteOperation(operation);
                 updateTableContent();
                 if (operationUpdateListener != null)
                     operationUpdateListener.execute();

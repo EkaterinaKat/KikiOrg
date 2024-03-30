@@ -40,7 +40,7 @@ class HuddleCheckController implements FxController {
         associateButtonWithControls(checkButton, comboBox);
         DcTextField titleField = new DcTextField(true, "");
         addButton.setOnAction(event -> DialogConstructor.constructDialog(() -> {
-            Core.getInstance().huddleCheckService().createHuddle(titleField.getValue());
+            Core.getInstance().huddleCheckService.createHuddle(titleField.getValue());
             emptyAllCheckBoxes();
             resultLabel.setText("");
             setComboBoxItems();
@@ -50,13 +50,16 @@ class HuddleCheckController implements FxController {
             amountTextField.setText(comboBox.getValue().getAmount().toString());
             resultLabel.setText("");
         });
-        checkButton.setOnAction(event -> resultLabel.setText(Core.getInstance().huddleCheckService()
-                .checkAndRewriteHuddleInfo(comboBox.getValue(), Long.parseLong(amountTextField.getText()), getAllSelectedAccounts())));
+        checkButton.setOnAction(event ->
+                resultLabel.setText(Core.getInstance().huddleCheckService.checkAndRewriteHuddleInfo(
+                        comboBox.getValue(),
+                        Long.parseLong(amountTextField.getText()),
+                        getAllSelectedAccounts())));
     }
 
     private void fillGridPane() {
         accountCheckBoxMap = new HashMap<>();
-        List<Account> accounts = Core.getInstance().financeService().getActiveAccounts()
+        List<Account> accounts = Core.getInstance().financeService.getActiveAccounts()
                 .stream().sorted(Comparator.comparing(Account::getTitleWithAdditionalInfo)).collect(Collectors.toList());
         for (Account account : accounts) {
             CheckBox checkBox = new CheckBox(account.toString());
@@ -66,7 +69,7 @@ class HuddleCheckController implements FxController {
     }
 
     private void setComboBoxItems() {
-        FxUtils.setComboBoxItems(comboBox, Core.getInstance().huddleCheckService().getAllHuddles());
+        FxUtils.setComboBoxItems(comboBox, Core.getInstance().huddleCheckService.getAllHuddles());
     }
 
     private void emptyAllCheckBoxes() {

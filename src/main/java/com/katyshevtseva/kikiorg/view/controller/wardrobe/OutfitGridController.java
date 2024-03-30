@@ -28,7 +28,7 @@ import static com.katyshevtseva.kikiorg.view.utils.KikiOrgWindowUtil.OrgDialogIn
 
 @RequiredArgsConstructor
 public class OutfitGridController implements FxController {
-    private final WardrobeService service = Core.getInstance().wardrobeService();
+    private final WardrobeService service = Core.getInstance().wardrobeService;
     private PaginationPaneController<Outfit> paginationPaneController;
     private final OneInOneOutKnob<Integer, Page<Outfit>> outfitPageSupplier;
     @FXML

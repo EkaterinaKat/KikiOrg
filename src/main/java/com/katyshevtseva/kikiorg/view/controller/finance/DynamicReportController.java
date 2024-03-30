@@ -35,10 +35,10 @@ import static com.katyshevtseva.fx.FxUtils.getPaneWithHeight;
 import static com.katyshevtseva.kikiorg.view.utils.KikiOrgWindowUtil.OrgNodeInfo.REPORT_PANE;
 
 public class DynamicReportController implements WindowBuilder.FxController {
-    private final AccountGroupService accountGroupService = Core.getInstance().accountGroupService();
-    private final DynamicsReportService dynamicsReportService = Core.getInstance().dynamicsReportService();
-    private final FinanceReportService reportService = Core.getInstance().financeReportService();
-    private final FinanceService financeService = Core.getInstance().financeService();
+    private final AccountGroupService accountGroupService = Core.getInstance().accountGroupService;
+    private final DynamicsReportService dynamicsReportService = Core.getInstance().dynamicsReportService;
+    private final FinanceReportService reportService = Core.getInstance().financeReportService;
+    private final FinanceService financeService = Core.getInstance().financeService;
     private ToggleGroup toggleGroup;
     private Map<RadioButton, AccountGroup> radioButtonAccountGroupMap;
     private final ReportPaneController pieChartPaneController = new ReportPaneController();

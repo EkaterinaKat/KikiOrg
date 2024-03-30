@@ -44,7 +44,7 @@ class AdminController implements SectionController {
 
     private void fillHabitTable() {
         gridPane.getChildren().clear();
-        List<Habit> habits = Core.getInstance().habitsService().getAllHabits();
+        List<Habit> habits = Core.getInstance().habitsService.getAllHabits();
         habitIdPointLabelMap = new HashMap<>();
         int rowIndex = 0;
         for (Habit habit : habits) {

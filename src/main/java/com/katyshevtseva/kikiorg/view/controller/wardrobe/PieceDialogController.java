@@ -83,7 +83,7 @@ class PieceDialogController implements FxController {
     }
 
     private void save() {
-        Piece saved = Core.getInstance().wardrobeService().savePiece(
+        Piece saved = Core.getInstance().wardrobeService.savePiece(
                 existing,
                 descTextArea.getText().trim(),
                 selectedImage.getFileName(),

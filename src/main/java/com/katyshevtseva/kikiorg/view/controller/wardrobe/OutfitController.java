@@ -18,7 +18,7 @@ import static com.katyshevtseva.kikiorg.view.utils.KikiOrgWindowUtil.OrgDialogIn
 import static com.katyshevtseva.kikiorg.view.utils.KikiOrgWindowUtil.OrgNodeInfo.OUTFIT_GRID;
 
 class OutfitController implements SectionController {
-    private final WardrobeService service = Core.getInstance().wardrobeService();
+    private final WardrobeService service = Core.getInstance().wardrobeService;
     private final OutfitGridController gridController = new OutfitGridController(this::getOutfitPage);
     @FXML
     private Button outfitCreateButton;

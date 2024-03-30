@@ -22,7 +22,7 @@ import static com.katyshevtseva.kikiorg.core.sections.finance.ExpenseGroupingTyp
 import static com.katyshevtseva.kikiorg.view.utils.KikiOrgWindowUtil.OrgNodeInfo.POTENTIAL_EXPENSE;
 
 public class PlaningController implements WindowBuilder.FxController {
-    private final PlanningService planningService = Core.getInstance().planningService();
+    private final PlanningService planningService = Core.getInstance().planningService;
     @FXML
     private ComboBox<AccountGroup> groupAccountComboBox;
     @FXML
@@ -41,7 +41,7 @@ public class PlaningController implements WindowBuilder.FxController {
         expensePane.getChildren().add(WindowBuilder.getNode(POTENTIAL_EXPENSE, expenseController));
 
         //groupAccountComboBox
-        FxUtils.setComboBoxItems(groupAccountComboBox, Core.getInstance().accountGroupService().getAll());
+        FxUtils.setComboBoxItems(groupAccountComboBox, Core.getInstance().accountGroupService.getAll());
         groupAccountComboBox.setValue(planningService.getSelectedAccountGroupOrNull());
         groupAccountComboBox.setOnAction(event -> {
             planningService.setSelectedAccountGroup(groupAccountComboBox.getValue());

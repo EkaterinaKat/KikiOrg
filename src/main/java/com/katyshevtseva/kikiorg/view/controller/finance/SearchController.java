@@ -27,7 +27,7 @@ import static com.katyshevtseva.fx.FxUtils.setComboBoxItems;
 
 class SearchController implements FxController {
     private final Size fromAndToComponentSize = new Size(150, 240);
-    private final FinanceSearchService searchService = Core.getInstance().financeSearchService();
+    private final FinanceSearchService searchService = Core.getInstance().financeSearchService;
     private OneArgKnob<List<Operation>> tableUpdateKnob;
     private MultipleChoiceController<OperationEnd> fromController;
     private MultipleChoiceController<OperationEnd> toController;

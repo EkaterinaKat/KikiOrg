@@ -22,7 +22,7 @@ import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
 public class TaskPaneController implements WindowBuilder.FxController {
-    private final TaskService service = Core.getInstance().taskService();
+    private final TaskService service = Core.getInstance().taskService;
     private final Task task;
     private final int blockWidth;
     private final NoArgsKnob contentUpdateKnob;

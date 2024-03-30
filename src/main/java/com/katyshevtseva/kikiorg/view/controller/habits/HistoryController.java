@@ -40,7 +40,7 @@ public class HistoryController implements SectionController {
 
     private void fillHabitTable() {
         habitListPane.getChildren().clear();
-        List<Habit> habits = Core.getInstance().habitsService().getAllHabits();
+        List<Habit> habits = Core.getInstance().habitsService.getAllHabits();
         habitIdPointLabelMap = new HashMap<>();
         int rowIndex = 0;
         for (Habit habit : habits) {
@@ -65,7 +65,7 @@ public class HistoryController implements SectionController {
         habitIdPointLabelMap.get(habit.getId()).setText("* ");
 
         historyPane.getChildren().clear();
-        List<Mark> marks = Core.getInstance().habitMarkService().getMarks(habit);
+        List<Mark> marks = Core.getInstance().habitMarkService.getMarks(habit);
 
         for (Map.Entry<String, List<Mark>> yearEntry : splitIntoYears(marks).entrySet()) {
             List<Mark> yearMarks = yearEntry.getValue();

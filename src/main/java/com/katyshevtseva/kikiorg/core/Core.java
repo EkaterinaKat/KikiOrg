@@ -30,37 +30,37 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class Core implements InitializingBean {
     private static Core INSTANCE;
-    private final FinanceService financeService;
-    private final HabitsService habitsService;
-    private final HabitsReportService habitsReportService;
-    private final ScuttleCheckService scuttleCheckService;
-    private final FinanceOperationService financeOperationService;
-    private final HabitMarkService habitMarkService;
-    private final WardrobeService wardrobeService;
-    private final AnalysisService analysisService;
-    private final HuddleCheckService huddleCheckService;
-    private final FinanceSearchService financeSearchService;
-    private final WardrobeStatisticsService wardrobeStatisticsService;
-    private final FinanceReportService financeReportService;
-    private final ReportPeriodService reportPeriodService;
-    private final ItemHierarchyService itemHierarchyService;
-    private final AccountGroupService accountGroupService;
-    private final AccountDeleteService accountDeleteService;
-    private final ItemMergeService itemMergeService;
-    private final PieceSeasonService pieceSeasonService;
-    private final SphereService sphereService;
-    private final TaskService taskService;
-    private final DynamicsReportService dynamicsReportService;
-    private final DiaryService diaryService;
-    private final DairyTableService dairyTableService;
-    private final PlanningService planningService;
-    private final SettingService settingService;
-    private final OperationDeletionService operationDeletionService;
-    private final DiaryChartService diaryChartService;
-    private final StudyChartService studyChartService;
-    private final StudyService studyService;
-    private final StudyTableService studyTableService;
-    private final CircsService circsService;
+    public final FinanceService financeService;
+    public final HabitsService habitsService;
+    public final HabitsReportService habitsReportService;
+    public final ScuttleCheckService scuttleCheckService;
+    public final FinanceOperationService financeOperationService;
+    public final HabitMarkService habitMarkService;
+    public final WardrobeService wardrobeService;
+    public final AnalysisService analysisService;
+    public final HuddleCheckService huddleCheckService;
+    public final FinanceSearchService financeSearchService;
+    public final WardrobeStatisticsService wardrobeStatisticsService;
+    public final FinanceReportService financeReportService;
+    public final ReportPeriodService reportPeriodService;
+    public final ItemHierarchyService itemHierarchyService;
+    public final AccountGroupService accountGroupService;
+    public final AccountDeleteService accountDeleteService;
+    public final ItemMergeService itemMergeService;
+    public final PieceSeasonService pieceSeasonService;
+    public final SphereService sphereService;
+    public final TaskService taskService;
+    public final DynamicsReportService dynamicsReportService;
+    public final DiaryService diaryService;
+    public final DairyTableService dairyTableService;
+    public final PlanningService planningService;
+    public final SettingService settingService;
+    public final OperationDeletionService operationDeletionService;
+    public final DiaryChartService diaryChartService;
+    public final StudyChartService studyChartService;
+    public final StudyService studyService;
+    public final StudyTableService studyTableService;
+    public final CircsService circsService;
 
     public static Core getInstance() {
         while (INSTANCE == null) {
@@ -76,129 +76,5 @@ public class Core implements InitializingBean {
     @Override
     public void afterPropertiesSet() {
         INSTANCE = this;
-    }
-
-    public CircsService circsService() {
-        return circsService;
-    }
-
-    public StudyChartService studyChartService() {
-        return studyChartService;
-    }
-
-    public StudyService studyService() {
-        return studyService;
-    }
-
-    public StudyTableService studyTableService() {
-        return studyTableService;
-    }
-
-    public DiaryChartService diaryChartService() {
-        return diaryChartService;
-    }
-
-    public OperationDeletionService operationDeletionService() {
-        return operationDeletionService;
-    }
-
-    public SettingService settingService() {
-        return settingService;
-    }
-
-    public PlanningService planningService() {
-        return planningService;
-    }
-
-    public DiaryService diaryService() {
-        return diaryService;
-    }
-
-    public DairyTableService dairyTableService() {
-        return dairyTableService;
-    }
-
-    public DynamicsReportService dynamicsReportService() {
-        return dynamicsReportService;
-    }
-
-    public TaskService taskService() {
-        return taskService;
-    }
-
-    public SphereService sphereService() {
-        return sphereService;
-    }
-
-    public PieceSeasonService pieceSeasonService() {
-        return pieceSeasonService;
-    }
-
-    public ItemMergeService itemMergeService() {
-        return itemMergeService;
-    }
-
-    public AccountDeleteService accountDeleteService() {
-        return accountDeleteService;
-    }
-
-    public AccountGroupService accountGroupService() {
-        return accountGroupService;
-    }
-
-    public FinanceService financeService() {
-        return financeService;
-    }
-
-    public HabitsService habitsService() {
-        return habitsService;
-    }
-
-    public HabitsReportService habitsReportService() {
-        return habitsReportService;
-    }
-
-    public ScuttleCheckService scuttleCheckService() {
-        return scuttleCheckService;
-    }
-
-    public FinanceOperationService financeOperationService() {
-        return financeOperationService;
-    }
-
-    public HabitMarkService habitMarkService() {
-        return habitMarkService;
-    }
-
-    public WardrobeService wardrobeService() {
-        return wardrobeService;
-    }
-
-    public AnalysisService analysisService() {
-        return analysisService;
-    }
-
-    public HuddleCheckService huddleCheckService() {
-        return huddleCheckService;
-    }
-
-    public FinanceSearchService financeSearchService() {
-        return financeSearchService;
-    }
-
-    public WardrobeStatisticsService wardrobeStatisticsService() {
-        return wardrobeStatisticsService;
-    }
-
-    public FinanceReportService financeReportService() {
-        return financeReportService;
-    }
-
-    public ReportPeriodService reportPeriodService() {
-        return reportPeriodService;
-    }
-
-    public ItemHierarchyService itemHierarchyService() {
-        return itemHierarchyService;
     }
 }

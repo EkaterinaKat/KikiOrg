@@ -14,9 +14,9 @@ import com.katyshevtseva.kikiorg.core.sections.finance.FinanceService;
 import com.katyshevtseva.kikiorg.core.sections.finance.entity.Account;
 import com.katyshevtseva.kikiorg.core.sections.finance.entity.AccountGroup;
 import com.katyshevtseva.kikiorg.core.sections.finance.report.FinanceReportService;
-import com.katyshevtseva.kikiorg.core.sections.finance.report.SinglePeriodReport;
 import com.katyshevtseva.kikiorg.core.sections.finance.report.ReportPeriodService;
 import com.katyshevtseva.kikiorg.core.sections.finance.report.ReportPeriodService.ReportPeriod;
+import com.katyshevtseva.kikiorg.core.sections.finance.report.SinglePeriodReport;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
@@ -35,10 +35,10 @@ import static com.katyshevtseva.kikiorg.view.utils.KikiOrgWindowUtil.OrgNodeInfo
 
 class SinglePeriodReportController implements FxController {
     private static final int NUM_OF_COLUMNS_IN_PERIOD_GRID = 3;
-    private final AccountGroupService accountGroupService = Core.getInstance().accountGroupService();
-    private final FinanceReportService reportService = Core.getInstance().financeReportService();
-    private final ReportPeriodService periodService = Core.getInstance().reportPeriodService();
-    private final FinanceService financeService = Core.getInstance().financeService();
+    private final AccountGroupService accountGroupService = Core.getInstance().accountGroupService;
+    private final FinanceReportService reportService = Core.getInstance().financeReportService;
+    private final ReportPeriodService periodService = Core.getInstance().reportPeriodService;
+    private final FinanceService financeService = Core.getInstance().financeService;
     private ToggleGroup toggleGroup;
     private Map<RadioButton, AccountGroup> radioButtonAccountGroupMap;
     private final ReportPaneController incomePaneController = new ReportPaneController();

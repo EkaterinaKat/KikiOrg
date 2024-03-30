@@ -30,7 +30,7 @@ class CheckController implements FxController {
 
     void updateTable() {
         root.getChildren().clear();
-        List<Account> newAccountList = Core.getInstance().financeService().getActiveAccounts();
+        List<Account> newAccountList = Core.getInstance().financeService.getActiveAccounts();
 
         for (Account account : newAccountList) {
             Node node = accountToNode(account);

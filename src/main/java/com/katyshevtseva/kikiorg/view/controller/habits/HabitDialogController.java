@@ -71,7 +71,7 @@ class HabitDialogController implements FxController {
     }
 
     private void saveAndCloseDialog(boolean needToCreateDescChangeAction) {
-        habit = Core.getInstance().habitsService().saveHabit(
+        habit = Core.getInstance().habitsService.saveHabit(
                 habit,
                 titleTextField.getText(),
                 descTextArea.getText(),
@@ -80,7 +80,7 @@ class HabitDialogController implements FxController {
                 activeCheckBox.isSelected(),
                 needToCreateDescChangeAction);
 
-        habitSaveHandler.execute(Core.getInstance().habitsService().getHabitById(habit.getId()));
+        habitSaveHandler.execute(Core.getInstance().habitsService.getHabitById(habit.getId()));
         closeWindowThatContains(saveButton);
     }
 }

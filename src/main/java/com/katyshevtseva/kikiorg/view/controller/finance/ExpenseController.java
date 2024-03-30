@@ -65,13 +65,13 @@ class ExpenseController implements FxController {
 
     public void adjustComboBoxes() {
         setItemComboBoxItems();
-        setComboBoxItemsAndSetSelectedFirstItem(accountComboBox, Core.getInstance().financeService().getActiveAccounts());
+        setComboBoxItemsAndSetSelectedFirstItem(accountComboBox, Core.getInstance().financeService.getActiveAccounts());
         setComboBoxItems(necessityComboBox, Necessity.values(), Necessity.BTW);
     }
 
     private void setItemComboBoxItems() {
         ItemSelectDialogController itemSelectController = new ItemSelectDialogController(item -> itemComboBox.setValue(item));
-        ObservableList<Item> items = FXCollections.observableArrayList(Core.getInstance().financeService().getFewLastItems());
+        ObservableList<Item> items = FXCollections.observableArrayList(Core.getInstance().financeService.getFewLastItems());
 
         Item more = new Item();
         more.setTitle("More..");
@@ -90,7 +90,7 @@ class ExpenseController implements FxController {
 
     private void saveExpense() {
         if (expense == null) {
-            Core.getInstance().financeService().addExpense(
+            Core.getInstance().financeService.addExpense(
                     accountComboBox.getValue(),
                     Long.parseLong(amountTextField.getText()),
                     itemComboBox.getValue(),
@@ -103,7 +103,7 @@ class ExpenseController implements FxController {
             commentTextField.clear();
             mtnmCheckBox.setSelected(false);
         } else {
-            Core.getInstance().financeService().editExpense(
+            Core.getInstance().financeService.editExpense(
                     expense,
                     accountComboBox.getValue(),
                     Long.parseLong(amountTextField.getText()),

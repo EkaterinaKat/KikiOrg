@@ -39,7 +39,7 @@ import static com.katyshevtseva.kikiorg.view.utils.KikiOrgWindowUtil.OrgNodeInfo
 import static com.katyshevtseva.kikiorg.view.utils.ViewConstants.CLOTHES_TYPE_SELECT_DIALOG_SIZE;
 
 class PieceController implements SectionController {
-    private final WardrobeService service = Core.getInstance().wardrobeService();
+    private final WardrobeService service = Core.getInstance().wardrobeService;
     private GalleryController galleryController;
     private PaginationPaneController<Piece> paginationPaneController;
     private PieceType pieceType;
@@ -184,7 +184,7 @@ class PieceController implements SectionController {
 
     private ImageView getSeasonImageView(ImageContainer imageContainer) {
         IconPicture iconPicture = null;
-        OutfitSeason season = Core.getInstance().pieceSeasonService()
+        OutfitSeason season = Core.getInstance().pieceSeasonService
                 .getPieceSeasonOrNull(((ImageAndPieceContainer) imageContainer).getPiece());
 
         if (season == null) {

@@ -40,7 +40,7 @@ public class DiaryReportController implements SectionController {
 
     @FXML
     private void initialize() {
-        setComboBoxItems(indicatorComboBox, Core.getInstance().diaryService().getIndicatorsWithNumericValues());
+        setComboBoxItems(indicatorComboBox, Core.getInstance().diaryService.getIndicatorsWithNumericValues());
         setComboBoxItems(spanComboBox, Span.values());
         setComboBoxItems(yValueTypeComboBox, ChartYValueType.values(), ChartYValueType.AVERAGE);
         associateButtonWithControls(showButton, indicatorComboBox, spanComboBox, yValueTypeComboBox);
@@ -48,7 +48,7 @@ public class DiaryReportController implements SectionController {
     }
 
     private void showChart() {
-        List<Dot> dots = Core.getInstance().diaryChartService()
+        List<Dot> dots = Core.getInstance().diaryChartService
                 .getChart(indicatorComboBox.getValue(), spanComboBox.getValue(), yValueTypeComboBox.getValue());
         int yUpperBound = adjustYCheckBox.isSelected() ? getMaxY(dots) : 10;
 

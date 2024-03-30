@@ -20,7 +20,7 @@ public class WrdImageUtils {
 
     public static List<ImageContainer> getFreeImagesForPieceCreation() {
         List<ImageContainer> freeImages = new ArrayList<>();
-        List<Piece> existingPieces = Core.getInstance().wardrobeService().getAllPieces();
+        List<Piece> existingPieces = Core.getInstance().wardrobeService.getAllPieces();
 
         for (File file : getAllImageFiles()) {
             boolean imageIsFree = true;

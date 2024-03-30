@@ -20,12 +20,12 @@ public class CollageUtils {
     public static final int COLLAGE_SIZE = 850;
 
     public static CollageEntity saveCollage(CollageEntity existing, Collage collage) {
-        CollageEntity savedCollageEntity = Core.getInstance().wardrobeService().saveCollage(existing);
+        CollageEntity savedCollageEntity = Core.getInstance().wardrobeService.saveCollage(existing);
 
         List<ComponentEntity> componentEntities = collage.getComponents().stream()
                 .map(component -> toEntity(component, savedCollageEntity)).collect(Collectors.toList());
 
-        Core.getInstance().wardrobeService().saveComponents(componentEntities, savedCollageEntity);
+        Core.getInstance().wardrobeService.saveComponents(componentEntities, savedCollageEntity);
 
         return savedCollageEntity;
     }
@@ -61,7 +61,7 @@ public class CollageUtils {
             return createEmptyCollage();
 
         Collage collage = new CollageBuilder()
-                .allExistingImages(toCollageImages(Core.getInstance().wardrobeService().getActivePieces()))
+                .allExistingImages(toCollageImages(Core.getInstance().wardrobeService.getActivePieces()))
                 .height(COLLAGE_SIZE)
                 .width(COLLAGE_SIZE)
                 .build();
@@ -87,7 +87,7 @@ public class CollageUtils {
         return new CollageBuilder()
                 .height(COLLAGE_SIZE)
                 .width(COLLAGE_SIZE)
-                .allExistingImages(toCollageImages(Core.getInstance().wardrobeService().getActivePieces()))
+                .allExistingImages(toCollageImages(Core.getInstance().wardrobeService.getActivePieces()))
                 .build();
     }
 }

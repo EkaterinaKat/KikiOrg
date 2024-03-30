@@ -15,7 +15,7 @@ import java.util.List;
 import java.util.Map;
 
 public class PlanningUtil {
-    private static final PlanningService planningService = Core.getInstance().planningService();
+    private static final PlanningService planningService = Core.getInstance().planningService;
 
     public static List<List<ReportCell>> getReport(ExpenseGroupingType groupingType,
                                                    OneArgKnob<PotentialExpense> peDeleteKnob) {

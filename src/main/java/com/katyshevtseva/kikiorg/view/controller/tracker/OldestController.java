@@ -39,7 +39,7 @@ public class OldestController implements SectionController {
         }
         hBox.getChildren().add(getPaneWithWidth(10));
 
-        List<Task> tasks = Core.getInstance().taskService().getOldestTasks();
+        List<Task> tasks = Core.getInstance().taskService.getOldestTasks();
         for (int i = 0; i < tasks.size(); i++) {
             int numOfBox = i % NUM_OF_COLUMNS;
             vBoxes.get(numOfBox).getChildren().addAll(taskToNode(tasks.get(i)), getPaneWithHeight(10));

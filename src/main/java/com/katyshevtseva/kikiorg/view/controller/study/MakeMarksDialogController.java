@@ -57,14 +57,14 @@ public class MakeMarksDialogController implements FxController {
     }
 
     private void fillPaneWithAllSubjects() {
-        List<Subject> subjects = Core.getInstance().studyService().getActiveSubjects();
+        List<Subject> subjects = Core.getInstance().studyService.getActiveSubjects();
         for (int i = 0; i < subjects.size(); i++) {
             addSubjectToPane(subjects.get(i), i, subjectPane, lines);
         }
     }
 
     private void addSubjectToPane(Subject subject, int row, GridPane pane, List<Line> lineList) {
-        SubjMark mark = Core.getInstance().studyService().getMark(subject, FxUtils.getDate(datePicker)).orElse(null);
+        SubjMark mark = Core.getInstance().studyService.getMark(subject, FxUtils.getDate(datePicker)).orElse(null);
 
         Label label = new Label(subject.getTitle());
         label.setTooltip(new Tooltip(subject.getDescription()));
@@ -89,7 +89,7 @@ public class MakeMarksDialogController implements FxController {
 
     private void save() {
         for (Line line : lines) {
-            Core.getInstance().studyService().saveMark(
+            Core.getInstance().studyService.saveMark(
                     line.getSubject(),
                     FxUtils.getDate(datePicker),
                     line.timeNode.getTotalMin(),

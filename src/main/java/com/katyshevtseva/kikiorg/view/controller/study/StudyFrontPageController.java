@@ -32,7 +32,7 @@ import static com.katyshevtseva.kikiorg.view.utils.KikiOrgWindowUtil.OrgDialogIn
 import static com.katyshevtseva.kikiorg.view.utils.KikiOrgWindowUtil.OrgDialogInfo.SMALL_MAKE_SUBJ_MARKS_DIALOG;
 
 public class StudyFrontPageController implements SectionController {
-    private final StudyTableService tableService = Core.getInstance().studyTableService();
+    private final StudyTableService tableService = Core.getInstance().studyTableService;
     @FXML
     private GridPane tablePane;
     @FXML
@@ -94,7 +94,7 @@ public class StudyFrontPageController implements SectionController {
         if (circsToEdit.getCircs() != null) {
             MenuItem deleteItem = new MenuItem("Delete");
             deleteItem.setOnAction(event -> {
-                Core.getInstance().circsService().delete(circsToEdit.getDate());
+                Core.getInstance().circsService.delete(circsToEdit.getDate());
                 updateSectionContent();
             });
             contextMenu.getItems().add(deleteItem);
@@ -110,7 +110,7 @@ public class StudyFrontPageController implements SectionController {
         DcTextArea commentField = new DcTextArea(false, newCircs ? "" : circs.getComment());
 
         DialogConstructor.constructDialog(() -> {
-            Core.getInstance().circsService().save(comboBox.getValue(), date, commentField.getValue());
+            Core.getInstance().circsService.save(comboBox.getValue(), date, commentField.getValue());
             updateSectionContent();
         }, comboBox, commentField);
     }
@@ -123,7 +123,7 @@ public class StudyFrontPageController implements SectionController {
 
         MenuItem deleteItem = new MenuItem("Delete");
         deleteItem.setOnAction(event -> {
-            Core.getInstance().studyService().delete(mark);
+            Core.getInstance().studyService.delete(mark);
             updateSectionContent();
         });
 

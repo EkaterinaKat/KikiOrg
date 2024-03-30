@@ -40,7 +40,7 @@ public class StudyReportController implements SectionController {
 
     @FXML
     private void initialize() {
-        setComboBoxItems(subjectComboBox, Core.getInstance().studyService().getActiveSubjects());
+        setComboBoxItems(subjectComboBox, Core.getInstance().studyService.getActiveSubjects());
         setComboBoxItems(spanComboBox, Span.values());
         setComboBoxItems(yValueTypeComboBox, ChartYValueType.values(), ChartYValueType.AVERAGE);
         associateButtonWithControls(showButton, subjectComboBox, spanComboBox, yValueTypeComboBox);
@@ -53,7 +53,7 @@ public class StudyReportController implements SectionController {
     }
 
     private void showChart() {
-        List<Dot> dots = Core.getInstance().studyChartService()
+        List<Dot> dots = Core.getInstance().studyChartService
                 .getChart(subjectComboBox.getValue(), spanComboBox.getValue(), yValueTypeComboBox.getValue());
         int yUpperBound = adjustYCheckBox.isSelected() ? getMaxY(dots) : 10;
 

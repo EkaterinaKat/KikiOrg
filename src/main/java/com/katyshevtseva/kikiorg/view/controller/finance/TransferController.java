@@ -20,7 +20,7 @@ import static com.katyshevtseva.fx.FxUtils.associateButtonWithControls;
 import static com.katyshevtseva.fx.FxUtils.disableNonNumericChars;
 
 class TransferController implements FxController {
-    private final FinanceService service = Core.getInstance().financeService();
+    private final FinanceService service = Core.getInstance().financeService;
     private final Transfer transfer;
     private final NoArgsKnob operationListener;
     private ChangeListener<String> changeAmountGoneTextFieldListener;
@@ -62,8 +62,8 @@ class TransferController implements FxController {
     }
 
     public void adjustComboBoxes() {
-        FxUtils.setComboBoxItems(fromComboBox, Core.getInstance().financeService().getActiveAccounts());
-        FxUtils.setComboBoxItems(toComboBox, Core.getInstance().financeService().getActiveAccounts());
+        FxUtils.setComboBoxItems(fromComboBox, service.getActiveAccounts());
+        FxUtils.setComboBoxItems(toComboBox, service.getActiveAccounts());
     }
 
     private void transfer() {

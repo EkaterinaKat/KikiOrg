@@ -28,9 +28,9 @@ import static com.katyshevtseva.fx.Styler.getTextSizeStyle;
 import static com.katyshevtseva.kikiorg.view.utils.KikiOrgWindowUtil.OrgNodeInfo.HABIT_REPORT_TABLE;
 
 class CheckListController implements SectionController {
-    private final HabitsService habitsService = Core.getInstance().habitsService();
-    private final HabitMarkService habitMarkService = Core.getInstance().habitMarkService();
-    private final AnalysisService analysisService = Core.getInstance().analysisService();
+    private final HabitsService habitsService = Core.getInstance().habitsService;
+    private final HabitMarkService habitMarkService = Core.getInstance().habitMarkService;
+    private final AnalysisService analysisService = Core.getInstance().analysisService;
     @FXML
     private DatePicker datePicker;
     @FXML
@@ -94,7 +94,7 @@ class CheckListController implements SectionController {
     }
 
     private void updateSectionContent() {
-        tableController.showReport(Core.getInstance().habitsReportService().getQuickReport());
+        tableController.showReport(Core.getInstance().habitsReportService.getQuickReport());
 
         statisticsBox.getChildren().clear();
         for (AnalysisResult analysisResult : analysisService.analyzeStabilityAndAssignNewStatusIfNeeded(habitsService.getActiveHabits())) {

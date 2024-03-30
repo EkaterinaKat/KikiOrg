@@ -7,7 +7,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 
 public class StatisticsController implements SectionController {
-    private final WardrobeStatisticsService service = Core.getInstance().wardrobeStatisticsService();
+    private final WardrobeStatisticsService service = Core.getInstance().wardrobeStatisticsService;
     @FXML
     private Label label;
 

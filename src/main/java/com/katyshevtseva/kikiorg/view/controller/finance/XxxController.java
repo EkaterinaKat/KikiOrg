@@ -17,8 +17,8 @@ import java.util.ArrayList;
 import static com.katyshevtseva.fx.FxUtils.setComboBoxItems;
 
 public class XxxController implements SectionController {
-    private final AccountDeleteService accountDeleteService = Core.getInstance().accountDeleteService();
-    private final ItemMergeService itemMergeService = Core.getInstance().itemMergeService();
+    private final AccountDeleteService accountDeleteService = Core.getInstance().accountDeleteService;
+    private final ItemMergeService itemMergeService = Core.getInstance().itemMergeService;
     @FXML
     private ComboBox<Account> accountToDeleteComboBox;
     @FXML
@@ -40,15 +40,15 @@ public class XxxController implements SectionController {
 
     private void adjustItemMerge() {
         FxUtils.associateButtonWithControls(mergeButton, itemToMergeComboBox, destItemComboBox);
-        setComboBoxItems(itemToMergeComboBox, Core.getInstance().financeService().getAllItems());
-        setComboBoxItems(destItemComboBox, Core.getInstance().financeService().getAllItems());
+        setComboBoxItems(itemToMergeComboBox, Core.getInstance().financeService.getAllItems());
+        setComboBoxItems(destItemComboBox, Core.getInstance().financeService.getAllItems());
 
         mergeButton.setOnAction(event -> {
             try {
                 itemMergeService.merge(itemToMergeComboBox.getValue(), destItemComboBox.getValue());
                 new StandardDialogBuilder().openInfoDialog("Success");
-                setComboBoxItems(itemToMergeComboBox, Core.getInstance().financeService().getAllItems());
-                setComboBoxItems(destItemComboBox, Core.getInstance().financeService().getAllItems());
+                setComboBoxItems(itemToMergeComboBox, Core.getInstance().financeService.getAllItems());
+                setComboBoxItems(destItemComboBox, Core.getInstance().financeService.getAllItems());
             } catch (Exception e) {
                 new StandardDialogBuilder().setSize(1000, 1000).openInfoDialog(e.getMessage());
             }
@@ -57,7 +57,7 @@ public class XxxController implements SectionController {
 
     private void adjustAccountDeletion() {
         FxUtils.associateButtonWithControls(deleteButton, accountToDeleteComboBox, substituteAccountComboBox);
-        setComboBoxItems(accountToDeleteComboBox, Core.getInstance().financeService().getAllAccounts());
+        setComboBoxItems(accountToDeleteComboBox, Core.getInstance().financeService.getAllAccounts());
 
         accountToDeleteComboBox.setOnAction(event -> setComboBoxItems(substituteAccountComboBox, accountDeleteService.getSubstituteAccounts(accountToDeleteComboBox.getValue())));
 
@@ -65,7 +65,7 @@ public class XxxController implements SectionController {
             try {
                 accountDeleteService.delete(accountToDeleteComboBox.getValue(), substituteAccountComboBox.getValue());
                 new StandardDialogBuilder().openInfoDialog("Success");
-                setComboBoxItems(accountToDeleteComboBox, Core.getInstance().financeService().getAllAccounts());
+                setComboBoxItems(accountToDeleteComboBox, Core.getInstance().financeService.getAllAccounts());
                 setComboBoxItems(substituteAccountComboBox, new ArrayList<>());
             } catch (Exception e) {
                 new StandardDialogBuilder().setSize(1000, 1000).openInfoDialog(e.getMessage());

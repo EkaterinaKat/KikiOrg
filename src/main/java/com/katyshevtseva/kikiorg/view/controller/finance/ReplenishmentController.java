@@ -53,20 +53,20 @@ class ReplenishmentController implements FxController {
     }
 
     public void adjustComboBoxes() {
-        setComboBoxItems(sourceComboBox, Core.getInstance().financeService().getAllSources());
-        setComboBoxItemsAndSetSelectedFirstItem(accountComboBox, Core.getInstance().financeService().getActiveAccounts());
+        setComboBoxItems(sourceComboBox, Core.getInstance().financeService.getAllSources());
+        setComboBoxItemsAndSetSelectedFirstItem(accountComboBox, Core.getInstance().financeService.getActiveAccounts());
     }
 
     private void saveReplenishment() {
         if (replenishment == null) {
-            Core.getInstance().financeService().addReplenishment(
+            Core.getInstance().financeService.addReplenishment(
                     accountComboBox.getValue(),
                     Long.parseLong(amountTextField.getText()),
                     sourceComboBox.getValue(),
                     java.sql.Date.valueOf(datePicker.getValue()));
             amountTextField.clear();
         } else {
-            Core.getInstance().financeService().editReplenishment(
+            Core.getInstance().financeService.editReplenishment(
                     replenishment,
                     accountComboBox.getValue(),
                     Long.parseLong(amountTextField.getText()),

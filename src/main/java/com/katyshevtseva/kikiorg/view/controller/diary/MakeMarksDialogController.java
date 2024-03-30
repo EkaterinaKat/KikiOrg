@@ -72,7 +72,7 @@ public class MakeMarksDialogController implements FxController {
         if (hiddenShown) {
             showHiddenButton.setText("Hide");
 
-            List<Indicator> indicators = Core.getInstance().diaryService().getActiveHiddenIndicators();
+            List<Indicator> indicators = Core.getInstance().diaryService.getActiveHiddenIndicators();
             for (int i = 0; i < indicators.size(); i++) {
                 addIndicatorToPane(indicators.get(i), i, hiddenIndicatorPane, hiddenLines);
             }
@@ -85,7 +85,7 @@ public class MakeMarksDialogController implements FxController {
 
     private void fillPaneWithAllIndicators() {
         showHiddenButton.setVisible(true);
-        List<Indicator> indicators = Core.getInstance().diaryService().getActiveNotHiddenIndicators();
+        List<Indicator> indicators = Core.getInstance().diaryService.getActiveNotHiddenIndicators();
         for (int i = 0; i < indicators.size(); i++) {
             addIndicatorToPane(indicators.get(i), i, indicatorPane, lines);
         }
@@ -107,7 +107,7 @@ public class MakeMarksDialogController implements FxController {
         commentArea.setWrapText(true);
         pane.add(commentArea, 3, row + 1);
 
-        IndMark mark = Core.getInstance().diaryService().getMark(indicator, FxUtils.getDate(datePicker)).orElse(null);
+        IndMark mark = Core.getInstance().diaryService.getMark(indicator, FxUtils.getDate(datePicker)).orElse(null);
         if (mark != null) {
             valueComboBox.setValue(mark.getValue());
             commentArea.setText(mark.getComment());
@@ -118,7 +118,7 @@ public class MakeMarksDialogController implements FxController {
 
     private void save() {
         for (Line line : Stream.concat(lines.stream(), hiddenLines.stream()).collect(Collectors.toList())) {
-            Core.getInstance().diaryService().saveMark(
+            Core.getInstance().diaryService.saveMark(
                     line.getIndicator(),
                     FxUtils.getDate(datePicker),
                     line.getValueComboBox().getValue(),

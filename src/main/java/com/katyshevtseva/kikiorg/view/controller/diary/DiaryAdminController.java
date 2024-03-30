@@ -59,7 +59,7 @@ public class DiaryAdminController implements SectionController {
     private void fillIndicatorTable(Indicator indicatorToShow) {
         boolean indToShowWasShowed = false;
         gridPane.getChildren().clear();
-        List<Indicator> habits = Core.getInstance().diaryService().getAllIndicators();
+        List<Indicator> habits = Core.getInstance().diaryService.getAllIndicators();
         indicatorIdPointLabelMap = new HashMap<>();
         int rowIndex = 0;
         for (Indicator indicator : habits) {
@@ -101,14 +101,14 @@ public class DiaryAdminController implements SectionController {
 
         MenuItem archiveItem = new MenuItem("Archive");
         archiveItem.setOnAction(event1 -> {
-            Core.getInstance().diaryService().archive(indicator);
+            Core.getInstance().diaryService.archive(indicator);
             fillIndicatorTable(indicator);
         });
         contextMenu.getItems().add(archiveItem);
 
         MenuItem hideItem = new MenuItem("Hide");
         hideItem.setOnAction(event1 -> {
-            Core.getInstance().diaryService().hide(indicator);
+            Core.getInstance().diaryService.hide(indicator);
             fillIndicatorTable(indicator);
         });
         contextMenu.getItems().add(hideItem);
@@ -118,7 +118,7 @@ public class DiaryAdminController implements SectionController {
             String question = String.format("Delete %s?", indicator.getTitle());
             new StandardDialogBuilder().openQuestionDialog(question, b -> {
                 if (b) {
-                    Core.getInstance().diaryService().delete(indicator);
+                    Core.getInstance().diaryService.delete(indicator);
                     fillIndicatorTable(indicator);
                 }
             });
@@ -177,7 +177,7 @@ public class DiaryAdminController implements SectionController {
         DcTextField titleField = new DcTextField(true, indicator == null ? "" : indicator.getTitle());
         DcTextArea descField = new DcTextArea(false, indicator == null ? "" : indicator.getDescription());
         DialogConstructor.constructDialog(() -> {
-            Core.getInstance().diaryService().save(indicator, titleField.getValue(), descField.getValue());
+            Core.getInstance().diaryService.save(indicator, titleField.getValue(), descField.getValue());
             fillIndicatorTable(indicator);
         }, titleField, descField);
     }
@@ -187,7 +187,7 @@ public class DiaryAdminController implements SectionController {
         DcTextField colorField = new DcTextField(false, value == null ? "" : value.getColor());
         DcTextArea descField = new DcTextArea(false, value == null ? "" : value.getDescription());
         DialogConstructor.constructDialog(() -> {
-            Core.getInstance().diaryService().save(indicator, value, titleField.getValue(),
+            Core.getInstance().diaryService.save(indicator, value, titleField.getValue(),
                     descField.getValue(), colorField.getValue());
             fillIndicatorTable(indicator);
         }, titleField, colorField, descField);
@@ -202,7 +202,7 @@ public class DiaryAdminController implements SectionController {
 
         MenuItem makeDefaultItem = new MenuItem("Make default");
         makeDefaultItem.setOnAction(event1 -> {
-            Core.getInstance().diaryService().makeDefault(value);
+            Core.getInstance().diaryService.makeDefault(value);
             fillIndicatorTable(indicator);
         });
         contextMenu.getItems().add(makeDefaultItem);

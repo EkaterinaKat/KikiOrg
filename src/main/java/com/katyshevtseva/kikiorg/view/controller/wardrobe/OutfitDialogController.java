@@ -24,7 +24,7 @@ import static com.katyshevtseva.kikiorg.view.controller.wardrobe.utils.WrdImageU
 import static com.katyshevtseva.kikiorg.view.utils.ViewConstants.CLOTHES_TYPE_SELECT_DIALOG_SIZE;
 
 class OutfitDialogController implements FxController {
-    private final WardrobeService service = Core.getInstance().wardrobeService();
+    private final WardrobeService service = Core.getInstance().wardrobeService;
     private final Outfit existing;
     private final OneArgKnob<Outfit> onSaveListener;
     private final Category category;

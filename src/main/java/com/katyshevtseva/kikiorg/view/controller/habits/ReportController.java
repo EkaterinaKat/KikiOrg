@@ -81,7 +81,7 @@ class ReportController implements SectionController {
     }
 
     private void fillHabitsTable() {
-        List<Habit> allHabits = Core.getInstance().habitsService().getAllHabits();
+        List<Habit> allHabits = Core.getInstance().habitsService.getAllHabits();
         ObservableList<Habit> observableList = FXCollections.observableArrayList();
         observableList.addAll(allHabits);
         habitsTable.setItems(observableList);
@@ -101,7 +101,7 @@ class ReportController implements SectionController {
         if (selectedHabits.size() == 0)
             return;
 
-        tableController.showReport(Core.getInstance().habitsReportService()
+        tableController.showReport(Core.getInstance().habitsReportService
                 .getReport(selectedHabits, OrgUtils.getPeriodByDp(startDatePicker, endDatePicker)));
     }
 }

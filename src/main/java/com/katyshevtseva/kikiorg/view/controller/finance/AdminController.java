@@ -9,6 +9,7 @@ import com.katyshevtseva.fx.dialogconstructor.DialogConstructor;
 import com.katyshevtseva.fx.switchcontroller.SectionController;
 import com.katyshevtseva.kikiorg.core.Core;
 import com.katyshevtseva.kikiorg.core.sections.finance.Currency;
+import com.katyshevtseva.kikiorg.core.sections.finance.FinanceService;
 import com.katyshevtseva.kikiorg.core.sections.finance.OperationEnd;
 import com.katyshevtseva.kikiorg.core.sections.finance.OperationEnd.OperationEndType;
 import com.katyshevtseva.kikiorg.core.sections.finance.entity.Account;
@@ -23,7 +24,10 @@ import javafx.scene.text.Text;
 
 import java.util.Arrays;
 
+import static com.katyshevtseva.kikiorg.core.sections.finance.Currency.RUB;
+
 class AdminController implements SectionController {
+    private final FinanceService financeService = Core.getInstance().financeService;
     @FXML
     private ComboBox<OperationEndType> typeComboBox;
     @FXML
@@ -50,15 +54,15 @@ class AdminController implements SectionController {
         ObservableList<OperationEnd> items = FXCollections.observableArrayList();
         switch (typeComboBox.getValue()) {
             case ITEM:
-                items.addAll(Core.getInstance().financeService().getAllItems());
+                items.addAll(financeService.getAllItems());
                 archiveColumn.setVisible(false);
                 break;
             case SOURCE:
-                items.addAll(Core.getInstance().financeService().getAllSources());
+                items.addAll(financeService.getAllSources());
                 archiveColumn.setVisible(false);
                 break;
             case ACCOUNT:
-                items.addAll(Core.getInstance().financeService().getAllAccounts());
+                items.addAll(financeService.getAllAccounts());
                 archiveColumn.setVisible(true);
         }
         adjustColumns();
@@ -69,22 +73,22 @@ class AdminController implements SectionController {
     private void newButtonListener() {
         DcTextField titleField = new DcTextField(true, "");
         DcTextArea descField = new DcTextArea(false, "");
-        DcComboBox<Currency> currencyComboBox = new DcComboBox<>(true, Currency.RUB, Arrays.asList(Currency.values()));
+        DcComboBox<Currency> currencyCB = new DcComboBox<>(true, RUB, Arrays.asList(Currency.values()));
 
         if (typeComboBox.getValue() == OperationEndType.ACCOUNT) {
             DialogConstructor.constructDialog(() -> {
-                Core.getInstance().financeService()
-                        .addAccount(titleField.getValue(), descField.getValue(), currencyComboBox.getValue());
+                financeService
+                        .addAccount(titleField.getValue(), descField.getValue(), currencyCB.getValue());
                 updateTable();
-            }, titleField, currencyComboBox, descField);
+            }, titleField, currencyCB, descField);
         } else {
             DialogConstructor.constructDialog(() -> {
                 switch (typeComboBox.getValue()) {
                     case ITEM:
-                        Core.getInstance().financeService().addItem(titleField.getValue(), descField.getValue());
+                        financeService.addItem(titleField.getValue(), descField.getValue());
                         break;
                     case SOURCE:
-                        Core.getInstance().financeService().addSource(titleField.getValue(), descField.getValue());
+                        financeService.addSource(titleField.getValue(), descField.getValue());
                 }
                 updateTable();
             }, titleField, descField);
@@ -110,16 +114,13 @@ class AdminController implements SectionController {
             DialogConstructor.constructDialog(() -> {
                 switch (operationEnd.getType()) {
                     case ITEM:
-                        Core.getInstance().financeService()
-                                .alterItem((Item) operationEnd, titleField.getValue(), descField.getValue());
+                        financeService.alterItem((Item) operationEnd, titleField.getValue(), descField.getValue());
                         break;
                     case SOURCE:
-                        Core.getInstance().financeService()
-                                .alterSource((Source) operationEnd, titleField.getValue(), descField.getValue());
+                        financeService.alterSource((Source) operationEnd, titleField.getValue(), descField.getValue());
                         break;
                     case ACCOUNT:
-                        Core.getInstance().financeService()
-                                .alterAccount((Account) operationEnd, titleField.getValue(), descField.getValue());
+                        financeService.alterAccount((Account) operationEnd, titleField.getValue(), descField.getValue());
                 }
                 updateTable();
             }, titleField, descField);
@@ -127,7 +128,7 @@ class AdminController implements SectionController {
 
         TableUtils.adjustButtonColumn(archiveColumn, "-", operationEnd -> {
             if (operationEnd.getType() == OperationEndType.ACCOUNT) {
-                Core.getInstance().financeService().archive((Account) operationEnd);
+                financeService.archive((Account) operationEnd);
                 updateTable();
             }
         }, button -> button.setText("Archive"));

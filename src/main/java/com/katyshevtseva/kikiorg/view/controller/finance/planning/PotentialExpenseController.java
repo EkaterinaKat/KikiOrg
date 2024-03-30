@@ -49,7 +49,7 @@ class PotentialExpenseController implements WindowBuilder.FxController {
 
     private void setItemComboBoxItems() {
         ItemSelectDialogController itemSelectController = new ItemSelectDialogController(item -> itemComboBox.setValue(item));
-        ObservableList<Item> items = FXCollections.observableArrayList(Core.getInstance().financeService().getFewLastItems());
+        ObservableList<Item> items = FXCollections.observableArrayList(Core.getInstance().financeService.getFewLastItems());
 
         Item more = new Item();
         more.setTitle("More..");
@@ -67,7 +67,7 @@ class PotentialExpenseController implements WindowBuilder.FxController {
     }
 
     private void saveExpense() {
-        Core.getInstance().planningService().addPotentialExpense(
+        Core.getInstance().planningService.addPotentialExpense(
                 Long.parseLong(amountTextField.getText()),
                 itemComboBox.getValue(),
                 necessityComboBox.getValue(),
