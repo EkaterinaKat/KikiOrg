@@ -26,6 +26,7 @@ public class KikiOrgWindowUtil {
         STUDY_ADMIN(STUDY_FXML_LOCATION, "admin.fxml"),
         STUDY_FRONT_PAGE(STUDY_FXML_LOCATION, "front_page.fxml"),
         STUDY_REPORT(STUDY_FXML_LOCATION, "report.fxml"),
+        STUDY_PLAN(STUDY_FXML_LOCATION, "plan.fxml"),
         //DIARY
         MAIN_DIARY(FXML_LOCATION, "section_main.fxml"),
         DIARY_ADMIN(DIARY_FXML_LOCATION, "admin.fxml"),

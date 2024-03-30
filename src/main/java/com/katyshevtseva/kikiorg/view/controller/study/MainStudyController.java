@@ -30,6 +30,8 @@ public class MainStudyController extends AbstractSwitchController implements Sec
         return Arrays.asList(
                 new Section("Front page", new StudyFrontPageController(),
                         controller -> WindowBuilder.getNode(STUDY_FRONT_PAGE, controller)),
+                new Section("Plan", new PlanController(),
+                        controller -> WindowBuilder.getNode(STUDY_PLAN, controller)),
                 new Section("Admin", new StudyAdminController(),
                         controller -> WindowBuilder.getNode(STUDY_ADMIN, controller)),
                 new Section("Report", new StudyReportController(),
