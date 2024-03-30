@@ -21,6 +21,7 @@ import static com.katyshevtseva.fx.Styler.StandardColor.BLACK;
 import static com.katyshevtseva.fx.Styler.StandardColor.LIGHT_GREY;
 import static com.katyshevtseva.general.ReportCell.Type.HEAD_COLUMN;
 import static com.katyshevtseva.kikiorg.core.CoreConstants.STUDY_START_DATE;
+import static com.katyshevtseva.time.TimeUtil.getTimeStringByMinutes;
 
 @RequiredArgsConstructor
 @Service
@@ -80,19 +81,11 @@ public class StudyTableService {
             return ReportCell.builder().item(getNonexistentMarkToEdit(subject, date)).build();
         }
         return ReportCell.builder()
-                .text(getHoursMinutesStringByMinutes(mark.getMinutes()))
+                .text(getTimeStringByMinutes(mark.getMinutes(), true))
                 .textColor(mark.getMinutes() == 0 ? LIGHT_GREY.getCode() : BLACK.getCode())
                 .width(columnWidth)
                 .item(mark)
                 .build();
-    }
-
-    public String getHoursMinutesStringByMinutes(int min) {
-        int hours = min / 60;
-        int leftMin = min % 60;
-        if (leftMin == 0)
-            return hours + "";
-        return String.format("%d:%02d", hours, leftMin);
     }
 
     private List<ReportCell> getReportHead(List<Subject> subjects) {

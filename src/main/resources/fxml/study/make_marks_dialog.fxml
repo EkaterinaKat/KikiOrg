@@ -12,7 +12,7 @@
         <Pane minHeight="25" maxHeight="25"/>
         <DatePicker fx:id="datePicker"/>
         <Pane minHeight="25" maxHeight="25"/>
-        <ScrollPane minWidth="700" maxWidth="700" minHeight="780" maxHeight="780">
+        <ScrollPane minWidth="700" maxWidth="700">
             <VBox alignment="CENTER">
                 <GridPane fx:id="subjectPane" hgap="20" vgap="20"/>
             </VBox>

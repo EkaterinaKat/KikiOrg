@@ -29,6 +29,9 @@ import java.util.Map;
 
 import static com.katyshevtseva.fx.FxUtils.frame;
 import static com.katyshevtseva.fx.FxUtils.getPaneWithHeight;
+import static com.katyshevtseva.fx.Styler.StandardColor.GRAY;
+import static com.katyshevtseva.fx.Styler.ThingToColor.TEXT;
+import static com.katyshevtseva.fx.Styler.getColorfullStyle;
 
 public class DiaryAdminController implements SectionController {
     @FXML
@@ -77,7 +80,7 @@ public class DiaryAdminController implements SectionController {
             }
 
             if (indicator.getArchived()) {
-                label.setStyle(Styler.getColorfullStyle(Styler.ThingToColor.TEXT, Styler.StandardColor.GRAY));
+                label.setStyle(getColorfullStyle(TEXT, GRAY));
             }
         }
         if (!indToShowWasShowed) {
@@ -145,7 +148,7 @@ public class DiaryAdminController implements SectionController {
 
         for (IndValue value : indicator.getSortedValues()) {
             Label label = new Label(value.getTitleAndDesc());
-            label.setStyle(Styler.getColorfullStyle(Styler.ThingToColor.TEXT, Styler.StandardColor.BLACK));
+            label.setStyle(getColorfullStyle(TEXT, Styler.StandardColor.BLACK));
             FxUtils.setWidth(label, 400);
             label.setWrapText(true);
 
@@ -154,7 +157,8 @@ public class DiaryAdminController implements SectionController {
             valuesPane.getChildren().addAll(node, getPaneWithHeight(10));
             if (!GeneralUtils.isEmpty(value.getColor())) {
                 try {
-                    Styler.setBackgroundColorAndCorrectTextColor(node, label, value.getColor());
+                    node.setStyle(getColorfullStyle(Styler.ThingToColor.BACKGROUND, value.getColor()));
+                    Styler.correctLabelColorIfNeeded(label, value.getColor());
                 } catch (Exception e) {
                 }
             } else {

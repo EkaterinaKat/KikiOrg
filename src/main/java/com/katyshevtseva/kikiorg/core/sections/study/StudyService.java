@@ -17,8 +17,6 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-import static com.katyshevtseva.general.GeneralUtils.isEmpty;
-
 @RequiredArgsConstructor
 @Service
 public class StudyService {
@@ -46,10 +44,8 @@ public class StudyService {
         return subjectRepo.findAllByArchivedFalseOrderByTitle();
     }
 
-    public void saveMark(Subject subject, Date date, String minutesStr, String comment) {
+    public void saveMark(Subject subject, Date date, int minutes, String comment) {
         getMark(subject, date).ifPresent(markRepo::delete);
-
-        int minutes = isEmpty(minutesStr) ? 0 : Integer.parseInt(minutesStr);
 
         SubjMark mark = new SubjMark(
                 subject,

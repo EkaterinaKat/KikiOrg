@@ -64,28 +64,27 @@ public class MakeMarksDialogController implements FxController {
     }
 
     private void addSubjectToPane(Subject subject, int row, GridPane pane, List<Line> lineList) {
+        SubjMark mark = Core.getInstance().studyService().getMark(subject, FxUtils.getDate(datePicker)).orElse(null);
+
         Label label = new Label(subject.getTitle());
         label.setTooltip(new Tooltip(subject.getDescription()));
         pane.add(label, 1, row + 1);
 
-        TextField minTV = new TextField();
-        FxUtils.disableNonNumericChars(minTV);
-        FxUtils.setWidth(minTV, 150);
-        minTV.setText("0");
-        pane.add(minTV, 2, row + 1);
+        TimeNode timeNode = new TimeNode();
+        pane.add(timeNode.getNode(), 2, row + 1);
+        if (mark != null) {
+            timeNode.setTotalMin(mark.getMinutes());
+        }
 
         TextArea commentArea = new TextArea();
         FxUtils.setSize(commentArea, new Size(100, 300));
         commentArea.setWrapText(true);
         pane.add(commentArea, 3, row + 1);
-
-        SubjMark mark = Core.getInstance().studyService().getMark(subject, FxUtils.getDate(datePicker)).orElse(null);
         if (mark != null) {
-            minTV.setText(mark.getMinutes() + "");
             commentArea.setText(mark.getComment());
         }
 
-        lineList.add(new Line(subject, minTV, commentArea));
+        lineList.add(new Line(subject, timeNode, commentArea));
     }
 
     private void save() {
@@ -93,7 +92,7 @@ public class MakeMarksDialogController implements FxController {
             Core.getInstance().studyService().saveMark(
                     line.getSubject(),
                     FxUtils.getDate(datePicker),
-                    line.getMinTV().getText(),
+                    line.timeNode.getTotalMin(),
                     line.textArea.getText());
         }
     }
@@ -102,7 +101,7 @@ public class MakeMarksDialogController implements FxController {
     @Data
     private static class Line {
         Subject subject;
-        TextField minTV;
+        TimeNode timeNode;
         TextArea textArea;
     }
 }

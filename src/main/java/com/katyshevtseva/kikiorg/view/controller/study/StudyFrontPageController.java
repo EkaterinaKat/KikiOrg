@@ -29,6 +29,7 @@ import java.util.List;
 import static com.katyshevtseva.date.DateUtils.shiftDate;
 import static com.katyshevtseva.fx.FxUtils.getPeriod;
 import static com.katyshevtseva.kikiorg.view.utils.KikiOrgWindowUtil.OrgDialogInfo.MAKE_SUBJ_MARKS_DIALOG;
+import static com.katyshevtseva.kikiorg.view.utils.KikiOrgWindowUtil.OrgDialogInfo.SMALL_MAKE_SUBJ_MARKS_DIALOG;
 
 public class StudyFrontPageController implements SectionController {
     private final StudyTableService tableService = Core.getInstance().studyTableService();
@@ -117,7 +118,7 @@ public class StudyFrontPageController implements SectionController {
 
     private ContextMenu getContextMenu(MarkToEdit mark) {
         MenuItem editItem = new MenuItem("Edit");
-        editItem.setOnAction(event -> WindowBuilder.openDialog(MAKE_SUBJ_MARKS_DIALOG,
+        editItem.setOnAction(event -> WindowBuilder.openDialog(SMALL_MAKE_SUBJ_MARKS_DIALOG,
                 new MakeMarksDialogController(this::updateSectionContent, mark)));
 
         MenuItem deleteItem = new MenuItem("Delete");
