@@ -50,4 +50,8 @@ public class SubjMark implements StudyTableService.MarkToEdit {
     public SubjMark getMark() {
         return this;
     }
+
+    public Float getHours() {
+        return minutes.floatValue() / 60f;
+    }
 }

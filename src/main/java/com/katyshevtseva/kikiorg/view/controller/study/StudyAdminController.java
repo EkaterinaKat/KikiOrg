@@ -1,5 +1,6 @@
 package com.katyshevtseva.kikiorg.view.controller.study;
 
+import com.katyshevtseva.fx.LabelBuilder;
 import com.katyshevtseva.fx.Styler;
 import com.katyshevtseva.fx.dialog.StandardDialogBuilder;
 import com.katyshevtseva.fx.dialogconstructor.DcTextArea;
@@ -52,7 +53,7 @@ public class StudyAdminController implements SectionController {
         subjectIdPointLabelMap = new HashMap<>();
         int rowIndex = 0;
         for (Subject subject : habits) {
-            Label label = new Label(subject.getTitleAndArchivedInfo());
+            Label label = new LabelBuilder().text(subject.getTitleAndArchivedInfo()).width(200).build();
             label.setContextMenu(getContextMenu(subject));
             Label point = new Label();
             subjectIdPointLabelMap.put(subject.getId(), point);

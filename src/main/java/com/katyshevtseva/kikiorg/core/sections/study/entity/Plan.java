@@ -26,17 +26,17 @@ public class Plan {
     @JoinColumn(name = "end_id")
     private DateEntity end;
 
-    private Integer minDays;
+    private Long minDays;
 
-    private Integer minHourADay;
+    private Long minMinutesADay;
 
     private boolean archived;
 
-    public void setValues(Subject subject, DateEntity start, DateEntity end, Integer minDays, Integer minHourADay) {
+    public void setValues(Subject subject, DateEntity start, DateEntity end, Long minDays, Long minMinutesADay) {
         this.subject = subject;
         this.start = start;
         this.end = end;
         this.minDays = minDays;
-        this.minHourADay = minHourADay;
+        this.minMinutesADay = minMinutesADay;
     }
 }

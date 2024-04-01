@@ -60,12 +60,12 @@ public class StudyChartService {
         switch (yValueType) {
             case AVERAGE:
                 return (float) entry.getValue().stream()
-                        .mapToInt(SubjMark::getMinutes)
+                        .mapToDouble(SubjMark::getHours)
                         .average()
                         .orElse(0);
             case SUM:
                 return (float) entry.getValue().stream()
-                        .mapToInt(SubjMark::getMinutes)
+                        .mapToDouble(SubjMark::getHours)
                         .sum();
         }
         throw new RuntimeException();

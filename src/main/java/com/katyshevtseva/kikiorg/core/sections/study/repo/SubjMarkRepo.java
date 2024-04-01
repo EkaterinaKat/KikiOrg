@@ -23,4 +23,6 @@ public interface SubjMarkRepo extends JpaRepository<SubjMark, Long> {
     SubjMark findFirstBySubjectOrderByDateEntityValue(Subject subject);
 
     boolean existsBySubjectAndDateEntityValue(Subject subject, Date date);
+
+    List<SubjMark> findBySubjectAndDateEntityValue(Subject subject, Date date);
 }

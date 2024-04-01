@@ -6,7 +6,7 @@
       xmlns="http://javafx.com/javafx">
 
     <ScrollPane maxWidth="250" minWidth="250">
-        <GridPane fx:id="gridPane" alignment="CENTER" maxWidth="240" minWidth="240"/>
+        <GridPane fx:id="gridPane" alignment="CENTER" maxWidth="240" minWidth="240" vgap="10"/>
     </ScrollPane>
 
     <Pane maxWidth="20" minWidth="20"/>

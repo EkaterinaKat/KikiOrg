@@ -8,10 +8,12 @@ import com.katyshevtseva.kikiorg.core.Core;
 import com.katyshevtseva.kikiorg.core.sections.study.StudyTableService.MarkToEdit;
 import com.katyshevtseva.kikiorg.core.sections.study.entity.SubjMark;
 import com.katyshevtseva.kikiorg.core.sections.study.entity.Subject;
+import com.katyshevtseva.time.TimeNode;
 import com.sun.istack.NotNull;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.VBox;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
@@ -46,7 +48,7 @@ public class MakeMarksDialogController implements FxController {
         } else {
             FxUtils.setDate(datePicker, mark.getDate());
             datePicker.setDisable(true);
-            addSubjectToPane(mark.getSubject(), 0, subjectPane, lines);
+            addSubjectToPane(mark.getSubject(), 0, lines);
         }
 
         saveButton.setOnAction(event -> {
@@ -59,19 +61,17 @@ public class MakeMarksDialogController implements FxController {
     private void fillPaneWithAllSubjects() {
         List<Subject> subjects = Core.getInstance().studyService.getActiveSubjects();
         for (int i = 0; i < subjects.size(); i++) {
-            addSubjectToPane(subjects.get(i), i, subjectPane, lines);
+            addSubjectToPane(subjects.get(i), i, lines);
         }
     }
 
-    private void addSubjectToPane(Subject subject, int row, GridPane pane, List<Line> lineList) {
+    private void addSubjectToPane(Subject subject, int row, List<Line> lineList) {
         SubjMark mark = Core.getInstance().studyService.getMark(subject, FxUtils.getDate(datePicker)).orElse(null);
 
         Label label = new Label(subject.getTitle());
         label.setTooltip(new Tooltip(subject.getDescription()));
-        pane.add(label, 1, row + 1);
 
         TimeNode timeNode = new TimeNode();
-        pane.add(timeNode.getNode(), 2, row + 1);
         if (mark != null) {
             timeNode.setTotalMin(mark.getMinutes());
         }
@@ -79,10 +79,20 @@ public class MakeMarksDialogController implements FxController {
         TextArea commentArea = new TextArea();
         FxUtils.setSize(commentArea, new Size(100, 300));
         commentArea.setWrapText(true);
-        pane.add(commentArea, 3, row + 1);
         if (mark != null) {
             commentArea.setText(mark.getComment());
         }
+
+
+        VBox vBox = new VBox();
+        vBox.getChildren().addAll(label, FxUtils.getPaneWithHeight(17), timeNode.getNode());
+        subjectPane.add(vBox, 1, row + 1);
+        subjectPane.add(commentArea, 2, row + 1);
+
+
+//        subjectPane.add(label, 1, row + 1);
+//        subjectPane.add(timeNode.getNode(), 2, row + 1);
+//        subjectPane.add(commentArea, 3, row + 1);
 
         lineList.add(new Line(subject, timeNode, commentArea));
     }

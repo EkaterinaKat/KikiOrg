@@ -19,8 +19,13 @@
 
     <Pane minHeight="25" maxHeight="25"/>
 
-    <ScrollPane maxWidth="1050" minWidth="1050" maxHeight="750" minHeight="750">
-        <GridPane fx:id="tablePane" hgap="1" vgap="1"/>
-    </ScrollPane>
+    <HBox>
+        <ScrollPane maxWidth="700" minWidth="700" maxHeight="750" minHeight="750">
+            <GridPane fx:id="tablePane" hgap="1" vgap="1"/>
+        </ScrollPane>
+        <Pane maxWidth="10" minWidth="10"/>
+        <Pane fx:id="planPane"/>
+    </HBox>
+
 
 </VBox>

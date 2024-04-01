@@ -21,6 +21,7 @@ import javafx.scene.control.ContextMenu;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.MenuItem;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Pane;
 
 import java.util.Arrays;
 import java.util.Date;
@@ -30,9 +31,11 @@ import static com.katyshevtseva.date.DateUtils.shiftDate;
 import static com.katyshevtseva.fx.FxUtils.getPeriod;
 import static com.katyshevtseva.kikiorg.view.utils.KikiOrgWindowUtil.OrgDialogInfo.MAKE_SUBJ_MARKS_DIALOG;
 import static com.katyshevtseva.kikiorg.view.utils.KikiOrgWindowUtil.OrgDialogInfo.SMALL_MAKE_SUBJ_MARKS_DIALOG;
+import static com.katyshevtseva.kikiorg.view.utils.KikiOrgWindowUtil.OrgNodeInfo.STUDY_PLAN_LIST;
 
 public class StudyFrontPageController implements SectionController {
     private final StudyTableService tableService = Core.getInstance().studyTableService;
+    private PlanListController listController;
     @FXML
     private GridPane tablePane;
     @FXML
@@ -41,27 +44,41 @@ public class StudyFrontPageController implements SectionController {
     private DatePicker startDatePicker;
     @FXML
     private DatePicker endDatePicker;
+    @FXML
+    private Pane planPane;
 
     @FXML
     private void initialize() {
         FxUtils.setDate(startDatePicker, shiftDate(new Date(), DateUtils.TimeUnit.DAY, -30));
         FxUtils.setDate(endDatePicker, new Date());
-        startDatePicker.setOnAction(event -> updateSectionContent());
-        endDatePicker.setOnAction(event -> updateSectionContent());
+        startDatePicker.setOnAction(event -> updateTableContent());
+        endDatePicker.setOnAction(event -> updateTableContent());
 
         makeMarksButton.setOnAction(event ->
-                WindowBuilder.openDialog(MAKE_SUBJ_MARKS_DIALOG, new MakeMarksDialogController(this::updateSectionContent)));
+                WindowBuilder.openDialog(MAKE_SUBJ_MARKS_DIALOG, new MakeMarksDialogController(this::updateAllContent)));
+
+        listController = new PlanListController(null, this::updatePlanPane, 400);
+        planPane.getChildren().add(WindowBuilder.getNode(STUDY_PLAN_LIST, listController));
     }
 
     @Override
     public void update() {
-        updateSectionContent();
+        updateAllContent();
     }
 
-    private void updateSectionContent() {
+    private void updateAllContent() {
+        updateTableContent();
+        updatePlanPane();
+    }
+
+    private void updateTableContent() {
         List<List<ReportCell>> report = tableService.getReport(getPeriod(startDatePicker, endDatePicker));
         addContextMenu(report);
         ReportUtils.showReport(report, tablePane, false);
+    }
+
+    private void updatePlanPane() {
+        listController.show(Core.getInstance().planService.getActivePlans());
     }
 
     private void addContextMenu(List<List<ReportCell>> report) {
@@ -95,7 +112,7 @@ public class StudyFrontPageController implements SectionController {
             MenuItem deleteItem = new MenuItem("Delete");
             deleteItem.setOnAction(event -> {
                 Core.getInstance().circsService.delete(circsToEdit.getDate());
-                updateSectionContent();
+                updateAllContent();
             });
             contextMenu.getItems().add(deleteItem);
         }
@@ -111,7 +128,7 @@ public class StudyFrontPageController implements SectionController {
 
         DialogConstructor.constructDialog(() -> {
             Core.getInstance().circsService.save(comboBox.getValue(), date, commentField.getValue());
-            updateSectionContent();
+            updateAllContent();
         }, comboBox, commentField);
     }
 
@@ -119,12 +136,12 @@ public class StudyFrontPageController implements SectionController {
     private ContextMenu getContextMenu(MarkToEdit mark) {
         MenuItem editItem = new MenuItem("Edit");
         editItem.setOnAction(event -> WindowBuilder.openDialog(SMALL_MAKE_SUBJ_MARKS_DIALOG,
-                new MakeMarksDialogController(this::updateSectionContent, mark)));
+                new MakeMarksDialogController(this::updateAllContent, mark)));
 
         MenuItem deleteItem = new MenuItem("Delete");
         deleteItem.setOnAction(event -> {
             Core.getInstance().studyService.delete(mark);
-            updateSectionContent();
+            updateAllContent();
         });
 
         ContextMenu contextMenu = new ContextMenu();

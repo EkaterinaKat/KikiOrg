@@ -12,10 +12,7 @@ import com.katyshevtseva.kikiorg.core.sections.habits.AnalysisService;
 import com.katyshevtseva.kikiorg.core.sections.habits.HabitMarkService;
 import com.katyshevtseva.kikiorg.core.sections.habits.HabitsReportService;
 import com.katyshevtseva.kikiorg.core.sections.habits.HabitsService;
-import com.katyshevtseva.kikiorg.core.sections.study.CircsService;
-import com.katyshevtseva.kikiorg.core.sections.study.StudyChartService;
-import com.katyshevtseva.kikiorg.core.sections.study.StudyService;
-import com.katyshevtseva.kikiorg.core.sections.study.StudyTableService;
+import com.katyshevtseva.kikiorg.core.sections.study.*;
 import com.katyshevtseva.kikiorg.core.sections.tracker.SphereService;
 import com.katyshevtseva.kikiorg.core.sections.tracker.TaskService;
 import com.katyshevtseva.kikiorg.core.sections.wardrobe.PieceSeasonService;
@@ -61,6 +58,7 @@ public class Core implements InitializingBean {
     public final StudyService studyService;
     public final StudyTableService studyTableService;
     public final CircsService circsService;
+    public final PlanService planService;
 
     public static Core getInstance() {
         while (INSTANCE == null) {

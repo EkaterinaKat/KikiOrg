@@ -4,22 +4,19 @@
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.layout.*?>
-<HBox xmlns:fx="http://javafx.com/fxml"
-      xmlns="http://javafx.com/javafx">
+<GridPane xmlns:fx="http://javafx.com/fxml"
+          xmlns="http://javafx.com/javafx" alignment="CENTER">
 
-    <Pane minWidth="25" maxWidth="25"/>
-    <VBox alignment="CENTER">
-        <Pane minHeight="25" maxHeight="25"/>
+    <VBox alignment="CENTER" GridPane.columnIndex="0" GridPane.rowIndex="0">
         <DatePicker fx:id="datePicker"/>
         <Pane minHeight="25" maxHeight="25"/>
-        <ScrollPane minWidth="700" maxWidth="700">
+        <ScrollPane>
             <VBox alignment="CENTER">
-                <GridPane fx:id="subjectPane" hgap="20" vgap="20"/>
+                <GridPane fx:id="subjectPane" hgap="20" vgap="20" alignment="CENTER"/>
             </VBox>
         </ScrollPane>
         <Pane minHeight="25" maxHeight="25"/>
         <Button fx:id="saveButton" text="Save"/>
     </VBox>
-    <Pane minWidth="25" maxWidth="25"/>
 
-</HBox>
+</GridPane>

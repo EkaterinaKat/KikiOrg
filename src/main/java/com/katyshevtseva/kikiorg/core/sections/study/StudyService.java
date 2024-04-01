@@ -5,6 +5,7 @@ import com.katyshevtseva.kikiorg.core.date.DateEntity;
 import com.katyshevtseva.kikiorg.core.date.DateService;
 import com.katyshevtseva.kikiorg.core.sections.study.entity.SubjMark;
 import com.katyshevtseva.kikiorg.core.sections.study.entity.Subject;
+import com.katyshevtseva.kikiorg.core.sections.study.repo.PlanRepo;
 import com.katyshevtseva.kikiorg.core.sections.study.repo.SubjMarkRepo;
 import com.katyshevtseva.kikiorg.core.sections.study.repo.SubjectRepo;
 import lombok.RequiredArgsConstructor;
@@ -23,6 +24,7 @@ public class StudyService {
     private final SubjMarkRepo markRepo;
     private final DateService dateService;
     private final SubjectRepo subjectRepo;
+    private final PlanRepo planRepo;
 
     public void save(Subject existing, String title, String desc) {
         if (existing == null) {
@@ -72,6 +74,7 @@ public class StudyService {
     @Transactional
     public void delete(Subject subject) {
         markRepo.deleteBySubject(subject);
+        planRepo.deleteBySubject(subject);
         subjectRepo.delete(subject);
     }
 

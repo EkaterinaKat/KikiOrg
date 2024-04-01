@@ -27,6 +27,7 @@ public class KikiOrgWindowUtil {
         STUDY_FRONT_PAGE(STUDY_FXML_LOCATION, "front_page.fxml"),
         STUDY_REPORT(STUDY_FXML_LOCATION, "report.fxml"),
         STUDY_PLAN(STUDY_FXML_LOCATION, "plan.fxml"),
+        STUDY_PLAN_LIST(STUDY_FXML_LOCATION, "plan_list.fxml"),
         //DIARY
         MAIN_DIARY(FXML_LOCATION, "section_main.fxml"),
         DIARY_ADMIN(DIARY_FXML_LOCATION, "admin.fxml"),
@@ -103,9 +104,9 @@ public class KikiOrgWindowUtil {
         MAKE_MARKS_DIALOG(DIARY_FXML_LOCATION, "make_marks_dialog.fxml",
                 new Size(1000, 800), "Make marks"),
         MAKE_SUBJ_MARKS_DIALOG(STUDY_FXML_LOCATION, "make_marks_dialog.fxml",
-                new Size(1000, 800), "Make marks"),
+                new Size(1000, 700), "Make marks"),
         SMALL_MAKE_SUBJ_MARKS_DIALOG(STUDY_FXML_LOCATION, "make_marks_dialog.fxml",
-                new Size(400, 800), "Make marks");
+                new Size(400, 700), "Make marks");
 
         private final String location;
         private final String fileName;
