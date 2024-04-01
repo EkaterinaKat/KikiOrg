@@ -7,6 +7,7 @@ public class ViewConstants {
     }
 
     public static final String WARDROBE_IMAGES_LOCATION = "D:\\onedrive\\central_image_storage\\wardrobe\\";
+    public static final String SUBJECT_IMAGES_LOCATION = "D:\\onedrive\\central_image_storage\\subject\\";
 
     static final String FXML_LOCATION = "/fxml/";
     static final String FIN_FXML_LOCATION = "/fxml/finance/";

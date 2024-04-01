@@ -1,6 +1,7 @@
 package com.katyshevtseva.kikiorg.view.controller.study;
 
 import com.katyshevtseva.date.DateUtils;
+import com.katyshevtseva.date.Period;
 import com.katyshevtseva.fx.FxUtils;
 import com.katyshevtseva.fx.LabelBuilder;
 import com.katyshevtseva.fx.Styler;
@@ -15,7 +16,9 @@ import javafx.scene.Node;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.ContextMenuEvent;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import lombok.RequiredArgsConstructor;
@@ -47,16 +50,24 @@ public class PlanListController implements FxController {
     public Node getPlanNode(Plan plan) {
         int textWidth = blockWidth - 50;
 
-        String titleText = plan.getSubject().getTitle() + "\n"
-                + DateUtils.getStringRepresentationOfPeriod(plan.getStart().getValue(), plan.getEnd().getValue());
+        Period period = new Period(plan.getStart().getValue(), plan.getEnd().getValue());
+        String titleText = plan.getSubject().getTitle() + " " + (DateUtils.getNumberOfDays(period) + 1) + " д.";
         Label titleLabel = new LabelBuilder().text(titleText).textSize(25).width(textWidth).build();
 
-        String infoString = "Min days: " + plan.getMinDays() + "\n" + "Min time: " +
-                getTimeStringByMinutes(plan.getMinMinutesADay().intValue(), true);
+        String infoString = String.format("Dates: %s\nMin days: %d \nMin time: %s ",
+                DateUtils.getStringRepresentationOfPeriod(period),
+                plan.getMinDays(),
+                getTimeStringByMinutes(plan.getMinMinutesADay().intValue(), true));
         Label infoLabel = new LabelBuilder().text(infoString).width(textWidth).build();
 
-        VBox contentBox = new VBox();
-        contentBox.getChildren().addAll(titleLabel, FxUtils.getPaneWithHeight(15), infoLabel);
+        VBox textContentBox = new VBox();
+        textContentBox.getChildren().addAll(titleLabel, FxUtils.getPaneWithHeight(15), infoLabel);
+
+        HBox contentBox = new HBox();
+        ImageView imageView = new ImageView();
+        imageView.setImage(SubjectImageUtil.getImage(plan.getSubject()));
+        contentBox.getChildren().addAll(imageView, FxUtils.getPaneWithWidth(15), textContentBox);
+
         Pane root = new Pane();
         FxUtils.setWidth(root, blockWidth);
         root.setStyle(Styler.getBlackBorderStyle()

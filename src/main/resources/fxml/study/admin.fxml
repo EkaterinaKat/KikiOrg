@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.*?>
 <HBox xmlns:fx="http://javafx.com/fxml"
       xmlns="http://javafx.com/javafx">
@@ -12,27 +15,19 @@
     <Pane maxWidth="20" minWidth="20"/>
 
     <VBox>
-        <HBox>
-            <Button fx:id="newSubjectButton" text="New Subject"/>
-        </HBox>
+
+        <Button fx:id="newSubjectButton" text="New Subject"/>
+        <Pane minHeight="25" maxHeight="25"/>
         <HBox>
             <Pane minWidth="25" maxWidth="25"/>
+            <ImageView fx:id="imageView" fitWidth="100" fitHeight="100"/>
+            <Pane minWidth="15" maxWidth="15"/>
             <VBox>
                 <Pane minHeight="25" maxHeight="25"/>
                 <Label fx:id="titleLabel" styleClass="font_25" wrapText="true" minWidth="650" maxWidth="650"/>
                 <Pane minHeight="25" maxHeight="25"/>
                 <Label fx:id="descLabel" wrapText="true" minWidth="650" maxWidth="650"/>
                 <Pane minHeight="25" maxHeight="25"/>
-                <ScrollPane maxWidth="700" minWidth="700" maxHeight="650" minHeight="650">
-                    <HBox>
-                        <Pane minWidth="20" maxWidth="20"/>
-                        <VBox>
-                            <Pane minHeight="20" maxHeight="20"/>
-                            <VBox fx:id="valuesPane"/>
-                        </VBox>
-                    </HBox>
-
-                </ScrollPane>
             </VBox>
             <Pane minWidth="25" maxWidth="25"/>
         </HBox>

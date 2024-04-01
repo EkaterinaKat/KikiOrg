@@ -14,9 +14,9 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.VBox;
 import org.springframework.lang.Nullable;
 
 import java.util.HashMap;
@@ -33,7 +33,7 @@ public class StudyAdminController implements SectionController {
     @FXML
     private Label descLabel;
     @FXML
-    private VBox valuesPane;
+    private ImageView imageView;
     private Map<Long, Label> subjectIdPointLabelMap;
 
     @FXML
@@ -115,6 +115,7 @@ public class StudyAdminController implements SectionController {
         if (subject != null) {
             subjectIdPointLabelMap.get(subject.getId()).setText("* ");
         }
+        imageView.setImage(subject != null ? SubjectImageUtil.getImage(subject) : null);
     }
 
     private void openSubjectEditWindow(Subject subject) {
