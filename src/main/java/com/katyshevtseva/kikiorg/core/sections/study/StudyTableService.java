@@ -1,5 +1,6 @@
 package com.katyshevtseva.kikiorg.core.sections.study;
 
+import com.katyshevtseva.date.DateUtils;
 import com.katyshevtseva.date.Period;
 import com.katyshevtseva.fx.Styler;
 import com.katyshevtseva.general.ReportCell;
@@ -26,7 +27,8 @@ import static com.katyshevtseva.time.TimeUtil.getTimeStringByMinutes;
 @RequiredArgsConstructor
 @Service
 public class StudyTableService {
-    private static final int columnWidth = 130;
+    private static final int COLUMN_WIDTH = 120;
+    private static final int DATE_COLUMN_WIDTH = 100;
     private final StudyService studyService;
     private final CircsService circsService;
     private final SubjMarkRepo markRepo;
@@ -40,20 +42,31 @@ public class StudyTableService {
         result.add(getReportHead(subjects));
         List<Date> dates = getDateRange(period);
         Collections.reverse(dates);  // Чтобы последние даты были наверху таблицы
+        Date today = new Date();
         for (Date date : dates) {
-            result.add(getReportLine(date, subjects));
+            result.add(getReportLine(date, subjects, today));
         }
         return result;
     }
 
-    private List<ReportCell> getReportLine(Date date, List<Subject> subjects) {
+    private List<ReportCell> getReportLine(Date date, List<Subject> subjects, Date today) {
         List<ReportCell> result = new ArrayList<>();
-        result.add(ReportCell.builder().text(READABLE_DATE_FORMAT.format(date)).width(100).build());
+        result.add(getDateCell(date, today));
         result.add(getCircsCell(date));
         for (Subject subject : subjects) {
             result.add(getSubjMarkCell(subject, date));
         }
         return result;
+    }
+
+    private ReportCell getDateCell(Date date, Date today) {
+        ReportCellBuilder builder = ReportCell.builder()
+                .text(READABLE_DATE_FORMAT.format(date))
+                .width(DATE_COLUMN_WIDTH);
+        if (DateUtils.equalsIgnoreTime(date, today)) {
+            builder.color(Styler.StandardColor.GOLD.getCode());
+        }
+        return builder.build();
     }
 
     private ReportCell getCircsCell(Date date) {
@@ -65,7 +78,7 @@ public class StudyTableService {
                 builder.color(Styler.StandardColor.RED.getCode());
             return builder.build();
         } else
-            return (ReportCell.builder().item(circs).text(circs.getInfo()).width(150).build());
+            return (ReportCell.builder().item(circs).text(circs.getInfo()).width(COLUMN_WIDTH).build());
     }
 
     private boolean circsCellShouldBeFilled(Date date, Date today) {
@@ -83,7 +96,7 @@ public class StudyTableService {
         return ReportCell.builder()
                 .text(getTimeStringByMinutes(mark.getMinutes(), true))
                 .textColor(mark.getMinutes() == 0 ? LIGHT_GREY.getCode() : BLACK.getCode())
-                .width(columnWidth)
+                .width(COLUMN_WIDTH)
                 .item(mark)
                 .build();
     }
@@ -93,7 +106,7 @@ public class StudyTableService {
         result.add(ReportCell.builder().build());//пустая клетка над колонкой дат 
         result.add(ReportCell.builder().build());//пустая клетка над колонкой circs
         for (Subject subject : subjects) {
-            result.add(ReportCell.builder().type(HEAD_COLUMN).text(subject.getTitle()).width(columnWidth).build());
+            result.add(ReportCell.builder().type(HEAD_COLUMN).text(subject.getTitle()).width(COLUMN_WIDTH).build());
         }
         return result;
     }

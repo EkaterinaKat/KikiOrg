@@ -23,8 +23,10 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import lombok.RequiredArgsConstructor;
 
+import java.util.Date;
 import java.util.List;
 
+import static com.katyshevtseva.date.DateUtils.getNumberOfDays;
 import static com.katyshevtseva.time.TimeUtil.getTimeStringByMinutes;
 
 @RequiredArgsConstructor
@@ -51,13 +53,17 @@ public class PlanListController implements FxController {
         int textWidth = blockWidth - 50;
 
         Period period = new Period(plan.getStart().getValue(), plan.getEnd().getValue());
-        String titleText = plan.getSubject().getTitle() + " " + (DateUtils.getNumberOfDays(period) + 1) + " д.";
+        String titleText = String.format("%s %d/%d",
+                plan.getSubject().getTitle(),
+                plan.getMinDays(),
+                (getNumberOfDays(period) + 1));
         Label titleLabel = new LabelBuilder().text(titleText).textSize(25).width(textWidth).build();
 
-        String infoString = String.format("Dates: %s\nMin days: %d \nMin time: %s ",
+        String infoString = String.format("Dates: %s\nMin time: %s \n\nDays passed: %d\nDays done: %d",
                 DateUtils.getStringRepresentationOfPeriod(period),
-                plan.getMinDays(),
-                getTimeStringByMinutes(plan.getMinMinutesADay().intValue(), true));
+                getTimeStringByMinutes(plan.getMinMinutesADay().intValue(), true),
+                getNumberOfDays(plan.getStart().getValue(), new Date()),
+                Core.getInstance().planService.daysDone(plan));
         Label infoLabel = new LabelBuilder().text(infoString).width(textWidth).build();
 
         VBox textContentBox = new VBox();

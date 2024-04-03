@@ -1,7 +1,6 @@
 package com.katyshevtseva.kikiorg.view.controller.study;
 
 import com.katyshevtseva.date.DateUtils;
-import com.katyshevtseva.fx.FxUtils;
 import com.katyshevtseva.fx.ReportUtils;
 import com.katyshevtseva.fx.WindowBuilder;
 import com.katyshevtseva.fx.dialogconstructor.DcComboBox;
@@ -18,7 +17,6 @@ import com.katyshevtseva.kikiorg.core.sections.study.enums.CircsType;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ContextMenu;
-import javafx.scene.control.DatePicker;
 import javafx.scene.control.MenuItem;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
@@ -28,7 +26,6 @@ import java.util.Date;
 import java.util.List;
 
 import static com.katyshevtseva.date.DateUtils.shiftDate;
-import static com.katyshevtseva.fx.FxUtils.getPeriod;
 import static com.katyshevtseva.kikiorg.view.utils.KikiOrgWindowUtil.OrgDialogInfo.MAKE_SUBJ_MARKS_DIALOG;
 import static com.katyshevtseva.kikiorg.view.utils.KikiOrgWindowUtil.OrgDialogInfo.SMALL_MAKE_SUBJ_MARKS_DIALOG;
 import static com.katyshevtseva.kikiorg.view.utils.KikiOrgWindowUtil.OrgNodeInfo.STUDY_PLAN_LIST;
@@ -36,28 +33,28 @@ import static com.katyshevtseva.kikiorg.view.utils.KikiOrgWindowUtil.OrgNodeInfo
 public class StudyFrontPageController implements SectionController {
     private final StudyTableService tableService = Core.getInstance().studyTableService;
     private PlanListController listController;
+    private StartEndDateNode dateNode;
     @FXML
     private GridPane tablePane;
     @FXML
     private Button makeMarksButton;
     @FXML
-    private DatePicker startDatePicker;
-    @FXML
-    private DatePicker endDatePicker;
-    @FXML
     private Pane planPane;
+    @FXML
+    private Pane datePane;
 
     @FXML
     private void initialize() {
-        FxUtils.setDate(startDatePicker, shiftDate(new Date(), DateUtils.TimeUnit.DAY, -30));
-        FxUtils.setDate(endDatePicker, new Date());
-        startDatePicker.setOnAction(event -> updateTableContent());
-        endDatePicker.setOnAction(event -> updateTableContent());
+        dateNode = new StartEndDateNode(
+                this::updateTableContent,
+                shiftDate(new Date(), DateUtils.TimeUnit.DAY, -30),
+                new Date());
+        datePane.getChildren().add(dateNode.getNode());
 
         makeMarksButton.setOnAction(event ->
                 WindowBuilder.openDialog(MAKE_SUBJ_MARKS_DIALOG, new MakeMarksDialogController(this::updateAllContent)));
 
-        listController = new PlanListController(null, this::updatePlanPane, 400);
+        listController = new PlanListController(null, this::updatePlanPane, 420);
         planPane.getChildren().add(WindowBuilder.getNode(STUDY_PLAN_LIST, listController));
     }
 
@@ -72,7 +69,7 @@ public class StudyFrontPageController implements SectionController {
     }
 
     private void updateTableContent() {
-        List<List<ReportCell>> report = tableService.getReport(getPeriod(startDatePicker, endDatePicker));
+        List<List<ReportCell>> report = tableService.getReport(dateNode.getPeriod());
         addContextMenu(report);
         ReportUtils.showReport(report, tablePane, false);
     }

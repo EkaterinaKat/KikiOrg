@@ -51,8 +51,7 @@ public class PlanService {
     }
 
     public boolean planCompleted(Plan plan) {
-        List<SubjMark> marks = getMarksByPlan(plan);
-        return marks.stream().filter(mark -> mark.getMinutes() >= plan.getMinMinutesADay()).count() >= plan.getMinDays();
+        return daysDone(plan) >= plan.getMinDays();
     }
 
     private List<SubjMark> getMarksByPlan(Plan plan) {
@@ -62,5 +61,9 @@ public class PlanService {
             studyService.getMark(plan.getSubject(), date).ifPresent(marks::add);
         }
         return marks;
+    }
+
+    public long daysDone(Plan plan) {
+        return getMarksByPlan(plan).stream().filter(mark -> mark.getMinutes() >= plan.getMinMinutesADay()).count();
     }
 }
