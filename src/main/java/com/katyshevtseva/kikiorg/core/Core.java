@@ -59,6 +59,7 @@ public class Core implements InitializingBean {
     public final StudyTableService studyTableService;
     public final CircsService circsService;
     public final PlanService planService;
+    public final PmService pmService;
 
     public static Core getInstance() {
         while (INSTANCE == null) {

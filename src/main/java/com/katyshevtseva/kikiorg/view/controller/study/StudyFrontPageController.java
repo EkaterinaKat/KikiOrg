@@ -47,8 +47,8 @@ public class StudyFrontPageController implements SectionController {
     private void initialize() {
         dateNode = new StartEndDateNode(
                 this::updateTableContent,
-                shiftDate(new Date(), DateUtils.TimeUnit.DAY, -30),
-                new Date());
+                shiftDate(new Date(), DateUtils.TimeUnit.DAY, -20),
+                shiftDate(new Date(), DateUtils.TimeUnit.DAY, 10));
         datePane.getChildren().add(dateNode.getNode());
 
         makeMarksButton.setOnAction(event ->
@@ -141,8 +141,14 @@ public class StudyFrontPageController implements SectionController {
             updateAllContent();
         });
 
+        MenuItem planItem = new MenuItem("Plan");
+        planItem.setOnAction(event -> {
+            Core.getInstance().pmService.makeMark(mark.getSubject(), mark.getDate());
+            updateAllContent();
+        });
+
         ContextMenu contextMenu = new ContextMenu();
-        contextMenu.getItems().addAll(editItem, deleteItem);
+        contextMenu.getItems().addAll(editItem, deleteItem, planItem);
         return contextMenu;
     }
 }

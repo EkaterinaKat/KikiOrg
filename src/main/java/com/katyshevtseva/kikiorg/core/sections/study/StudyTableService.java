@@ -18,8 +18,7 @@ import java.util.Date;
 import java.util.List;
 
 import static com.katyshevtseva.date.DateUtils.*;
-import static com.katyshevtseva.fx.Styler.StandardColor.BLACK;
-import static com.katyshevtseva.fx.Styler.StandardColor.LIGHT_GREY;
+import static com.katyshevtseva.fx.Styler.StandardColor.*;
 import static com.katyshevtseva.general.ReportCell.Type.HEAD_COLUMN;
 import static com.katyshevtseva.kikiorg.core.CoreConstants.STUDY_START_DATE;
 import static com.katyshevtseva.time.TimeUtil.getTimeStringByMinutes;
@@ -32,6 +31,7 @@ public class StudyTableService {
     private final StudyService studyService;
     private final CircsService circsService;
     private final SubjMarkRepo markRepo;
+    private final PmService pmService;
 
     public List<List<ReportCell>> getReport(Period period) {
         return getReport(studyService.getActiveSubjects(), period);
@@ -90,12 +90,18 @@ public class StudyTableService {
 
     private ReportCell getSubjMarkCell(Subject subject, Date date) {
         SubjMark mark = studyService.getMark(subject, date).orElse(null);
+        String cellColor = pmService.markExists(subject, date) ? BLUE.getCode() : WHITE.getCode();
+
         if (mark == null) {
-            return ReportCell.builder().item(getNonexistentMarkToEdit(subject, date)).build();
+            return ReportCell.builder()
+                    .item(getNonexistentMarkToEdit(subject, date))
+                    .color(cellColor)
+                    .build();
         }
         return ReportCell.builder()
                 .text(getTimeStringByMinutes(mark.getMinutes(), true))
                 .textColor(mark.getMinutes() == 0 ? LIGHT_GREY.getCode() : BLACK.getCode())
+                .color(cellColor)
                 .width(COLUMN_WIDTH)
                 .item(mark)
                 .build();
