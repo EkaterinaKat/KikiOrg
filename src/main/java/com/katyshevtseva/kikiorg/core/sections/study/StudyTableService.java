@@ -26,7 +26,8 @@ import static com.katyshevtseva.time.TimeUtil.getTimeStringByMinutes;
 @RequiredArgsConstructor
 @Service
 public class StudyTableService {
-    private static final int COLUMN_WIDTH = 120;
+    private static final int COLUMN_WIDTH = 70;
+    private static final int CIRCS_COLUMN_WIDTH = 120;
     private static final int DATE_COLUMN_WIDTH = 100;
     private final StudyService studyService;
     private final CircsService circsService;
@@ -78,7 +79,7 @@ public class StudyTableService {
                 builder.color(Styler.StandardColor.RED.getCode());
             return builder.build();
         } else
-            return (ReportCell.builder().item(circs).text(circs.getInfo()).width(COLUMN_WIDTH).build());
+            return (ReportCell.builder().item(circs).text(circs.getInfo()).width(CIRCS_COLUMN_WIDTH).build());
     }
 
     private boolean circsCellShouldBeFilled(Date date, Date today) {
@@ -96,6 +97,7 @@ public class StudyTableService {
             return ReportCell.builder()
                     .item(getNonexistentMarkToEdit(subject, date))
                     .color(cellColor)
+                    .width(COLUMN_WIDTH)
                     .build();
         }
         return ReportCell.builder()
@@ -112,7 +114,7 @@ public class StudyTableService {
         result.add(ReportCell.builder().build());//пустая клетка над колонкой дат 
         result.add(ReportCell.builder().build());//пустая клетка над колонкой circs
         for (Subject subject : subjects) {
-            result.add(ReportCell.builder().type(HEAD_COLUMN).text(subject.getTitle()).width(COLUMN_WIDTH).build());
+            result.add(ReportCell.builder().type(HEAD_COLUMN).text(subject.getTitle()).build());
         }
         return result;
     }

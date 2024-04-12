@@ -71,7 +71,7 @@ public class StudyFrontPageController implements SectionController {
     private void updateTableContent() {
         List<List<ReportCell>> report = tableService.getReport(dateNode.getPeriod());
         addContextMenu(report);
-        ReportUtils.showReport(report, tablePane, false);
+        ReportUtils.showReport(report, tablePane, true);
     }
 
     private void updatePlanPane() {
