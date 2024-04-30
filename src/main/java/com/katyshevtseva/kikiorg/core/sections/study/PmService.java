@@ -22,12 +22,16 @@ public class PmService {
     }
 
     @Transactional
-    public void makeMark(Subject subject, Date date) {
+    public void makeOrDeleteMark(Subject subject, Date date) {
         Optional<PlanMark> mark = repo.findByDateEntityValueAndSubject(date, subject);
         if (mark.isPresent()) {
             repo.delete(mark.get());
         } else {
             repo.save(new PlanMark(subject, dateService.createIfNotExistAndGetDateEntity(date)));
         }
+    }
+
+    public void deleteMark(Subject subject, Date date) {
+        repo.findByDateEntityValueAndSubject(date, subject).ifPresent(repo::delete);
     }
 }

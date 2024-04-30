@@ -28,7 +28,7 @@ import static com.katyshevtseva.time.TimeUtil.getTimeStringByMinutes;
 public class StudyTableService {
     private static final int COLUMN_WIDTH = 70;
     private static final int CIRCS_COLUMN_WIDTH = 120;
-    private static final int DATE_COLUMN_WIDTH = 100;
+    private static final int DATE_COLUMN_WIDTH = 140;
     private final StudyService studyService;
     private final CircsService circsService;
     private final SubjMarkRepo markRepo;
@@ -61,11 +61,16 @@ public class StudyTableService {
     }
 
     private ReportCell getDateCell(Date date, Date today) {
+        String text = String.format("%s (%s)", READABLE_DATE_FORMAT.format(date), getWeekdayName(date));
+
         ReportCellBuilder builder = ReportCell.builder()
-                .text(READABLE_DATE_FORMAT.format(date))
+                .text(text)
                 .width(DATE_COLUMN_WIDTH);
         if (DateUtils.equalsIgnoreTime(date, today)) {
             builder.color(Styler.StandardColor.GOLD.getCode());
+        }
+        if (DateUtils.getWeekdayIndex(date) == 7) {
+            builder.textColor(RED.getCode());
         }
         return builder.build();
     }

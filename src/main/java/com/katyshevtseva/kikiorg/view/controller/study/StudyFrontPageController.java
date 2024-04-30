@@ -135,6 +135,16 @@ public class StudyFrontPageController implements SectionController {
         editItem.setOnAction(event -> WindowBuilder.openDialog(SMALL_MAKE_SUBJ_MARKS_DIALOG,
                 new MakeMarksDialogController(this::updateAllContent, mark)));
 
+        MenuItem oneHourItem = new MenuItem("1");
+        oneHourItem.setOnAction(event -> {
+            Core.getInstance().studyService.saveMark(
+                    mark.getSubject(),
+                    mark.getDate(),
+                    60,
+                    null);
+            updateAllContent();
+        });
+
         MenuItem deleteItem = new MenuItem("Delete");
         deleteItem.setOnAction(event -> {
             Core.getInstance().studyService.delete(mark);
@@ -143,12 +153,12 @@ public class StudyFrontPageController implements SectionController {
 
         MenuItem planItem = new MenuItem("Plan");
         planItem.setOnAction(event -> {
-            Core.getInstance().pmService.makeMark(mark.getSubject(), mark.getDate());
+            Core.getInstance().pmService.makeOrDeleteMark(mark.getSubject(), mark.getDate());
             updateAllContent();
         });
 
         ContextMenu contextMenu = new ContextMenu();
-        contextMenu.getItems().addAll(editItem, deleteItem, planItem);
+        contextMenu.getItems().addAll(editItem, oneHourItem, deleteItem, planItem);
         return contextMenu;
     }
 }

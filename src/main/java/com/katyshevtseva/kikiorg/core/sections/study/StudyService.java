@@ -25,6 +25,7 @@ public class StudyService {
     private final DateService dateService;
     private final SubjectRepo subjectRepo;
     private final PlanRepo planRepo;
+    private final PmService pmService;
 
     public void save(Subject existing, String title, String desc) {
         if (existing == null) {
@@ -55,6 +56,7 @@ public class StudyService {
                 minutes,
                 GeneralUtils.trim(comment));
         markRepo.save(mark);
+        pmService.deleteMark(subject, date);
     }
 
     public Optional<SubjMark> getMark(Subject subject, Date date) {
