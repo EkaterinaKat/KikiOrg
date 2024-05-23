@@ -19,7 +19,7 @@ public class ZeroMarkCreationService {
     private final DateService dateService;
     private final IndicatorRepo indicatorRepo;
 
-    void createZeroMarks(Indicator indicator) {
+    void createZeroMarks(Indicator indicator, Span span) {
         indicator = indicatorRepo.findById(indicator.getId()).orElseThrow(RuntimeException::new);
         if (!DiaryUtils.hasNumericValues(indicator))
             throw new RuntimeException();
@@ -32,7 +32,18 @@ public class ZeroMarkCreationService {
 //        System.out.println("***** START *****");
 //        System.out.println("First date " + DateUtils.READABLE_DATE_FORMAT.format(firstMark.getDate()));
         IndValue zeroValue = getZeroValue(indicator);
-        Date date = firstMark.getDate();
+
+        Date firstMarkDate = firstMark.getDate();
+        Date date = null;
+
+        switch (span) {
+            case WEEK:
+                date = DateUtils.getPeriodOfWeekDateBelongsTo(firstMarkDate).start();
+                break;
+            case MONTH:
+                date = DateUtils.getPeriodOfMonthDateBelongsTo(firstMarkDate).start();
+        }
+
         Date today = new Date();
         while (DateUtils.before(date, today)) {
             if (!markRepo.existsByIndicatorAndDateEntityValue(indicator, date)) {

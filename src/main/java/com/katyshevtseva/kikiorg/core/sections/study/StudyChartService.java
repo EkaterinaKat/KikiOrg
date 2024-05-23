@@ -27,7 +27,7 @@ public class StudyChartService {
     private final Cache<Date, Period> weekPeriodCache = new Cache<>(DateUtils::getPeriodOfWeekDateBelongsTo);
 
     public List<Dot> getChart(Subject subject, Span span, ChartYValueType yValueType) {
-        zeroService.createZeroMarks(subject);
+        zeroService.createZeroMarks(subject, span);
         List<SubjMark> marks = markRepo.findBySubject(subject);
 
         Map<Period, List<SubjMark>> periodMarkListMap = getPeriodMarkListMapByMarks(marks, getPeriodCache(span));

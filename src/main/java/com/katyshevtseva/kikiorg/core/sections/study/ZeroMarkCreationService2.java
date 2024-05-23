@@ -4,6 +4,7 @@ import com.katyshevtseva.date.DateUtils;
 import com.katyshevtseva.kikiorg.core.date.DateService;
 import com.katyshevtseva.kikiorg.core.sections.study.entity.SubjMark;
 import com.katyshevtseva.kikiorg.core.sections.study.entity.Subject;
+import com.katyshevtseva.kikiorg.core.sections.study.enums.Span;
 import com.katyshevtseva.kikiorg.core.sections.study.repo.SubjMarkRepo;
 import com.katyshevtseva.kikiorg.core.sections.study.repo.SubjectRepo;
 import lombok.RequiredArgsConstructor;
@@ -18,7 +19,7 @@ public class ZeroMarkCreationService2 {
     private final DateService dateService;
     private final SubjectRepo subjectRepo;
 
-    void createZeroMarks(Subject subject) {
+    void createZeroMarks(Subject subject, Span span) {
         subject = subjectRepo.findById(subject.getId()).orElseThrow(RuntimeException::new);
 
         SubjMark firstMark = markRepo.findFirstBySubjectOrderByDateEntityValue(subject);
@@ -28,7 +29,18 @@ public class ZeroMarkCreationService2 {
 
 //        System.out.println("***** START *****");
 //        System.out.println("First date " + DateUtils.READABLE_DATE_FORMAT.format(firstMark.getDate()));
-        Date date = firstMark.getDate();
+        Date firstMarkDate = firstMark.getDate();
+        Date date = null;
+
+        switch (span) {
+            case WEEK:
+                date = DateUtils.getPeriodOfWeekDateBelongsTo(firstMarkDate).start();
+                break;
+            case MONTH:
+                date = DateUtils.getPeriodOfMonthDateBelongsTo(firstMarkDate).start();
+        }
+
+
         Date today = new Date();
         while (DateUtils.before(date, today)) {
             if (!markRepo.existsBySubjectAndDateEntityValue(subject, date)) {
