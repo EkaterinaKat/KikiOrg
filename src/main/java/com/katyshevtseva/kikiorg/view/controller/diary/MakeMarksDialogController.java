@@ -85,6 +85,7 @@ public class MakeMarksDialogController implements FxController {
 
     private void fillPaneWithAllIndicators() {
         showHiddenButton.setVisible(true);
+        indicatorPane.getChildren().clear();
         List<Indicator> indicators = Core.getInstance().diaryService.getActiveNotHiddenIndicators();
         for (int i = 0; i < indicators.size(); i++) {
             addIndicatorToPane(indicators.get(i), i, indicatorPane, lines);

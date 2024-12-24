@@ -13,7 +13,11 @@ public class OrgUtils {
     }
 
     public static void setDate(DatePicker datePicker, DateEntity dateEntity) {
-        datePicker.setValue(dateEntity != null ?
-                new java.sql.Date(dateEntity.getValue().getTime()).toLocalDate() : null);
+        setDate(datePicker, dateEntity.getValue());
+    }
+
+    public static void setDate(DatePicker datePicker, java.util.Date date) {
+        datePicker.setValue(date != null ?
+                new java.sql.Date(date.getTime()).toLocalDate() : null);
     }
 }

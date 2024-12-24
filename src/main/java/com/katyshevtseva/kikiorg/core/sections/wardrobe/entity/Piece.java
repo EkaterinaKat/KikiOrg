@@ -7,6 +7,7 @@ import lombok.Data;
 
 import javax.persistence.*;
 import java.util.Collection;
+import java.util.Date;
 import java.util.Objects;
 import java.util.Set;
 
@@ -35,22 +36,22 @@ public class Piece {
     @Enumerated(EnumType.STRING)
     Set<Category> categories;
 
-    @ManyToOne
-    @JoinColumn(name = "start_date_entity_id")
-    private DateEntity startDate;
+    @Temporal(TemporalType.DATE)
+    @Column(name = "start_date")
+    private Date startDate;
 
-    @ManyToOne
-    @JoinColumn(name = "end_date_entity_id")
-    private DateEntity endDate;
+    @Temporal(TemporalType.DATE)
+    @Column(name = "end_date")
+    private Date endDate;
 
     @OneToMany(mappedBy = "piece")
     private Collection<ComponentEntity> components;
 
     public String getFullDesc() {
         return description + "\n\n" + "Type: " + type + "\n" + categories + "\n\n" +
-                (startDate != null ? READABLE_DATE_FORMAT.format(startDate.getValue()) : "*") +
+                (startDate != null ? READABLE_DATE_FORMAT.format(startDate) : "*") +
                 "-" +
-                (endDate != null ? READABLE_DATE_FORMAT.format(endDate.getValue()) : "*");
+                (endDate != null ? READABLE_DATE_FORMAT.format(endDate) : "*");
     }
 
     @Override

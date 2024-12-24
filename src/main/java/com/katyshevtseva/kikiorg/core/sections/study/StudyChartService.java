@@ -43,14 +43,16 @@ public class StudyChartService {
 
             Float yValue = getYValueOfDot(entry, yValueType);
 
-            String details = entry.getValue().stream()
+            String details1 = yValueType+" = "+yValue+ "\n";
+
+            String details2 = entry.getValue().stream()
                     .sorted(Comparator.comparing(mark -> mark.getDateEntity().getValue()))
                     .map(mark -> String.format("%s = %s",
                             READABLE_DATE_FORMAT.format(mark.getDateEntity().getValue()),
                             mark.getMinutes()))
                     .reduce((s, s2) -> s + "\n" + s2).orElse("-");
 
-            dots.add(new Dot(getPeriodTitle(span, entry.getKey()), yValue, details));
+            dots.add(new Dot(getPeriodTitle(span, entry.getKey()), yValue, details1+details2));
         }
 
         return dots;

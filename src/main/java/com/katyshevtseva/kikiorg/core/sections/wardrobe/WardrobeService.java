@@ -39,7 +39,6 @@ public class WardrobeService {
     private final OutfitRepo outfitRepo;
     private final CollageEntityRepo collageEntityRepo;
     private final ComponentEntityRepo componentEntityRepo;
-    private final DateService dateService;
 
     public List<Piece> getAllPieces() {
         return pieceRepo.findAll().stream()
@@ -99,8 +98,8 @@ public class WardrobeService {
             existing = new Piece();
         existing.setImageFileName(imageFileName);
         existing.setDescription(description);
-        existing.setStartDate(dateService.createIfNotExistAndGetDateEntity(start));
-        existing.setEndDate(dateService.createIfNotExistAndGetDateEntity(end));
+        existing.setStartDate(start);
+        existing.setEndDate(end);
         existing.setType(type);
         existing.setCategories(new HashSet<>(categories));
 
@@ -156,7 +155,7 @@ public class WardrobeService {
             throw new RuntimeException("Вещь уже архивирована");
         }
 
-        piece.setEndDate(dateService.createIfNotExistAndGetDateEntity(new Date()));
+        piece.setEndDate(new Date());
         pieceRepo.save(piece);
     }
 
