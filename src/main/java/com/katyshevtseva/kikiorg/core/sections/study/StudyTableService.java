@@ -32,7 +32,7 @@ public class StudyTableService {
     private final StudyService studyService;
     private final CircsService circsService;
     private final SubjMarkRepo markRepo;
-    private final PmService pmService;
+    private final PlanMarkService pmService;
 
     public List<List<ReportCell>> getReport(Period period) {
         return getReport(studyService.getActiveSubjects(), period);
@@ -53,7 +53,7 @@ public class StudyTableService {
     private List<ReportCell> getReportLine(Date date, List<Subject> subjects, Date today) {
         List<ReportCell> result = new ArrayList<>();
         result.add(getDateCell(date, today));
-        result.add(getCircsCell(date));
+//        result.add(getCircumstancesCell(date));
         for (Subject subject : subjects) {
             result.add(getSubjMarkCell(subject, date));
         }
@@ -75,19 +75,19 @@ public class StudyTableService {
         return builder.build();
     }
 
-    private ReportCell getCircsCell(Date date) {
+    private ReportCell getCircumstancesCell(Date date) {
         Circs circs = circsService.getCircsOrNull(date);
         if (circs == null) {
             ReportCellBuilder builder = ReportCell.builder().item(getNonexistentCircsToEdit(date));
             Date today = new Date();
-            if (circsCellShouldBeFilled(date, today))
+            if (circumstancesCellShouldBeFilled(date, today))
                 builder.color(Styler.StandardColor.RED.getCode());
             return builder.build();
         } else
             return (ReportCell.builder().item(circs).text(circs.getInfo()).width(CIRCS_COLUMN_WIDTH).build());
     }
 
-    private boolean circsCellShouldBeFilled(Date date, Date today) {
+    private boolean circumstancesCellShouldBeFilled(Date date, Date today) {
         if (before(date, STUDY_START_DATE) || !before(date, today)) {
             return false;
         }
@@ -96,7 +96,9 @@ public class StudyTableService {
 
     private ReportCell getSubjMarkCell(Subject subject, Date date) {
         SubjMark mark = studyService.getMark(subject, date).orElse(null);
-        String cellColor = pmService.markExists(subject, date) ? BLUE.getCode() : WHITE.getCode();
+        String cellColor = pmService.markExists(subject, date) ?
+                BLUE.getCode() :
+                (mark != null && mark.getMinutes() > 0) ? SCREAMING_GREEN.getCode() : WHITE.getCode();
 
         if (mark == null) {
             return ReportCell.builder()
@@ -117,7 +119,7 @@ public class StudyTableService {
     private List<ReportCell> getReportHead(List<Subject> subjects) {
         List<ReportCell> result = new ArrayList<>();
         result.add(ReportCell.builder().build());//пустая клетка над колонкой дат 
-        result.add(ReportCell.builder().build());//пустая клетка над колонкой circs
+//        result.add(ReportCell.builder().build());//пустая клетка над колонкой circs
         for (Subject subject : subjects) {
             result.add(ReportCell.builder().type(HEAD_COLUMN).text(subject.getTitle()).build());
         }

@@ -1,6 +1,5 @@
 package com.katyshevtseva.kikiorg.core.sections.study.entity;
 
-import com.katyshevtseva.general.GeneralUtils;
 import com.katyshevtseva.kikiorg.core.date.DateEntity;
 import com.katyshevtseva.kikiorg.core.sections.study.StudyTableService;
 import lombok.Data;
@@ -34,11 +33,6 @@ public class SubjMark implements StudyTableService.MarkToEdit {
         this.dateEntity = dateEntity;
         this.comment = comment;
         this.minutes = minutes;
-    }
-
-    public String getValueAndComment() {
-        String commentPart = GeneralUtils.isEmpty(comment) ? "" : "\n" + comment;
-        return minutes + commentPart;
     }
 
     @Override

@@ -13,7 +13,7 @@ import java.util.Optional;
 
 @RequiredArgsConstructor
 @Service
-public class PmService {
+public class PlanMarkService {
     private final PlanMarkRepo repo;
     private final DateService dateService;
 

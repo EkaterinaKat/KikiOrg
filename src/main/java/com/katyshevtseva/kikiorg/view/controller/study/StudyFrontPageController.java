@@ -9,6 +9,7 @@ import com.katyshevtseva.fx.dialogconstructor.DialogConstructor;
 import com.katyshevtseva.fx.switchcontroller.SectionController;
 import com.katyshevtseva.general.ReportCell;
 import com.katyshevtseva.kikiorg.core.Core;
+import com.katyshevtseva.kikiorg.core.sections.habits.entity.Mark;
 import com.katyshevtseva.kikiorg.core.sections.study.StudyTableService;
 import com.katyshevtseva.kikiorg.core.sections.study.StudyTableService.CircsToEdit;
 import com.katyshevtseva.kikiorg.core.sections.study.StudyTableService.MarkToEdit;
@@ -135,15 +136,6 @@ public class StudyFrontPageController implements SectionController {
         editItem.setOnAction(event -> WindowBuilder.openDialog(SMALL_MAKE_SUBJ_MARKS_DIALOG,
                 new MakeMarksDialogController(this::updateAllContent, mark)));
 
-        MenuItem oneHourItem = new MenuItem("1");
-        oneHourItem.setOnAction(event -> {
-            Core.getInstance().studyService.saveMark(
-                    mark.getSubject(),
-                    mark.getDate(),
-                    60,
-                    null);
-            updateAllContent();
-        });
 
         MenuItem deleteItem = new MenuItem("Delete");
         deleteItem.setOnAction(event -> {
@@ -157,8 +149,31 @@ public class StudyFrontPageController implements SectionController {
             updateAllContent();
         });
 
+
+
         ContextMenu contextMenu = new ContextMenu();
-        contextMenu.getItems().addAll(editItem, oneHourItem, deleteItem, planItem);
+        contextMenu.getItems().addAll(
+                editItem,
+                deleteItem,
+                planItem,
+                getTimeValueItem(60, mark),
+                getTimeValueItem(50, mark),
+                getTimeValueItem(40, mark),
+                getTimeValueItem(30, mark),
+                getTimeValueItem(20, mark));
         return contextMenu;
+    }
+
+    private MenuItem getTimeValueItem(Integer minutes, MarkToEdit mark){
+        MenuItem item = new MenuItem(minutes.toString());
+        item.setOnAction(event -> {
+            Core.getInstance().studyService.saveMark(
+                    mark.getSubject(),
+                    mark.getDate(),
+                    minutes,
+                    null);
+            updateAllContent();
+        });
+        return item;
     }
 }

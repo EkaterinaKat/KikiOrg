@@ -25,7 +25,7 @@ public class StudyService {
     private final DateService dateService;
     private final SubjectRepo subjectRepo;
     private final PlanRepo planRepo;
-    private final PmService pmService;
+    private final PlanMarkService pmService;
 
     public void save(Subject existing, String title, String desc) {
         if (existing == null) {
