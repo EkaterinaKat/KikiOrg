@@ -1,5 +1,7 @@
 package com.katyshevtseva.kikiorg.view.controller.habits;
 
+import com.katyshevtseva.date.DateUtils;
+import com.katyshevtseva.fx.FxUtils;
 import com.katyshevtseva.fx.WindowBuilder;
 import com.katyshevtseva.fx.dialog.StandardDialogBuilder;
 import com.katyshevtseva.fx.switchcontroller.SectionController;
@@ -39,6 +41,10 @@ class CheckListController implements SectionController {
     private Pane tablePane;
     @FXML
     private VBox statisticsBox;
+    @FXML
+    private Button prevDateButton;
+    @FXML
+    private Button nextDateButton;
     private ReportTableController tableController;
 
     @FXML
@@ -48,11 +54,28 @@ class CheckListController implements SectionController {
         datePicker.setValue(LocalDate.now());
         datePicker.setOnAction(event -> fillHabitsTable());
         fillHabitsTable();
+        tuneDateSwitchButtons();
     }
 
     @Override
     public void update() {
         updateSectionContent();
+    }
+
+    private void tuneDateSwitchButtons() {
+        prevDateButton.setOnAction(event -> {
+            FxUtils.setDate(
+                    datePicker,
+                    DateUtils.shiftDate(FxUtils.getDate(datePicker), DateUtils.TimeUnit.DAY, -1));
+            updateSectionContent();
+        });
+
+        nextDateButton.setOnAction(event -> {
+            FxUtils.setDate(
+                    datePicker,
+                    DateUtils.shiftDate(FxUtils.getDate(datePicker), DateUtils.TimeUnit.DAY, 1));
+            updateSectionContent();
+        });
     }
 
     private void fillHabitsTable() {
@@ -94,7 +117,7 @@ class CheckListController implements SectionController {
     }
 
     private void updateSectionContent() {
-        tableController.showReport(Core.getInstance().habitsReportService.getQuickReport());
+        tableController.showReport(Core.getInstance().habitsReportService.getQuickReport(FxUtils.getDate(datePicker)));
 
         statisticsBox.getChildren().clear();
         for (AnalysisResult analysisResult : analysisService.analyzeStabilityAndAssignNewStatusIfNeeded(habitsService.getActiveHabits())) {

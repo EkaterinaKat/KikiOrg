@@ -102,6 +102,6 @@ class ReportController implements SectionController {
             return;
 
         tableController.showReport(Core.getInstance().habitsReportService
-                .getReport(selectedHabits, OrgUtils.getPeriodByDp(startDatePicker, endDatePicker)));
+                .getReport(selectedHabits, OrgUtils.getPeriodByDp(startDatePicker, endDatePicker), null));
     }
 }
